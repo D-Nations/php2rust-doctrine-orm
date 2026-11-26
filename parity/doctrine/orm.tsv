@@ -1579,7 +1579,7 @@ tests/Tests/ORM/Functional/Ticket/GH7869Test.php	GH7869Test::testDQLDeferredEage
 tests/Tests/ORM/Functional/Ticket/GH7875Test.php	GH7875Test::testUpdateSchemaSql	pending	
 tests/Tests/ORM/Functional/Ticket/GH7875Test.php	GH7875Test::testUpdateSchemaSqlWithSchemaAssetFilter	pending	
 tests/Tests/ORM/Functional/Ticket/GH7941Test.php	GH7941Test::typesShouldBeConvertedForDQLFunctions	pending	
-tests/Tests/ORM/Functional/Ticket/GH8055Test.php	GH8055Test::testNumericDescriminatorColumn	pending	
+tests/Tests/ORM/Functional/Ticket/GH8055Test.php	GH8055Test::testNumericDescriminatorColumn	ported	crates/php2rust-doctrine-orm/tests/gh8055_test.rs::testNumericDescriminatorColumn
 tests/Tests/ORM/Functional/Ticket/GH8061Test.php	GH8061Test::testConvertToPHPValueSQLForNewObjectExpression	pending	
 tests/Tests/ORM/Functional/Ticket/GH8127Test.php	GH8127Test::testLoadFieldsFromAllClassesInHierarchy	pending	
 tests/Tests/ORM/Functional/Ticket/GH8217Test.php	GH8217Test::testNoQueriesAfterSecondFlush	pending	
