@@ -3501,8 +3501,10 @@ impl UnitOfWork {
                 .cloned()
                 .unwrap_or_default();
             let identifier = self.normalize_identifier(&class, &id).await?;
+            // The proxy factory's persister: the cached one when the
+            // entity is cached.
             let found = self
-                .get_entity_persister(&name)?
+                .get_entity_persister_interface(&name)?
                 .load_by_id(&identifier, Some(obj))
                 .await?;
             if found.is_none() {
