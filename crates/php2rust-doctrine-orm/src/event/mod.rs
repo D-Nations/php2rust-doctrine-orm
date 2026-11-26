@@ -217,3 +217,16 @@ pub fn listener_error(e: php2rust_doctrine_event_manager::ListenerError) -> Thro
         Err(other) => Thrown::new("Exception", other.to_string(), 0),
     }
 }
+
+/// The class of ORM event arguments (`$eventArgs::class`): `None` for
+/// arguments the ORM does not define.
+pub fn event_args_class(args: &dyn EventArgs) -> Option<&'static str> {
+    let any: &dyn std::any::Any = args;
+    if let Some(args) = any.downcast_ref::<LifecycleEventArgs>() {
+        return Some(args.class());
+    }
+    if any.downcast_ref::<PreUpdateEventArgs>().is_some() {
+        return Some(PRE_UPDATE_EVENT_ARGS);
+    }
+    any.downcast_ref::<ManagerEventArgs>().map(ManagerEventArgs::class)
+}
