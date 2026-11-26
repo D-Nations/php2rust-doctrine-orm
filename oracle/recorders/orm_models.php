@@ -346,6 +346,14 @@ namespace {
         'ORM/Functional/ValueConversionType/OneToOneCompositeIdForeignKeyTest.php',
         'ORM/Functional/ValueConversionType/OneToOneCompositeIdTest.php',
         'ORM/Functional/ValueConversionType/OneToOneTest.php',
+        'ORM/Functional/Ticket/DDC1452Test.php',
+        'ORM/Functional/Ticket/DDC1113Test.php',
+        'ORM/Functional/Ticket/DDC1181Test.php',
+        'ORM/Functional/Ticket/DDC1193Test.php',
+        'ORM/Functional/Ticket/DDC1225Test.php',
+        'ORM/Functional/Ticket/DDC1228Test.php',
+        'ORM/Functional/Ticket/DDC1238Test.php',
+        'Doctrine\\Tests\\Models\\Quote\\NumericEntity',
     ];
     $before = array_merge(get_declared_classes(), get_declared_interfaces(), get_declared_traits());
     foreach ($files as $file) {
