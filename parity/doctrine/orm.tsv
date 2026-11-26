@@ -1162,7 +1162,7 @@ tests/Tests/ORM/Functional/Ticket/DDC1043Test.php	DDC1043Test::testChangeSetPlus
 tests/Tests/ORM/Functional/Ticket/DDC1080Test.php	DDC1080Test::testHydration	ported	crates/php2rust-doctrine-orm/tests/ddc1080_test.rs::testHydration
 tests/Tests/ORM/Functional/Ticket/DDC1113Test.php	DDC1113Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc1113_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC1129Test.php	DDC1129Test::testVersionFieldIgnoredInChangesetComputation	ported	crates/php2rust-doctrine-orm/tests/ddc1129_test.rs::testVersionFieldIgnoredInChangesetComputation
-tests/Tests/ORM/Functional/Ticket/DDC1163Test.php	DDC1163Test::testIssue	pending	
+tests/Tests/ORM/Functional/Ticket/DDC1163Test.php	DDC1163Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc1163_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testArrayHydrationWithCompositeKey	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testArrayHydrationWithCompositeKey
 tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testAssociationOnlyCompositeKey	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testAssociationOnlyCompositeKey
 tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testClearManyToManyCollectionOfForeignKeyEntities	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testClearManyToManyCollectionOfForeignKeyEntities
