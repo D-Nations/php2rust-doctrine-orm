@@ -944,19 +944,19 @@ tests/Tests/ORM/Functional/ReadonlyPropertiesTest.php	ReadonlyPropertiesTest::te
 tests/Tests/ORM/Functional/ReadonlyPropertiesTest.php	ReadonlyPropertiesTest::testEntityWithLazyManyToOne	pending	
 tests/Tests/ORM/Functional/ReadonlyPropertiesTest.php	ReadonlyPropertiesTest::testEntityWithManyToMany	pending	
 tests/Tests/ORM/Functional/ReadonlyPropertiesTest.php	ReadonlyPropertiesTest::testSimpleEntity	pending	
-tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testAccessMetatadaForProxy	pending	
-tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testCloneProxy	pending	
-tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testCloneProxyWithResetId	pending	
-tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testCommonPersistenceProxy	pending	
-tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testDoNotInitializeProxyOnGettingTheIdentifier	pending	
-tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testDoNotInitializeProxyOnGettingTheIdentifierAndReturnTheRightType	pending	
-tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testDoNotInitializeProxyOnGettingTheIdentifierDDC1625	pending	
-tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testInitializeChangeAndFlushProxy	pending	
-tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testInitializeProxy	pending	
-tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testInitializeProxyOnGettingSomethingOtherThanTheIdentifier	pending	
-tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testLazyLoadsFieldValuesFromDatabase	pending	
-tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testReferenceFind	pending	
-tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testWakeupOnProxy	pending	
+tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testAccessMetatadaForProxy	ported	crates/php2rust-doctrine-orm/tests/reference_proxy_test.rs::testAccessMetatadaForProxy
+tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testCloneProxy	ported	crates/php2rust-doctrine-orm/tests/reference_proxy_test.rs::testCloneProxy
+tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testCloneProxyWithResetId	ported	crates/php2rust-doctrine-orm/tests/reference_proxy_test.rs::testCloneProxyWithResetId
+tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testCommonPersistenceProxy	n/a: upstream skips it with native lazy objects (Test only works with proxy generation disabled.)	
+tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testDoNotInitializeProxyOnGettingTheIdentifier	ported	crates/php2rust-doctrine-orm/tests/reference_proxy_test.rs::testDoNotInitializeProxyOnGettingTheIdentifier
+tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testDoNotInitializeProxyOnGettingTheIdentifierAndReturnTheRightType	ported	crates/php2rust-doctrine-orm/tests/reference_proxy_test.rs::testDoNotInitializeProxyOnGettingTheIdentifierAndReturnTheRightType
+tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testDoNotInitializeProxyOnGettingTheIdentifierDDC1625	ported	crates/php2rust-doctrine-orm/tests/reference_proxy_test.rs::testDoNotInitializeProxyOnGettingTheIdentifierDDC1625
+tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testInitializeChangeAndFlushProxy	ported	crates/php2rust-doctrine-orm/tests/reference_proxy_test.rs::testInitializeChangeAndFlushProxy
+tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testInitializeProxy	ported	crates/php2rust-doctrine-orm/tests/reference_proxy_test.rs::testInitializeProxy
+tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testInitializeProxyOnGettingSomethingOtherThanTheIdentifier	ported	crates/php2rust-doctrine-orm/tests/reference_proxy_test.rs::testInitializeProxyOnGettingSomethingOtherThanTheIdentifier
+tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testLazyLoadsFieldValuesFromDatabase	ported	crates/php2rust-doctrine-orm/tests/reference_proxy_test.rs::testLazyLoadsFieldValuesFromDatabase
+tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testReferenceFind	ported	crates/php2rust-doctrine-orm/tests/reference_proxy_test.rs::testReferenceFind
+tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testWakeupOnProxy	ported	crates/php2rust-doctrine-orm/tests/reference_proxy_test.rs::testWakeupOnProxy
 tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testDisableResultCache	pending	
 tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testEnableResultCache	pending	
 tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testEnableResultCacheParams	pending	
