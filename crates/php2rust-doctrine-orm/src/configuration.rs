@@ -18,6 +18,9 @@ use php_value::{PhpArray, Thrown};
 use php2rust_doctrine_persistence::mapping::driver::MappingDriver;
 use php2rust_doctrine_persistence::php_reflection;
 
+use crate::mapping::entity_listener_resolver::{
+    DefaultEntityListenerResolver, EntityListenerResolver,
+};
 use crate::mapping::naming_strategy::{DefaultNamingStrategy, NamingStrategy};
 use crate::mapping::quote_strategy::{DefaultQuoteStrategy, QuoteStrategy};
 use crate::mapping::typed_field_mapper::{DefaultTypedFieldMapper, TypedFieldMapper};
@@ -60,6 +63,9 @@ pub struct Configuration {
     /// the configuration object, so a filter added after the entity
     /// manager was created is seen by it).
     filters: Arc<RwLock<Vec<(String, String)>>>,
+    /// `getEntityListenerResolver()`: the resolver, shared by the clones
+    /// (`??= new DefaultEntityListenerResolver()` on the shared object).
+    entity_listener_resolver: Arc<dyn EntityListenerResolver>,
     /// The custom functions given as a callable (`callable(string):
     /// FunctionNode`) instead of a class name: lowercased name → factory.
     custom_string_function_callables: Vec<(String, FunctionFactory)>,
@@ -109,6 +115,7 @@ impl Configuration {
             eager_fetch_batch_size: None,
             default_string_type_schema_length: None,
             filters: Arc::default(),
+            entity_listener_resolver: Arc::new(DefaultEntityListenerResolver::new()),
         }
     }
 
@@ -120,6 +127,16 @@ impl Configuration {
 
     pub fn get_identity_generation_preferences(&self) -> &[(String, i64)] {
         &self.identity_generation_preferences
+    }
+
+    /// Set the entity listener resolver.
+    pub fn set_entity_listener_resolver(&mut self, resolver: Arc<dyn EntityListenerResolver>) {
+        self.entity_listener_resolver = resolver;
+    }
+
+    /// Get the entity listener resolver.
+    pub fn get_entity_listener_resolver(&self) -> Arc<dyn EntityListenerResolver> {
+        Arc::clone(&self.entity_listener_resolver)
     }
 
     pub fn set_proxy_dir(&mut self, dir: impl Into<String>) {

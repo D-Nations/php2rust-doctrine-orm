@@ -77,12 +77,13 @@ impl EntityManager {
         factory_config.platform = platform.clone();
         metadata_factory.set_entity_manager(factory_config);
         let repository_factory = config.get_repository_factory();
+        let entity_listener_resolver = config.get_entity_listener_resolver();
         Ok(Arc::new_cyclic(|weak| Self {
             conn,
             config,
             metadata_factory,
             repository_factory,
-            unit_of_work: UnitOfWork::new(weak.clone()),
+            unit_of_work: UnitOfWork::new(weak.clone(), entity_listener_resolver),
             event_manager: RwLock::new(event_manager.unwrap_or_default()),
             platform,
             closed: RwLock::new(false),
