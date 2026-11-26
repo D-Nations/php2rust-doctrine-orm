@@ -6,6 +6,7 @@ pub mod expr;
 mod lexer;
 mod parameter;
 mod parameter_type_inferer;
+pub mod result_set_mapping;
 mod sort_direction;
 mod token_type;
 
@@ -13,5 +14,6 @@ pub use expr::Expr;
 pub use lexer::Lexer;
 pub use parameter::{Parameter, ParameterName};
 pub use parameter_type_inferer::ParameterTypeInferer;
+pub use result_set_mapping::ResultSetMapping;
 pub use sort_direction::SortDirection;
 pub use token_type::TokenType;

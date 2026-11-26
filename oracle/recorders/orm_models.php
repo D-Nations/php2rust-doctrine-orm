@@ -272,6 +272,16 @@ namespace {
         'ORM/Mapping/PropertyAccessors/TypedNoDefaultPropertyAccessorTest.php',
         'ORM/Mapping/TypedFieldMapperTest.php',
         'ORM/Mapping/TypedEnumFieldMapperTest.php',
+        'ORM/UnitOfWorkTest.php',
+        'ORM/Functional/LifecycleCallbackTest.php',
+        'ORM/Functional/OneToManyBidirectionalAssociationTest.php',
+        'ORM/Functional/OneToManyUnidirectionalAssociationTest.php',
+        'ORM/Functional/OneToManySelfReferentialAssociationTest.php',
+        'ORM/Functional/OneToManyOrphanRemovalTest.php',
+        'ORM/Functional/ManyToManyBasicAssociationTest.php',
+        'ORM/Functional/ManyToManyBidirectionalAssociationTest.php',
+        'ORM/Functional/ManyToManyUnidirectionalAssociationTest.php',
+        'ORM/Functional/ManyToManySelfReferentialAssociationTest.php',
         'Models/Global/GlobalNamespaceModel.php',
     ];
     $before = array_merge(get_declared_classes(), get_declared_interfaces(), get_declared_traits());
