@@ -1839,14 +1839,14 @@ tests/Tests/ORM/LazyCriteriaCollectionTest.php	LazyCriteriaCollectionTest::testI
 tests/Tests/ORM/LazyCriteriaCollectionTest.php	LazyCriteriaCollectionTest::testIsEmptyUsesCountWhenNotInitialized	pending	
 tests/Tests/ORM/LazyCriteriaCollectionTest.php	LazyCriteriaCollectionTest::testIsEmptyUsesWrappedCollectionWhenInitialized	pending	
 tests/Tests/ORM/LazyCriteriaCollectionTest.php	LazyCriteriaCollectionTest::testMatchingUsesThePersisterOnlyOnce	pending	
-tests/Tests/ORM/Mapping/AnsiQuoteStrategyTest.php	AnsiQuoteStrategyTest::testColumnAlias	pending	
-tests/Tests/ORM/Mapping/AnsiQuoteStrategyTest.php	AnsiQuoteStrategyTest::testGetColumnName	pending	
-tests/Tests/ORM/Mapping/AnsiQuoteStrategyTest.php	AnsiQuoteStrategyTest::testGetSequenceName	pending	
-tests/Tests/ORM/Mapping/AnsiQuoteStrategyTest.php	AnsiQuoteStrategyTest::testGetTableName	pending	
-tests/Tests/ORM/Mapping/AnsiQuoteStrategyTest.php	AnsiQuoteStrategyTest::testIdentifierColumnNames	pending	
-tests/Tests/ORM/Mapping/AnsiQuoteStrategyTest.php	AnsiQuoteStrategyTest::testJoinColumnName	pending	
-tests/Tests/ORM/Mapping/AnsiQuoteStrategyTest.php	AnsiQuoteStrategyTest::testJoinTableName	pending	
-tests/Tests/ORM/Mapping/AnsiQuoteStrategyTest.php	AnsiQuoteStrategyTest::testReferencedJoinColumnName	pending	
+tests/Tests/ORM/Mapping/AnsiQuoteStrategyTest.php	AnsiQuoteStrategyTest::testColumnAlias	ported	crates/php2rust-doctrine-orm/tests/ansi_quote_strategy_test.rs::testColumnAlias
+tests/Tests/ORM/Mapping/AnsiQuoteStrategyTest.php	AnsiQuoteStrategyTest::testGetColumnName	ported	crates/php2rust-doctrine-orm/tests/ansi_quote_strategy_test.rs::testGetColumnName
+tests/Tests/ORM/Mapping/AnsiQuoteStrategyTest.php	AnsiQuoteStrategyTest::testGetSequenceName	ported	crates/php2rust-doctrine-orm/tests/ansi_quote_strategy_test.rs::testGetSequenceName
+tests/Tests/ORM/Mapping/AnsiQuoteStrategyTest.php	AnsiQuoteStrategyTest::testGetTableName	ported	crates/php2rust-doctrine-orm/tests/ansi_quote_strategy_test.rs::testGetTableName
+tests/Tests/ORM/Mapping/AnsiQuoteStrategyTest.php	AnsiQuoteStrategyTest::testIdentifierColumnNames	ported	crates/php2rust-doctrine-orm/tests/ansi_quote_strategy_test.rs::testIdentifierColumnNames
+tests/Tests/ORM/Mapping/AnsiQuoteStrategyTest.php	AnsiQuoteStrategyTest::testJoinColumnName	ported	crates/php2rust-doctrine-orm/tests/ansi_quote_strategy_test.rs::testJoinColumnName
+tests/Tests/ORM/Mapping/AnsiQuoteStrategyTest.php	AnsiQuoteStrategyTest::testJoinTableName	ported	crates/php2rust-doctrine-orm/tests/ansi_quote_strategy_test.rs::testJoinTableName
+tests/Tests/ORM/Mapping/AnsiQuoteStrategyTest.php	AnsiQuoteStrategyTest::testReferencedJoinColumnName	ported	crates/php2rust-doctrine-orm/tests/ansi_quote_strategy_test.rs::testReferencedJoinColumnName
 tests/Tests/ORM/Mapping/AssociationMappingTest.php	AssociationMappingTest::testItSurvivesSerialization	ported	crates/php2rust-doctrine-orm/tests/association_mapping_test.rs::testItSurvivesSerialization
 tests/Tests/ORM/Mapping/AssociationMappingTest.php	AssociationMappingTest::testItThrowsWhenAccessingUnknownProperty	ported	crates/php2rust-doctrine-orm/tests/association_mapping_test.rs::testItThrowsWhenAccessingUnknownProperty
 tests/Tests/ORM/Mapping/AssociationMappingTest.php	AssociationMappingTest::testItThrowsWhenSettingUnknownProperty	ported	crates/php2rust-doctrine-orm/tests/association_mapping_test.rs::testItThrowsWhenSettingUnknownProperty
@@ -2058,8 +2058,8 @@ tests/Tests/ORM/Mapping/ClassMetadataTest.php	ClassMetadataTest::testSetSubClass
 tests/Tests/ORM/Mapping/ClassMetadataTest.php	ClassMetadataTest::testTargetEntityNotFound	ported	crates/php2rust-doctrine-orm/tests/class_metadata_test.rs::testTargetEntityNotFound
 tests/Tests/ORM/Mapping/ClassMetadataTest.php	ClassMetadataTest::testUnderscoreNamingStrategyDefaults	ported	crates/php2rust-doctrine-orm/tests/class_metadata_test.rs::testUnderscoreNamingStrategyDefaults
 tests/Tests/ORM/Mapping/ClassMetadataTest.php	ClassMetadataTest::testWakeupReflectionWithEmbeddable	n/a: upstream skips it without StaticReflectionService, which doctrine/persistence 4 removed	
-tests/Tests/ORM/Mapping/DefaultQuoteStrategyTest.php	DefaultQuoteStrategyTest::testGetJoinTableName	pending	
-tests/Tests/ORM/Mapping/DefaultQuoteStrategyTest.php	DefaultQuoteStrategyTest::testGetTableName	pending	
+tests/Tests/ORM/Mapping/DefaultQuoteStrategyTest.php	DefaultQuoteStrategyTest::testGetJoinTableName	ported	crates/php2rust-doctrine-orm/tests/default_quote_strategy_test.rs::testGetJoinTableName
+tests/Tests/ORM/Mapping/DefaultQuoteStrategyTest.php	DefaultQuoteStrategyTest::testGetTableName	ported	crates/php2rust-doctrine-orm/tests/default_quote_strategy_test.rs::testGetTableName
 tests/Tests/ORM/Mapping/DiscriminatorColumnMappingTest.php	DiscriminatorColumnMappingTest::testItSurvivesSerialization	ported	crates/php2rust-doctrine-orm/tests/discriminator_column_mapping_test.rs::testItSurvivesSerialization
 tests/Tests/ORM/Mapping/EmbeddedClassMappingTest.php	EmbeddedClassMappingTest::testItSurvivesSerialization	ported	crates/php2rust-doctrine-orm/tests/embedded_class_mapping_test.rs::testItSurvivesSerialization
 tests/Tests/ORM/Mapping/EntityListenerResolverTest.php	EntityListenerResolverTest::testClearAll	pending	
@@ -2099,15 +2099,15 @@ tests/Tests/ORM/Mapping/PropertyAccessors/ReadOnlyAccessorTest.php	ReadOnlyAcces
 tests/Tests/ORM/Mapping/PropertyAccessors/ReadOnlyAccessorTest.php	ReadOnlyAccessorTest::testReadOnlyPropertyOnlyOnce	pending	
 tests/Tests/ORM/Mapping/PropertyAccessors/TypedNoDefaultPropertyAccessorTest.php	TypedNoDefaultPropertyAccessorTest::testSetNullWithoutDefault	pending	
 tests/Tests/ORM/Mapping/PropertyAccessors/TypedNoDefaultPropertyAccessorTest.php	TypedNoDefaultPropertyAccessorTest::testSetValueWithoutDefault	pending	
-tests/Tests/ORM/Mapping/QuoteStrategyTest.php	QuoteStrategyTest::testColumnAlias	pending	
+tests/Tests/ORM/Mapping/QuoteStrategyTest.php	QuoteStrategyTest::testColumnAlias	ported	crates/php2rust-doctrine-orm/tests/quote_strategy_test.rs::testColumnAlias
 tests/Tests/ORM/Mapping/QuoteStrategyTest.php	QuoteStrategyTest::testConfiguration	pending	
-tests/Tests/ORM/Mapping/QuoteStrategyTest.php	QuoteStrategyTest::testGetColumnName	pending	
-tests/Tests/ORM/Mapping/QuoteStrategyTest.php	QuoteStrategyTest::testGetTableName	pending	
-tests/Tests/ORM/Mapping/QuoteStrategyTest.php	QuoteStrategyTest::testIdentifierColumnNames	pending	
-tests/Tests/ORM/Mapping/QuoteStrategyTest.php	QuoteStrategyTest::testJoinColumnName	pending	
-tests/Tests/ORM/Mapping/QuoteStrategyTest.php	QuoteStrategyTest::testJoinTableName	pending	
-tests/Tests/ORM/Mapping/QuoteStrategyTest.php	QuoteStrategyTest::testQuoteIdentifierJoinColumns	pending	
-tests/Tests/ORM/Mapping/QuoteStrategyTest.php	QuoteStrategyTest::testReferencedJoinColumnName	pending	
+tests/Tests/ORM/Mapping/QuoteStrategyTest.php	QuoteStrategyTest::testGetColumnName	ported	crates/php2rust-doctrine-orm/tests/quote_strategy_test.rs::testGetColumnName
+tests/Tests/ORM/Mapping/QuoteStrategyTest.php	QuoteStrategyTest::testGetTableName	ported	crates/php2rust-doctrine-orm/tests/quote_strategy_test.rs::testGetTableName
+tests/Tests/ORM/Mapping/QuoteStrategyTest.php	QuoteStrategyTest::testIdentifierColumnNames	ported	crates/php2rust-doctrine-orm/tests/quote_strategy_test.rs::testIdentifierColumnNames
+tests/Tests/ORM/Mapping/QuoteStrategyTest.php	QuoteStrategyTest::testJoinColumnName	ported	crates/php2rust-doctrine-orm/tests/quote_strategy_test.rs::testJoinColumnName
+tests/Tests/ORM/Mapping/QuoteStrategyTest.php	QuoteStrategyTest::testJoinTableName	ported	crates/php2rust-doctrine-orm/tests/quote_strategy_test.rs::testJoinTableName
+tests/Tests/ORM/Mapping/QuoteStrategyTest.php	QuoteStrategyTest::testQuoteIdentifierJoinColumns	ported	crates/php2rust-doctrine-orm/tests/quote_strategy_test.rs::testQuoteIdentifierJoinColumns
+tests/Tests/ORM/Mapping/QuoteStrategyTest.php	QuoteStrategyTest::testReferencedJoinColumnName	ported	crates/php2rust-doctrine-orm/tests/quote_strategy_test.rs::testReferencedJoinColumnName
 tests/Tests/ORM/Mapping/ReflectionEmbeddedPropertyTest.php	ReflectionEmbeddedPropertyTest::testCanSetAndGetEmbeddedProperty	pending	
 tests/Tests/ORM/Mapping/ReflectionEmbeddedPropertyTest.php	ReflectionEmbeddedPropertyTest::testWillSkipReadingPropertiesFromNullEmbeddable	pending	
 tests/Tests/ORM/Mapping/ReflectionReadonlyPropertyTest.php	ReflectionReadonlyPropertyTest::testNonReadonlyPropertiesAreForbidden	pending	

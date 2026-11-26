@@ -394,7 +394,10 @@ fn testGetAllMetadataWorksWithBadConnection() {
 }
 
 #[test]
-#[allow(clippy::too_many_lines, reason = "the upstream test, assertion by assertion")]
+#[allow(
+    clippy::too_many_lines,
+    reason = "the upstream test, assertion by assertion"
+)]
 fn testQuoteMetadata() {
     const QUOTE: &str = "Doctrine\\Tests\\Models\\Quote\\";
     let cmf = factory(attribute_driver());
