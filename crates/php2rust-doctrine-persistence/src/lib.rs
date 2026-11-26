@@ -20,6 +20,7 @@
 
 mod abstract_manager_registry;
 mod connection_registry;
+pub mod event;
 mod manager_registry;
 pub mod mapping;
 mod notify_property_changed;
