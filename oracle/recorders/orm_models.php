@@ -308,6 +308,13 @@ namespace {
         'ORM/Functional/ValueConversionType/OneToManyCriteriaMatchingTest.php',
         'ORM/Functional/ValueConversionType/ManyToManyCriteriaMatchingTest.php',
         'Models/Global/GlobalNamespaceModel.php',
+        'ORM/Functional/SingleTableInheritanceTest.php',
+        'ORM/Functional/ClassTableInheritanceTest.php',
+        'ORM/Functional/ClassTableInheritanceSecondTest.php',
+        'ORM/Functional/MappedSuperclassTest.php',
+        'ORM/Functional/OneToOneSingleTableInheritanceTest.php',
+        'ORM/Functional/OrderedJoinedTableInheritanceCollectionTest.php',
+        'ORM/Functional/SchemaTool/CompanySchemaTest.php',
     ];
     $before = array_merge(get_declared_classes(), get_declared_interfaces(), get_declared_traits());
     foreach ($files as $file) {
