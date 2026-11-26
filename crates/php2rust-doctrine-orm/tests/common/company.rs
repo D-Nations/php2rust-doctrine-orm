@@ -51,17 +51,23 @@ pub const COMPANY_MODELS: [&str; 9] = [
     COMPANY_CONTRACT,
 ];
 
-/// `$this->$property[] = func_get_args();` (the event arguments are not
-/// kept: a list of the entity).
-fn record_call(listener: &Object, property: &str, entity: &Object) -> Result<(), Thrown> {
+/// `$this->$property[] = func_get_args();`: the entity and the class of
+/// the event arguments (the arguments object is not kept).
+fn record_call(
+    listener: &Object,
+    property: &str,
+    entity: &Object,
+    args: &dyn php2rust_doctrine_event_manager::EventArgs,
+) -> Result<(), Thrown> {
     let mut calls = match get(listener, property) {
         Value::Array(calls) => calls,
         _ => PhpArray::new(),
     };
     calls
-        .push(Value::Array(PhpArray::list([Value::Object(
-            entity.clone(),
-        )])))
+        .push(Value::Array(PhpArray::list([
+            Value::Object(entity.clone()),
+            php2rust_doctrine_orm::event::event_args_class(args).map_or(Value::Null, Value::string),
+        ])))
         .map_err(|_| Thrown::new("Error", "Cannot add element to the array", 0))?;
     set(listener, property, Value::Array(calls));
     Ok(())
@@ -85,7 +91,9 @@ pub fn register_listeners() {
             register_listener_method(
                 contract_listener,
                 method,
-                Arc::new(move |listener, entity, _args| record_call(listener, property, entity)),
+                Arc::new(move |listener, entity, args| {
+                    record_call(listener, property, entity, args)
+                }),
             );
         }
         let ultra_listener = "Doctrine\\Tests\\Models\\Company\\CompanyFlexUltraContractListener";
@@ -93,8 +101,8 @@ pub fn register_listeners() {
             register_listener_method(
                 ultra_listener,
                 method,
-                Arc::new(|listener, entity, _args| {
-                    record_call(listener, "prePersistCalls", entity)
+                Arc::new(|listener, entity, args| {
+                    record_call(listener, "prePersistCalls", entity, args)
                 }),
             );
         }
