@@ -1,5 +1,5 @@
 # doctrine/orm at 00c2fd70da291cca1ec75f4dae5344fe3df588fa: upstream file	classes	code lines	status	rust files
-src/AbstractQuery.php	AbstractQuery	548	pending	
+src/AbstractQuery.php	AbstractQuery	548	ported	crates/php2rust-doctrine-orm/src/abstract_query.rs
 src/Cache.php	Cache	27	pending	
 src/Cache/AssociationCacheEntry.php	AssociationCacheEntry	14	pending	
 src/Cache/CacheConfiguration.php	CacheConfiguration	44	pending	
@@ -86,7 +86,7 @@ src/Exception/InvalidHydrationMode.php	InvalidHydrationMode	11	pending
 src/Exception/ManagerException.php	ManagerException	6	pending	
 src/Exception/MissingIdentifierField.php	MissingIdentifierField	15	ported	crates/php2rust-doctrine-orm/src/exception.rs
 src/Exception/MissingMappingDriverImplementation.php	MissingMappingDriverImplementation	13	ported	crates/php2rust-doctrine-orm/src/exception.rs
-src/Exception/MultipleSelectorsFoundException.php	MultipleSelectorsFoundException	18	pending	
+src/Exception/MultipleSelectorsFoundException.php	MultipleSelectorsFoundException	18	ported	crates/php2rust-doctrine-orm/src/internal/hydration/abstract_hydrator.rs
 src/Exception/NoMatchingPropertyException.php	NoMatchingPropertyException	11	ported	crates/php2rust-doctrine-orm/src/query/query_exception.rs
 src/Exception/NotSupported.php	NotSupported	35	ported	crates/php2rust-doctrine-orm/src/exception.rs
 src/Exception/ORMException.php	ORMException	6	ported	crates/php2rust-doctrine-orm/src/exception.rs
@@ -100,14 +100,14 @@ src/Id/AssignedGenerator.php	AssignedGenerator	24	ported	crates/php2rust-doctrin
 src/Id/BigIntegerIdentityGenerator.php	BigIntegerIdentityGenerator	14	pending	
 src/Id/IdentityGenerator.php	IdentityGenerator	14	ported	crates/php2rust-doctrine-orm/src/unit_of_work.rs
 src/Id/SequenceGenerator.php	SequenceGenerator	73	ported	crates/php2rust-doctrine-orm/src/unit_of_work.rs
-src/Internal/Hydration/AbstractHydrator.php	AbstractHydrator	359	ported	crates/php2rust-doctrine-orm/src/internal/hydration/mod.rs
-src/Internal/Hydration/ArrayHydrator.php	ArrayHydrator	175	pending	
-src/Internal/Hydration/HydrationException.php	HydrationException	59	pending	
-src/Internal/Hydration/ObjectHydrator.php	ObjectHydrator	388	pending	
-src/Internal/Hydration/ScalarColumnHydrator.php	ScalarColumnHydrator	15	pending	
-src/Internal/Hydration/ScalarHydrator.php	ScalarHydrator	17	pending	
+src/Internal/Hydration/AbstractHydrator.php	AbstractHydrator	359	ported	crates/php2rust-doctrine-orm/src/internal/hydration/abstract_hydrator.rs
+src/Internal/Hydration/ArrayHydrator.php	ArrayHydrator	175	ported	crates/php2rust-doctrine-orm/src/internal/hydration/array_hydrator.rs
+src/Internal/Hydration/HydrationException.php	HydrationException	59	ported	crates/php2rust-doctrine-orm/src/internal/hydration/abstract_hydrator.rs
+src/Internal/Hydration/ObjectHydrator.php	ObjectHydrator	388	ported	crates/php2rust-doctrine-orm/src/internal/hydration/object_hydrator.rs
+src/Internal/Hydration/ScalarColumnHydrator.php	ScalarColumnHydrator	15	ported	crates/php2rust-doctrine-orm/src/internal/hydration/mod.rs
+src/Internal/Hydration/ScalarHydrator.php	ScalarHydrator	17	ported	crates/php2rust-doctrine-orm/src/internal/hydration/mod.rs
 src/Internal/Hydration/SimpleObjectHydrator.php	SimpleObjectHydrator	134	ported	crates/php2rust-doctrine-orm/src/internal/hydration/mod.rs
-src/Internal/Hydration/SingleScalarHydrator.php	SingleScalarHydrator	26	pending	
+src/Internal/Hydration/SingleScalarHydrator.php	SingleScalarHydrator	26	ported	crates/php2rust-doctrine-orm/src/internal/hydration/mod.rs
 src/Internal/HydrationCompleteHandler.php	HydrationCompleteHandler	39	ported	crates/php2rust-doctrine-orm/src/unit_of_work.rs
 src/Internal/NoUnknownNamedArguments.php	NoUnknownNamedArguments	34	pending	
 src/Internal/SQLResultCasing.php	SQLResultCasing	21	ported	crates/php2rust-doctrine-orm/src/mapping/quote_strategy.rs
@@ -227,9 +227,9 @@ src/Mapping/TypedFieldMapper.php	TypedFieldMapper	8	ported	crates/php2rust-doctr
 src/Mapping/UnderscoreNamingStrategy.php	UnderscoreNamingStrategy	73	ported	crates/php2rust-doctrine-orm/src/mapping/naming_strategy.rs
 src/Mapping/UniqueConstraint.php	UniqueConstraint	14	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
 src/Mapping/Version.php	Version	7	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
-src/NativeQuery.php	NativeQuery	52	pending	
-src/NoResultException.php	NoResultException	9	pending	
-src/NonUniqueResultException.php	NonUniqueResultException	10	pending	
+src/NativeQuery.php	NativeQuery	52	ported	crates/php2rust-doctrine-orm/src/native_query.rs
+src/NoResultException.php	NoResultException	9	ported	crates/php2rust-doctrine-orm/src/abstract_query.rs
+src/NonUniqueResultException.php	NonUniqueResultException	10	ported	crates/php2rust-doctrine-orm/src/abstract_query.rs
 src/ORMInvalidArgumentException.php	ORMInvalidArgumentException	160	ported	crates/php2rust-doctrine-orm/src/exception.rs
 src/ORMSetup.php	ORMSetup	157	pending	
 src/OptimisticLockException.php	OptimisticLockException	37	ported	crates/php2rust-doctrine-orm/src/exception.rs
@@ -259,7 +259,7 @@ src/Proxy/DefaultProxyClassNameResolver.php	DefaultProxyClassNameResolver	39	pen
 src/Proxy/InternalProxy.php	InternalProxy	7	pending	
 src/Proxy/NotAProxyClass.php	NotAProxyClass	16	pending	
 src/Proxy/ProxyFactory.php	ProxyFactory	399	ported	crates/php2rust-doctrine-orm/src/entity_manager.rs
-src/Query.php	Query	367	pending	
+src/Query.php	Query	367	ported	crates/php2rust-doctrine-orm/src/query/dql_query.rs
 src/Query/AST/ASTException.php	ASTException	11	ported	crates/php2rust-doctrine-orm/src/query/query_exception.rs
 src/Query/AST/AggregateExpression.php	AggregateExpression	16	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
 src/Query/AST/ArithmeticExpression.php	ArithmeticExpression	20	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
@@ -464,7 +464,7 @@ src/Tools/SchemaValidator.php	SchemaValidator	345	pending
 src/Tools/ToolEvents.php	ToolEvents	7	pending	
 src/Tools/ToolsException.php	ToolsException	16	ported	crates/php2rust-doctrine-orm/src/tools/schema_tool.rs
 src/TransactionRequiredException.php	TransactionRequiredException	11	ported	crates/php2rust-doctrine-orm/src/exception.rs
-src/UnexpectedResultException.php	UnexpectedResultException	7	pending	
+src/UnexpectedResultException.php	UnexpectedResultException	7	ported	crates/php2rust-doctrine-orm/src/abstract_query.rs
 src/UnitOfWork.php	UnitOfWork	1956	ported	crates/php2rust-doctrine-orm/src/unit_of_work.rs
 src/Utility/HierarchyDiscriminatorResolver.php	HierarchyDiscriminatorResolver	26	ported	crates/php2rust-doctrine-orm/src/query/utility.rs
 src/Utility/IdentifierFlattener.php	IdentifierFlattener	50	ported	crates/php2rust-doctrine-orm/src/utility/identifier_flattener.rs
