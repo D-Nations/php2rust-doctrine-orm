@@ -29,6 +29,13 @@ assert_eq!(PhpString::from("O'Neil"), lexer.token().unwrap().value);
 | `Expr\Comparison`, `Func`, `Math` (a `Math` operand in parentheses), `From`, `Join` (alias, index and condition only when truthy; `strtoupper()`'s `TypeError` for a condition without a type), `OrderBy` (`SortDirection` to `ASC`/`DESC`, a falsy order to `ASC`, the deprecation `https://github.com/doctrine/orm/issues/11313` for an order that is not a `SortDirection`, in the constructor and again in `add()`) | `Query/Expr/Comparison.php`, `Func.php`, `Math.php`, `From.php`, `Join.php`, `OrderBy.php` | ExprTest; recorded expressions (with the deprecation counts) |
 | `ParameterTypeInferer::inferType()`: DBAL's `Types` names for ints, bools, dates, intervals and backed enums, `ArrayParameterType` from an array's first element (an enum's backing value), `ParameterType::STRING` otherwise; types from php2rust-doctrine-dbal | `Query/ParameterTypeInferer.php` | ParameterTypeInfererTest (1, 15 rows) |
 | `Parameter`: the name without leading and trailing `:`, the value, a given type or the inferred one (`$type ?:`: also for a falsy type name), `typeWasSpecified()` | `Query/Parameter.php` | Compiled use; no upstream test of its own |
+| `Mapping\ClassMetadata`: the mapping API (`mapField()`, the association `map*()` methods, overrides, inheritance, discriminator, lifecycle callbacks, entity listeners, id generators, sequences, `__sleep()`/`unserialize()`, `newInstance()`), with the `MappingException` texts; the metadata is shared as `ClassMetadata` (an `RwLock` over `ClassMetadataInfo`) | `Mapping/ClassMetadata.php`, `MappingException.php`, `Exception/*.php` | ClassMetadataTest (69) |
+| The mapping value objects: `FieldMapping`, `AssociationMapping` and its subclasses, `JoinColumnMapping`, `JoinTableMapping`, `EmbeddedClassMapping`, `DiscriminatorColumnMapping` (`fromMappingArray()`, `toArray()`, `ArrayAccess`, `__sleep()`) | `Mapping/*Mapping.php` | the `*MappingTest` files (24) |
+| The mapping attributes (`Entity`, `Table`, `Column`, `Id`, `GeneratedValue`, the association and join attributes, `OrderBy`, overrides, lifecycle callbacks, ...) with PHP's constructor defaults; `AttributeReader` and `AttributeDriver` over a registry that stands in for PHP attributes (`ClassAttributes`, `register_attributes()`: what a derive macro would emit) | `Mapping/*.php` (attributes), `Driver/AttributeReader.php`, `Driver/AttributeDriver.php` | AttributeReaderTest (5), AttributeDriverTest with MappingDriverTestCase (62); test models recorded from PHP 8.3.6 reflection (`tests/data/models.json`, oracle/recorders/orm_models.php) |
+| `ClassMetadataFactory` on persistence's `AbstractClassMetadataFactory`: inheritance, embeddables, id generator completion (identity preferences, DBAL 4 PostgreSQL identity, Oracle sequences), default discriminator map, runtime validation | `Mapping/ClassMetadataFactory.php` | ClassMetadataFactoryTest (12), BasicInheritanceMappingTest (14), ClassMetadataLoadEventTest (1) |
+| The builders (`ClassMetadataBuilder`, `FieldBuilder`, `EmbeddedBuilder`, the association builders, `EntityListenerBuilder`) | `Mapping/Builder/*.php` | ClassMetadataBuilderTest (38), FieldBuilderTest (1) |
+| Naming strategies (`DefaultNamingStrategy`, `UnderscoreNamingStrategy`), quote strategies (`DefaultQuoteStrategy`, `AnsiQuoteStrategy`), typed field mappers (`DefaultTypedFieldMapper`, `ChainTypedFieldMapper`) | `Mapping/*NamingStrategy.php`, `*QuoteStrategy.php`, `*TypedFieldMapper.php`, `Internal/SQLResultCasing.php` | NamingStrategyTest (6), QuoteStrategyTest (8), AnsiQuoteStrategyTest (8), DefaultQuoteStrategyTest (2), TypedFieldMapperTest (1, 12 rows), TypedEnumFieldMapperTest (1) |
+| The property accessors (`RawValue`, `ObjectCast`, `TypedNoDefault`, `Readonly`, `Enum`, `Embeddable`, the factory) and the legacy `ReflectionReadonlyProperty`/`ReflectionEmbeddedProperty` | `Mapping/PropertyAccessors/*.php`, `ReflectionReadonlyProperty.php`, `ReflectionEmbeddedProperty.php` | the PropertyAccessors tests (10), ReflectionReadonlyPropertyTest (3), ReflectionEmbeddedPropertyTest (2, 6 rows each) |
 
 `Lexer::new()` returns doctrine/lexer's `PcreError`, which the DQL
 patterns never cause.
@@ -54,3 +61,40 @@ Query expressions, not reproduced and so not claimed:
 Pending: `ExprTest::testExistsExpr`, `testAllExpr`, `testSomeExpr`,
 `testAnyExpr` and `testNotExpr` build a `QueryBuilder` from the test
 entity manager, which are not ported.
+
+Mapping, not reproduced and so not claimed:
+
+- PHP attributes are a registry (`mapping::attributes`); the test models
+  are registered from PHP reflection recorded by
+  oracle/recorders/orm_models.php (locally, PHP 8.3.6, not the Docker
+  oracle). There are no recorded ORM vectors beyond the models.
+- There is no entity manager: `ClassMetadataFactory::set_entity_manager()`
+  takes a `FactoryConfiguration` (driver, naming and quote strategies,
+  typed field mapper, identity preferences, platform), and the
+  `loadClassMetadata` and `onClassMetadataNotFound` listeners are hooks
+  on it. Only DBAL's `SQLitePlatform` exists; other platforms are known
+  by class name.
+- No dynamic properties; `LegacyReflectionFields` and
+  `getMetadataValue()` are not ported. Test objects are `EntityObject`s,
+  whose private properties of a parent share the child's slots.
+- `IdGenerator` names the generator class and its settings; generating
+  values needs the entity manager.
+- Unserialized metadata gets the default naming strategy and typed field
+  mapper (PHP leaves them uninitialized).
+- `getSequenceName()`/`getSequencePrefix()` take no platform (upstream
+  ignores it). A `ReflectionException` from the driver becomes
+  `MappingException::reflectionFailure()` without the previous
+  exception (`Thrown` has none).
+- The attribute constructors' type checks (such as an invalid override
+  type) cannot fail: the Rust types rule those values out.
+- PHPUnit's `#[Depends]` chains rebuild the metadata in each test.
+
+Mapping pending: XmlMappingDriverTest, the Symfony XmlDriverTest,
+StaticPHPMappingDriverTest and `ClassMetadataTest::testClassNameMappingDiscriminatorValue`
+(the XML and static PHP drivers are not ported; the demo uses
+attributes); `RawValuePropertyAccessorTest` (PHP 8.4 property hooks);
+`EntityListenerResolverTest` (the resolver serves the unit of work);
+`AttributeDriverTest::testMappedSuperclassWithRepository`,
+`ClassMetadataFactoryTest::testAcceptsEntityManagerInterfaceInstances`
+and `QuoteStrategyTest::testConfiguration` (the entity manager and its
+`Configuration`).
