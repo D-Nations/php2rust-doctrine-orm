@@ -1163,26 +1163,26 @@ tests/Tests/ORM/Functional/Ticket/DDC1080Test.php	DDC1080Test::testHydration	pen
 tests/Tests/ORM/Functional/Ticket/DDC1113Test.php	DDC1113Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1129Test.php	DDC1129Test::testVersionFieldIgnoredInChangesetComputation	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1163Test.php	DDC1163Test::testIssue	pending	
-tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testArrayHydrationWithCompositeKey	pending	
-tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testAssociationOnlyCompositeKey	pending	
-tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testClearManyToManyCollectionOfForeignKeyEntities	pending	
-tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testDqlRemoveCompositeElement	pending	
-tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testFetchDql	pending	
-tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testGetEntityState	pending	
-tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testIndexByOnCompositeKeyField	pending	
-tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testInverseSideAccess	pending	
-tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testLoadInverseManyToManyCollection	pending	
-tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testLoadManyToManyCollectionOfForeignKeyEntities	pending	
-tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testLoadOneToManyCollectionOfForeignKeyEntities	pending	
-tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testLoadOneToManyOfSourceEntityWithAssociationIdentifier	pending	
-tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testMixedCompositeKey	pending	
-tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testMixedCompositeKeyViolateUniqueness	pending	
-tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testOneToOneCascadePersist	pending	
-tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testOneToOneCascadeRemove	pending	
-tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testOneToOneForeignObjectId	pending	
-tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testReferencesToForeignKeyEntities	pending	
-tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testRemoveCompositeElement	pending	
-tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testUpdateAssociationEntity	pending	
+tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testArrayHydrationWithCompositeKey	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testArrayHydrationWithCompositeKey
+tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testAssociationOnlyCompositeKey	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testAssociationOnlyCompositeKey
+tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testClearManyToManyCollectionOfForeignKeyEntities	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testClearManyToManyCollectionOfForeignKeyEntities
+tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testDqlRemoveCompositeElement	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testDqlRemoveCompositeElement
+tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testFetchDql	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testFetchDql
+tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testGetEntityState	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testGetEntityState
+tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testIndexByOnCompositeKeyField	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testIndexByOnCompositeKeyField
+tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testInverseSideAccess	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testInverseSideAccess
+tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testLoadInverseManyToManyCollection	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testLoadInverseManyToManyCollection
+tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testLoadManyToManyCollectionOfForeignKeyEntities	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testLoadManyToManyCollectionOfForeignKeyEntities
+tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testLoadOneToManyCollectionOfForeignKeyEntities	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testLoadOneToManyCollectionOfForeignKeyEntities
+tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testLoadOneToManyOfSourceEntityWithAssociationIdentifier	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testLoadOneToManyOfSourceEntityWithAssociationIdentifier
+tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testMixedCompositeKey	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testMixedCompositeKey
+tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testMixedCompositeKeyViolateUniqueness	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testMixedCompositeKeyViolateUniqueness
+tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testOneToOneCascadePersist	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testOneToOneCascadePersist
+tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testOneToOneCascadeRemove	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testOneToOneCascadeRemove
+tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testOneToOneForeignObjectId	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testOneToOneForeignObjectId
+tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testReferencesToForeignKeyEntities	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testReferencesToForeignKeyEntities
+tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testRemoveCompositeElement	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testRemoveCompositeElement
+tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testUpdateAssociationEntity	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testUpdateAssociationEntity
 tests/Tests/ORM/Functional/Ticket/DDC1181Test.php	DDC1181Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1193Test.php	DDC1193Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1209Test.php	DDC1209Test::testCompositeIdentifierCanHaveCustomType	pending	
