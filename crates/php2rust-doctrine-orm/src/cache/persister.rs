@@ -1051,7 +1051,7 @@ impl EntityPersisterInterface for AbstractEntityPersister {
 }
 
 /// `sha1($data)`: the SHA-1 digest of a byte string, in lowercase hex.
-fn sha1_hex(data: &[u8]) -> String {
+pub(crate) fn sha1_hex(data: &[u8]) -> String {
     use sha1::Digest as _;
     use std::fmt::Write as _;
     sha1::Sha1::digest(data)

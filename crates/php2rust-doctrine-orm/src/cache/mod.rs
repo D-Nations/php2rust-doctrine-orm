@@ -38,6 +38,7 @@ pub use hydrator::{
 };
 pub use lock::Lock;
 pub use lock::uniqid;
+pub(crate) use persister::sha1_hex;
 pub use persister::{AbstractEntityPersister, CacheUsage, CachedEntityPersister, CachedPersister};
 pub use query_cache::{DefaultQueryCache, QueryCache};
 pub use region::{

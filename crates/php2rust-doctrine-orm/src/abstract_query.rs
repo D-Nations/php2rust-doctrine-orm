@@ -5,9 +5,10 @@
 //! The state is behind a lock, so a query's setters take `&self` (PHP's
 //! fluent `$this`) and its futures are `Send`. A result is a [`Value`]:
 //! the array of a hydration, the scalar of `HYDRATE_SINGLE_SCALAR`, or
-//! the affected row count of a DQL UPDATE or DELETE. The second level
-//! cache, the result and hydration caches and custom hydration modes are
-//! not ported; `toIterable()` hydrates row by row but reads the rows
+//! the affected row count of a DQL UPDATE or DELETE. A cacheable query
+//! of an em with the second-level cache goes through its query cache
+//! (`executeUsingQueryCache()`). The result and hydration caches and
+//! custom hydration modes are not ported; `toIterable()` hydrates row by row but reads the rows
 //! whole.
 //!
 //! Upstream: doctrine/orm src/AbstractQuery.php src/NoResultException.php src/NonUniqueResultException.php src/UnexpectedResultException.php
@@ -97,7 +98,7 @@ struct Inner {
     hints: Vec<(String, Hint)>,
     hydration_mode: i64,
     result_set_mapping: Option<ResultSetMapping>,
-    // The second-level cache options (the cache itself is not ported).
+    // The second-level cache options.
     cacheable: bool,
     lifetime: i64,
     cache_region: Option<String>,
@@ -420,6 +421,149 @@ impl QueryState {
         self.st().cache_mode = cache_mode;
     }
 
+    /// `$this->hasCache`: whether the em has the second-level cache.
+    pub fn has_cache(&self) -> bool {
+        self.em.get_configuration().is_second_level_cache_enabled()
+    }
+
+    /// `$this->cacheLogger`.
+    pub(crate) fn cache_logger(&self) -> Option<Arc<dyn crate::cache::logging::CacheLogger>> {
+        if !self.has_cache() {
+            return None;
+        }
+        self.em
+            .get_configuration()
+            .get_second_level_cache_configuration()
+            .and_then(|config| config.get_cache_logger())
+    }
+
+    /// `$this->hints` as a PHP array: a lock mode is its integer, the
+    /// walkers are their class names.
+    pub fn hints_array(&self) -> PhpArray {
+        let mut array = PhpArray::new();
+        for (name, hint) in &self.st().hints {
+            let value = match hint {
+                Hint::Value(value) => value.clone(),
+                Hint::LockMode(mode) => Value::Int(match mode {
+                    php2rust_doctrine_dbal::LockMode::None => 0,
+                    php2rust_doctrine_dbal::LockMode::Optimistic => 1,
+                    php2rust_doctrine_dbal::LockMode::PessimisticRead => 2,
+                    php2rust_doctrine_dbal::LockMode::PessimisticWrite => 4,
+                }),
+                Hint::TreeWalkers(walkers) => Value::Array(PhpArray::list(
+                    walkers.iter().map(|w| Value::string(w.name)),
+                )),
+                Hint::OutputWalker(walker) => Value::string(walker.name),
+            };
+            array.insert(Key::from(name.as_str()), value);
+        }
+        array
+    }
+
+    /// `AbstractQuery::getHash()` of a query's SQL: `sha1($query . '-' .
+    /// serialize($params) . '-' . serialize($hints))`, the hints sorted
+    /// by name.
+    pub fn get_hash(&self, query: &str) -> Result<String, Thrown> {
+        let mut params = Vec::new();
+        for parameter in self.get_parameters() {
+            let value = parameter.get_value();
+            // Small optimization
+            // Does not invoke processParameterValue for scalar value
+            params.push(match value {
+                Value::Bool(_) | Value::Int(_) | Value::Float(_) | Value::String(_) => {
+                    value.clone()
+                }
+                _ => self.process_parameter_value(value)?,
+            });
+        }
+        let mut hints = self.hints_array();
+        hints.ksort();
+        let mut data = format!("{query}-").into_bytes();
+        data.extend_from_slice(
+            php_value::serialize::serialize(&Value::Array(PhpArray::list(params))).as_bytes(),
+        );
+        data.push(b'-');
+        data.extend_from_slice(php_value::serialize::serialize(&Value::Array(hints)).as_bytes());
+        Ok(crate::cache::sha1_hex(&data))
+    }
+
+    /// `getTimestampKey()`: the key of the first alias's root entity.
+    pub(crate) fn get_timestamp_key(
+        &self,
+        rsm: &ResultSetMapping,
+    ) -> Result<Option<crate::cache::TimestampCacheKey>, Thrown> {
+        let Some((_, entity_name)) = rsm.alias_map.iter().next() else {
+            return Ok(None);
+        };
+        if entity_name.is_empty() {
+            return Ok(None);
+        }
+        let metadata = self.em.get_class_metadata(entity_name)?;
+        let root = metadata.read().root_entity_name.clone();
+        Ok(Some(crate::cache::TimestampCacheKey::new(root)))
+    }
+
+    /// `executeUsingQueryCache()` around the query's execution
+    /// (`executeIgnoreQueryCache()`), with its mapping and hash.
+    pub(crate) async fn execute_using_query_cache<F>(
+        &self,
+        rsm: ResultSetMapping,
+        hash: String,
+        execute: F,
+    ) -> Result<Value, Thrown>
+    where
+        F: std::future::Future<Output = Result<Value, Thrown>>,
+    {
+        let cache = self.em.get_cache().ok_or_else(|| {
+            Thrown::new(
+                "LogicException",
+                "The second level cache is not enabled.",
+                0,
+            )
+        })?;
+        let (cache_region, lifetime, cache_mode) = {
+            let st = self.st();
+            (st.cache_region.clone(), st.lifetime, st.cache_mode)
+        };
+        let query_cache = cache.get_query_cache(cache_region.as_deref())?;
+        let query_key = crate::cache::QueryCacheKey::with(
+            hash,
+            lifetime,
+            cache_mode
+                .filter(|mode| *mode != 0)
+                .unwrap_or(crate::cache::MODE_NORMAL),
+            self.get_timestamp_key(&rsm)?,
+        );
+        let cache_logger = self.cache_logger();
+
+        let hints = self.hints_array();
+        let result = query_cache.get(&query_key, &rsm, &hints).await?;
+
+        if let Some(result) = result {
+            if let Some(logger) = &cache_logger {
+                logger.query_cache_hit(&query_cache.get_region().get_name(), &query_key);
+            }
+            return Ok(Value::Array(result));
+        }
+
+        let result = execute.await?;
+        let hints = self.hints_array();
+        let array = match &result {
+            Value::Array(array) => array.clone(),
+            _ => PhpArray::new(),
+        };
+        let cached = query_cache.put(&query_key, &rsm, &array, &hints).await?;
+
+        if let Some(logger) = &cache_logger {
+            logger.query_cache_miss(&query_cache.get_region().get_name(), &query_key);
+            if cached {
+                logger.query_cache_put(&query_cache.get_region().get_name(), &query_key);
+            }
+        }
+
+        Ok(result)
+    }
+
     /// The query hints as the unit of work and the hydrators read them.
     pub(crate) fn hydration_hints(&self) -> (Hints, HydrationHints) {
         let st = self.st();
@@ -671,6 +815,28 @@ macro_rules! abstract_query_methods {
 
         /// Executes the query.
         pub async fn execute(
+            &self,
+            parameters: Option<&php_value::PhpArray>,
+            hydration_mode: Option<i64>,
+        ) -> Result<php_value::Value, php_value::Thrown> {
+            if self.state().is_cacheable() && self.state().has_cache() {
+                let rsm = self.get_result_set_mapping()?;
+                let hash = self.get_hash()?;
+                return self
+                    .state()
+                    .execute_using_query_cache(
+                        rsm,
+                        hash,
+                        self.execute_ignore_query_cache(parameters, hydration_mode),
+                    )
+                    .await;
+            }
+            self.execute_ignore_query_cache(parameters, hydration_mode)
+                .await
+        }
+
+        /// Execute query ignoring second level cache.
+        async fn execute_ignore_query_cache(
             &self,
             parameters: Option<&php_value::PhpArray>,
             hydration_mode: Option<i64>,
