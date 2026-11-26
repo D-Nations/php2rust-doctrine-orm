@@ -16,6 +16,7 @@ use php2rust_doctrine_dbal::WrapperParameterType;
 
 use crate::query::context::{DqlQuery, HYDRATE_OBJECT, Hint, QueryContext};
 use crate::query::exec::SqlStatements;
+use crate::query::result_set_mapping::ResultSetMapping;
 use crate::query::{Parameter, ParameterName, Parser, ParserResult};
 
 /// `$query` of `EntityManager::createQuery($dql)`, as far as the query
@@ -32,6 +33,7 @@ pub struct StandInQuery {
     lifetime: Cell<i64>,
     cache_region: RefCell<Option<String>>,
     cache_mode: Cell<Option<i64>>,
+    result_set_mapping: RefCell<Option<ResultSetMapping>>,
 }
 
 impl std::fmt::Debug for StandInQuery {
@@ -58,6 +60,7 @@ impl StandInQuery {
             lifetime: Cell::new(0),
             cache_region: RefCell::new(None),
             cache_mode: Cell::new(None),
+            result_set_mapping: RefCell::new(None),
         }
     }
 
@@ -175,6 +178,17 @@ impl StandInQuery {
         self.cache_mode.get()
     }
 
+    /// `setResultSetMapping($rsm)`.
+    pub fn set_result_set_mapping(&self, rsm: ResultSetMapping) -> &Self {
+        *self.result_set_mapping.borrow_mut() = Some(rsm);
+        self
+    }
+
+    /// The result set mapping set with `setResultSetMapping()`.
+    pub fn get_result_set_mapping(&self) -> Option<ResultSetMapping> {
+        self.result_set_mapping.borrow().clone()
+    }
+
     /// `clone $query`: `AbstractQuery::__clone()` drops the parameters
     /// and the hints (`Query::__clone()` also resets the parser state,
     /// which this stand-in does not keep).
@@ -191,6 +205,10 @@ impl StandInQuery {
             .borrow_mut()
             .clone_from(&self.cache_region.borrow());
         clone.cache_mode.set(self.cache_mode.get());
+        clone
+            .result_set_mapping
+            .borrow_mut()
+            .clone_from(&self.result_set_mapping.borrow());
         clone
     }
 
