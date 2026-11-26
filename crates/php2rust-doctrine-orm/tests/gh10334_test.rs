@@ -37,6 +37,7 @@ async fn set_up() -> Arc<EntityManager> {
 }
 
 /// `new GH10334Foo($collection, $productTypeId)`.
+#[allow(clippy::disallowed_names, reason = "upstream's names")]
 fn foo(collection: &Object, product_type_id: &str) -> Object {
     let foo = new_object(FOO);
     set_obj(&foo, "collection", collection);
