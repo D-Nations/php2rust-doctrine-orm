@@ -2,7 +2,7 @@
 //! on `SQLite` (its own models).
 //!
 //! Upstream's `TestUtil` adds DBAL's `EnableForeignKeys` middleware on
-//! SQLite; the DBAL port has no middlewares, so the test runs its
+//! `SQLite`; the DBAL port has no middlewares, so the test runs its
 //! statement, `PRAGMA foreign_keys = ON`.
 //!
 //! Upstream: doctrine/orm tests/Tests/ORM/Functional/Ticket/GH10752Test.php
@@ -39,7 +39,7 @@ async fn set_up() -> Arc<EntityManager> {
         .execute_statement(
             "PRAGMA foreign_keys = ON",
             &PhpArray::new(),
-            &Default::default(),
+            &php2rust_doctrine_dbal::ParameterTypes::new(),
         )
         .await
         .unwrap();
