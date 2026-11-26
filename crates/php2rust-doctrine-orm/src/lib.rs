@@ -13,6 +13,7 @@ struct ReadmeExample;
 pub use query_builder::QueryBuilder;
 pub use query_type::QueryType;
 
+pub mod abstract_query;
 pub mod collection_object;
 pub mod configuration;
 pub mod deprecations;
@@ -24,6 +25,7 @@ pub mod exception;
 pub mod id;
 pub mod internal;
 pub mod mapping;
+pub mod native_query;
 pub mod object;
 pub mod persistent_collection;
 pub mod persisters;

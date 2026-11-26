@@ -470,3 +470,14 @@ pub fn from_conversion(e: &php2rust_doctrine_dbal::types::ConversionError) -> Th
         ),
     }
 }
+
+/// `InvalidHydrationMode::class`.
+pub const INVALID_HYDRATION_MODE: &str = "Doctrine\\ORM\\Exception\\InvalidHydrationMode";
+
+/// `InvalidHydrationMode::fromMode($mode)`.
+pub fn invalid_hydration_mode(mode: &str) -> Thrown {
+    new(
+        INVALID_HYDRATION_MODE,
+        format!("\"{mode}\" is an invalid hydration mode."),
+    )
+}

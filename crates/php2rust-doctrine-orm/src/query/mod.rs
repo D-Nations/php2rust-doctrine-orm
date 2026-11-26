@@ -4,6 +4,7 @@
 
 pub mod ast;
 pub mod context;
+pub mod dql_query;
 pub mod exec;
 pub mod expr;
 mod lexer;
@@ -16,11 +17,11 @@ pub mod query_expression_visitor;
 pub mod result_set_mapping;
 mod sort_direction;
 pub mod sql_walker;
-pub mod stand_in_query;
 mod token_type;
 pub mod tree_walker;
 pub(crate) mod utility;
 
+pub use dql_query::Query;
 pub use expr::Expr;
 pub use lexer::Lexer;
 pub use parameter::{Parameter, ParameterName};
@@ -31,6 +32,5 @@ pub use query_expression_visitor::QueryExpressionVisitor;
 pub use result_set_mapping::ResultSetMapping;
 pub use sort_direction::SortDirection;
 pub use sql_walker::{OutputWalker, SqlOutputWalker, SqlWalker};
-pub use stand_in_query::StandInQuery;
 pub use token_type::TokenType;
 pub use tree_walker::{TreeWalker, TreeWalkerAdapter, TreeWalkerChain};

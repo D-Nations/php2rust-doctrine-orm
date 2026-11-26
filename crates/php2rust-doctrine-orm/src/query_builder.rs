@@ -6,7 +6,7 @@
 //! (`andWhere()` adds to the `Andx` that `getDQLPart('where')` returned).
 //! The variadic methods take a `Vec`; Rust has no named arguments, so the
 //! check of `NoUnknownNamedArguments` has no counterpart. `getQuery()`
-//! gives a [`StandInQuery`] until the port of `Query.php` is merged.
+//! gives a [`Query`] of the builder's entity manager.
 //!
 //! Upstream: doctrine/orm src/QueryBuilder.php
 
@@ -22,14 +22,13 @@ use php2rust_doctrine_collections::expr::ExpressionVisitor as _;
 use php2rust_doctrine_dbal::WrapperParameterType;
 
 use crate::deprecations;
-use crate::query::context::{DqlQuery as _, Hint, QueryContext};
+use crate::query::context::{Hint, QueryContext};
 use crate::query::expr::{
     self, Andx, Comparison, Composite, From, Func, GroupBy, Join, Literal, Math, Order, OrderBy,
     Orx, Select,
 };
 use crate::query::{
-    Expr, Parameter, ParameterName, QueryExpressionVisitor, SortDirection, StandInQuery,
-    query_exception,
+    Expr, Parameter, ParameterName, Query, QueryExpressionVisitor, SortDirection, query_exception,
 };
 use crate::query_type::QueryType;
 
@@ -296,11 +295,21 @@ impl QueryBuilder {
     }
 
     /// Constructs a Query instance from the current specifications of the builder.
-    pub fn get_query(&self) -> Result<StandInQuery, Thrown> {
-        let query = StandInQuery::new(Arc::clone(&self.em), &self.get_dql()?);
+    ///
+    /// The query needs the entity manager: a builder over another
+    /// `QueryContext` (the tests' stand-ins) gives a `LogicException`.
+    pub fn get_query(&self) -> Result<Query, Thrown> {
+        let em = Arc::clone(&self.em).as_entity_manager().ok_or_else(|| {
+            Thrown::new(
+                "LogicException",
+                "The query builder's entity manager is not an EntityManager.",
+                0,
+            )
+        })?;
+        let query = em.create_query(&self.get_dql()?);
         query
             .set_parameters(self.parameters.clone())
-            .set_first_result(Some(self.first_result))
+            .set_first_result(self.first_result)
             .set_max_results(self.max_results);
 
         if self.lifetime != 0 {

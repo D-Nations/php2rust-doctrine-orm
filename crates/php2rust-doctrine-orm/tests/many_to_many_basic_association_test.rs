@@ -302,3 +302,153 @@ async fn testClearBeforeLazyLoad() {
     let user = em.find(CMS_USER, get(&user, "id")).await.unwrap().unwrap();
     assert_eq!(count_of(&user, "groups").await, 0);
 }
+
+async fn assert_gblanco_group_count_is(em: &Arc<EntityManager>, expected_group_count: i64) {
+    let count_dql = "SELECT count(g.id) FROM Doctrine\\Tests\\Models\\CMS\\CmsUser u JOIN u.groups g WHERE u.username = 'gblanco'";
+    assert_loose_eq(
+        &Value::Int(expected_group_count),
+        &em.create_query(count_dql)
+            .get_single_scalar_result()
+            .await
+            .unwrap(),
+    );
+}
+
+#[tokio::test]
+async fn testBasicManyToManyJoin() {
+    use php2rust_doctrine_orm::unit_of_work::STATE_MANAGED;
+
+    let em = set_up(&CMS_MODELS).await;
+    add_cms_user_gblanco_with_groups(&em, 1).await;
+    em.clear().unwrap();
+
+    assert_eq!(0, em.get_unit_of_work().size());
+
+    let query =
+        em.create_query("select u, g from Doctrine\\Tests\\Models\\CMS\\CmsUser u join u.groups g");
+
+    let result = query.get_object_result().await.unwrap();
+
+    assert_eq!(2, em.get_unit_of_work().size());
+    let user0 = obj(&at(&result, 0));
+    assert_eq!(user0.class(), CMS_USER);
+    assert_loose_eq(&s("Guilherme"), &get(&user0, "name"));
+    assert_eq!(1, count_of(&user0, "groups").await);
+    let groups = elements(&user0, "groups").await;
+    assert_loose_eq(&s("Developers_0"), &get(&groups[0], "name"));
+
+    let uow = em.get_unit_of_work();
+    assert_eq!(STATE_MANAGED, uow.get_entity_state(&user0).await.unwrap());
+    assert_eq!(
+        STATE_MANAGED,
+        uow.get_entity_state(&groups[0]).await.unwrap()
+    );
+
+    persistent(&user0, "groups");
+    persistent(&groups[0], "users");
+
+    coll::clear(&get(&groups[0], "users")).await.unwrap();
+    coll::clear(&get(&user0, "groups")).await.unwrap();
+
+    em.flush().await.unwrap();
+    em.clear().unwrap();
+
+    let query =
+        em.create_query("select u, g from Doctrine\\Tests\\Models\\CMS\\CmsUser u join u.groups g");
+    assert_eq!(0, list(&query.get_object_result().await.unwrap()).len());
+}
+
+#[tokio::test]
+async fn testManyToManyCollectionClearAndAdd() {
+    let em = set_up(&CMS_MODELS).await;
+    let group_count = 10;
+    let user = add_cms_user_gblanco_with_groups(&em, group_count).await;
+
+    let groups = coll::get_values(&get(&user, "groups")).await.unwrap();
+    coll::clear(&get(&user, "groups")).await.unwrap();
+
+    for group in groups {
+        coll::add(&get(&user, "groups"), group).unwrap();
+    }
+
+    assert!(persistent(&user, "groups").is_dirty());
+
+    assert_eq!(
+        group_count,
+        count_of(&user, "groups").await,
+        "There should be 10 groups in the collection."
+    );
+
+    em.flush().await.unwrap();
+
+    assert_gblanco_group_count_is(&em, 10).await;
+}
+
+#[tokio::test]
+async fn testManyToManyCollectionClearing() {
+    let (em, log) = set_up_logged(&CMS_MODELS).await;
+    let user = add_cms_user_gblanco_with_groups(&em, 10).await;
+
+    // Check that there are indeed 10 links in the association table
+    assert_gblanco_group_count_is(&em, 10).await;
+
+    coll::clear(&get(&user, "groups")).await.unwrap();
+
+    log.reset_and_enable();
+    em.flush().await.unwrap();
+
+    // Deletions of entire collections happen in a single query (the log
+    // has no transaction commands)
+    assert_eq!(1, log.queries().len(), "{:?}", log.queries());
+
+    // Check that the links in the association table have been deleted
+    assert_gblanco_group_count_is(&em, 0).await;
+}
+
+#[tokio::test]
+async fn testUnsetManyToMany() {
+    let em = set_up(&CMS_MODELS).await;
+    let user = add_cms_user_gblanco_with_groups(&em, 1).await;
+
+    // inverse side
+    // owning side!
+    let group = obj(&coll::get(&get(&user, "groups"), 0).await.unwrap());
+    coll::remove(&get(&group, "users"), 0).await.unwrap();
+    coll::remove(&get(&user, "groups"), 0).await.unwrap();
+
+    em.flush().await.unwrap();
+
+    // Check that the link in the association table has been deleted
+    assert_gblanco_group_count_is(&em, 0).await;
+}
+
+#[tokio::test]
+async fn testWorkWithDqlHydratedEmptyCollection() {
+    let em = set_up(&CMS_MODELS).await;
+    let user = add_cms_user_gblanco_with_groups(&em, 0).await;
+    let group = cms_group("Developers0");
+    em.persist(&group).unwrap();
+
+    em.flush().await.unwrap();
+    em.clear().unwrap();
+
+    let new_user = em
+        .create_query(
+            "SELECT u, g FROM Doctrine\\Tests\\Models\\CMS\\CmsUser u LEFT JOIN u.groups g WHERE u.id = ?1",
+        )
+        .set_parameter(1, get(&user, "id"), None)
+        .get_single_result(None)
+        .await
+        .unwrap();
+    let new_user = obj(&new_user);
+    assert_eq!(0, count_of(&new_user, "groups").await);
+    persistent(&new_user, "groups").get_mapping().unwrap();
+
+    add_group(&new_user, &group);
+
+    em.flush().await.unwrap();
+    em.clear().unwrap();
+
+    let new_user = em.find(CMS_USER, get(&user, "id")).await.unwrap().unwrap();
+    assert_eq!(1, count_of(&new_user, "groups").await);
+}

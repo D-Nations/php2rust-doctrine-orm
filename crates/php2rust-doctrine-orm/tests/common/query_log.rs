@@ -14,18 +14,18 @@
 
 use std::sync::{Arc, Mutex, PoisonError};
 
-use php_value::{PhpArray, PhpString, Value};
+use php_value::{Key, PhpArray, PhpString, Value};
 use php2rust_doctrine_dbal::driver::api::ExceptionConverter;
 use php2rust_doctrine_dbal::driver::{
     BoxFuture, Connection as DriverConnection, Driver, PlatformBox, Result as DriverResult,
     Statement, pdo_sqlite,
 };
-use php2rust_doctrine_dbal::{Connection, Exception, ServerVersionProvider};
+use php2rust_doctrine_dbal::{Connection, Exception, ParameterType, ServerVersionProvider};
 
 /// The recorded statements, and whether recording is on.
 #[derive(Debug, Default)]
 pub struct QueryLog {
-    queries: Mutex<(bool, Vec<String>)>,
+    queries: Mutex<(bool, Vec<(String, PhpArray)>)>,
 }
 
 impl QueryLog {
@@ -34,11 +34,33 @@ impl QueryLog {
         *self.queries.lock().unwrap_or_else(PoisonError::into_inner) = (true, Vec::new());
     }
 
-    fn log(&self, sql: &str) {
+    /// Records a statement: its position in the log.
+    fn log(&self, sql: &str) -> Option<usize> {
         let mut queries = self.queries.lock().unwrap_or_else(PoisonError::into_inner);
         if queries.0 {
-            queries.1.push(sql.to_owned());
+            queries.1.push((sql.to_owned(), PhpArray::new()));
+            return Some(queries.1.len() - 1);
         }
+        None
+    }
+
+    fn bind(&self, position: usize, param: &Key, value: &Value) {
+        let mut queries = self.queries.lock().unwrap_or_else(PoisonError::into_inner);
+        if let Some((_, params)) = queries.1.get_mut(position) {
+            params.insert(param.clone(), value.clone());
+        }
+    }
+
+    /// `getLastLoggedQuery()['params']`: the values bound to the last
+    /// statement.
+    pub fn last_params(&self) -> PhpArray {
+        self.queries
+            .lock()
+            .unwrap_or_else(PoisonError::into_inner)
+            .1
+            .last()
+            .map(|(_, params)| params.clone())
+            .unwrap_or_default()
     }
 
     /// The statements recorded since `reset_and_enable()`.
@@ -47,7 +69,34 @@ impl QueryLog {
             .lock()
             .unwrap_or_else(PoisonError::into_inner)
             .1
-            .clone()
+            .iter()
+            .map(|(sql, _)| sql.clone())
+            .collect()
+    }
+}
+
+/// A statement whose bound values go to the log.
+struct LoggingStatement {
+    inner: Box<dyn Statement>,
+    log: Arc<QueryLog>,
+    position: Option<usize>,
+}
+
+impl Statement for LoggingStatement {
+    fn bind_value(
+        &mut self,
+        param: &Key,
+        value: Value,
+        r#type: ParameterType,
+    ) -> Result<(), Exception> {
+        if let Some(position) = self.position {
+            self.log.bind(position, param, &value);
+        }
+        self.inner.bind_value(param, value, r#type)
+    }
+
+    fn execute(&mut self) -> BoxFuture<'_, Result<Box<dyn DriverResult>, Exception>> {
+        self.inner.execute()
     }
 }
 
@@ -93,15 +142,22 @@ impl Driver for LoggingDriver {
 
 impl DriverConnection for LoggingConnection {
     fn prepare<'a>(&'a self, sql: &'a str) -> BoxFuture<'a, Result<Box<dyn Statement>, Exception>> {
-        self.log.log(sql);
-        self.inner.prepare(sql)
+        Box::pin(async move {
+            let position = self.log.log(sql);
+            let inner = self.inner.prepare(sql).await?;
+            Ok(Box::new(LoggingStatement {
+                inner,
+                log: self.log.clone(),
+                position,
+            }) as Box<dyn Statement>)
+        })
     }
 
     fn query<'a>(
         &'a self,
         sql: &'a str,
     ) -> BoxFuture<'a, Result<Box<dyn DriverResult>, Exception>> {
-        self.log.log(sql);
+        let _ = self.log.log(sql);
         self.inner.query(sql)
     }
 
@@ -110,7 +166,7 @@ impl DriverConnection for LoggingConnection {
     }
 
     fn exec<'a>(&'a self, sql: &'a str) -> BoxFuture<'a, Result<i64, Exception>> {
-        self.log.log(sql);
+        let _ = self.log.log(sql);
         self.inner.exec(sql)
     }
 

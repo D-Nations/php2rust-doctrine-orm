@@ -69,6 +69,7 @@ const FETCH_EAGER: i64 = 3;
 
 /// The hints of a hydration (`Query::HINT_REFRESH`, ...).
 #[derive(Debug, Clone, Default)]
+#[allow(clippy::struct_excessive_bools, reason = "the query hints")]
 pub struct Hints {
     /// `Query::HINT_REFRESH`.
     pub refresh: bool,
@@ -84,6 +85,10 @@ pub struct Hints {
     pub fetched: Vec<(String, String)>,
     /// `fetchMode[class][field]`.
     pub fetch_mode: Vec<(String, String, Option<i64>)>,
+    /// `LimitSubqueryWalker::FORCE_DBAL_TYPE_CONVERSION`.
+    pub force_dbal_type_conversion: bool,
+    /// `Query::HINT_INTERNAL_ITERATION`.
+    pub internal_iteration: bool,
 }
 
 impl Hints {

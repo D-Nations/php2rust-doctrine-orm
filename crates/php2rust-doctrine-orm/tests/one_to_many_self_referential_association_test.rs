@@ -92,3 +92,64 @@ async fn testRemovesOneToManyAssociation() {
     assert_foreign_key_is(&f.em, Value::Null, &f.first_child).await;
     assert_foreign_key_is(&f.em, get(&f.parent, "id"), &f.second_child).await;
 }
+
+async fn create_fixture(f: &Fixture) {
+    add_child(&f.parent, &f.first_child);
+    add_child(&f.parent, &f.second_child);
+    f.em.persist(&f.parent).unwrap();
+
+    f.em.flush().await.unwrap();
+    f.em.clear().unwrap();
+}
+
+/// `strstr($name, ' books')`.
+fn strstr_books(name: &Value) -> Value {
+    let name = php2rust_doctrine_orm::utility::to_text(name);
+    name.find(" books")
+        .map_or(Value::Bool(false), |i| s(&name[i..]))
+}
+
+async fn assert_children_of(parent: &Object) {
+    let children = elements(parent, "children").await;
+
+    assert_eq!(children[0].class(), ECOMMERCE_CATEGORY);
+    assert!(same_value(&get(&children[0], "parent"), parent));
+    assert_loose_eq(&s(" books"), &strstr_books(&get(&children[0], "name")));
+    assert_eq!(children[1].class(), ECOMMERCE_CATEGORY);
+    assert!(same_value(&get(&children[1], "parent"), parent));
+    assert_loose_eq(&s(" books"), &strstr_books(&get(&children[1], "name")));
+}
+
+#[tokio::test]
+async fn testEagerLoadsOneToManyAssociation() {
+    let f = set_up_test().await;
+    create_fixture(&f).await;
+
+    let query = f.em.create_query(
+        "select c1, c2 from Doctrine\\Tests\\Models\\ECommerce\\ECommerceCategory c1 join c1.children c2",
+    );
+    let result = query.get_object_result().await.unwrap();
+    assert_eq!(list(&result).len(), 1);
+    let parent = obj(&at(&result, 0));
+    assert_children_of(&parent).await;
+}
+
+#[tokio::test]
+async fn testLazyLoadsOneToManyAssociation() {
+    let f = set_up_test().await;
+    create_fixture(&f).await;
+    f.em.get_class_metadata(ECOMMERCE_CATEGORY)
+        .unwrap()
+        .write()
+        .association_mappings
+        .get_mut("children")
+        .unwrap()
+        .fetch = Some(php2rust_doctrine_orm::mapping::class_metadata::FETCH_LAZY);
+
+    let query = f.em.create_query(
+        "select c from Doctrine\\Tests\\Models\\ECommerce\\ECommerceCategory c order by c.id asc",
+    );
+    let result = query.get_object_result().await.unwrap();
+    let parent = obj(&at(&result, 0));
+    assert_children_of(&parent).await;
+}

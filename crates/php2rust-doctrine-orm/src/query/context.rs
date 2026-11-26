@@ -51,6 +51,23 @@ pub const HYDRATE_OBJECT: i64 = 1;
 pub const HYDRATE_ARRAY: i64 = 2;
 /// `AbstractQuery::HYDRATE_SCALAR`.
 pub const HYDRATE_SCALAR: i64 = 3;
+/// `AbstractQuery::HYDRATE_SINGLE_SCALAR`.
+pub const HYDRATE_SINGLE_SCALAR: i64 = 4;
+/// `AbstractQuery::HYDRATE_SIMPLEOBJECT`.
+pub const HYDRATE_SIMPLEOBJECT: i64 = 5;
+/// `AbstractQuery::HYDRATE_SCALAR_COLUMN`.
+pub const HYDRATE_SCALAR_COLUMN: i64 = 6;
+/// `Query::HINT_CACHE_ENABLED`.
+pub const HINT_CACHE_ENABLED: &str = "doctrine.cache.enabled";
+/// `Query::HINT_CACHE_EVICT`.
+pub const HINT_CACHE_EVICT: &str = "doctrine.cache.evict";
+/// `Query::HINT_REFRESH_ENTITY`.
+pub const HINT_REFRESH_ENTITY: &str = "doctrine.refresh.entity";
+/// `Query::HINT_READ_ONLY`.
+pub const HINT_READ_ONLY: &str = "doctrine.readOnly";
+/// `LimitSubqueryWalker::FORCE_DBAL_TYPE_CONVERSION`.
+pub const FORCE_DBAL_TYPE_CONVERSION: &str =
+    "doctrine_paginator.scalar_result.force_dbal_type_conversion";
 
 /// The query components: `$queryComponents`, keyed by DQL alias.
 pub type QueryComponents = OrderedMap<QueryComponent>;
@@ -198,6 +215,13 @@ pub trait QueryContext {
     /// `hasFilters()`.
     fn has_filters(&self) -> bool {
         false
+    }
+
+    /// The entity manager behind the handle, when it is one (the tests'
+    /// stand-ins are not): what `QueryBuilder::getQuery()` creates its
+    /// `Query` with.
+    fn as_entity_manager(self: Arc<Self>) -> Option<Arc<crate::entity_manager::EntityManager>> {
+        None
     }
 
     /// `getFilters()->getEnabledFilters()`.
@@ -377,6 +401,10 @@ fn function_class(class_name: Option<String>) -> Option<FunctionFactory> {
 
 /// The entity manager as the parser and the walkers see it.
 impl QueryContext for crate::entity_manager::EntityManager {
+    fn as_entity_manager(self: Arc<Self>) -> Option<Arc<crate::entity_manager::EntityManager>> {
+        Some(self)
+    }
+
     fn get_class_metadata(&self, class_name: &str) -> Result<Arc<ClassMetadata>, Thrown> {
         crate::entity_manager::EntityManager::get_class_metadata(self, class_name)
     }
