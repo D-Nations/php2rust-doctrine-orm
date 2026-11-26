@@ -9,6 +9,7 @@ use php2rust_doctrine_persistence::php_reflection::{ClassInfo, register_class};
 
 pub mod association_mapping;
 pub mod attributes;
+pub mod builder;
 pub mod class_metadata;
 pub mod class_metadata_factory;
 pub mod driver;
