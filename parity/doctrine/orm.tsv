@@ -1442,7 +1442,7 @@ tests/Tests/ORM/Functional/Ticket/GH10752Test.php	GH10752Test::testThrowExceptio
 tests/Tests/ORM/Functional/Ticket/GH10808Test.php	GH10808Test::testDQLDeferredEagerLoad	ported	crates/php2rust-doctrine-orm/tests/gh10808_test.rs::testDQLDeferredEagerLoad
 tests/Tests/ORM/Functional/Ticket/GH10869Test.php	GH10869Test::testPostPersistListenerUpdatingObjectFieldWhileOtherInsertPending	pending	
 tests/Tests/ORM/Functional/Ticket/GH10880Test.php	GH10880Test::testProcessShouldBeUpdated	ported	crates/php2rust-doctrine-orm/tests/gh10880_test.rs::testProcessShouldBeUpdated
-tests/Tests/ORM/Functional/Ticket/GH10889Test.php	GH10889Test::testIssue	pending	
+tests/Tests/ORM/Functional/Ticket/GH10889Test.php	GH10889Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/gh10889_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/GH10912Test.php	GH10912Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/GH10913Test.php	GH10913Test::testExample1	pending	
 tests/Tests/ORM/Functional/Ticket/GH10913Test.php	GH10913Test::testExample2	pending	
