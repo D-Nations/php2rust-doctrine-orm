@@ -501,3 +501,13 @@ pub fn assert_loose_eq(expected: &Value, actual: &Value) {
         "{expected:?} != {actual:?}"
     );
 }
+
+/// `setUp()` on a connection whose statements are logged.
+pub async fn set_up_logged(
+    classes: &[&str],
+) -> (Arc<EntityManager>, Arc<super::query_log::QueryLog>) {
+    let (conn, log) = super::query_log::logging_connection();
+    let em = entity_manager(conn, None);
+    create_schema(&em, classes).await;
+    (em, log)
+}
