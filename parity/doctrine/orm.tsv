@@ -1283,7 +1283,7 @@ tests/Tests/ORM/Functional/Ticket/DDC2224Test.php	DDC2224Test::testIssue	pending
 tests/Tests/ORM/Functional/Ticket/DDC2252Test.php	DDC2252Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2252_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC2306Test.php	DDC2306Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2306_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC2346Test.php	DDC2346Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2346_test.rs::testIssue
-tests/Tests/ORM/Functional/Ticket/DDC2350Test.php	DDC2350Test::testEagerCollectionsAreOnlyRetrievedOnce	pending	
+tests/Tests/ORM/Functional/Ticket/DDC2350Test.php	DDC2350Test::testEagerCollectionsAreOnlyRetrievedOnce	ported	crates/php2rust-doctrine-orm/tests/ddc2350_test.rs::testEagerCollectionsAreOnlyRetrievedOnce
 tests/Tests/ORM/Functional/Ticket/DDC2359Test.php	DDC2359Test::testIssue	pending	PHPUnit mocks of the metadata factory and driver
 tests/Tests/ORM/Functional/Ticket/DDC237Test.php	DDC237Test::testUninitializedProxyIsInitializedOnFetchJoin	ported	crates/php2rust-doctrine-orm/tests/ddc237_test.rs::testUninitializedProxyIsInitializedOnFetchJoin
 tests/Tests/ORM/Functional/Ticket/DDC2387Test.php	DDC2387Test::testCompositeAssociationKeyDetection	pending	DatabaseDriver (schema to metadata) is not ported
