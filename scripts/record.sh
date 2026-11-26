@@ -38,8 +38,9 @@ case "${1:-}" in
     orm-query-lexer) record orm_query_lexer.php crates/php2rust-doctrine-orm/tests/data/query_lexer.json ;;
     inflector) record inflector.php crates/php2rust-doctrine-inflector/tests/data/inflector.json ;;
     orm-query-expr) record orm_query_expr.php crates/php2rust-doctrine-orm/tests/data/query_expr.json ;;
+    orm-models) record orm_models.php crates/php2rust-doctrine-orm/tests/data/models.json ;;
     persistence)
         record persistence.php \
             crates/php2rust-doctrine-persistence/tests/data/persistence.json ;;
-    *) echo "usage: scripts/record.sh lexer|event-manager|collections|orm-query-lexer|orm-query-expr|inflector|persistence" >&2; exit 2 ;;
+    *) echo "usage: scripts/record.sh lexer|event-manager|collections|orm-query-lexer|orm-query-expr|orm-models|inflector|persistence" >&2; exit 2 ;;
 esac

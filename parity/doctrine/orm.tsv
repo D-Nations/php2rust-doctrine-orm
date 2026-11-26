@@ -1914,11 +1914,11 @@ tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testSecondL
 tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testStringFieldMappings	pending	
 tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testUpdatableColumn	pending	
 tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testVersionedField	pending	
-tests/Tests/ORM/Mapping/AttributeReaderTest.php	AttributeReaderTest::testDiscriminatedColumnOptions	pending	
-tests/Tests/ORM/Mapping/AttributeReaderTest.php	AttributeReaderTest::testItThrowsWhenGettingNonRepeatableAttributeWithTheWrongMethod	pending	
-tests/Tests/ORM/Mapping/AttributeReaderTest.php	AttributeReaderTest::testItThrowsWhenGettingRepeatableAttributeWithTheWrongMethod	pending	
-tests/Tests/ORM/Mapping/AttributeReaderTest.php	AttributeReaderTest::testJoinColumnOptions	pending	
-tests/Tests/ORM/Mapping/AttributeReaderTest.php	AttributeReaderTest::testJoinTableOptions	pending	
+tests/Tests/ORM/Mapping/AttributeReaderTest.php	AttributeReaderTest::testDiscriminatedColumnOptions	ported	crates/php2rust-doctrine-orm/tests/attribute_reader_test.rs::testDiscriminatedColumnOptions
+tests/Tests/ORM/Mapping/AttributeReaderTest.php	AttributeReaderTest::testItThrowsWhenGettingNonRepeatableAttributeWithTheWrongMethod	ported	crates/php2rust-doctrine-orm/tests/attribute_reader_test.rs::testItThrowsWhenGettingNonRepeatableAttributeWithTheWrongMethod
+tests/Tests/ORM/Mapping/AttributeReaderTest.php	AttributeReaderTest::testItThrowsWhenGettingRepeatableAttributeWithTheWrongMethod	ported	crates/php2rust-doctrine-orm/tests/attribute_reader_test.rs::testItThrowsWhenGettingRepeatableAttributeWithTheWrongMethod
+tests/Tests/ORM/Mapping/AttributeReaderTest.php	AttributeReaderTest::testJoinColumnOptions	ported	crates/php2rust-doctrine-orm/tests/attribute_reader_test.rs::testJoinColumnOptions
+tests/Tests/ORM/Mapping/AttributeReaderTest.php	AttributeReaderTest::testJoinTableOptions	ported	crates/php2rust-doctrine-orm/tests/attribute_reader_test.rs::testJoinTableOptions
 tests/Tests/ORM/Mapping/BasicInheritanceMappingTest.php	BasicInheritanceMappingTest::testEmbeddableSubclassDoesNotRequireInheritanceTypeDeclaration	pending	
 tests/Tests/ORM/Mapping/BasicInheritanceMappingTest.php	BasicInheritanceMappingTest::testGetMetadataForSubclassWithMappedSuperclass	pending	
 tests/Tests/ORM/Mapping/BasicInheritanceMappingTest.php	BasicInheritanceMappingTest::testGetMetadataForSubclassWithMappedSuperclassWithRepository	pending	
@@ -2175,8 +2175,8 @@ tests/Tests/ORM/Mapping/Symfony/XmlDriverTest.php	XmlDriverTest::testFindMapping
 tests/Tests/ORM/Mapping/Symfony/XmlDriverTest.php	XmlDriverTest::testFindMappingFileInSubnamespace	pending	
 tests/Tests/ORM/Mapping/Symfony/XmlDriverTest.php	XmlDriverTest::testFindMappingFileNamespacedFoundFileNotFound	pending	
 tests/Tests/ORM/Mapping/Symfony/XmlDriverTest.php	XmlDriverTest::testFindMappingNamespaceNotFound	pending	
-tests/Tests/ORM/Mapping/TableMappingTest.php	TableMappingTest::testDeprecationOnIndexesPropertyIsTriggered	pending	
-tests/Tests/ORM/Mapping/TableMappingTest.php	TableMappingTest::testDeprecationOnUniqueConstraintsPropertyIsTriggered	pending	
+tests/Tests/ORM/Mapping/TableMappingTest.php	TableMappingTest::testDeprecationOnIndexesPropertyIsTriggered	ported	crates/php2rust-doctrine-orm/tests/table_mapping_test.rs::testDeprecationOnIndexesPropertyIsTriggered
+tests/Tests/ORM/Mapping/TableMappingTest.php	TableMappingTest::testDeprecationOnUniqueConstraintsPropertyIsTriggered	ported	crates/php2rust-doctrine-orm/tests/table_mapping_test.rs::testDeprecationOnUniqueConstraintsPropertyIsTriggered
 tests/Tests/ORM/Mapping/ToManyAssociationMappingTest.php	ToManyAssociationMappingTest::testItSurvivesSerialization	ported	crates/php2rust-doctrine-orm/tests/to_many_association_mapping_test.rs::testItSurvivesSerialization
 tests/Tests/ORM/Mapping/TypedEnumFieldMapperTest.php	TypedEnumFieldMapperTest::testNotBackedEnumThrows	pending	
 tests/Tests/ORM/Mapping/TypedFieldMapperTest.php	TypedFieldMapperTest::testValidateAndComplete	pending	
