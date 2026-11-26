@@ -544,8 +544,34 @@ pub fn assert_instance_of(class: &str, object: &Object) {
 }
 
 /// `$entity->$field->get($index)` of a collection property.
-pub async fn get_at(entity: &Object, field: &str, index: usize) -> Object {
-    orm::elements(entity, field).await[index].clone()
+pub async fn get_at(entity: &Object, field: &str, index: i64) -> Object {
+    orm::obj(
+        &php2rust_doctrine_orm::collection_object::get(&orm::get(entity, field), index)
+            .await
+            .unwrap(),
+    )
+}
+
+/// `$entity->$field->isInitialized()` of a persistent collection.
+pub fn is_initialized(entity: &Object, field: &str) -> bool {
+    php2rust_doctrine_orm::persistent_collection::PersistentCollection::from_value(&orm::get(
+        entity, field,
+    ))
+    .unwrap()
+    .is_initialized()
+}
+
+/// `new Login($name)`.
+pub fn login(name: &str) -> Object {
+    let login = orm::new_object(LOGIN);
+    orm::set(&login, "name", Value::string(name));
+    login
+}
+
+/// `$token->addLogin($login)`.
+pub fn add_login(token: &Object, login: &Object) {
+    slc::add_to(token, "logins", login);
+    orm::set_obj(login, "token", token);
 }
 
 /// `count($entity->$field)`.
