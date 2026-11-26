@@ -1396,12 +1396,12 @@ tests/Tests/ORM/Functional/Ticket/DDC767Test.php	DDC767Test::testCollectionChang
 tests/Tests/ORM/Functional/Ticket/DDC7969Test.php	DDC7969Test::testChildEntityRetrievedFromCache	pending	
 tests/Tests/ORM/Functional/Ticket/DDC809Test.php	DDC809Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC812Test.php	DDC812Test::testFetchJoinInitializesPreviouslyUninitializedCollectionOfManagedEntity	pending	
-tests/Tests/ORM/Functional/Ticket/DDC832Test.php	DDC832Test::testQuotedTableBasicRemove	pending	
-tests/Tests/ORM/Functional/Ticket/DDC832Test.php	DDC832Test::testQuotedTableBasicUpdate	pending	
-tests/Tests/ORM/Functional/Ticket/DDC832Test.php	DDC832Test::testQuotedTableJoinedChildRemove	pending	
-tests/Tests/ORM/Functional/Ticket/DDC832Test.php	DDC832Test::testQuotedTableJoinedChildUpdate	pending	
-tests/Tests/ORM/Functional/Ticket/DDC832Test.php	DDC832Test::testQuotedTableJoinedRemove	pending	
-tests/Tests/ORM/Functional/Ticket/DDC832Test.php	DDC832Test::testQuotedTableJoinedUpdate	pending	
+tests/Tests/ORM/Functional/Ticket/DDC832Test.php	DDC832Test::testQuotedTableBasicRemove	ported	crates/php2rust-doctrine-orm/tests/ddc832_test.rs::testQuotedTableBasicRemove
+tests/Tests/ORM/Functional/Ticket/DDC832Test.php	DDC832Test::testQuotedTableBasicUpdate	ported	crates/php2rust-doctrine-orm/tests/ddc832_test.rs::testQuotedTableBasicUpdate
+tests/Tests/ORM/Functional/Ticket/DDC832Test.php	DDC832Test::testQuotedTableJoinedChildRemove	ported	crates/php2rust-doctrine-orm/tests/ddc832_test.rs::testQuotedTableJoinedChildRemove
+tests/Tests/ORM/Functional/Ticket/DDC832Test.php	DDC832Test::testQuotedTableJoinedChildUpdate	ported	crates/php2rust-doctrine-orm/tests/ddc832_test.rs::testQuotedTableJoinedChildUpdate
+tests/Tests/ORM/Functional/Ticket/DDC832Test.php	DDC832Test::testQuotedTableJoinedRemove	ported	crates/php2rust-doctrine-orm/tests/ddc832_test.rs::testQuotedTableJoinedRemove
+tests/Tests/ORM/Functional/Ticket/DDC832Test.php	DDC832Test::testQuotedTableJoinedUpdate	ported	crates/php2rust-doctrine-orm/tests/ddc832_test.rs::testQuotedTableJoinedUpdate
 tests/Tests/ORM/Functional/Ticket/DDC837Test.php	DDC837Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC849Test.php	DDC849Test::testClearContains	pending	
 tests/Tests/ORM/Functional/Ticket/DDC849Test.php	DDC849Test::testClearCount	pending	
