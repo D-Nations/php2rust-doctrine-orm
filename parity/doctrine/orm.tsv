@@ -1433,9 +1433,9 @@ tests/Tests/ORM/Functional/Ticket/GH10532Test.php	GH10532Test::testInserts	porte
 tests/Tests/ORM/Functional/Ticket/GH10566Test.php	GH10566Test::testInsertion	ported	crates/php2rust-doctrine-orm/tests/gh10566_test.rs::testInsertion
 tests/Tests/ORM/Functional/Ticket/GH10566Test.php	GH10566Test::testRemoval	ported	crates/php2rust-doctrine-orm/tests/gh10566_test.rs::testRemoval
 tests/Tests/ORM/Functional/Ticket/GH10625Test.php	GH10625Test::testLoadFieldsFromAllClassesInHierarchy	ported	crates/php2rust-doctrine-orm/tests/gh10625_test.rs::testLoadFieldsFromAllClassesInHierarchy
-tests/Tests/ORM/Functional/Ticket/GH10661/GH10661Test.php	GH10661Test::testMetadataFieldTypeNotCoherentWithEntityPropertyType	pending	
-tests/Tests/ORM/Functional/Ticket/GH10661/GH10661Test.php	GH10661Test::testMetadataFieldTypeNotCoherentWithEntityPropertyTypeWithInheritance	pending	
-tests/Tests/ORM/Functional/Ticket/GH10661/GH10661Test.php	GH10661Test::testPropertyTypeErrorsCanBeSilenced	pending	
+tests/Tests/ORM/Functional/Ticket/GH10661/GH10661Test.php	GH10661Test::testMetadataFieldTypeNotCoherentWithEntityPropertyType	ported	crates/php2rust-doctrine-orm/tests/gh10661_test.rs::testMetadataFieldTypeNotCoherentWithEntityPropertyType
+tests/Tests/ORM/Functional/Ticket/GH10661/GH10661Test.php	GH10661Test::testMetadataFieldTypeNotCoherentWithEntityPropertyTypeWithInheritance	ported	crates/php2rust-doctrine-orm/tests/gh10661_test.rs::testMetadataFieldTypeNotCoherentWithEntityPropertyTypeWithInheritance
+tests/Tests/ORM/Functional/Ticket/GH10661/GH10661Test.php	GH10661Test::testPropertyTypeErrorsCanBeSilenced	ported	crates/php2rust-doctrine-orm/tests/gh10661_test.rs::testPropertyTypeErrorsCanBeSilenced
 tests/Tests/ORM/Functional/Ticket/GH10747Test.php	GH10747Test::testOrphanedOneToManyDeletesCollection	pending	
 tests/Tests/ORM/Functional/Ticket/GH10752Test.php	GH10752Test::testThrowExceptionWhenRemovingPromotionThatIsInUse	ported	crates/php2rust-doctrine-orm/tests/gh10752_test.rs::testThrowExceptionWhenRemovingPromotionThatIsInUse
 tests/Tests/ORM/Functional/Ticket/GH10752Test.php	GH10752Test::testThrowExceptionWhenRemovingPromotionThatIsInUseAndOrderIsNotInMemory	ported	crates/php2rust-doctrine-orm/tests/gh10752_test.rs::testThrowExceptionWhenRemovingPromotionThatIsInUseAndOrderIsNotInMemory
