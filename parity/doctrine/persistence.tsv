@@ -43,7 +43,7 @@ tests/Mapping/DefaultFileLocatorTest.php	DefaultFileLocatorTest::testGetAllClass
 tests/Mapping/DefaultFileLocatorTest.php	DefaultFileLocatorTest::testGetFileExtension	ported	crates/php2rust-doctrine-persistence/tests/default_file_locator_test.rs::testGetFileExtension
 tests/Mapping/DefaultFileLocatorTest.php	DefaultFileLocatorTest::testGetPaths	ported	crates/php2rust-doctrine-persistence/tests/default_file_locator_test.rs::testGetPaths
 tests/Mapping/DefaultFileLocatorTest.php	DefaultFileLocatorTest::testUniquePaths	ported	crates/php2rust-doctrine-persistence/tests/default_file_locator_test.rs::testUniquePaths
-tests/Mapping/Driver/ClassNamesTest.php	ClassNamesTest::testGetClassNames	pending	
+tests/Mapping/Driver/ClassNamesTest.php	ClassNamesTest::testGetClassNames	ported	crates/php2rust-doctrine-persistence/tests/class_names_test.rs::testGetClassNames
 tests/Mapping/Driver/FileClassLocatorTest.php	FileClassLocatorTest::testCreateFromDirectory	pending	
 tests/Mapping/Driver/FileClassLocatorTest.php	FileClassLocatorTest::testCreateFromDirectoryIterator	pending	
 tests/Mapping/Driver/FileClassLocatorTest.php	FileClassLocatorTest::testCreateFromDirectoryWithExtension	pending	
