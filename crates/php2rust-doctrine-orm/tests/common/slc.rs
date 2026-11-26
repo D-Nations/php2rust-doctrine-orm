@@ -151,7 +151,7 @@ pub enum Ret {
     Objects(Vec<Object>),
     Array(PhpArray),
     Params(Params),
-    Rsm(ResultSetMapping),
+    Rsm(Box<ResultSetMapping>),
     Entry(Option<CacheEntry>),
     Lock(Option<Lock>),
 }
@@ -221,6 +221,10 @@ impl Recorder {
     }
 }
 
+#[allow(
+    clippy::needless_pass_by_value,
+    reason = "takes what `record()` returns"
+)]
 fn ret_bool(ret: Option<Ret>) -> bool {
     matches!(ret, Some(Ret::Bool(true)))
 }
@@ -469,7 +473,7 @@ impl EntityPersisterInterface for EntityPersisterMock {
 
     fn get_result_set_mapping(&self) -> ResultSetMapping {
         match self.recorder.record("getResultSetMapping", vec![]) {
-            Some(Ret::Rsm(rsm)) => rsm,
+            Some(Ret::Rsm(rsm)) => *rsm,
             _ => ResultSetMapping::new(),
         }
     }

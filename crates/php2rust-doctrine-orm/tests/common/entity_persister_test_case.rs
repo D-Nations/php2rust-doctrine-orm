@@ -1,6 +1,6 @@
 //! `EntityPersisterTestCase`'s tests, for each cached entity persister:
-//! `entity_persister_test_case!` declares them in a test file, over the
-//! file's `create_persister()`.
+//! each test file calls them with a `Fixture` over its
+//! `create_persister()` and `create_region()`.
 //!
 //! `createMock()` expectations are checked after the call: a mock
 //! records its calls. `assertInstanceOf()` of an interface is the type;
@@ -336,7 +336,7 @@ pub async fn testInvokeLoadAll(f: &Fixture) {
         .will_return("loadAll", Ret::Objects(vec![entity.clone()]));
     f.entity_persister.recorder.will_return(
         "getResultSetMapping",
-        Ret::Rsm(rsm.into_result_set_mapping()),
+        Ret::Rsm(Box::new(rsm.into_result_set_mapping())),
     );
     let order_by = PhpArray::list([Value::Int(0)]);
     let loaded = persister
@@ -428,7 +428,7 @@ pub async fn testInvokeLoadCriteria(f: &Fixture) {
     );
     f.entity_persister.recorder.will_return(
         "getResultSetMapping",
-        Ret::Rsm(rsm.into_result_set_mapping()),
+        Ret::Rsm(Box::new(rsm.into_result_set_mapping())),
     );
     f.entity_persister
         .recorder
@@ -585,26 +585,4 @@ pub async fn testInvokeExists(f: &Fixture) {
     f.entity_persister
         .recorder
         .assert_once_with("exists", &[Arg::object(&entity), Arg::Text(String::new())]);
-}
-
-/// Declares `EntityPersisterTestCase`'s tests (those named) over
-/// `create_persister()` and `create_region()`.
-#[macro_export]
-macro_rules! entity_persister_test_case {
-    (sync: [$($sync:ident),* $(,)?], async: [$($async:ident),* $(,)?] $(,)?) => {
-        $(
-            #[tokio::test]
-            async fn $sync() {
-                let f = entity_persister_test_case::Fixture::new(create_persister, create_region());
-                entity_persister_test_case::$sync(&f);
-            }
-        )*
-        $(
-            #[tokio::test]
-            async fn $async() {
-                let f = entity_persister_test_case::Fixture::new(create_persister, create_region());
-                entity_persister_test_case::$async(&f).await;
-            }
-        )*
-    };
 }

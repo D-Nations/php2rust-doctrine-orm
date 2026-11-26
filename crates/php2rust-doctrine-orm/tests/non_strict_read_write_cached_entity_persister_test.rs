@@ -53,35 +53,148 @@ fn create_region() -> Arc<RegionMock> {
     RegionMock::new()
 }
 
-entity_persister_test_case! {
-    sync: [
-        testImplementsEntityPersister,
-        testInvokeAddInsert,
-        testInvokeGetInserts,
-        testInvokeGetSelectSQL,
-        testInvokeGetInsertSQL,
-        testInvokeExpandParameters,
-        testInvokeExpandCriteriaParameters,
-        testInvokeSelectConditionStatementSQL,
-        testInvokeGetOwningTable,
-    ],
-    async: [
-        testInvokeExecuteInserts,
-        testInvokeUpdate,
-        testInvokeDelete,
-        testInvokeLoad,
-        testInvokeLoadAll,
-        testInvokeLoadById,
-        testInvokeLoadOneToOneEntity,
-        testInvokeRefresh,
-        testInvokeLoadCriteria,
-        testInvokeGetManyToManyCollection,
-        testInvokeGetOneToManyCollection,
-        testInvokeLoadManyToManyCollection,
-        testInvokeLoadOneToManyCollection,
-        testInvokeLock,
-        testInvokeExists,
-    ],
+#[test]
+fn testImplementsEntityPersister() {
+    let f = entity_persister_test_case::Fixture::new(create_persister, create_region());
+    entity_persister_test_case::testImplementsEntityPersister(&f);
+}
+
+#[test]
+fn testInvokeAddInsert() {
+    let f = entity_persister_test_case::Fixture::new(create_persister, create_region());
+    entity_persister_test_case::testInvokeAddInsert(&f);
+}
+
+#[test]
+fn testInvokeGetInserts() {
+    let f = entity_persister_test_case::Fixture::new(create_persister, create_region());
+    entity_persister_test_case::testInvokeGetInserts(&f);
+}
+
+#[test]
+fn testInvokeGetSelectSQL() {
+    let f = entity_persister_test_case::Fixture::new(create_persister, create_region());
+    entity_persister_test_case::testInvokeGetSelectSQL(&f);
+}
+
+#[test]
+fn testInvokeGetInsertSQL() {
+    let f = entity_persister_test_case::Fixture::new(create_persister, create_region());
+    entity_persister_test_case::testInvokeGetInsertSQL(&f);
+}
+
+#[test]
+fn testInvokeExpandParameters() {
+    let f = entity_persister_test_case::Fixture::new(create_persister, create_region());
+    entity_persister_test_case::testInvokeExpandParameters(&f);
+}
+
+#[test]
+fn testInvokeExpandCriteriaParameters() {
+    let f = entity_persister_test_case::Fixture::new(create_persister, create_region());
+    entity_persister_test_case::testInvokeExpandCriteriaParameters(&f);
+}
+
+#[test]
+fn testInvokeSelectConditionStatementSQL() {
+    let f = entity_persister_test_case::Fixture::new(create_persister, create_region());
+    entity_persister_test_case::testInvokeSelectConditionStatementSQL(&f);
+}
+
+#[test]
+fn testInvokeGetOwningTable() {
+    let f = entity_persister_test_case::Fixture::new(create_persister, create_region());
+    entity_persister_test_case::testInvokeGetOwningTable(&f);
+}
+
+#[tokio::test]
+async fn testInvokeExecuteInserts() {
+    let f = entity_persister_test_case::Fixture::new(create_persister, create_region());
+    entity_persister_test_case::testInvokeExecuteInserts(&f).await;
+}
+
+#[tokio::test]
+async fn testInvokeUpdate() {
+    let f = entity_persister_test_case::Fixture::new(create_persister, create_region());
+    entity_persister_test_case::testInvokeUpdate(&f).await;
+}
+
+#[tokio::test]
+async fn testInvokeDelete() {
+    let f = entity_persister_test_case::Fixture::new(create_persister, create_region());
+    entity_persister_test_case::testInvokeDelete(&f).await;
+}
+
+#[tokio::test]
+async fn testInvokeLoad() {
+    let f = entity_persister_test_case::Fixture::new(create_persister, create_region());
+    entity_persister_test_case::testInvokeLoad(&f).await;
+}
+
+#[tokio::test]
+async fn testInvokeLoadAll() {
+    let f = entity_persister_test_case::Fixture::new(create_persister, create_region());
+    entity_persister_test_case::testInvokeLoadAll(&f).await;
+}
+
+#[tokio::test]
+async fn testInvokeLoadById() {
+    let f = entity_persister_test_case::Fixture::new(create_persister, create_region());
+    entity_persister_test_case::testInvokeLoadById(&f).await;
+}
+
+#[tokio::test]
+async fn testInvokeLoadOneToOneEntity() {
+    let f = entity_persister_test_case::Fixture::new(create_persister, create_region());
+    entity_persister_test_case::testInvokeLoadOneToOneEntity(&f).await;
+}
+
+#[tokio::test]
+async fn testInvokeRefresh() {
+    let f = entity_persister_test_case::Fixture::new(create_persister, create_region());
+    entity_persister_test_case::testInvokeRefresh(&f).await;
+}
+
+#[tokio::test]
+async fn testInvokeLoadCriteria() {
+    let f = entity_persister_test_case::Fixture::new(create_persister, create_region());
+    entity_persister_test_case::testInvokeLoadCriteria(&f).await;
+}
+
+#[tokio::test]
+async fn testInvokeGetManyToManyCollection() {
+    let f = entity_persister_test_case::Fixture::new(create_persister, create_region());
+    entity_persister_test_case::testInvokeGetManyToManyCollection(&f).await;
+}
+
+#[tokio::test]
+async fn testInvokeGetOneToManyCollection() {
+    let f = entity_persister_test_case::Fixture::new(create_persister, create_region());
+    entity_persister_test_case::testInvokeGetOneToManyCollection(&f).await;
+}
+
+#[tokio::test]
+async fn testInvokeLoadManyToManyCollection() {
+    let f = entity_persister_test_case::Fixture::new(create_persister, create_region());
+    entity_persister_test_case::testInvokeLoadManyToManyCollection(&f).await;
+}
+
+#[tokio::test]
+async fn testInvokeLoadOneToManyCollection() {
+    let f = entity_persister_test_case::Fixture::new(create_persister, create_region());
+    entity_persister_test_case::testInvokeLoadOneToManyCollection(&f).await;
+}
+
+#[tokio::test]
+async fn testInvokeLock() {
+    let f = entity_persister_test_case::Fixture::new(create_persister, create_region());
+    entity_persister_test_case::testInvokeLock(&f).await;
+}
+
+#[tokio::test]
+async fn testInvokeExists() {
+    let f = entity_persister_test_case::Fixture::new(create_persister, create_region());
+    entity_persister_test_case::testInvokeExists(&f).await;
 }
 
 fn key() -> CacheKey {

@@ -293,11 +293,17 @@ fn testSetGetSecondLevelCacheConfig() {
     let mut configuration = set_up();
     let mock_class = Arc::new(CacheConfiguration::new());
 
-    assert!(configuration.get_second_level_cache_configuration().is_none());
+    assert!(
+        configuration
+            .get_second_level_cache_configuration()
+            .is_none()
+    );
     configuration.set_second_level_cache_configuration(mock_class.clone());
     assert!(same(
         &mock_class,
-        &configuration.get_second_level_cache_configuration().unwrap()
+        &configuration
+            .get_second_level_cache_configuration()
+            .unwrap()
     ));
 }
 
