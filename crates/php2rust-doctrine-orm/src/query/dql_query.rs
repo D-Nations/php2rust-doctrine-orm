@@ -131,8 +131,9 @@ impl Query {
     }
 
     /// `getHash()`: `sha1(parent::getHash() . '-' . $this->firstResult .
-    /// '-' . $this->maxResults)`.
-    fn get_hash(&self) -> Result<String, Thrown> {
+    /// '-' . $this->maxResults)`. Public, as the tests call it by
+    /// reflection.
+    pub fn get_hash(&self) -> Result<String, Thrown> {
         let sql = match self.get_sql()? {
             SqlStatements::One(sql) => sql,
             // `$query . '-'` of an array.
