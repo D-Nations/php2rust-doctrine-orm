@@ -1574,7 +1574,7 @@ tests/Tests/ORM/Functional/Ticket/GH7829Test.php	GH7829Test::testPaginatorWithLi
 tests/Tests/ORM/Functional/Ticket/GH7836Test.php	GH7836Test::testMatchingKeepsOrderOfCriteriaOrderingKeys	ported	crates/php2rust-doctrine-orm/tests/gh7836_test.rs::testMatchingKeepsOrderOfCriteriaOrderingKeys
 tests/Tests/ORM/Functional/Ticket/GH7836Test.php	GH7836Test::testMatchingOverrulesCollectionOrdering	ported	crates/php2rust-doctrine-orm/tests/gh7836_test.rs::testMatchingOverrulesCollectionOrdering
 tests/Tests/ORM/Functional/Ticket/GH7836Test.php	GH7836Test::testMatchingRespectsCollectionOrdering	ported	crates/php2rust-doctrine-orm/tests/gh7836_test.rs::testMatchingRespectsCollectionOrdering
-tests/Tests/ORM/Functional/Ticket/GH7864Test.php	GH7864Test::testExtraLazyRemoveElement	pending	
+tests/Tests/ORM/Functional/Ticket/GH7864Test.php	GH7864Test::testExtraLazyRemoveElement	ported	crates/php2rust-doctrine-orm/tests/gh7864_test.rs::testExtraLazyRemoveElement
 tests/Tests/ORM/Functional/Ticket/GH7869Test.php	GH7869Test::testDQLDeferredEagerLoad	pending	
 tests/Tests/ORM/Functional/Ticket/GH7875Test.php	GH7875Test::testUpdateSchemaSql	pending	
 tests/Tests/ORM/Functional/Ticket/GH7875Test.php	GH7875Test::testUpdateSchemaSqlWithSchemaAssetFilter	pending	
