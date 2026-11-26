@@ -20,11 +20,11 @@ use abstract_hydrator::Columns;
 pub use abstract_hydrator::build_enum;
 pub(crate) use abstract_hydrator::register_classes;
 pub use abstract_hydrator::{
-    HYDRATION_EXCEPTION, MULTIPLE_SELECTORS_FOUND, NewObjectConstructor, empty_discriminator_value,
-    invalid_discriminator_value, missing_discriminator_column,
+    HYDRATION_EXCEPTION, MULTIPLE_SELECTORS_FOUND, NewObjectArgsConstructor, NewObjectConstructor,
+    empty_discriminator_value, invalid_discriminator_value, missing_discriminator_column,
     missing_discriminator_meta_mapping_column, multiple_selectors_found, non_unique_result,
     parent_object_of_relation_not_found, partial_object_hydration_disallowed,
-    register_new_object_class,
+    register_new_object_class, register_new_object_class_with_arguments,
 };
 use array_hydrator::ArrayHydrator;
 use object_hydrator::ObjectHydrator;

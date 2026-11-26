@@ -6,8 +6,7 @@
 //! persisters and the repositories hold it weakly.
 //!
 //! The DBAL is async, so the methods that reach the database are `async`.
-//! Filters, the second level cache and the metadata cache are not
-//! ported. The platform is the `SQLite` platform,
+//! The second level cache and the metadata cache are not ported. The platform is the `SQLite` platform,
 //! the one database the DBAL port drives.
 //!
 //! Upstream: doctrine/orm src/EntityManager.php src/Proxy/ProxyFactory.php
@@ -40,6 +39,11 @@ pub struct EntityManager {
     event_manager: RwLock<EventManager>,
     platform: SharedPlatform,
     closed: RwLock<bool>,
+    /// The collection of query filters (`$filterCollection`).
+    filter_collection: crate::query::FilterCollection,
+    /// Whether `getFilters()` created the collection (`$filterCollection
+    /// !== null`).
+    filters_used: std::sync::atomic::AtomicBool,
 }
 
 impl std::fmt::Debug for EntityManager {
@@ -82,6 +86,8 @@ impl EntityManager {
             event_manager: RwLock::new(event_manager.unwrap_or_default()),
             platform,
             closed: RwLock::new(false),
+            filter_collection: crate::query::FilterCollection::new(weak.clone()),
+            filters_used: std::sync::atomic::AtomicBool::new(false),
         }))
     }
 
@@ -105,6 +111,23 @@ impl EntityManager {
         query.set_sql(sql);
         query.set_result_set_mapping(rsm)?;
         Ok(query)
+    }
+
+    /// Gets the enabled filters.
+    pub fn get_filters(&self) -> &crate::query::FilterCollection {
+        self.filters_used
+            .store(true, std::sync::atomic::Ordering::Relaxed);
+        &self.filter_collection
+    }
+
+    /// Checks whether the state of the filter collection is clean.
+    pub fn is_filters_state_clean(&self) -> bool {
+        !self.has_filters() || self.filter_collection.is_clean()
+    }
+
+    /// Checks whether the Entity Manager has filters.
+    pub fn has_filters(&self) -> bool {
+        self.filters_used.load(std::sync::atomic::Ordering::Relaxed)
     }
 
     /// Gets the database connection object used by the `EntityManager`.

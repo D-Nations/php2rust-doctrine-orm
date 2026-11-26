@@ -3,7 +3,8 @@
 //!
 //! The entity manager takes the configuration by value and shares it
 //! (PHP shares the object, and changes after the entity manager was
-//! created are seen by it; here they are not). Caches, filters, custom
+//! created are seen by it; here they are not, except the filters, which
+//! the clones share). Caches, custom
 //! hydration modes, the entity listener resolver and the second level
 //! cache are not ported; the custom DQL functions are class names, as
 //! upstream keeps them.
@@ -11,7 +12,7 @@
 //! Upstream: doctrine/orm src/Configuration.php
 
 use std::fmt;
-use std::sync::Arc;
+use std::sync::{Arc, PoisonError, RwLock};
 
 use php_value::{PhpArray, Thrown};
 use php2rust_doctrine_persistence::mapping::driver::MappingDriver;
@@ -54,6 +55,10 @@ pub struct Configuration {
     reject_id_collision: bool,
     eager_fetch_batch_size: Option<i64>,
     default_string_type_schema_length: Option<i64>,
+    /// `addFilter()`: name → class name, shared by the clones (PHP shares
+    /// the configuration object, so a filter added after the entity
+    /// manager was created is seen by it).
+    filters: Arc<RwLock<Vec<(String, String)>>>,
 }
 
 impl fmt::Debug for Configuration {
@@ -94,6 +99,7 @@ impl Configuration {
             reject_id_collision: true,
             eager_fetch_batch_size: None,
             default_string_type_schema_length: None,
+            filters: Arc::default(),
         }
     }
 
@@ -166,6 +172,29 @@ impl Configuration {
         let name = name.to_ascii_lowercase();
         list.retain(|(known, _)| *known != name);
         list.push((name, class.to_owned()));
+    }
+
+    /// Adds a filter to the list of possible filters. The filters are
+    /// shared by the clones of the configuration, and the entity manager
+    /// sees the filters added after it was created, as PHP's shared
+    /// configuration object does.
+    pub fn add_filter(&self, name: &str, class_name: &str) {
+        let mut filters = self.filters.write().unwrap_or_else(PoisonError::into_inner);
+        match filters.iter_mut().find(|(known, _)| known == name) {
+            Some(entry) => class_name.clone_into(&mut entry.1),
+            None => filters.push((name.to_owned(), class_name.to_owned())),
+        }
+    }
+
+    /// Gets the class name for a given filter name (`None` when it is not
+    /// defined).
+    pub fn get_filter_class_name(&self, name: &str) -> Option<String> {
+        self.filters
+            .read()
+            .unwrap_or_else(PoisonError::into_inner)
+            .iter()
+            .find(|(known, _)| known == name)
+            .map(|(_, class)| class.clone())
     }
 
     /// `addCustomStringFunction()`: the name is case-insensitive.

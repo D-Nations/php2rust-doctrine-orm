@@ -134,14 +134,45 @@ pub fn register_new_object_class(class_name: &str, constructor: NewObjectConstru
     classes.insert(class_name.trim_start_matches('\\').to_owned(), constructor);
 }
 
-fn new_instance_args(class_name: &str, args: Vec<Value>) -> Result<Value, Thrown> {
+/// `new $className(...$args)` with the arguments as PHP's
+/// `ReflectionClass::newInstanceArgs($args)` gets them: a string key is a
+/// named argument.
+pub type NewObjectArgsConstructor = Arc<dyn Fn(&PhpArray) -> Result<Value, Thrown> + Send + Sync>;
+
+fn new_object_args_classes() -> &'static RwLock<HashMap<String, NewObjectArgsConstructor>> {
+    static CLASSES: OnceLock<RwLock<HashMap<String, NewObjectArgsConstructor>>> = OnceLock::new();
+    CLASSES.get_or_init(Default::default)
+}
+
+/// Registers the constructor of a class a DQL `NEW` expression names, for
+/// a constructor that takes named arguments (`NEW NAMED`): it gets the
+/// arguments with their keys, positions or names.
+pub fn register_new_object_class_with_arguments(
+    class_name: &str,
+    constructor: NewObjectArgsConstructor,
+) {
+    let mut classes = new_object_args_classes()
+        .write()
+        .unwrap_or_else(PoisonError::into_inner);
+    classes.insert(class_name.trim_start_matches('\\').to_owned(), constructor);
+}
+
+fn new_instance_args(class_name: &str, args: &PhpArray) -> Result<Value, Thrown> {
+    let with_arguments = new_object_args_classes()
+        .read()
+        .unwrap_or_else(PoisonError::into_inner)
+        .get(class_name.trim_start_matches('\\'))
+        .cloned();
+    if let Some(constructor) = with_arguments {
+        return constructor(args);
+    }
     let constructor = new_object_classes()
         .read()
         .unwrap_or_else(PoisonError::into_inner)
         .get(class_name.trim_start_matches('\\'))
         .cloned();
     match constructor {
-        Some(constructor) => constructor(args),
+        Some(constructor) => constructor(args.values().cloned().collect()),
         None => Err(Thrown::new(
             "ReflectionException",
             format!("Class \"{class_name}\" does not exist"),
@@ -234,6 +265,14 @@ pub(crate) struct RowData {
     /// `$rowData['newObjects']`: the objects and the count of their
     /// arguments.
     pub new_objects: Vec<(Key, Value, usize)>,
+}
+
+/// The classes and the arguments of a row's new objects, by object index,
+/// before the objects are built.
+#[derive(Debug, Default)]
+pub(crate) struct PendingNewObjects {
+    classes: Vec<(Key, String)>,
+    args: Vec<(Key, PhpArray)>,
 }
 
 impl RowData {
@@ -418,14 +457,29 @@ impl<'a> Columns<'a> {
         Ok(None)
     }
 
-    /// `gatherRowData($data, &$id, &$nonemptyComponents)`.
-    #[allow(clippy::too_many_lines, reason = "gatherRowData(), in its order")]
+    /// `gatherRowData($data, &$id, &$nonemptyComponents)` of a hydrator
+    /// whose `hydrateNestedEntity()` gives the data itself.
     pub fn gather_row_data(
         &mut self,
         row: &PhpArray,
         id: &mut HashMap<String, String>,
         nonempty_components: &mut HashSet<String>,
     ) -> Result<RowData, Thrown> {
+        let (row_data, pending) = self.gather_row_data_parts(row, id, nonempty_components)?;
+        self.finish_row_data(row_data, pending, &[])
+    }
+
+    /// The first part of `gatherRowData()`: the row split into the data
+    /// of each alias and the scalars, and the arguments of the new
+    /// objects ([`Self::finish_row_data`] builds the objects; the object
+    /// hydrator hydrates the nested entities in between, asynchronously).
+    #[allow(clippy::too_many_lines, reason = "gatherRowData(), in its order")]
+    pub(crate) fn gather_row_data_parts(
+        &mut self,
+        row: &PhpArray,
+        id: &mut HashMap<String, String>,
+        nonempty_components: &mut HashSet<String>,
+    ) -> Result<(RowData, PendingNewObjects), Thrown> {
         let rsm = self.rsm;
         let mut row_data = RowData::default();
 
@@ -520,8 +574,63 @@ impl<'a> Columns<'a> {
             }
         }
 
+        Ok((
+            row_data,
+            PendingNewObjects {
+                classes: new_object_classes,
+                args: new_object_args,
+            },
+        ))
+    }
+
+    /// The DQL aliases of the entities that are arguments of a `NEW`
+    /// expression in this row (`$rowData['data'][$argAlias]` of
+    /// `nestedNewObjectArguments`), in the order of the arguments: the
+    /// data `hydrateNestedEntity()` gets.
+    pub(crate) fn nested_entity_aliases(
+        &self,
+        row_data: &RowData,
+        pending: &PendingNewObjects,
+    ) -> Vec<String> {
+        let mut aliases: Vec<String> = Vec::new();
+        for argument in self.rsm.nested_new_object_arguments.values() {
+            let Value::Array(argument) = argument else {
+                continue;
+            };
+            let arg_alias = argument
+                .get(&Key::from("argAlias"))
+                .map(to_text)
+                .unwrap_or_default();
+            let arg_alias_key = Key::from_bytes(arg_alias.as_bytes());
+            if pending.args.iter().any(|(k, _)| *k == arg_alias_key) {
+                continue;
+            }
+            if row_data.data.iter().any(|(a, _)| *a == arg_alias) && !aliases.contains(&arg_alias) {
+                aliases.push(arg_alias);
+            }
+        }
+        aliases
+    }
+
+    /// The rest of `gatherRowData()`: the nested new objects and entities
+    /// of the `NEW` arguments, then the new objects. `nested_entities`
+    /// holds what `hydrateNestedEntity()` gave for each DQL alias
+    /// [`Self::nested_entity_aliases`] names (the data itself when it is
+    /// missing, as the base hydrator gives it).
+    pub(crate) fn finish_row_data(
+        &self,
+        mut row_data: RowData,
+        pending: PendingNewObjects,
+        nested_entities: &[(String, Value)],
+    ) -> Result<RowData, Thrown> {
+        let rsm = self.rsm;
+        let PendingNewObjects {
+            classes: new_object_classes,
+            args: mut new_object_args,
+        } = pending;
+
         // The nested new objects and entities of the `NEW` arguments.
-        let mut nested_entities: Vec<String> = Vec::new();
+        let mut nested_entity_aliases: Vec<String> = Vec::new();
         for argument in rsm.nested_new_object_arguments.values() {
             let Value::Array(argument) = argument else {
                 continue;
@@ -548,12 +657,18 @@ impl<'a> Columns<'a> {
                     .map(|(_, c)| c.clone())
                     .unwrap_or_default();
                 args.ksort();
-                new_instance_args(&class_name, args.values().cloned().collect())?
+                new_instance_args(&class_name, &args)?
             } else if let Some(position) = row_data.data.iter().position(|(a, _)| *a == arg_alias) {
-                if !nested_entities.contains(&arg_alias) {
-                    nested_entities.push(arg_alias.clone());
+                if !nested_entity_aliases.contains(&arg_alias) {
+                    nested_entity_aliases.push(arg_alias.clone());
                 }
-                Value::Array(row_data.data[position].1.clone())
+                nested_entities
+                    .iter()
+                    .find(|(alias, _)| *alias == arg_alias)
+                    .map_or_else(
+                        || Value::Array(row_data.data[position].1.clone()),
+                        |(_, entity)| entity.clone(),
+                    )
             } else {
                 return Err(Thrown::new(
                     "LogicException",
@@ -569,13 +684,9 @@ impl<'a> Columns<'a> {
                 new_object_args.push((owner_index, args));
             }
         }
-        if !nested_entities.is_empty() {
-            return Err(Thrown::new(
-                "LogicException",
-                "Entities as arguments of a NEW expression are not supported",
-                0,
-            ));
-        }
+        row_data
+            .data
+            .retain(|(alias, _)| !nested_entity_aliases.contains(alias));
 
         for (obj_index, mut args) in new_object_args {
             args.ksort();
@@ -585,7 +696,7 @@ impl<'a> Columns<'a> {
                 .find(|(k, _)| *k == obj_index)
                 .map(|(_, c)| c.clone())
                 .unwrap_or_default();
-            let obj = new_instance_args(&class_name, args.values().cloned().collect())?;
+            let obj = new_instance_args(&class_name, &args)?;
             row_data.new_objects.push((obj_index, obj, count));
         }
 

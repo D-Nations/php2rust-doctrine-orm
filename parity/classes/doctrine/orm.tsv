@@ -374,10 +374,10 @@ src/Query/Expr/Math.php	Math	36	ported	crates/php2rust-doctrine-orm/src/query/ex
 src/Query/Expr/OrderBy.php	OrderBy	66	ported	crates/php2rust-doctrine-orm/src/query/expr/order_by.rs
 src/Query/Expr/Orx.php	Orx	18	ported	crates/php2rust-doctrine-orm/src/query/expr/orx.rs
 src/Query/Expr/Select.php	Select	14	ported	crates/php2rust-doctrine-orm/src/query/expr/select.rs
-src/Query/Filter/FilterException.php	FilterException	16	pending	
-src/Query/Filter/Parameter.php	Parameter	13	pending	
-src/Query/Filter/SQLFilter.php	SQLFilter	85	pending	
-src/Query/FilterCollection.php	FilterCollection	112	pending	
+src/Query/Filter/FilterException.php	FilterException	16	ported	crates/php2rust-doctrine-orm/src/query/filter.rs
+src/Query/Filter/Parameter.php	Parameter	13	ported	crates/php2rust-doctrine-orm/src/query/filter.rs
+src/Query/Filter/SQLFilter.php	SQLFilter	85	ported	crates/php2rust-doctrine-orm/src/query/filter.rs
+src/Query/FilterCollection.php	FilterCollection	112	ported	crates/php2rust-doctrine-orm/src/query/filter_collection.rs
 src/Query/Lexer.php	Lexer	92	ported	crates/php2rust-doctrine-orm/src/query/lexer.rs
 src/Query/OutputWalker.php	OutputWalker	7	ported	crates/php2rust-doctrine-orm/src/query/sql_walker.rs
 src/Query/Parameter.php	Parameter	41	ported	crates/php2rust-doctrine-orm/src/query/parameter.rs

@@ -307,6 +307,11 @@ namespace {
         'ORM/Functional/ValueConversionType/ManyToManyExtraLazyTest.php',
         'ORM/Functional/ValueConversionType/OneToManyCriteriaMatchingTest.php',
         'ORM/Functional/ValueConversionType/ManyToManyCriteriaMatchingTest.php',
+        'ORM/Functional/QueryBuilderParenthesisTest.php',
+        'Doctrine\\Tests\\ORM\\Functional\\Ticket\\SwitchContextWithFilter\\Entity\\Order',
+        'Doctrine\\Tests\\ORM\\Functional\\Ticket\\SwitchContextWithFilter\\Entity\\User',
+        'Doctrine\\Tests\\ORM\\Functional\\Ticket\\SwitchContextWithFilterAndIndexedRelation\\Company',
+        'Doctrine\\Tests\\ORM\\Functional\\Ticket\\SwitchContextWithFilterAndIndexedRelation\\Category',
         'Models/Global/GlobalNamespaceModel.php',
     ];
     $before = array_merge(get_declared_classes(), get_declared_interfaces(), get_declared_traits());

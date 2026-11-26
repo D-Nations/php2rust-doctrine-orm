@@ -371,9 +371,29 @@ impl<'a> ObjectHydrator<'a> {
         let mut id = self.id_template.clone(); // initialize the id-memory
         let mut nonempty_components = HashSet::new();
         // Split the row data into chunks of class data.
+        let (row_data, pending) =
+            self.columns
+                .gather_row_data_parts(row, &mut id, &mut nonempty_components)?;
+        // hydrateNestedEntity(): the entities that are NEW arguments.
+        let mut nested_entities = Vec::new();
+        for dql_alias in self.columns.nested_entity_aliases(&row_data, &pending) {
+            let Some((_, data)) = row_data.data.iter().find(|(a, _)| *a == dql_alias) else {
+                continue;
+            };
+            let data = data.clone();
+            let entity = if rsm
+                .nested_entities
+                .contains_key(&Key::from(dql_alias.as_str()))
+            {
+                Value::Object(self.get_entity(data, &dql_alias).await?)
+            } else {
+                Value::Array(data)
+            };
+            nested_entities.push((dql_alias, entity));
+        }
         let row_data: RowData =
             self.columns
-                .gather_row_data(row, &mut id, &mut nonempty_components)?;
+                .finish_row_data(row_data, pending, &nested_entities)?;
 
         // reset result pointers for each data row
         self.result_pointers.clear();
