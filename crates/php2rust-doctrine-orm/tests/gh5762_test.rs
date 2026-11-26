@@ -30,7 +30,11 @@ fn car(brand: &str, model: &str) -> Object {
     let car = new("GH5762Car");
     set(&car, "brand", s(brand));
     set(&car, "model", s(model));
-    set(&car, "carRides", ArrayCollectionObject::value(PhpArray::new()));
+    set(
+        &car,
+        "carRides",
+        ArrayCollectionObject::value(PhpArray::new()),
+    );
     car
 }
 
@@ -103,7 +107,12 @@ async fn testIssue() {
         .r#where(vec![s("d.id = 1")])
         .unwrap();
 
-    let result = qb.get_query().unwrap().get_single_result(None).await.unwrap();
+    let result = qb
+        .get_query()
+        .unwrap()
+        .get_single_result(None)
+        .await
+        .unwrap();
 
     assert_instance_of("GH5762Driver", &result);
     let result = obj(&result);
