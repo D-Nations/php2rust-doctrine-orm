@@ -256,6 +256,7 @@ async fn testRemoveEntityByReference() {
 
     let user_ref = em
         .get_reference(CMS_USER, get(&user, "id"))
+        .await
         .unwrap()
         .unwrap();
     em.remove(&user_ref).await.unwrap();
@@ -490,7 +491,10 @@ async fn testItThrowsWhenReferenceUsesIdAssignedByDatabase() {
     let Value::Int(id) = get(&user, "id") else {
         panic!("an id");
     };
-    let _reference = em.get_reference(CMS_USER, Value::Int(id + 1)).unwrap();
+    let _reference = em
+        .get_reference(CMS_USER, Value::Int(id + 1))
+        .await
+        .unwrap();
 
     let user2 = cms_user();
     set(&user2, "name", s("test2"));

@@ -1,13 +1,6 @@
 //! Functional/PaginationTest.php at doctrine/orm 00c2fd70da291cca1ec75f4dae5344fe3df588fa,
 //! on `SQLite` (`tests/common/orm.rs`). A data provider's rows run in one
-//! test, labelled. The `company` model set is not created and its
-//! `CompanyManager` is not populated: joined (class table) inheritance
-//! persisters are not ported, so `testJoinedClassTableInheritance` is
-//! pending; no other test reads the manager.
-//! The `User1`s are not populated either: the single table inheritance
-//! persister is not ported, so
-//! `testIterateWithOutputWalkersWithFetchJoinWithComplexOrderByReferencingJoinedWithLimitAndOffsetWithInheritanceType`
-//! is pending.
+//! test, labelled.
 //! `testDifferentResultLengthsDoNotRequireExtraQueryCacheEntries` is pending:
 //! the port has no query cache. `ReflectionMethod($paginator,
 //! 'getCountQuery')` is `OffsetPaginator::get_count_query()`.
@@ -25,6 +18,8 @@
 )]
 #![allow(non_snake_case)]
 
+#[path = "common/company.rs"]
+mod company;
 #[path = "common/models.rs"]
 mod models;
 #[path = "common/orm.rs"]
@@ -118,7 +113,7 @@ fn custom_id_object(id: &str) -> Object {
     object
 }
 
-/// `setUp()`: the cms, pagination and `custom_id_object_type` model sets,
+/// `setUp()`: the cms, pagination, company and `custom_id_object_type` model sets,
 /// the `CustomIdObject` type and `populate()`.
 async fn set_up() -> Arc<EntityManager> {
     if !has_type(CustomIdObjectType::NAME) {
@@ -139,6 +134,8 @@ async fn set_up() -> Arc<EntityManager> {
         CUSTOM_ID_OBJECT_TYPE_PARENT,
         CUSTOM_ID_OBJECT_TYPE_CHILD,
     ]);
+    classes.extend(company::COMPANY_MODELS);
+    company::register_listeners();
     let em = orm::set_up(&classes).await;
     populate(&em).await;
     em
@@ -197,8 +194,16 @@ async fn populate(em: &Arc<EntityManager>) {
         em.persist(&company).unwrap();
     }
 
-    // The nine `User1`s are not persisted: the single table inheritance
-    // persister (`SingleTablePersister`) is not ported.
+    for i in 0..9 {
+        let user = orm::new_object(USER1);
+        set(&user, "name", s(&format!("name{i}")));
+        set(&user, "email", s(&format!("email{i}")));
+        em.persist(&user).unwrap();
+    }
+
+    let manager = company::company_manager("Roman B.", 100_000, "IT", "Foo");
+
+    em.persist(&manager).unwrap();
 
     em.flush().await.unwrap();
 }
@@ -269,7 +274,7 @@ async fn testOffsetPaginatorReturnsFirstPage() {
     let dql = "SELECT u FROM Doctrine\\Tests\\Models\\CMS\\CmsUser u ORDER BY u.id ASC";
     let query = em.create_query(dql);
 
-    let page = paginate(OffsetPaginator::default(), &query, window(0, 4))
+    let page = paginate(OffsetPaginator::new(true, None), &query, window(0, 4))
         .await
         .unwrap();
 
@@ -290,7 +295,7 @@ async fn testOffsetPaginatorReturnsLastPage() {
     let dql = "SELECT u FROM Doctrine\\Tests\\Models\\CMS\\CmsUser u ORDER BY u.id ASC";
     let query = em.create_query(dql);
 
-    let page = paginate(OffsetPaginator::default(), &query, window(8, 4))
+    let page = paginate(OffsetPaginator::new(true, None), &query, window(8, 4))
         .await
         .unwrap();
 
@@ -328,7 +333,7 @@ async fn testOffsetPaginatorWithFetchJoin() {
     let dql = "SELECT u, g FROM Doctrine\\Tests\\Models\\CMS\\CmsUser u JOIN u.groups g ORDER BY u.id ASC";
     let query = em.create_query(dql);
 
-    let page = paginate(OffsetPaginator::default(), &query, window(0, 4))
+    let page = paginate(OffsetPaginator::new(true, None), &query, window(0, 4))
         .await
         .unwrap();
 
@@ -850,6 +855,13 @@ async fn testIterateWithOutputWalkersWithFetchJoinWithComplexOrderByReferencingJ
 }
 
 #[tokio::test]
+async fn testIterateWithOutputWalkersWithFetchJoinWithComplexOrderByReferencingJoinedWithLimitAndOffsetWithInheritanceType()
+ {
+    let dql = "SELECT u FROM Doctrine\\Tests\\Models\\Pagination\\User u ORDER BY u.id";
+    iterate_with_orders(&fetch_join_collection_rows(true), dql, "name", &WITH_LIMIT).await;
+}
+
+#[tokio::test]
 async fn testIterateComplexWithOutputWalker() {
     let em = set_up().await;
     let dql = "SELECT g, COUNT(u.id) AS userCount FROM Doctrine\\Tests\\Models\\CMS\\CmsGroup g LEFT JOIN g.users u GROUP BY g HAVING COUNT(u.id) > 0";
@@ -863,6 +875,23 @@ async fn testIterateComplexWithOutputWalker() {
     .await
     .unwrap();
     assert_eq!(3, page.count());
+}
+
+#[tokio::test]
+async fn testJoinedClassTableInheritance() {
+    let em = set_up().await;
+    let dql =
+        "SELECT c FROM Doctrine\\Tests\\Models\\Company\\CompanyManager c ORDER BY c.startDate";
+    let query = em.create_query(dql);
+
+    let page = paginate(
+        OffsetPaginator::new(true, None),
+        &query,
+        window(0, WHOLE_RESULT_SET),
+    )
+    .await
+    .unwrap();
+    assert_eq!(1, page.count());
 }
 
 #[tokio::test]

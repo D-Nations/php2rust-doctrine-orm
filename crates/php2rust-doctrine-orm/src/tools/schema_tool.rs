@@ -212,9 +212,6 @@ impl SchemaTool {
             if self.processing_not_required(&class, &processed) {
                 continue;
             }
-            if class.is_inheritance_type_joined() {
-                return Err(exception::not_supported());
-            }
             let table_name = self.quote_strategy.get_table_name(&class, self.platform());
             schema.create_table(&table_name).map_err(|e| dbal(&e))?;
 
@@ -244,6 +241,15 @@ impl SchemaTool {
                     )?;
                     processed.push(sub_class_name.clone());
                 }
+            } else if class.is_inheritance_type_joined() {
+                self.gather_joined_class(
+                    &class,
+                    classes,
+                    &table_name,
+                    &mut schema,
+                    &mut added_fks,
+                    &mut blacklisted_fks,
+                )?;
             } else {
                 self.gather_columns(&class, &mut schema, &table_name)?;
                 self.gather_relations_sql(
@@ -391,6 +397,121 @@ impl SchemaTool {
         Ok(schema)
     }
 
+    /// The `isInheritanceTypeJoined()` branch of `getSchemaFromMetadata()`:
+    /// the class's own columns and relations, the discriminator column on
+    /// the root table, and on a child table the inherited identifier
+    /// columns with a cascading foreign key to the root table.
+    fn gather_joined_class(
+        &self,
+        class: &ClassMetadataInfo,
+        classes: &[Arc<ClassMetadata>],
+        table_name: &str,
+        schema: &mut Schema,
+        added_fks: &mut Vec<AddedFk>,
+        blacklisted_fks: &mut Vec<String>,
+    ) -> Result<(), Thrown> {
+        // Add all non-inherited fields as columns
+        {
+            let table = schema.get_table_mut(table_name).map_err(|e| dbal(&e))?;
+            for mapping in class.field_mappings.values() {
+                if mapping.inherited.is_none() {
+                    self.gather_column(class, mapping, table)?;
+                }
+            }
+        }
+
+        self.gather_relations_sql(class, table_name, schema, added_fks, blacklisted_fks)?;
+
+        // Add the discriminator column only to the root table
+        if class.name == class.root_entity_name {
+            return self.add_discriminator_column_definition(class, schema, table_name);
+        }
+
+        // Add an ID FK column to child tables
+        let mut pk_columns: Vec<String> = Vec::new();
+        let mut inherited_key_columns: Vec<String> = Vec::new();
+
+        for identifier_field in &class.identifier {
+            if let Some(id_mapping) = class
+                .field_mappings
+                .get(identifier_field)
+                .filter(|m| m.inherited.is_some())
+            {
+                let table = schema.get_table_mut(table_name).map_err(|e| dbal(&e))?;
+                self.gather_column(class, id_mapping, table)?;
+                let column_name =
+                    self.quote_strategy
+                        .get_column_name(identifier_field, class, self.platform());
+                // TODO: This seems rather hackish, can we optimize it?
+                table
+                    .get_column_mut(&column_name)
+                    .map_err(|e| dbal(&e))?
+                    .set_autoincrement(false);
+
+                pk_columns.push(column_name.clone());
+                inherited_key_columns.push(column_name);
+                continue;
+            }
+
+            if let Some(id_mapping) = class
+                .association_mappings
+                .get(identifier_field)
+                .filter(|m| m.inherited.is_some())
+            {
+                let target_entity = classes
+                    .iter()
+                    .find(|c| c.read().name == id_mapping.target_entity)
+                    .map(|c| c.read().clone());
+                for join_column in &id_mapping.join_columns {
+                    if target_entity.as_ref().is_some_and(|t| {
+                        t.field_mappings
+                            .contains_key(&join_column.referenced_column_name)
+                    }) {
+                        let column_name = self.quote_strategy.get_join_column_name(
+                            join_column,
+                            class,
+                            self.platform(),
+                        );
+                        pk_columns.push(column_name.clone());
+                        inherited_key_columns.push(column_name);
+                    }
+                }
+            }
+        }
+
+        if !inherited_key_columns.is_empty() {
+            // A FK collected on the same columns (e.g. for an inherited
+            // identifier association) would get the same generated name
+            // and replace the FK to the root table.
+            let composite_name = format!("{table_name}.{}", inherited_key_columns.join(""));
+            added_fks.retain(|fk| fk.composite_name != composite_name);
+
+            // Add a FK constraint on the ID column
+            let root_table = self.quote_strategy.get_table_name(
+                &self.em.get_class_metadata(&class.root_entity_name)?.read(),
+                self.platform(),
+            );
+            let mut fk_options = PhpArray::new();
+            fk_options.insert("onDelete", Value::from("CASCADE"));
+            let columns: Vec<&str> = inherited_key_columns.iter().map(String::as_str).collect();
+            schema
+                .get_table_mut(table_name)
+                .map_err(|e| dbal(&e))?
+                .add_foreign_key_constraint(&root_table, &columns, &columns, fk_options, None)
+                .map_err(|e| dbal(&e))?;
+        }
+
+        if !pk_columns.is_empty() {
+            let refs: Vec<&str> = pk_columns.iter().map(String::as_str).collect();
+            schema
+                .get_table_mut(table_name)
+                .map_err(|e| dbal(&e))?
+                .set_primary_key(&refs, None)
+                .map_err(|e| dbal(&e))?;
+        }
+        Ok(())
+    }
+
     /// Gets a portable column definition as required by the DBAL for the
     /// discriminator column of a class.
     fn add_discriminator_column_definition(
@@ -506,6 +627,10 @@ impl SchemaTool {
             && class.get_identifier_field_names() == [mapping.field_name.clone()]
         {
             options.insert("autoincrement", Value::Bool(true));
+        }
+
+        if class.is_inheritance_type_joined() && class.name != class.root_entity_name {
+            options.insert("autoincrement", Value::Bool(false));
         }
 
         if table.has_column(&column_name) {

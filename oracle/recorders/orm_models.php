@@ -317,6 +317,15 @@ namespace {
         'Doctrine\\Tests\\ORM\\Functional\\Ticket\\SwitchContextWithFilterAndIndexedRelation\\Company',
         'Doctrine\\Tests\\ORM\\Functional\\Ticket\\SwitchContextWithFilterAndIndexedRelation\\Category',
         'Models/Global/GlobalNamespaceModel.php',
+        'ORM/Functional/SingleTableInheritanceTest.php',
+        'ORM/Functional/ClassTableInheritanceTest.php',
+        'ORM/Functional/ClassTableInheritanceSecondTest.php',
+        'ORM/Functional/MappedSuperclassTest.php',
+        'ORM/Functional/OneToOneSingleTableInheritanceTest.php',
+        'ORM/Functional/OrderedJoinedTableInheritanceCollectionTest.php',
+        'ORM/Functional/SchemaTool/CompanySchemaTest.php',
+        'ORM/Functional/JoinedTableCompositeKeyTest.php',
+        'ORM/Functional/SingleTableCompositeKeyTest.php',
     ];
     $before = array_merge(get_declared_classes(), get_declared_interfaces(), get_declared_traits());
     foreach ($files as $file) {

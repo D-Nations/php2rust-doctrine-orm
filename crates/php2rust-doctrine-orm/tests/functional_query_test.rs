@@ -717,6 +717,7 @@ async fn testEntityParameters() {
 
     let reference = em
         .get_reference(CMS_USER, get(&author, "id"))
+        .await
         .unwrap()
         .unwrap();
     let q = em.create_query(
