@@ -1474,7 +1474,7 @@ tests/Tests/ORM/Functional/Ticket/GH11386/GH11386Test.php	GH11386Test::testIniti
 tests/Tests/ORM/Functional/Ticket/GH11487Test.php	GH11487Test::testItThrowsASyntaxErrorOnUnfinishedQuery	ported	crates/php2rust-doctrine-orm/tests/gh11487_test.rs::testItThrowsASyntaxErrorOnUnfinishedQuery
 tests/Tests/ORM/Functional/Ticket/GH11500Test.php	GH11500Test::testDeleteOneToManyCollectionWithSingleTableInheritance	ported	crates/php2rust-doctrine-orm/tests/gh11500_test.rs::testDeleteOneToManyCollectionWithSingleTableInheritance
 tests/Tests/ORM/Functional/Ticket/GH11501Test.php	GH11501Test::testDeleteOneToManyCollectionWithSingleTableInheritance	ported	crates/php2rust-doctrine-orm/tests/gh11501_test.rs::testDeleteOneToManyCollectionWithSingleTableInheritance
-tests/Tests/ORM/Functional/Ticket/GH11524Test.php	GH11524Test::testPostLoadCalledOnProxy	pending	
+tests/Tests/ORM/Functional/Ticket/GH11524Test.php	GH11524Test::testPostLoadCalledOnProxy	ported	crates/php2rust-doctrine-orm/tests/gh11524_test.rs::testPostLoadCalledOnProxy
 tests/Tests/ORM/Functional/Ticket/GH11982Test.php	GH11982Test::testSchema	pending	
 tests/Tests/ORM/Functional/Ticket/GH11982Test.php	GH11982Test::testSchemaLegacyDbal	pending	
 tests/Tests/ORM/Functional/Ticket/GH12166/GH12166Test.php	GH12166Test::testProxyWithReadonlyIdIsNotInitializedImmediately	pending	the models are separate files of the ticket directory and not recorded yet
