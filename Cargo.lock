@@ -65,6 +65,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "php2rust-doctrine-inflector"
+version = "0.1.0"
+dependencies = [
+ "php2rust-regex",
+ "php2rust-value",
+ "serde_json",
+]
+
+[[package]]
 name = "php2rust-doctrine-lexer"
 version = "0.1.0"
 dependencies = [

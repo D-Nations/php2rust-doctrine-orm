@@ -33,5 +33,6 @@ case "${1:-}" in
     lexer) record lexer.php crates/php2rust-doctrine-lexer/tests/data/lexer.json ;;
     event-manager) record event_manager.php crates/php2rust-doctrine-event-manager/tests/data/event_manager.json ;;
     orm-query-lexer) record orm_query_lexer.php crates/php2rust-doctrine-orm/tests/data/query_lexer.json ;;
-    *) echo "usage: scripts/record.sh lexer|event-manager|orm-query-lexer" >&2; exit 2 ;;
+    inflector) record inflector.php crates/php2rust-doctrine-inflector/tests/data/inflector.json ;;
+    *) echo "usage: scripts/record.sh lexer|event-manager|orm-query-lexer|inflector" >&2; exit 2 ;;
 esac
