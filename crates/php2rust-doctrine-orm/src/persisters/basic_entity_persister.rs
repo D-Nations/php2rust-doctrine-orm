@@ -132,7 +132,7 @@ pub(super) type Params = (Vec<Value>, Vec<ParamType>);
 
 /// `$conditionSql = $conditionSql ? $conditionSql . ' AND ' . $filterSql
 /// : $filterSql` for a filter SQL that is not empty.
-fn append_filter_sql(condition_sql: &mut String, filter_sql: &str) {
+pub(super) fn append_filter_sql(condition_sql: &mut String, filter_sql: &str) {
     if filter_sql.is_empty() {
         return;
     }
@@ -2461,6 +2461,18 @@ impl BasicEntityPersister {
         target_entity: &Arc<ClassMetadata>,
         target_table_alias: &str,
     ) -> Result<String, Thrown> {
+        // SingleTablePersister::generateFilterConditionSQL(): ensure that
+        // the filters are applied to the root entity of the inheritance
+        // tree; the table alias does not matter, in a STI there is only
+        // one table.
+        let root;
+        let target_entity = if self.kind == PersisterKind::SingleTable {
+            let root_name = target_entity.read().root_entity_name.clone();
+            root = em.get_class_metadata(&root_name)?;
+            &root
+        } else {
+            target_entity
+        };
         let mut filter_clauses = Vec::new();
 
         for (_, filter) in em.get_filters().get_enabled_filters() {
