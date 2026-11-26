@@ -89,7 +89,10 @@ async fn testDynamicAttributes() {
     let found = find(
         &em,
         "GH6531ArticleAttribute",
-        array(&[("article", Value::Object(article.clone())), ("attribute", s("name"))]),
+        array(&[
+            ("article", Value::Object(article.clone())),
+            ("attribute", s("name")),
+        ]),
     )
     .await
     .unwrap();
@@ -109,7 +112,11 @@ async fn testJoinTableWithMetadata() {
 
     // new GH6531Order()
     let order = new("GH6531Order");
-    set(&order, "items", ArrayCollectionObject::value(PhpArray::new()));
+    set(
+        &order,
+        "items",
+        ArrayCollectionObject::value(PhpArray::new()),
+    );
     // $order->addItem($product, 2): new GH6531OrderItem($this, $product, $amount)
     let item = new("GH6531OrderItem");
     set_obj(&item, "order", &order);
