@@ -2440,6 +2440,7 @@ impl BasicEntityPersister {
             params.extend(criteria_params);
             types.extend(criteria_types);
         }
+        let alias = self.get_sql_table_alias(&self.class.read().name.clone(), "");
         let filter_sql = self.generate_filter_condition_sql(&em, &self.class, &alias)?;
         if !filter_sql.is_empty() {
             sql.push_str(" AND ");
