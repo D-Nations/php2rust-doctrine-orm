@@ -853,35 +853,35 @@ tests/Tests/ORM/Functional/QueryCacheTest.php	QueryCacheTest::testQueryCacheDoes
 tests/Tests/ORM/Functional/QueryCacheTest.php	QueryCacheTest::testQueryCacheDoesNotDependOnMaxResultsForDefaultOutputWalker	pending	
 tests/Tests/ORM/Functional/QueryCacheTest.php	QueryCacheTest::testQueryCacheHitDoesNotSaveParserResult	pending	
 tests/Tests/ORM/Functional/QueryCacheTest.php	QueryCacheTest::testQueryCacheNoHitSaveParserResult	pending	
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testAggregateAvg	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testAggregateCount	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testAggregateMax	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testAggregateMin	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testAggregateSum	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testBitAndComparison	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testBitOrComparison	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testConcatFunction	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testDateAdd	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testDateAddWithColumnInterval	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testDateDiff	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testDateSub	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testDateSubWithColumnInterval	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testFunctionAbs	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testFunctionConcat	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testFunctionLength	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testFunctionLocate	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testFunctionLower	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testFunctionMod	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testAggregateAvg	ported	crates/php2rust-doctrine-orm/tests/query_dql_function_test.rs::testAggregateAvg
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testAggregateCount	ported	crates/php2rust-doctrine-orm/tests/query_dql_function_test.rs::testAggregateCount
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testAggregateMax	ported	crates/php2rust-doctrine-orm/tests/query_dql_function_test.rs::testAggregateMax
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testAggregateMin	ported	crates/php2rust-doctrine-orm/tests/query_dql_function_test.rs::testAggregateMin
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testAggregateSum	ported	crates/php2rust-doctrine-orm/tests/query_dql_function_test.rs::testAggregateSum
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testBitAndComparison	ported	crates/php2rust-doctrine-orm/tests/query_dql_function_test.rs::testBitAndComparison
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testBitOrComparison	ported	crates/php2rust-doctrine-orm/tests/query_dql_function_test.rs::testBitOrComparison
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testConcatFunction	ported	crates/php2rust-doctrine-orm/tests/query_dql_function_test.rs::testConcatFunction
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testDateAdd	ported	crates/php2rust-doctrine-orm/tests/query_dql_function_test.rs::testDateAdd
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testDateAddWithColumnInterval	ported	crates/php2rust-doctrine-orm/tests/query_dql_function_test.rs::testDateAddWithColumnInterval
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testDateDiff	ported	crates/php2rust-doctrine-orm/tests/query_dql_function_test.rs::testDateDiff
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testDateSub	ported	crates/php2rust-doctrine-orm/tests/query_dql_function_test.rs::testDateSub
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testDateSubWithColumnInterval	ported	crates/php2rust-doctrine-orm/tests/query_dql_function_test.rs::testDateSubWithColumnInterval
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testFunctionAbs	ported	crates/php2rust-doctrine-orm/tests/query_dql_function_test.rs::testFunctionAbs
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testFunctionConcat	ported	crates/php2rust-doctrine-orm/tests/query_dql_function_test.rs::testFunctionConcat
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testFunctionLength	ported	crates/php2rust-doctrine-orm/tests/query_dql_function_test.rs::testFunctionLength
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testFunctionLocate	ported	crates/php2rust-doctrine-orm/tests/query_dql_function_test.rs::testFunctionLocate
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testFunctionLower	ported	crates/php2rust-doctrine-orm/tests/query_dql_function_test.rs::testFunctionLower
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testFunctionMod	ported	crates/php2rust-doctrine-orm/tests/query_dql_function_test.rs::testFunctionMod
 tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testFunctionSqrt	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testFunctionSubstring	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testFunctionTrim	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testFunctionUpper	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testInArithmeticExpression1	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testInArithmeticExpression2	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testOperatorAdd	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testOperatorDiv	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testOperatorMultiply	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testOperatorSub	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testFunctionSubstring	ported	crates/php2rust-doctrine-orm/tests/query_dql_function_test.rs::testFunctionSubstring
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testFunctionTrim	ported	crates/php2rust-doctrine-orm/tests/query_dql_function_test.rs::testFunctionTrim
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testFunctionUpper	ported	crates/php2rust-doctrine-orm/tests/query_dql_function_test.rs::testFunctionUpper
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testInArithmeticExpression1	ported	crates/php2rust-doctrine-orm/tests/query_dql_function_test.rs::testInArithmeticExpression1
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testInArithmeticExpression2	ported	crates/php2rust-doctrine-orm/tests/query_dql_function_test.rs::testInArithmeticExpression2
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testOperatorAdd	ported	crates/php2rust-doctrine-orm/tests/query_dql_function_test.rs::testOperatorAdd
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testOperatorDiv	ported	crates/php2rust-doctrine-orm/tests/query_dql_function_test.rs::testOperatorDiv
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testOperatorMultiply	ported	crates/php2rust-doctrine-orm/tests/query_dql_function_test.rs::testOperatorMultiply
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testOperatorSub	ported	crates/php2rust-doctrine-orm/tests/query_dql_function_test.rs::testOperatorSub
 tests/Tests/ORM/Functional/QueryIterableTest.php	QueryIterableTest::testAlias	pending	
 tests/Tests/ORM/Functional/QueryIterableTest.php	QueryIterableTest::testAliasInnerJoin	pending	
 tests/Tests/ORM/Functional/QueryIterableTest.php	QueryIterableTest::testIndexByQueryWithMultipleResults	pending	
