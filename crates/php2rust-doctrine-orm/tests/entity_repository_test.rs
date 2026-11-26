@@ -799,7 +799,7 @@ async fn testFindByNullValueInInCondition() {
 // Criteria and matching()
 
 /// `$repository->matching(Criteria::create()->where($expression))`.
-async fn matching(em: &Arc<EntityManager>, class: &str, criteria: &Criteria) -> Value {
+fn matching(em: &Arc<EntityManager>, class: &str, criteria: &Criteria) -> Value {
     em.get_repository(class)
         .unwrap()
         .matching(criteria)
@@ -866,7 +866,7 @@ async fn testMatchingEmptyCriteria() {
     let em = set_up(&CMS_MODELS).await;
     load_fixture(&em).await;
 
-    let users = matching(&em, CMS_USER, &Criteria::create()).await;
+    let users = matching(&em, CMS_USER, &Criteria::create());
 
     assert_eq!(count(&users).await, 4);
 }
@@ -880,8 +880,7 @@ async fn testMatchingCriteriaEqComparison() {
         &em,
         CMS_USER,
         &criteria_where(Criteria::expr().eq("username", s("beberlei"))),
-    )
-    .await;
+    );
 
     assert_eq!(count(&users).await, 1);
 }
@@ -895,8 +894,7 @@ async fn testMatchingCriteriaNeqComparison() {
         &em,
         CMS_USER,
         &criteria_where(Criteria::expr().neq("username", s("beberlei"))),
-    )
-    .await;
+    );
 
     assert_eq!(count(&users).await, 3);
 }
@@ -912,8 +910,7 @@ async fn testMatchingCriteriaInComparison() {
         &criteria_where(
             Criteria::expr().r#in("username", PhpArray::list([s("beberlei"), s("gblanco")])),
         ),
-    )
-    .await;
+    );
 
     assert_eq!(count(&users).await, 2);
 }
@@ -930,8 +927,7 @@ async fn testMatchingCriteriaNotInComparison() {
             "username",
             PhpArray::list([s("beberlei"), s("gblanco"), s("asm89")]),
         )),
-    )
-    .await;
+    );
 
     assert_eq!(count(&users).await, 1);
 }
@@ -952,8 +948,7 @@ async fn testMatchingCriteriaLtComparison() {
         &em,
         CMS_USER,
         &criteria_where(Criteria::expr().lt("id", plus(&first_user_id, 1))),
-    )
-    .await;
+    );
 
     assert_eq!(count(&users).await, 1);
 }
@@ -967,8 +962,7 @@ async fn testMatchingCriteriaLeComparison() {
         &em,
         CMS_USER,
         &criteria_where(Criteria::expr().lte("id", plus(&first_user_id, 1))),
-    )
-    .await;
+    );
 
     assert_eq!(count(&users).await, 2);
 }
@@ -982,8 +976,7 @@ async fn testMatchingCriteriaGtComparison() {
         &em,
         CMS_USER,
         &criteria_where(Criteria::expr().gt("id", first_user_id)),
-    )
-    .await;
+    );
 
     assert_eq!(count(&users).await, 3);
 }
@@ -997,8 +990,7 @@ async fn testMatchingCriteriaGteComparison() {
         &em,
         CMS_USER,
         &criteria_where(Criteria::expr().gte("id", first_user_id)),
-    )
-    .await;
+    );
 
     assert_eq!(count(&users).await, 4);
 }
@@ -1012,7 +1004,7 @@ async fn testMatchingCriteriaAssocationByObjectInMemory() {
 
     let criteria = criteria_where(Criteria::expr().eq("user", Value::Object(user)));
 
-    let addresses = matching(&em, CMS_ADDRESS, &criteria).await;
+    let addresses = matching(&em, CMS_ADDRESS, &criteria);
 
     assert_eq!(count(&addresses).await, 1);
 
@@ -1022,7 +1014,8 @@ async fn testMatchingCriteriaAssocationByObjectInMemory() {
         .find_all()
         .await
         .unwrap();
-    let addresses = ArrayCollectionObject::value(PhpArray::list(all.into_iter().map(Value::Object)));
+    let addresses =
+        ArrayCollectionObject::value(PhpArray::list(all.into_iter().map(Value::Object)));
 
     assert_eq!(
         count(&coll::matching(&addresses, &criteria).await.unwrap()).await,
@@ -1037,11 +1030,10 @@ async fn testMatchingCriteriaAssocationInWithArray() {
 
     let user = em.find(CMS_USER, user_id).await.unwrap().unwrap();
 
-    let criteria = criteria_where(
-        Criteria::expr().r#in("user", PhpArray::list([Value::Object(user)])),
-    );
+    let criteria =
+        criteria_where(Criteria::expr().r#in("user", PhpArray::list([Value::Object(user)])));
 
-    let addresses = matching(&em, CMS_ADDRESS, &criteria).await;
+    let addresses = matching(&em, CMS_ADDRESS, &criteria);
 
     assert_eq!(count(&addresses).await, 1);
 
@@ -1051,7 +1043,8 @@ async fn testMatchingCriteriaAssocationInWithArray() {
         .find_all()
         .await
         .unwrap();
-    let addresses = ArrayCollectionObject::value(PhpArray::list(all.into_iter().map(Value::Object)));
+    let addresses =
+        ArrayCollectionObject::value(PhpArray::list(all.into_iter().map(Value::Object)));
 
     assert_eq!(
         count(&coll::matching(&addresses, &criteria).await.unwrap()).await,
@@ -1068,24 +1061,21 @@ async fn testMatchingCriteriaContainsComparison() {
         &em,
         CMS_USER,
         &criteria_where(Criteria::expr().contains("name", s("Foobar"))),
-    )
-    .await;
+    );
     assert_eq!(count(&users).await, 0);
 
     let users = matching(
         &em,
         CMS_USER,
         &criteria_where(Criteria::expr().contains("name", s("Rom"))),
-    )
-    .await;
+    );
     assert_eq!(count(&users).await, 1);
 
     let users = matching(
         &em,
         CMS_USER,
         &criteria_where(Criteria::expr().contains("status", s("dev"))),
-    )
-    .await;
+    );
     assert_eq!(count(&users).await, 2);
 }
 
@@ -1098,24 +1088,21 @@ async fn testMatchingCriteriaStartsWithComparison() {
         &em,
         CMS_USER,
         &criteria_where(Criteria::expr().starts_with("name", s("Foo"))),
-    )
-    .await;
+    );
     assert_eq!(count(&users).await, 0);
 
     let users = matching(
         &em,
         CMS_USER,
         &criteria_where(Criteria::expr().starts_with("name", s("R"))),
-    )
-    .await;
+    );
     assert_eq!(count(&users).await, 1);
 
     let users = matching(
         &em,
         CMS_USER,
         &criteria_where(Criteria::expr().starts_with("status", s("de"))),
-    )
-    .await;
+    );
     assert_eq!(count(&users).await, 2);
 }
 
@@ -1128,24 +1115,21 @@ async fn testMatchingCriteriaEndsWithComparison() {
         &em,
         CMS_USER,
         &criteria_where(Criteria::expr().ends_with("name", s("foo"))),
-    )
-    .await;
+    );
     assert_eq!(count(&users).await, 0);
 
     let users = matching(
         &em,
         CMS_USER,
         &criteria_where(Criteria::expr().ends_with("name", s("oman"))),
-    )
-    .await;
+    );
     assert_eq!(count(&users).await, 1);
 
     let users = matching(
         &em,
         CMS_USER,
         &criteria_where(Criteria::expr().ends_with("status", s("ev"))),
-    )
-    .await;
+    );
     assert_eq!(count(&users).await, 2);
 }
 
@@ -1167,8 +1151,8 @@ async fn testMatchingCriteriaNullAssocComparison() {
     em.flush().await.unwrap();
     em.clear().unwrap();
 
-    let users_is_null = matching(&em, CMS_USER, &criteria_is_null).await;
-    let users_eq_null = matching(&em, CMS_USER, &criteria_eq_null).await;
+    let users_is_null = matching(&em, CMS_USER, &criteria_is_null);
+    let users_eq_null = matching(&em, CMS_USER, &criteria_eq_null);
 
     assert_eq!(count(&users_is_null).await, 1);
     assert_eq!(count(&users_eq_null).await, 1);

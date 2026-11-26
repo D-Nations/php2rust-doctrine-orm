@@ -23,8 +23,12 @@ use std::sync::Arc;
 use php_value::{PhpArray, PhpString, Value};
 use php2rust_doctrine_collections::Criteria;
 use php2rust_doctrine_dbal::platforms::AbstractPlatform;
-use php2rust_doctrine_dbal::types::{ConversionError, Type, TypeArgument, add_type, has_type, override_type};
-use php2rust_doctrine_orm::collection_object::{self as coll, ArrayCollectionObject, CollectionRef};
+use php2rust_doctrine_dbal::types::{
+    ConversionError, Type, TypeArgument, add_type, has_type, override_type,
+};
+use php2rust_doctrine_orm::collection_object::{
+    self as coll, ArrayCollectionObject, CollectionRef,
+};
 use php2rust_doctrine_orm::entity_manager::EntityManager;
 
 use orm::*;
@@ -32,7 +36,8 @@ use orm::*;
 const TWEET: &str = "Doctrine\\Tests\\Models\\Tweet\\Tweet";
 const TWEET_USER: &str = "Doctrine\\Tests\\Models\\Tweet\\User";
 const TWEET_USER_LIST: &str = "Doctrine\\Tests\\Models\\Tweet\\UserList";
-const OWNING: &str = "Doctrine\\Tests\\Models\\ValueConversionType\\OwningManyToManyExtraLazyEntity";
+const OWNING: &str =
+    "Doctrine\\Tests\\Models\\ValueConversionType\\OwningManyToManyExtraLazyEntity";
 const INVERSED: &str =
     "Doctrine\\Tests\\Models\\ValueConversionType\\InversedManyToManyExtraLazyEntity";
 
@@ -105,7 +110,11 @@ async fn set_up_models() -> Arc<EntityManager> {
 
 fn tweet_user(name: &str) -> php_value::Object {
     let user = new_object(TWEET_USER);
-    set(&user, "tweets", ArrayCollectionObject::value(PhpArray::new()));
+    set(
+        &user,
+        "tweets",
+        ArrayCollectionObject::value(PhpArray::new()),
+    );
     set(
         &user,
         "userLists",
@@ -146,7 +155,11 @@ async fn testCanCountWithoutLoadingPersistentCollection() {
 
     let mut criteria = PhpArray::new();
     criteria.insert("name", s("ngal"));
-    let user = repository.find_one_by(&criteria, None).await.unwrap().unwrap();
+    let user = repository
+        .find_one_by(&criteria, None)
+        .await
+        .unwrap()
+        .unwrap();
     let tweets = coll::matching(&get(&user, "tweets"), &Criteria::create())
         .await
         .unwrap();
@@ -214,5 +227,8 @@ async fn testCanHandleComplexTypesOnAssociation() {
     let Value::Object(first) = coll::get(&result, 0).await.unwrap() else {
         panic!("an entity expected");
     };
-    assert!(php_value::compare::loose_equals(&get(&first, "id1"), &s("Bob")));
+    assert!(php_value::compare::loose_equals(
+        &get(&first, "id1"),
+        &s("Bob")
+    ));
 }

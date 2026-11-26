@@ -21,7 +21,9 @@ use std::sync::Arc;
 use php_value::datetime::{DateTime, DateTimeImmutable, TimeZone};
 use php_value::{Object, PhpArray, Value};
 use php2rust_doctrine_collections::Criteria;
-use php2rust_doctrine_orm::collection_object::{self as coll, ArrayCollectionObject, CollectionRef};
+use php2rust_doctrine_orm::collection_object::{
+    self as coll, ArrayCollectionObject, CollectionRef,
+};
 use php2rust_doctrine_orm::entity_manager::EntityManager;
 
 use orm::*;
@@ -34,13 +36,7 @@ const TWEET_USER_LIST: &str = "Doctrine\\Tests\\Models\\Tweet\\UserList";
 /// `useModelSet('generic')` and `useModelSet('tweet')`: the generic
 /// models these tests use (the other ones are not recorded).
 async fn set_up_models() -> Arc<EntityManager> {
-    set_up(&[
-        DATE_TIME_MODEL,
-        TWEET_USER,
-        TWEET,
-        TWEET_USER_LIST,
-    ])
-    .await
+    set_up(&[DATE_TIME_MODEL, TWEET_USER, TWEET, TWEET_USER_LIST]).await
 }
 
 /// `new DateTime('today')`, `'tomorrow'`, `'yesterday'`: midnight UTC,
@@ -65,7 +61,8 @@ fn date_time_model(datetime: &Value, date: &Value, time: &Value) -> Object {
 
 async fn load_fixture(em: &EntityManager) {
     let today = date(0);
-    em.persist(&date_time_model(&today, &today, &today)).unwrap();
+    em.persist(&date_time_model(&today, &today, &today))
+        .unwrap();
 
     let tomorrow = date(1);
     em.persist(&date_time_model(&tomorrow, &tomorrow, &tomorrow))
@@ -87,7 +84,7 @@ fn criteria_where(
     criteria
 }
 
-async fn matching(em: &Arc<EntityManager>, criteria: &Criteria) -> Value {
+fn matching(em: &Arc<EntityManager>, criteria: &Criteria) -> Value {
     em.get_repository(DATE_TIME_MODEL)
         .unwrap()
         .matching(criteria)
@@ -107,8 +104,7 @@ async fn testLteDateComparison() {
     let dates = matching(
         &em,
         &criteria_where(Criteria::expr().lte("datetime", date(0))),
-    )
-    .await;
+    );
 
     assert_eq!(count(&dates).await, 2);
 }
@@ -131,7 +127,7 @@ async fn testIsNullComparison() {
     let em = set_up_models().await;
     load_null_field_fixtures(&em).await;
 
-    let dates = matching(&em, &criteria_where(Criteria::expr().is_null("time"))).await;
+    let dates = matching(&em, &criteria_where(Criteria::expr().is_null("time")));
 
     assert_eq!(count(&dates).await, 1);
 }
@@ -144,8 +140,7 @@ async fn testEqNullComparison() {
     let dates = matching(
         &em,
         &criteria_where(Criteria::expr().eq("time", Value::Null)),
-    )
-    .await;
+    );
 
     assert_eq!(count(&dates).await, 1);
 }
@@ -158,8 +153,7 @@ async fn testNotEqNullComparison() {
     let dates = matching(
         &em,
         &criteria_where(Criteria::expr().neq("time", Value::Null)),
-    )
-    .await;
+    );
 
     assert_eq!(count(&dates).await, 1);
 }
@@ -194,7 +188,11 @@ async fn testCanCountWithoutLoadingCollection() {
 async fn testCanContainsWithoutLoadingCollection() {
     let em = set_up_models().await;
     let user = new_object(TWEET_USER);
-    set(&user, "tweets", ArrayCollectionObject::value(PhpArray::new()));
+    set(
+        &user,
+        "tweets",
+        ArrayCollectionObject::value(PhpArray::new()),
+    );
     set(
         &user,
         "userLists",
