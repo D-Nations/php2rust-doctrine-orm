@@ -258,6 +258,13 @@ impl DqlQuery for TestQuery<'_> {
         self.hints.borrow_mut().insert(name.to_owned(), value);
     }
 
+    fn has_hint(&self, name: &str) -> bool {
+        self.hints
+            .borrow()
+            .get(name)
+            .is_some_and(|hint| !matches!(hint, Hint::Value(Value::Null)))
+    }
+
     fn get_hydration_mode(&self) -> i64 {
         self.hydration_mode.get()
     }

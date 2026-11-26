@@ -386,7 +386,7 @@ src/Query/Parser.php	Parser	2140	ported	crates/php2rust-doctrine-orm/src/query/p
 src/Query/ParserResult.php	ParserResult	81	ported	crates/php2rust-doctrine-orm/src/query/parser_result.rs
 src/Query/Printer.php	Printer	26	pending	
 src/Query/QueryException.php	QueryException	133	ported	crates/php2rust-doctrine-orm/src/query/query_exception.rs
-src/Query/QueryExpressionVisitor.php	QueryExpressionVisitor	124	pending	
+src/Query/QueryExpressionVisitor.php	QueryExpressionVisitor	124	ported	crates/php2rust-doctrine-orm/src/query/query_expression_visitor.rs
 src/Query/ResultSetMapping.php	ResultSetMapping	203	ported	crates/php2rust-doctrine-orm/src/query/result_set_mapping.rs
 src/Query/ResultSetMappingBuilder.php	ResultSetMappingBuilder	160	pending	
 src/Query/SqlOutputWalker.php	SqlOutputWalker	21	ported	crates/php2rust-doctrine-orm/src/query/sql_walker.rs
@@ -395,8 +395,8 @@ src/Query/TokenType.php	TokenType	85	ported	crates/php2rust-doctrine-orm/src/que
 src/Query/TreeWalker.php	TreeWalker	11	ported	crates/php2rust-doctrine-orm/src/query/tree_walker.rs
 src/Query/TreeWalkerAdapter.php	TreeWalkerAdapter	51	ported	crates/php2rust-doctrine-orm/src/query/tree_walker.rs
 src/Query/TreeWalkerChain.php	TreeWalkerChain	47	ported	crates/php2rust-doctrine-orm/src/query/tree_walker.rs
-src/QueryBuilder.php	QueryBuilder	707	pending	
-src/QueryType.php	QueryType	8	pending	
+src/QueryBuilder.php	QueryBuilder	707	ported	crates/php2rust-doctrine-orm/src/query_builder.rs
+src/QueryType.php	QueryType	8	ported	crates/php2rust-doctrine-orm/src/query_type.rs
 src/Repository/DefaultRepositoryFactory.php	DefaultRepositoryFactory	24	ported	crates/php2rust-doctrine-orm/src/repository/mod.rs
 src/Repository/Exception/InvalidFindByCall.php	InvalidFindByCall	16	ported	crates/php2rust-doctrine-orm/src/exception.rs
 src/Repository/Exception/InvalidMagicMethodCall.php	InvalidMagicMethodCall	21	ported	crates/php2rust-doctrine-orm/src/exception.rs
@@ -435,8 +435,8 @@ src/Tools/Event/GenerateSchemaEventArgs.php	GenerateSchemaEventArgs	33	pending
 src/Tools/Event/GenerateSchemaTableEventArgs.php	GenerateSchemaTableEventArgs	55	pending	
 src/Tools/Exception/MissingColumnException.php	MissingColumnException	17	ported	crates/php2rust-doctrine-orm/src/tools/schema_tool.rs
 src/Tools/Exception/NotSupported.php	NotSupported	11	pending	
-src/Tools/Pagination/CountOutputWalker.php	CountOutputWalker	81	pending	
-src/Tools/Pagination/CountWalker.php	CountWalker	49	pending	
+src/Tools/Pagination/CountOutputWalker.php	CountOutputWalker	81	ported	crates/php2rust-doctrine-orm/src/tools/pagination/count_output_walker.rs
+src/Tools/Pagination/CountWalker.php	CountWalker	49	ported	crates/php2rust-doctrine-orm/src/tools/pagination/count_walker.rs
 src/Tools/Pagination/Cursor.php	Cursor	68	pending	
 src/Tools/Pagination/CursorItem.php	CursorItem	18	pending	
 src/Tools/Pagination/CursorOrderByItem.php	CursorOrderByItem	14	pending	
@@ -444,18 +444,18 @@ src/Tools/Pagination/CursorPage.php	CursorPage	81	pending
 src/Tools/Pagination/CursorPaginator.php	CursorPaginator	128	pending	
 src/Tools/Pagination/CursorWalker.php	CursorWalker	137	pending	
 src/Tools/Pagination/Exception/InvalidCursor.php	InvalidCursor	18	pending	
-src/Tools/Pagination/Exception/RowNumberOverFunctionNotEnabled.php	RowNumberOverFunctionNotEnabled	11	pending	
-src/Tools/Pagination/LimitSubqueryOutputWalker.php	LimitSubqueryOutputWalker	361	pending	
-src/Tools/Pagination/LimitSubqueryWalker.php	LimitSubqueryWalker	107	pending	
+src/Tools/Pagination/Exception/RowNumberOverFunctionNotEnabled.php	RowNumberOverFunctionNotEnabled	11	ported	crates/php2rust-doctrine-orm/src/tools/pagination/row_number_over_function.rs
+src/Tools/Pagination/LimitSubqueryOutputWalker.php	LimitSubqueryOutputWalker	361	ported	crates/php2rust-doctrine-orm/src/tools/pagination/limit_subquery_output_walker.rs
+src/Tools/Pagination/LimitSubqueryWalker.php	LimitSubqueryWalker	107	ported	crates/php2rust-doctrine-orm/src/tools/pagination/limit_subquery_walker.rs
 src/Tools/Pagination/OffsetPaginator.php	OffsetPaginator	50	pending	
 src/Tools/Pagination/OrderDirection.php	OrderDirection	27	pending	
 src/Tools/Pagination/Page.php	Page	13	pending	
-src/Tools/Pagination/Paginator.php	Paginator	63	pending	
+src/Tools/Pagination/Paginator.php	Paginator	63	ported	crates/php2rust-doctrine-orm/src/tools/pagination/paginator.rs
 src/Tools/Pagination/PaginatorInterface.php	PaginatorInterface	9	pending	
-src/Tools/Pagination/PaginatorQuery.php	PaginatorQuery	129	pending	
-src/Tools/Pagination/RootTypeWalker.php	RootTypeWalker	38	pending	
-src/Tools/Pagination/RowNumberOverFunction.php	RowNumberOverFunction	22	pending	
-src/Tools/Pagination/WhereInWalker.php	WhereInWalker	85	pending	
+src/Tools/Pagination/PaginatorQuery.php	PaginatorQuery	129	ported	crates/php2rust-doctrine-orm/src/tools/pagination/paginator.rs
+src/Tools/Pagination/RootTypeWalker.php	RootTypeWalker	38	ported	crates/php2rust-doctrine-orm/src/tools/pagination/root_type_walker.rs
+src/Tools/Pagination/RowNumberOverFunction.php	RowNumberOverFunction	22	ported	crates/php2rust-doctrine-orm/src/tools/pagination/row_number_over_function.rs
+src/Tools/Pagination/WhereInWalker.php	WhereInWalker	85	ported	crates/php2rust-doctrine-orm/src/tools/pagination/where_in_walker.rs
 src/Tools/Pagination/Window.php	Window	46	pending	
 src/Tools/Pagination/WindowPage.php	WindowPage	76	pending	
 src/Tools/ResolveTargetEntityListener.php	ResolveTargetEntityListener	75	pending	
