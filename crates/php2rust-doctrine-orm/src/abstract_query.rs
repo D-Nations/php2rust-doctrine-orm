@@ -253,6 +253,11 @@ impl QueryState {
                 {
                     return Ok(backing.clone());
                 }
+                if let Some(metadata) =
+                    crate::collection_object::downcast::<crate::mapping::ClassMetadata>(object)
+                {
+                    return Ok(Value::from(metadata.read().name.as_str()));
+                }
                 // Silence any mapping exceptions. These can occur if the
                 // object in question is not a mapped entity, in which case
                 // we just don't do any preparation on the value.
