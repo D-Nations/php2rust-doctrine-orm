@@ -44,14 +44,14 @@ tests/Mapping/DefaultFileLocatorTest.php	DefaultFileLocatorTest::testGetFileExte
 tests/Mapping/DefaultFileLocatorTest.php	DefaultFileLocatorTest::testGetPaths	ported	crates/php2rust-doctrine-persistence/tests/default_file_locator_test.rs::testGetPaths
 tests/Mapping/DefaultFileLocatorTest.php	DefaultFileLocatorTest::testUniquePaths	ported	crates/php2rust-doctrine-persistence/tests/default_file_locator_test.rs::testUniquePaths
 tests/Mapping/Driver/ClassNamesTest.php	ClassNamesTest::testGetClassNames	ported	crates/php2rust-doctrine-persistence/tests/class_names_test.rs::testGetClassNames
-tests/Mapping/Driver/FileClassLocatorTest.php	FileClassLocatorTest::testCreateFromDirectory	pending	
-tests/Mapping/Driver/FileClassLocatorTest.php	FileClassLocatorTest::testCreateFromDirectoryIterator	pending	
-tests/Mapping/Driver/FileClassLocatorTest.php	FileClassLocatorTest::testCreateFromDirectoryWithExtension	pending	
-tests/Mapping/Driver/FileClassLocatorTest.php	FileClassLocatorTest::testCreateFromDirectoryWithNonExistentDirectory	pending	
-tests/Mapping/Driver/FileClassLocatorTest.php	FileClassLocatorTest::testCreateFromEmptyDirectory	pending	
+tests/Mapping/Driver/FileClassLocatorTest.php	FileClassLocatorTest::testCreateFromDirectory	ported	crates/php2rust-doctrine-persistence/tests/file_class_locator_test.rs::testCreateFromDirectory
+tests/Mapping/Driver/FileClassLocatorTest.php	FileClassLocatorTest::testCreateFromDirectoryIterator	ported	crates/php2rust-doctrine-persistence/tests/file_class_locator_test.rs::testCreateFromDirectoryIterator
+tests/Mapping/Driver/FileClassLocatorTest.php	FileClassLocatorTest::testCreateFromDirectoryWithExtension	ported	crates/php2rust-doctrine-persistence/tests/file_class_locator_test.rs::testCreateFromDirectoryWithExtension
+tests/Mapping/Driver/FileClassLocatorTest.php	FileClassLocatorTest::testCreateFromDirectoryWithNonExistentDirectory	ported	crates/php2rust-doctrine-persistence/tests/file_class_locator_test.rs::testCreateFromDirectoryWithNonExistentDirectory
+tests/Mapping/Driver/FileClassLocatorTest.php	FileClassLocatorTest::testCreateFromEmptyDirectory	ported	crates/php2rust-doctrine-persistence/tests/file_class_locator_test.rs::testCreateFromEmptyDirectory
 tests/Mapping/Driver/FileClassLocatorTest.php	FileClassLocatorTest::testCreateFromSymfonyFinder	pending	
-tests/Mapping/Driver/FileClassLocatorTest.php	FileClassLocatorTest::testGetClassNames	pending	
-tests/Mapping/Driver/FileClassLocatorTest.php	FileClassLocatorTest::testGetClassNamesWithEmptyIterator	pending	
+tests/Mapping/Driver/FileClassLocatorTest.php	FileClassLocatorTest::testGetClassNames	ported	crates/php2rust-doctrine-persistence/tests/file_class_locator_test.rs::testGetClassNames
+tests/Mapping/Driver/FileClassLocatorTest.php	FileClassLocatorTest::testGetClassNamesWithEmptyIterator	ported	crates/php2rust-doctrine-persistence/tests/file_class_locator_test.rs::testGetClassNamesWithEmptyIterator
 tests/Mapping/Driver/FileClassLocatorTest.php	FileClassLocatorTest::testWithPharFiles	pending	
 tests/Mapping/DriverChainTest.php	DriverChainTest::testDefaultDriver	ported	crates/php2rust-doctrine-persistence/tests/driver_chain_test.rs::testDefaultDriver
 tests/Mapping/DriverChainTest.php	DriverChainTest::testDefaultDriverGetAllClassNames	ported	crates/php2rust-doctrine-persistence/tests/driver_chain_test.rs::testDefaultDriverGetAllClassNames
