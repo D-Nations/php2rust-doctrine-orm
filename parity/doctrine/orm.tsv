@@ -1437,8 +1437,8 @@ tests/Tests/ORM/Functional/Ticket/GH10661/GH10661Test.php	GH10661Test::testMetad
 tests/Tests/ORM/Functional/Ticket/GH10661/GH10661Test.php	GH10661Test::testMetadataFieldTypeNotCoherentWithEntityPropertyTypeWithInheritance	pending	the models are separate files of the ticket directory and not recorded yet
 tests/Tests/ORM/Functional/Ticket/GH10661/GH10661Test.php	GH10661Test::testPropertyTypeErrorsCanBeSilenced	pending	the models are separate files of the ticket directory and not recorded yet
 tests/Tests/ORM/Functional/Ticket/GH10747Test.php	GH10747Test::testOrphanedOneToManyDeletesCollection	pending	a custom DBAL type of the test file (the recorder cannot load a DBAL Type subclass)
-tests/Tests/ORM/Functional/Ticket/GH10752Test.php	GH10752Test::testThrowExceptionWhenRemovingPromotionThatIsInUse	pending	
-tests/Tests/ORM/Functional/Ticket/GH10752Test.php	GH10752Test::testThrowExceptionWhenRemovingPromotionThatIsInUseAndOrderIsNotInMemory	pending	
+tests/Tests/ORM/Functional/Ticket/GH10752Test.php	GH10752Test::testThrowExceptionWhenRemovingPromotionThatIsInUse	ported	crates/php2rust-doctrine-orm/tests/gh10752_test.rs::testThrowExceptionWhenRemovingPromotionThatIsInUse
+tests/Tests/ORM/Functional/Ticket/GH10752Test.php	GH10752Test::testThrowExceptionWhenRemovingPromotionThatIsInUseAndOrderIsNotInMemory	ported	crates/php2rust-doctrine-orm/tests/gh10752_test.rs::testThrowExceptionWhenRemovingPromotionThatIsInUseAndOrderIsNotInMemory
 tests/Tests/ORM/Functional/Ticket/GH10808Test.php	GH10808Test::testDQLDeferredEagerLoad	pending	
 tests/Tests/ORM/Functional/Ticket/GH10869Test.php	GH10869Test::testPostPersistListenerUpdatingObjectFieldWhileOtherInsertPending	pending	
 tests/Tests/ORM/Functional/Ticket/GH10880Test.php	GH10880Test::testProcessShouldBeUpdated	pending	
