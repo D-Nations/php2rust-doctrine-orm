@@ -33,6 +33,7 @@
 
 #![forbid(unsafe_code)]
 
+mod abstract_lazy_collection;
 mod array_collection;
 mod collection;
 mod criteria;
@@ -46,6 +47,7 @@ pub mod reflection;
 mod selectable;
 mod sort_direction;
 
+pub use abstract_lazy_collection::{AbstractLazyCollection, DoInitialize};
 pub use array_collection::{ArrayCollection, ArrayCollectionClass};
 pub use collection::Collection;
 pub use criteria::{Criteria, Direction};

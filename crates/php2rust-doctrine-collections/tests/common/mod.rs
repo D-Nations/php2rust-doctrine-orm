@@ -1,10 +1,10 @@
 //! The upstream test fixtures (`TestObject`, `TestObjectPrivatePropertyOnly`,
-//! `TestObjectPropertyHook`, and
+//! `TestObjectPropertyHook`, `LazyArrayCollection`, and
 //! `TestObjectWithPrivatePropertyInParentClass` of
 //! ClosureExpressionVisitorTest.php) as PHP objects, and helpers for
 //! PHPUnit's assertions.
 //!
-//! Upstream: doctrine/collections tests/TestObject.php tests/TestObjectPrivatePropertyOnly.php tests/TestObjectPropertyHook.php
+//! Upstream: doctrine/collections tests/TestObject.php tests/TestObjectPrivatePropertyOnly.php tests/TestObjectPropertyHook.php tests/LazyArrayCollection.php
 
 #![allow(
     dead_code,
@@ -22,7 +22,9 @@ use std::sync::{Arc, Mutex};
 
 use php_value::{Key, PhpArray, PhpObject, Thrown, Value};
 use php2rust_doctrine_collections::reflection::{RawProperties, register_raw_properties};
-use php2rust_doctrine_collections::deprecations;
+use php2rust_doctrine_collections::{
+    AbstractLazyCollection, ArrayCollection, Collection, DoInitialize, deprecations,
+};
 
 /// `Doctrine\Tests\Common\Collections\TestObject`: four public mixed
 /// properties.
@@ -228,6 +230,33 @@ impl RawProperties for TestObjectPropertyHook {
     fn raw_property(&self, name: &str) -> Option<Result<Value, Thrown>> {
         (name == "fooBar").then(|| Ok(self.foo_bar.lock().unwrap().map_or(Value::Null, Value::Int)))
     }
+}
+
+/// `Doctrine\Tests\Common\Collections\LazyArrayCollection`'s
+/// `doInitialize()`: the collection given to the constructor.
+#[derive(Debug)]
+pub struct LazyArrayCollectionClass {
+    collection_on_initialization: Option<Box<dyn Collection>>,
+}
+
+impl DoInitialize for LazyArrayCollectionClass {
+    fn do_initialize(
+        &mut self,
+        collection: &mut Option<Box<dyn Collection>>,
+    ) -> Result<(), Thrown> {
+        *collection = self.collection_on_initialization.take();
+        Ok(())
+    }
+}
+
+/// `LazyArrayCollection`.
+pub type LazyArrayCollection = AbstractLazyCollection<LazyArrayCollectionClass>;
+
+/// `new LazyArrayCollection(new ArrayCollection($elements))`.
+pub fn lazy_array_collection(elements: PhpArray) -> LazyArrayCollection {
+    AbstractLazyCollection::new(LazyArrayCollectionClass {
+        collection_on_initialization: Some(Box::new(ArrayCollection::new(elements))),
+    })
 }
 
 /// An int or string key.
