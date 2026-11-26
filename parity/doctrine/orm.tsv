@@ -1415,8 +1415,8 @@ tests/Tests/ORM/Functional/Ticket/DDC992Test.php	DDC992Test::testOneToManyChild	
 tests/Tests/ORM/Functional/Ticket/EagerSecondLevelCacheCollectionTest.php	EagerSecondLevelCacheCollectionTest::testEagerCollectionIsNotDuplicatedAfterSecondLevelCacheHit	pending	
 tests/Tests/ORM/Functional/Ticket/GH10049/GH10049Test.php	GH10049Test::testInheritedReadOnlyPropertyValueCanBeSet	pending	
 tests/Tests/ORM/Functional/Ticket/GH10132Test.php	GH10132Test::testQueryBackedEnumInCompositeKeyJoin	ported	crates/php2rust-doctrine-orm/tests/gh10132_test.rs::testQueryBackedEnumInCompositeKeyJoin
-tests/Tests/ORM/Functional/Ticket/GH10288Test.php	GH10288Test::testEnumDiscriminatorWithCustomEnumType	pending	a custom DBAL type of the test file (the recorder cannot load a DBAL Type subclass)
-tests/Tests/ORM/Functional/Ticket/GH10288Test.php	GH10288Test::testEnumDiscriminatorWithEnumType	pending	a custom DBAL type of the test file (the recorder cannot load a DBAL Type subclass)
+tests/Tests/ORM/Functional/Ticket/GH10288Test.php	GH10288Test::testEnumDiscriminatorWithCustomEnumType	pending	
+tests/Tests/ORM/Functional/Ticket/GH10288Test.php	GH10288Test::testEnumDiscriminatorWithEnumType	pending	
 tests/Tests/ORM/Functional/Ticket/GH10334Test.php	GH10334Test::testGetChildWithBackedEnumId	ported	crates/php2rust-doctrine-orm/tests/gh10334_test.rs::testGetChildWithBackedEnumId
 tests/Tests/ORM/Functional/Ticket/GH10334Test.php	GH10334Test::testTicket	ported	crates/php2rust-doctrine-orm/tests/gh10334_test.rs::testTicket
 tests/Tests/ORM/Functional/Ticket/GH10336Test.php	GH10336Test::testCanAccessRelationPropertyAfterClear	ported	crates/php2rust-doctrine-orm/tests/gh10336_test.rs::testCanAccessRelationPropertyAfterClear
