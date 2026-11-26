@@ -1152,10 +1152,15 @@ impl BasicEntityPersister {
     }
 
     /// Refreshes a managed entity.
-    pub async fn refresh(&self, id: &PhpArray, _entity: &Object) -> Result<(), Thrown> {
+    pub async fn refresh(
+        &self,
+        id: &PhpArray,
+        _entity: &Object,
+        lock_mode: Option<LockMode>,
+    ) -> Result<(), Thrown> {
         let em = self.em()?;
         self.switch_persister_context(None, None);
-        let sql = self.get_select_sql(&em, id.into(), None, None, None, None, None)?;
+        let sql = self.get_select_sql(&em, id.into(), None, lock_mode, None, None, None)?;
         let (params, types) = self.expand_parameters(&em, id)?;
         let rows = self.fetch_all(&em, &sql, params, types).await?;
         let rsm = self.get_result_set_mapping();
