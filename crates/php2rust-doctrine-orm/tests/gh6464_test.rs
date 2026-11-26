@@ -45,10 +45,10 @@ fn has_inner_join_without_on(sql: &str) -> bool {
     })
 }
 
-/// Verifies that SqlWalker generates valid SQL for an INNER JOIN to CTI table
+/// Verifies that `SqlWalker` generates valid SQL for an INNER JOIN to CTI table
 ///
-/// SqlWalker needs to generate nested INNER JOIN statements, otherwise there would be INNER JOIN
-/// statements without an ON clause, which are valid on e.g. MySQL but rejected by PostgreSQL.
+/// `SqlWalker` needs to generate nested INNER JOIN statements, otherwise there would be INNER JOIN
+/// statements without an ON clause, which are valid on e.g. `MySQL` but rejected by `PostgreSQL`.
 #[tokio::test]
 async fn testIssue() {
     let em = ticket::set_up(&["GH6464Post", "GH6464User", "GH6464Author"]).await;
