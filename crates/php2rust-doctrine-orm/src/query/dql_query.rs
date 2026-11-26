@@ -404,7 +404,22 @@ impl Query {
             return Ok((parameter.get_value().clone(), parameter.get_type().clone()));
         }
         let original_value = parameter.get_value();
-        let processed_value = self.state.process_parameter_value(original_value)?;
+        let mut value = original_value.clone();
+        if let Value::Object(object) = original_value
+            && let Some(metadata) =
+                crate::collection_object::downcast::<crate::mapping::ClassMetadata>(object)
+            && self.state.get_result_set_mapping().is_some_and(|rsm| {
+                rsm.discriminator_parameters
+                    .contains_key(&Key::from_bytes(parameter.get_name().as_bytes()))
+            })
+        {
+            let discriminators = crate::query::utility::resolve_discriminators_for_class(
+                &metadata,
+                &**self.state.get_entity_manager(),
+            )?;
+            value = Value::Array(PhpArray::list(discriminators.keys().map(Key::to_value)));
+        }
+        let processed_value = self.state.process_parameter_value(&value)?;
         let type_ = if original_value.identical(&processed_value) {
             parameter.get_type().clone()
         } else {

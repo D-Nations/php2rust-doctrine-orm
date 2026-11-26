@@ -1,8 +1,8 @@
 //! Ticket/DDC1163Test.php at doctrine/orm 00c2fd70da291cca1ec75f4dae5344fe3df588fa,
 //! on `SQLite` (its own models).
 //!
-//! `EntityManager::find()` initializes the proxy it finds in the identity
-//! map, so the `isUninitializedObject()` assertion is inverted.
+//! The property write on the lazy proxy is `initialize_object()` and
+//! then `set()`.
 //!
 //! Upstream: doctrine/orm tests/Tests/ORM/Functional/Ticket/DDC1163Test.php
 
@@ -69,12 +69,12 @@ async fn testIssue() {
         "DDC1163SpecialProduct",
         &Value::Object(special_product.clone()),
     );
-    // PHP: assertTrue(isUninitializedObject($specialProduct)); the port's
-    // find() initializes the proxy it finds in the identity map.
-    assert!(!is_uninitialized(
+    assert!(is_uninitialized(
         &em,
         &Value::Object(special_product.clone())
     ));
+    // the property write initializes the lazy object first
+    em.initialize_object(&special_product).await.unwrap();
     set(&special_product, "subclassProperty", s("foobar"));
 
     // this screams violation of law of demeter ;)

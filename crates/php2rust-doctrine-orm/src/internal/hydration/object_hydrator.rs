@@ -294,6 +294,14 @@ impl<'a> ObjectHydrator<'a> {
                         dql_alias,
                     ));
                 }
+                // `$discriminatorValue instanceof BackedEnum`: its value.
+                Some(Value::Object(object))
+                    if let Some(backing) = object
+                        .downcast_ref::<php_value::object::EnumCase>()
+                        .and_then(php_value::object::EnumCase::value) =>
+                {
+                    to_text(backing)
+                }
                 Some(value) => to_text(value),
             };
             if discriminator_value.is_empty()

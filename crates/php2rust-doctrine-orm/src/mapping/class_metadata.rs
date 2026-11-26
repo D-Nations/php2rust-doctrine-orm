@@ -132,6 +132,24 @@ impl ClassMetadata {
     }
 }
 
+/// The metadata as a PHP value: a query parameter (`INSTANCE OF :param`)
+/// takes it.
+impl php_value::PhpObject for ClassMetadata {
+    fn class(&self) -> &str {
+        CLASS
+    }
+
+    fn properties(&self) -> PhpArray {
+        PhpArray::new()
+    }
+
+    fn instance_of(&self, class: &str) -> bool {
+        [CLASS, "Doctrine\\Persistence\\Mapping\\ClassMetadata"]
+            .iter()
+            .any(|known| known.eq_ignore_ascii_case(class))
+    }
+}
+
 impl PersistenceClassMetadata for ClassMetadata {
     fn get_name(&self) -> String {
         self.read().name.clone()
