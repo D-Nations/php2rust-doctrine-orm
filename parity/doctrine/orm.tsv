@@ -1525,7 +1525,7 @@ tests/Tests/ORM/Functional/Ticket/GH6499Test.php	GH6499Test::testIssueReversed	p
 tests/Tests/ORM/Functional/Ticket/GH6531Test.php	GH6531Test::testDynamicAttributes	ported	crates/php2rust-doctrine-orm/tests/gh6531_test.rs::testDynamicAttributes
 tests/Tests/ORM/Functional/Ticket/GH6531Test.php	GH6531Test::testJoinTableWithMetadata	ported	crates/php2rust-doctrine-orm/tests/gh6531_test.rs::testJoinTableWithMetadata
 tests/Tests/ORM/Functional/Ticket/GH6531Test.php	GH6531Test::testSimpleDerivedIdentity	ported	crates/php2rust-doctrine-orm/tests/gh6531_test.rs::testSimpleDerivedIdentity
-tests/Tests/ORM/Functional/Ticket/GH6682Test.php	GH6682Test::testIssue	pending	
+tests/Tests/ORM/Functional/Ticket/GH6682Test.php	GH6682Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/gh6682_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/GH6699Test.php	GH6699Test::testMixedParametersWithZeroNumber	pending	
 tests/Tests/ORM/Functional/Ticket/GH6699Test.php	GH6699Test::testMixedParametersWithZeroNumberOnQueryBuilder	pending	
 tests/Tests/ORM/Functional/Ticket/GH6740Test.php	GH6740Test::testCollectionFilteringEqualsOperator	pending	
