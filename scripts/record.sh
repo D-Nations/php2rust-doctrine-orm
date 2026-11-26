@@ -32,5 +32,8 @@ record() {
 case "${1:-}" in
     lexer) record lexer.php crates/php2rust-doctrine-lexer/tests/data/lexer.json ;;
     event-manager) record event_manager.php crates/php2rust-doctrine-event-manager/tests/data/event_manager.json ;;
-    *) echo "usage: scripts/record.sh lexer|event-manager" >&2; exit 2 ;;
+    collections)
+        record doctrine_collections.php \
+            crates/php2rust-doctrine-collections/tests/data/doctrine_collections.json ;;
+    *) echo "usage: scripts/record.sh lexer|event-manager|collections" >&2; exit 2 ;;
 esac

@@ -9,5 +9,9 @@ description = "Port of doctrine/collections"
 [dependencies]
 php-value = { workspace = true }
 
+[dev-dependencies]
+php-value = { workspace = true, features = ["vectors"] }
+serde_json = "1.0.154"
+
 [lints]
 workspace = true

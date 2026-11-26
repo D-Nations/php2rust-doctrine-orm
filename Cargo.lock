@@ -54,6 +54,7 @@ name = "php2rust-doctrine-collections"
 version = "0.1.0"
 dependencies = [
  "php2rust-value",
+ "serde_json",
 ]
 
 [[package]]
@@ -85,6 +86,9 @@ dependencies = [
 name = "php2rust-value"
 version = "0.1.0"
 source = "git+https://github.com/D-Nations/php2rust-compatibility-tools?rev=977342827ba414362c6af60f38dd376f2fbcfd72#977342827ba414362c6af60f38dd376f2fbcfd72"
+dependencies = [
+ "serde_json",
+]
 
 [[package]]
 name = "proc-macro2"
