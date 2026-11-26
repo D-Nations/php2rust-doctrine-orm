@@ -6,6 +6,9 @@
 //!
 //! Upstream: doctrine/lexer src/AbstractLexer.php
 
+use std::collections::HashMap;
+use std::sync::{Arc, Mutex, OnceLock, PoisonError};
+
 use php_regex::PcreError;
 use php_value::{PhpString, Value};
 
@@ -33,7 +36,7 @@ pub struct LexerState<T, V = Value> {
 
 #[derive(Debug, Clone)]
 enum Compiled {
-    Regex(Box<Splitter>),
+    Regex(Arc<Splitter>),
     /// PHP warns and `preg_split()` returns `false`.
     Invalid,
     /// A pattern `php_regex` does not translate.
@@ -305,11 +308,39 @@ fn compile(catchable: &[PhpString], non_catchable: &[PhpString], modifiers: &[u8
     join(&mut body, catchable, b")|(");
     body.extend_from_slice(b")|");
     join(&mut body, non_catchable, b"|");
-    match Splitter::new(&body, modifiers) {
-        Ok(splitter) => Compiled::Regex(Box::new(splitter)),
+    match cached_splitter(&body, modifiers) {
+        Ok(splitter) => Compiled::Regex(splitter),
         Err(PcreError::Compile(_)) => Compiled::Invalid,
         Err(error @ PcreError::Unsupported(_)) => Compiled::Unsupported(error),
     }
+}
+
+/// Compiled split patterns by body and modifiers.
+type SplitterCache = HashMap<(Vec<u8>, Vec<u8>), Arc<Splitter>>;
+
+/// PHP keeps compiled patterns in a per-process cache (4096 entries); so
+/// does this port, so that a new lexer for the same patterns (the ORM makes
+/// one per query) does not compile them again.
+fn cached_splitter(body: &[u8], modifiers: &[u8]) -> Result<Arc<Splitter>, PcreError> {
+    const LIMIT: usize = 4096;
+    static CACHE: OnceLock<Mutex<SplitterCache>> = OnceLock::new();
+
+    let cache = CACHE.get_or_init(Mutex::default);
+    let key = (body.to_vec(), modifiers.to_vec());
+    if let Some(splitter) = cache
+        .lock()
+        .unwrap_or_else(PoisonError::into_inner)
+        .get(&key)
+    {
+        return Ok(splitter.clone());
+    }
+    let splitter = Arc::new(Splitter::new(body, modifiers)?);
+    let mut cache = cache.lock().unwrap_or_else(PoisonError::into_inner);
+    if cache.len() >= LIMIT {
+        cache.clear();
+    }
+    cache.insert(key, splitter.clone());
+    Ok(splitter)
 }
 
 fn join(out: &mut Vec<u8>, parts: &[PhpString], glue: &[u8]) {
