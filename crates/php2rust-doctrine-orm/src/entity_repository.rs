@@ -249,3 +249,19 @@ fn lcfirst(word: &str) -> String {
         None => String::new(),
     }
 }
+
+/// The query builder of the repository.
+impl EntityRepository {
+    /// Creates a new `QueryBuilder` instance that is prepopulated for this entity name.
+    pub fn create_query_builder(
+        &self,
+        alias: &str,
+        index_by: Option<&str>,
+    ) -> Result<crate::query_builder::QueryBuilder, Thrown> {
+        let mut query_builder = self.em()?.create_query_builder();
+        query_builder
+            .select(vec![Value::from(alias)])?
+            .from(&self.entity_name, alias, index_by)?;
+        Ok(query_builder)
+    }
+}

@@ -84,6 +84,52 @@ pub(crate) fn get_type_of_column(
     ))
 }
 
+/// `PersisterHelper::getTypeOfField($fieldName, $class, $em)`: the types
+/// of the field (one for each join column of an association).
+pub(crate) fn get_type_of_field(
+    field_name: &str,
+    class: &Arc<ClassMetadata>,
+    em: &dyn QueryContext,
+) -> Result<Vec<String>, Thrown> {
+    let (assoc, owning) = {
+        let info = class.read();
+        if let Some(mapping) = info.field_mappings.get(field_name) {
+            return Ok(vec![mapping.r#type.clone()]);
+        }
+        let Some(assoc) = info.association_mappings.get(field_name) else {
+            return Ok(Vec::new());
+        };
+        (assoc.clone(), assoc.is_owning_side())
+    };
+
+    if !owning {
+        let target = em.get_class_metadata(&assoc.target_entity)?;
+        return get_type_of_field(assoc.mapped_by.as_deref().unwrap_or_default(), &target, em);
+    }
+
+    let join_columns = if assoc.is_many_to_many_owning_side() {
+        assoc
+            .join_table
+            .as_ref()
+            .map(|t| t.join_columns.clone())
+            .unwrap_or_default()
+    } else {
+        assoc.join_columns.clone()
+    };
+
+    let target_class = em.get_class_metadata(&assoc.target_entity)?;
+    let mut types = Vec::new();
+    for join_column in &join_columns {
+        types.push(get_type_of_column(
+            &join_column.referenced_column_name,
+            &target_class,
+            em,
+        )?);
+    }
+
+    Ok(types)
+}
+
 /// `HierarchyDiscriminatorResolver::resolveDiscriminatorsForClass()`:
 /// the discriminator values of the class and its subclasses, as the keys
 /// of an array (the values are `null`).

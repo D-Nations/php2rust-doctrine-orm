@@ -1,7 +1,7 @@
 <?php
 // Describes the models of the doctrine/orm DQL tests (the Parser, SqlWalker
-// and tree walker tests) for crates/php2rust-doctrine-orm/tests/common/
-// models.rs, through orm_models.php: the test files, the models that their
+// and tree walker tests, QueryBuilderTest and the pagination tests) for
+// crates/php2rust-doctrine-orm/tests/common/models.rs, through orm_models.php: the test files, the models that their
 // DQL strings and imports name, and the whole CMS and Company model sets.
 
 $root  = __DIR__ . '/../../upstream/doctrine/orm/tests/Tests';
@@ -16,6 +16,15 @@ $files = [
     'ORM/Query/CustomTreeWalkersJoinTest.php',
     'ORM/Query/SqlWalkerTest.php',
     'ORM/Query/TypedExpressionDeprecationTest.php',
+    'ORM/QueryBuilderTest.php',
+    'ORM/Tools/Pagination/PaginationTestCase.php',
+    'ORM/Tools/Pagination/CountWalkerTest.php',
+    'ORM/Tools/Pagination/CountOutputWalkerTest.php',
+    'ORM/Tools/Pagination/LimitSubqueryWalkerTest.php',
+    'ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php',
+    'ORM/Tools/Pagination/WhereInWalkerTest.php',
+    'ORM/Tools/Pagination/RootTypeWalkerTest.php',
+    'ORM/Tools/Pagination/PaginatorTest.php',
 ];
 
 $classes = [];

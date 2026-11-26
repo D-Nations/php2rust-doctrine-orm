@@ -5,8 +5,9 @@
 //! of the iterable providers are a `\Generator` stand-in that `foreach`
 //! traverses (`PhpObject::traverse()`). `VerifyDeprecations` is
 //! `crate::deprecations`. The five subquery tests (`exists()`, `all()`,
-//! `some()`, `any()`, `not()` of a `QueryBuilder`) need the entity manager
-//! and query builder, which are not ported; they stay pending.
+//! `some()`, `any()`, `not()` of a `QueryBuilder`) pass the builder as
+//! `QueryBuilder::to_value()`, a `Stringable` object whose string is the
+//! builder's DQL, on the test entity manager (`tests/common/dql.rs`).
 //!
 //! Upstream: doctrine/orm tests/Tests/ORM/Query/ExprTest.php
 
@@ -16,6 +17,12 @@
     reason = "test helpers; a panic is a test failure"
 )]
 #![allow(non_snake_case)]
+#![allow(clippy::arc_with_non_send_sync, reason = "the test entity manager")]
+
+#[path = "common/dql.rs"]
+mod dql;
+#[path = "common/models.rs"]
+mod models;
 
 use php_value::object::StdClass;
 use php_value::{PhpArray, PhpObject, PhpString, Value};
@@ -67,6 +74,67 @@ impl PhpObject for Generator {
 
 fn generator(values: Vec<Value>) -> Value {
     Value::Object(std::sync::Arc::new(Generator(values)))
+}
+
+/// `$this->entityManager->createQueryBuilder()` with
+/// `select('u')->from('User', 'u')->where('u.name = ?1')`, as the value
+/// the expression takes.
+fn subquery() -> Value {
+    let entity_manager: std::sync::Arc<dyn php2rust_doctrine_orm::query::context::QueryContext> =
+        std::sync::Arc::new(dql::TestEntityManager::new());
+    let mut qb = php2rust_doctrine_orm::QueryBuilder::new(entity_manager);
+    qb.select(vec![v("u")])
+        .unwrap()
+        .from("User", "u", None)
+        .unwrap()
+        .r#where(vec![v("u.name = ?1")])
+        .unwrap();
+    qb.to_value().unwrap()
+}
+
+#[test]
+fn testExistsExpr() {
+    let expr = set_up();
+    assert_eq!(
+        "EXISTS(SELECT u FROM User u WHERE u.name = ?1)",
+        s(expr.exists(subquery()).try_to_string())
+    );
+}
+
+#[test]
+fn testAllExpr() {
+    let expr = set_up();
+    assert_eq!(
+        "ALL(SELECT u FROM User u WHERE u.name = ?1)",
+        s(expr.all(subquery()).try_to_string())
+    );
+}
+
+#[test]
+fn testSomeExpr() {
+    let expr = set_up();
+    assert_eq!(
+        "SOME(SELECT u FROM User u WHERE u.name = ?1)",
+        s(expr.some(subquery()).try_to_string())
+    );
+}
+
+#[test]
+fn testAnyExpr() {
+    let expr = set_up();
+    assert_eq!(
+        "ANY(SELECT u FROM User u WHERE u.name = ?1)",
+        s(expr.any(subquery()).try_to_string())
+    );
+}
+
+#[test]
+fn testNotExpr() {
+    let expr = set_up();
+    assert_eq!(
+        "NOT(SELECT u FROM User u WHERE u.name = ?1)",
+        s(expr.not(subquery()).try_to_string())
+    );
 }
 
 #[test]

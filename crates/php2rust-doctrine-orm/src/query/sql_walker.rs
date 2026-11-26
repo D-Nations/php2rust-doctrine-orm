@@ -3840,3 +3840,28 @@ impl<'a> SqlWalker<'a> for SqlOutputWalker<'a> {
 }
 
 impl<'a> OutputWalker<'a> for SqlOutputWalker<'a> {}
+
+/// `clone $walker`: PHP copies the walker's arrays and shares its objects
+/// (the parser result and its result set mapping).
+impl Clone for SqlWalkerState<'_> {
+    fn clone(&self) -> Self {
+        Self {
+            query: self.query,
+            parser_result: Rc::clone(&self.parser_result),
+            query_components: self.query_components.clone(),
+            em: self.em,
+            alias_counter: self.alias_counter,
+            table_alias_counter: self.table_alias_counter,
+            scalar_result_counter: self.scalar_result_counter,
+            sql_param_index: self.sql_param_index,
+            new_object_counter: self.new_object_counter,
+            table_alias_map: self.table_alias_map.clone(),
+            scalar_result_alias_map: self.scalar_result_alias_map.clone(),
+            ordered_columns_map: self.ordered_columns_map.clone(),
+            scalar_fields: self.scalar_fields.clone(),
+            selected_classes: self.selected_classes.clone(),
+            root_aliases: self.root_aliases.clone(),
+            use_sql_table_aliases: self.use_sql_table_aliases,
+        }
+    }
+}

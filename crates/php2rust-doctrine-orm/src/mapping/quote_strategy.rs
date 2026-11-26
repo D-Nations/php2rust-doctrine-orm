@@ -395,3 +395,9 @@ impl QuoteStrategy for AnsiQuoteStrategy {
         get_sql_result_casing(platform, &format!("{column_name}_{counter}"))
     }
 }
+
+/// `SQLResultCasing::getSQLResultCasing()`, for the paginator's count
+/// query.
+pub(crate) fn sql_result_casing(platform: &dyn AbstractPlatform, column: &str) -> String {
+    get_sql_result_casing(platform, column)
+}
