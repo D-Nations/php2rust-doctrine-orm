@@ -890,6 +890,7 @@ crates/php2rust-doctrine-orm/tests/gh7836_test.rs	doctrine/orm	tests/Tests/ORM/F
 crates/php2rust-doctrine-orm/tests/gh7864_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/GH7864Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/gh8011_test.rs	doctrine/orm	tests/Tests/ORM/Functional/GH8011Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/gh8055_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/GH8055Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/tests/gh8127_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/GH8127Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/identity_map_test.rs	doctrine/orm	tests/Tests/ORM/Functional/IdentityMapTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/index_by_association_test.rs	doctrine/orm	tests/Tests/ORM/Functional/IndexByAssociationTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/index_by_association_test.rs	doctrine/orm	tests/Tests/Models/StockExchange/Market.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
