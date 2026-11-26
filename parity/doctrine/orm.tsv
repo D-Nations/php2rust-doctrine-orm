@@ -349,8 +349,8 @@ tests/Tests/ORM/Functional/CustomForeignKeyNameTest.php	CustomForeignKeyNameTest
 tests/Tests/ORM/Functional/CustomForeignKeyNameTest.php	CustomForeignKeyNameTest::testManyToOneGeneratesCustomForeignKeyName	pending	
 tests/Tests/ORM/Functional/CustomForeignKeyNameTest.php	CustomForeignKeyNameTest::testMultipleCompositeFKNamesThrowsException	pending	
 tests/Tests/ORM/Functional/CustomForeignKeyNameTest.php	CustomForeignKeyNameTest::testPartialCompositeFKNamesIsValid	pending	
-tests/Tests/ORM/Functional/CustomFunctionsTest.php	CustomFunctionsTest::testCustomFunctionDefinedWithCallback	pending	
-tests/Tests/ORM/Functional/CustomFunctionsTest.php	CustomFunctionsTest::testCustomFunctionOverride	pending	
+tests/Tests/ORM/Functional/CustomFunctionsTest.php	CustomFunctionsTest::testCustomFunctionDefinedWithCallback	ported	crates/php2rust-doctrine-orm/tests/custom_functions_test.rs::testCustomFunctionDefinedWithCallback
+tests/Tests/ORM/Functional/CustomFunctionsTest.php	CustomFunctionsTest::testCustomFunctionOverride	ported	crates/php2rust-doctrine-orm/tests/custom_functions_test.rs::testCustomFunctionOverride
 tests/Tests/ORM/Functional/CustomIdObjectTypeTest.php	CustomIdObjectTypeTest::testFetchJoinCustomIdObject	pending	
 tests/Tests/ORM/Functional/CustomIdObjectTypeTest.php	CustomIdObjectTypeTest::testFetchJoinWhereCustomIdObject	pending	
 tests/Tests/ORM/Functional/CustomIdObjectTypeTest.php	CustomIdObjectTypeTest::testFindByCustomIdObject	pending	

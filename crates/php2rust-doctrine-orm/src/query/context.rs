@@ -434,15 +434,24 @@ impl QueryContext for crate::entity_manager::EntityManager {
     }
 
     fn get_custom_string_function(&self, name: &str) -> Option<FunctionFactory> {
-        function_class(self.get_configuration().get_custom_string_function(name))
+        let configuration = self.get_configuration();
+        configuration
+            .get_custom_string_function_callable(name)
+            .or_else(|| function_class(configuration.get_custom_string_function(name)))
     }
 
     fn get_custom_numeric_function(&self, name: &str) -> Option<FunctionFactory> {
-        function_class(self.get_configuration().get_custom_numeric_function(name))
+        let configuration = self.get_configuration();
+        configuration
+            .get_custom_numeric_function_callable(name)
+            .or_else(|| function_class(configuration.get_custom_numeric_function(name)))
     }
 
     fn get_custom_datetime_function(&self, name: &str) -> Option<FunctionFactory> {
-        function_class(self.get_configuration().get_custom_datetime_function(name))
+        let configuration = self.get_configuration();
+        configuration
+            .get_custom_datetime_function_callable(name)
+            .or_else(|| function_class(configuration.get_custom_datetime_function(name)))
     }
 
     fn has_filters(&self) -> bool {
