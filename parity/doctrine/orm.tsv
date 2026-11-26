@@ -1551,7 +1551,7 @@ tests/Tests/ORM/Functional/Ticket/GH7259Test.php	GH7259Test::testPersistFileBefo
 tests/Tests/ORM/Functional/Ticket/GH7286Test.php	GH7286Test::testAggregateExpressionInFunction	ported	crates/php2rust-doctrine-orm/tests/gh7286_test.rs::testAggregateExpressionInFunction
 tests/Tests/ORM/Functional/Ticket/GH7286Test.php	GH7286Test::testAggregateFunctionInCustomFunction	ported	crates/php2rust-doctrine-orm/tests/gh7286_test.rs::testAggregateFunctionInCustomFunction
 tests/Tests/ORM/Functional/Ticket/GH7366Test.php	GH7366Test::testOptimisticLockNoExceptionOnFind	ported	crates/php2rust-doctrine-orm/tests/gh7366_test.rs::testOptimisticLockNoExceptionOnFind
-tests/Tests/ORM/Functional/Ticket/GH7496WithToIterableTest.php	GH7496WithToIterableTest::testNonUniqueObjectHydrationDuringIteration	pending	
+tests/Tests/ORM/Functional/Ticket/GH7496WithToIterableTest.php	GH7496WithToIterableTest::testNonUniqueObjectHydrationDuringIteration	ported	crates/php2rust-doctrine-orm/tests/gh7496_with_to_iterable_test.rs::testNonUniqueObjectHydrationDuringIteration
 tests/Tests/ORM/Functional/Ticket/GH7505Test.php	GH7505Test::testSimpleArrayTypeHydratedCorrectly	pending	
 tests/Tests/ORM/Functional/Ticket/GH7512Test.php	GH7512Test::testFindEntityByAssociationPropertyJoinedChildWithClearMetadata	pending	
 tests/Tests/ORM/Functional/Ticket/GH7629Test.php	GH7629Test::testClearScheduledForSynchronizationWhenCommitEmpty	pending	
