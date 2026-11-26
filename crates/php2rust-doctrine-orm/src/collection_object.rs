@@ -276,3 +276,33 @@ pub async fn first(collection: &Value) -> Result<Value, Thrown> {
 pub async fn get_values(collection: &Value) -> Result<Vec<Value>, Thrown> {
     Ok(to_array(collection).await?.values().cloned().collect())
 }
+
+/// `$collection->matching($criteria)`: the matched collection (an
+/// `ArrayCollection` object, or a `LazyCriteriaCollection` for an
+/// uninitialized extra-lazy one-to-many collection).
+pub async fn matching(
+    collection: &Value,
+    criteria: &php2rust_doctrine_collections::Criteria,
+) -> Result<Value, Thrown> {
+    match of(collection)? {
+        CollectionRef::Array(c) => {
+            let matched = c.lock().matching(criteria)?;
+            Ok(ArrayCollectionObject::value(matched.to_array()))
+        }
+        CollectionRef::Persistent(c) => c.matching(criteria).await,
+        CollectionRef::Lazy(c) => c.matching(criteria).await,
+    }
+}
+
+/// `$collection->slice($offset, $length)`.
+pub async fn slice(
+    collection: &Value,
+    offset: i64,
+    length: Option<i64>,
+) -> Result<PhpArray, Thrown> {
+    match of(collection)? {
+        CollectionRef::Array(c) => Ok(c.lock().slice(offset, length)),
+        CollectionRef::Persistent(c) => c.slice(offset, length).await,
+        CollectionRef::Lazy(c) => c.slice(offset, length).await,
+    }
+}
