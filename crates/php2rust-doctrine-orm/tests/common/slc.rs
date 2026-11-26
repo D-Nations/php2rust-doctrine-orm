@@ -1,13 +1,15 @@
 //! Helpers shared by the second-level cache tests that need an entity
 //! manager: `OrmTestCase::enableSecondLevelCache()` with
-//! `getTestEntityManager()`, the `Region`, `ConcurrentRegion` and
-//! `EntityPersister` mocks (`createMock()`: each records its calls and
+//! `getTestEntityManager()`, the `Region`, `ConcurrentRegion`,
+//! `EntityPersister` and `CollectionPersister` mocks (`createMock()`: each records its calls and
 //! returns what the test sets, or its type's default: `''`, `false`,
 //! `null`, `[]`, `0`), and the `Doctrine\Tests\Models\Cache` models'
 //! constructors.
 //!
 //! Upstream: doctrine/orm tests/Tests/OrmTestCase.php
 //! Upstream: doctrine/orm tests/Tests/Models/Cache/Country.php
+//! Upstream: doctrine/orm tests/Tests/Models/Cache/State.php
+//! Upstream: doctrine/orm tests/Tests/Models/Cache/City.php
 
 #![allow(dead_code, reason = "each test file uses a subset")]
 #![allow(
@@ -19,7 +21,7 @@
 use std::collections::{HashMap, VecDeque};
 use std::sync::{Arc, Mutex};
 
-use php_value::{Object, PhpArray, Thrown, Value};
+use php_value::{Key, Object, PhpArray, Thrown, Value};
 use php2rust_doctrine_collections::Criteria;
 use php2rust_doctrine_dbal::LockMode;
 use php2rust_doctrine_orm::cache::pool::ArrayAdapter;
@@ -28,9 +30,11 @@ use php2rust_doctrine_orm::cache::{
     CacheConfiguration, CacheEntry, CacheKey, CollectionCacheEntry, ConcurrentRegion,
     DefaultCacheFactory, Lock, Region,
 };
+use php2rust_doctrine_orm::collection_object::ArrayCollectionObject;
 use php2rust_doctrine_orm::entity_manager::EntityManager;
 use php2rust_doctrine_orm::mapping::{AssociationMapping, ClassMetadata};
 use php2rust_doctrine_orm::persistent_collection::PersistentCollection;
+use php2rust_doctrine_orm::persisters::collection::CollectionPersister;
 use php2rust_doctrine_orm::persisters::{
     CommitPersister, EntityPersister, EntityPersisterInterface, Params, PersisterCriteria,
 };
@@ -81,6 +85,30 @@ pub fn country(name: &str) -> Object {
     let country = orm::new_object(COUNTRY);
     orm::set(&country, "name", Value::string(name));
     country
+}
+
+/// `new State($name)`.
+pub fn state(name: &str) -> Object {
+    let state = orm::new_object(STATE);
+    orm::set(&state, "name", Value::string(name));
+    orm::set(
+        &state,
+        "cities",
+        ArrayCollectionObject::value(PhpArray::new()),
+    );
+    state
+}
+
+/// `new City($name, $state)`.
+pub fn city(name: &str, state: Option<&Object>) -> Object {
+    let city = orm::new_object(CITY);
+    orm::set(&city, "name", Value::string(name));
+    orm::set(
+        &city,
+        "state",
+        state.map_or(Value::Null, |s| Value::Object(s.clone())),
+    );
+    city
 }
 
 /// A PHP array of string keys.
@@ -705,5 +733,131 @@ impl EntityPersisterInterface for EntityPersisterMock {
             ],
         );
         Box::pin(async move { Ok(ret) })
+    }
+}
+
+/// `createMock(CollectionPersister::class)`.
+#[derive(Debug, Default)]
+pub struct CollectionPersisterMock {
+    pub recorder: Recorder,
+}
+
+impl CollectionPersisterMock {
+    pub fn new() -> Arc<Self> {
+        Arc::new(Self::default())
+    }
+
+    /// The collection argument (`identicalTo($collection)`).
+    pub fn collection(collection: &Arc<PersistentCollection>) -> Arg {
+        Arg::Text(format!("{:p}", Arc::as_ptr(collection)))
+    }
+}
+
+impl CollectionPersister for CollectionPersisterMock {
+    fn delete<'a>(&'a self, collection: &'a Arc<PersistentCollection>) -> Fut<'a, ()> {
+        self.recorder
+            .record("delete", vec![Self::collection(collection)]);
+        Box::pin(async { Ok(()) })
+    }
+
+    fn update<'a>(&'a self, collection: &'a Arc<PersistentCollection>) -> Fut<'a, ()> {
+        self.recorder
+            .record("update", vec![Self::collection(collection)]);
+        Box::pin(async { Ok(()) })
+    }
+
+    fn count<'a>(&'a self, collection: &'a Arc<PersistentCollection>) -> Fut<'a, i64> {
+        let ret = self
+            .recorder
+            .record("count", vec![Self::collection(collection)]);
+        Box::pin(async move {
+            Ok(match ret {
+                Some(Ret::Int(count)) => count,
+                _ => 0,
+            })
+        })
+    }
+
+    fn slice<'a>(
+        &'a self,
+        collection: &'a Arc<PersistentCollection>,
+        offset: i64,
+        length: Option<i64>,
+    ) -> Fut<'a, PhpArray> {
+        let ret = self.recorder.record(
+            "slice",
+            vec![
+                Self::collection(collection),
+                Arg::Value(Value::Int(offset)),
+                Arg::opt_int(length),
+            ],
+        );
+        Box::pin(async move {
+            Ok(match ret {
+                Some(Ret::Array(array)) => array,
+                Some(Ret::Objects(objects)) => {
+                    PhpArray::list(objects.into_iter().map(Value::Object))
+                }
+                _ => PhpArray::new(),
+            })
+        })
+    }
+
+    fn contains<'a>(
+        &'a self,
+        collection: &'a Arc<PersistentCollection>,
+        element: &'a Object,
+    ) -> Fut<'a, bool> {
+        let ret = ret_bool(self.recorder.record(
+            "contains",
+            vec![Self::collection(collection), Arg::object(element)],
+        ));
+        Box::pin(async move { Ok(ret) })
+    }
+
+    fn contains_key<'a>(
+        &'a self,
+        collection: &'a Arc<PersistentCollection>,
+        key: &'a Key,
+    ) -> Fut<'a, bool> {
+        let ret = ret_bool(self.recorder.record(
+            "containsKey",
+            vec![Self::collection(collection), Arg::Value(key.to_value())],
+        ));
+        Box::pin(async move { Ok(ret) })
+    }
+
+    fn get<'a>(
+        &'a self,
+        collection: &'a Arc<PersistentCollection>,
+        index: &'a Value,
+    ) -> Fut<'a, Option<Object>> {
+        let ret = self.recorder.record(
+            "get",
+            vec![Self::collection(collection), Arg::Value(index.clone())],
+        );
+        Box::pin(async move {
+            Ok(match ret {
+                Some(Ret::Object(object)) => object,
+                _ => None,
+            })
+        })
+    }
+
+    fn load_criteria<'a>(
+        &'a self,
+        collection: &'a Arc<PersistentCollection>,
+        criteria: &'a Criteria,
+    ) -> Fut<'a, Vec<Value>> {
+        let ret = self.recorder.record(
+            "loadCriteria",
+            vec![Self::collection(collection), Arg::criteria(criteria)],
+        );
+        Box::pin(async move {
+            Ok(match ret {
+                Some(Ret::Objects(objects)) => objects.into_iter().map(Value::Object).collect(),
+                _ => Vec::new(),
+            })
+        })
     }
 }
