@@ -1,3 +1,3 @@
 # doctrine/lexer at 71d305eaa6480d3d3460c7d053d1da7749fa9cca: upstream file	classes	code lines	status	rust files
-src/AbstractLexer.php	AbstractLexer	143	pending	
+src/AbstractLexer.php	AbstractLexer	143	ported	crates/php2rust-doctrine-lexer/src/abstract_lexer.rs
 src/Token.php	Token	20	ported	crates/php2rust-doctrine-lexer/src/token.rs

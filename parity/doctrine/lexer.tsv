@@ -1,20 +1,20 @@
 # doctrine/lexer at 71d305eaa6480d3d3460c7d053d1da7749fa9cca: upstream test	method	status	rust test
-tests/AbstractLexerTest.php	AbstractLexerTest::testAddCatchablePatternsToMutableLexer	pending	
-tests/AbstractLexerTest.php	AbstractLexerTest::testCanTokenizeFloatValue	pending	
-tests/AbstractLexerTest.php	AbstractLexerTest::testGetInputUntilPosition	pending	
-tests/AbstractLexerTest.php	AbstractLexerTest::testGetLiteral	pending	
-tests/AbstractLexerTest.php	AbstractLexerTest::testGetLiteralWithEnumLexer	pending	
-tests/AbstractLexerTest.php	AbstractLexerTest::testGlimpse	pending	
-tests/AbstractLexerTest.php	AbstractLexerTest::testIsA	pending	
-tests/AbstractLexerTest.php	AbstractLexerTest::testIsNextToken	pending	
-tests/AbstractLexerTest.php	AbstractLexerTest::testIsNextTokenAny	pending	
-tests/AbstractLexerTest.php	AbstractLexerTest::testMarkerAnnotationLocaleTr	pending	
-tests/AbstractLexerTest.php	AbstractLexerTest::testMoveNext	pending	
-tests/AbstractLexerTest.php	AbstractLexerTest::testPeek	pending	
-tests/AbstractLexerTest.php	AbstractLexerTest::testResetPeek	pending	
-tests/AbstractLexerTest.php	AbstractLexerTest::testResetPosition	pending	
-tests/AbstractLexerTest.php	AbstractLexerTest::testResetPositionByTokenPosition	pending	
-tests/AbstractLexerTest.php	AbstractLexerTest::testResetPositionPastTheLastToken	pending	
-tests/AbstractLexerTest.php	AbstractLexerTest::testSkipUntil	pending	
-tests/AbstractLexerTest.php	AbstractLexerTest::testUtf8Mismatch	pending	
+tests/AbstractLexerTest.php	AbstractLexerTest::testAddCatchablePatternsToMutableLexer	ported	crates/php2rust-doctrine-lexer/tests/abstract_lexer_test.rs::testAddCatchablePatternsToMutableLexer
+tests/AbstractLexerTest.php	AbstractLexerTest::testCanTokenizeFloatValue	ported	crates/php2rust-doctrine-lexer/tests/abstract_lexer_test.rs::testCanTokenizeFloatValue
+tests/AbstractLexerTest.php	AbstractLexerTest::testGetInputUntilPosition	ported	crates/php2rust-doctrine-lexer/tests/abstract_lexer_test.rs::testGetInputUntilPosition
+tests/AbstractLexerTest.php	AbstractLexerTest::testGetLiteral	ported	crates/php2rust-doctrine-lexer/tests/abstract_lexer_test.rs::testGetLiteral
+tests/AbstractLexerTest.php	AbstractLexerTest::testGetLiteralWithEnumLexer	ported	crates/php2rust-doctrine-lexer/tests/abstract_lexer_test.rs::testGetLiteralWithEnumLexer
+tests/AbstractLexerTest.php	AbstractLexerTest::testGlimpse	ported	crates/php2rust-doctrine-lexer/tests/abstract_lexer_test.rs::testGlimpse
+tests/AbstractLexerTest.php	AbstractLexerTest::testIsA	ported	crates/php2rust-doctrine-lexer/tests/abstract_lexer_test.rs::testIsA
+tests/AbstractLexerTest.php	AbstractLexerTest::testIsNextToken	ported	crates/php2rust-doctrine-lexer/tests/abstract_lexer_test.rs::testIsNextToken
+tests/AbstractLexerTest.php	AbstractLexerTest::testIsNextTokenAny	ported	crates/php2rust-doctrine-lexer/tests/abstract_lexer_test.rs::testIsNextTokenAny
+tests/AbstractLexerTest.php	AbstractLexerTest::testMarkerAnnotationLocaleTr	ported	crates/php2rust-doctrine-lexer/tests/abstract_lexer_test.rs::testMarkerAnnotationLocaleTr
+tests/AbstractLexerTest.php	AbstractLexerTest::testMoveNext	ported	crates/php2rust-doctrine-lexer/tests/abstract_lexer_test.rs::testMoveNext
+tests/AbstractLexerTest.php	AbstractLexerTest::testPeek	ported	crates/php2rust-doctrine-lexer/tests/abstract_lexer_test.rs::testPeek
+tests/AbstractLexerTest.php	AbstractLexerTest::testResetPeek	ported	crates/php2rust-doctrine-lexer/tests/abstract_lexer_test.rs::testResetPeek
+tests/AbstractLexerTest.php	AbstractLexerTest::testResetPosition	ported	crates/php2rust-doctrine-lexer/tests/abstract_lexer_test.rs::testResetPosition
+tests/AbstractLexerTest.php	AbstractLexerTest::testResetPositionByTokenPosition	ported	crates/php2rust-doctrine-lexer/tests/abstract_lexer_test.rs::testResetPositionByTokenPosition
+tests/AbstractLexerTest.php	AbstractLexerTest::testResetPositionPastTheLastToken	ported	crates/php2rust-doctrine-lexer/tests/abstract_lexer_test.rs::testResetPositionPastTheLastToken
+tests/AbstractLexerTest.php	AbstractLexerTest::testSkipUntil	ported	crates/php2rust-doctrine-lexer/tests/abstract_lexer_test.rs::testSkipUntil
+tests/AbstractLexerTest.php	AbstractLexerTest::testUtf8Mismatch	ported	crates/php2rust-doctrine-lexer/tests/abstract_lexer_test.rs::testUtf8Mismatch
 tests/TokenTest.php	TokenTest::testIsA	ported	crates/php2rust-doctrine-lexer/tests/token_test.rs::testIsA

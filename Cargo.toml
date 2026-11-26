@@ -8,6 +8,7 @@ resolver = "3"
 # uncommitted .cargo/config.toml (see README.md).
 [workspace.dependencies]
 php-value = { package = "php2rust-value", git = "https://github.com/D-Nations/php2rust-compatibility-tools", rev = "977342827ba414362c6af60f38dd376f2fbcfd72" }
+php-regex = { package = "php2rust-regex", git = "https://github.com/D-Nations/php2rust-compatibility-tools", rev = "977342827ba414362c6af60f38dd376f2fbcfd72" }
 # Lints for every member (`[lints] workspace = true`), the same rule set as
 # symfony-rs and php2rust-compatibility-tools.
 [workspace.lints.clippy]

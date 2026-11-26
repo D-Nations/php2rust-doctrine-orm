@@ -30,5 +30,6 @@ record() {
 }
 
 case "${1:-}" in
-    *) echo "usage: scripts/record.sh TARGET (no targets yet)" >&2; exit 2 ;;
+    lexer) record lexer.php crates/php2rust-doctrine-lexer/tests/data/lexer.json ;;
+    *) echo "usage: scripts/record.sh lexer" >&2; exit 2 ;;
 esac
