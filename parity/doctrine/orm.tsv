@@ -1509,7 +1509,7 @@ tests/Tests/ORM/Functional/Ticket/GH6029Test.php	GH6029Test::testManyToManyAssoc
 tests/Tests/ORM/Functional/Ticket/GH6029Test.php	GH6029Test::testOneToManyAssociation	ported	crates/php2rust-doctrine-orm/tests/gh6029_test.rs::testOneToManyAssociation
 tests/Tests/ORM/Functional/Ticket/GH6123Test.php	GH6123Test::testLoadingRemovedEntityFromDatabaseDoesNotCreateNewManagedEntityInstance	ported	crates/php2rust-doctrine-orm/tests/gh6123_test.rs::testLoadingRemovedEntityFromDatabaseDoesNotCreateNewManagedEntityInstance
 tests/Tests/ORM/Functional/Ticket/GH6123Test.php	GH6123Test::testRemovedEntityCanBePersistedAgain	ported	crates/php2rust-doctrine-orm/tests/gh6123_test.rs::testRemovedEntityCanBePersistedAgain
-tests/Tests/ORM/Functional/Ticket/GH6141Test.php	GH6141Test::testEnumDiscriminatorsShouldBeConvertedToString	pending	
+tests/Tests/ORM/Functional/Ticket/GH6141Test.php	GH6141Test::testEnumDiscriminatorsShouldBeConvertedToString	ported	crates/php2rust-doctrine-orm/tests/gh6141_test.rs::testEnumDiscriminatorsShouldBeConvertedToString
 tests/Tests/ORM/Functional/Ticket/GH6217Test.php	GH6217Test::testLoadingOfSecondLevelCacheOnEagerAssociations	pending	needs the second-level cache
 tests/Tests/ORM/Functional/Ticket/GH6362Test.php	GH6362Test::testInheritanceJoinAlias	ported	crates/php2rust-doctrine-orm/tests/gh6362_test.rs::testInheritanceJoinAlias
 tests/Tests/ORM/Functional/Ticket/GH6394Test.php	GH6394Test::testFetchVersionValueForDifferentIdFieldAndColumn	ported	crates/php2rust-doctrine-orm/tests/gh6394_test.rs::testFetchVersionValueForDifferentIdFieldAndColumn
