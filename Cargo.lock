@@ -79,6 +79,7 @@ version = "0.1.0"
 dependencies = [
  "php2rust-doctrine-lexer",
  "php2rust-value",
+ "serde_json",
 ]
 
 [[package]]

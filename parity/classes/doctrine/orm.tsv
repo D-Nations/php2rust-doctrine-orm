@@ -378,7 +378,7 @@ src/Query/Filter/FilterException.php	FilterException	16	pending
 src/Query/Filter/Parameter.php	Parameter	13	pending	
 src/Query/Filter/SQLFilter.php	SQLFilter	85	pending	
 src/Query/FilterCollection.php	FilterCollection	112	pending	
-src/Query/Lexer.php	Lexer	92	pending	
+src/Query/Lexer.php	Lexer	92	ported	crates/php2rust-doctrine-orm/src/query/lexer.rs
 src/Query/OutputWalker.php	OutputWalker	7	pending	
 src/Query/Parameter.php	Parameter	41	pending	
 src/Query/ParameterTypeInferer.php	ParameterTypeInferer	52	pending	

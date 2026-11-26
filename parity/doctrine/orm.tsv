@@ -2536,21 +2536,21 @@ tests/Tests/ORM/Query/LanguageRecognitionTest.php	LanguageRecognitionTest::testU
 tests/Tests/ORM/Query/LanguageRecognitionTest.php	LanguageRecognitionTest::testUpdateWorksWithMultipleFields	pending	
 tests/Tests/ORM/Query/LanguageRecognitionTest.php	LanguageRecognitionTest::testUpdateWorksWithOneField	pending	
 tests/Tests/ORM/Query/LanguageRecognitionTest.php	LanguageRecognitionTest::testUsageOfQComponentOutsideSubquery	pending	
-tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesDecimalInteger	pending	
-tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesFloat	pending	
-tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesFloatBig	pending	
-tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesFloatContainingWhitespace	pending	
-tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesFloatWithExponent	pending	
-tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesFloatWithExponent2	pending	
-tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesFloatWithNegativeExponent	pending	
-tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesInputParameter	pending	
-tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesNamedInputParameter	pending	
-tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesNamedInputParameterStartingWithUnderscore	pending	
-tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesStringContainingSingleQuotes	pending	
-tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesStringContainingWhitespace	pending	
-tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesTerminalString	pending	
-tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesTokens	pending	
-tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerTokenizesASimpleQueryCorrectly	pending	
+tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesDecimalInteger	ported	crates/php2rust-doctrine-orm/tests/query_lexer_test.rs::testScannerRecognizesDecimalInteger
+tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesFloat	ported	crates/php2rust-doctrine-orm/tests/query_lexer_test.rs::testScannerRecognizesFloat
+tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesFloatBig	ported	crates/php2rust-doctrine-orm/tests/query_lexer_test.rs::testScannerRecognizesFloatBig
+tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesFloatContainingWhitespace	ported	crates/php2rust-doctrine-orm/tests/query_lexer_test.rs::testScannerRecognizesFloatContainingWhitespace
+tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesFloatWithExponent	ported	crates/php2rust-doctrine-orm/tests/query_lexer_test.rs::testScannerRecognizesFloatWithExponent
+tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesFloatWithExponent2	ported	crates/php2rust-doctrine-orm/tests/query_lexer_test.rs::testScannerRecognizesFloatWithExponent2
+tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesFloatWithNegativeExponent	ported	crates/php2rust-doctrine-orm/tests/query_lexer_test.rs::testScannerRecognizesFloatWithNegativeExponent
+tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesInputParameter	ported	crates/php2rust-doctrine-orm/tests/query_lexer_test.rs::testScannerRecognizesInputParameter
+tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesNamedInputParameter	ported	crates/php2rust-doctrine-orm/tests/query_lexer_test.rs::testScannerRecognizesNamedInputParameter
+tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesNamedInputParameterStartingWithUnderscore	ported	crates/php2rust-doctrine-orm/tests/query_lexer_test.rs::testScannerRecognizesNamedInputParameterStartingWithUnderscore
+tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesStringContainingSingleQuotes	ported	crates/php2rust-doctrine-orm/tests/query_lexer_test.rs::testScannerRecognizesStringContainingSingleQuotes
+tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesStringContainingWhitespace	ported	crates/php2rust-doctrine-orm/tests/query_lexer_test.rs::testScannerRecognizesStringContainingWhitespace
+tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesTerminalString	ported	crates/php2rust-doctrine-orm/tests/query_lexer_test.rs::testScannerRecognizesTerminalString
+tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesTokens	ported	crates/php2rust-doctrine-orm/tests/query_lexer_test.rs::testScannerRecognizesTokens
+tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerTokenizesASimpleQueryCorrectly	ported	crates/php2rust-doctrine-orm/tests/query_lexer_test.rs::testScannerTokenizesASimpleQueryCorrectly
 tests/Tests/ORM/Query/NativeQueryTest.php	NativeQueryTest::testValuesAreNotBeingResolvedForSpecifiedParameterTypes	pending	
 tests/Tests/ORM/Query/ParameterTypeInfererTest.php	ParameterTypeInfererTest::testParameterTypeInferer	pending	
 tests/Tests/ORM/Query/ParserResultTest.php	ParserResultTest::testGetParameterMappings	pending	
