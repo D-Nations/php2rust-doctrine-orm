@@ -94,6 +94,22 @@ pub fn entity_manager(
     EntityManager::create(conn, config, event_manager).unwrap()
 }
 
+/// `getEntityManager()` with a configuration the caller changes first.
+pub fn entity_manager_with(
+    conn: Arc<Connection>,
+    configure: impl FnOnce(&mut Configuration),
+) -> Arc<EntityManager> {
+    models::register();
+    register_methods();
+    let mut config = Configuration::new();
+    config.set_metadata_driver_impl(Arc::new(
+        AttributeDriver::new(Vec::<String>::new(), true).unwrap(),
+    ));
+    config.enable_native_lazy_objects(true).unwrap();
+    configure(&mut config);
+    EntityManager::create(conn, config, None).unwrap()
+}
+
 /// `setUp()` with `useModelSet()` for the classes: a new database with
 /// their schema.
 pub async fn set_up(classes: &[&str]) -> Arc<EntityManager> {
