@@ -1847,10 +1847,10 @@ tests/Tests/ORM/Mapping/AnsiQuoteStrategyTest.php	AnsiQuoteStrategyTest::testIde
 tests/Tests/ORM/Mapping/AnsiQuoteStrategyTest.php	AnsiQuoteStrategyTest::testJoinColumnName	pending	
 tests/Tests/ORM/Mapping/AnsiQuoteStrategyTest.php	AnsiQuoteStrategyTest::testJoinTableName	pending	
 tests/Tests/ORM/Mapping/AnsiQuoteStrategyTest.php	AnsiQuoteStrategyTest::testReferencedJoinColumnName	pending	
-tests/Tests/ORM/Mapping/AssociationMappingTest.php	AssociationMappingTest::testItSurvivesSerialization	pending	
-tests/Tests/ORM/Mapping/AssociationMappingTest.php	AssociationMappingTest::testItThrowsWhenAccessingUnknownProperty	pending	
-tests/Tests/ORM/Mapping/AssociationMappingTest.php	AssociationMappingTest::testItThrowsWhenSettingUnknownProperty	pending	
-tests/Tests/ORM/Mapping/AssociationMappingTest.php	AssociationMappingTest::testItThrowsWhenUnsettingUnknownProperty	pending	
+tests/Tests/ORM/Mapping/AssociationMappingTest.php	AssociationMappingTest::testItSurvivesSerialization	ported	crates/php2rust-doctrine-orm/tests/association_mapping_test.rs::testItSurvivesSerialization
+tests/Tests/ORM/Mapping/AssociationMappingTest.php	AssociationMappingTest::testItThrowsWhenAccessingUnknownProperty	ported	crates/php2rust-doctrine-orm/tests/association_mapping_test.rs::testItThrowsWhenAccessingUnknownProperty
+tests/Tests/ORM/Mapping/AssociationMappingTest.php	AssociationMappingTest::testItThrowsWhenSettingUnknownProperty	ported	crates/php2rust-doctrine-orm/tests/association_mapping_test.rs::testItThrowsWhenSettingUnknownProperty
+tests/Tests/ORM/Mapping/AssociationMappingTest.php	AssociationMappingTest::testItThrowsWhenUnsettingUnknownProperty	ported	crates/php2rust-doctrine-orm/tests/association_mapping_test.rs::testItThrowsWhenUnsettingUnknownProperty
 tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testAssociationOverridesMapping	pending	
 tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testAssociations	pending	
 tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testAttributeOverridesMapping	pending	
@@ -2060,33 +2060,33 @@ tests/Tests/ORM/Mapping/ClassMetadataTest.php	ClassMetadataTest::testUnderscoreN
 tests/Tests/ORM/Mapping/ClassMetadataTest.php	ClassMetadataTest::testWakeupReflectionWithEmbeddable	pending	
 tests/Tests/ORM/Mapping/DefaultQuoteStrategyTest.php	DefaultQuoteStrategyTest::testGetJoinTableName	pending	
 tests/Tests/ORM/Mapping/DefaultQuoteStrategyTest.php	DefaultQuoteStrategyTest::testGetTableName	pending	
-tests/Tests/ORM/Mapping/DiscriminatorColumnMappingTest.php	DiscriminatorColumnMappingTest::testItSurvivesSerialization	pending	
-tests/Tests/ORM/Mapping/EmbeddedClassMappingTest.php	EmbeddedClassMappingTest::testItSurvivesSerialization	pending	
+tests/Tests/ORM/Mapping/DiscriminatorColumnMappingTest.php	DiscriminatorColumnMappingTest::testItSurvivesSerialization	ported	crates/php2rust-doctrine-orm/tests/discriminator_column_mapping_test.rs::testItSurvivesSerialization
+tests/Tests/ORM/Mapping/EmbeddedClassMappingTest.php	EmbeddedClassMappingTest::testItSurvivesSerialization	ported	crates/php2rust-doctrine-orm/tests/embedded_class_mapping_test.rs::testItSurvivesSerialization
 tests/Tests/ORM/Mapping/EntityListenerResolverTest.php	EntityListenerResolverTest::testClearAll	pending	
 tests/Tests/ORM/Mapping/EntityListenerResolverTest.php	EntityListenerResolverTest::testClearOne	pending	
 tests/Tests/ORM/Mapping/EntityListenerResolverTest.php	EntityListenerResolverTest::testRegisterAndResolve	pending	
 tests/Tests/ORM/Mapping/EntityListenerResolverTest.php	EntityListenerResolverTest::testResolve	pending	
 tests/Tests/ORM/Mapping/FieldBuilderTest.php	FieldBuilderTest::testCustomIdGeneratorCanBeSet	pending	
-tests/Tests/ORM/Mapping/FieldMappingTest.php	FieldMappingTest::testItSurvivesSerialization	pending	
-tests/Tests/ORM/Mapping/InverseSideMappingTest.php	InverseSideMappingTest::testItSurvivesSerialization	pending	
-tests/Tests/ORM/Mapping/JoinColumnMappingTest.php	JoinColumnMappingTest::testFromMappingArrayIncludesForeignKeyName	pending	
-tests/Tests/ORM/Mapping/JoinColumnMappingTest.php	JoinColumnMappingTest::testItSurvivesSerialization	pending	
-tests/Tests/ORM/Mapping/JoinTableMappingTest.php	JoinTableMappingTest::testConvertingItToAMappingArrayDoesNotContainNullableInformation	pending	
-tests/Tests/ORM/Mapping/JoinTableMappingTest.php	JoinTableMappingTest::testItSurvivesSerialization	pending	
-tests/Tests/ORM/Mapping/ManyToManyOwningSideMappingTest.php	ManyToManyOwningSideMappingTest::testItSurvivesSerialization	pending	
-tests/Tests/ORM/Mapping/ManyToManyOwningSideMappingTest.php	ManyToManyOwningSideMappingTest::testNullableDefaults	pending	
-tests/Tests/ORM/Mapping/ManyToOneAssociationMappingTest.php	ManyToOneAssociationMappingTest::testItSurvivesSerialization	pending	
-tests/Tests/ORM/Mapping/ManyToOneAssociationMappingTest.php	ManyToOneAssociationMappingTest::testNullableDefaults	pending	
+tests/Tests/ORM/Mapping/FieldMappingTest.php	FieldMappingTest::testItSurvivesSerialization	ported	crates/php2rust-doctrine-orm/tests/field_mapping_test.rs::testItSurvivesSerialization
+tests/Tests/ORM/Mapping/InverseSideMappingTest.php	InverseSideMappingTest::testItSurvivesSerialization	ported	crates/php2rust-doctrine-orm/tests/inverse_side_mapping_test.rs::testItSurvivesSerialization
+tests/Tests/ORM/Mapping/JoinColumnMappingTest.php	JoinColumnMappingTest::testFromMappingArrayIncludesForeignKeyName	ported	crates/php2rust-doctrine-orm/tests/join_column_mapping_test.rs::testFromMappingArrayIncludesForeignKeyName
+tests/Tests/ORM/Mapping/JoinColumnMappingTest.php	JoinColumnMappingTest::testItSurvivesSerialization	ported	crates/php2rust-doctrine-orm/tests/join_column_mapping_test.rs::testItSurvivesSerialization
+tests/Tests/ORM/Mapping/JoinTableMappingTest.php	JoinTableMappingTest::testConvertingItToAMappingArrayDoesNotContainNullableInformation	ported	crates/php2rust-doctrine-orm/tests/join_table_mapping_test.rs::testConvertingItToAMappingArrayDoesNotContainNullableInformation
+tests/Tests/ORM/Mapping/JoinTableMappingTest.php	JoinTableMappingTest::testItSurvivesSerialization	ported	crates/php2rust-doctrine-orm/tests/join_table_mapping_test.rs::testItSurvivesSerialization
+tests/Tests/ORM/Mapping/ManyToManyOwningSideMappingTest.php	ManyToManyOwningSideMappingTest::testItSurvivesSerialization	ported	crates/php2rust-doctrine-orm/tests/many_to_many_owning_side_mapping_test.rs::testItSurvivesSerialization
+tests/Tests/ORM/Mapping/ManyToManyOwningSideMappingTest.php	ManyToManyOwningSideMappingTest::testNullableDefaults	ported	crates/php2rust-doctrine-orm/tests/many_to_many_owning_side_mapping_test.rs::testNullableDefaults
+tests/Tests/ORM/Mapping/ManyToOneAssociationMappingTest.php	ManyToOneAssociationMappingTest::testItSurvivesSerialization	ported	crates/php2rust-doctrine-orm/tests/many_to_one_association_mapping_test.rs::testItSurvivesSerialization
+tests/Tests/ORM/Mapping/ManyToOneAssociationMappingTest.php	ManyToOneAssociationMappingTest::testNullableDefaults	ported	crates/php2rust-doctrine-orm/tests/many_to_one_association_mapping_test.rs::testNullableDefaults
 tests/Tests/ORM/Mapping/NamingStrategyTest.php	NamingStrategyTest::testClassToTableName	pending	
 tests/Tests/ORM/Mapping/NamingStrategyTest.php	NamingStrategyTest::testJoinColumnName	pending	
 tests/Tests/ORM/Mapping/NamingStrategyTest.php	NamingStrategyTest::testJoinKeyColumnName	pending	
 tests/Tests/ORM/Mapping/NamingStrategyTest.php	NamingStrategyTest::testJoinTableName	pending	
 tests/Tests/ORM/Mapping/NamingStrategyTest.php	NamingStrategyTest::testPropertyToColumnName	pending	
 tests/Tests/ORM/Mapping/NamingStrategyTest.php	NamingStrategyTest::testReferenceColumnName	pending	
-tests/Tests/ORM/Mapping/OneToOneOwningSideMappingTest.php	OneToOneOwningSideMappingTest::testConvertToArray	pending	
-tests/Tests/ORM/Mapping/OneToOneOwningSideMappingTest.php	OneToOneOwningSideMappingTest::testItSurvivesSerialization	pending	
-tests/Tests/ORM/Mapping/OneToOneOwningSideMappingTest.php	OneToOneOwningSideMappingTest::testNullableDefaults	pending	
-tests/Tests/ORM/Mapping/OwningSideMappingTest.php	OwningSideMappingTest::testItSurvivesSerialization	pending	
+tests/Tests/ORM/Mapping/OneToOneOwningSideMappingTest.php	OneToOneOwningSideMappingTest::testConvertToArray	ported	crates/php2rust-doctrine-orm/tests/one_to_one_owning_side_mapping_test.rs::testConvertToArray
+tests/Tests/ORM/Mapping/OneToOneOwningSideMappingTest.php	OneToOneOwningSideMappingTest::testItSurvivesSerialization	ported	crates/php2rust-doctrine-orm/tests/one_to_one_owning_side_mapping_test.rs::testItSurvivesSerialization
+tests/Tests/ORM/Mapping/OneToOneOwningSideMappingTest.php	OneToOneOwningSideMappingTest::testNullableDefaults	ported	crates/php2rust-doctrine-orm/tests/one_to_one_owning_side_mapping_test.rs::testNullableDefaults
+tests/Tests/ORM/Mapping/OwningSideMappingTest.php	OwningSideMappingTest::testItSurvivesSerialization	ported	crates/php2rust-doctrine-orm/tests/owning_side_mapping_test.rs::testItSurvivesSerialization
 tests/Tests/ORM/Mapping/PropertyAccessors/EnumPropertyAccessorTest.php	EnumPropertyAccessorTest::testEnumSetDatabaseArrayGetValue	pending	
 tests/Tests/ORM/Mapping/PropertyAccessors/EnumPropertyAccessorTest.php	EnumPropertyAccessorTest::testEnumSetDatabaseGetValue	pending	
 tests/Tests/ORM/Mapping/PropertyAccessors/EnumPropertyAccessorTest.php	EnumPropertyAccessorTest::testEnumSetEnumGetValue	pending	
@@ -2177,7 +2177,7 @@ tests/Tests/ORM/Mapping/Symfony/XmlDriverTest.php	XmlDriverTest::testFindMapping
 tests/Tests/ORM/Mapping/Symfony/XmlDriverTest.php	XmlDriverTest::testFindMappingNamespaceNotFound	pending	
 tests/Tests/ORM/Mapping/TableMappingTest.php	TableMappingTest::testDeprecationOnIndexesPropertyIsTriggered	pending	
 tests/Tests/ORM/Mapping/TableMappingTest.php	TableMappingTest::testDeprecationOnUniqueConstraintsPropertyIsTriggered	pending	
-tests/Tests/ORM/Mapping/ToManyAssociationMappingTest.php	ToManyAssociationMappingTest::testItSurvivesSerialization	pending	
+tests/Tests/ORM/Mapping/ToManyAssociationMappingTest.php	ToManyAssociationMappingTest::testItSurvivesSerialization	ported	crates/php2rust-doctrine-orm/tests/to_many_association_mapping_test.rs::testItSurvivesSerialization
 tests/Tests/ORM/Mapping/TypedEnumFieldMapperTest.php	TypedEnumFieldMapperTest::testNotBackedEnumThrows	pending	
 tests/Tests/ORM/Mapping/TypedFieldMapperTest.php	TypedFieldMapperTest::testValidateAndComplete	pending	
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testAssociationOverridesMapping	pending	
