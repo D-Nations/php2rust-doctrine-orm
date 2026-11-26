@@ -114,6 +114,8 @@ pub struct Fixture {
     pub logger: Arc<StatisticsCacheLogger>,
     pub log: Arc<QueryLog>,
     pub pool: Arc<ArrayAdapter>,
+    /// `$this->secondLevelCacheFactory`.
+    pub factory: Arc<DefaultCacheFactory>,
     pub people: Vec<Object>,
     pub addresses: Vec<Object>,
     pub countries: Vec<Object>,
@@ -142,7 +144,7 @@ pub async fn set_up_with(classes: &[&str]) -> Fixture {
     ));
     let logger = Arc::new(StatisticsCacheLogger::new());
     cache_config.set_cache_logger(logger.clone());
-    cache_config.set_cache_factory(factory);
+    cache_config.set_cache_factory(factory.clone());
     let (conn, log) = logging_connection();
     let em = orm::entity_manager_with(conn, move |c| {
         let locator: Arc<dyn ClassLocator> = Arc::new(FunctionalModelsLocator);
@@ -153,6 +155,8 @@ pub async fn set_up_with(classes: &[&str]) -> Fixture {
         c.set_second_level_cache_configuration(cache_config);
     });
     orm::create_schema(&em, classes).await;
+    // $this->getQueryLog()->enable()
+    log.reset_and_enable();
     let cache = em.get_cache().unwrap();
     Fixture {
         em,
@@ -160,6 +164,7 @@ pub async fn set_up_with(classes: &[&str]) -> Fixture {
         logger,
         log,
         pool,
+        factory,
         people: Vec::new(),
         addresses: Vec::new(),
         countries: Vec::new(),
