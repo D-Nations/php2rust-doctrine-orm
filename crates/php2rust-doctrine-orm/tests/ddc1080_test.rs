@@ -36,6 +36,7 @@ fn with_foo_bars(short: &str, title_field: &str, title: &str) -> Object {
 }
 
 /// `new DDC1080FooBar()`, `setFoo()`, `setBar()`, `setOrderNr()`.
+#[allow(clippy::disallowed_names, reason = "upstream's names")]
 fn foo_bar(foo: &Object, bar: &Object, order_nr: i64) -> Object {
     let foobar = new("DDC1080FooBar");
     set_obj(&foobar, "foo", foo);
