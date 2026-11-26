@@ -1594,7 +1594,7 @@ tests/Tests/ORM/Functional/Ticket/GH8663Test.php	GH8663Test::testDeletedEntity	p
 tests/Tests/ORM/Functional/Ticket/GH8914Test.php	GH8914Test::testDiscriminatorMapWithSeveralLevelsIsSupported	ported	crates/php2rust-doctrine-orm/tests/gh8914_test.rs::testDiscriminatorMapWithSeveralLevelsIsSupported
 tests/Tests/ORM/Functional/Ticket/GH9027Test.php	GH9027Test::testUnitOfWorkHandlesNullRelations	ported	crates/php2rust-doctrine-orm/tests/gh9027_test.rs::testUnitOfWorkHandlesNullRelations
 tests/Tests/ORM/Functional/Ticket/GH9109Test.php	GH9109Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/gh9109_test.rs::testIssue
-tests/Tests/ORM/Functional/Ticket/GH9192Test.php	GH9192Test::testIssue	pending	
+tests/Tests/ORM/Functional/Ticket/GH9192Test.php	GH9192Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/gh9192_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/GH9230Test.php	GH9230Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/GH9335Test.php	GH9335Test::testFlattenIdentifierWithObjectId	pending	
 tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildNonInsertableColumnInsert	pending	
