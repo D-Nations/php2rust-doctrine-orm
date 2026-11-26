@@ -7,6 +7,8 @@
 //! Upstream: doctrine/orm tests/Tests/Models/CMS/CmsEmail.php tests/Tests/Models/CMS/CmsGroup.php
 //! Upstream: doctrine/orm tests/Tests/Models/CMS/CmsTag.php tests/Tests/Models/CMS/CmsArticle.php
 //! Upstream: doctrine/orm tests/Tests/Models/CMS/CmsComment.php
+//! Upstream: doctrine/orm tests/Tests/Models/ECommerce/ECommerceProduct.php tests/Tests/Models/ECommerce/ECommerceFeature.php
+//! Upstream: doctrine/orm tests/Tests/Models/ECommerce/ECommerceCategory.php tests/Tests/Models/ECommerce/ECommerceCart.php
 
 #![allow(dead_code, reason = "each test binary uses a part of the helpers")]
 
@@ -45,6 +47,23 @@ pub const CMS_MODELS: [&str; 8] = [
     CMS_TAG,
     CMS_ARTICLE,
     CMS_COMMENT,
+];
+
+pub const ECOMMERCE_CART: &str = "Doctrine\\Tests\\Models\\ECommerce\\ECommerceCart";
+pub const ECOMMERCE_CUSTOMER: &str = "Doctrine\\Tests\\Models\\ECommerce\\ECommerceCustomer";
+pub const ECOMMERCE_PRODUCT: &str = "Doctrine\\Tests\\Models\\ECommerce\\ECommerceProduct";
+pub const ECOMMERCE_SHIPPING: &str = "Doctrine\\Tests\\Models\\ECommerce\\ECommerceShipping";
+pub const ECOMMERCE_FEATURE: &str = "Doctrine\\Tests\\Models\\ECommerce\\ECommerceFeature";
+pub const ECOMMERCE_CATEGORY: &str = "Doctrine\\Tests\\Models\\ECommerce\\ECommerceCategory";
+
+/// The `ecommerce` model set.
+pub const ECOMMERCE_MODELS: [&str; 6] = [
+    ECOMMERCE_CART,
+    ECOMMERCE_CUSTOMER,
+    ECOMMERCE_PRODUCT,
+    ECOMMERCE_SHIPPING,
+    ECOMMERCE_FEATURE,
+    ECOMMERCE_CATEGORY,
 ];
 
 /// `DriverManager::getConnection(['driver' => 'pdo_sqlite', 'memory' => true])`.
@@ -319,4 +338,166 @@ pub async fn count_of(object: &Object, name: &str) -> usize {
 /// `$object->$name = $value` for an object.
 pub fn set_obj(object: &Object, name: &str, value: &Object) {
     set(object, name, Value::Object(value.clone()));
+}
+
+/// `$collection->removeElement($element)`.
+pub async fn remove_element(object: &Object, name: &str, element: &Object) -> bool {
+    coll::remove_element(&get(object, name), &Value::Object(element.clone()))
+        .await
+        .unwrap()
+}
+
+/// `$collection->contains($element)`.
+pub async fn contains(object: &Object, name: &str, element: &Object) -> bool {
+    coll::contains(&get(object, name), &Value::Object(element.clone()))
+        .await
+        .unwrap()
+}
+
+/// The elements of a collection property.
+pub async fn elements(object: &Object, name: &str) -> Vec<Object> {
+    coll::get_values(&get(object, name))
+        .await
+        .unwrap()
+        .into_iter()
+        .filter_map(|v| match v {
+            Value::Object(o) => Some(o),
+            _ => None,
+        })
+        .collect()
+}
+
+/// `new ECommerceProduct()` with a name.
+pub fn ecommerce_product(name: &str) -> Object {
+    let product = new_object(ECOMMERCE_PRODUCT);
+    for collection in ["features", "categories", "related"] {
+        set(&product, collection, ArrayCollectionObject::value(PhpArray::new()));
+    }
+    set(&product, "name", s(name));
+    product
+}
+
+/// `new ECommerceFeature()` with a description.
+pub fn ecommerce_feature(description: &str) -> Object {
+    let feature = new_object(ECOMMERCE_FEATURE);
+    set(&feature, "description", s(description));
+    feature
+}
+
+/// `$product->addFeature($feature)`.
+pub fn add_feature(product: &Object, feature: &Object) {
+    append(product, "features", Value::Object(feature.clone()));
+    set_obj(feature, "product", product);
+}
+
+/// `$product->removeFeature($feature)`.
+pub async fn remove_feature(product: &Object, feature: &Object) -> bool {
+    let removed = remove_element(product, "features", feature).await;
+    if removed {
+        // $feature->removeProduct()
+        if !get(feature, "product").is_null() {
+            set(feature, "product", Value::Null);
+            Box::pin(remove_feature(product, feature)).await;
+        }
+    }
+    removed
+}
+
+/// `new ECommerceCategory()` with a name.
+pub fn ecommerce_category(name: &str) -> Object {
+    let category = new_object(ECOMMERCE_CATEGORY);
+    set(&category, "products", ArrayCollectionObject::value(PhpArray::new()));
+    set(&category, "children", ArrayCollectionObject::value(PhpArray::new()));
+    set(&category, "name", s(name));
+    category
+}
+
+/// `$product->addCategory($category)` (and `$category->addProduct()`).
+pub async fn add_category(product: &Object, category: &Object) {
+    if !contains(product, "categories", category).await {
+        append(product, "categories", Value::Object(category.clone()));
+        if !contains(category, "products", product).await {
+            append(category, "products", Value::Object(product.clone()));
+        }
+    }
+}
+
+/// `$product->removeCategory($category)` (and `$category->removeProduct()`).
+pub async fn remove_category(product: &Object, category: &Object) {
+    if remove_element(product, "categories", category).await {
+        remove_element(category, "products", product).await;
+    }
+}
+
+/// `$category->addChild($child)`.
+pub fn add_child(parent: &Object, child: &Object) {
+    append(parent, "children", Value::Object(child.clone()));
+    set_obj(child, "parent", parent);
+}
+
+/// `$category->removeChild($child)`.
+pub async fn remove_child(parent: &Object, child: &Object) {
+    if remove_element(parent, "children", child).await {
+        set(child, "parent", Value::Null);
+    }
+}
+
+/// `$product->addRelated($related)`.
+pub async fn add_related(product: &Object, related: &Object) {
+    if !contains(product, "related", related).await {
+        append(product, "related", Value::Object(related.clone()));
+        Box::pin(add_related(related, product)).await;
+    }
+}
+
+/// `$product->removeRelated($related)`.
+pub async fn remove_related(product: &Object, related: &Object) {
+    if remove_element(product, "related", related).await {
+        Box::pin(remove_related(related, product)).await;
+    }
+}
+
+/// `new ECommerceCart()`.
+pub fn ecommerce_cart(payment: &str) -> Object {
+    let cart = new_object(ECOMMERCE_CART);
+    set(&cart, "products", ArrayCollectionObject::value(PhpArray::new()));
+    set(&cart, "payment", s(payment));
+    cart
+}
+
+/// `$conn->executeQuery($sql, $params)->fetchOne()`.
+pub async fn fetch_one_with(em: &EntityManager, sql: &str, params: Vec<Value>) -> Value {
+    em.get_connection()
+        .fetch_one(sql, &PhpArray::list(params), &Default::default())
+        .await
+        .unwrap()
+        .unwrap_or(Value::Bool(false))
+}
+
+/// `AbstractManyToManyAssociationTestCase::countForeignKeys()`.
+pub async fn count_foreign_keys(
+    em: &EntityManager,
+    table: &str,
+    first_field: &str,
+    second_field: &str,
+    first_id: Value,
+    second_id: Value,
+) -> usize {
+    let sql = format!(
+        "SELECT {first_field}\n  FROM {table}\n WHERE {first_field} = ?\n   AND {second_field} = ?"
+    );
+    em.get_connection()
+        .fetch_all_associative(&sql, &PhpArray::list([first_id, second_id]), &Default::default())
+        .await
+        .unwrap()
+        .len()
+}
+
+/// `assertEquals($value, $foreignKey)` for a nullable foreign key: `null`
+/// equals `NULL`.
+pub fn assert_loose_eq(expected: &Value, actual: &Value) {
+    assert!(
+        php_value::compare::loose_equals(expected, actual),
+        "{expected:?} != {actual:?}"
+    );
 }
