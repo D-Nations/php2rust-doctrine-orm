@@ -13,6 +13,7 @@ mod file_locator;
 pub mod files;
 mod mapping_driver;
 mod mapping_driver_chain;
+mod static_php_driver;
 mod symfony_file_locator;
 
 pub use class_locator::ClassLocator;
@@ -24,4 +25,5 @@ pub use file_driver::{FileDriver, FileDriverImpl, FileDriverLocator};
 pub use file_locator::FileLocator;
 pub use mapping_driver::MappingDriver;
 pub use mapping_driver_chain::MappingDriverChain;
+pub use static_php_driver::{StaticPHPDriver, StaticPHPDriverPaths};
 pub use symfony_file_locator::SymfonyFileLocator;
