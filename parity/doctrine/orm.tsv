@@ -1225,7 +1225,7 @@ tests/Tests/ORM/Functional/Ticket/DDC1545Test.php	DDC1545Test::testUnlinkObjects
 tests/Tests/ORM/Functional/Ticket/DDC1545Test.php	DDC1545Test::testUnlinkObjectsWithAssociationLoaded	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1548Test.php	DDC1548Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1595Test.php	DDC1595Test::testIssue	pending	
-tests/Tests/ORM/Functional/Ticket/DDC163Test.php	DDC163Test::testQueryWithOrConditionUsingTwoRelationOnSameEntity	pending	
+tests/Tests/ORM/Functional/Ticket/DDC163Test.php	DDC163Test::testQueryWithOrConditionUsingTwoRelationOnSameEntity	ported	crates/php2rust-doctrine-orm/tests/ddc163_test.rs::testQueryWithOrConditionUsingTwoRelationOnSameEntity
 tests/Tests/ORM/Functional/Ticket/DDC1643Test.php	DDC1643Test::testClonePersistentCollectionAndReuse	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1643Test.php	DDC1643Test::testClonePersistentCollectionAndShare	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1643Test.php	DDC1643Test::testCloneThenDirtyPersistentCollection	pending	
