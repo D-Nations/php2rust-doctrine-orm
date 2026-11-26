@@ -1478,13 +1478,13 @@ tests/Tests/ORM/Functional/Ticket/GH11524Test.php	GH11524Test::testPostLoadCalle
 tests/Tests/ORM/Functional/Ticket/GH11982Test.php	GH11982Test::testSchema	ported	crates/php2rust-doctrine-orm/tests/gh11982_test.rs::testSchema
 tests/Tests/ORM/Functional/Ticket/GH11982Test.php	GH11982Test::testSchemaLegacyDbal	pending	
 tests/Tests/ORM/Functional/Ticket/GH12166/GH12166Test.php	GH12166Test::testProxyWithReadonlyIdIsNotInitializedImmediately	pending	the models are separate files of the ticket directory and not recorded yet
-tests/Tests/ORM/Functional/Ticket/GH12172Test.php	GH12172Test::testInitializeObjectNoOpForCustomNonEntityClass	pending	
-tests/Tests/ORM/Functional/Ticket/GH12172Test.php	GH12172Test::testInitializeObjectNoOpForNonManagedObjects	pending	
-tests/Tests/ORM/Functional/Ticket/GH12172Test.php	GH12172Test::testInitializeObjectNoOpForNonManagedObjectsWithMappingDriverChain	pending	
-tests/Tests/ORM/Functional/Ticket/GH12172Test.php	GH12172Test::testInitializeObjectWithDifferentTypesOfObjectsConsistentBehavior	pending	
-tests/Tests/ORM/Functional/Ticket/GH12172Test.php	GH12172Test::testInitializeObjectWithValidEntityClassDoesNotBreakMetadataLoading	pending	
-tests/Tests/ORM/Functional/Ticket/GH12172Test.php	GH12172Test::testIsUninitializedObjectNoExceptionForNonManagedObjects	pending	
-tests/Tests/ORM/Functional/Ticket/GH12172Test.php	GH12172Test::testIsUninitializedObjectNoExceptionForNonManagedObjectsWithMappingDriverChain	pending	
+tests/Tests/ORM/Functional/Ticket/GH12172Test.php	GH12172Test::testInitializeObjectNoOpForCustomNonEntityClass	ported	crates/php2rust-doctrine-orm/tests/gh12172_test.rs::testInitializeObjectNoOpForCustomNonEntityClass
+tests/Tests/ORM/Functional/Ticket/GH12172Test.php	GH12172Test::testInitializeObjectNoOpForNonManagedObjects	ported	crates/php2rust-doctrine-orm/tests/gh12172_test.rs::testInitializeObjectNoOpForNonManagedObjects
+tests/Tests/ORM/Functional/Ticket/GH12172Test.php	GH12172Test::testInitializeObjectNoOpForNonManagedObjectsWithMappingDriverChain	ported	crates/php2rust-doctrine-orm/tests/gh12172_test.rs::testInitializeObjectNoOpForNonManagedObjectsWithMappingDriverChain
+tests/Tests/ORM/Functional/Ticket/GH12172Test.php	GH12172Test::testInitializeObjectWithDifferentTypesOfObjectsConsistentBehavior	ported	crates/php2rust-doctrine-orm/tests/gh12172_test.rs::testInitializeObjectWithDifferentTypesOfObjectsConsistentBehavior
+tests/Tests/ORM/Functional/Ticket/GH12172Test.php	GH12172Test::testInitializeObjectWithValidEntityClassDoesNotBreakMetadataLoading	ported	crates/php2rust-doctrine-orm/tests/gh12172_test.rs::testInitializeObjectWithValidEntityClassDoesNotBreakMetadataLoading
+tests/Tests/ORM/Functional/Ticket/GH12172Test.php	GH12172Test::testIsUninitializedObjectNoExceptionForNonManagedObjects	ported	crates/php2rust-doctrine-orm/tests/gh12172_test.rs::testIsUninitializedObjectNoExceptionForNonManagedObjects
+tests/Tests/ORM/Functional/Ticket/GH12172Test.php	GH12172Test::testIsUninitializedObjectNoExceptionForNonManagedObjectsWithMappingDriverChain	ported	crates/php2rust-doctrine-orm/tests/gh12172_test.rs::testIsUninitializedObjectNoExceptionForNonManagedObjectsWithMappingDriverChain
 tests/Tests/ORM/Functional/Ticket/GH12174Test.php	GH12174Test::testMappedSuperclassNameCanBeUsedToResolveTargetEntityClass	pending	
 tests/Tests/ORM/Functional/Ticket/GH12183Test.php	GH12183Test::testPaginatorCountWithTreeWalkerAfterQueryHasBeenExecuted	pending	
 tests/Tests/ORM/Functional/Ticket/GH12225/GH12225Test.php	GH12225Test::testHydrateWithIndexByFilterAndInheritanceMapping	pending	the models are separate files of the ticket directory and not recorded yet
