@@ -360,4 +360,8 @@ impl DqlQuery for Query {
     fn get_max_results(&self) -> Option<i64> {
         self.dst().max_results
     }
+
+    fn as_query(&self) -> Option<&Query> {
+        Some(self)
+    }
 }
