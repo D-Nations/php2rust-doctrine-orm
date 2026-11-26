@@ -70,7 +70,11 @@ fn list(values: &[&str]) -> PhpArray {
     PhpArray::list(values.iter().map(|v| Value::from(*v)))
 }
 
-#[allow(clippy::type_complexity, clippy::too_many_lines, reason = "the provider's rows")]
+#[allow(
+    clippy::type_complexity,
+    clippy::too_many_lines,
+    reason = "the provider's rows"
+)]
 fn comparison_data() -> Vec<(&'static str, CriteriaComparison, Value, Option<Parameter>)> {
     let cb = CriteriaBuilder::new();
     let qb = QueryBuilder::new();
