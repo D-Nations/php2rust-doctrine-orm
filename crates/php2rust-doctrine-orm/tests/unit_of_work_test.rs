@@ -27,13 +27,13 @@ use std::sync::{Arc, Mutex, PoisonError, Weak};
 
 use php_value::object::StdClass;
 use php_value::{Object, PhpArray, Value};
+use php2rust_doctrine_collections::Criteria;
 use php2rust_doctrine_orm::collection_object::ArrayCollectionObject;
 use php2rust_doctrine_orm::entity_manager::EntityManager;
 use php2rust_doctrine_orm::exception::{
     ENTITY_IDENTITY_COLLISION_EXCEPTION, ENTITY_NOT_FOUND_EXCEPTION, OPTIMISTIC_LOCK_EXCEPTION,
     ORM_INVALID_ARGUMENT_EXCEPTION,
 };
-use php2rust_doctrine_collections::Criteria;
 use php2rust_doctrine_orm::mapping::ClassMetadata;
 use php2rust_doctrine_orm::mapping::class_metadata::GENERATOR_TYPE_IDENTITY;
 use php2rust_doctrine_orm::persistent_collection::PersistentCollection;
@@ -385,7 +385,8 @@ struct EntityPersisterMock {
 
 impl std::fmt::Debug for EntityPersisterMock {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("EntityPersisterMock").finish_non_exhaustive()
+        f.debug_struct("EntityPersisterMock")
+            .finish_non_exhaustive()
     }
 }
 
@@ -493,7 +494,10 @@ impl CommitPersister for EntityPersisterMock {
 
 /// `assertIsNumeric()`.
 fn assert_is_numeric(value: &Value) {
-    assert!(matches!(value, Value::Int(_) | Value::Float(_)), "{value:?}");
+    assert!(
+        matches!(value, Value::Int(_) | Value::Float(_)),
+        "{value:?}"
+    );
 }
 
 const FORUM_AVATAR: &str = "Doctrine\\Tests\\Models\\Forum\\ForumAvatar";
@@ -641,12 +645,7 @@ fn new_with_uniqid(class_name: &str) -> Object {
 /// `EntityWithNonCascadingAssociation`, and new entities of them.
 fn cascade_fixture(
     em: &Arc<EntityManager>,
-) -> (
-    [Arc<EntityPersisterMock>; 3],
-    Object,
-    Object,
-    Object,
-) {
+) -> ([Arc<EntityPersisterMock>; 3], Object, Object, Object) {
     let persister1 = EntityPersisterMock::set(em, &class("CascadePersistedEntity"));
     let persister2 = EntityPersisterMock::set(em, &class("EntityWithCascadingAssociation"));
     let persister3 = EntityPersisterMock::set(em, &class("EntityWithNonCascadingAssociation"));
