@@ -291,14 +291,15 @@ async fn testLazyLoading1() {
     assert_instance_of(COMPANY_ORGANIZATION, &result[0]);
     assert!(get(&result[0], "mainevent").is_null());
 
-    let events = get(&result[0], "events");
+    let org_events = get(&result[0], "events");
 
-    let collection = PersistentCollection::from_value(&events).expect("a persistent collection");
+    let collection =
+        PersistentCollection::from_value(&org_events).expect("a persistent collection");
     assert!(!collection.is_initialized());
 
-    assert_eq!(coll::count(&events).await.unwrap(), 2);
-    let first = obj(&coll::get(&events, 0_i64).await.unwrap());
-    let second = obj(&coll::get(&events, 1_i64).await.unwrap());
+    assert_eq!(coll::count(&org_events).await.unwrap(), 2);
+    let first = obj(&coll::get(&org_events, 0_i64).await.unwrap());
+    let second = obj(&coll::get(&org_events, 1_i64).await.unwrap());
     if php_reflection::is_a(first.class(), COMPANY_AUCTION) {
         assert_instance_of(COMPANY_RAFFLE, &second);
     } else {
