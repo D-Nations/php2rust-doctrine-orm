@@ -435,8 +435,8 @@ src/Tools/Event/GenerateSchemaEventArgs.php	GenerateSchemaEventArgs	33	pending
 src/Tools/Event/GenerateSchemaTableEventArgs.php	GenerateSchemaTableEventArgs	55	pending	
 src/Tools/Exception/MissingColumnException.php	MissingColumnException	17	ported	crates/php2rust-doctrine-orm/src/tools/schema_tool.rs
 src/Tools/Exception/NotSupported.php	NotSupported	11	pending	
-src/Tools/Pagination/CountOutputWalker.php	CountOutputWalker	81	pending	
-src/Tools/Pagination/CountWalker.php	CountWalker	49	pending	
+src/Tools/Pagination/CountOutputWalker.php	CountOutputWalker	81	ported	crates/php2rust-doctrine-orm/src/tools/pagination/count_output_walker.rs
+src/Tools/Pagination/CountWalker.php	CountWalker	49	ported	crates/php2rust-doctrine-orm/src/tools/pagination/count_walker.rs
 src/Tools/Pagination/Cursor.php	Cursor	68	pending	
 src/Tools/Pagination/CursorItem.php	CursorItem	18	pending	
 src/Tools/Pagination/CursorOrderByItem.php	CursorOrderByItem	14	pending	
@@ -444,18 +444,18 @@ src/Tools/Pagination/CursorPage.php	CursorPage	81	pending
 src/Tools/Pagination/CursorPaginator.php	CursorPaginator	128	pending	
 src/Tools/Pagination/CursorWalker.php	CursorWalker	137	pending	
 src/Tools/Pagination/Exception/InvalidCursor.php	InvalidCursor	18	pending	
-src/Tools/Pagination/Exception/RowNumberOverFunctionNotEnabled.php	RowNumberOverFunctionNotEnabled	11	pending	
-src/Tools/Pagination/LimitSubqueryOutputWalker.php	LimitSubqueryOutputWalker	361	pending	
-src/Tools/Pagination/LimitSubqueryWalker.php	LimitSubqueryWalker	107	pending	
+src/Tools/Pagination/Exception/RowNumberOverFunctionNotEnabled.php	RowNumberOverFunctionNotEnabled	11	ported	crates/php2rust-doctrine-orm/src/tools/pagination/row_number_over_function.rs
+src/Tools/Pagination/LimitSubqueryOutputWalker.php	LimitSubqueryOutputWalker	361	ported	crates/php2rust-doctrine-orm/src/tools/pagination/limit_subquery_output_walker.rs
+src/Tools/Pagination/LimitSubqueryWalker.php	LimitSubqueryWalker	107	ported	crates/php2rust-doctrine-orm/src/tools/pagination/limit_subquery_walker.rs
 src/Tools/Pagination/OffsetPaginator.php	OffsetPaginator	50	pending	
 src/Tools/Pagination/OrderDirection.php	OrderDirection	27	pending	
 src/Tools/Pagination/Page.php	Page	13	pending	
-src/Tools/Pagination/Paginator.php	Paginator	63	pending	
+src/Tools/Pagination/Paginator.php	Paginator	63	ported	crates/php2rust-doctrine-orm/src/tools/pagination/paginator.rs
 src/Tools/Pagination/PaginatorInterface.php	PaginatorInterface	9	pending	
-src/Tools/Pagination/PaginatorQuery.php	PaginatorQuery	129	pending	
-src/Tools/Pagination/RootTypeWalker.php	RootTypeWalker	38	pending	
-src/Tools/Pagination/RowNumberOverFunction.php	RowNumberOverFunction	22	pending	
-src/Tools/Pagination/WhereInWalker.php	WhereInWalker	85	pending	
+src/Tools/Pagination/PaginatorQuery.php	PaginatorQuery	129	ported	crates/php2rust-doctrine-orm/src/tools/pagination/paginator.rs
+src/Tools/Pagination/RootTypeWalker.php	RootTypeWalker	38	ported	crates/php2rust-doctrine-orm/src/tools/pagination/root_type_walker.rs
+src/Tools/Pagination/RowNumberOverFunction.php	RowNumberOverFunction	22	ported	crates/php2rust-doctrine-orm/src/tools/pagination/row_number_over_function.rs
+src/Tools/Pagination/WhereInWalker.php	WhereInWalker	85	ported	crates/php2rust-doctrine-orm/src/tools/pagination/where_in_walker.rs
 src/Tools/Pagination/Window.php	Window	46	pending	
 src/Tools/Pagination/WindowPage.php	WindowPage	76	pending	
 src/Tools/ResolveTargetEntityListener.php	ResolveTargetEntityListener	75	pending	

@@ -756,63 +756,63 @@ tests/Tests/ORM/Functional/OrderedCollectionTest.php	OrderedCollectionTest::test
 tests/Tests/ORM/Functional/OrderedCollectionTest.php	OrderedCollectionTest::testLazyOneToManyCollectionIsRetrievedWithOrderByClause	pending	
 tests/Tests/ORM/Functional/OrderedCollectionTest.php	OrderedCollectionTest::testOrderedResultFromDqlQuery	pending	
 tests/Tests/ORM/Functional/OrderedJoinedTableInheritanceCollectionTest.php	OrderedJoinedTableInheritanceCollectionTest::testOrderdOneToManyCollection	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testCloneQuery	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testCountComplexWithOutputWalker	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testCountComplexWithoutOutputWalker	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testCountQueryStripsParametersInSelect	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testCountSimpleWithoutJoin	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testCountWithComplexScalarOrderBy	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testCountWithCountSubqueryInWhereClauseWithOutputWalker	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testCountWithFetchJoin	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testCustomIdTypeWithoutOutputWalker	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testDetectOutputWalker	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testDifferentResultLengthsDoNotRequireExtraQueryCacheEntries	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateComplexWithOutputWalker	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateSimpleWithOutputWalkerWithoutJoinWithComplexOrder	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateSimpleWithOutputWalkerWithoutJoinWithComplexOrderAndLimit	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateSimpleWithOutputWalkerWithoutJoinWithComplexOrderAndLimitAndOffset	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateSimpleWithoutJoin	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateSimpleWithoutJoinWithOrder	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateSimpleWithoutJoinWithOrderAndLimit	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateSimpleWithoutJoinWithOrderAndLimitAndOffset	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithCountSubqueryInWhereClause	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoin	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinOneToManyWithOrderByColumnFromBoth	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinOneToManyWithOrderByColumnFromBothWithLimitWithOutputWalker	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinOneToManyWithOrderByColumnFromBothWithLimitWithoutOutputWalker	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinOneToManyWithOrderByColumnFromJoined	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinOneToManyWithOrderByColumnFromJoinedWithLimitWithOutputWalker	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinOneToManyWithOrderByColumnFromJoinedWithLimitWithoutOutputWalker	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinOneToManyWithOrderByColumnFromRoot	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinOneToManyWithOrderByColumnFromRootWithLimit	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinOneToManyWithOrderByColumnFromRootWithLimitAndOffset	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinWithOrder	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinWithOrderAndLimit	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinWithOrderAndLimitAndOffset	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinWithOrderByColumnFromJoined	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinWithOrderByColumnFromJoinedWithLimit	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinWithOrderByColumnFromJoinedWithLimitAndOffset	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithOutputWalkersWithFetchJoinWithComplexOrderByReferencingJoined	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithOutputWalkersWithFetchJoinWithComplexOrderByReferencingJoinedWithLimit	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithOutputWalkersWithFetchJoinWithComplexOrderByReferencingJoinedWithLimitAndOffset	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithOutputWalkersWithFetchJoinWithComplexOrderByReferencingJoinedWithLimitAndOffsetWithInheritanceType	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithOutputWalkersWithRegularJoinWithComplexOrderByReferencingJoined	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithOutputWalkersWithRegularJoinWithComplexOrderByReferencingJoinedWithLimit	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithOutputWalkersWithRegularJoinWithComplexOrderByReferencingJoinedWithLimitAndOffset	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithRegularJoinWithOrderByColumnFromJoined	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithRegularJoinWithOrderByColumnFromJoinedWithLimit	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithRegularJoinWithOrderByColumnFromJoinedWithLimitAndOffset	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testJoinedClassTableInheritance	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testOffsetPaginatorIsReusableAcrossQueriesAndPages	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testOffsetPaginatorRejectsANonWindowPosition	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testOffsetPaginatorReturnsFirstPage	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testOffsetPaginatorReturnsLastPage	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testOffsetPaginatorWithFetchJoin	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testOffsetPaginatorWithFromPageNumberAndSize	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testPageItemsAreAListEvenForIndexByQueries	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testPaginationWithColumnAttributeNameDifference	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testPaginationWithSubSelectOrderByExpression	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testQueryWalkerIsKept	pending	
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testCloneQuery	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testCountComplexWithOutputWalker	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testCountComplexWithoutOutputWalker	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testCountQueryStripsParametersInSelect	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testCountSimpleWithoutJoin	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testCountWithComplexScalarOrderBy	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testCountWithCountSubqueryInWhereClauseWithOutputWalker	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testCountWithFetchJoin	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testCustomIdTypeWithoutOutputWalker	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testDetectOutputWalker	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testDifferentResultLengthsDoNotRequireExtraQueryCacheEntries	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateComplexWithOutputWalker	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateSimpleWithOutputWalkerWithoutJoinWithComplexOrder	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateSimpleWithOutputWalkerWithoutJoinWithComplexOrderAndLimit	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateSimpleWithOutputWalkerWithoutJoinWithComplexOrderAndLimitAndOffset	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateSimpleWithoutJoin	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateSimpleWithoutJoinWithOrder	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateSimpleWithoutJoinWithOrderAndLimit	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateSimpleWithoutJoinWithOrderAndLimitAndOffset	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithCountSubqueryInWhereClause	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoin	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinOneToManyWithOrderByColumnFromBoth	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinOneToManyWithOrderByColumnFromBothWithLimitWithOutputWalker	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinOneToManyWithOrderByColumnFromBothWithLimitWithoutOutputWalker	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinOneToManyWithOrderByColumnFromJoined	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinOneToManyWithOrderByColumnFromJoinedWithLimitWithOutputWalker	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinOneToManyWithOrderByColumnFromJoinedWithLimitWithoutOutputWalker	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinOneToManyWithOrderByColumnFromRoot	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinOneToManyWithOrderByColumnFromRootWithLimit	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinOneToManyWithOrderByColumnFromRootWithLimitAndOffset	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinWithOrder	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinWithOrderAndLimit	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinWithOrderAndLimitAndOffset	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinWithOrderByColumnFromJoined	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinWithOrderByColumnFromJoinedWithLimit	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinWithOrderByColumnFromJoinedWithLimitAndOffset	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithOutputWalkersWithFetchJoinWithComplexOrderByReferencingJoined	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithOutputWalkersWithFetchJoinWithComplexOrderByReferencingJoinedWithLimit	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithOutputWalkersWithFetchJoinWithComplexOrderByReferencingJoinedWithLimitAndOffset	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithOutputWalkersWithFetchJoinWithComplexOrderByReferencingJoinedWithLimitAndOffsetWithInheritanceType	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithOutputWalkersWithRegularJoinWithComplexOrderByReferencingJoined	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithOutputWalkersWithRegularJoinWithComplexOrderByReferencingJoinedWithLimit	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithOutputWalkersWithRegularJoinWithComplexOrderByReferencingJoinedWithLimitAndOffset	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithRegularJoinWithOrderByColumnFromJoined	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithRegularJoinWithOrderByColumnFromJoinedWithLimit	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithRegularJoinWithOrderByColumnFromJoinedWithLimitAndOffset	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testJoinedClassTableInheritance	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testOffsetPaginatorIsReusableAcrossQueriesAndPages	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testOffsetPaginatorRejectsANonWindowPosition	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testOffsetPaginatorReturnsFirstPage	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testOffsetPaginatorReturnsLastPage	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testOffsetPaginatorWithFetchJoin	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testOffsetPaginatorWithFromPageNumberAndSize	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testPageItemsAreAListEvenForIndexByQueries	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testPaginationWithColumnAttributeNameDifference	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testPaginationWithSubSelectOrderByExpression	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testQueryWalkerIsKept	pending	functional: needs Query.php and hydration
 tests/Tests/ORM/Functional/ParserResultSerializationTest.php	ParserResultSerializationTest::testSerializeParserResultForQueryWithSqlOutputWalker	pending	
 tests/Tests/ORM/Functional/ParserResultSerializationTest.php	ParserResultSerializationTest::testSerializeParserResultForQueryWithSqlWalker	pending	
 tests/Tests/ORM/Functional/ParserResultSerializationTest.php	ParserResultSerializationTest::testSymfony44ProvidedData	pending	
@@ -2986,19 +2986,19 @@ tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportDateTimeZone	pending
 tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportObject	pending	
 tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportObjectWithReference	pending	
 tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportParentAttributes	pending	
-tests/Tests/ORM/Tools/Pagination/CountOutputWalkerTest.php	CountOutputWalkerTest::testCountQuery	pending	
-tests/Tests/ORM/Tools/Pagination/CountOutputWalkerTest.php	CountOutputWalkerTest::testCountQueryGroupBy	pending	
-tests/Tests/ORM/Tools/Pagination/CountOutputWalkerTest.php	CountOutputWalkerTest::testCountQueryHaving	pending	
-tests/Tests/ORM/Tools/Pagination/CountOutputWalkerTest.php	CountOutputWalkerTest::testCountQueryMixedResultsWithName	pending	
-tests/Tests/ORM/Tools/Pagination/CountOutputWalkerTest.php	CountOutputWalkerTest::testCountQueryOrderBySqlServer	pending	
-tests/Tests/ORM/Tools/Pagination/CountWalkerTest.php	CountWalkerTest::testCountQuery	pending	
-tests/Tests/ORM/Tools/Pagination/CountWalkerTest.php	CountWalkerTest::testCountQueryHavingException	pending	
-tests/Tests/ORM/Tools/Pagination/CountWalkerTest.php	CountWalkerTest::testCountQueryKeepsGroupBy	pending	
-tests/Tests/ORM/Tools/Pagination/CountWalkerTest.php	CountWalkerTest::testCountQueryMixedResultsWithName	pending	
-tests/Tests/ORM/Tools/Pagination/CountWalkerTest.php	CountWalkerTest::testCountQueryRemovesLimits	pending	
-tests/Tests/ORM/Tools/Pagination/CountWalkerTest.php	CountWalkerTest::testCountQueryRemovesOrderBy	pending	
-tests/Tests/ORM/Tools/Pagination/CountWalkerTest.php	CountWalkerTest::testCountQueryWithArbitraryJoin	pending	
-tests/Tests/ORM/Tools/Pagination/CountWalkerTest.php	CountWalkerTest::testCountQueryWithoutDistinctUsesCountStar	pending	
+tests/Tests/ORM/Tools/Pagination/CountOutputWalkerTest.php	CountOutputWalkerTest::testCountQuery	ported	crates/php2rust-doctrine-orm/tests/count_output_walker_test.rs::testCountQuery
+tests/Tests/ORM/Tools/Pagination/CountOutputWalkerTest.php	CountOutputWalkerTest::testCountQueryGroupBy	ported	crates/php2rust-doctrine-orm/tests/count_output_walker_test.rs::testCountQueryGroupBy
+tests/Tests/ORM/Tools/Pagination/CountOutputWalkerTest.php	CountOutputWalkerTest::testCountQueryHaving	ported	crates/php2rust-doctrine-orm/tests/count_output_walker_test.rs::testCountQueryHaving
+tests/Tests/ORM/Tools/Pagination/CountOutputWalkerTest.php	CountOutputWalkerTest::testCountQueryMixedResultsWithName	ported	crates/php2rust-doctrine-orm/tests/count_output_walker_test.rs::testCountQueryMixedResultsWithName
+tests/Tests/ORM/Tools/Pagination/CountOutputWalkerTest.php	CountOutputWalkerTest::testCountQueryOrderBySqlServer	pending	SQLServerPlatform only; the DBAL port has only SQLitePlatform
+tests/Tests/ORM/Tools/Pagination/CountWalkerTest.php	CountWalkerTest::testCountQuery	ported	crates/php2rust-doctrine-orm/tests/count_walker_test.rs::testCountQuery
+tests/Tests/ORM/Tools/Pagination/CountWalkerTest.php	CountWalkerTest::testCountQueryHavingException	ported	crates/php2rust-doctrine-orm/tests/count_walker_test.rs::testCountQueryHavingException
+tests/Tests/ORM/Tools/Pagination/CountWalkerTest.php	CountWalkerTest::testCountQueryKeepsGroupBy	ported	crates/php2rust-doctrine-orm/tests/count_walker_test.rs::testCountQueryKeepsGroupBy
+tests/Tests/ORM/Tools/Pagination/CountWalkerTest.php	CountWalkerTest::testCountQueryMixedResultsWithName	ported	crates/php2rust-doctrine-orm/tests/count_walker_test.rs::testCountQueryMixedResultsWithName
+tests/Tests/ORM/Tools/Pagination/CountWalkerTest.php	CountWalkerTest::testCountQueryRemovesLimits	ported	crates/php2rust-doctrine-orm/tests/count_walker_test.rs::testCountQueryRemovesLimits
+tests/Tests/ORM/Tools/Pagination/CountWalkerTest.php	CountWalkerTest::testCountQueryRemovesOrderBy	ported	crates/php2rust-doctrine-orm/tests/count_walker_test.rs::testCountQueryRemovesOrderBy
+tests/Tests/ORM/Tools/Pagination/CountWalkerTest.php	CountWalkerTest::testCountQueryWithArbitraryJoin	ported	crates/php2rust-doctrine-orm/tests/count_walker_test.rs::testCountQueryWithArbitraryJoin
+tests/Tests/ORM/Tools/Pagination/CountWalkerTest.php	CountWalkerTest::testCountQueryWithoutDistinctUsesCountStar	ported	crates/php2rust-doctrine-orm/tests/count_walker_test.rs::testCountQueryWithoutDistinctUsesCountStar
 tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testCloneQueryCopiesExistingHints	pending	
 tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testDefaultQueryProducesDuplicatesIsTrue	pending	
 tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testEmptyResultSet	pending	
@@ -3051,51 +3051,51 @@ tests/Tests/ORM/Tools/Pagination/CursorWalkerTest.php	CursorWalkerTest::testQuer
 tests/Tests/ORM/Tools/Pagination/CursorWalkerTest.php	CursorWalkerTest::testQueryWithMultipleOrderByColumnsReversed	pending	
 tests/Tests/ORM/Tools/Pagination/CursorWalkerTest.php	CursorWalkerTest::testQueryWithReversedOrderBy	pending	
 tests/Tests/ORM/Tools/Pagination/CursorWalkerTest.php	CursorWalkerTest::testThrowsExceptionWithoutOrderBy	pending	
-tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testCountQueryMixedResultsWithName	pending	
-tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testCountQueryWithArithmeticOrderByCondition	pending	
-tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testCountQueryWithComplexScalarOrderByItemJoinedWithPartial	pending	
-tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testCountQueryWithComplexScalarOrderByItemJoinedWithoutPartial	pending	
-tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testCountQueryWithComplexScalarOrderByItemOracle	pending	
-tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testCountQueryWithComplexScalarOrderByItemWithoutJoin	pending	
-tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubquery	pending	
-tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryOracle	pending	
-tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryOrderByFieldFromMappedSuperclass	pending	
-tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryOrderBySubSelectOrderByExpression	pending	
-tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryOrderBySubSelectOrderByExpressionOracle	pending	
-tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryOrderBySubSelectOrderByExpressionPg	pending	
-tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryPg	pending	
-tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryWithColumnWithSortDirectionInName	pending	
-tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryWithHiddenScalarSortPg	pending	
-tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryWithHiddenSelectionInOrderBy	pending	
-tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryWithMixedSortOracle	pending	
-tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryWithMixedSortPg	pending	
-tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryWithOrderByAndSubSelectInWhereClauseMySql	pending	
-tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryWithOrderByAndSubSelectInWhereClausePgSql	pending	
-tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryWithOrderByInnerJoined	pending	
-tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryWithScalarSortOracle	pending	
-tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryWithScalarSortPg	pending	
-tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryWithSortOracle	pending	
-tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryWithSortPg	pending	
-tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testParsingQueryWithDifferentLimitOffsetValuesTakesOnlyOneCacheEntry	pending	
-tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testSubqueryClonedCompletely	pending	
-tests/Tests/ORM/Tools/Pagination/LimitSubqueryWalkerTest.php	LimitSubqueryWalkerTest::testAggQueryMixedResultsWithNameAndSort	pending	
-tests/Tests/ORM/Tools/Pagination/LimitSubqueryWalkerTest.php	LimitSubqueryWalkerTest::testAggQueryMultipleMixedResultsWithSort	pending	
-tests/Tests/ORM/Tools/Pagination/LimitSubqueryWalkerTest.php	LimitSubqueryWalkerTest::testCountQueryMixedResultsWithName	pending	
-tests/Tests/ORM/Tools/Pagination/LimitSubqueryWalkerTest.php	LimitSubqueryWalkerTest::testHintCanDisableDistinct	pending	
-tests/Tests/ORM/Tools/Pagination/LimitSubqueryWalkerTest.php	LimitSubqueryWalkerTest::testLimitSubquery	pending	
-tests/Tests/ORM/Tools/Pagination/LimitSubqueryWalkerTest.php	LimitSubqueryWalkerTest::testLimitSubqueryWithArbitraryJoin	pending	
-tests/Tests/ORM/Tools/Pagination/LimitSubqueryWalkerTest.php	LimitSubqueryWalkerTest::testLimitSubqueryWithSort	pending	
-tests/Tests/ORM/Tools/Pagination/LimitSubqueryWalkerTest.php	LimitSubqueryWalkerTest::testLimitSubqueryWithSortFunction	pending	
-tests/Tests/ORM/Tools/Pagination/LimitSubqueryWalkerTest.php	LimitSubqueryWalkerTest::testLimitSubqueryWithSortOnAssociation	pending	
-tests/Tests/ORM/Tools/Pagination/LimitSubqueryWalkerTest.php	LimitSubqueryWalkerTest::testLimitSubqueryWithSortWithArbitraryJoin	pending	
+tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testCountQueryMixedResultsWithName	ported	crates/php2rust-doctrine-orm/tests/limit_subquery_output_walker_test.rs::testCountQueryMixedResultsWithName
+tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testCountQueryWithArithmeticOrderByCondition	ported	crates/php2rust-doctrine-orm/tests/limit_subquery_output_walker_test.rs::testCountQueryWithArithmeticOrderByCondition
+tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testCountQueryWithComplexScalarOrderByItemJoinedWithPartial	ported	crates/php2rust-doctrine-orm/tests/limit_subquery_output_walker_test.rs::testCountQueryWithComplexScalarOrderByItemJoinedWithPartial
+tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testCountQueryWithComplexScalarOrderByItemJoinedWithoutPartial	ported	crates/php2rust-doctrine-orm/tests/limit_subquery_output_walker_test.rs::testCountQueryWithComplexScalarOrderByItemJoinedWithoutPartial
+tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testCountQueryWithComplexScalarOrderByItemOracle	pending	OraclePlatform (ROW_NUMBER() SQL); the DBAL port has only SQLitePlatform
+tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testCountQueryWithComplexScalarOrderByItemWithoutJoin	ported	crates/php2rust-doctrine-orm/tests/limit_subquery_output_walker_test.rs::testCountQueryWithComplexScalarOrderByItemWithoutJoin
+tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubquery	ported	crates/php2rust-doctrine-orm/tests/limit_subquery_output_walker_test.rs::testLimitSubquery
+tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryOracle	pending	OraclePlatform (ROW_NUMBER() SQL); the DBAL port has only SQLitePlatform
+tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryOrderByFieldFromMappedSuperclass	ported	crates/php2rust-doctrine-orm/tests/limit_subquery_output_walker_test.rs::testLimitSubqueryOrderByFieldFromMappedSuperclass
+tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryOrderBySubSelectOrderByExpression	ported	crates/php2rust-doctrine-orm/tests/limit_subquery_output_walker_test.rs::testLimitSubqueryOrderBySubSelectOrderByExpression
+tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryOrderBySubSelectOrderByExpressionOracle	pending	OraclePlatform (ROW_NUMBER() SQL); the DBAL port has only SQLitePlatform
+tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryOrderBySubSelectOrderByExpressionPg	pending	PostgreSQLPlatform (ROW_NUMBER() SQL); the DBAL port has only SQLitePlatform
+tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryPg	pending	PostgreSQLPlatform (ROW_NUMBER() SQL); the DBAL port has only SQLitePlatform
+tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryWithColumnWithSortDirectionInName	ported	crates/php2rust-doctrine-orm/tests/limit_subquery_output_walker_test.rs::testLimitSubqueryWithColumnWithSortDirectionInName
+tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryWithHiddenScalarSortPg	pending	PostgreSQLPlatform (ROW_NUMBER() SQL); the DBAL port has only SQLitePlatform
+tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryWithHiddenSelectionInOrderBy	ported	crates/php2rust-doctrine-orm/tests/limit_subquery_output_walker_test.rs::testLimitSubqueryWithHiddenSelectionInOrderBy
+tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryWithMixedSortOracle	pending	OraclePlatform (ROW_NUMBER() SQL); the DBAL port has only SQLitePlatform
+tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryWithMixedSortPg	pending	PostgreSQLPlatform (ROW_NUMBER() SQL); the DBAL port has only SQLitePlatform
+tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryWithOrderByAndSubSelectInWhereClauseMySql	ported	crates/php2rust-doctrine-orm/tests/limit_subquery_output_walker_test.rs::testLimitSubqueryWithOrderByAndSubSelectInWhereClauseMySql
+tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryWithOrderByAndSubSelectInWhereClausePgSql	pending	PostgreSQLPlatform (ROW_NUMBER() SQL); the DBAL port has only SQLitePlatform
+tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryWithOrderByInnerJoined	ported	crates/php2rust-doctrine-orm/tests/limit_subquery_output_walker_test.rs::testLimitSubqueryWithOrderByInnerJoined
+tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryWithScalarSortOracle	pending	OraclePlatform (ROW_NUMBER() SQL); the DBAL port has only SQLitePlatform
+tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryWithScalarSortPg	pending	PostgreSQLPlatform (ROW_NUMBER() SQL); the DBAL port has only SQLitePlatform
+tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryWithSortOracle	pending	OraclePlatform (ROW_NUMBER() SQL); the DBAL port has only SQLitePlatform
+tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryWithSortPg	pending	PostgreSQLPlatform (ROW_NUMBER() SQL); the DBAL port has only SQLitePlatform
+tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testParsingQueryWithDifferentLimitOffsetValuesTakesOnlyOneCacheEntry	pending	the port has no query cache (Configuration::setQueryCache)
+tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testSubqueryClonedCompletely	pending	the walker borrows the query instead of cloning a Query; waits for the port of Query.php
+tests/Tests/ORM/Tools/Pagination/LimitSubqueryWalkerTest.php	LimitSubqueryWalkerTest::testAggQueryMixedResultsWithNameAndSort	ported	crates/php2rust-doctrine-orm/tests/limit_subquery_walker_test.rs::testAggQueryMixedResultsWithNameAndSort
+tests/Tests/ORM/Tools/Pagination/LimitSubqueryWalkerTest.php	LimitSubqueryWalkerTest::testAggQueryMultipleMixedResultsWithSort	ported	crates/php2rust-doctrine-orm/tests/limit_subquery_walker_test.rs::testAggQueryMultipleMixedResultsWithSort
+tests/Tests/ORM/Tools/Pagination/LimitSubqueryWalkerTest.php	LimitSubqueryWalkerTest::testCountQueryMixedResultsWithName	ported	crates/php2rust-doctrine-orm/tests/limit_subquery_walker_test.rs::testCountQueryMixedResultsWithName
+tests/Tests/ORM/Tools/Pagination/LimitSubqueryWalkerTest.php	LimitSubqueryWalkerTest::testHintCanDisableDistinct	ported	crates/php2rust-doctrine-orm/tests/limit_subquery_walker_test.rs::testHintCanDisableDistinct
+tests/Tests/ORM/Tools/Pagination/LimitSubqueryWalkerTest.php	LimitSubqueryWalkerTest::testLimitSubquery	ported	crates/php2rust-doctrine-orm/tests/limit_subquery_walker_test.rs::testLimitSubquery
+tests/Tests/ORM/Tools/Pagination/LimitSubqueryWalkerTest.php	LimitSubqueryWalkerTest::testLimitSubqueryWithArbitraryJoin	ported	crates/php2rust-doctrine-orm/tests/limit_subquery_walker_test.rs::testLimitSubqueryWithArbitraryJoin
+tests/Tests/ORM/Tools/Pagination/LimitSubqueryWalkerTest.php	LimitSubqueryWalkerTest::testLimitSubqueryWithSort	ported	crates/php2rust-doctrine-orm/tests/limit_subquery_walker_test.rs::testLimitSubqueryWithSort
+tests/Tests/ORM/Tools/Pagination/LimitSubqueryWalkerTest.php	LimitSubqueryWalkerTest::testLimitSubqueryWithSortFunction	ported	crates/php2rust-doctrine-orm/tests/limit_subquery_walker_test.rs::testLimitSubqueryWithSortFunction
+tests/Tests/ORM/Tools/Pagination/LimitSubqueryWalkerTest.php	LimitSubqueryWalkerTest::testLimitSubqueryWithSortOnAssociation	ported	crates/php2rust-doctrine-orm/tests/limit_subquery_walker_test.rs::testLimitSubqueryWithSortOnAssociation
+tests/Tests/ORM/Tools/Pagination/LimitSubqueryWalkerTest.php	LimitSubqueryWalkerTest::testLimitSubqueryWithSortWithArbitraryJoin	ported	crates/php2rust-doctrine-orm/tests/limit_subquery_walker_test.rs::testLimitSubqueryWithSortWithArbitraryJoin
 tests/Tests/ORM/Tools/Pagination/OffsetPaginatorTest.php	OffsetPaginatorTest::testExtraParametersAreStrippedWhenWalkerRemovingOriginalSelectElementsIsUsed	pending	
 tests/Tests/ORM/Tools/Pagination/OffsetPaginatorTest.php	OffsetPaginatorTest::testPaginatingDoesCareAboutExtraParametersWithoutOutputWalkersWhenResultIsNotEmpty	pending	
 tests/Tests/ORM/Tools/Pagination/OffsetPaginatorTest.php	OffsetPaginatorTest::testPaginatingDoesNotCareAboutExtraParametersWithoutOutputWalkersWhenResultIsEmpty	pending	
-tests/Tests/ORM/Tools/Pagination/PaginatorTest.php	PaginatorTest::testExtraParametersAreStrippedWhenWalkerRemovingOriginalSelectElementsIsUsed	pending	
-tests/Tests/ORM/Tools/Pagination/PaginatorTest.php	PaginatorTest::testPaginatorNotCaringAboutExtraParametersWithoutOutputWalkers	pending	
-tests/Tests/ORM/Tools/Pagination/PaginatorTest.php	PaginatorTest::testgetIteratorDoesCareAboutExtraParametersWithoutOutputWalkersWhenResultIsNotEmpty	pending	
-tests/Tests/ORM/Tools/Pagination/RootTypeWalkerTest.php	RootTypeWalkerTest::testResolveTypeMapping	pending	
-tests/Tests/ORM/Tools/Pagination/WhereInWalkerTest.php	WhereInWalkerTest::testDqlQueryTransformation	pending	
+tests/Tests/ORM/Tools/Pagination/PaginatorTest.php	PaginatorTest::testExtraParametersAreStrippedWhenWalkerRemovingOriginalSelectElementsIsUsed	pending	count() and getIterator() run queries: waits for the port of Query.php and hydration
+tests/Tests/ORM/Tools/Pagination/PaginatorTest.php	PaginatorTest::testPaginatorNotCaringAboutExtraParametersWithoutOutputWalkers	pending	count() and getIterator() run queries: waits for the port of Query.php and hydration
+tests/Tests/ORM/Tools/Pagination/PaginatorTest.php	PaginatorTest::testgetIteratorDoesCareAboutExtraParametersWithoutOutputWalkersWhenResultIsNotEmpty	pending	count() and getIterator() run queries: waits for the port of Query.php and hydration
+tests/Tests/ORM/Tools/Pagination/RootTypeWalkerTest.php	RootTypeWalkerTest::testResolveTypeMapping	ported	crates/php2rust-doctrine-orm/tests/root_type_walker_test.rs::testResolveTypeMapping
+tests/Tests/ORM/Tools/Pagination/WhereInWalkerTest.php	WhereInWalkerTest::testDqlQueryTransformation	ported	crates/php2rust-doctrine-orm/tests/where_in_walker_test.rs::testDqlQueryTransformation
 tests/Tests/ORM/Tools/Pagination/WindowPageTest.php	WindowPageTest::testFirstPageHasNextButNoPreviousPage	pending	
 tests/Tests/ORM/Tools/Pagination/WindowPageTest.php	WindowPageTest::testGetItemsAndCount	pending	
 tests/Tests/ORM/Tools/Pagination/WindowPageTest.php	WindowPageTest::testGetLastWindow	pending	
