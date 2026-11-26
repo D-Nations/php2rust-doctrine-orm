@@ -1584,7 +1584,7 @@ tests/Tests/ORM/Functional/Ticket/GH8061Test.php	GH8061Test::testConvertToPHPVal
 tests/Tests/ORM/Functional/Ticket/GH8127Test.php	GH8127Test::testLoadFieldsFromAllClassesInHierarchy	ported	crates/php2rust-doctrine-orm/tests/gh8127_test.rs::testLoadFieldsFromAllClassesInHierarchy
 tests/Tests/ORM/Functional/Ticket/GH8217Test.php	GH8217Test::testNoQueriesAfterSecondFlush	ported	crates/php2rust-doctrine-orm/tests/gh8217_test.rs::testNoQueriesAfterSecondFlush
 tests/Tests/ORM/Functional/Ticket/GH8415Test.php	GH8415Test::testAssociationIsBasedOnBaseClass	ported	crates/php2rust-doctrine-orm/tests/gh8415_test.rs::testAssociationIsBasedOnBaseClass
-tests/Tests/ORM/Functional/Ticket/GH8415ToManyAssociationTest.php	GH8415ToManyAssociationTest::testToManyAssociationOnBaseClassAllowedWhenThereAreMappedSuperclassesAsChildren	pending	
+tests/Tests/ORM/Functional/Ticket/GH8415ToManyAssociationTest.php	GH8415ToManyAssociationTest::testToManyAssociationOnBaseClassAllowedWhenThereAreMappedSuperclassesAsChildren	ported	crates/php2rust-doctrine-orm/tests/gh8415_to_many_association_test.rs::testToManyAssociationOnBaseClassAllowedWhenThereAreMappedSuperclassesAsChildren
 tests/Tests/ORM/Functional/Ticket/GH8443Test.php	GH8443Test::testJoinRootEntityWithForcePartialLoad	pending	
 tests/Tests/ORM/Functional/Ticket/GH8443Test.php	GH8443Test::testJoinRootEntityWithOnlyOneEntityInHierarchy	pending	
 tests/Tests/ORM/Functional/Ticket/GH8499Test.php	GH8499Test::testOptimisticLockWithDateTimeForVersion	pending	
