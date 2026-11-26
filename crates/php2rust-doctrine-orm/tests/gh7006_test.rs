@@ -59,7 +59,10 @@ async fn testIssue() {
     em.flush().await.unwrap();
 
     assert!(matches!(get(&book, "id"), Value::Int(_)));
-    assert!(matches!(get(&payment_card_transaction, "id"), Value::Int(_)));
+    assert!(matches!(
+        get(&payment_card_transaction, "id"),
+        Value::Int(_)
+    ));
     assert!(matches!(
         get(&payment_card_transaction_fee, "id"),
         Value::Int(_)
