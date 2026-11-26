@@ -22,7 +22,7 @@ use crate::exception;
 use crate::id::IdGenerator;
 use crate::mapping::ClassMetadata;
 use crate::mapping::quote_strategy::get_sql_result_casing;
-use crate::utility::{ParamType, flatten_identifier, get_type_of_column, key_text};
+use crate::utility::{ParamType, flatten_identifier, get_type_of_column, key_text, to_text};
 
 use super::basic_entity_persister::{BasicEntityPersister, PersisterCriteria, dbal, types_of};
 
@@ -632,8 +632,8 @@ impl BasicEntityPersister {
 
             if let Some(assoc) = assoc {
                 if assoc.is_to_one_owning_side() {
-                    for (source_col, _) in assoc.target_to_source_key_columns.iter() {
-                        columns.push(key_text(source_col));
+                    for source_col in assoc.target_to_source_key_columns.values() {
+                        columns.push(to_text(source_col));
                     }
                 }
             } else if info.name != info.root_entity_name
