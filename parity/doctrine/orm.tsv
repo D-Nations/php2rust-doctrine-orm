@@ -587,17 +587,17 @@ tests/Tests/ORM/Functional/Locking/LockTest.php	LockTest::testLockWithLockModeNo
 tests/Tests/ORM/Functional/Locking/LockTest.php	LockTest::testRefreshWithLockPessimisticWrite	pending	
 tests/Tests/ORM/Functional/Locking/LockTest.php	LockTest::testRefreshWithLockPessimisticWriteNoTransactionThrowsException	pending	
 tests/Tests/ORM/Functional/Locking/LockTest.php	LockTest::testRefreshWithNullLockModeIsDeprecated	pending	
-tests/Tests/ORM/Functional/Locking/OptimisticTest.php	OptimisticTest::testJoinedChildFailureThrowsException	pending	
-tests/Tests/ORM/Functional/Locking/OptimisticTest.php	OptimisticTest::testJoinedChildInsertSetsInitialVersionValue	pending	
-tests/Tests/ORM/Functional/Locking/OptimisticTest.php	OptimisticTest::testJoinedParentFailureThrowsException	pending	
-tests/Tests/ORM/Functional/Locking/OptimisticTest.php	OptimisticTest::testJoinedParentInsertSetsInitialVersionValue	pending	
-tests/Tests/ORM/Functional/Locking/OptimisticTest.php	OptimisticTest::testLockWorksWithProxy	pending	
-tests/Tests/ORM/Functional/Locking/OptimisticTest.php	OptimisticTest::testMultipleFlushesDoIncrementalUpdates	pending	
-tests/Tests/ORM/Functional/Locking/OptimisticTest.php	OptimisticTest::testOptimisticTimestampFailureThrowsException	pending	
-tests/Tests/ORM/Functional/Locking/OptimisticTest.php	OptimisticTest::testOptimisticTimestampLockFailureThrowsException	pending	
-tests/Tests/ORM/Functional/Locking/OptimisticTest.php	OptimisticTest::testOptimisticTimestampSetsDefaultValue	pending	
-tests/Tests/ORM/Functional/Locking/OptimisticTest.php	OptimisticTest::testStandardFailureThrowsException	pending	
-tests/Tests/ORM/Functional/Locking/OptimisticTest.php	OptimisticTest::testStandardInsertSetsInitialVersionValue	pending	
+tests/Tests/ORM/Functional/Locking/OptimisticTest.php	OptimisticTest::testJoinedChildFailureThrowsException	ported	crates/php2rust-doctrine-orm/tests/optimistic_test.rs::testJoinedChildFailureThrowsException
+tests/Tests/ORM/Functional/Locking/OptimisticTest.php	OptimisticTest::testJoinedChildInsertSetsInitialVersionValue	ported	crates/php2rust-doctrine-orm/tests/optimistic_test.rs::testJoinedChildInsertSetsInitialVersionValue
+tests/Tests/ORM/Functional/Locking/OptimisticTest.php	OptimisticTest::testJoinedParentFailureThrowsException	ported	crates/php2rust-doctrine-orm/tests/optimistic_test.rs::testJoinedParentFailureThrowsException
+tests/Tests/ORM/Functional/Locking/OptimisticTest.php	OptimisticTest::testJoinedParentInsertSetsInitialVersionValue	ported	crates/php2rust-doctrine-orm/tests/optimistic_test.rs::testJoinedParentInsertSetsInitialVersionValue
+tests/Tests/ORM/Functional/Locking/OptimisticTest.php	OptimisticTest::testLockWorksWithProxy	ported	crates/php2rust-doctrine-orm/tests/optimistic_test.rs::testLockWorksWithProxy
+tests/Tests/ORM/Functional/Locking/OptimisticTest.php	OptimisticTest::testMultipleFlushesDoIncrementalUpdates	ported	crates/php2rust-doctrine-orm/tests/optimistic_test.rs::testMultipleFlushesDoIncrementalUpdates
+tests/Tests/ORM/Functional/Locking/OptimisticTest.php	OptimisticTest::testOptimisticTimestampFailureThrowsException	ported	crates/php2rust-doctrine-orm/tests/optimistic_test.rs::testOptimisticTimestampFailureThrowsException
+tests/Tests/ORM/Functional/Locking/OptimisticTest.php	OptimisticTest::testOptimisticTimestampLockFailureThrowsException	ported	crates/php2rust-doctrine-orm/tests/optimistic_test.rs::testOptimisticTimestampLockFailureThrowsException
+tests/Tests/ORM/Functional/Locking/OptimisticTest.php	OptimisticTest::testOptimisticTimestampSetsDefaultValue	ported	crates/php2rust-doctrine-orm/tests/optimistic_test.rs::testOptimisticTimestampSetsDefaultValue
+tests/Tests/ORM/Functional/Locking/OptimisticTest.php	OptimisticTest::testStandardFailureThrowsException	ported	crates/php2rust-doctrine-orm/tests/optimistic_test.rs::testStandardFailureThrowsException
+tests/Tests/ORM/Functional/Locking/OptimisticTest.php	OptimisticTest::testStandardInsertSetsInitialVersionValue	ported	crates/php2rust-doctrine-orm/tests/optimistic_test.rs::testStandardInsertSetsInitialVersionValue
 tests/Tests/ORM/Functional/ManyToManyBasicAssociationTest.php	ManyToManyBasicAssociationTest::testBasicManyToManyJoin	ported	crates/php2rust-doctrine-orm/tests/many_to_many_basic_association_test.rs::testBasicManyToManyJoin
 tests/Tests/ORM/Functional/ManyToManyBasicAssociationTest.php	ManyToManyBasicAssociationTest::testClearAndResetCollection	ported	crates/php2rust-doctrine-orm/tests/many_to_many_basic_association_test.rs::testClearAndResetCollection
 tests/Tests/ORM/Functional/ManyToManyBasicAssociationTest.php	ManyToManyBasicAssociationTest::testClearBeforeLazyLoad	ported	crates/php2rust-doctrine-orm/tests/many_to_many_basic_association_test.rs::testClearBeforeLazyLoad
