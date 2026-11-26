@@ -18,9 +18,23 @@
 
 #![forbid(unsafe_code)]
 
+mod connection_registry;
+mod manager_registry;
 pub mod mapping;
+mod notify_property_changed;
+mod object_manager;
+mod object_manager_decorator;
+mod object_repository;
 pub mod php_reflection;
+mod property_changed_listener;
 pub mod proxy;
 pub mod reflection;
 
+pub use connection_registry::{Connection, ConnectionRegistry};
+pub use manager_registry::{ManagerRegistry, Managers};
+pub use notify_property_changed::NotifyPropertyChanged;
+pub use object_manager::ObjectManager;
+pub use object_manager_decorator::ObjectManagerDecorator;
+pub use object_repository::ObjectRepository;
+pub use property_changed_listener::PropertyChangedListener;
 pub use proxy::Proxy;
