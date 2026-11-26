@@ -1571,9 +1571,9 @@ tests/Tests/ORM/Functional/Ticket/GH7820Test.php	GH7820Test::testWillFindSongsIn
 tests/Tests/ORM/Functional/Ticket/GH7820Test.php	GH7820Test::testWillFindSongsInPaginatorEvenWithCachedQueryParsing	pending	
 tests/Tests/ORM/Functional/Ticket/GH7829Test.php	GH7829Test::testPaginatorWithLimitSubquery	ported	crates/php2rust-doctrine-orm/tests/gh7829_test.rs::testPaginatorWithLimitSubquery
 tests/Tests/ORM/Functional/Ticket/GH7829Test.php	GH7829Test::testPaginatorWithLimitSubquerySkipped	ported	crates/php2rust-doctrine-orm/tests/gh7829_test.rs::testPaginatorWithLimitSubquerySkipped
-tests/Tests/ORM/Functional/Ticket/GH7836Test.php	GH7836Test::testMatchingKeepsOrderOfCriteriaOrderingKeys	pending	
-tests/Tests/ORM/Functional/Ticket/GH7836Test.php	GH7836Test::testMatchingOverrulesCollectionOrdering	pending	
-tests/Tests/ORM/Functional/Ticket/GH7836Test.php	GH7836Test::testMatchingRespectsCollectionOrdering	pending	
+tests/Tests/ORM/Functional/Ticket/GH7836Test.php	GH7836Test::testMatchingKeepsOrderOfCriteriaOrderingKeys	ported	crates/php2rust-doctrine-orm/tests/gh7836_test.rs::testMatchingKeepsOrderOfCriteriaOrderingKeys
+tests/Tests/ORM/Functional/Ticket/GH7836Test.php	GH7836Test::testMatchingOverrulesCollectionOrdering	ported	crates/php2rust-doctrine-orm/tests/gh7836_test.rs::testMatchingOverrulesCollectionOrdering
+tests/Tests/ORM/Functional/Ticket/GH7836Test.php	GH7836Test::testMatchingRespectsCollectionOrdering	ported	crates/php2rust-doctrine-orm/tests/gh7836_test.rs::testMatchingRespectsCollectionOrdering
 tests/Tests/ORM/Functional/Ticket/GH7864Test.php	GH7864Test::testExtraLazyRemoveElement	pending	
 tests/Tests/ORM/Functional/Ticket/GH7869Test.php	GH7869Test::testDQLDeferredEagerLoad	pending	
 tests/Tests/ORM/Functional/Ticket/GH7875Test.php	GH7875Test::testUpdateSchemaSql	pending	
