@@ -1,8 +1,8 @@
 //! `Doctrine\ORM\Query\Exec`: the SQL executors and finalizers, as data.
 //! An executor holds the SQL statements the walker generated (and, for the
 //! multi-table executors, the temporary table statements and parameter
-//! lists); `execute()` is not ported (the connection's statements belong
-//! to the query).
+//! lists). `execute()` runs them on a connection; a SELECT's rows are
+//! fetched whole. The query cache profile is not ported.
 //!
 //! Upstream: doctrine/orm src/Query/Exec/AbstractSqlExecutor.php src/Query/Exec/FinalizedSelectExecutor.php src/Query/Exec/MultiTableDeleteExecutor.php src/Query/Exec/MultiTableUpdateExecutor.php src/Query/Exec/PreparedExecutorFinalizer.php src/Query/Exec/SingleSelectExecutor.php src/Query/Exec/SingleSelectSqlFinalizer.php src/Query/Exec/SingleTableDeleteUpdateExecutor.php src/Query/Exec/SqlFinalizer.php
 
@@ -287,6 +287,157 @@ impl SqlExecutor {
             },
             SqlStatements::Many(statements),
         ))
+    }
+}
+
+impl SqlExecutor {
+    /// Executes all sql statements.
+    #[allow(clippy::too_many_lines, reason = "the execute() of each executor")]
+    pub async fn execute(
+        &self,
+        conn: &php2rust_doctrine_dbal::Connection,
+        params: &PhpArray,
+        types: &php2rust_doctrine_dbal::ParameterTypes,
+    ) -> Result<crate::abstract_query::Executed, Thrown> {
+        use crate::abstract_query::Executed;
+        let no_types = php2rust_doctrine_dbal::ParameterTypes::new();
+        let empty = PhpArray::new();
+        let one = |statements: &SqlStatements| match statements {
+            SqlStatements::One(sql) => sql.clone(),
+            SqlStatements::Many(sql) => sql.join("; "),
+        };
+        match &self.kind {
+            ExecutorKind::FinalizedSelect | ExecutorKind::SingleSelect => {
+                let rows = conn
+                    .fetch_all_associative(&one(&self.sql_statements), params, types)
+                    .await
+                    .map_err(dbal_error)?;
+                Ok(Executed::Rows(rows))
+            }
+            ExecutorKind::SingleTableDeleteUpdate => {
+                let count = conn
+                    .execute_statement(&one(&self.sql_statements), params, types)
+                    .await
+                    .map_err(dbal_error)?;
+                Ok(Executed::Count(count))
+            }
+            ExecutorKind::MultiTableDelete {
+                create_temp_table_sql,
+                drop_temp_table_sql,
+                insert_sql,
+            } => {
+                // Create temporary id table
+                conn.execute_statement(create_temp_table_sql, &empty, &no_types)
+                    .await
+                    .map_err(dbal_error)?;
+                let outcome = async {
+                    // Insert identifiers
+                    let num_deleted = conn
+                        .execute_statement(insert_sql, params, types)
+                        .await
+                        .map_err(dbal_error)?;
+                    // Execute DELETE statements
+                    for sql in statements(&self.sql_statements) {
+                        conn.execute_statement(sql, &empty, &no_types)
+                            .await
+                            .map_err(dbal_error)?;
+                    }
+                    Ok::<i64, Thrown>(num_deleted)
+                }
+                .await;
+                // Drop temporary table (also on a failure, to avoid
+                // possible collisions)
+                let dropped = conn
+                    .execute_statement(drop_temp_table_sql, &empty, &no_types)
+                    .await
+                    .map_err(dbal_error);
+                let num_deleted = outcome?;
+                dropped?;
+                Ok(Executed::Count(num_deleted))
+            }
+            ExecutorKind::MultiTableUpdate {
+                create_temp_table_sql,
+                drop_temp_table_sql,
+                insert_sql,
+                sql_parameters,
+                num_parameters_in_update_clause,
+            } => {
+                // Create temporary id table
+                conn.execute_statement(create_temp_table_sql, &empty, &no_types)
+                    .await
+                    .map_err(dbal_error)?;
+                let skip = usize::try_from(*num_parameters_in_update_clause).unwrap_or(0);
+                let outcome = async {
+                    // Insert identifiers. Parameters from the update
+                    // clause are cut off.
+                    let mut insert_params = PhpArray::new();
+                    let mut insert_types = php2rust_doctrine_dbal::ParameterTypes::new();
+                    for (i, value) in params.values().skip(skip).enumerate() {
+                        let _ = insert_params.push(value.clone());
+                        if let Some(ty) = types.get(&php_value::Key::Int(
+                            i64::try_from(i + skip).unwrap_or(i64::MAX),
+                        )) {
+                            insert_types.insert(
+                                php_value::Key::Int(i64::try_from(i).unwrap_or(i64::MAX)),
+                                ty.clone(),
+                            );
+                        }
+                    }
+                    let num_updated = conn
+                        .execute_statement(insert_sql, &insert_params, &insert_types)
+                        .await
+                        .map_err(dbal_error)?;
+
+                    // Execute UPDATE statements
+                    let param_list: Vec<&Value> = params.values().collect();
+                    for (key, statement) in statements(&self.sql_statements).iter().enumerate() {
+                        let mut param_values = PhpArray::new();
+                        let mut param_types = php2rust_doctrine_dbal::ParameterTypes::new();
+                        if let Some(names) = sql_parameters.get(key) {
+                            for (parameter_key, _) in names.iter().enumerate() {
+                                let value = param_list
+                                    .get(parameter_key)
+                                    .map_or(Value::Null, |v| (*v).clone());
+                                let ty = types
+                                    .get(&php_value::Key::Int(
+                                        i64::try_from(parameter_key).unwrap_or(i64::MAX),
+                                    ))
+                                    .cloned()
+                                    .unwrap_or_else(|| {
+                                        crate::query::ParameterTypeInferer::infer_type(&value)
+                                    });
+                                let index = php_value::Key::Int(
+                                    i64::try_from(param_values.len()).unwrap_or(i64::MAX),
+                                );
+                                param_types.insert(index, ty);
+                                let _ = param_values.push(value);
+                            }
+                        }
+                        conn.execute_statement(statement, &param_values, &param_types)
+                            .await
+                            .map_err(dbal_error)?;
+                    }
+                    Ok::<i64, Thrown>(num_updated)
+                }
+                .await;
+                // Drop temporary table
+                let dropped = conn
+                    .execute_statement(drop_temp_table_sql, &empty, &no_types)
+                    .await
+                    .map_err(dbal_error);
+                let num_updated = outcome?;
+                dropped?;
+                Ok(Executed::Count(num_updated))
+            }
+        }
+    }
+}
+
+/// The statements of an executor, as a list.
+fn statements(sql: &SqlStatements) -> Vec<&String> {
+    match sql {
+        SqlStatements::One(sql) => vec![sql],
+        SqlStatements::Many(sql) => sql.iter().collect(),
     }
 }
 
