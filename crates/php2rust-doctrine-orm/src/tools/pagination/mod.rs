@@ -6,6 +6,7 @@
 
 pub mod count_output_walker;
 pub mod count_walker;
+pub mod limit_subquery_output_walker;
 pub mod limit_subquery_walker;
 pub mod root_type_walker;
 pub mod row_number_over_function;
@@ -17,6 +18,7 @@ use crate::query::ast::IdentificationVariableDeclaration;
 
 pub use count_output_walker::CountOutputWalker;
 pub use count_walker::CountWalker;
+pub use limit_subquery_output_walker::LimitSubqueryOutputWalker;
 pub use limit_subquery_walker::LimitSubqueryWalker;
 pub use root_type_walker::RootTypeWalker;
 pub use row_number_over_function::RowNumberOverFunction;
