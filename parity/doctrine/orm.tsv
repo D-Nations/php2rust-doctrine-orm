@@ -1414,7 +1414,7 @@ tests/Tests/ORM/Functional/Ticket/DDC992Test.php	DDC992Test::testIssue	ported	cr
 tests/Tests/ORM/Functional/Ticket/DDC992Test.php	DDC992Test::testOneToManyChild	ported	crates/php2rust-doctrine-orm/tests/ddc992_test.rs::testOneToManyChild
 tests/Tests/ORM/Functional/Ticket/EagerSecondLevelCacheCollectionTest.php	EagerSecondLevelCacheCollectionTest::testEagerCollectionIsNotDuplicatedAfterSecondLevelCacheHit	pending	
 tests/Tests/ORM/Functional/Ticket/GH10049/GH10049Test.php	GH10049Test::testInheritedReadOnlyPropertyValueCanBeSet	pending	the models are separate files of the ticket directory and not recorded yet
-tests/Tests/ORM/Functional/Ticket/GH10132Test.php	GH10132Test::testQueryBackedEnumInCompositeKeyJoin	pending	
+tests/Tests/ORM/Functional/Ticket/GH10132Test.php	GH10132Test::testQueryBackedEnumInCompositeKeyJoin	ported	crates/php2rust-doctrine-orm/tests/gh10132_test.rs::testQueryBackedEnumInCompositeKeyJoin
 tests/Tests/ORM/Functional/Ticket/GH10288Test.php	GH10288Test::testEnumDiscriminatorWithCustomEnumType	pending	a custom DBAL type of the test file (the recorder cannot load a DBAL Type subclass)
 tests/Tests/ORM/Functional/Ticket/GH10288Test.php	GH10288Test::testEnumDiscriminatorWithEnumType	pending	a custom DBAL type of the test file (the recorder cannot load a DBAL Type subclass)
 tests/Tests/ORM/Functional/Ticket/GH10334Test.php	GH10334Test::testGetChildWithBackedEnumId	pending	
