@@ -8,7 +8,9 @@ use std::sync::Once;
 use php2rust_doctrine_persistence::php_reflection::{ClassInfo, register_class};
 
 pub mod association_mapping;
+pub mod attributes;
 pub mod class_metadata;
+pub mod driver;
 pub mod embedded_class_mapping;
 pub mod field_mapping;
 pub mod join_column_mapping;
