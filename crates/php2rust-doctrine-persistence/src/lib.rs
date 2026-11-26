@@ -41,6 +41,7 @@
 #![forbid(unsafe_code)]
 
 mod abstract_manager_registry;
+pub mod cache;
 mod connection_registry;
 pub mod event;
 mod manager_registry;
