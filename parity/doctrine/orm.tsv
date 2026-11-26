@@ -1592,7 +1592,7 @@ tests/Tests/ORM/Functional/Ticket/GH8499Test.php	GH8499Test::testOptimisticLockW
 tests/Tests/ORM/Functional/Ticket/GH8499Test.php	GH8499Test::testOptimisticTimestampSetsDefaultValue	ported	crates/php2rust-doctrine-orm/tests/gh8499_test.rs::testOptimisticTimestampSetsDefaultValue
 tests/Tests/ORM/Functional/Ticket/GH8663Test.php	GH8663Test::testDeletedEntity	ported	crates/php2rust-doctrine-orm/tests/gh8663_test.rs::testDeletedEntity
 tests/Tests/ORM/Functional/Ticket/GH8914Test.php	GH8914Test::testDiscriminatorMapWithSeveralLevelsIsSupported	ported	crates/php2rust-doctrine-orm/tests/gh8914_test.rs::testDiscriminatorMapWithSeveralLevelsIsSupported
-tests/Tests/ORM/Functional/Ticket/GH9027Test.php	GH9027Test::testUnitOfWorkHandlesNullRelations	pending	
+tests/Tests/ORM/Functional/Ticket/GH9027Test.php	GH9027Test::testUnitOfWorkHandlesNullRelations	ported	crates/php2rust-doctrine-orm/tests/gh9027_test.rs::testUnitOfWorkHandlesNullRelations
 tests/Tests/ORM/Functional/Ticket/GH9109Test.php	GH9109Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/GH9192Test.php	GH9192Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/GH9230Test.php	GH9230Test::testIssue	pending	
