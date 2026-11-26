@@ -315,6 +315,8 @@ namespace {
         'ORM/Functional/OneToOneSingleTableInheritanceTest.php',
         'ORM/Functional/OrderedJoinedTableInheritanceCollectionTest.php',
         'ORM/Functional/SchemaTool/CompanySchemaTest.php',
+        'ORM/Functional/JoinedTableCompositeKeyTest.php',
+        'ORM/Functional/SingleTableCompositeKeyTest.php',
     ];
     $before = array_merge(get_declared_classes(), get_declared_interfaces(), get_declared_traits());
     foreach ($files as $file) {
