@@ -1843,10 +1843,7 @@ impl ClassMetadataInfo {
             let default = if ["integer", "bigint", "smallint"].contains(&ty.as_str()) {
                 Value::Int(1)
             } else if ty == "datetime" {
-                Value::Object(Arc::new(GenericObject::new(
-                    "Doctrine\\DBAL\\Schema\\DefaultExpression\\CurrentTimestamp",
-                    PhpArray::new(),
-                )))
+                php2rust_doctrine_dbal::schema::CurrentTimestamp::value()
             } else {
                 return Err(mapping_exception::unsupported_optimistic_locking_type(
                     &self.name,

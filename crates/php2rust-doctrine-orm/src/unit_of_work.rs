@@ -2162,9 +2162,13 @@ impl UnitOfWork {
 
     /// Refreshes the state of the given entity from the database,
     /// overwriting any local, unpersisted changes.
-    pub async fn refresh(&self, entity: &Object) -> Result<(), Thrown> {
+    pub async fn refresh(
+        &self,
+        entity: &Object,
+        lock_mode: Option<LockMode>,
+    ) -> Result<(), Thrown> {
         let mut visited = HashSet::new();
-        self.do_refresh(entity, &mut visited).await
+        self.do_refresh(entity, &mut visited, lock_mode).await
     }
 
     /// Executes a refresh operation on an entity.
@@ -2172,8 +2176,16 @@ impl UnitOfWork {
         &'a self,
         entity: &'a Object,
         visited: &'a mut HashSet<usize>,
+        lock_mode: Option<LockMode>,
     ) -> Fut<'a, ()> {
         Box::pin(async move {
+            if matches!(
+                lock_mode,
+                Some(LockMode::PessimisticRead | LockMode::PessimisticWrite)
+            ) && !self.em()?.get_connection().is_transaction_active()
+            {
+                return Err(exception::transaction_required());
+            }
             let oid = object_id(entity);
             if !visited.insert(oid) {
                 return Ok(()); // Prevent infinite recursion
@@ -2182,7 +2194,7 @@ impl UnitOfWork {
             if self.get_entity_state(entity).await? != STATE_MANAGED {
                 return Err(exception::entity_not_managed(entity));
             }
-            self.cascade_refresh(entity, visited).await?;
+            self.cascade_refresh(entity, visited, lock_mode).await?;
 
             let id = self
                 .st()
@@ -2197,7 +2209,7 @@ impl UnitOfWork {
             }
             let name = class.read().name.clone();
             self.get_entity_persister(&name)?
-                .refresh(&criteria, entity)
+                .refresh(&criteria, entity, lock_mode)
                 .await
         })
     }
@@ -2206,6 +2218,7 @@ impl UnitOfWork {
         &self,
         entity: &Object,
         visited: &mut HashSet<usize>,
+        lock_mode: Option<LockMode>,
     ) -> Result<(), Thrown> {
         let class = self.em()?.get_class_metadata(entity.class())?;
         let associations: Vec<AssociationMapping> = class
@@ -2220,11 +2233,11 @@ impl UnitOfWork {
             if let Some(entities) = related_entities(&related) {
                 for related_entity in entities {
                     if let Value::Object(o) = related_entity {
-                        self.do_refresh(&o, visited).await?;
+                        self.do_refresh(&o, visited, lock_mode).await?;
                     }
                 }
             } else if let Value::Object(o) = related {
-                self.do_refresh(&o, visited).await?;
+                self.do_refresh(&o, visited, lock_mode).await?;
             }
         }
         Ok(())

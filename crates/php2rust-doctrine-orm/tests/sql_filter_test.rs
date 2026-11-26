@@ -8,9 +8,7 @@
 //! Each filter class registers its constructor
 //! (`register_filter_class()`), as the configuration names it by class.
 //!
-//! Pending: the `company` model set (joined and single table inheritance
-//! persisters are not ported) and the query cache (not ported); see the
-//! parity rows.
+//! Pending: the query cache (not ported); see the parity rows.
 //!
 //! Upstream: doctrine/orm tests/Tests/ORM/Functional/SQLFilterTest.php
 
@@ -21,6 +19,8 @@
     reason = "test helpers; a panic is a test failure"
 )]
 
+#[path = "common/company.rs"]
+mod company;
 #[path = "common/models.rs"]
 mod models;
 #[path = "common/orm.rs"]
@@ -50,6 +50,10 @@ const MY_SOFT_DELETE_FILTER: &str = "Doctrine\\Tests\\ORM\\Functional\\MySoftDel
 const MY_LOCALE_FILTER: &str = "Doctrine\\Tests\\ORM\\Functional\\MyLocaleFilter";
 const CMS_COUNTRY_FILTER: &str = "Doctrine\\Tests\\ORM\\Functional\\CMSCountryFilter";
 const CMS_GROUP_PREFIX_FILTER: &str = "Doctrine\\Tests\\ORM\\Functional\\CMSGroupPrefixFilter";
+const COMPANY_PERSON_NAME_FILTER: &str =
+    "Doctrine\\Tests\\ORM\\Functional\\CompanyPersonNameFilter";
+const COMPLETED_CONTRACT_FILTER: &str = "Doctrine\\Tests\\ORM\\Functional\\CompletedContractFilter";
+const COMPANY_EVENT_FILTER: &str = "Doctrine\\Tests\\ORM\\Functional\\CompanyEventFilter";
 const CMS_ARTICLE_TOPIC_FILTER: &str = "Doctrine\\Tests\\ORM\\Functional\\CMSArticleTopicFilter";
 const FILTER_EXCEPTION: &str = "Doctrine\\ORM\\Query\\Filter\\FilterException";
 
@@ -142,6 +146,69 @@ impl FilterConstraint for CmsGroupPrefixFilter {
     }
 }
 
+/// `CompanyPersonNameFilter extends SQLFilter`.
+struct CompanyPersonNameFilter;
+
+impl FilterConstraint for CompanyPersonNameFilter {
+    fn add_filter_constraint(
+        &self,
+        filter: &SqlFilter,
+        target_entity: &ClassMetadataInfo,
+        target_table_alias: &str,
+    ) -> Result<String, Thrown> {
+        if target_entity.name != company::COMPANY_PERSON {
+            return Ok(String::new());
+        }
+
+        Ok(format!(
+            "{target_table_alias}.name LIKE {}",
+            filter.get_parameter("name")?
+        ))
+    }
+}
+
+/// `CompletedContractFilter extends SQLFilter`.
+struct CompletedContractFilter;
+
+impl FilterConstraint for CompletedContractFilter {
+    fn add_filter_constraint(
+        &self,
+        filter: &SqlFilter,
+        target_entity: &ClassMetadataInfo,
+        target_table_alias: &str,
+    ) -> Result<String, Thrown> {
+        if target_entity.name != company::COMPANY_CONTRACT {
+            return Ok(String::new());
+        }
+
+        Ok(format!(
+            "{target_table_alias}.completed = {}",
+            filter.get_parameter("completed")?
+        ))
+    }
+}
+
+/// `CompanyEventFilter extends SQLFilter`.
+struct CompanyEventFilter;
+
+impl FilterConstraint for CompanyEventFilter {
+    fn add_filter_constraint(
+        &self,
+        filter: &SqlFilter,
+        target_entity: &ClassMetadataInfo,
+        target_table_alias: &str,
+    ) -> Result<String, Thrown> {
+        if target_entity.name != company::COMPANY_EVENT {
+            return Ok(String::new());
+        }
+
+        Ok(format!(
+            "{target_table_alias}.id = {}",
+            filter.get_parameter("id")?
+        ))
+    }
+}
+
 /// `CMSArticleTopicFilter extends SQLFilter`.
 struct CmsArticleTopicFilter;
 
@@ -175,16 +242,25 @@ fn register_filters() {
     register(MY_LOCALE_FILTER, || Box::new(MyLocaleFilter));
     register(CMS_COUNTRY_FILTER, || Box::new(CmsCountryFilter));
     register(CMS_GROUP_PREFIX_FILTER, || Box::new(CmsGroupPrefixFilter));
+    register(COMPANY_PERSON_NAME_FILTER, || {
+        Box::new(CompanyPersonNameFilter)
+    });
+    register(COMPLETED_CONTRACT_FILTER, || {
+        Box::new(CompletedContractFilter)
+    });
+    register(COMPANY_EVENT_FILTER, || Box::new(CompanyEventFilter));
     register(CMS_ARTICLE_TOPIC_FILTER, || Box::new(CmsArticleTopicFilter));
 }
 
 // The test case
 
-/// `setUp()`: the cms model set (the company model set is not created:
-/// its tests are pending).
+/// `setUp()`: the cms and company model sets.
 async fn set_up() -> Arc<EntityManager> {
     register_filters();
-    orm::set_up(&CMS_MODELS).await
+    company::register_listeners();
+    let mut models = CMS_MODELS.to_vec();
+    models.extend(company::COMPANY_MODELS);
+    orm::set_up(&models).await
 }
 
 /// `getEntityManager()`: a new entity manager on an open connection.
@@ -921,6 +997,469 @@ async fn testWhereOrFilter() {
 
     // We get one user after enabling the filter
     assert_eq!(count_result(&query).await, 1);
+}
+
+// The company model set
+
+/// `getRepository($class)->findAll()`'s count.
+async fn find_all_count(em: &Arc<EntityManager>, class: &str) -> usize {
+    em.get_repository(class)
+        .unwrap()
+        .find_all()
+        .await
+        .unwrap()
+        .len()
+}
+
+#[derive(Default)]
+struct CompanyFixture {
+    manager_id: Value,
+    manager_id2: Value,
+    contract_id1: Value,
+    contract_id2: Value,
+    organization_id: Value,
+    event_id1: Value,
+    event_id2: Value,
+}
+
+#[tokio::test]
+async fn testJoinSubclassPersisterFilterOnlyOnRootTableWhenFetchingSubEntity() {
+    let em = set_up().await;
+    load_company_joined_subclass_fixture_data(&em).await;
+    // Persister
+    assert_eq!(find_all_count(&em, company::COMPANY_MANAGER).await, 2);
+    // SQLWalker
+    let query =
+        em.create_query("SELECT cm FROM Doctrine\\Tests\\Models\\Company\\CompanyManager cm");
+    assert_eq!(count_result(&query).await, 2);
+
+    // Enable the filter
+    use_person_name_filter(&em, "Guilh%");
+
+    let managers = em
+        .get_repository(company::COMPANY_MANAGER)
+        .unwrap()
+        .find_all()
+        .await
+        .unwrap();
+    assert_eq!(managers.len(), 1);
+    orm::assert_loose_eq(&Value::string("Guilherme"), &get(&managers[0], "name"));
+
+    let query =
+        em.create_query("SELECT cm FROM Doctrine\\Tests\\Models\\Company\\CompanyManager cm");
+    assert_eq!(count_result(&query).await, 1);
+}
+
+#[tokio::test]
+async fn testJoinSubclassPersisterFilterOnlyOnRootTableWhenFetchingRootEntity() {
+    let em = set_up().await;
+    load_company_joined_subclass_fixture_data(&em).await;
+    assert_eq!(find_all_count(&em, company::COMPANY_PERSON).await, 3);
+    let query =
+        em.create_query("SELECT cp FROM Doctrine\\Tests\\Models\\Company\\CompanyPerson cp");
+    assert_eq!(count_result(&query).await, 3);
+
+    // Enable the filter
+    use_person_name_filter(&em, "Guilh%");
+
+    let persons = em
+        .get_repository(company::COMPANY_PERSON)
+        .unwrap()
+        .find_all()
+        .await
+        .unwrap();
+    assert_eq!(persons.len(), 1);
+    orm::assert_loose_eq(&Value::string("Guilherme"), &get(&persons[0], "name"));
+
+    let query =
+        em.create_query("SELECT cp FROM Doctrine\\Tests\\Models\\Company\\CompanyPerson cp");
+    assert_eq!(count_result(&query).await, 1);
+}
+
+async fn load_company_joined_subclass_fixture_data(em: &Arc<EntityManager>) {
+    let manager = company::company_manager("Roman", 42, "persisters", "testlead");
+
+    let manager2 = company::company_manager("Guilherme", 42, "parsers", "devlead");
+
+    let person = company::company_person("Benjamin");
+
+    em.persist(&manager).unwrap();
+    em.persist(&manager2).unwrap();
+    em.persist(&person).unwrap();
+    em.flush().await.unwrap();
+    em.clear().unwrap();
+}
+
+#[tokio::test]
+async fn testSingleTableInheritanceFilterOnlyOnRootTableWhenFetchingSubEntity() {
+    let em = set_up().await;
+    load_company_single_table_inheritance_fixture_data(&em).await;
+    // Persister
+    assert_eq!(
+        find_all_count(&em, company::COMPANY_FLEX_ULTRA_CONTRACT).await,
+        2
+    );
+    // SQLWalker
+    let query = em.create_query(
+        "SELECT cfc FROM Doctrine\\Tests\\Models\\Company\\CompanyFlexUltraContract cfc",
+    );
+    assert_eq!(count_result(&query).await, 2);
+
+    // Enable the filter
+    use_completed_contract_filter(&em);
+
+    assert_eq!(
+        find_all_count(&em, company::COMPANY_FLEX_ULTRA_CONTRACT).await,
+        1
+    );
+    let query = em.create_query(
+        "SELECT cfc FROM Doctrine\\Tests\\Models\\Company\\CompanyFlexUltraContract cfc",
+    );
+    assert_eq!(count_result(&query).await, 1);
+}
+
+#[tokio::test]
+async fn testSingleTableInheritanceFilterOnlyOnRootTableWhenFetchingRootEntity() {
+    let em = set_up().await;
+    load_company_single_table_inheritance_fixture_data(&em).await;
+    assert_eq!(find_all_count(&em, company::COMPANY_FLEX_CONTRACT).await, 4);
+    let query = em
+        .create_query("SELECT cfc FROM Doctrine\\Tests\\Models\\Company\\CompanyFlexContract cfc");
+    assert_eq!(count_result(&query).await, 4);
+
+    // Enable the filter
+    use_completed_contract_filter(&em);
+
+    assert_eq!(find_all_count(&em, company::COMPANY_FLEX_CONTRACT).await, 2);
+    let query = em
+        .create_query("SELECT cfc FROM Doctrine\\Tests\\Models\\Company\\CompanyFlexContract cfc");
+    assert_eq!(count_result(&query).await, 2);
+}
+
+async fn load_company_single_table_inheritance_fixture_data(
+    em: &Arc<EntityManager>,
+) -> CompanyFixture {
+    let contract1 = company::company_contract(company::COMPANY_FLEX_ULTRA_CONTRACT);
+    let contract2 = company::company_contract(company::COMPANY_FLEX_ULTRA_CONTRACT);
+    company::mark_completed(&contract2);
+
+    let contract3 = company::company_contract(company::COMPANY_FLEX_CONTRACT);
+    let contract4 = company::company_contract(company::COMPANY_FLEX_CONTRACT);
+    company::mark_completed(&contract4);
+
+    let manager = company::company_manager("Alexander", 42, "Doctrine", "Filterer");
+
+    let manager2 = company::company_manager("Benjamin", 1337, "Doctrine", "Maintainer");
+
+    for contract in [&contract1, &contract2, &contract3, &contract4] {
+        // `$contract->addManager($manager)`
+        orm::append(contract, "managers", Value::Object(manager.clone()));
+    }
+
+    orm::append(&contract1, "managers", Value::Object(manager2.clone()));
+
+    orm::set_obj(&contract1, "salesPerson", &manager);
+    orm::set_obj(&contract2, "salesPerson", &manager);
+
+    em.persist(&manager).unwrap();
+    em.persist(&manager2).unwrap();
+    em.persist(&contract1).unwrap();
+    em.persist(&contract2).unwrap();
+    em.persist(&contract3).unwrap();
+    em.persist(&contract4).unwrap();
+    em.flush().await.unwrap();
+    em.clear().unwrap();
+
+    CompanyFixture {
+        manager_id: get(&manager, "id"),
+        manager_id2: get(&manager2, "id"),
+        contract_id1: get(&contract1, "id"),
+        contract_id2: get(&contract2, "id"),
+        ..CompanyFixture::default()
+    }
+}
+
+fn use_completed_contract_filter(em: &EntityManager) {
+    let conf = em.get_configuration();
+    conf.add_filter(
+        "completed_contract",
+        "\\Doctrine\\Tests\\ORM\\Functional\\CompletedContractFilter",
+    );
+    em.get_filters()
+        .enable("completed_contract")
+        .unwrap()
+        .set_parameter("completed", Value::Bool(true), Some(Types::BOOLEAN))
+        .unwrap();
+}
+
+#[tokio::test]
+async fn testManyToManyExtraLazyCountWithFilterOnSTI() {
+    let em = set_up().await;
+    let f = load_company_single_table_inheritance_fixture_data(&em).await;
+
+    let manager = find(&em, company::COMPANY_MANAGER, &f.manager_id).await;
+
+    assert!(!is_initialized(&manager, "managedContracts"));
+    assert_eq!(orm::count_of(&manager, "managedContracts").await, 4);
+
+    // Enable the filter
+    use_completed_contract_filter(&em);
+
+    assert!(!is_initialized(&manager, "managedContracts"));
+    assert_eq!(orm::count_of(&manager, "managedContracts").await, 2);
+}
+
+#[tokio::test]
+async fn testManyToManyExtraLazyContainsWithFilterOnSTI() {
+    let em = set_up().await;
+    let f = load_company_single_table_inheritance_fixture_data(&em).await;
+
+    let manager = find(&em, company::COMPANY_MANAGER, &f.manager_id).await;
+    let contract1 = find(&em, company::COMPANY_CONTRACT, &f.contract_id1).await;
+    let contract2 = find(&em, company::COMPANY_CONTRACT, &f.contract_id2).await;
+
+    assert!(!is_initialized(&manager, "managedContracts"));
+    assert!(contains(&manager, "managedContracts", &contract1).await);
+    assert!(contains(&manager, "managedContracts", &contract2).await);
+
+    // Enable the filter
+    use_completed_contract_filter(&em);
+
+    assert!(!is_initialized(&manager, "managedContracts"));
+    assert!(!contains(&manager, "managedContracts", &contract1).await);
+    assert!(contains(&manager, "managedContracts", &contract2).await);
+}
+
+#[tokio::test]
+async fn testManyToManyExtraLazySliceWithFilterOnSTI() {
+    let em = set_up().await;
+    let f = load_company_single_table_inheritance_fixture_data(&em).await;
+
+    let manager = find(&em, company::COMPANY_MANAGER, &f.manager_id).await;
+
+    assert!(!is_initialized(&manager, "managedContracts"));
+    assert_eq!(slice_count(&manager, "managedContracts").await, 4);
+
+    // Enable the filter
+    use_completed_contract_filter(&em);
+
+    assert!(!is_initialized(&manager, "managedContracts"));
+    assert_eq!(slice_count(&manager, "managedContracts").await, 2);
+}
+
+fn use_person_name_filter(em: &EntityManager, name: &str) {
+    // Enable the filter
+    let conf = em.get_configuration();
+    conf.add_filter(
+        "person_name",
+        "\\Doctrine\\Tests\\ORM\\Functional\\CompanyPersonNameFilter",
+    );
+    em.get_filters()
+        .enable("person_name")
+        .unwrap()
+        .set_parameter("name", Value::string(name), Some(Types::STRING))
+        .unwrap();
+}
+
+#[tokio::test]
+async fn testManyToManyExtraLazyCountWithFilterOnCTI() {
+    let em = set_up().await;
+    let f = load_company_single_table_inheritance_fixture_data(&em).await;
+
+    let contract = find(&em, company::COMPANY_FLEX_ULTRA_CONTRACT, &f.contract_id1).await;
+
+    assert!(!is_initialized(&contract, "managers"));
+    assert_eq!(orm::count_of(&contract, "managers").await, 2);
+
+    // Enable the filter
+    use_person_name_filter(&em, "Benjamin");
+
+    assert!(!is_initialized(&contract, "managers"));
+    assert_eq!(orm::count_of(&contract, "managers").await, 1);
+}
+
+#[tokio::test]
+async fn testManyToManyExtraLazyContainsWithFilterOnCTI() {
+    let em = set_up().await;
+    let f = load_company_single_table_inheritance_fixture_data(&em).await;
+
+    let contract = find(&em, company::COMPANY_FLEX_ULTRA_CONTRACT, &f.contract_id1).await;
+    let manager1 = find(&em, company::COMPANY_MANAGER, &f.manager_id).await;
+    let manager2 = find(&em, company::COMPANY_MANAGER, &f.manager_id2).await;
+
+    assert!(!is_initialized(&contract, "managers"));
+    assert!(contains(&contract, "managers", &manager1).await);
+    assert!(contains(&contract, "managers", &manager2).await);
+
+    // Enable the filter
+    use_person_name_filter(&em, "Benjamin");
+
+    assert!(!is_initialized(&contract, "managers"));
+    assert!(!contains(&contract, "managers", &manager1).await);
+    assert!(contains(&contract, "managers", &manager2).await);
+}
+
+#[tokio::test]
+async fn testManyToManyExtraLazySliceWithFilterOnCTI() {
+    let em = set_up().await;
+    let f = load_company_single_table_inheritance_fixture_data(&em).await;
+
+    let contract = find(&em, company::COMPANY_FLEX_ULTRA_CONTRACT, &f.contract_id1).await;
+
+    assert!(!is_initialized(&contract, "managers"));
+    assert_eq!(slice_count(&contract, "managers").await, 2);
+
+    // Enable the filter
+    use_person_name_filter(&em, "Benjamin");
+
+    assert!(!is_initialized(&contract, "managers"));
+    assert_eq!(slice_count(&contract, "managers").await, 1);
+}
+
+#[tokio::test]
+async fn testOneToManyExtraLazyCountWithFilterOnSTI() {
+    let em = set_up().await;
+    let f = load_company_single_table_inheritance_fixture_data(&em).await;
+
+    let manager = find(&em, company::COMPANY_MANAGER, &f.manager_id).await;
+
+    assert!(!is_initialized(&manager, "soldContracts"));
+    assert_eq!(orm::count_of(&manager, "soldContracts").await, 2);
+
+    // Enable the filter
+    use_completed_contract_filter(&em);
+
+    assert!(!is_initialized(&manager, "soldContracts"));
+    assert_eq!(orm::count_of(&manager, "soldContracts").await, 1);
+}
+
+#[tokio::test]
+async fn testOneToManyExtraLazyContainsWithFilterOnSTI() {
+    let em = set_up().await;
+    let f = load_company_single_table_inheritance_fixture_data(&em).await;
+
+    let manager = find(&em, company::COMPANY_MANAGER, &f.manager_id).await;
+    let contract1 = find(&em, company::COMPANY_CONTRACT, &f.contract_id1).await;
+    let contract2 = find(&em, company::COMPANY_CONTRACT, &f.contract_id2).await;
+
+    assert!(!is_initialized(&manager, "soldContracts"));
+    assert!(contains(&manager, "soldContracts", &contract1).await);
+    assert!(contains(&manager, "soldContracts", &contract2).await);
+
+    // Enable the filter
+    use_completed_contract_filter(&em);
+
+    assert!(!is_initialized(&manager, "soldContracts"));
+    assert!(!contains(&manager, "soldContracts", &contract1).await);
+    assert!(contains(&manager, "soldContracts", &contract2).await);
+}
+
+#[tokio::test]
+async fn testOneToManyExtraLazySliceWithFilterOnSTI() {
+    let em = set_up().await;
+    let f = load_company_single_table_inheritance_fixture_data(&em).await;
+
+    let manager = find(&em, company::COMPANY_MANAGER, &f.manager_id).await;
+
+    assert!(!is_initialized(&manager, "soldContracts"));
+    assert_eq!(slice_count(&manager, "soldContracts").await, 2);
+
+    // Enable the filter
+    use_completed_contract_filter(&em);
+
+    assert!(!is_initialized(&manager, "soldContracts"));
+    assert_eq!(slice_count(&manager, "soldContracts").await, 1);
+}
+
+async fn load_company_organization_event_joined_subclass_fixture_data(
+    em: &Arc<EntityManager>,
+) -> CompanyFixture {
+    let organization = company::company_organization();
+
+    let event1 = company::company_event(company::COMPANY_AUCTION, "foo");
+
+    let event2 = company::company_event(company::COMPANY_AUCTION, "bar");
+
+    company::add_event(&organization, &event1);
+    company::add_event(&organization, &event2);
+
+    em.persist(&organization).unwrap();
+    em.flush().await.unwrap();
+    em.clear().unwrap();
+
+    CompanyFixture {
+        organization_id: get(&organization, "id"),
+        event_id1: get(&event1, "id"),
+        event_id2: get(&event2, "id"),
+        ..CompanyFixture::default()
+    }
+}
+
+fn use_company_event_id_filter(em: &EntityManager, f: &CompanyFixture) {
+    // Enable the filter
+    let conf = em.get_configuration();
+    conf.add_filter("event_id", COMPANY_EVENT_FILTER);
+    em.get_filters()
+        .enable("event_id")
+        .unwrap()
+        .set_parameter("id", f.event_id2.clone(), None)
+        .unwrap();
+}
+
+#[tokio::test]
+async fn testOneToManyExtraLazyCountWithFilterOnCTI() {
+    let em = set_up().await;
+    let f = load_company_organization_event_joined_subclass_fixture_data(&em).await;
+
+    let organization = find(&em, company::COMPANY_ORGANIZATION, &f.organization_id).await;
+
+    assert!(!is_initialized(&organization, "events"));
+    assert_eq!(orm::count_of(&organization, "events").await, 2);
+
+    // Enable the filter
+    use_company_event_id_filter(&em, &f);
+
+    assert!(!is_initialized(&organization, "events"));
+    assert_eq!(orm::count_of(&organization, "events").await, 1);
+}
+
+#[tokio::test]
+async fn testOneToManyExtraLazyContainsWithFilterOnCTI() {
+    let em = set_up().await;
+    let f = load_company_organization_event_joined_subclass_fixture_data(&em).await;
+
+    let organization = find(&em, company::COMPANY_ORGANIZATION, &f.organization_id).await;
+
+    let event1 = find(&em, company::COMPANY_EVENT, &f.event_id1).await;
+    let event2 = find(&em, company::COMPANY_EVENT, &f.event_id2).await;
+
+    assert!(!is_initialized(&organization, "events"));
+    assert!(contains(&organization, "events", &event1).await);
+    assert!(contains(&organization, "events", &event2).await);
+
+    // Enable the filter
+    use_company_event_id_filter(&em, &f);
+
+    assert!(!is_initialized(&organization, "events"));
+    assert!(!contains(&organization, "events", &event1).await);
+    assert!(contains(&organization, "events", &event2).await);
+}
+
+#[tokio::test]
+async fn testOneToManyExtraLazySliceWithFilterOnCTI() {
+    let em = set_up().await;
+    let f = load_company_organization_event_joined_subclass_fixture_data(&em).await;
+
+    let organization = find(&em, company::COMPANY_ORGANIZATION, &f.organization_id).await;
+
+    assert!(!is_initialized(&organization, "events"));
+    assert_eq!(slice_count(&organization, "events").await, 2);
+
+    // Enable the filter
+    use_company_event_id_filter(&em, &f);
+
+    assert!(!is_initialized(&organization, "events"));
+    assert_eq!(slice_count(&organization, "events").await, 1);
 }
 
 #[tokio::test]
