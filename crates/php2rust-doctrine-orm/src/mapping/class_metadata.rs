@@ -1855,7 +1855,7 @@ impl ClassMetadataInfo {
                 ));
             };
             if let Some(Value::Array(options)) = mapping.get_mut(&Key::from("options")) {
-                options.insert("default", default)
+                options.insert("default", default);
             } else {
                 let mut options = PhpArray::new();
                 options.insert("default", default);
