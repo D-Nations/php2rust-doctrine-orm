@@ -1,6 +1,6 @@
 //! GH8011Test.php at doctrine/orm 00c2fd70da291cca1ec75f4dae5344fe3df588fa,
-//! on SQLite: ordering with arithmetic expressions. `skipIfPostgres()`
-//! never skips (the platform is SQLite).
+//! on `SQLite`: ordering with arithmetic expressions. `skipIfPostgres()`
+//! never skips (the platform is `SQLite`).
 //!
 //! Upstream: doctrine/orm tests/Tests/ORM/Functional/GH8011Test.php
 
