@@ -123,8 +123,8 @@ async fn testExample3() {
 #[tokio::test]
 async fn testExample4() {
     let (em, log) = set_up().await;
-    let e = create_entities(4);
-    let (a, b, c, d) = (&e[0], &e[1], &e[2], &e[3]);
+    let entities = create_entities(4);
+    let (a, b, c, d) = (&entities[0], &entities[1], &entities[2], &entities[3]);
 
     set_obj(a, "ref", b);
     set_obj(b, "odc", c);
