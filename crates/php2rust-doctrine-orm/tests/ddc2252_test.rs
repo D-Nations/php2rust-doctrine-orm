@@ -33,6 +33,7 @@ fn add_privilege(membership: &Object, privilege: &Object) {
 }
 
 #[tokio::test]
+#[allow(clippy::similar_names, reason = "upstream's names")]
 async fn testIssue() {
     let em = ticket::set_up(&[
         "DDC2252User",
