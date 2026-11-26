@@ -11,11 +11,16 @@
 //! Upstream: doctrine/orm tests/Tests/Models/ECommerce/ECommerceCategory.php tests/Tests/Models/ECommerce/ECommerceCart.php
 
 #![allow(dead_code, reason = "each test binary uses a part of the helpers")]
+#![allow(
+    clippy::unwrap_used,
+    clippy::expect_used,
+    reason = "test helpers; a panic is a test failure"
+)]
 
 use std::sync::{Arc, Once};
 
 use php_value::{Object, PhpArray, Thrown, Value};
-use php2rust_doctrine_dbal::{Connection, DriverManager};
+use php2rust_doctrine_dbal::{Connection, DriverManager, ParameterTypes};
 use php2rust_doctrine_event_manager::EventManager;
 use php2rust_doctrine_orm::collection_object::{self as coll, ArrayCollectionObject, downcast};
 use php2rust_doctrine_orm::configuration::Configuration;
@@ -75,7 +80,10 @@ pub fn connection() -> Arc<Connection> {
 }
 
 /// `getEntityManager()`: the attribute driver, native lazy objects.
-pub fn entity_manager(conn: Arc<Connection>, event_manager: Option<EventManager>) -> Arc<EntityManager> {
+pub fn entity_manager(
+    conn: Arc<Connection>,
+    event_manager: Option<EventManager>,
+) -> Arc<EntityManager> {
     models::register();
     register_methods();
     let mut config = Configuration::new();
@@ -188,8 +196,10 @@ fn register_methods() {
                         Some(Value::Array(list)) => list.clone(),
                         _ => PhpArray::new(),
                     };
-                    list.push(Value::Array(PhpArray::list([Value::Object(entity.clone())])))
-                        .map_err(|_| Thrown::new("Error", "Cannot add element to the array", 0))?;
+                    list.push(Value::Array(PhpArray::list([Value::Object(
+                        entity.clone(),
+                    )])))
+                    .map_err(|_| Thrown::new("Error", "Cannot add element to the array", 0))?;
                     calls.insert(method, Value::Array(list));
                     set(listener, "calls", Value::Array(calls));
                     Ok(())
@@ -205,7 +215,11 @@ fn register_methods() {
 pub fn cms_user() -> Object {
     let user = new_object(CMS_USER);
     for collection in ["phonenumbers", "articles", "groups", "tags"] {
-        set(&user, collection, ArrayCollectionObject::value(PhpArray::new()));
+        set(
+            &user,
+            collection,
+            ArrayCollectionObject::value(PhpArray::new()),
+        );
     }
     user
 }
@@ -241,7 +255,11 @@ pub fn add_article(user: &Object, article: &Object) {
 /// `new CmsGroup()`.
 pub fn cms_group(name: &str) -> Object {
     let group = new_object(CMS_GROUP);
-    set(&group, "users", ArrayCollectionObject::value(PhpArray::new()));
+    set(
+        &group,
+        "users",
+        ArrayCollectionObject::value(PhpArray::new()),
+    );
     set(&group, "name", s(name));
     group
 }
@@ -319,7 +337,7 @@ pub fn add_comment(article: &Object, comment: &Object) {
 /// The value of a count query.
 pub async fn fetch_one(em: &EntityManager, sql: &str) -> Value {
     em.get_connection()
-        .fetch_one(sql, &PhpArray::new(), &Default::default())
+        .fetch_one(sql, &PhpArray::new(), &ParameterTypes::new())
         .await
         .unwrap()
         .unwrap_or(Value::Null)
@@ -371,7 +389,11 @@ pub async fn elements(object: &Object, name: &str) -> Vec<Object> {
 pub fn ecommerce_product(name: &str) -> Object {
     let product = new_object(ECOMMERCE_PRODUCT);
     for collection in ["features", "categories", "related"] {
-        set(&product, collection, ArrayCollectionObject::value(PhpArray::new()));
+        set(
+            &product,
+            collection,
+            ArrayCollectionObject::value(PhpArray::new()),
+        );
     }
     set(&product, "name", s(name));
     product
@@ -406,8 +428,16 @@ pub async fn remove_feature(product: &Object, feature: &Object) -> bool {
 /// `new ECommerceCategory()` with a name.
 pub fn ecommerce_category(name: &str) -> Object {
     let category = new_object(ECOMMERCE_CATEGORY);
-    set(&category, "products", ArrayCollectionObject::value(PhpArray::new()));
-    set(&category, "children", ArrayCollectionObject::value(PhpArray::new()));
+    set(
+        &category,
+        "products",
+        ArrayCollectionObject::value(PhpArray::new()),
+    );
+    set(
+        &category,
+        "children",
+        ArrayCollectionObject::value(PhpArray::new()),
+    );
     set(&category, "name", s(name));
     category
 }
@@ -460,7 +490,11 @@ pub async fn remove_related(product: &Object, related: &Object) {
 /// `new ECommerceCart()`.
 pub fn ecommerce_cart(payment: &str) -> Object {
     let cart = new_object(ECOMMERCE_CART);
-    set(&cart, "products", ArrayCollectionObject::value(PhpArray::new()));
+    set(
+        &cart,
+        "products",
+        ArrayCollectionObject::value(PhpArray::new()),
+    );
     set(&cart, "payment", s(payment));
     cart
 }
@@ -468,7 +502,7 @@ pub fn ecommerce_cart(payment: &str) -> Object {
 /// `$conn->executeQuery($sql, $params)->fetchOne()`.
 pub async fn fetch_one_with(em: &EntityManager, sql: &str, params: Vec<Value>) -> Value {
     em.get_connection()
-        .fetch_one(sql, &PhpArray::list(params), &Default::default())
+        .fetch_one(sql, &PhpArray::list(params), &ParameterTypes::new())
         .await
         .unwrap()
         .unwrap_or(Value::Bool(false))
@@ -487,7 +521,11 @@ pub async fn count_foreign_keys(
         "SELECT {first_field}\n  FROM {table}\n WHERE {first_field} = ?\n   AND {second_field} = ?"
     );
     em.get_connection()
-        .fetch_all_associative(&sql, &PhpArray::list([first_id, second_id]), &Default::default())
+        .fetch_all_associative(
+            &sql,
+            &PhpArray::list([first_id, second_id]),
+            &ParameterTypes::new(),
+        )
         .await
         .unwrap()
         .len()
@@ -501,4 +539,3 @@ pub fn assert_loose_eq(expected: &Value, actual: &Value) {
         "{expected:?} != {actual:?}"
     );
 }
-

@@ -4,6 +4,14 @@
 //! would emit for the PHP methods); a static property is an atomic flag.
 //! The event arguments an entity keeps are their class names.
 
+#![allow(non_snake_case)]
+#![allow(
+    clippy::unwrap_used,
+    clippy::expect_used,
+    clippy::similar_names,
+    reason = "test helpers; a panic is a test failure"
+)]
+
 #[path = "common/models.rs"]
 mod models;
 #[path = "common/orm.rs"]
@@ -90,14 +98,20 @@ fn register_callbacks() {
             Arc::new(|entity, _| {
                 CASCADER_POST_LOAD_INVOKED.store(true, Ordering::SeqCst);
                 let count = match get(entity, "entities") {
-                    Value::Object(entities) => entities.php_count().and_then(Result::ok).unwrap_or(0),
+                    Value::Object(entities) => {
+                        entities.php_count().and_then(Result::ok).unwrap_or(0)
+                    }
                     _ => 0,
                 };
                 set(entity, "postLoadEntitiesCount", Value::Int(count));
                 Ok(())
             }),
         );
-        register_method(&class("LifecycleCallbackParentEntity"), "doStuff", Arc::new(|_, _| Ok(())));
+        register_method(
+            &class("LifecycleCallbackParentEntity"),
+            "doStuff",
+            Arc::new(|_, _| Ok(())),
+        );
         for handler in [
             "postPersistHandler",
             "prePersistHandler",
@@ -136,14 +150,14 @@ async fn set_up_test() -> Arc<php2rust_doctrine_orm::entity_manager::EntityManag
     .await
 }
 
-fn test_entity() -> Object {
+fn new_test_entity() -> Object {
     new_object(&class("LifecycleCallbackTestEntity"))
 }
 
 #[tokio::test]
-async fn test_pre_flush_callbacks_are_invoked() {
+async fn testPreFlushCallbacksAreInvoked() {
     let em = set_up_test().await;
-    let entity = test_entity();
+    let entity = new_test_entity();
     set(&entity, "value", s("hello"));
     em.persist(&entity).unwrap();
 
@@ -165,7 +179,7 @@ async fn test_pre_flush_callbacks_are_invoked() {
 }
 
 #[tokio::test]
-async fn test_changes_dont_get_lost() {
+async fn testChangesDontGetLost() {
     let em = set_up_test().await;
     let user = new_object(&class("LifecycleCallbackTestUser"));
     set(&user, "name", s("Bob"));
@@ -178,16 +192,20 @@ async fn test_changes_dont_get_lost() {
 
     em.clear().unwrap();
 
-    let user2 = em.find(user.class(), get(&user, "id")).await.unwrap().unwrap();
+    let user2 = em
+        .find(user.class(), get(&user, "id"))
+        .await
+        .unwrap()
+        .unwrap();
 
     assert_eq!(get(&user2, "name"), s("Alice"));
     assert_eq!(get(&user2, "value"), s("Hello World"));
 }
 
 #[tokio::test]
-async fn test_get_reference_with_post_load_event_is_delayed_until_proxy_trigger() {
+async fn testGetReferenceWithPostLoadEventIsDelayedUntilProxyTrigger() {
     let em = set_up_test().await;
-    let entity = test_entity();
+    let entity = new_test_entity();
     set(&entity, "value", s("hello"));
     em.persist(&entity).unwrap();
     em.flush().await.unwrap();
@@ -201,7 +219,9 @@ async fn test_get_reference_with_post_load_event_is_delayed_until_proxy_trigger(
         .unwrap()
         .unwrap();
     assert!(
-        !reference.properties().contains_key(&"postLoadCallbackInvoked".into()),
+        !reference
+            .properties()
+            .contains_key(&"postLoadCallbackInvoked".into()),
         "a static property is not an object property"
     );
     assert!(em.is_uninitialized_object(&Value::Object(reference.clone())));
@@ -212,9 +232,9 @@ async fn test_get_reference_with_post_load_event_is_delayed_until_proxy_trigger(
 }
 
 #[tokio::test]
-async fn test_post_load_triggered_on_refresh() {
+async fn testPostLoadTriggeredOnRefresh() {
     let em = set_up_test().await;
-    let entity = test_entity();
+    let entity = new_test_entity();
     set(&entity, "value", s("hello"));
     em.persist(&entity).unwrap();
     em.flush().await.unwrap();
@@ -239,13 +259,17 @@ async fn test_post_load_triggered_on_refresh() {
 }
 
 #[tokio::test]
-async fn test_cascaded_entities_calls_pre_persist() {
+async fn testCascadedEntitiesCallsPrePersist() {
     let em = set_up_test().await;
-    let e1 = test_entity();
-    let e2 = test_entity();
+    let e1 = new_test_entity();
+    let e2 = new_test_entity();
 
     let c = new_object(&class("LifecycleCallbackCascader"));
-    set(&c, "entities", ArrayCollectionObject::value(PhpArray::new()));
+    set(
+        &c,
+        "entities",
+        ArrayCollectionObject::value(PhpArray::new()),
+    );
     em.persist(&c).unwrap();
 
     append(&c, "entities", Value::Object(e1.clone()));
@@ -260,20 +284,25 @@ async fn test_cascaded_entities_calls_pre_persist() {
 }
 
 #[tokio::test]
-async fn test_lifecycle_callbacks_get_inherited() {
+async fn testLifecycleCallbacksGetInherited() {
     let em = set_up_test().await;
-    let child_meta = em.get_class_metadata(&class("LifecycleCallbackChildEntity")).unwrap();
+    let child_meta = em
+        .get_class_metadata(&class("LifecycleCallbackChildEntity"))
+        .unwrap();
     let callbacks: Vec<(String, Vec<String>)> = child_meta
         .read()
         .lifecycle_callbacks
         .iter()
         .map(|(k, v)| (k.to_owned(), v.clone()))
         .collect();
-    assert_eq!(callbacks, vec![("prePersist".to_owned(), vec!["doStuff".to_owned()])]);
+    assert_eq!(
+        callbacks,
+        vec![("prePersist".to_owned(), vec!["doStuff".to_owned()])]
+    );
 }
 
 #[tokio::test]
-async fn test_lifecycle_callback_event_args() {
+async fn testLifecycleCallbackEventArgs() {
     let em = set_up_test().await;
     let e = new_object(&class("LifecycleCallbackEventArgEntity"));
 

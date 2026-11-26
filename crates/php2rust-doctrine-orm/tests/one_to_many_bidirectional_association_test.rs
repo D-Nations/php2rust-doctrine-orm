@@ -1,5 +1,13 @@
 //! Upstream: doctrine/orm tests/Tests/ORM/Functional/OneToManyBidirectionalAssociationTest.php
 
+#![allow(non_snake_case)]
+#![allow(
+    clippy::unwrap_used,
+    clippy::expect_used,
+    clippy::similar_names,
+    reason = "test helpers; a panic is a test failure"
+)]
+
 #[path = "common/models.rs"]
 mod models;
 #[path = "common/orm.rs"]
@@ -40,7 +48,7 @@ async fn assert_feature_foreign_key_is(em: &EntityManager, value: Value, feature
 }
 
 #[tokio::test]
-async fn test_saves_a_one_to_many_association_with_cascade_save_set() {
+async fn testSavesAOneToManyAssociationWithCascadeSaveSet() {
     let f = set_up_test().await;
     add_feature(&f.product, &f.first_feature);
     add_feature(&f.product, &f.second_feature);
@@ -52,7 +60,7 @@ async fn test_saves_a_one_to_many_association_with_cascade_save_set() {
 }
 
 #[tokio::test]
-async fn test_saves_an_empty_collection() {
+async fn testSavesAnEmptyCollection() {
     let f = set_up_test().await;
     f.em.persist(&f.product).unwrap();
     f.em.flush().await.unwrap();
@@ -61,10 +69,14 @@ async fn test_saves_an_empty_collection() {
 }
 
 #[tokio::test]
-async fn test_does_not_save_an_inverse_side_set() {
+async fn testDoesNotSaveAnInverseSideSet() {
     let f = set_up_test().await;
     // $product->brokenAddFeature($feature)
-    append(&f.product, "features", Value::Object(f.first_feature.clone()));
+    append(
+        &f.product,
+        "features",
+        Value::Object(f.first_feature.clone()),
+    );
     f.em.persist(&f.product).unwrap();
     f.em.flush().await.unwrap();
 
@@ -72,7 +84,7 @@ async fn test_does_not_save_an_inverse_side_set() {
 }
 
 #[tokio::test]
-async fn test_removes_one_to_one_association() {
+async fn testRemovesOneToOneAssociation() {
     let f = set_up_test().await;
     add_feature(&f.product, &f.first_feature);
     add_feature(&f.product, &f.second_feature);

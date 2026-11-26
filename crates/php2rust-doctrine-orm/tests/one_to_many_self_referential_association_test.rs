@@ -1,5 +1,13 @@
 //! Upstream: doctrine/orm tests/Tests/ORM/Functional/OneToManySelfReferentialAssociationTest.php
 
+#![allow(non_snake_case)]
+#![allow(
+    clippy::unwrap_used,
+    clippy::expect_used,
+    clippy::similar_names,
+    reason = "test helpers; a panic is a test failure"
+)]
+
 #[path = "common/models.rs"]
 mod models;
 #[path = "common/orm.rs"]
@@ -40,7 +48,7 @@ async fn assert_foreign_key_is(em: &EntityManager, value: Value, child: &Object)
 }
 
 #[tokio::test]
-async fn test_saves_a_one_to_many_association_with_cascade_save_set() {
+async fn testSavesAOneToManyAssociationWithCascadeSaveSet() {
     let f = set_up_test().await;
     add_child(&f.parent, &f.first_child);
     add_child(&f.parent, &f.second_child);
@@ -52,7 +60,7 @@ async fn test_saves_a_one_to_many_association_with_cascade_save_set() {
 }
 
 #[tokio::test]
-async fn test_saves_an_empty_collection() {
+async fn testSavesAnEmptyCollection() {
     let f = set_up_test().await;
     f.em.persist(&f.parent).unwrap();
     f.em.flush().await.unwrap();
@@ -61,7 +69,7 @@ async fn test_saves_an_empty_collection() {
 }
 
 #[tokio::test]
-async fn test_does_not_save_an_inverse_side_set() {
+async fn testDoesNotSaveAnInverseSideSet() {
     let f = set_up_test().await;
     // $parent->brokenAddChild($child)
     append(&f.parent, "children", Value::Object(f.first_child.clone()));
@@ -72,7 +80,7 @@ async fn test_does_not_save_an_inverse_side_set() {
 }
 
 #[tokio::test]
-async fn test_removes_one_to_many_association() {
+async fn testRemovesOneToManyAssociation() {
     let f = set_up_test().await;
     add_child(&f.parent, &f.first_child);
     add_child(&f.parent, &f.second_child);

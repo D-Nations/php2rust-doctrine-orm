@@ -1,5 +1,13 @@
 //! Upstream: doctrine/orm tests/Tests/ORM/Functional/OneToManyUnidirectionalAssociationTest.php
 
+#![allow(non_snake_case)]
+#![allow(
+    clippy::unwrap_used,
+    clippy::expect_used,
+    clippy::similar_names,
+    reason = "test helpers; a panic is a test failure"
+)]
+
 #[path = "common/models.rs"]
 mod models;
 #[path = "common/orm.rs"]
@@ -18,7 +26,7 @@ fn class(name: &str) -> String {
 }
 
 #[tokio::test]
-async fn test_legs_are_unique_to_routes() {
+async fn testLegsAreUniqueToRoutes() {
     let models = [
         class("RoutingLeg"),
         class("RoutingLocation"),
@@ -41,19 +49,31 @@ async fn test_legs_are_unique_to_routes() {
     set_obj(&leg, "fromLocation", &locations[0]);
     set_obj(&leg, "toLocation", &locations[1]);
     let now = DateTimeImmutable::now(TimeZone::Utc);
-    set(&leg, "departureDate", DateTime::object(now.clone()));
+    set(&leg, "departureDate", DateTime::object(now));
     set(
         &leg,
         "arrivalDate",
-        DateTime::object(DateTimeImmutable::from_timestamp(now.timestamp() + 5 * 3600, 0, TimeZone::Utc)),
+        DateTime::object(DateTimeImmutable::from_timestamp(
+            now.timestamp() + 5 * 3600,
+            0,
+            TimeZone::Utc,
+        )),
     );
 
     let route_a = new_object(&class("RoutingRoute"));
-    set(&route_a, "legs", ArrayCollectionObject::value(PhpArray::new()));
+    set(
+        &route_a,
+        "legs",
+        ArrayCollectionObject::value(PhpArray::new()),
+    );
     append(&route_a, "legs", Value::Object(leg.clone()));
 
     let route_b = new_object(&class("RoutingRoute"));
-    set(&route_b, "legs", ArrayCollectionObject::value(PhpArray::new()));
+    set(
+        &route_b,
+        "legs",
+        ArrayCollectionObject::value(PhpArray::new()),
+    );
     append(&route_b, "legs", Value::Object(leg.clone()));
 
     em.persist(&route_a).unwrap();

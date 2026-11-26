@@ -272,6 +272,7 @@ namespace {
         'ORM/Mapping/PropertyAccessors/TypedNoDefaultPropertyAccessorTest.php',
         'ORM/Mapping/TypedFieldMapperTest.php',
         'ORM/Mapping/TypedEnumFieldMapperTest.php',
+        'ORM/UnitOfWorkTest.php',
         'ORM/Functional/LifecycleCallbackTest.php',
         'ORM/Functional/OneToManyBidirectionalAssociationTest.php',
         'ORM/Functional/OneToManyUnidirectionalAssociationTest.php',

@@ -1,5 +1,13 @@
 //! Upstream: doctrine/orm tests/Tests/ORM/Functional/ManyToManyBasicAssociationTest.php
 
+#![allow(non_snake_case)]
+#![allow(
+    clippy::unwrap_used,
+    clippy::expect_used,
+    clippy::similar_names,
+    reason = "test helpers; a panic is a test failure"
+)]
+
 #[path = "common/models.rs"]
 mod models;
 #[path = "common/orm.rs"]
@@ -37,14 +45,18 @@ async fn add_cms_user_gblanco_with_groups(em: &EntityManager, group_count: usize
 }
 
 #[tokio::test]
-async fn test_many_to_many_add_remove() {
+async fn testManyToManyAddRemove() {
     let em = set_up(&CMS_MODELS).await;
     let user = add_cms_user_gblanco_with_groups(&em, 2).await;
     em.clear().unwrap();
     let u_rep = em.get_repository(CMS_USER).unwrap();
 
     // Get user
-    let Value::Object(user) = u_rep.call("findOneById", vec![get(&user, "id")]).await.unwrap() else {
+    let Value::Object(user) = u_rep
+        .call("findOneById", vec![get(&user, "id")])
+        .await
+        .unwrap()
+    else {
         panic!("Has to return exactly one entry.");
     };
     assert!(!persistent(&user, "groups").is_initialized());
@@ -62,7 +74,11 @@ async fn test_many_to_many_add_remove() {
     em.clear().unwrap();
 
     // Reload same user
-    let Value::Object(user2) = u_rep.call("findOneById", vec![get(&user, "id")]).await.unwrap() else {
+    let Value::Object(user2) = u_rep
+        .call("findOneById", vec![get(&user, "id")])
+        .await
+        .unwrap()
+    else {
         panic!("a user");
     };
 
@@ -71,7 +87,7 @@ async fn test_many_to_many_add_remove() {
 }
 
 #[tokio::test]
-async fn test_many_to_many_inverse_side_ignored() {
+async fn testManyToManyInverseSideIgnored() {
     let em = set_up(&CMS_MODELS).await;
     let user = add_cms_user_gblanco_with_groups(&em, 0).await;
 
@@ -92,7 +108,7 @@ async fn test_many_to_many_inverse_side_ignored() {
 }
 
 #[tokio::test]
-async fn test_retrieve_many_to_many_and_add_more() {
+async fn testRetrieveManyToManyAndAddMore() {
     let em = set_up(&CMS_MODELS).await;
     let user = add_cms_user_gblanco_with_groups(&em, 2).await;
 
@@ -132,7 +148,7 @@ async fn test_retrieve_many_to_many_and_add_more() {
 }
 
 #[tokio::test]
-async fn test_remove_user_with_many_groups() {
+async fn testRemoveUserWithManyGroups() {
     let (em, log) = set_up_logged(&CMS_MODELS).await;
     let user = add_cms_user_gblanco_with_groups(&em, 10).await;
     let user_id = get(&user, "id");
@@ -152,7 +168,7 @@ async fn test_remove_user_with_many_groups() {
 }
 
 #[tokio::test]
-async fn test_remove_group_with_user() {
+async fn testRemoveGroupWithUser() {
     let (em, log) = set_up_logged(&CMS_MODELS).await;
     let user = add_cms_user_gblanco_with_groups(&em, 5).await;
 
@@ -190,7 +206,7 @@ async fn test_remove_group_with_user() {
 }
 
 #[tokio::test]
-async fn test_dereference_collection_delete() {
+async fn testDereferenceCollectionDelete() {
     let (em, log) = set_up_logged(&CMS_MODELS).await;
     let user = add_cms_user_gblanco_with_groups(&em, 2).await;
     set(&user, "groups", Value::Null);
@@ -209,7 +225,7 @@ async fn test_dereference_collection_delete() {
 }
 
 #[tokio::test]
-async fn test_clear_and_reset_collection() {
+async fn testClearAndResetCollection() {
     let em = set_up(&CMS_MODELS).await;
     let user = add_cms_user_gblanco_with_groups(&em, 2).await;
     let group1 = cms_group("Developers_New1");
@@ -246,18 +262,24 @@ async fn test_clear_and_reset_collection() {
 }
 
 #[tokio::test]
-async fn test_initialize_persistent_collection() {
+async fn testInitializePersistentCollection() {
     let em = set_up(&CMS_MODELS).await;
     let user = add_cms_user_gblanco_with_groups(&em, 2).await;
     em.clear().unwrap();
 
     let user = em.find(CMS_USER, get(&user, "id")).await.unwrap().unwrap();
 
-    assert!(!persistent(&user, "groups").is_initialized(), "Pre-condition: lazy collection");
+    assert!(
+        !persistent(&user, "groups").is_initialized(),
+        "Pre-condition: lazy collection"
+    );
     let Value::Object(groups) = get(&user, "groups") else {
         panic!("a collection");
     };
-    em.get_unit_of_work().initialize_object(&groups).await.unwrap();
+    em.get_unit_of_work()
+        .initialize_object(&groups)
+        .await
+        .unwrap();
     assert!(
         persistent(&user, "groups").is_initialized(),
         "Collection should be initialized after calling UnitOfWork::initializeObject()"
@@ -265,7 +287,7 @@ async fn test_initialize_persistent_collection() {
 }
 
 #[tokio::test]
-async fn test_clear_before_lazy_load() {
+async fn testClearBeforeLazyLoad() {
     let em = set_up(&CMS_MODELS).await;
     let user = add_cms_user_gblanco_with_groups(&em, 4).await;
 

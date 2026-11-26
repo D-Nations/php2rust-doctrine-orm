@@ -1,5 +1,13 @@
 //! Upstream: doctrine/orm tests/Tests/ORM/Functional/BasicFunctionalTest.php
 
+#![allow(non_snake_case)]
+#![allow(
+    clippy::unwrap_used,
+    clippy::expect_used,
+    clippy::similar_names,
+    reason = "test helpers; a panic is a test failure"
+)]
+
 #[path = "common/models.rs"]
 mod models;
 #[path = "common/orm.rs"]
@@ -15,7 +23,7 @@ use php2rust_doctrine_orm::unit_of_work::{STATE_MANAGED, STATE_NEW, STATE_REMOVE
 use orm::*;
 
 #[tokio::test]
-async fn test_basic_units_of_work_with_one_to_many_association() {
+async fn testBasicUnitsOfWorkWithOneToManyAssociation() {
     let em = set_up(&CMS_MODELS).await;
     // Create
     let user = cms_user_with("Roman", "romanb", "developer");
@@ -64,7 +72,7 @@ async fn test_basic_units_of_work_with_one_to_many_association() {
 }
 
 #[tokio::test]
-async fn test_one_to_many_association_modification() {
+async fn testOneToManyAssociationModification() {
     let em = set_up(&CMS_MODELS).await;
     let user = cms_user_with("Roman", "romanb", "developer");
     let ph1 = cms_phonenumber("0301234");
@@ -85,31 +93,51 @@ async fn test_one_to_many_association_modification() {
 }
 
 #[tokio::test]
-async fn test_remove() {
+async fn testRemove() {
     let em = set_up(&CMS_MODELS).await;
     let user = cms_user_with("Guilherme", "gblanco", "developer");
     let uow = em.get_unit_of_work();
 
-    assert_eq!(uow.get_entity_state(&user).await.unwrap(), STATE_NEW, "State should be UnitOfWork::STATE_NEW");
+    assert_eq!(
+        uow.get_entity_state(&user).await.unwrap(),
+        STATE_NEW,
+        "State should be UnitOfWork::STATE_NEW"
+    );
     em.persist(&user).unwrap();
-    assert_eq!(uow.get_entity_state(&user).await.unwrap(), STATE_MANAGED, "State should be UnitOfWork::STATE_MANAGED");
+    assert_eq!(
+        uow.get_entity_state(&user).await.unwrap(),
+        STATE_MANAGED,
+        "State should be UnitOfWork::STATE_MANAGED"
+    );
     em.remove(&user).await.unwrap();
-    assert_eq!(uow.get_entity_state(&user).await.unwrap(), STATE_NEW, "State should be UnitOfWork::STATE_NEW");
+    assert_eq!(
+        uow.get_entity_state(&user).await.unwrap(),
+        STATE_NEW,
+        "State should be UnitOfWork::STATE_NEW"
+    );
 
     em.persist(&user).unwrap();
     em.flush().await.unwrap();
     let id = get(&user, "id");
 
     em.remove(&user).await.unwrap();
-    assert_eq!(uow.get_entity_state(&user).await.unwrap(), STATE_REMOVED, "State should be UnitOfWork::STATE_REMOVED");
+    assert_eq!(
+        uow.get_entity_state(&user).await.unwrap(),
+        STATE_REMOVED,
+        "State should be UnitOfWork::STATE_REMOVED"
+    );
     em.flush().await.unwrap();
-    assert_eq!(uow.get_entity_state(&user).await.unwrap(), STATE_NEW, "State should be UnitOfWork::STATE_NEW");
+    assert_eq!(
+        uow.get_entity_state(&user).await.unwrap(),
+        STATE_NEW,
+        "State should be UnitOfWork::STATE_NEW"
+    );
 
     assert!(em.find(CMS_USER, id).await.unwrap().is_none());
 }
 
 #[tokio::test]
-async fn test_one_to_many_orphan_removal() {
+async fn testOneToManyOrphanRemoval() {
     let em = set_up(&CMS_MODELS).await;
     let user = cms_user_with("Guilherme", "gblanco", "developer");
     for i in 0..3 {
@@ -132,11 +160,14 @@ async fn test_one_to_many_orphan_removal() {
     // check that clear() removes the others via orphan removal
     coll::clear(&get(&user, "phonenumbers")).await.unwrap();
     em.flush().await.unwrap();
-    assert_eq!(fetch_one(&em, "select count(*) from cms_phonenumbers").await, Value::Int(0));
+    assert_eq!(
+        fetch_one(&em, "select count(*) from cms_phonenumbers").await,
+        Value::Int(0)
+    );
 }
 
 #[tokio::test]
-async fn test_basic_refresh() {
+async fn testBasicRefresh() {
     let em = set_up(&CMS_MODELS).await;
     let user = cms_user_with("Guilherme", "gblanco", "developer");
     em.persist(&user).unwrap();
@@ -150,7 +181,7 @@ async fn test_basic_refresh() {
 
 /// DDC-833
 #[tokio::test]
-async fn test_refresh_resets_collection() {
+async fn testRefreshResetsCollection() {
     let em = set_up(&CMS_MODELS).await;
     let user = cms_user_with("Guilherme", "gblanco", "developer");
     // Add a phonenumber
@@ -173,7 +204,7 @@ async fn test_refresh_resets_collection() {
 }
 
 #[tokio::test]
-async fn test_text_column_save_and_retrieve() {
+async fn testTextColumnSaveAndRetrieve() {
     let em = set_up(&CMS_MODELS).await;
     let user = cms_user_with("Guilherme", "gblanco", "developer");
     em.persist(&user).unwrap();
@@ -198,30 +229,43 @@ async fn test_text_column_save_and_retrieve() {
 
     assert!(!same(&article, &article_new));
 
-    set(&article_new, "text", s("Lorem ipsum dolor sunt. And stuff!"));
+    set(
+        &article_new,
+        "text",
+        s("Lorem ipsum dolor sunt. And stuff!"),
+    );
 
     em.flush().await.unwrap();
     em.clear().unwrap();
 
     let article_new = em.find(CMS_ARTICLE, article_id).await.unwrap().unwrap();
-    assert_eq!(get(&article_new, "text"), s("Lorem ipsum dolor sunt. And stuff!"));
+    assert_eq!(
+        get(&article_new, "text"),
+        s("Lorem ipsum dolor sunt. And stuff!")
+    );
     assert!(em.contains(&article_new).unwrap());
 }
 
 #[tokio::test]
-async fn test_remove_entity_by_reference() {
+async fn testRemoveEntityByReference() {
     let em = set_up(&CMS_MODELS).await;
     let user = cms_user_with("Guilherme", "gblanco", "developer");
     em.persist(&user).unwrap();
     em.flush().await.unwrap();
     em.clear().unwrap();
 
-    let user_ref = em.get_reference(CMS_USER, get(&user, "id")).unwrap().unwrap();
+    let user_ref = em
+        .get_reference(CMS_USER, get(&user, "id"))
+        .unwrap()
+        .unwrap();
     em.remove(&user_ref).await.unwrap();
     em.flush().await.unwrap();
     em.clear().unwrap();
 
-    assert_eq!(fetch_one(&em, "select count(*) from cms_users").await, Value::Int(0));
+    assert_eq!(
+        fetch_one(&em, "select count(*) from cms_users").await,
+        Value::Int(0)
+    );
 }
 
 fn bonn_address(user: &Object) -> Object {
@@ -232,7 +276,7 @@ fn bonn_address(user: &Object) -> Object {
 }
 
 #[tokio::test]
-async fn test_one_to_one_null_update() {
+async fn testOneToOneNullUpdate() {
     let em = set_up(&CMS_MODELS).await;
     let user = cms_user_with("Benjamin E.", "beberlei", "active");
     let address = bonn_address(&user);
@@ -254,7 +298,7 @@ async fn test_one_to_one_null_update() {
 }
 
 #[tokio::test]
-async fn test_new_associated_entity_during_flush_throws_exception() {
+async fn testNewAssociatedEntityDuringFlushThrowsException() {
     let em = set_up(&CMS_MODELS).await;
     let user = cms_user_with("Benjamin E.", "beberlei", "active");
     let address = bonn_address(&user);
@@ -267,7 +311,7 @@ async fn test_new_associated_entity_during_flush_throws_exception() {
 }
 
 #[tokio::test]
-async fn test_new_associated_entity_during_flush_throws_exception2() {
+async fn testNewAssociatedEntityDuringFlushThrowsException2() {
     let em = set_up(&CMS_MODELS).await;
     let user = cms_user_with("Benjamin E.", "beberlei", "active");
     let address = bonn_address(&user);
@@ -285,7 +329,7 @@ async fn test_new_associated_entity_during_flush_throws_exception2() {
 }
 
 #[tokio::test]
-async fn test_new_associated_entity_during_flush_throws_exception3() {
+async fn testNewAssociatedEntityDuringFlushThrowsException3() {
     let em = set_up(&CMS_MODELS).await;
     let art = cms_article("topic", "the text");
     let com = cms_comment("Good", "Really good!");
@@ -299,7 +343,7 @@ async fn test_new_associated_entity_during_flush_throws_exception3() {
 }
 
 #[tokio::test]
-async fn test_one_to_one_orphan_removal() {
+async fn testOneToOneOrphanRemoval() {
     let em = set_up(&CMS_MODELS).await;
     let user = cms_user_with("Benjamin E.", "beberlei", "active");
     let address = bonn_address(&user);
@@ -313,14 +357,20 @@ async fn test_one_to_one_orphan_removal() {
 
     em.flush().await.unwrap();
 
-    assert_eq!(fetch_one(&em, "select count(*) from cms_addresses").await, Value::Int(0));
+    assert_eq!(
+        fetch_one(&em, "select count(*) from cms_addresses").await,
+        Value::Int(0)
+    );
 
     // check orphan removal through replacement
     set_obj(&user, "address", &address);
     set_obj(&address, "user", &user);
 
     em.flush().await.unwrap();
-    assert_eq!(fetch_one(&em, "select count(*) from cms_addresses").await, Value::Int(1));
+    assert_eq!(
+        fetch_one(&em, "select count(*) from cms_addresses").await,
+        Value::Int(1)
+    );
 
     // remove $address to free up unique key id
     em.remove(&address).await.unwrap();
@@ -332,11 +382,14 @@ async fn test_one_to_one_orphan_removal() {
     set_obj(&user, "address", &new_address);
 
     em.flush().await.unwrap();
-    assert_eq!(fetch_one(&em, "select count(*) from cms_addresses").await, Value::Int(1));
+    assert_eq!(
+        fetch_one(&em, "select count(*) from cms_addresses").await,
+        Value::Int(1)
+    );
 }
 
 #[tokio::test]
-async fn test_flush_single_managed_entity() {
+async fn testFlushSingleManagedEntity() {
     let em = set_up(&CMS_MODELS).await;
     let user = cms_user_with("Dominik", "domnikl", "developer");
     em.persist(&user).unwrap();
@@ -351,7 +404,7 @@ async fn test_flush_single_managed_entity() {
 }
 
 #[tokio::test]
-async fn test_flush_and_cascade_persist() {
+async fn testFlushAndCascadePersist() {
     let em = set_up(&CMS_MODELS).await;
     let user = cms_user_with("Dominik", "domnikl", "developer");
     em.persist(&user).unwrap();
@@ -364,12 +417,18 @@ async fn test_flush_and_cascade_persist() {
 
     em.flush().await.unwrap();
 
-    assert!(em.contains(&address).unwrap(), "Other user is contained in EntityManager");
-    assert!(matches!(get(&address, "id"), Value::Int(id) if id > 0), "other user has an id");
+    assert!(
+        em.contains(&address).unwrap(),
+        "Other user is contained in EntityManager"
+    );
+    assert!(
+        matches!(get(&address, "id"), Value::Int(id) if id > 0),
+        "other user has an id"
+    );
 }
 
 #[tokio::test]
-async fn test_flush_single_and_no_cascade() {
+async fn testFlushSingleAndNoCascade() {
     let em = set_up(&CMS_MODELS).await;
     let user = cms_user_with("Dominik", "domnikl", "developer");
     em.persist(&user).unwrap();
@@ -387,7 +446,7 @@ async fn test_flush_single_and_no_cascade() {
 }
 
 #[tokio::test]
-async fn test_flush_single_new_entity_then_remove() {
+async fn testFlushSingleNewEntityThenRemove() {
     let em = set_up(&CMS_MODELS).await;
     let user = cms_user_with("Dominik", "domnikl", "developer");
     em.persist(&user).unwrap();
@@ -403,7 +462,7 @@ async fn test_flush_single_new_entity_then_remove() {
 }
 
 #[tokio::test]
-async fn test_wrong_association_instance() {
+async fn testWrongAssociationInstance() {
     let em = set_up(&CMS_MODELS).await;
     let user = cms_user_with("Dominik", "domnikl", "developer");
     set_obj(&user, "address", &user);
@@ -418,7 +477,7 @@ async fn test_wrong_association_instance() {
 }
 
 #[tokio::test]
-async fn test_it_throws_when_reference_uses_id_assigned_by_database() {
+async fn testItThrowsWhenReferenceUsesIdAssignedByDatabase() {
     let em = set_up(&CMS_MODELS).await;
     let user = cms_user();
     set(&user, "name", s("test"));

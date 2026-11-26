@@ -1,5 +1,13 @@
 //! Upstream: doctrine/orm tests/Tests/ORM/Functional/EntityRepositoryTest.php
 
+#![allow(non_snake_case)]
+#![allow(
+    clippy::unwrap_used,
+    clippy::expect_used,
+    clippy::similar_names,
+    reason = "test helpers; a panic is a test failure"
+)]
+
 #[path = "common/models.rs"]
 mod models;
 #[path = "common/orm.rs"]
@@ -77,7 +85,13 @@ async fn load_fixture_user_email(em: &EntityManager) -> Vec<Object> {
     users.into_iter().map(|(user, _)| user).collect()
 }
 
-async fn build_user(em: &EntityManager, name: &str, username: &str, status: &str, address: &Object) -> Object {
+async fn build_user(
+    em: &EntityManager,
+    name: &str,
+    username: &str,
+    status: &str,
+    address: &Object,
+) -> Object {
     let user = cms_user_with(name, username, status);
     set_address(&user, address);
     em.persist(&user).unwrap();
@@ -85,7 +99,13 @@ async fn build_user(em: &EntityManager, name: &str, username: &str, status: &str
     user
 }
 
-async fn build_address(em: &EntityManager, country: &str, city: &str, street: &str, zip: &str) -> Object {
+async fn build_address(
+    em: &EntityManager,
+    country: &str,
+    city: &str,
+    street: &str,
+    zip: &str,
+) -> Object {
     let address = cms_address(country, zip, city);
     set(&address, "street", s(street));
     em.persist(&address).unwrap();
@@ -118,7 +138,7 @@ fn objects(value: Value) -> Vec<Object> {
 }
 
 #[tokio::test]
-async fn test_basic_find() {
+async fn testBasicFind() {
     let em = set_up(&CMS_MODELS).await;
     let user1_id = load_fixture(&em).await;
     let repos = em.get_repository(CMS_USER).unwrap();
@@ -130,12 +150,15 @@ async fn test_basic_find() {
 }
 
 #[tokio::test]
-async fn test_find_by_field() {
+async fn testFindByField() {
     let em = set_up(&CMS_MODELS).await;
     load_fixture(&em).await;
     let repos = em.get_repository(CMS_USER).unwrap();
 
-    let users = repos.find_by(&array([("status", s("dev"))]), None, None, None).await.unwrap();
+    let users = repos
+        .find_by(&array([("status", s("dev"))]), None, None, None)
+        .await
+        .unwrap();
     assert_eq!(users.len(), 2);
     assert!(users[0].instance_of(CMS_USER));
     assert_eq!(get(&users[0], "name"), s("Guilherme"));
@@ -143,33 +166,39 @@ async fn test_find_by_field() {
 }
 
 #[tokio::test]
-async fn test_find_by_association_with_integer_as_parameter() {
+async fn testFindByAssociationWithIntegerAsParameter() {
     let em = set_up(&CMS_MODELS).await;
     let (user1, user2, _user3) = three_users_with_addresses(&em).await;
 
     let repository = em.get_repository(CMS_ADDRESS).unwrap();
     let criteria = array([("user", list([get(&user1, "id"), get(&user2, "id")]))]);
-    let addresses = repository.find_by(&criteria, None, None, None).await.unwrap();
+    let addresses = repository
+        .find_by(&criteria, None, None, None)
+        .await
+        .unwrap();
 
     assert_eq!(addresses.len(), 2);
     assert!(addresses[0].instance_of(CMS_ADDRESS));
 }
 
 #[tokio::test]
-async fn test_find_by_association_with_object_as_parameter() {
+async fn testFindByAssociationWithObjectAsParameter() {
     let em = set_up(&CMS_MODELS).await;
     let (user1, user2, _user3) = three_users_with_addresses(&em).await;
 
     let repository = em.get_repository(CMS_ADDRESS).unwrap();
     let criteria = array([("user", list([Value::Object(user1), Value::Object(user2)]))]);
-    let addresses = repository.find_by(&criteria, None, None, None).await.unwrap();
+    let addresses = repository
+        .find_by(&criteria, None, None, None)
+        .await
+        .unwrap();
 
     assert_eq!(addresses.len(), 2);
     assert!(addresses[0].instance_of(CMS_ADDRESS));
 }
 
 #[tokio::test]
-async fn test_find_field_by_magic_call() {
+async fn testFindFieldByMagicCall() {
     let em = set_up(&CMS_MODELS).await;
     load_fixture(&em).await;
     let repos = em.get_repository(CMS_USER).unwrap();
@@ -182,7 +211,7 @@ async fn test_find_field_by_magic_call() {
 }
 
 #[tokio::test]
-async fn test_find_all() {
+async fn testFindAll() {
     let em = set_up(&CMS_MODELS).await;
     load_fixture(&em).await;
     let repos = em.get_repository(CMS_USER).unwrap();
@@ -191,27 +220,39 @@ async fn test_find_all() {
 }
 
 #[tokio::test]
-async fn test_count() {
+async fn testCount() {
     let em = set_up(&CMS_MODELS).await;
     load_fixture(&em).await;
     let repos = em.get_repository(CMS_USER).unwrap();
 
     assert_eq!(repos.count(&PhpArray::new()).await.unwrap(), 4);
-    assert_eq!(repos.count(&array([("status", s("dev"))])).await.unwrap(), 2);
-    assert_eq!(repos.count(&array([("status", s("nonexistent"))])).await.unwrap(), 0);
+    assert_eq!(
+        repos.count(&array([("status", s("dev"))])).await.unwrap(),
+        2
+    );
+    assert_eq!(
+        repos
+            .count(&array([("status", s("nonexistent"))]))
+            .await
+            .unwrap(),
+        0
+    );
 }
 
 #[tokio::test]
-async fn test_count_by() {
+async fn testCountBy() {
     let em = set_up(&CMS_MODELS).await;
     load_fixture(&em).await;
     let repos = em.get_repository(CMS_USER).unwrap();
 
-    assert_eq!(repos.call("countByStatus", vec![s("dev")]).await.unwrap(), Value::Int(2));
+    assert_eq!(
+        repos.call("countByStatus", vec![s("dev")]).await.unwrap(),
+        Value::Int(2)
+    );
 }
 
 #[tokio::test]
-async fn test_exception_is_thrown_when_calling_find_by_without_parameter() {
+async fn testExceptionIsThrownWhenCallingFindByWithoutParameter() {
     let em = set_up(&CMS_MODELS).await;
     let e = em
         .get_repository(CMS_USER)
@@ -223,7 +264,7 @@ async fn test_exception_is_thrown_when_calling_find_by_without_parameter() {
 }
 
 #[tokio::test]
-async fn test_exception_is_thrown_when_using_invalid_field_name() {
+async fn testExceptionIsThrownWhenUsingInvalidFieldName() {
     let em = set_up(&CMS_MODELS).await;
     let e = em
         .get_repository(CMS_USER)
@@ -236,7 +277,7 @@ async fn test_exception_is_thrown_when_using_invalid_field_name() {
 
 /// locking, DDC-178
 #[tokio::test]
-async fn test_pessimistic_read_lock_without_transaction_throws_exception() {
+async fn testPessimisticReadLockWithoutTransactionThrowsException() {
     let em = set_up(&CMS_MODELS).await;
     let e = em
         .get_repository(CMS_USER)
@@ -249,7 +290,7 @@ async fn test_pessimistic_read_lock_without_transaction_throws_exception() {
 
 /// locking, DDC-178
 #[tokio::test]
-async fn test_pessimistic_write_lock_without_transaction_throws_exception() {
+async fn testPessimisticWriteLockWithoutTransactionThrowsException() {
     let em = set_up(&CMS_MODELS).await;
     let e = em
         .get_repository(CMS_USER)
@@ -262,7 +303,7 @@ async fn test_pessimistic_write_lock_without_transaction_throws_exception() {
 
 /// locking, DDC-178
 #[tokio::test]
-async fn test_optimistic_lock_unversioned_entity_throws_exception() {
+async fn testOptimisticLockUnversionedEntityThrowsException() {
     let em = set_up(&CMS_MODELS).await;
     let e = em
         .get_repository(CMS_USER)
@@ -275,7 +316,7 @@ async fn test_optimistic_lock_unversioned_entity_throws_exception() {
 
 /// locking, DDC-178
 #[tokio::test]
-async fn test_identity_mapped_optimistic_lock_unversioned_entity_throws_exception() {
+async fn testIdentityMappedOptimisticLockUnversionedEntityThrowsException() {
     let em = set_up(&CMS_MODELS).await;
     let user = cms_user_with("Roman", "romanb", "freak");
     em.persist(&user).unwrap();
@@ -294,7 +335,7 @@ async fn test_identity_mapped_optimistic_lock_unversioned_entity_throws_exceptio
 
 /// DDC-819
 #[tokio::test]
-async fn test_find_magic_call_by_null_value() {
+async fn testFindMagicCallByNullValue() {
     let em = set_up(&CMS_MODELS).await;
     load_fixture(&em).await;
     let repos = em.get_repository(CMS_USER).unwrap();
@@ -305,7 +346,7 @@ async fn test_find_magic_call_by_null_value() {
 
 /// DDC-819
 #[tokio::test]
-async fn test_invalid_magic_call() {
+async fn testInvalidMagicCall() {
     let em = set_up(&CMS_MODELS).await;
     let repos = em.get_repository(CMS_USER).unwrap();
     let e = repos.call("foo", vec![]).await.unwrap_err();
@@ -314,7 +355,7 @@ async fn test_invalid_magic_call() {
 
 /// DDC-817
 #[tokio::test]
-async fn test_find_by_association_key_exception_on_inverse_side() {
+async fn testFindByAssociationKeyExceptionOnInverseSide() {
     let em = set_up(&CMS_MODELS).await;
     let (_user_id, address_id) = load_associated_fixture(&em).await;
     let repos = em.get_repository(CMS_USER).unwrap();
@@ -332,11 +373,15 @@ async fn test_find_by_association_key_exception_on_inverse_side() {
 
 /// DDC-817
 #[tokio::test]
-async fn test_find_one_by_association_key() {
+async fn testFindOneByAssociationKey() {
     let em = set_up(&CMS_MODELS).await;
     let (user_id, address_id) = load_associated_fixture(&em).await;
     let repos = em.get_repository(CMS_ADDRESS).unwrap();
-    let address = repos.find_one_by(&array([("user", user_id)]), None).await.unwrap().unwrap();
+    let address = repos
+        .find_one_by(&array([("user", user_id)]), None)
+        .await
+        .unwrap()
+        .unwrap();
 
     assert!(address.instance_of(CMS_ADDRESS));
     assert_eq!(get(&address, "id"), address_id);
@@ -344,7 +389,7 @@ async fn test_find_one_by_association_key() {
 
 /// DDC-1241
 #[tokio::test]
-async fn test_find_one_by_order_by() {
+async fn testFindOneByOrderBy() {
     let em = set_up(&CMS_MODELS).await;
     load_fixture(&em).await;
 
@@ -365,11 +410,14 @@ async fn test_find_one_by_order_by() {
 
 /// DDC-817
 #[tokio::test]
-async fn test_find_by_association_key() {
+async fn testFindByAssociationKey() {
     let em = set_up(&CMS_MODELS).await;
     let (user_id, address_id) = load_associated_fixture(&em).await;
     let repos = em.get_repository(CMS_ADDRESS).unwrap();
-    let addresses = repos.find_by(&array([("user", user_id)]), None, None, None).await.unwrap();
+    let addresses = repos
+        .find_by(&array([("user", user_id)]), None, None, None)
+        .await
+        .unwrap();
 
     assert!(addresses.iter().all(|a| a.instance_of(CMS_ADDRESS)));
     assert_eq!(addresses.len(), 1);
@@ -378,7 +426,7 @@ async fn test_find_by_association_key() {
 
 /// DDC-817
 #[tokio::test]
-async fn test_find_association_by_magic_call() {
+async fn testFindAssociationByMagicCall() {
     let em = set_up(&CMS_MODELS).await;
     let (user_id, address_id) = load_associated_fixture(&em).await;
     let repos = em.get_repository(CMS_ADDRESS).unwrap();
@@ -391,7 +439,7 @@ async fn test_find_association_by_magic_call() {
 
 /// DDC-817
 #[tokio::test]
-async fn test_find_one_association_by_magic_call() {
+async fn testFindOneAssociationByMagicCall() {
     let em = set_up(&CMS_MODELS).await;
     let (user_id, address_id) = load_associated_fixture(&em).await;
     let repos = em.get_repository(CMS_ADDRESS).unwrap();
@@ -404,52 +452,93 @@ async fn test_find_one_association_by_magic_call() {
 }
 
 #[tokio::test]
-async fn test_find_by_limit_offset() {
+async fn testFindByLimitOffset() {
     let em = set_up(&CMS_MODELS).await;
     load_fixture(&em).await;
     let repos = em.get_repository(CMS_USER).unwrap();
 
-    let users1 = repos.find_by(&PhpArray::new(), None, Some(1), Some(0)).await.unwrap();
-    let users2 = repos.find_by(&PhpArray::new(), None, Some(1), Some(1)).await.unwrap();
+    let users1 = repos
+        .find_by(&PhpArray::new(), None, Some(1), Some(0))
+        .await
+        .unwrap();
+    let users2 = repos
+        .find_by(&PhpArray::new(), None, Some(1), Some(1))
+        .await
+        .unwrap();
 
-    assert_eq!(repos.find_by(&PhpArray::new(), None, None, None).await.unwrap().len(), 4);
+    assert_eq!(
+        repos
+            .find_by(&PhpArray::new(), None, None, None)
+            .await
+            .unwrap()
+            .len(),
+        4
+    );
     assert_eq!(users1.len(), 1);
     assert_eq!(users2.len(), 1);
     assert!(!same(&users1[0], &users2[0]));
 }
 
 #[tokio::test]
-async fn test_find_by_order_by() {
+async fn testFindByOrderBy() {
     let em = set_up(&CMS_MODELS).await;
     load_fixture(&em).await;
     let repos = em.get_repository(CMS_USER).unwrap();
     let users_asc = repos
-        .find_by(&PhpArray::new(), Some(&array([("username", s("ASC"))])), None, None)
+        .find_by(
+            &PhpArray::new(),
+            Some(&array([("username", s("ASC"))])),
+            None,
+            None,
+        )
         .await
         .unwrap();
     let users_desc = repos
-        .find_by(&PhpArray::new(), Some(&array([("username", s("DESC"))])), None, None)
+        .find_by(
+            &PhpArray::new(),
+            Some(&array([("username", s("DESC"))])),
+            None,
+            None,
+        )
         .await
         .unwrap();
 
-    assert_eq!(users_asc.len(), 4, "Pre-condition: only four users in fixture");
-    assert_eq!(users_desc.len(), 4, "Pre-condition: only four users in fixture");
+    assert_eq!(
+        users_asc.len(),
+        4,
+        "Pre-condition: only four users in fixture"
+    );
+    assert_eq!(
+        users_desc.len(),
+        4,
+        "Pre-condition: only four users in fixture"
+    );
     assert!(same(&users_asc[0], &users_desc[3]));
     assert!(same(&users_asc[3], &users_desc[0]));
 }
 
 #[tokio::test]
-async fn test_find_by_order_by_association() {
+async fn testFindByOrderByAssociation() {
     let em = set_up(&CMS_MODELS).await;
     load_fixture_user_email(&em).await;
 
     let repository = em.get_repository(CMS_USER).unwrap();
     let result_asc = repository
-        .find_by(&PhpArray::new(), Some(&array([("email", s("ASC"))])), None, None)
+        .find_by(
+            &PhpArray::new(),
+            Some(&array([("email", s("ASC"))])),
+            None,
+            None,
+        )
         .await
         .unwrap();
     let result_desc = repository
-        .find_by(&PhpArray::new(), Some(&array([("email", s("DESC"))])), None, None)
+        .find_by(
+            &PhpArray::new(),
+            Some(&array([("email", s("DESC"))])),
+            None,
+            None,
+        )
         .await
         .unwrap();
 
@@ -466,20 +555,26 @@ async fn test_find_by_order_by_association() {
 }
 
 #[tokio::test]
-async fn test_find_field_by_magic_call_order_by() {
+async fn testFindFieldByMagicCallOrderBy() {
     let em = set_up(&CMS_MODELS).await;
     load_fixture(&em).await;
     let repos = em.get_repository(CMS_USER).unwrap();
 
     let users_asc = objects(
         repos
-            .call("findByStatus", vec![s("dev"), Value::Array(array([("username", s("ASC"))]))])
+            .call(
+                "findByStatus",
+                vec![s("dev"), Value::Array(array([("username", s("ASC"))]))],
+            )
             .await
             .unwrap(),
     );
     let users_desc = objects(
         repos
-            .call("findByStatus", vec![s("dev"), Value::Array(array([("username", s("DESC"))]))])
+            .call(
+                "findByStatus",
+                vec![s("dev"), Value::Array(array([("username", s("DESC"))]))],
+            )
             .await
             .unwrap(),
     );
@@ -496,7 +591,7 @@ async fn test_find_field_by_magic_call_order_by() {
 }
 
 #[tokio::test]
-async fn test_find_field_by_magic_call_limit_offset() {
+async fn testFindFieldByMagicCallLimitOffset() {
     let em = set_up(&CMS_MODELS).await;
     load_fixture(&em).await;
     let repos = em.get_repository(CMS_USER).unwrap();
@@ -504,13 +599,19 @@ async fn test_find_field_by_magic_call_limit_offset() {
     let empty = Value::Array(PhpArray::new());
     let users1 = objects(
         repos
-            .call("findByStatus", vec![s("dev"), empty.clone(), Value::Int(1), Value::Int(0)])
+            .call(
+                "findByStatus",
+                vec![s("dev"), empty.clone(), Value::Int(1), Value::Int(0)],
+            )
             .await
             .unwrap(),
     );
     let users2 = objects(
         repos
-            .call("findByStatus", vec![s("dev"), empty, Value::Int(1), Value::Int(1)])
+            .call(
+                "findByStatus",
+                vec![s("dev"), empty, Value::Int(1), Value::Int(1)],
+            )
             .await
             .unwrap(),
     );
@@ -521,7 +622,7 @@ async fn test_find_field_by_magic_call_limit_offset() {
 }
 
 #[tokio::test]
-async fn test_can_retrieve_repository_from_class_name_with_leading_backslash() {
+async fn testCanRetrieveRepositoryFromClassNameWithLeadingBackslash() {
     let em = set_up(&CMS_MODELS).await;
     assert!(Arc::ptr_eq(
         &em.get_repository(&format!("\\{CMS_USER}")).unwrap(),
@@ -530,12 +631,17 @@ async fn test_can_retrieve_repository_from_class_name_with_leading_backslash() {
 }
 
 #[tokio::test]
-async fn test_invalid_order_by_association() {
+async fn testInvalidOrderByAssociation() {
     let em = set_up(&CMS_MODELS).await;
     let e = em
         .get_repository(CMS_USER)
         .unwrap()
-        .find_by(&array([("status", s("test"))]), Some(&array([("address", s("ASC"))])), None, None)
+        .find_by(
+            &array([("status", s("test"))]),
+            Some(&array([("address", s("ASC"))])),
+            None,
+            None,
+        )
         .await
         .unwrap_err();
     assert_eq!(e.class, INVALID_FIND_BY_CALL);
@@ -545,11 +651,16 @@ async fn test_invalid_order_by_association() {
 }
 
 #[tokio::test]
-async fn test_invalid_orientation() {
+async fn testInvalidOrientation() {
     let em = set_up(&CMS_MODELS).await;
     let repo = em.get_repository(CMS_USER).unwrap();
     let e = repo
-        .find_by(&array([("status", s("test"))]), Some(&array([("username", s("INVALID"))])), None, None)
+        .find_by(
+            &array([("status", s("test"))]),
+            Some(&array([("username", s("INVALID"))])),
+            None,
+            None,
+        )
         .await
         .unwrap_err();
     assert_eq!(e.class, INVALID_ORIENTATION);
@@ -559,7 +670,7 @@ async fn test_invalid_orientation() {
 }
 
 #[tokio::test]
-async fn test_find_by_association_array() {
+async fn testFindByAssociationArray() {
     let em = set_up(&CMS_MODELS).await;
     let mut users = Vec::new();
     for (country, zip, city, username, name) in [
@@ -584,7 +695,10 @@ async fn test_find_by_association_array() {
     em.clear().unwrap();
 
     let repo = em.get_repository(CMS_ADDRESS).unwrap();
-    let addresses = repo.find_by(&array([("user", ids)]), None, None, None).await.unwrap();
+    let addresses = repo
+        .find_by(&array([("user", ids)]), None, None, None)
+        .await
+        .unwrap();
 
     assert_eq!(addresses.len(), 3);
     for address in &addresses {
@@ -593,11 +707,19 @@ async fn test_find_by_association_array() {
 }
 
 #[tokio::test]
-async fn test_find_by_field_injection_prevented() {
+async fn testFindByFieldInjectionPrevented() {
     let em = set_up(&CMS_MODELS).await;
     let repository = em.get_repository(CMS_USER).unwrap();
     let e = repository
-        .find_by(&array([("username = ?; DELETE FROM cms_users; SELECT 1 WHERE 1", s("test"))]), None, None, None)
+        .find_by(
+            &array([(
+                "username = ?; DELETE FROM cms_users; SELECT 1 WHERE 1",
+                s("test"),
+            )]),
+            None,
+            None,
+            None,
+        )
         .await
         .unwrap_err();
     assert_eq!(e.class, UNRECOGNIZED_FIELD);
@@ -605,11 +727,17 @@ async fn test_find_by_field_injection_prevented() {
 }
 
 #[tokio::test]
-async fn test_find_one_by_field_injection_prevented() {
+async fn testFindOneByFieldInjectionPrevented() {
     let em = set_up(&CMS_MODELS).await;
     let repository = em.get_repository(CMS_USER).unwrap();
     let e = repository
-        .find_one_by(&array([("username = ?; DELETE FROM cms_users; SELECT 1 WHERE 1", s("test"))]), None)
+        .find_one_by(
+            &array([(
+                "username = ?; DELETE FROM cms_users; SELECT 1 WHERE 1",
+                s("test"),
+            )]),
+            None,
+        )
         .await
         .unwrap_err();
     // UnrecognizedField is an ORMException.
@@ -618,12 +746,15 @@ async fn test_find_one_by_field_injection_prevented() {
 }
 
 #[tokio::test]
-async fn test_find_injection_prevented() {
+async fn testFindInjectionPrevented() {
     let em = set_up(&CMS_MODELS).await;
     let repository = em.get_repository(CMS_USER).unwrap();
     let e = repository
         .find(Value::Array(array([
-            ("username = ?; DELETE FROM cms_users; SELECT 1 WHERE 1", s("test")),
+            (
+                "username = ?; DELETE FROM cms_users; SELECT 1 WHERE 1",
+                s("test"),
+            ),
             ("id", Value::Int(1)),
         ])))
         .await
@@ -633,7 +764,8 @@ async fn test_find_injection_prevented() {
 }
 
 #[tokio::test]
-async fn test_find_by_null_value_in_in_condition() {
+#[allow(clippy::similar_names, reason = "upstream's names")]
+async fn testFindByNullValueInInCondition() {
     let em = set_up(&CMS_MODELS).await;
     let user1 = cms_user();
     let user2 = cms_user();

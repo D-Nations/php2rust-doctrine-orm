@@ -6,14 +6,19 @@
 //! Upstream: doctrine/orm tests/Tests/DbalExtensions/QueryLog.php
 
 #![allow(dead_code, reason = "each test binary uses a part of the helpers")]
+#![allow(
+    clippy::unwrap_used,
+    clippy::expect_used,
+    reason = "test helpers; a panic is a test failure"
+)]
 
 use std::sync::{Arc, Mutex, PoisonError};
 
 use php_value::{PhpArray, PhpString, Value};
 use php2rust_doctrine_dbal::driver::api::ExceptionConverter;
 use php2rust_doctrine_dbal::driver::{
-    BoxFuture, Connection as DriverConnection, Driver, PlatformBox, Result as DriverResult, Statement,
-    pdo_sqlite,
+    BoxFuture, Connection as DriverConnection, Driver, PlatformBox, Result as DriverResult,
+    Statement, pdo_sqlite,
 };
 use php2rust_doctrine_dbal::{Connection, Exception, ServerVersionProvider};
 
@@ -38,7 +43,11 @@ impl QueryLog {
 
     /// The statements recorded since `reset_and_enable()`.
     pub fn queries(&self) -> Vec<String> {
-        self.queries.lock().unwrap_or_else(PoisonError::into_inner).1.clone()
+        self.queries
+            .lock()
+            .unwrap_or_else(PoisonError::into_inner)
+            .1
+            .clone()
     }
 }
 
@@ -88,7 +97,10 @@ impl DriverConnection for LoggingConnection {
         self.inner.prepare(sql)
     }
 
-    fn query<'a>(&'a self, sql: &'a str) -> BoxFuture<'a, Result<Box<dyn DriverResult>, Exception>> {
+    fn query<'a>(
+        &'a self,
+        sql: &'a str,
+    ) -> BoxFuture<'a, Result<Box<dyn DriverResult>, Exception>> {
         self.log.log(sql);
         self.inner.query(sql)
     }
@@ -132,13 +144,19 @@ pub fn logging_connection() -> (Arc<Connection>, Arc<QueryLog>) {
         inner: pdo_sqlite::Driver::new(),
         log: log.clone(),
     };
-    (Arc::new(Connection::new(params, Arc::new(driver), None)), log)
+    (
+        Arc::new(Connection::new(params, Arc::new(driver), None)),
+        log,
+    )
 }
 
 /// `setUp()` on a connection whose statements are logged.
 pub async fn set_up_logged(
     classes: &[&str],
-) -> (Arc<php2rust_doctrine_orm::entity_manager::EntityManager>, Arc<QueryLog>) {
+) -> (
+    Arc<php2rust_doctrine_orm::entity_manager::EntityManager>,
+    Arc<QueryLog>,
+) {
     let (conn, log) = logging_connection();
     let em = super::orm::entity_manager(conn, None);
     super::orm::create_schema(&em, classes).await;
