@@ -2,6 +2,8 @@
 //! and for the DBAL platforms the port does not have: it reports a class
 //! name of the test's choice, can quote identifiers its own way, and
 //! delegates the rest to `SQLitePlatform`.
+//!
+//! Upstream: none
 
 #![allow(dead_code, reason = "each test uses a part of the helpers")]
 
