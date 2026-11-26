@@ -22,6 +22,21 @@ use php2rust_doctrine_persistence::php_reflection::{
 use serde_json::Value as Json;
 
 const MODELS: &str = include_str!("../data/models.json");
+const QUERY_MODELS: &str = include_str!("../data/query_models.json");
+
+/// Declares the models of the DQL tests (`tests/data/query_models.json`,
+/// recorded by `oracle/recorders/orm_query_models.php`), once per test
+/// binary.
+pub fn register_query_models() {
+    static ONCE: Once = Once::new();
+    ONCE.call_once(|| {
+        php2rust_doctrine_orm::mapping::register_orm_classes();
+        let json: Json = serde_json::from_str(QUERY_MODELS).unwrap();
+        for class in json["classes"].as_array().unwrap() {
+            declare(class);
+        }
+    });
+}
 
 /// Declares the models, once per test binary.
 pub fn register() {
@@ -123,6 +138,9 @@ fn declare(class: &Json) {
             MethodInfo::new(method_name.as_str()).visibility(visibility(&method["visibility"]));
         if method["static"].as_bool().unwrap() {
             m = m.static_method();
+        }
+        if let Some(required) = method["required"].as_u64() {
+            m = m.required_parameters(usize::try_from(required).unwrap());
         }
         info = info.method(m);
         let method_attributes: Vec<MappingAttribute> = method["attributes"]
