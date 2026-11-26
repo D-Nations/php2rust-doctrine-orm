@@ -7,7 +7,7 @@
 //! public arrays and the `add*()` methods the walker calls), a stand-in
 //! until the full class is joined in.
 //!
-//! Upstream: doctrine/orm src/Query/ParserResult.php src/Query/ResultSetMapping.php
+//! Upstream: doctrine/orm src/Query/ParserResult.php
 
 use php_value::{Key, PhpArray, Thrown, Value};
 
