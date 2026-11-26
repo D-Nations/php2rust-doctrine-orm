@@ -4,6 +4,9 @@
 //! rows, `lastInsertId()` 1, 2, 3, ...), as upstream's `EntityManagerMock`
 //! on its stubbed driver; the persisters are the real ones, which run
 //! their statements on the stub. A data provider's rows run in one test.
+//! `EntityPersisterMock` is a `CommitPersister` that records its calls,
+//! set with `UnitOfWork::set_entity_persister()` (upstream's
+//! `UnitOfWorkMock::setEntityPersister()`).
 
 #![allow(non_snake_case)]
 #![allow(
@@ -20,7 +23,7 @@ mod orm;
 #[path = "common/stub_connection.rs"]
 mod stub_connection;
 
-use std::sync::Arc;
+use std::sync::{Arc, Mutex, PoisonError, Weak};
 
 use php_value::object::StdClass;
 use php_value::{Object, PhpArray, Value};
@@ -30,8 +33,15 @@ use php2rust_doctrine_orm::exception::{
     ENTITY_IDENTITY_COLLISION_EXCEPTION, ENTITY_NOT_FOUND_EXCEPTION, OPTIMISTIC_LOCK_EXCEPTION,
     ORM_INVALID_ARGUMENT_EXCEPTION,
 };
+use php2rust_doctrine_collections::Criteria;
+use php2rust_doctrine_orm::mapping::ClassMetadata;
+use php2rust_doctrine_orm::mapping::class_metadata::GENERATOR_TYPE_IDENTITY;
 use php2rust_doctrine_orm::persistent_collection::PersistentCollection;
-use php2rust_doctrine_orm::unit_of_work::{STATE_MANAGED, STATE_REMOVED, UnitOfWork};
+use php2rust_doctrine_orm::persisters::CommitPersister;
+use php2rust_doctrine_orm::unit_of_work::Fut;
+use php2rust_doctrine_orm::unit_of_work::{
+    STATE_DETACHED, STATE_MANAGED, STATE_NEW, STATE_REMOVED, UnitOfWork,
+};
 
 use orm::*;
 use stub_connection::{Failures, stub_connection};
@@ -350,4 +360,420 @@ async fn testItThrowsWhenApplicationProvidedIdsCollide() {
     assert_eq!(e.class, ENTITY_IDENTITY_COLLISION_EXCEPTION);
     assert!(message(&e).contains("another object"));
     assert!(message(&e).contains("was already present for the same ID"));
+}
+
+/// The recorded calls of an `EntityPersisterMock`.
+#[derive(Default)]
+struct MockState {
+    count_of_execute_insert_calls: usize,
+    inserts: Vec<Object>,
+    updates: Vec<Object>,
+    deletes: Vec<Object>,
+    identity_column_value_counter: i64,
+    mock_id_generator_type: Option<i64>,
+    post_insert_ids: Vec<(i64, Object)>,
+    exists_called: bool,
+}
+
+/// `EntityPersisterMock`: an entity persister used for mocking during
+/// tests.
+struct EntityPersisterMock {
+    em: Weak<EntityManager>,
+    class: Arc<ClassMetadata>,
+    state: Mutex<MockState>,
+}
+
+impl std::fmt::Debug for EntityPersisterMock {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("EntityPersisterMock").finish_non_exhaustive()
+    }
+}
+
+impl EntityPersisterMock {
+    /// `new EntityPersisterMock($em, $em->getClassMetadata($class))`,
+    /// set as the class's persister.
+    fn set(em: &Arc<EntityManager>, class_name: &str) -> Arc<Self> {
+        let persister = Arc::new(Self {
+            em: Arc::downgrade(em),
+            class: em.get_class_metadata(class_name).unwrap(),
+            state: Mutex::new(MockState::default()),
+        });
+        em.get_unit_of_work()
+            .set_entity_persister(class_name, persister.clone());
+        persister
+    }
+
+    fn st(&self) -> std::sync::MutexGuard<'_, MockState> {
+        self.state.lock().unwrap_or_else(PoisonError::into_inner)
+    }
+
+    fn set_mock_id_generator_type(&self, gen_type: i64) {
+        self.st().mock_id_generator_type = Some(gen_type);
+    }
+
+    fn get_inserts(&self) -> Vec<Object> {
+        self.st().inserts.clone()
+    }
+
+    fn get_updates(&self) -> Vec<Object> {
+        self.st().updates.clone()
+    }
+
+    fn get_deletes(&self) -> Vec<Object> {
+        self.st().deletes.clone()
+    }
+
+    fn reset(&self) {
+        let mut st = self.st();
+        st.count_of_execute_insert_calls = 0;
+        st.exists_called = false;
+        st.identity_column_value_counter = 0;
+        st.inserts.clear();
+        st.updates.clear();
+        st.deletes.clear();
+    }
+
+    fn is_exists_called(&self) -> bool {
+        self.st().exists_called
+    }
+
+    fn count_of_execute_insert_calls(&self) -> usize {
+        self.st().count_of_execute_insert_calls
+    }
+}
+
+impl CommitPersister for EntityPersisterMock {
+    fn add_insert(&self, entity: &Object) {
+        let identity = self.class.read().is_id_generator_identity();
+        let mut st = self.st();
+        st.inserts.push(entity.clone());
+        if st.mock_id_generator_type != Some(GENERATOR_TYPE_IDENTITY) && !identity {
+            return;
+        }
+        let id = st.identity_column_value_counter;
+        st.identity_column_value_counter += 1;
+        st.post_insert_ids.push((id, entity.clone()));
+    }
+
+    fn execute_inserts(&self) -> Fut<'_, ()> {
+        Box::pin(async move {
+            let post_insert_ids = {
+                let mut st = self.st();
+                st.count_of_execute_insert_calls += 1;
+                st.post_insert_ids.clone()
+            };
+            let em = self.em.upgrade().expect("the entity manager");
+            for (generated_id, entity) in post_insert_ids {
+                em.get_unit_of_work()
+                    .assign_post_insert_id(&entity, &Value::Int(generated_id))?;
+            }
+            Ok(())
+        })
+    }
+
+    fn update<'a>(&'a self, entity: &'a Object) -> Fut<'a, ()> {
+        self.st().updates.push(entity.clone());
+        Box::pin(async { Ok(()) })
+    }
+
+    fn delete<'a>(&'a self, entity: &'a Object) -> Fut<'a, bool> {
+        self.st().deletes.push(entity.clone());
+        Box::pin(async { Ok(true) })
+    }
+
+    fn exists<'a>(
+        &'a self,
+        _entity: &'a Object,
+        _extra_conditions: Option<&'a Criteria>,
+    ) -> Fut<'a, bool> {
+        self.st().exists_called = true;
+        Box::pin(async { Ok(false) })
+    }
+}
+
+/// `assertIsNumeric()`.
+fn assert_is_numeric(value: &Value) {
+    assert!(matches!(value, Value::Int(_) | Value::Float(_)), "{value:?}");
+}
+
+const FORUM_AVATAR: &str = "Doctrine\\Tests\\Models\\Forum\\ForumAvatar";
+const CMS_PHONENUMBER: &str = "Doctrine\\Tests\\Models\\CMS\\CmsPhonenumber";
+const COUNTRY: &str = "Doctrine\\Tests\\Models\\MixedToOneIdentity\\Country";
+
+#[tokio::test]
+async fn testSavingSingleEntityWithIdentityColumnForcesInsert() {
+    let em = set_up_test();
+    let uow = em.get_unit_of_work();
+    // Setup fake persister and id generator for identity generation
+    let user_persister = EntityPersisterMock::set(&em, FORUM_USER);
+    user_persister.set_mock_id_generator_type(GENERATOR_TYPE_IDENTITY);
+
+    // Test
+    let user = forum_user(Some("romanb"));
+    uow.persist(&user).unwrap();
+
+    // Check
+    assert_eq!(0, user_persister.get_inserts().len());
+    assert_eq!(0, user_persister.get_updates().len());
+    assert_eq!(0, user_persister.get_deletes().len());
+    assert!(!uow.is_in_identity_map(&user).unwrap());
+    // should no longer be scheduled for insert
+    assert!(uow.is_scheduled_for_insert(&user));
+
+    // Now lets check whether a subsequent commit() does anything
+    user_persister.reset();
+
+    // Test
+    uow.commit().await.unwrap();
+
+    // Check.
+    assert_eq!(1, user_persister.get_inserts().len());
+    assert_eq!(0, user_persister.get_updates().len());
+    assert_eq!(0, user_persister.get_deletes().len());
+
+    // should have an id
+    assert_is_numeric(&get(&user, "id"));
+}
+
+#[tokio::test]
+async fn testCascadedIdentityColumnInsert() {
+    let em = set_up_test();
+    let uow = em.get_unit_of_work();
+    // Setup fake persister and id generator for identity generation
+    //ForumUser
+    let user_persister = EntityPersisterMock::set(&em, FORUM_USER);
+    user_persister.set_mock_id_generator_type(GENERATOR_TYPE_IDENTITY);
+    // ForumAvatar
+    let avatar_persister = EntityPersisterMock::set(&em, FORUM_AVATAR);
+    avatar_persister.set_mock_id_generator_type(GENERATOR_TYPE_IDENTITY);
+
+    // Test
+    let user = forum_user(Some("romanb"));
+    let avatar = new_object(FORUM_AVATAR);
+    set_obj(&user, "avatar", &avatar);
+    uow.persist(&user).unwrap(); // save cascaded to avatar
+
+    uow.commit().await.unwrap();
+
+    assert_is_numeric(&get(&user, "id"));
+    assert_is_numeric(&get(&avatar, "id"));
+
+    assert_eq!(1, user_persister.get_inserts().len());
+    assert_eq!(0, user_persister.get_updates().len());
+    assert_eq!(0, user_persister.get_deletes().len());
+
+    assert_eq!(1, avatar_persister.get_inserts().len());
+    assert_eq!(0, avatar_persister.get_updates().len());
+    assert_eq!(0, avatar_persister.get_deletes().len());
+}
+
+#[tokio::test]
+async fn testGetEntityStateOnVersionedEntityWithAssignedIdentifier() {
+    let em = set_up_test();
+    let class_name = class("VersionedAssignedIdentifierEntity");
+    let persister = EntityPersisterMock::set(&em, &class_name);
+
+    let e = new_object(&class_name);
+    set(&e, "id", Value::Int(42));
+    assert_eq!(
+        STATE_NEW,
+        em.get_unit_of_work().get_entity_state(&e).await.unwrap()
+    );
+    assert!(!persister.is_exists_called());
+}
+
+#[tokio::test]
+async fn testGetEntityStateWithAssignedIdentity() {
+    let em = set_up_test();
+    let uow = em.get_unit_of_work();
+    let persister = EntityPersisterMock::set(&em, CMS_PHONENUMBER);
+
+    let ph = new_object(CMS_PHONENUMBER);
+    set(&ph, "phonenumber", s("12345"));
+
+    assert_eq!(STATE_NEW, uow.get_entity_state(&ph).await.unwrap());
+    assert!(persister.is_exists_called());
+
+    persister.reset();
+
+    // if the entity is already managed the exists() check should be skipped
+    uow.register_managed(&ph, array([("phonenumber", s("12345"))]), PhpArray::new())
+        .unwrap();
+    assert_eq!(STATE_MANAGED, uow.get_entity_state(&ph).await.unwrap());
+    assert!(!persister.is_exists_called());
+    let ph2 = new_object(CMS_PHONENUMBER);
+    set(&ph2, "phonenumber", s("12345"));
+    assert_eq!(STATE_DETACHED, uow.get_entity_state(&ph2).await.unwrap());
+    assert!(!persister.is_exists_called());
+}
+
+#[tokio::test]
+async fn testMultipleInsertsAreBatchedInThePersister() {
+    let em = set_up_test();
+    let uow = em.get_unit_of_work();
+    let user_persister = EntityPersisterMock::set(&em, COUNTRY);
+
+    let country1 = new_object(COUNTRY);
+    set(&country1, "country", s("Italy"));
+    let country2 = new_object(COUNTRY);
+    set(&country2, "country", s("Germany"));
+
+    uow.persist(&country1).unwrap();
+    uow.persist(&country2).unwrap();
+    uow.commit().await.unwrap();
+
+    assert_eq!(2, user_persister.get_inserts().len());
+    assert_eq!(1, user_persister.count_of_execute_insert_calls());
+}
+
+/// `new CascadePersistedEntity()` (and the two other classes): the
+/// constructor's `$this->id = uniqid(self::class, true)`.
+fn new_with_uniqid(class_name: &str) -> Object {
+    static COUNTER: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
+    let entity = new_object(class_name);
+    let n = COUNTER.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
+    set(&entity, "id", s(&format!("{class_name}{n}")));
+    entity
+}
+
+/// The persisters of `CascadePersistedEntity`,
+/// `EntityWithCascadingAssociation` and
+/// `EntityWithNonCascadingAssociation`, and new entities of them.
+fn cascade_fixture(
+    em: &Arc<EntityManager>,
+) -> (
+    [Arc<EntityPersisterMock>; 3],
+    Object,
+    Object,
+    Object,
+) {
+    let persister1 = EntityPersisterMock::set(em, &class("CascadePersistedEntity"));
+    let persister2 = EntityPersisterMock::set(em, &class("EntityWithCascadingAssociation"));
+    let persister3 = EntityPersisterMock::set(em, &class("EntityWithNonCascadingAssociation"));
+    (
+        [persister1, persister2, persister3],
+        new_with_uniqid(&class("CascadePersistedEntity")),
+        new_with_uniqid(&class("EntityWithCascadingAssociation")),
+        new_with_uniqid(&class("EntityWithNonCascadingAssociation")),
+    )
+}
+
+#[tokio::test]
+async fn testNewAssociatedEntityPersistenceOfNewEntitiesThroughCascadedAssociationsFirst() {
+    let em = set_up_test();
+    let uow = em.get_unit_of_work();
+    let ([persister1, persister2, persister3], cascade_persisted, cascading, non_cascading) =
+        cascade_fixture(&em);
+
+    // First we persist and flush a EntityWithCascadingAssociation with
+    // the cascading association not set. Having the "cascading path" involve
+    // a non-new object is important to show that the ORM should be considering
+    // cascades across entity changesets in subsequent flushes.
+    set_obj(&cascading, "cascaded", &cascade_persisted);
+    set_obj(&non_cascading, "nonCascaded", &cascade_persisted);
+
+    uow.persist(&cascading).unwrap();
+    uow.persist(&non_cascading).unwrap();
+
+    uow.commit().await.unwrap();
+
+    assert_eq!(1, persister1.get_inserts().len());
+    assert_eq!(1, persister2.get_inserts().len());
+    assert_eq!(1, persister3.get_inserts().len());
+}
+
+#[tokio::test]
+async fn testNewAssociatedEntityPersistenceOfNewEntitiesThroughNonCascadedAssociationsFirst() {
+    let em = set_up_test();
+    let uow = em.get_unit_of_work();
+    let ([persister1, persister2, persister3], cascade_persisted, cascading, non_cascading) =
+        cascade_fixture(&em);
+
+    // First we persist and flush a EntityWithCascadingAssociation with
+    // the cascading association not set. Having the "cascading path" involve
+    // a non-new object is important to show that the ORM should be considering
+    // cascades across entity changesets in subsequent flushes.
+    set(&cascading, "cascaded", Value::Null);
+
+    uow.persist(&cascading).unwrap();
+    uow.commit().await.unwrap();
+
+    assert_eq!(0, persister1.get_inserts().len());
+    assert_eq!(1, persister2.get_inserts().len());
+    assert_eq!(0, persister3.get_inserts().len());
+
+    // Note that we have NOT directly persisted the CascadePersistedEntity,
+    // and EntityWithNonCascadingAssociation does NOT have a configured
+    // cascade-persist.
+    set_obj(&non_cascading, "nonCascaded", &cascade_persisted);
+
+    // However, EntityWithCascadingAssociation *does* have a cascade-persist
+    // association, which ought to allow us to save the CascadePersistedEntity
+    // anyway through that connection.
+    set_obj(&cascading, "cascaded", &cascade_persisted);
+
+    uow.persist(&non_cascading).unwrap();
+    uow.commit().await.unwrap();
+
+    assert_eq!(1, persister1.get_inserts().len());
+    assert_eq!(1, persister2.get_inserts().len());
+    assert_eq!(1, persister3.get_inserts().len());
+}
+
+#[tokio::test]
+async fn testNoUndefinedIndexNoticeOnScheduleForUpdateWithoutChanges() {
+    let em = set_up_test();
+    let uow = em.get_unit_of_work();
+    // Setup fake persister and id generator
+    let user_persister = EntityPersisterMock::set(&em, FORUM_USER);
+    user_persister.set_mock_id_generator_type(GENERATOR_TYPE_IDENTITY);
+
+    // Create a test user
+    let user = forum_user(Some("Jasper"));
+    uow.persist(&user).unwrap();
+    uow.commit().await.unwrap();
+
+    // Schedule user for update without changes
+    uow.schedule_for_update(&user).unwrap();
+
+    assert!(!uow.get_scheduled_entity_updates().is_empty());
+
+    // This commit should not raise an E_NOTICE
+    uow.commit().await.unwrap();
+
+    assert!(uow.get_scheduled_entity_updates().is_empty());
+}
+
+#[tokio::test]
+async fn testPreviousDetectedIllegalNewNonCascadedEntitiesAreCleanedUpOnSubsequentCommits() {
+    let em = set_up_test();
+    let uow = em.get_unit_of_work();
+    let persister1 = EntityPersisterMock::set(&em, &class("CascadePersistedEntity"));
+    let persister2 = EntityPersisterMock::set(&em, &class("EntityWithNonCascadingAssociation"));
+
+    let cascade_persisted = new_with_uniqid(&class("CascadePersistedEntity"));
+    let non_cascading = new_with_uniqid(&class("EntityWithNonCascadingAssociation"));
+
+    // We explicitly cause the ORM to detect a non-persisted new entity in the association graph:
+    set_obj(&non_cascading, "nonCascaded", &cascade_persisted);
+
+    uow.persist(&non_cascading).unwrap();
+
+    match uow.commit().await {
+        Ok(()) => panic!("An exception was supposed to be raised"),
+        Err(e) => {
+            assert_eq!(e.class, ORM_INVALID_ARGUMENT_EXCEPTION);
+            assert!(persister1.get_inserts().is_empty());
+            assert!(persister2.get_inserts().is_empty());
+        }
+    }
+
+    uow.clear().unwrap();
+    uow.persist(&new_with_uniqid(&class("CascadePersistedEntity")))
+        .unwrap();
+    uow.commit().await.unwrap();
+
+    // Persistence operations should just recover normally:
+    assert_eq!(1, persister1.get_inserts().len());
+    assert_eq!(0, persister2.get_inserts().len());
 }
