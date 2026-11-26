@@ -4,8 +4,7 @@
 //! (`count()`, `slice()`, `contains()`, `containsKey()`, `get()`) and
 //! `loadCriteria()`. The persister is chosen by the collection's mapping,
 //! so the functions take the collection. Filters are not ported (the
-//! filter SQL is always empty); joined-inheritance targets are refused
-//! (`NotSupported`) where the orphan removal deletes them.
+//! filter SQL is always empty).
 //!
 //! Upstream: doctrine/orm src/Persisters/Collection/OneToManyPersister.php src/Persisters/Collection/ManyToManyPersister.php
 //! Upstream: doctrine/orm src/Persisters/Collection/AbstractCollectionPersister.php src/Persisters/Collection/CollectionPersister.php
@@ -16,6 +15,7 @@ use php_value::{Key, Object, PhpArray, Thrown, Value};
 use php2rust_doctrine_collections::expr::{Comparison, ExpressionVisitor};
 use php2rust_doctrine_collections::{Criteria, SortDirection};
 use php2rust_doctrine_dbal::ParameterTypes;
+use php2rust_doctrine_dbal::schema::TypeObject;
 
 use crate::entity_manager::EntityManager;
 use crate::exception;
@@ -98,7 +98,8 @@ async fn one_to_many_delete(
     }
     let target_class = em.get_class_metadata(&mapping.target_entity)?;
     if target_class.read().is_inheritance_type_joined() {
-        return Err(exception::not_supported());
+        delete_joined_entity_collection(em, collection, mapping).await?;
+        return Ok(());
     }
 
     // deleteEntityCollection()
@@ -167,6 +168,111 @@ async fn one_to_many_delete(
         .await
         .map_err(|e| exception::from_dbal(&e))?;
     Ok(())
+}
+
+/// `deleteJoinedEntityCollection()`: deletes Class Table Inheritance
+/// entities. A temporary table is needed to keep IDs to be deleted in both
+/// parent and child class' tables.
+async fn delete_joined_entity_collection(
+    em: &Arc<EntityManager>,
+    collection: &Arc<PersistentCollection>,
+    mapping: &AssociationMapping,
+) -> Result<i64, Thrown> {
+    let platform = em.get_platform();
+    let quote_strategy = em.get_configuration().get_quote_strategy();
+    let source_class = em.get_class_metadata(&mapping.source_entity)?;
+    let target_class = em.get_class_metadata(&mapping.target_entity)?;
+    let root_name = target_class.read().root_entity_name.clone();
+    let root_class = em.get_class_metadata(&root_name)?;
+
+    // 1) Build temporary table DDL
+    let (temp_table, id_column_names, id_field_names) = {
+        let root = root_class.read();
+        (
+            platform.get_temporary_table_name(&root.get_temporary_id_table_name()?),
+            root.get_identifier_column_names(),
+            root.get_identifier_field_names().to_vec(),
+        )
+    };
+    let id_column_list = id_column_names.join(", ");
+    let mut column_definitions = Vec::new();
+    for id_column_name in &id_column_names {
+        let type_name = get_type_of_column(id_column_name, &root_class.read(), em)?;
+        let type_ = php2rust_doctrine_dbal::types::get_type(&type_name)
+            .map_err(|e| Thrown::new(e.class(), e.message(), 0))?;
+        let mut column = PhpArray::new();
+        column.insert("name", Value::from(id_column_name.as_str()));
+        column.insert("notnull", Value::Bool(true));
+        column.insert("type", TypeObject::value(type_));
+        column_definitions.push(column);
+    }
+    let statement = format!(
+        "{} {temp_table} ({})",
+        platform.get_create_temporary_table_snippet_sql(),
+        platform
+            .get_column_declaration_list_sql(&column_definitions)
+            .map_err(|e| exception::from_dbal(&e))?
+    );
+    let conn = em.get_connection();
+    conn.execute_statement(&statement, &PhpArray::new(), &ParameterTypes::new())
+        .await
+        .map_err(|e| exception::from_dbal(&e))?;
+
+    // 2) Build insert table records into temporary table
+    let owner = owner_of(collection)?;
+    let query = em.create_query(&format!(
+        " SELECT t0.{} FROM {} t0 WHERE t0.{} = :owner",
+        id_field_names.join(", t0."),
+        target_class.read().name,
+        mapping.mapped_by.clone().unwrap_or_default()
+    ));
+    query.set_parameter("owner", Value::Object(owner.clone()), None);
+    let sql = query.get_single_sql()?;
+    let statement = format!("INSERT INTO {temp_table} ({id_column_list}) {sql}");
+    let parameters: Vec<Value> = source_class
+        .read()
+        .get_identifier_values(&owner)?
+        .values()
+        .cloned()
+        .collect();
+    let num_deleted = conn
+        .execute_statement(
+            &statement,
+            &PhpArray::list(parameters),
+            &ParameterTypes::new(),
+        )
+        .await
+        .map_err(|e| exception::from_dbal(&e))?;
+
+    // 3) Delete records on each table in the hierarchy
+    let class_names: Vec<String> = {
+        let target = target_class.read();
+        target
+            .parent_classes
+            .iter()
+            .chain(std::iter::once(&target.name))
+            .chain(target.sub_classes.iter())
+            .cloned()
+            .collect()
+    };
+    for class_name in class_names.iter().rev() {
+        let table_name =
+            quote_strategy.get_table_name(&em.get_class_metadata(class_name)?.read(), platform);
+        let statement = format!(
+            "DELETE FROM {table_name} WHERE ({id_column_list}) IN (SELECT {id_column_list} FROM {temp_table})"
+        );
+        conn.execute_statement(&statement, &PhpArray::new(), &ParameterTypes::new())
+            .await
+            .map_err(|e| exception::from_dbal(&e))?;
+    }
+
+    // 4) Drop temporary table
+    let statement = platform.get_drop_temporary_table_sql(&temp_table);
+    conn.execute_statement(&statement, &PhpArray::new(), &ParameterTypes::new())
+        .await
+        .map_err(|e| exception::from_dbal(&e))?;
+
+    Ok(num_deleted)
 }
 
 async fn many_to_many_delete(
