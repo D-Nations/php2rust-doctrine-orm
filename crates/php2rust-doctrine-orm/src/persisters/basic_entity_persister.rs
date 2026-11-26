@@ -1220,7 +1220,7 @@ impl BasicEntityPersister {
         source_entity: &Object,
         offset: Option<i64>,
         limit: Option<i64>,
-    ) -> Result<Vec<Object>, Thrown> {
+    ) -> Result<PhpArray, Thrown> {
         let em = self.em()?;
         self.switch_persister_context(offset, limit);
         let rows = self
@@ -1234,15 +1234,27 @@ impl BasicEntityPersister {
         em: &Arc<EntityManager>,
         assoc: &AssociationMapping,
         rows: Vec<PhpArray>,
-    ) -> Result<Vec<Object>, Thrown> {
+    ) -> Result<PhpArray, Thrown> {
         let rsm = self.get_result_set_mapping();
         let mut hints = Hints {
             defer_eager_load: true,
             ..Hints::default()
         };
         let entities = hydration::hydrate_all(em, rows, &rsm, &mut hints, None).await?;
-        let _ = assoc;
-        Ok(entities)
+        if !assoc.is_indexed() {
+            return Ok(PhpArray::list(entities.into_iter().map(Value::Object)));
+        }
+        // `$rsm->addIndexBy('r', $assoc->indexBy())`: the entities keyed
+        // by the field.
+        let index_by = assoc.index_by()?.to_owned();
+        let mut result = PhpArray::new();
+        for entity in entities {
+            let entity_class = em.get_class_metadata(entity.class())?;
+            let key = entity_class.read().get_field_value(&entity, &index_by)?;
+            let key = Key::from_value(&key).unwrap_or_else(|| Key::from(to_text(&key).as_str()));
+            result.insert(key, Value::Object(entity));
+        }
+        Ok(result)
     }
 
     async fn load_collection_from_statement(
@@ -2072,7 +2084,7 @@ impl BasicEntityPersister {
         source_entity: &Object,
         offset: Option<i64>,
         limit: Option<i64>,
-    ) -> Result<Vec<Object>, Thrown> {
+    ) -> Result<PhpArray, Thrown> {
         let em = self.em()?;
         self.switch_persister_context(offset, limit);
         let rows = self

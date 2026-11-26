@@ -1,8 +1,11 @@
 //! The collection persisters: `OneToManyPersister` (the deletion of the
 //! elements of an orphan-removing collection) and `ManyToManyPersister`
-//! (the rows of the join table). The extra-lazy operations (`count()`,
-//! `slice()`, `contains()`, `get()`, ...) and `loadCriteria()` are not
-//! ported; joined-inheritance targets are refused (`NotSupported`).
+//! (the rows of the join table), with the extra-lazy operations
+//! (`count()`, `slice()`, `contains()`, `containsKey()`, `get()`) and
+//! `loadCriteria()`. The persister is chosen by the collection's mapping,
+//! so the functions take the collection. Filters are not ported (the
+//! filter SQL is always empty); joined-inheritance targets are refused
+//! (`NotSupported`) where the orphan removal deletes them.
 //!
 //! Upstream: doctrine/orm src/Persisters/Collection/OneToManyPersister.php src/Persisters/Collection/ManyToManyPersister.php
 //! Upstream: doctrine/orm src/Persisters/Collection/AbstractCollectionPersister.php src/Persisters/Collection/CollectionPersister.php
@@ -10,13 +13,24 @@
 use std::sync::Arc;
 
 use php_value::{Key, Object, PhpArray, Thrown, Value};
+use php2rust_doctrine_collections::expr::{Comparison, ExpressionVisitor};
+use php2rust_doctrine_collections::{Criteria, SortDirection};
 use php2rust_doctrine_dbal::ParameterTypes;
 
 use crate::entity_manager::EntityManager;
 use crate::exception;
-use crate::mapping::AssociationMapping;
+use crate::internal::hydration::{self, HydrationHints};
+use crate::mapping::ordered_map::OrderedMap;
+use crate::mapping::{AssociationMapping, ClassMetadataInfo};
 use crate::persistent_collection::PersistentCollection;
-use crate::utility::{ParamType, get_type_of_column, key_text, to_text};
+use crate::query::ResultSetMappingBuilder;
+use crate::unit_of_work::{Hints, STATE_MANAGED, STATE_NEW};
+use crate::utility::{
+    ParamType, convert_to_parameter_value, get_type_of_column, infer_parameter_types, key_text,
+    to_text,
+};
+
+use super::SqlValueVisitor;
 
 fn types_of(types: Vec<ParamType>) -> ParameterTypes {
     types
@@ -414,4 +428,708 @@ fn collect_join_table_column_parameters(
         );
     }
     Ok(params)
+}
+
+fn bad_method_call(message: &str) -> Thrown {
+    Thrown::new("BadMethodCallException", message, 0)
+}
+
+const NOT_INDEXED: &str =
+    "Selecting a collection by index is only supported on indexed collections.";
+
+fn dbal(e: &php2rust_doctrine_dbal::Exception) -> Thrown {
+    exception::from_dbal(e)
+}
+
+/// `$id[$field]`.
+fn id_value(id: &PhpArray, field: &str) -> Value {
+    id.get(&field.into()).cloned().unwrap_or(Value::Null)
+}
+
+/// `(int) $value` of a `fetchOne()` result.
+fn to_int(value: Option<Value>) -> i64 {
+    match value {
+        Some(Value::Int(i)) => i,
+        Some(other) => to_text(&other).trim().parse().unwrap_or(0),
+        None => 0,
+    }
+}
+
+/// `AbstractCollectionPersister::isValidEntityState()`: check if entity
+/// is in a valid state for operations.
+fn is_valid_entity_state(em: &EntityManager, entity: &Object) -> bool {
+    let uow = em.get_unit_of_work();
+    let entity_state = uow.get_entity_state_or(entity, STATE_NEW);
+    if entity_state == STATE_NEW {
+        return false;
+    }
+    // If Entity is scheduled for inclusion, it is not in this collection.
+    // We can assure that because it would have return true before on
+    // array check
+    !(entity_state == STATE_MANAGED && uow.is_scheduled_for_insert(entity))
+}
+
+/// `CollectionPersister::get()`: gets an element by key.
+pub async fn get(
+    em: &Arc<EntityManager>,
+    collection: &Arc<PersistentCollection>,
+    index: &Value,
+) -> Result<Option<Object>, Thrown> {
+    let mapping = collection.get_mapping()?;
+    if !mapping.is_indexed() {
+        return Err(bad_method_call(NOT_INDEXED));
+    }
+    let persister = em
+        .get_unit_of_work()
+        .get_entity_persister(&mapping.target_entity)?;
+    let mapped_key = if mapping.is_one_to_many() || !mapping.is_owning_side() {
+        mapping.mapped_by.clone()
+    } else {
+        mapping.inversed_by.clone()
+    }
+    .unwrap_or_default();
+    let mut criteria = PhpArray::new();
+    criteria.insert(
+        mapped_key.as_str(),
+        collection.get_owner().map_or(Value::Null, Value::Object),
+    );
+    criteria.insert(mapping.index_by()?, index.clone());
+    persister
+        .load(
+            &criteria,
+            None,
+            Some(&mapping),
+            Hints::default(),
+            Some(1),
+            None,
+        )
+        .await
+}
+
+/// `CollectionPersister::count()`: counts the size of this persistent
+/// collection.
+pub async fn count(
+    em: &Arc<EntityManager>,
+    collection: &Arc<PersistentCollection>,
+) -> Result<i64, Thrown> {
+    let mapping = collection.get_mapping()?;
+    if mapping.is_one_to_many() {
+        let persister = em
+            .get_unit_of_work()
+            .get_entity_persister(&mapping.target_entity)?;
+        // only works with single id identifier entities. Will throw an
+        // exception in Entity Persisters if that is not the case for the
+        // 'mappedBy' field.
+        let mut criteria = Criteria::create();
+        criteria.r#where(Criteria::expr().eq(
+            mapping.mapped_by.as_deref().unwrap_or_default(),
+            collection.get_owner().map_or(Value::Null, Value::Object),
+        ));
+        return persister.count_criteria(&criteria).await;
+    }
+
+    let platform = em.get_platform();
+    let quote_strategy = em.get_configuration().get_quote_strategy();
+    let id = em
+        .get_unit_of_work()
+        .get_entity_identifier(&owner_of(collection)?)?;
+    let source_class = em.get_class_metadata(&mapping.source_entity)?;
+    let association = em.get_metadata_factory().get_owning_side(&mapping)?;
+    let mut conditions = Vec::new();
+    let mut params = Vec::new();
+    let mut types: Vec<ParamType> = Vec::new();
+    let sql = {
+        let source = source_class.read();
+        let join_table_name = quote_strategy.get_join_table_name(&association, &source, platform);
+        let join_table = association
+            .join_table
+            .clone()
+            .unwrap_or_else(|| crate::mapping::JoinTableMapping::new(""));
+        let join_columns = if mapping.is_owning_side() {
+            join_table.join_columns
+        } else {
+            join_table.inverse_join_columns
+        };
+        for join_column in &join_columns {
+            let column_name = quote_strategy.get_join_column_name(join_column, &source, platform);
+            let referenced_name = &join_column.referenced_column_name;
+            conditions.push(format!("t.{column_name} = ?"));
+            params.push(id_value(
+                &id,
+                &source.get_field_for_column(referenced_name)?,
+            ));
+            types.push(
+                get_type_of_column(referenced_name, &source, em)?
+                    .as_str()
+                    .into(),
+            );
+        }
+        // getFilterSql(): filters are not ported.
+        format!(
+            "SELECT COUNT(*) FROM {join_table_name} t WHERE {}",
+            conditions.join(" AND ")
+        )
+    };
+    let value = em
+        .get_connection()
+        .fetch_one(&sql, &PhpArray::list(params), &types_of(types))
+        .await
+        .map_err(|e| dbal(&e))?;
+    Ok(to_int(value))
+}
+
+/// `CollectionPersister::slice()`: slices elements.
+pub async fn slice(
+    em: &Arc<EntityManager>,
+    collection: &Arc<PersistentCollection>,
+    offset: i64,
+    length: Option<i64>,
+) -> Result<PhpArray, Thrown> {
+    let mapping = collection.get_mapping()?;
+    let persister = em
+        .get_unit_of_work()
+        .get_entity_persister(&mapping.target_entity)?;
+    let owner = owner_of(collection)?;
+    if mapping.is_one_to_many() {
+        persister
+            .get_one_to_many_collection(&mapping, &owner, Some(offset), length)
+            .await
+    } else {
+        persister
+            .get_many_to_many_collection(&mapping, &owner, Some(offset), length)
+            .await
+    }
+}
+
+/// `CollectionPersister::containsKey()`: checks for existence of an
+/// element by key.
+pub async fn contains_key(
+    em: &Arc<EntityManager>,
+    collection: &Arc<PersistentCollection>,
+    key: &Key,
+) -> Result<bool, Thrown> {
+    let mapping = collection.get_mapping()?;
+    if !mapping.is_indexed() {
+        return Err(bad_method_call(NOT_INDEXED));
+    }
+    if mapping.is_one_to_many() {
+        let persister = em
+            .get_unit_of_work()
+            .get_entity_persister(&mapping.target_entity)?;
+        // only works with single id identifier entities. Will throw an
+        // exception in Entity Persisters if that is not the case for the
+        // 'mappedBy' field.
+        let mut criteria = Criteria::create();
+        criteria.and_where(Criteria::expr().eq(
+            mapping.mapped_by.as_deref().unwrap_or_default(),
+            collection.get_owner().map_or(Value::Null, Value::Object),
+        ))?;
+        criteria.and_where(Criteria::expr().eq(mapping.index_by()?, key.to_value()))?;
+        return Ok(persister.count_criteria(&criteria).await? != 0);
+    }
+
+    let (quoted_join_table, where_clauses, params, types) =
+        get_join_table_restrictions_with_key(em, collection, &key_text(key))?;
+    let sql = format!(
+        "SELECT 1 FROM {quoted_join_table} WHERE {}",
+        where_clauses.join(" AND ")
+    );
+    let value = em
+        .get_connection()
+        .fetch_one(&sql, &PhpArray::list(params), &types_of(types))
+        .await
+        .map_err(|e| dbal(&e))?;
+    Ok(value.is_some_and(|v| v.is_truthy()))
+}
+
+/// `CollectionPersister::contains()`: checks for existence of an element.
+pub async fn contains(
+    em: &Arc<EntityManager>,
+    collection: &Arc<PersistentCollection>,
+    element: &Object,
+) -> Result<bool, Thrown> {
+    if !is_valid_entity_state(em, element) {
+        return Ok(false);
+    }
+    let mapping = collection.get_mapping()?;
+    if mapping.is_one_to_many() {
+        let persister = em
+            .get_unit_of_work()
+            .get_entity_persister(&mapping.target_entity)?;
+        // only works with single id identifier entities. Will throw an
+        // exception in Entity Persisters if that is not the case for the
+        // 'mappedBy' field.
+        let mut criteria = Criteria::create();
+        criteria.r#where(Criteria::expr().eq(
+            mapping.mapped_by.as_deref().unwrap_or_default(),
+            collection.get_owner().map_or(Value::Null, Value::Object),
+        ));
+        return persister.exists(element, Some(&criteria)).await;
+    }
+
+    let (quoted_join_table, where_clauses, params, types) =
+        get_join_table_restrictions(em, collection, element, true)?;
+    let sql = format!(
+        "SELECT 1 FROM {quoted_join_table} WHERE {}",
+        where_clauses.join(" AND ")
+    );
+    let value = em
+        .get_connection()
+        .fetch_one(&sql, &PhpArray::list(params), &types_of(types))
+        .await
+        .map_err(|e| dbal(&e))?;
+    Ok(value.is_some_and(|v| v.is_truthy()))
+}
+
+/// The quoted join table, the where clauses, the parameters and their
+/// types of `getJoinTableRestrictions*()`.
+type Restrictions = (String, Vec<String>, Vec<Value>, Vec<ParamType>);
+
+/// `ManyToManyPersister::getJoinTableRestrictionsWithKey()`.
+fn get_join_table_restrictions_with_key(
+    em: &Arc<EntityManager>,
+    collection: &Arc<PersistentCollection>,
+    key: &str,
+) -> Result<Restrictions, Thrown> {
+    let platform = em.get_platform();
+    let quote_strategy = em.get_configuration().get_quote_strategy();
+    let filter_mapping = collection.get_mapping()?;
+    let mut mapping = filter_mapping.clone();
+    let index_by = mapping.index_by()?.to_owned();
+    let id = em
+        .get_unit_of_work()
+        .get_entity_identifier(&owner_of(collection)?)?;
+    let source_class = em.get_class_metadata(&mapping.source_entity)?;
+    let target_class = em.get_class_metadata(&mapping.target_entity)?;
+
+    let (association_source_class, join_columns, source_to_target) = if mapping.is_owning_side() {
+        let association_source_class = em.get_class_metadata(&mapping.source_entity)?;
+        let join_columns = mapping
+            .join_table
+            .clone()
+            .unwrap_or_else(|| crate::mapping::JoinTableMapping::new(""))
+            .inverse_join_columns;
+        (association_source_class, join_columns, true)
+    } else {
+        let association_source_class = em.get_class_metadata(&mapping.target_entity)?;
+        mapping = association_source_class
+            .read()
+            .get_association_mapping(mapping.mapped_by.as_deref().unwrap_or_default())?
+            .clone();
+        let join_columns = mapping
+            .join_table
+            .clone()
+            .unwrap_or_else(|| crate::mapping::JoinTableMapping::new(""))
+            .join_columns;
+        (association_source_class, join_columns, false)
+    };
+    // relationToSourceKeyColumns / relationToTargetKeyColumns
+    let (source_relation, target_relation) = if source_to_target {
+        (
+            &mapping.relation_to_source_key_columns,
+            &mapping.relation_to_target_key_columns,
+        )
+    } else {
+        (
+            &mapping.relation_to_target_key_columns,
+            &mapping.relation_to_source_key_columns,
+        )
+    };
+
+    let source = source_class.read();
+    let target = target_class.read();
+    let mut quoted_join_table = format!(
+        "{} t",
+        quote_strategy.get_join_table_name(&mapping, &association_source_class.read(), platform)
+    );
+    let mut where_clauses = Vec::new();
+    let mut params = Vec::new();
+    let mut types: Vec<ParamType> = Vec::new();
+
+    let join_needed = !target.identifier.contains(&index_by);
+
+    if join_needed {
+        // extra join needed if indexBy is not a @id
+        let join_conditions: Vec<String> = join_columns
+            .iter()
+            .map(|c| format!("t.{} = tr.{}", c.name, c.referenced_column_name))
+            .collect();
+        let table_name = quote_strategy.get_table_name(&target, platform);
+        quoted_join_table.push_str(" JOIN ");
+        quoted_join_table.push_str(&table_name);
+        quoted_join_table.push_str(" tr ON ");
+        quoted_join_table.push_str(&join_conditions.join(" AND "));
+        let column_name = target.get_column_name(&index_by);
+        where_clauses.push(format!("tr.{column_name} = ?"));
+        params.push(Value::string(key));
+        types.push(
+            get_type_of_column(&column_name, &target, em)?
+                .as_str()
+                .into(),
+        );
+    }
+
+    for join_table_column in &mapping.join_table_columns {
+        let column_key = Key::from(join_table_column.as_str());
+        if let Some(column) = source_relation.get(&column_key) {
+            let column = to_text(column);
+            where_clauses.push(format!("t.{join_table_column} = ?"));
+            let field = if source.contains_foreign_identifier {
+                source.get_field_for_column(&column)?
+            } else {
+                source.field_names.get(&column).cloned().unwrap_or_default()
+            };
+            params.push(id_value(&id, &field));
+            types.push(get_type_of_column(&column, &source, em)?.as_str().into());
+        } else if !join_needed {
+            let column = to_text(target_relation.get(&column_key).unwrap_or(&Value::Null));
+            where_clauses.push(format!("t.{join_table_column} = ?"));
+            params.push(Value::string(key));
+            types.push(get_type_of_column(&column, &target, em)?.as_str().into());
+        }
+    }
+    // $addFilters: filters are not ported.
+    let _ = filter_mapping;
+    Ok((quoted_join_table, where_clauses, params, types))
+}
+
+/// `ManyToManyPersister::getJoinTableRestrictions()`.
+fn get_join_table_restrictions(
+    em: &Arc<EntityManager>,
+    collection: &Arc<PersistentCollection>,
+    element: &Object,
+    add_filters: bool,
+) -> Result<Restrictions, Thrown> {
+    let platform = em.get_platform();
+    let quote_strategy = em.get_configuration().get_quote_strategy();
+    let uow = em.get_unit_of_work();
+    let mapping = collection.get_mapping()?;
+    let owner = owner_of(collection)?;
+    let (source_class, target_class, source_id, target_id) = if mapping.is_owning_side() {
+        (
+            em.get_class_metadata(&mapping.source_entity)?,
+            em.get_class_metadata(&mapping.target_entity)?,
+            uow.get_entity_identifier(&owner)?,
+            uow.get_entity_identifier(element)?,
+        )
+    } else {
+        (
+            em.get_class_metadata(&mapping.target_entity)?,
+            em.get_class_metadata(&mapping.source_entity)?,
+            uow.get_entity_identifier(element)?,
+            uow.get_entity_identifier(&owner)?,
+        )
+    };
+    let mapping = em.get_metadata_factory().get_owning_side(&mapping)?;
+    let source = source_class.read();
+    let target = target_class.read();
+
+    let mut quoted_join_table = quote_strategy.get_join_table_name(&mapping, &source, platform);
+    let mut where_clauses = Vec::new();
+    let mut params = Vec::new();
+    let mut types: Vec<ParamType> = Vec::new();
+
+    for join_table_column in &mapping.join_table_columns {
+        where_clauses.push(format!(
+            "{}{join_table_column} = ?",
+            if add_filters { "t." } else { "" }
+        ));
+        let column_key = Key::from(join_table_column.as_str());
+        if let Some(target_column) = mapping.relation_to_target_key_columns.get(&column_key) {
+            let target_column = to_text(target_column);
+            params.push(id_value(
+                &target_id,
+                &target.get_field_for_column(&target_column)?,
+            ));
+            types.push(
+                get_type_of_column(&target_column, &target, em)?
+                    .as_str()
+                    .into(),
+            );
+            continue;
+        }
+        // relationToSourceKeyColumns
+        let target_column = to_text(
+            mapping
+                .relation_to_source_key_columns
+                .get(&column_key)
+                .unwrap_or(&Value::Null),
+        );
+        params.push(id_value(
+            &source_id,
+            &source.get_field_for_column(&target_column)?,
+        ));
+        types.push(
+            get_type_of_column(&target_column, &source, em)?
+                .as_str()
+                .into(),
+        );
+    }
+
+    if add_filters {
+        quoted_join_table.push_str(" t");
+        // getFilterSql(): filters are not ported.
+    }
+    Ok((quoted_join_table, where_clauses, params, types))
+}
+
+/// `CollectionPersister::loadCriteria()`: loads association entities
+/// matching the given Criteria object.
+pub async fn load_criteria(
+    em: &Arc<EntityManager>,
+    collection: &Arc<PersistentCollection>,
+    criteria: &Criteria,
+) -> Result<Vec<Value>, Thrown> {
+    let mapping = collection.get_mapping()?;
+    if mapping.is_one_to_many() {
+        return Err(bad_method_call(
+            "Filtering a collection by Criteria is not supported by this CollectionPersister.",
+        ));
+    }
+    many_to_many_load_criteria(em, collection, &mapping, criteria).await
+}
+
+#[allow(clippy::too_many_lines, reason = "upstream's method, in its order")]
+async fn many_to_many_load_criteria(
+    em: &Arc<EntityManager>,
+    collection: &Arc<PersistentCollection>,
+    mapping: &AssociationMapping,
+    criteria: &Criteria,
+) -> Result<Vec<Value>, Thrown> {
+    let platform = em.get_platform();
+    let quote_strategy = em.get_configuration().get_quote_strategy();
+    let owner = owner_of(collection)?;
+    let owner_metadata = em.get_class_metadata(owner.class())?;
+    let id = em.get_unit_of_work().get_entity_identifier(&owner)?;
+    let target_class = em.get_class_metadata(&mapping.target_entity)?;
+    let on_conditions = get_on_condition_sql(em, mapping)?;
+    let mut where_clauses = Vec::new();
+    let mut params = Vec::new();
+    let mut param_types: Vec<ParamType> = Vec::new();
+
+    let (association_source_class, source_to_target) = if mapping.is_owning_side() {
+        (Arc::clone(&owner_metadata), true)
+    } else {
+        (Arc::clone(&target_class), false)
+    };
+
+    let mapping = em.get_metadata_factory().get_owning_side(mapping)?;
+    let source_relation = if source_to_target {
+        &mapping.relation_to_source_key_columns
+    } else {
+        &mapping.relation_to_target_key_columns
+    };
+
+    {
+        let owner_info = owner_metadata.read();
+        for (key, value) in source_relation.iter() {
+            let value = to_text(value);
+            where_clauses.push(format!("t.{} = ?", key_text(key)));
+            let field = if owner_info.contains_foreign_identifier {
+                owner_info.get_field_for_column(&value)?
+            } else {
+                owner_info
+                    .field_names
+                    .get(&value)
+                    .cloned()
+                    .unwrap_or_default()
+            };
+            params.push(id_value(&id, &field));
+            param_types.push(get_type_of_column(&value, &owner_info, em)?.as_str().into());
+        }
+    }
+
+    let parameters = expand_criteria_parameters(criteria)?;
+
+    {
+        let target = target_class.read();
+        for parameter in parameters {
+            let (name, value, operator) = (parameter.field, parameter.value, parameter.operator);
+            let field = quote_strategy.get_column_name(&name, &target, platform);
+
+            if value.is_null() && (operator == Comparison::EQ || operator == Comparison::NEQ) {
+                where_clauses.push(format!(
+                    "te.{field} {} NULL",
+                    if operator == Comparison::EQ {
+                        "IS"
+                    } else {
+                        "IS NOT"
+                    }
+                ));
+            } else if operator == Comparison::IN || operator == Comparison::NIN {
+                let values: Vec<Value> = match &value {
+                    Value::Array(values) => values.values().cloned().collect(),
+                    other => {
+                        // `count($value)` of a non-countable value.
+                        return Err(Thrown::new(
+                            "TypeError",
+                            format!(
+                                "count(): Argument #1 ($value) must be of type Countable|array, {} given",
+                                php_type_name(other)
+                            ),
+                            0,
+                        ));
+                    }
+                };
+                where_clauses.push(format!(
+                    "te.{field} {} ({})",
+                    if operator == Comparison::IN {
+                        "IN"
+                    } else {
+                        "NOT IN"
+                    },
+                    vec!["?"; values.len()].join(", ")
+                ));
+                for item in &values {
+                    params.extend(convert_to_parameter_value(item, em)?);
+                    param_types.extend(infer_parameter_types(&name, item, &target, em)?);
+                }
+            } else {
+                where_clauses.push(format!("te.{field} {operator} ?"));
+                params.extend(convert_to_parameter_value(&value, em)?);
+                param_types.extend(infer_parameter_types(&name, &value, &target, em)?);
+            }
+        }
+    }
+
+    let (table_name, join_table) = (
+        quote_strategy.get_table_name(&target_class.read(), platform),
+        quote_strategy.get_join_table_name(&mapping, &association_source_class.read(), platform),
+    );
+
+    let target_name = target_class.read().name.clone();
+    let mut rsm = ResultSetMappingBuilder::new(em, None);
+    rsm.add_root_entity_from_class_metadata(&target_name, "te", &OrderedMap::new(), None)?;
+
+    let mut sql = format!(
+        "SELECT {} FROM {table_name} te JOIN {join_table} t ON{} WHERE {}",
+        rsm.generate_select_clause(&PhpArray::new())?,
+        on_conditions.join(" AND "),
+        where_clauses.join(" AND ")
+    );
+
+    sql.push_str(&get_ordering_sql(em, criteria, &target_class.read()));
+    sql.push_str(&get_limit_sql(em, criteria)?);
+
+    let mut stmt = em
+        .get_connection()
+        .execute_query(&sql, &PhpArray::list(params), &types_of(param_types))
+        .await
+        .map_err(|e| dbal(&e))?;
+    let rows = stmt.fetch_all_associative().map_err(|e| dbal(&e))?;
+
+    let rsm = rsm.into_result_set_mapping();
+    let result = hydration::hydrate(
+        em,
+        crate::query::context::HYDRATE_OBJECT,
+        rows,
+        &rsm,
+        &mut Hints::default(),
+        HydrationHints::default(),
+    )
+    .await?;
+    Ok(match result {
+        Value::Array(entities) => entities.values().cloned().collect(),
+        _ => Vec::new(),
+    })
+}
+
+/// `get_debug_type()` of a scalar.
+fn php_type_name(value: &Value) -> &'static str {
+    match value {
+        Value::Null => "null",
+        Value::Bool(_) => "bool",
+        Value::Int(_) => "int",
+        Value::Float(_) => "float",
+        Value::String(_) => "string",
+        Value::Array(_) => "array",
+        Value::Object(_) => "object",
+    }
+}
+
+/// `ManyToManyPersister::getOnConditionSQL()`: generate ON condition.
+fn get_on_condition_sql(
+    em: &Arc<EntityManager>,
+    mapping: &AssociationMapping,
+) -> Result<Vec<String>, Thrown> {
+    let platform = em.get_platform();
+    let quote_strategy = em.get_configuration().get_quote_strategy();
+    let association = em.get_metadata_factory().get_owning_side(mapping)?;
+    let join_table = association
+        .join_table
+        .clone()
+        .unwrap_or_else(|| crate::mapping::JoinTableMapping::new(""));
+    let join_columns = if mapping.is_owning_side() {
+        join_table.inverse_join_columns
+    } else {
+        join_table.join_columns
+    };
+
+    let target_class = em.get_class_metadata(&mapping.target_entity)?;
+    let target = target_class.read();
+    Ok(join_columns
+        .iter()
+        .map(|join_column| {
+            let join_column_name =
+                quote_strategy.get_join_column_name(join_column, &target, platform);
+            let ref_column_name =
+                quote_strategy.get_referenced_join_column_name(join_column, &target, platform);
+            format!(" t.{join_column_name} = te.{ref_column_name}")
+        })
+        .collect())
+}
+
+/// `ManyToManyPersister::expandCriteriaParameters()`: expands Criteria
+/// Parameters by walking the expressions and grabbing all parameters and
+/// types from it.
+fn expand_criteria_parameters(criteria: &Criteria) -> Result<Vec<super::ValueType>, Thrown> {
+    let Some(expression) = criteria.get_where_expression() else {
+        return Ok(Vec::new());
+    };
+    let mut value_visitor = SqlValueVisitor::new();
+    value_visitor.dispatch(expression)?;
+    let (_, types) = value_visitor.get_params_and_types();
+    Ok(types)
+}
+
+/// `ManyToManyPersister::getOrderingSql()`.
+fn get_ordering_sql(
+    em: &EntityManager,
+    criteria: &Criteria,
+    target_class: &ClassMetadataInfo,
+) -> String {
+    let orderings = criteria.get_orderings();
+    if orderings.is_empty() {
+        return String::new();
+    }
+    let platform = em.get_platform();
+    let quote_strategy = em.get_configuration().get_quote_strategy();
+    let order_by: Vec<String> = orderings
+        .iter()
+        .map(|(name, direction)| {
+            let field = quote_strategy.get_column_name(name, target_class, platform);
+            let direction_string = if *direction == SortDirection::Ascending {
+                "ASC"
+            } else {
+                "DESC"
+            };
+            format!("{field} {direction_string}")
+        })
+        .collect();
+    format!(" ORDER BY {}", order_by.join(", "))
+}
+
+/// `ManyToManyPersister::getLimitSql()`.
+fn get_limit_sql(em: &EntityManager, criteria: &Criteria) -> Result<String, Thrown> {
+    let limit = criteria.get_max_results();
+    let offset = criteria.get_first_result();
+    em.get_platform()
+        .modify_limit_query("", limit, offset.unwrap_or(0))
+        .map_err(|e| {
+            Thrown::new(
+                "Doctrine\\DBAL\\Exception\\InvalidArgumentException",
+                e.message(),
+                0,
+            )
+        })
 }
