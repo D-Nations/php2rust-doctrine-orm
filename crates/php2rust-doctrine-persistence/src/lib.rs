@@ -18,6 +18,7 @@
 
 #![forbid(unsafe_code)]
 
+mod abstract_manager_registry;
 mod connection_registry;
 mod manager_registry;
 pub mod mapping;
@@ -30,6 +31,7 @@ mod property_changed_listener;
 pub mod proxy;
 pub mod reflection;
 
+pub use abstract_manager_registry::{AbstractManagerRegistry, ManagerRegistryState, Service};
 pub use connection_registry::{Connection, ConnectionRegistry};
 pub use manager_registry::{ManagerRegistry, Managers};
 pub use notify_property_changed::NotifyPropertyChanged;
