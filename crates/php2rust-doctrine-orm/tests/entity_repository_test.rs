@@ -12,11 +12,15 @@
 mod models;
 #[path = "common/orm.rs"]
 mod orm;
+#[path = "common/query_log.rs"]
+mod query_log;
 
 use std::sync::Arc;
 
 use php_value::{Object, PhpArray, Value};
+use php2rust_doctrine_collections::Criteria;
 use php2rust_doctrine_dbal::LockMode;
+use php2rust_doctrine_orm::collection_object::{self as coll, ArrayCollectionObject};
 use php2rust_doctrine_orm::entity_manager::EntityManager;
 use php2rust_doctrine_orm::exception::{
     INVALID_FIND_BY_CALL, INVALID_MAGIC_METHOD_CALL, INVALID_ORIENTATION,
@@ -790,4 +794,496 @@ async fn testFindByNullValueInInCondition() {
 
     assert_eq!(users.len(), 1);
     assert!(same(&user1, &users[0]));
+}
+
+// Criteria and matching()
+
+/// `$repository->matching(Criteria::create()->where($expression))`.
+async fn matching(em: &Arc<EntityManager>, class: &str, criteria: &Criteria) -> Value {
+    em.get_repository(class)
+        .unwrap()
+        .matching(criteria)
+        .unwrap()
+        .value()
+}
+
+fn criteria_where(
+    expression: impl Into<php2rust_doctrine_collections::expr::Expression>,
+) -> Criteria {
+    let mut criteria = Criteria::create();
+    criteria.r#where(expression);
+    criteria
+}
+
+/// `count($collection)`.
+async fn count(collection: &Value) -> usize {
+    coll::count(collection).await.unwrap()
+}
+
+#[tokio::test]
+async fn testIsNullCriteriaDoesNotGenerateAParameter() {
+    let (em, log) = query_log::set_up_logged(&CMS_MODELS).await;
+    log.reset_and_enable();
+    let repos = em.get_repository(CMS_USER).unwrap();
+    let _users = repos
+        .find_by(
+            &array([("status", Value::Null), ("username", s("romanb"))]),
+            None,
+            None,
+            None,
+        )
+        .await
+        .unwrap();
+
+    let params = log.last_params();
+    assert_eq!(params.len(), 1, "Should only execute with one parameter.");
+    assert!(loose(
+        &Value::Array(PhpArray::list(params.values().cloned())),
+        &list([s("romanb")])
+    ));
+}
+
+fn loose(a: &Value, b: &Value) -> bool {
+    php_value::compare::loose_equals(a, b)
+}
+
+#[tokio::test]
+async fn testIsNullCriteria() {
+    let em = set_up(&CMS_MODELS).await;
+    load_fixture(&em).await;
+
+    let repos = em.get_repository(CMS_USER).unwrap();
+
+    let users = repos
+        .find_by(&array([("status", Value::Null)]), None, None, None)
+        .await
+        .unwrap();
+    assert_eq!(users.len(), 1);
+}
+
+#[tokio::test]
+async fn testMatchingEmptyCriteria() {
+    let em = set_up(&CMS_MODELS).await;
+    load_fixture(&em).await;
+
+    let users = matching(&em, CMS_USER, &Criteria::create()).await;
+
+    assert_eq!(count(&users).await, 4);
+}
+
+#[tokio::test]
+async fn testMatchingCriteriaEqComparison() {
+    let em = set_up(&CMS_MODELS).await;
+    load_fixture(&em).await;
+
+    let users = matching(
+        &em,
+        CMS_USER,
+        &criteria_where(Criteria::expr().eq("username", s("beberlei"))),
+    )
+    .await;
+
+    assert_eq!(count(&users).await, 1);
+}
+
+#[tokio::test]
+async fn testMatchingCriteriaNeqComparison() {
+    let em = set_up(&CMS_MODELS).await;
+    load_fixture(&em).await;
+
+    let users = matching(
+        &em,
+        CMS_USER,
+        &criteria_where(Criteria::expr().neq("username", s("beberlei"))),
+    )
+    .await;
+
+    assert_eq!(count(&users).await, 3);
+}
+
+#[tokio::test]
+async fn testMatchingCriteriaInComparison() {
+    let em = set_up(&CMS_MODELS).await;
+    load_fixture(&em).await;
+
+    let users = matching(
+        &em,
+        CMS_USER,
+        &criteria_where(
+            Criteria::expr().r#in("username", PhpArray::list([s("beberlei"), s("gblanco")])),
+        ),
+    )
+    .await;
+
+    assert_eq!(count(&users).await, 2);
+}
+
+#[tokio::test]
+async fn testMatchingCriteriaNotInComparison() {
+    let em = set_up(&CMS_MODELS).await;
+    load_fixture(&em).await;
+
+    let users = matching(
+        &em,
+        CMS_USER,
+        &criteria_where(Criteria::expr().not_in(
+            "username",
+            PhpArray::list([s("beberlei"), s("gblanco"), s("asm89")]),
+        )),
+    )
+    .await;
+
+    assert_eq!(count(&users).await, 1);
+}
+
+fn plus(id: &Value, n: i64) -> Value {
+    match id {
+        Value::Int(i) => Value::Int(i + n),
+        other => panic!("an int id, got {other:?}"),
+    }
+}
+
+#[tokio::test]
+async fn testMatchingCriteriaLtComparison() {
+    let em = set_up(&CMS_MODELS).await;
+    let first_user_id = load_fixture(&em).await;
+
+    let users = matching(
+        &em,
+        CMS_USER,
+        &criteria_where(Criteria::expr().lt("id", plus(&first_user_id, 1))),
+    )
+    .await;
+
+    assert_eq!(count(&users).await, 1);
+}
+
+#[tokio::test]
+async fn testMatchingCriteriaLeComparison() {
+    let em = set_up(&CMS_MODELS).await;
+    let first_user_id = load_fixture(&em).await;
+
+    let users = matching(
+        &em,
+        CMS_USER,
+        &criteria_where(Criteria::expr().lte("id", plus(&first_user_id, 1))),
+    )
+    .await;
+
+    assert_eq!(count(&users).await, 2);
+}
+
+#[tokio::test]
+async fn testMatchingCriteriaGtComparison() {
+    let em = set_up(&CMS_MODELS).await;
+    let first_user_id = load_fixture(&em).await;
+
+    let users = matching(
+        &em,
+        CMS_USER,
+        &criteria_where(Criteria::expr().gt("id", first_user_id)),
+    )
+    .await;
+
+    assert_eq!(count(&users).await, 3);
+}
+
+#[tokio::test]
+async fn testMatchingCriteriaGteComparison() {
+    let em = set_up(&CMS_MODELS).await;
+    let first_user_id = load_fixture(&em).await;
+
+    let users = matching(
+        &em,
+        CMS_USER,
+        &criteria_where(Criteria::expr().gte("id", first_user_id)),
+    )
+    .await;
+
+    assert_eq!(count(&users).await, 4);
+}
+
+#[tokio::test]
+async fn testMatchingCriteriaAssocationByObjectInMemory() {
+    let em = set_up(&CMS_MODELS).await;
+    let (user_id, _address_id) = load_associated_fixture(&em).await;
+
+    let user = em.find(CMS_USER, user_id).await.unwrap().unwrap();
+
+    let criteria = criteria_where(Criteria::expr().eq("user", Value::Object(user)));
+
+    let addresses = matching(&em, CMS_ADDRESS, &criteria).await;
+
+    assert_eq!(count(&addresses).await, 1);
+
+    let all = em
+        .get_repository(CMS_ADDRESS)
+        .unwrap()
+        .find_all()
+        .await
+        .unwrap();
+    let addresses = ArrayCollectionObject::value(PhpArray::list(all.into_iter().map(Value::Object)));
+
+    assert_eq!(
+        count(&coll::matching(&addresses, &criteria).await.unwrap()).await,
+        1
+    );
+}
+
+#[tokio::test]
+async fn testMatchingCriteriaAssocationInWithArray() {
+    let em = set_up(&CMS_MODELS).await;
+    let (user_id, _address_id) = load_associated_fixture(&em).await;
+
+    let user = em.find(CMS_USER, user_id).await.unwrap().unwrap();
+
+    let criteria = criteria_where(
+        Criteria::expr().r#in("user", PhpArray::list([Value::Object(user)])),
+    );
+
+    let addresses = matching(&em, CMS_ADDRESS, &criteria).await;
+
+    assert_eq!(count(&addresses).await, 1);
+
+    let all = em
+        .get_repository(CMS_ADDRESS)
+        .unwrap()
+        .find_all()
+        .await
+        .unwrap();
+    let addresses = ArrayCollectionObject::value(PhpArray::list(all.into_iter().map(Value::Object)));
+
+    assert_eq!(
+        count(&coll::matching(&addresses, &criteria).await.unwrap()).await,
+        1
+    );
+}
+
+#[tokio::test]
+async fn testMatchingCriteriaContainsComparison() {
+    let em = set_up(&CMS_MODELS).await;
+    load_fixture(&em).await;
+
+    let users = matching(
+        &em,
+        CMS_USER,
+        &criteria_where(Criteria::expr().contains("name", s("Foobar"))),
+    )
+    .await;
+    assert_eq!(count(&users).await, 0);
+
+    let users = matching(
+        &em,
+        CMS_USER,
+        &criteria_where(Criteria::expr().contains("name", s("Rom"))),
+    )
+    .await;
+    assert_eq!(count(&users).await, 1);
+
+    let users = matching(
+        &em,
+        CMS_USER,
+        &criteria_where(Criteria::expr().contains("status", s("dev"))),
+    )
+    .await;
+    assert_eq!(count(&users).await, 2);
+}
+
+#[tokio::test]
+async fn testMatchingCriteriaStartsWithComparison() {
+    let em = set_up(&CMS_MODELS).await;
+    load_fixture(&em).await;
+
+    let users = matching(
+        &em,
+        CMS_USER,
+        &criteria_where(Criteria::expr().starts_with("name", s("Foo"))),
+    )
+    .await;
+    assert_eq!(count(&users).await, 0);
+
+    let users = matching(
+        &em,
+        CMS_USER,
+        &criteria_where(Criteria::expr().starts_with("name", s("R"))),
+    )
+    .await;
+    assert_eq!(count(&users).await, 1);
+
+    let users = matching(
+        &em,
+        CMS_USER,
+        &criteria_where(Criteria::expr().starts_with("status", s("de"))),
+    )
+    .await;
+    assert_eq!(count(&users).await, 2);
+}
+
+#[tokio::test]
+async fn testMatchingCriteriaEndsWithComparison() {
+    let em = set_up(&CMS_MODELS).await;
+    load_fixture(&em).await;
+
+    let users = matching(
+        &em,
+        CMS_USER,
+        &criteria_where(Criteria::expr().ends_with("name", s("foo"))),
+    )
+    .await;
+    assert_eq!(count(&users).await, 0);
+
+    let users = matching(
+        &em,
+        CMS_USER,
+        &criteria_where(Criteria::expr().ends_with("name", s("oman"))),
+    )
+    .await;
+    assert_eq!(count(&users).await, 1);
+
+    let users = matching(
+        &em,
+        CMS_USER,
+        &criteria_where(Criteria::expr().ends_with("status", s("ev"))),
+    )
+    .await;
+    assert_eq!(count(&users).await, 2);
+}
+
+#[tokio::test]
+async fn testMatchingCriteriaNullAssocComparison() {
+    let em = set_up(&CMS_MODELS).await;
+    let fixtures = load_fixture_user_email(&em).await;
+    let user = em
+        .find(CMS_USER, get(&fixtures[0], "id"))
+        .await
+        .unwrap()
+        .unwrap();
+    let criteria_is_null = criteria_where(Criteria::expr().is_null("email"));
+    let criteria_eq_null = criteria_where(Criteria::expr().eq("email", Value::Null));
+
+    // `$user->setEmail(null)`.
+    set(&user, "email", Value::Null);
+    em.persist(&user).unwrap();
+    em.flush().await.unwrap();
+    em.clear().unwrap();
+
+    let users_is_null = matching(&em, CMS_USER, &criteria_is_null).await;
+    let users_eq_null = matching(&em, CMS_USER, &criteria_eq_null).await;
+
+    assert_eq!(count(&users_is_null).await, 1);
+    assert_eq!(count(&users_eq_null).await, 1);
+
+    let first_is_null = coll::get(&users_is_null, 0).await.unwrap();
+    let first_eq_null = coll::get(&users_eq_null, 0).await.unwrap();
+    let (Value::Object(first_is_null), Value::Object(first_eq_null)) =
+        (first_is_null, first_eq_null)
+    else {
+        panic!("CmsUser objects expected");
+    };
+    assert_eq!(first_is_null.class(), CMS_USER);
+    assert_eq!(first_eq_null.class(), CMS_USER);
+
+    assert!(get(&first_is_null, "email").is_null());
+    assert!(get(&first_eq_null, "email").is_null());
+}
+
+#[tokio::test]
+async fn testCreateResultSetMappingBuilder() {
+    let em = set_up(&CMS_MODELS).await;
+    let repository = em.get_repository(CMS_USER).unwrap();
+    let rsm = repository.create_result_set_mapping_builder("u").unwrap();
+
+    let alias_map: Vec<(String, String)> = rsm
+        .alias_map
+        .iter()
+        .map(|(k, v)| (k.to_owned(), v.clone()))
+        .collect();
+    assert_eq!(alias_map, vec![("u".to_owned(), CMS_USER.to_owned())]);
+}
+
+#[tokio::test]
+async fn testMatchingInjectionPrevented() {
+    let em = set_up(&CMS_MODELS).await;
+    let repository = em.get_repository(CMS_USER).unwrap();
+    let result = repository
+        .matching(&criteria_where(Criteria::expr().eq(
+            "username = ?; DELETE FROM cms_users; SELECT 1 WHERE 1",
+            s("beberlei"),
+        )))
+        .unwrap();
+
+    // Because repository returns a lazy collection, we call toArray to
+    // force initialization
+    let e = result.to_array().await.unwrap_err();
+    assert_eq!(e.class, UNRECOGNIZED_FIELD);
+    assert!(message(&e).contains("Unrecognized field: "));
+}
+
+#[tokio::test]
+async fn testFindByNullValueInMultipleInCriteriaValues() {
+    let em = set_up(&CMS_MODELS).await;
+    let user1 = cms_user();
+    let user2 = cms_user();
+
+    set(&user1, "username", s("ocramius"));
+    set(&user1, "name", s("Marco"));
+    set(&user2, "status", Value::Null);
+    set(&user2, "username", s("deeky666"));
+    set(&user2, "name", s("Steve"));
+    set(&user2, "status", s("dbal maintainer"));
+
+    em.persist(&user1).unwrap();
+    em.persist(&user2).unwrap();
+    em.flush().await.unwrap();
+
+    let users = em
+        .get_repository(CMS_USER)
+        .unwrap()
+        .find_by(
+            &array([("status", list([s("foo"), Value::Null]))]),
+            None,
+            None,
+            None,
+        )
+        .await
+        .unwrap();
+
+    assert_eq!(users.len(), 1);
+    assert!(same(&user1, &users[0]));
+}
+
+#[tokio::test]
+async fn testFindMultipleByNullValueInMultipleInCriteriaValues() {
+    let em = set_up(&CMS_MODELS).await;
+    let user1 = cms_user();
+    let user2 = cms_user();
+
+    set(&user1, "username", s("ocramius"));
+    set(&user1, "name", s("Marco"));
+    set(&user2, "status", Value::Null);
+    set(&user2, "username", s("deeky666"));
+    set(&user2, "name", s("Steve"));
+    set(&user2, "status", s("dbal maintainer"));
+
+    em.persist(&user1).unwrap();
+    em.persist(&user2).unwrap();
+    em.flush().await.unwrap();
+
+    let users = em
+        .get_repository(CMS_USER)
+        .unwrap()
+        .find_by(
+            &array([("status", list([s("dbal maintainer"), Value::Null]))]),
+            None,
+            None,
+            None,
+        )
+        .await
+        .unwrap();
+
+    assert_eq!(users.len(), 2);
+
+    for user in &users {
+        assert!(same(user, &user1) || same(user, &user2));
+    }
 }
