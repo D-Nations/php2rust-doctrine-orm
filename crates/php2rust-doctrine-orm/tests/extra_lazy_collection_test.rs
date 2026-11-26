@@ -37,6 +37,7 @@ struct Fixture {
     log: Arc<QueryLog>,
     user_id: Value,
     user_id2: Value,
+    username: Value,
     group_id: Value,
     article_id: Value,
     groupname: Value,
@@ -238,6 +239,7 @@ async fn load_fixture(em: Arc<EntityManager>, log: Arc<QueryLog>) -> Fixture {
         article_id: get(&article1, "id"),
         user_id: get(&user1, "id"),
         user_id2: get(&user2, "id"),
+        username: get(&user1, "username"),
         group_id: get(&group1, "id"),
         groupname: get(&group1, "name"),
         topic: get(&article1, "topic"),
@@ -492,6 +494,36 @@ async fn testSliceInitializedCollection() {
             .unwrap()
     );
 }
+#[tokio::test]
+async fn testSliceInverseCollection() {
+    let f = set_up().await;
+    let group = f.group().await;
+    assert!(!is_initialized(&group, "users"), "Pre-Condition");
+    f.reset_log();
+
+    let some_users = coll::slice(&get(&group, "users"), 0, Some(2))
+        .await
+        .unwrap();
+    let other_users = coll::slice(&get(&group, "users"), 2, Some(2))
+        .await
+        .unwrap();
+
+    for user in some_users.values().chain(other_users.values()) {
+        assert!(
+            matches!(user, Value::Object(o) if o.class() == CMS_USER),
+            "{user:?}"
+        );
+    }
+    assert_eq!(2, some_users.len());
+    assert_eq!(2, other_users.len());
+
+    // +2 queries executed by slice
+    f.assert_query_count(
+        2,
+        "Slicing two parts should only execute two additional queries.",
+    );
+}
+
 #[tokio::test]
 async fn testSliceOneToMany() {
     let f = set_up().await;
@@ -864,6 +896,23 @@ async fn testGetIndexByOneToMany() {
     let found = f.find(CMS_ARTICLE, &f.article_id).await;
     assert!(same_value(&article, &found));
 }
+#[tokio::test]
+async fn testGetIndexByManyToManyInverseSide() {
+    let f = set_up().await;
+    let group = f.group().await;
+
+    f.reset_log();
+
+    let user = coll::get(&get(&group, "users"), key(&f.username))
+        .await
+        .unwrap();
+
+    assert!(!is_initialized(&group, "users"));
+    f.assert_query_count(1, "");
+    let found = f.user().await;
+    assert!(same_value(&user, &found));
+}
+
 #[tokio::test]
 async fn testGetIndexByManyToManyOwningSide() {
     let f = set_up().await;

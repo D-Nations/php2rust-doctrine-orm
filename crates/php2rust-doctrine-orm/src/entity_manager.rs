@@ -70,19 +70,24 @@ impl EntityManager {
         let metadata_factory = Arc::new(ClassMetadataFactory::new());
         let mut factory_config = FactoryConfiguration::new(driver);
         factory_config.naming_strategy = config.get_naming_strategy();
-        factory_config.typed_field_mapper = config.get_typed_field_mapper();
+        // `new ClassMetadata(..., $typedFieldMapper)`: null is the default
+        // mapper.
+        factory_config.typed_field_mapper = config.get_typed_field_mapper().unwrap_or_else(|| {
+            Arc::new(crate::mapping::typed_field_mapper::DefaultTypedFieldMapper::default())
+        });
         factory_config.quote_strategy = config.get_quote_strategy();
         factory_config.identity_generation_preferences =
             config.get_identity_generation_preferences().to_vec();
         factory_config.platform = platform.clone();
         metadata_factory.set_entity_manager(factory_config);
         let repository_factory = config.get_repository_factory();
+        let entity_listener_resolver = config.get_entity_listener_resolver();
         Ok(Arc::new_cyclic(|weak| Self {
             conn,
             config,
             metadata_factory,
             repository_factory,
-            unit_of_work: UnitOfWork::new(weak.clone()),
+            unit_of_work: UnitOfWork::new(weak.clone(), entity_listener_resolver),
             event_manager: RwLock::new(event_manager.unwrap_or_default()),
             platform,
             closed: RwLock::new(false),

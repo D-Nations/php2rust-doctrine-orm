@@ -1,12 +1,8 @@
 //! A method invoker based on entity lifecycle.
 //!
-//! The entity listener resolver is `DefaultEntityListenerResolver`'s:
-//! one instance of each listener class, created without arguments
-//! (`new $className()`; the instance has its properties' defaults).
-//!
-//! Upstream: doctrine/orm src/Event/ListenersInvoker.php src/Mapping/DefaultEntityListenerResolver.php
+//! Upstream: doctrine/orm src/Event/ListenersInvoker.php
 
-use std::sync::{Mutex, PoisonError};
+use std::sync::Arc;
 
 use php_value::{Object, Thrown};
 use php2rust_doctrine_event_manager::{
@@ -14,13 +10,14 @@ use php2rust_doctrine_event_manager::{
 };
 
 use crate::mapping::ClassMetadataInfo;
-use crate::object::{EntityObject, call_listener_method, call_method};
+use crate::mapping::entity_listener_resolver::EntityListenerResolver;
+use crate::object::{call_listener_method, call_method};
 
 /// `Doctrine\ORM\Event\ListenersInvoker`.
-#[derive(Debug, Default)]
+#[derive(Debug)]
 pub struct ListenersInvoker {
-    /// The resolver's listener instances, by class.
-    instances: Mutex<Vec<(String, Object)>>,
+    /// The Entity listener resolver.
+    resolver: Arc<dyn EntityListenerResolver>,
 }
 
 impl ListenersInvoker {
@@ -29,8 +26,10 @@ impl ListenersInvoker {
     pub const INVOKE_CALLBACKS: i32 = 2;
     pub const INVOKE_MANAGER: i32 = 4;
 
-    pub fn new() -> Self {
-        Self::default()
+    /// `new ListenersInvoker($em)`: the resolver of the entity manager's
+    /// configuration.
+    pub fn new(resolver: Arc<dyn EntityListenerResolver>) -> Self {
+        Self { resolver }
     }
 
     /// Get the subscribed event systems.
@@ -50,31 +49,6 @@ impl ListenersInvoker {
             invoke |= Self::INVOKE_MANAGER;
         }
         invoke
-    }
-
-    fn resolve(&self, class: &str) -> Result<Object, Thrown> {
-        let mut instances = self
-            .instances
-            .lock()
-            .unwrap_or_else(PoisonError::into_inner);
-        if let Some((_, instance)) = instances
-            .iter()
-            .find(|(c, _)| c.eq_ignore_ascii_case(class))
-        {
-            return Ok(instance.clone());
-        }
-        let instance = EntityObject::object(class)
-            .ok_or_else(|| Thrown::new("Error", format!("Class \"{class}\" not found"), 0))?;
-        instances.push((class.to_owned(), instance.clone()));
-        Ok(instance)
-    }
-
-    /// Clears the resolver's instances (`DefaultEntityListenerResolver::clear()`).
-    pub fn clear(&self) {
-        self.instances
-            .lock()
-            .unwrap_or_else(PoisonError::into_inner)
-            .clear();
     }
 
     /// Dispatches the lifecycle event of the given entity.
@@ -98,7 +72,7 @@ impl ListenersInvoker {
             && let Some(listeners) = metadata.entity_listeners.get(event_name)
         {
             for listener in listeners {
-                let instance = self.resolve(&listener.class)?;
+                let instance = self.resolver.resolve(&listener.class)?;
                 call_listener_method(&instance, &listener.method, entity, event)?;
             }
         }

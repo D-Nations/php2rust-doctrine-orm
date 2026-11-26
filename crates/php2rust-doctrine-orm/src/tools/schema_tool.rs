@@ -2,9 +2,11 @@
 //! on `ClassMetadata` class descriptors.
 //!
 //! The schema comes from DBAL's (deprecated) table API, as upstream's
-//! default (`useDbalEditorApi` off) does. Joined inheritance, sequences,
-//! the `postGenerateSchemaTable` / `postGenerateSchema` events and schema
-//! updates are not ported. `dropSchema()` drops the tables of the classes
+//! default (`useDbalEditorApi` off) does. Sequences and schema updates
+//! are not ported. A foreign key of a table that a
+//! `postGenerateSchemaTable` listener replaced, or that the listener's new
+//! schema does not have, is not added (upstream adds it to the detached
+//! table). `dropSchema()` drops the tables of the classes
 //! without introspecting the database first (the statements that fail
 //! are ignored, as upstream ignores them).
 //!
@@ -15,14 +17,18 @@ use std::sync::Arc;
 use php_value::{PhpArray, Thrown, Value};
 use php2rust_doctrine_dbal::ParameterTypes;
 use php2rust_doctrine_dbal::platforms::AbstractPlatform;
-use php2rust_doctrine_dbal::schema::{Schema, Table};
+use php2rust_doctrine_dbal::schema::{Index, IndexType, Schema, Table};
+use php2rust_doctrine_event_manager::EventDispatcher;
 
 use crate::entity_manager::EntityManager;
+use crate::event;
 use crate::exception;
 use crate::mapping::{
     AssociationMapping, ClassMetadata, ClassMetadataInfo, FieldMapping, JoinColumnMapping,
     QuoteStrategy,
 };
+use crate::tools::event::{GenerateSchemaEventArgs, GenerateSchemaTableEventArgs};
+use crate::tools::tool_events;
 use crate::utility::{key_text, to_text};
 
 const KNOWN_COLUMN_OPTIONS: [&str; 5] = ["comment", "unsigned", "fixed", "default", "values"];
@@ -207,8 +213,11 @@ impl SchemaTool {
         let mut added_fks: Vec<AddedFk> = Vec::new();
         let mut blacklisted_fks: Vec<String> = Vec::new();
 
-        for class in classes {
-            let class = class.read().clone();
+        let event_manager = self.em.get_event_manager();
+        let mut detached_tables: Vec<String> = Vec::new();
+
+        for class_metadata in classes {
+            let class = class_metadata.read().clone();
             if self.processing_not_required(&class, &processed) {
                 continue;
             }
@@ -343,14 +352,21 @@ impl SchemaTool {
                         _ => PhpArray::new(),
                     };
                     let columns = self.get_index_columns(&class, index_data)?;
+                    let uniq_index = Index::new(
+                        Some(&format!("tmp__{}", key_text(index_name))),
+                        columns.clone(),
+                        true,
+                        false,
+                        Vec::<String>::new(),
+                        options.clone(),
+                    )
+                    .map_err(|e| dbal(&e))?;
                     let table = schema.get_table_mut(&table_name).map_err(|e| dbal(&e))?;
                     let redundant = table
                         .get_indexes()
                         .iter()
-                        .find(|(_, index)| {
-                            !index.is_primary()
-                                && !index.is_unique()
-                                && index.get_columns() == columns
+                        .find(|(_, table_index)| {
+                            is_index_redundant_for_unique_constraint(table_index, &uniq_index)
                         })
                         .map(|(key, _)| key.to_owned());
                     if let Some(key) = redundant {
@@ -374,13 +390,51 @@ impl SchemaTool {
             }
 
             processed.push(class.name.clone());
+
+            let original_table_name = schema
+                .get_table(&table_name)
+                .and_then(Table::get_object_name)
+                .map_err(|e| dbal(&e))?;
+            let table_event_args =
+                GenerateSchemaTableEventArgs::new(class_metadata.clone(), schema, &table_name);
+            let dispatched = event_manager
+                .dispatch_event(
+                    tool_events::POST_GENERATE_SCHEMA_TABLE,
+                    Some(&table_event_args),
+                )
+                .map_err(event::listener_error);
+            // Always retrieve the schema (listener may have mutated it)
+            let (new_schema, new_table) = table_event_args.into_parts();
+            schema = new_schema;
+            dispatched?;
+
+            // If the listener mutated the table, we need to replace it in the schema
+            if let Some(new_table) = new_table {
+                schema = schema
+                    .edit()
+                    .drop_table(&original_table_name)
+                    .add_table(new_table)
+                    .create()
+                    .map_err(|e| dbal(&e))?;
+                detached_tables.push(table_name);
+            }
         }
 
+        // After all classes have been processed and all FK metadata collected,
+        // apply the non-conflicting FK constraints to their respective tables
         for fk in added_fks {
+            // Skip if this composite key was blacklisted due to conflicts
             if blacklisted_fks.contains(&fk.composite_name) {
                 continue;
             }
-            let table = schema.get_table_mut(&fk.table).map_err(|e| dbal(&e))?;
+            // The table a listener replaced, or that a new schema does not
+            // have, is no longer in the schema.
+            if detached_tables.contains(&fk.table) {
+                continue;
+            }
+            let Ok(table) = schema.get_table_mut(&fk.table) else {
+                continue;
+            };
             let local: Vec<&str> = fk.local_columns.iter().map(String::as_str).collect();
             let foreign: Vec<&str> = fk.foreign_columns.iter().map(String::as_str).collect();
             table
@@ -394,7 +448,13 @@ impl SchemaTool {
                 .map_err(|e| dbal(&e))?;
         }
 
-        Ok(schema)
+        let schema_event_args = GenerateSchemaEventArgs::new(self.em.clone(), schema);
+        event_manager
+            .dispatch_event(tool_events::POST_GENERATE_SCHEMA, Some(&schema_event_args))
+            .map_err(event::listener_error)?;
+
+        // Always retrieve the schema (listener may have mutated it)
+        Ok(schema_event_args.into_schema())
     }
 
     /// The `isInheritanceTypeJoined()` branch of `getSchemaFromMetadata()`:
@@ -985,4 +1045,22 @@ fn gather_column_options(mapping_options: Option<&PhpArray>, enum_type: Option<&
     }
     options.insert("platformOptions", Value::Array(platform_options));
     options
+}
+
+/// `isIndexRedundantForUniqueConstraint()`: unique constraints can replace
+/// ordinary indexes on the same columns, but not platform-specific indexes
+/// such as fulltext or spatial whose flags they do not fulfill.
+fn is_index_redundant_for_unique_constraint(existing_index: &Index, unique_index: &Index) -> bool {
+    existing_index.is_fulfilled_by(unique_index) && index_flags_are_compatible(existing_index)
+}
+
+/// `indexFlagsAreCompatible()`: whether a unique constraint can replace
+/// the index given its platform-specific type. Unflagged indexes remain
+/// compatible with unique constraints so they can still be deduplicated.
+/// Fulltext and spatial indexes keep their own semantics.
+fn index_flags_are_compatible(existing_index: &Index) -> bool {
+    !matches!(
+        existing_index.get_type(),
+        Ok(IndexType::Fulltext | IndexType::Spatial)
+    )
 }

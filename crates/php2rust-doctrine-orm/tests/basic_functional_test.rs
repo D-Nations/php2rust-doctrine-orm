@@ -849,6 +849,33 @@ async fn testInitializeCollectionWithNewObjectsRetainsNewObjects() {
 }
 
 #[tokio::test]
+async fn testManyToOneFetchModeQuery() {
+    let (em, log) = query_log::set_up_logged(&CMS_MODELS).await;
+    let user = cms_user_with("Benjamin E.", "beberlei", "active");
+
+    let article = cms_article("foo", "bar");
+    set(&article, "user", Value::Object(user.clone()));
+
+    em.persist(&article).unwrap();
+    em.persist(&user).unwrap();
+    em.flush().await.unwrap();
+    em.clear().unwrap();
+
+    log.reset_and_enable();
+    let dql = "SELECT a FROM Doctrine\\Tests\\Models\\CMS\\CmsArticle a WHERE a.id = ?1";
+    let query = em.create_query(dql);
+    query.set_parameter(1, get(&article, "id"), None);
+    query.set_fetch_mode(
+        CMS_ARTICLE,
+        "user",
+        php2rust_doctrine_orm::mapping::class_metadata::FETCH_EAGER,
+    );
+    let article = orm::obj(&query.get_single_result(None).await.unwrap());
+    assert!(!is_uninitialized(&em, &get(&article, "user")));
+    assert_eq!(log.queries().len(), 2, "{:?}", log.queries());
+}
+
+#[tokio::test]
 async fn testSetToOneAssociationWithGetReference() {
     let em = set_up(&CMS_MODELS).await;
     let user = cms_user_with("Guilherme", "gblanco", "developer");

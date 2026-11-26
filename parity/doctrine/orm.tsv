@@ -218,45 +218,45 @@ tests/Tests/ORM/Cache/StatisticsCacheLoggerTest.php	StatisticsCacheLoggerTest::t
 tests/Tests/ORM/Cache/StatisticsCacheLoggerTest.php	StatisticsCacheLoggerTest::testEntityCache	pending	
 tests/Tests/ORM/Cache/StatisticsCacheLoggerTest.php	StatisticsCacheLoggerTest::testMultipleCaches	pending	
 tests/Tests/ORM/Cache/StatisticsCacheLoggerTest.php	StatisticsCacheLoggerTest::testQueryCache	pending	
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testAddGetCustomDatetimeFunction	pending	
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testAddGetCustomHydrationMode	pending	
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testAddGetCustomNumericFunction	pending	
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testAddGetCustomStringFunction	pending	
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testAddGetCustomDatetimeFunction	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testAddGetCustomDatetimeFunction
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testAddGetCustomHydrationMode	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testAddGetCustomHydrationMode
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testAddGetCustomNumericFunction	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testAddGetCustomNumericFunction
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testAddGetCustomStringFunction	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testAddGetCustomStringFunction
 tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testAddGetFilters	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testAddGetFilters
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testDisablingNativeLazyObjectsIsDeprecated	pending	
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetCustomHydrationModes	pending	
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetAutoGenerateProxyClasses	pending	
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetClassMetadataFactoryName	pending	
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetEntityListenerResolver	pending	
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetHydrationCache	pending	
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetMetadataCache	pending	
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetMetadataDriverImpl	pending	
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetNamingStrategy	pending	
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetProxyDir	pending	
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetProxyNamespace	pending	
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetQueryCache	pending	
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetQuoteStrategy	pending	
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetSecondLevelCacheConfig	pending	
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetTypedFieldMapper	pending	
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testDisablingNativeLazyObjectsIsDeprecated	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testDisablingNativeLazyObjectsIsDeprecated
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetCustomHydrationModes	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetCustomHydrationModes
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetAutoGenerateProxyClasses	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetAutoGenerateProxyClasses
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetClassMetadataFactoryName	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetClassMetadataFactoryName
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetEntityListenerResolver	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetEntityListenerResolver
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetHydrationCache	pending	the query, hydration and metadata caches and the second level cache configuration are not ported
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetMetadataCache	pending	the query, hydration and metadata caches and the second level cache configuration are not ported
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetMetadataDriverImpl	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetMetadataDriverImpl
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetNamingStrategy	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetNamingStrategy
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetProxyDir	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetProxyDir
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetProxyNamespace	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetProxyNamespace
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetQueryCache	pending	the query, hydration and metadata caches and the second level cache configuration are not ported
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetQuoteStrategy	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetQuoteStrategy
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetSecondLevelCacheConfig	pending	the query, hydration and metadata caches and the second level cache configuration are not ported
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetTypedFieldMapper	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetTypedFieldMapper
 tests/Tests/ORM/Entity/ConstructorTest.php	ConstructorTest::testFieldInitializationInConstructor	pending	
-tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testAffectedByErrorIfClosedException	pending	
-tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testCreateNativeQuery	pending	
-tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testCreateQuery	pending	
-tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testCreateQueryBuilder	pending	
-tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testCreateQueryBuilderAliasValid	pending	
-tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testCreateQueryDqlIsOptional	pending	
-tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testGetConfiguration	pending	
-tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testGetConnection	pending	
-tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testGetEventManager	pending	
-tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testGetMetadataFactory	pending	
-tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testGetProxyFactory	pending	
-tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testGetUnitOfWork	pending	
-tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testIsOpen	pending	
-tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testItDoesNotAttemptToRollbackIfNoTransactionIsActive	pending	
-tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testItPreservesTheOriginalExceptionOnRollbackFailure	pending	
-tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testLazyGhostEntityManager	pending	
-tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testWrapInTransactionAcceptsReturn	pending	
-tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testWrapInTransactionReThrowsThrowables	pending	
+tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testAffectedByErrorIfClosedException	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testAffectedByErrorIfClosedException
+tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testCreateNativeQuery	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testCreateNativeQuery
+tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testCreateQuery	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testCreateQuery
+tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testCreateQueryBuilder	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testCreateQueryBuilder
+tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testCreateQueryBuilderAliasValid	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testCreateQueryBuilderAliasValid
+tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testCreateQueryDqlIsOptional	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testCreateQueryDqlIsOptional
+tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testGetConfiguration	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testGetConfiguration
+tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testGetConnection	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testGetConnection
+tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testGetEventManager	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testGetEventManager
+tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testGetMetadataFactory	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testGetMetadataFactory
+tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testGetProxyFactory	pending	the proxies are native lazy ghosts: there is no ProxyFactory object
+tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testGetUnitOfWork	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testGetUnitOfWork
+tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testIsOpen	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testIsOpen
+tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testItDoesNotAttemptToRollbackIfNoTransactionIsActive	pending	overrides Connection::commit() and isTransactionActive() in a subclass (the DBAL connection is a struct)
+tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testItPreservesTheOriginalExceptionOnRollbackFailure	pending	overrides Connection::rollBack() in a subclass (the DBAL connection is a struct) and reads the previous exception (Thrown has none)
+tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testLazyGhostEntityManager	pending	a lazy ghost of the entity manager through reflection (ReflectionClass::newLazyGhost) is not ported
+tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testWrapInTransactionAcceptsReturn	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testWrapInTransactionAcceptsReturn
+tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testWrapInTransactionReThrowsThrowables	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testWrapInTransactionReThrowsThrowables
 tests/Tests/ORM/EntityNotFoundExceptionTest.php	EntityNotFoundExceptionTest::testFromClassNameAndIdentifier	pending	
 tests/Tests/ORM/EntityNotFoundExceptionTest.php	EntityNotFoundExceptionTest::testNoIdentifierFound	pending	
 tests/Tests/ORM/EntityRepositoryTest.php	EntityRepositoryTest::testExpr	pending	
@@ -293,7 +293,7 @@ tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testFlus
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testFlushSingleNewEntityThenRemove	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testFlushSingleNewEntityThenRemove
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testInitializeCollectionWithNewObjectsRetainsNewObjects	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testInitializeCollectionWithNewObjectsRetainsNewObjects
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testItThrowsWhenReferenceUsesIdAssignedByDatabase	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testItThrowsWhenReferenceUsesIdAssignedByDatabase
-tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testManyToOneFetchModeQuery	pending	BasicEntityPersister does not join the inverse one-to-one CmsUser::address into its SELECT, so the eager load issues 3 queries where PHP issues 2
+tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testManyToOneFetchModeQuery	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testManyToOneFetchModeQuery
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testNewAssociatedEntityDuringFlushThrowsException	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testNewAssociatedEntityDuringFlushThrowsException
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testNewAssociatedEntityDuringFlushThrowsException2	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testNewAssociatedEntityDuringFlushThrowsException2
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testNewAssociatedEntityDuringFlushThrowsException3	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testNewAssociatedEntityDuringFlushThrowsException3
@@ -376,16 +376,16 @@ tests/Tests/ORM/Functional/EagerFetchCollectionTest.php	EagerFetchCollectionTest
 tests/Tests/ORM/Functional/EagerFetchCollectionTest.php	EagerFetchCollectionTest::testSubselectFetchJoinWithAllowedWhenOverriddenNotEagerPaginator	pending	
 tests/Tests/ORM/Functional/EagerFetchCollectionTest.php	EagerFetchCollectionTest::testSubselectFetchJoinWithNotAllowed	pending	
 tests/Tests/ORM/Functional/EagerFetchOneToManyWithCompositeKeyTest.php	EagerFetchOneToManyWithCompositeKeyTest::testItDoesNotThrowAnExceptionWhenTriggeringALoad	pending	
-tests/Tests/ORM/Functional/EntityListenersTest.php	EntityListenersTest::testPostLoadListeners	pending	
-tests/Tests/ORM/Functional/EntityListenersTest.php	EntityListenersTest::testPostPersistCalledAfterAllInsertsHaveBeenPerformedAndIdsHaveBeenAssigned	pending	
-tests/Tests/ORM/Functional/EntityListenersTest.php	EntityListenersTest::testPostPersistListeners	pending	
-tests/Tests/ORM/Functional/EntityListenersTest.php	EntityListenersTest::testPostRemoveCalledAfterAllRemovalsHaveBeenPerformed	pending	
-tests/Tests/ORM/Functional/EntityListenersTest.php	EntityListenersTest::testPostRemoveListeners	pending	
-tests/Tests/ORM/Functional/EntityListenersTest.php	EntityListenersTest::testPostUpdateListeners	pending	
-tests/Tests/ORM/Functional/EntityListenersTest.php	EntityListenersTest::testPreFlushListeners	pending	
-tests/Tests/ORM/Functional/EntityListenersTest.php	EntityListenersTest::testPrePersistListeners	pending	
-tests/Tests/ORM/Functional/EntityListenersTest.php	EntityListenersTest::testPreRemoveListeners	pending	
-tests/Tests/ORM/Functional/EntityListenersTest.php	EntityListenersTest::testPreUpdateListeners	pending	
+tests/Tests/ORM/Functional/EntityListenersTest.php	EntityListenersTest::testPostLoadListeners	ported	crates/php2rust-doctrine-orm/tests/entity_listeners_test.rs::testPostLoadListeners
+tests/Tests/ORM/Functional/EntityListenersTest.php	EntityListenersTest::testPostPersistCalledAfterAllInsertsHaveBeenPerformedAndIdsHaveBeenAssigned	ported	crates/php2rust-doctrine-orm/tests/entity_listeners_test.rs::testPostPersistCalledAfterAllInsertsHaveBeenPerformedAndIdsHaveBeenAssigned
+tests/Tests/ORM/Functional/EntityListenersTest.php	EntityListenersTest::testPostPersistListeners	ported	crates/php2rust-doctrine-orm/tests/entity_listeners_test.rs::testPostPersistListeners
+tests/Tests/ORM/Functional/EntityListenersTest.php	EntityListenersTest::testPostRemoveCalledAfterAllRemovalsHaveBeenPerformed	ported	crates/php2rust-doctrine-orm/tests/entity_listeners_test.rs::testPostRemoveCalledAfterAllRemovalsHaveBeenPerformed
+tests/Tests/ORM/Functional/EntityListenersTest.php	EntityListenersTest::testPostRemoveListeners	ported	crates/php2rust-doctrine-orm/tests/entity_listeners_test.rs::testPostRemoveListeners
+tests/Tests/ORM/Functional/EntityListenersTest.php	EntityListenersTest::testPostUpdateListeners	ported	crates/php2rust-doctrine-orm/tests/entity_listeners_test.rs::testPostUpdateListeners
+tests/Tests/ORM/Functional/EntityListenersTest.php	EntityListenersTest::testPreFlushListeners	ported	crates/php2rust-doctrine-orm/tests/entity_listeners_test.rs::testPreFlushListeners
+tests/Tests/ORM/Functional/EntityListenersTest.php	EntityListenersTest::testPrePersistListeners	ported	crates/php2rust-doctrine-orm/tests/entity_listeners_test.rs::testPrePersistListeners
+tests/Tests/ORM/Functional/EntityListenersTest.php	EntityListenersTest::testPreRemoveListeners	ported	crates/php2rust-doctrine-orm/tests/entity_listeners_test.rs::testPreRemoveListeners
+tests/Tests/ORM/Functional/EntityListenersTest.php	EntityListenersTest::testPreUpdateListeners	ported	crates/php2rust-doctrine-orm/tests/entity_listeners_test.rs::testPreUpdateListeners
 tests/Tests/ORM/Functional/EntityRepositoryCriteriaTest.php	EntityRepositoryCriteriaTest::testCanContainsWithoutLoadingCollection	ported	crates/php2rust-doctrine-orm/tests/entity_repository_criteria_test.rs::testCanContainsWithoutLoadingCollection
 tests/Tests/ORM/Functional/EntityRepositoryCriteriaTest.php	EntityRepositoryCriteriaTest::testCanCountWithoutLoadingCollection	ported	crates/php2rust-doctrine-orm/tests/entity_repository_criteria_test.rs::testCanCountWithoutLoadingCollection
 tests/Tests/ORM/Functional/EntityRepositoryCriteriaTest.php	EntityRepositoryCriteriaTest::testEqNullComparison	ported	crates/php2rust-doctrine-orm/tests/entity_repository_criteria_test.rs::testEqNullComparison
@@ -502,14 +502,14 @@ tests/Tests/ORM/Functional/ExtraLazyCollectionTest.php	ExtraLazyCollectionTest::
 tests/Tests/ORM/Functional/ExtraLazyCollectionTest.php	ExtraLazyCollectionTest::testFirstWhenNotInitialized	ported	crates/php2rust-doctrine-orm/tests/extra_lazy_collection_test.rs::testFirstWhenNotInitialized
 tests/Tests/ORM/Functional/ExtraLazyCollectionTest.php	ExtraLazyCollectionTest::testFullSlice	ported	crates/php2rust-doctrine-orm/tests/extra_lazy_collection_test.rs::testFullSlice
 tests/Tests/ORM/Functional/ExtraLazyCollectionTest.php	ExtraLazyCollectionTest::testGetIndexByIdentifier	ported	crates/php2rust-doctrine-orm/tests/extra_lazy_collection_test.rs::testGetIndexByIdentifier
-tests/Tests/ORM/Functional/ExtraLazyCollectionTest.php	ExtraLazyCollectionTest::testGetIndexByManyToManyInverseSide	pending	
+tests/Tests/ORM/Functional/ExtraLazyCollectionTest.php	ExtraLazyCollectionTest::testGetIndexByManyToManyInverseSide	ported	crates/php2rust-doctrine-orm/tests/extra_lazy_collection_test.rs::testGetIndexByManyToManyInverseSide
 tests/Tests/ORM/Functional/ExtraLazyCollectionTest.php	ExtraLazyCollectionTest::testGetIndexByManyToManyOwningSide	ported	crates/php2rust-doctrine-orm/tests/extra_lazy_collection_test.rs::testGetIndexByManyToManyOwningSide
 tests/Tests/ORM/Functional/ExtraLazyCollectionTest.php	ExtraLazyCollectionTest::testGetIndexByOneToMany	ported	crates/php2rust-doctrine-orm/tests/extra_lazy_collection_test.rs::testGetIndexByOneToMany
 tests/Tests/ORM/Functional/ExtraLazyCollectionTest.php	ExtraLazyCollectionTest::testGetNonExistentIndexBy	ported	crates/php2rust-doctrine-orm/tests/extra_lazy_collection_test.rs::testGetNonExistentIndexBy
 tests/Tests/ORM/Functional/ExtraLazyCollectionTest.php	ExtraLazyCollectionTest::testLazyOneToManyJoinedInheritanceIsLazilyInitialized	ported	crates/php2rust-doctrine-orm/tests/extra_lazy_collection_test.rs::testLazyOneToManyJoinedInheritanceIsLazilyInitialized
 tests/Tests/ORM/Functional/ExtraLazyCollectionTest.php	ExtraLazyCollectionTest::testSlice	ported	crates/php2rust-doctrine-orm/tests/extra_lazy_collection_test.rs::testSlice
 tests/Tests/ORM/Functional/ExtraLazyCollectionTest.php	ExtraLazyCollectionTest::testSliceInitializedCollection	ported	crates/php2rust-doctrine-orm/tests/extra_lazy_collection_test.rs::testSliceInitializedCollection
-tests/Tests/ORM/Functional/ExtraLazyCollectionTest.php	ExtraLazyCollectionTest::testSliceInverseCollection	pending	
+tests/Tests/ORM/Functional/ExtraLazyCollectionTest.php	ExtraLazyCollectionTest::testSliceInverseCollection	ported	crates/php2rust-doctrine-orm/tests/extra_lazy_collection_test.rs::testSliceInverseCollection
 tests/Tests/ORM/Functional/ExtraLazyCollectionTest.php	ExtraLazyCollectionTest::testSliceOnDirtyCollection	ported	crates/php2rust-doctrine-orm/tests/extra_lazy_collection_test.rs::testSliceOnDirtyCollection
 tests/Tests/ORM/Functional/ExtraLazyCollectionTest.php	ExtraLazyCollectionTest::testSliceOneToMany	ported	crates/php2rust-doctrine-orm/tests/extra_lazy_collection_test.rs::testSliceOneToMany
 tests/Tests/ORM/Functional/FlushEventTest.php	FlushEventTest::testPersistNewEntitiesOnPreFlush	pending	
@@ -827,16 +827,16 @@ tests/Tests/ORM/Functional/PersistentCollectionTest.php	PersistentCollectionTest
 tests/Tests/ORM/Functional/PostFlushEventTest.php	PostFlushEventTest::testListenerShouldBeNotified	pending	
 tests/Tests/ORM/Functional/PostFlushEventTest.php	PostFlushEventTest::testListenerShouldNotBeNotifiedWhenFlushThrowsException	pending	
 tests/Tests/ORM/Functional/PostFlushEventTest.php	PostFlushEventTest::testListenerShouldReceiveEntityManagerThroughArgs	pending	
-tests/Tests/ORM/Functional/PostLoadEventTest.php	PostLoadEventTest::testAssociationsArePopulatedWhenEventIsFired	pending	
-tests/Tests/ORM/Functional/PostLoadEventTest.php	PostLoadEventTest::testEventRaisedCorrectTimesWhenOtherEntityLoadedInEventHandler	pending	
-tests/Tests/ORM/Functional/PostLoadEventTest.php	PostLoadEventTest::testLoadedAssociationToManyShouldTriggerEvent	pending	
-tests/Tests/ORM/Functional/PostLoadEventTest.php	PostLoadEventTest::testLoadedAssociationToOneShouldTriggerEvent	pending	
-tests/Tests/ORM/Functional/PostLoadEventTest.php	PostLoadEventTest::testLoadedEntityUsingFindShouldTriggerEvent	pending	
-tests/Tests/ORM/Functional/PostLoadEventTest.php	PostLoadEventTest::testLoadedEntityUsingQueryShouldTriggerEvent	pending	
-tests/Tests/ORM/Functional/PostLoadEventTest.php	PostLoadEventTest::testLoadedProxyAssociationToManyShouldTriggerEvent	pending	
-tests/Tests/ORM/Functional/PostLoadEventTest.php	PostLoadEventTest::testLoadedProxyAssociationToOneShouldTriggerEvent	pending	
-tests/Tests/ORM/Functional/PostLoadEventTest.php	PostLoadEventTest::testLoadedProxyEntityShouldTriggerEvent	pending	
-tests/Tests/ORM/Functional/PostLoadEventTest.php	PostLoadEventTest::testLoadedProxyPartialShouldTriggerEvent	pending	
+tests/Tests/ORM/Functional/PostLoadEventTest.php	PostLoadEventTest::testAssociationsArePopulatedWhenEventIsFired	ported	crates/php2rust-doctrine-orm/tests/post_load_event_test.rs::testAssociationsArePopulatedWhenEventIsFired
+tests/Tests/ORM/Functional/PostLoadEventTest.php	PostLoadEventTest::testEventRaisedCorrectTimesWhenOtherEntityLoadedInEventHandler	pending	its listener initializes a lazy proxy inside postLoad(); an event listener's call is synchronous and the load is async
+tests/Tests/ORM/Functional/PostLoadEventTest.php	PostLoadEventTest::testLoadedAssociationToManyShouldTriggerEvent	ported	crates/php2rust-doctrine-orm/tests/post_load_event_test.rs::testLoadedAssociationToManyShouldTriggerEvent
+tests/Tests/ORM/Functional/PostLoadEventTest.php	PostLoadEventTest::testLoadedAssociationToOneShouldTriggerEvent	ported	crates/php2rust-doctrine-orm/tests/post_load_event_test.rs::testLoadedAssociationToOneShouldTriggerEvent
+tests/Tests/ORM/Functional/PostLoadEventTest.php	PostLoadEventTest::testLoadedEntityUsingFindShouldTriggerEvent	ported	crates/php2rust-doctrine-orm/tests/post_load_event_test.rs::testLoadedEntityUsingFindShouldTriggerEvent
+tests/Tests/ORM/Functional/PostLoadEventTest.php	PostLoadEventTest::testLoadedEntityUsingQueryShouldTriggerEvent	ported	crates/php2rust-doctrine-orm/tests/post_load_event_test.rs::testLoadedEntityUsingQueryShouldTriggerEvent
+tests/Tests/ORM/Functional/PostLoadEventTest.php	PostLoadEventTest::testLoadedProxyAssociationToManyShouldTriggerEvent	ported	crates/php2rust-doctrine-orm/tests/post_load_event_test.rs::testLoadedProxyAssociationToManyShouldTriggerEvent
+tests/Tests/ORM/Functional/PostLoadEventTest.php	PostLoadEventTest::testLoadedProxyAssociationToOneShouldTriggerEvent	ported	crates/php2rust-doctrine-orm/tests/post_load_event_test.rs::testLoadedProxyAssociationToOneShouldTriggerEvent
+tests/Tests/ORM/Functional/PostLoadEventTest.php	PostLoadEventTest::testLoadedProxyEntityShouldTriggerEvent	ported	crates/php2rust-doctrine-orm/tests/post_load_event_test.rs::testLoadedProxyEntityShouldTriggerEvent
+tests/Tests/ORM/Functional/PostLoadEventTest.php	PostLoadEventTest::testLoadedProxyPartialShouldTriggerEvent	ported	crates/php2rust-doctrine-orm/tests/post_load_event_test.rs::testLoadedProxyPartialShouldTriggerEvent
 tests/Tests/ORM/Functional/PrePersistEventTest.php	PrePersistEventTest::testCallingPersistInPrePersistHook	pending	
 tests/Tests/ORM/Functional/PropertyHooksTest.php	PropertyHooksTest::testMapPropertyHooks	pending	
 tests/Tests/ORM/Functional/PropertyHooksTest.php	PropertyHooksTest::testMappingVirtualPropertyIsNotSupported	pending	
@@ -2062,10 +2062,10 @@ tests/Tests/ORM/Mapping/DefaultQuoteStrategyTest.php	DefaultQuoteStrategyTest::t
 tests/Tests/ORM/Mapping/DefaultQuoteStrategyTest.php	DefaultQuoteStrategyTest::testGetTableName	ported	crates/php2rust-doctrine-orm/tests/default_quote_strategy_test.rs::testGetTableName
 tests/Tests/ORM/Mapping/DiscriminatorColumnMappingTest.php	DiscriminatorColumnMappingTest::testItSurvivesSerialization	ported	crates/php2rust-doctrine-orm/tests/discriminator_column_mapping_test.rs::testItSurvivesSerialization
 tests/Tests/ORM/Mapping/EmbeddedClassMappingTest.php	EmbeddedClassMappingTest::testItSurvivesSerialization	ported	crates/php2rust-doctrine-orm/tests/embedded_class_mapping_test.rs::testItSurvivesSerialization
-tests/Tests/ORM/Mapping/EntityListenerResolverTest.php	EntityListenerResolverTest::testClearAll	pending	
-tests/Tests/ORM/Mapping/EntityListenerResolverTest.php	EntityListenerResolverTest::testClearOne	pending	
-tests/Tests/ORM/Mapping/EntityListenerResolverTest.php	EntityListenerResolverTest::testRegisterAndResolve	pending	
-tests/Tests/ORM/Mapping/EntityListenerResolverTest.php	EntityListenerResolverTest::testResolve	pending	
+tests/Tests/ORM/Mapping/EntityListenerResolverTest.php	EntityListenerResolverTest::testClearAll	ported	crates/php2rust-doctrine-orm/tests/entity_listener_resolver_test.rs::testClearAll
+tests/Tests/ORM/Mapping/EntityListenerResolverTest.php	EntityListenerResolverTest::testClearOne	ported	crates/php2rust-doctrine-orm/tests/entity_listener_resolver_test.rs::testClearOne
+tests/Tests/ORM/Mapping/EntityListenerResolverTest.php	EntityListenerResolverTest::testRegisterAndResolve	ported	crates/php2rust-doctrine-orm/tests/entity_listener_resolver_test.rs::testRegisterAndResolve
+tests/Tests/ORM/Mapping/EntityListenerResolverTest.php	EntityListenerResolverTest::testResolve	ported	crates/php2rust-doctrine-orm/tests/entity_listener_resolver_test.rs::testResolve
 tests/Tests/ORM/Mapping/FieldBuilderTest.php	FieldBuilderTest::testCustomIdGeneratorCanBeSet	ported	crates/php2rust-doctrine-orm/tests/field_builder_test.rs::testCustomIdGeneratorCanBeSet
 tests/Tests/ORM/Mapping/FieldMappingTest.php	FieldMappingTest::testItSurvivesSerialization	ported	crates/php2rust-doctrine-orm/tests/field_mapping_test.rs::testItSurvivesSerialization
 tests/Tests/ORM/Mapping/InverseSideMappingTest.php	InverseSideMappingTest::testItSurvivesSerialization	ported	crates/php2rust-doctrine-orm/tests/inverse_side_mapping_test.rs::testItSurvivesSerialization
@@ -3127,70 +3127,70 @@ tests/Tests/ORM/Tools/ResolveTargetEntityListenerTest.php	ResolveTargetEntityLis
 tests/Tests/ORM/Tools/ResolveTargetEntityListenerTest.php	ResolveTargetEntityListenerTest::testDoesResolveTargetEntitiesInDQLAlsoWithInterfaces	pending	
 tests/Tests/ORM/Tools/ResolveTargetEntityListenerTest.php	ResolveTargetEntityListenerTest::testResolveTargetEntityListenerCanResolveTargetEntity	pending	
 tests/Tests/ORM/Tools/ResolveTargetEntityListenerTest.php	ResolveTargetEntityListenerTest::testResolveTargetEntityListenerCanRetrieveTargetEntityByInterfaceName	pending	
-tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testAddUniqueIndexForUniqueFieldAttribute	pending	
-tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testAttributeOptionsArgument	pending	
-tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testCompositeFulltextAndUniqueIndexesOnSameColumnsArePreserved	pending	
-tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testCompositeIdPositionRespectedInSchema	pending	
-tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testConfigurationSchemaIgnoredEntity	pending	
-tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testConflictingSingleTableInheritanceAssociationIndexesAreAddedOnce	pending	
-tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testConflictingSingleTableInheritanceAssociationsTargetingSameEntityStillGenerateForeignKey	pending	
-tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testDerivedCompositeKey	pending	
-tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testEnumTypeAddedToCustomSchemaOptions	pending	
-tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testFulltextIndexIsPreservedAlongsideColumnLevelUnique	pending	
-tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testFulltextIndexIsPreservedAlongsideUniqueConstraint	pending	
-tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testIdenticalSingleTableInheritanceAssociationsShareOneForeignKey	pending	
-tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testIncorrectIndexesBasedOnFields	pending	
-tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testIncorrectUniqueConstraintsBasedOnFields	pending	
-tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testIndexesBasedOnFields	pending	
-tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testJoinedChildTableForeignKeyReferencesRootTableWhenIdentifierIsAnAssociation	pending	
-tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testLoadUniqueConstraintWithoutName	pending	
-tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testNullDefaultNotAddedToPlatformOptions	pending	
-tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testOverwritingSchemaInListener	pending	
-tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testOverwritingTableInListener	pending	
-tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testPartialIndexOptionsStillPreventDeduplication	pending	
-tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testPassColumnDefinitionToJoinColumn	pending	
-tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testPassColumnOptionsToJoinColumn	pending	
-tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testPostGenerateEvents	pending	
-tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testQuotedIdentifiers	pending	
-tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testRemoveUniqueIndexOverruledByPrimaryKey	pending	
-tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testSchemaHasProperIndexesFromUniqueConstraintAttribute	pending	
-tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testSetDefaultStringLength	pending	
-tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testSetDefaultStringLengthDoesNotOverrideExplicitLength	pending	
-tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testSetDiscriminatorColumnWithCustomDefaultLength	pending	
-tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testSetDiscriminatorColumnWithEnumType	pending	
-tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testSetDiscriminatorColumnWithoutLength	pending	
-tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testUnflaggedIndexCoveredByUniqueConstraintIsDeduplicated	pending	
-tests/Tests/ORM/Tools/SchemaValidatorTest.php	SchemaValidatorTest::testAbstractChildClassNotPresentInDiscriminator	pending	
-tests/Tests/ORM/Tools/SchemaValidatorTest.php	SchemaValidatorTest::testBigIntProperty	pending	
-tests/Tests/ORM/Tools/SchemaValidatorTest.php	SchemaValidatorTest::testCmsModelSet	pending	
-tests/Tests/ORM/Tools/SchemaValidatorTest.php	SchemaValidatorTest::testInvalidAssociationTowardsMappedSuperclass	pending	
-tests/Tests/ORM/Tools/SchemaValidatorTest.php	SchemaValidatorTest::testInvalidBiDirectionalRelationMappingMissingInversedByAttribute	pending	
-tests/Tests/ORM/Tools/SchemaValidatorTest.php	SchemaValidatorTest::testInvalidBiDirectionalRelationMappingMissingMappedByAttribute	pending	
-tests/Tests/ORM/Tools/SchemaValidatorTest.php	SchemaValidatorTest::testInvalidManyToManyJoinColumnSchema	pending	
-tests/Tests/ORM/Tools/SchemaValidatorTest.php	SchemaValidatorTest::testInvalidManyToOneAsSoleIdentifier	pending	
-tests/Tests/ORM/Tools/SchemaValidatorTest.php	SchemaValidatorTest::testInvalidOrderByAssociationInverseSide	pending	
-tests/Tests/ORM/Tools/SchemaValidatorTest.php	SchemaValidatorTest::testInvalidOrderByCollectionValuedAssociation	pending	
-tests/Tests/ORM/Tools/SchemaValidatorTest.php	SchemaValidatorTest::testInvalidOrderByInvalidField	pending	
-tests/Tests/ORM/Tools/SchemaValidatorTest.php	SchemaValidatorTest::testInvalidToOneJoinColumnSchema	pending	
-tests/Tests/ORM/Tools/SchemaValidatorTest.php	SchemaValidatorTest::testInvalidTripleAssociationAsKeyMapping	pending	
-tests/Tests/ORM/Tools/SchemaValidatorTest.php	SchemaValidatorTest::testMappedSuperclassNotPresentInDiscriminator	pending	
-tests/Tests/ORM/Tools/SchemaValidatorTest.php	SchemaValidatorTest::testOwningSideInversedByTargetsDifferentEntity	pending	
-tests/Tests/ORM/Tools/SchemaValidatorTest.php	SchemaValidatorTest::testValidManyToOneAsPartOfCompositeIdentifier	pending	
-tests/Tests/ORM/Tools/SchemaValidatorTest.php	SchemaValidatorTest::testValidOneToOneAsIdentifierSchema	pending	
+tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testAddUniqueIndexForUniqueFieldAttribute	ported	crates/php2rust-doctrine-orm/tests/schema_tool_test.rs::testAddUniqueIndexForUniqueFieldAttribute
+tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testAttributeOptionsArgument	ported	crates/php2rust-doctrine-orm/tests/schema_tool_test.rs::testAttributeOptionsArgument
+tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testCompositeFulltextAndUniqueIndexesOnSameColumnsArePreserved	ported	crates/php2rust-doctrine-orm/tests/schema_tool_test.rs::testCompositeFulltextAndUniqueIndexesOnSameColumnsArePreserved
+tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testCompositeIdPositionRespectedInSchema	ported	crates/php2rust-doctrine-orm/tests/schema_tool_test.rs::testCompositeIdPositionRespectedInSchema
+tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testConfigurationSchemaIgnoredEntity	ported	crates/php2rust-doctrine-orm/tests/schema_tool_test.rs::testConfigurationSchemaIgnoredEntity
+tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testConflictingSingleTableInheritanceAssociationIndexesAreAddedOnce	ported	crates/php2rust-doctrine-orm/tests/schema_tool_test.rs::testConflictingSingleTableInheritanceAssociationIndexesAreAddedOnce
+tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testConflictingSingleTableInheritanceAssociationsTargetingSameEntityStillGenerateForeignKey	ported	crates/php2rust-doctrine-orm/tests/schema_tool_test.rs::testConflictingSingleTableInheritanceAssociationsTargetingSameEntityStillGenerateForeignKey
+tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testDerivedCompositeKey	ported	crates/php2rust-doctrine-orm/tests/schema_tool_test.rs::testDerivedCompositeKey
+tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testEnumTypeAddedToCustomSchemaOptions	ported	crates/php2rust-doctrine-orm/tests/schema_tool_test.rs::testEnumTypeAddedToCustomSchemaOptions
+tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testFulltextIndexIsPreservedAlongsideColumnLevelUnique	ported	crates/php2rust-doctrine-orm/tests/schema_tool_test.rs::testFulltextIndexIsPreservedAlongsideColumnLevelUnique
+tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testFulltextIndexIsPreservedAlongsideUniqueConstraint	ported	crates/php2rust-doctrine-orm/tests/schema_tool_test.rs::testFulltextIndexIsPreservedAlongsideUniqueConstraint
+tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testIdenticalSingleTableInheritanceAssociationsShareOneForeignKey	ported	crates/php2rust-doctrine-orm/tests/schema_tool_test.rs::testIdenticalSingleTableInheritanceAssociationsShareOneForeignKey
+tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testIncorrectIndexesBasedOnFields	ported	crates/php2rust-doctrine-orm/tests/schema_tool_test.rs::testIncorrectIndexesBasedOnFields
+tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testIncorrectUniqueConstraintsBasedOnFields	ported	crates/php2rust-doctrine-orm/tests/schema_tool_test.rs::testIncorrectUniqueConstraintsBasedOnFields
+tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testIndexesBasedOnFields	ported	crates/php2rust-doctrine-orm/tests/schema_tool_test.rs::testIndexesBasedOnFields
+tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testJoinedChildTableForeignKeyReferencesRootTableWhenIdentifierIsAnAssociation	ported	crates/php2rust-doctrine-orm/tests/schema_tool_test.rs::testJoinedChildTableForeignKeyReferencesRootTableWhenIdentifierIsAnAssociation
+tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testLoadUniqueConstraintWithoutName	ported	crates/php2rust-doctrine-orm/tests/schema_tool_test.rs::testLoadUniqueConstraintWithoutName
+tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testNullDefaultNotAddedToPlatformOptions	ported	crates/php2rust-doctrine-orm/tests/schema_tool_test.rs::testNullDefaultNotAddedToPlatformOptions
+tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testOverwritingSchemaInListener	ported	crates/php2rust-doctrine-orm/tests/schema_tool_test.rs::testOverwritingSchemaInListener
+tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testOverwritingTableInListener	ported	crates/php2rust-doctrine-orm/tests/schema_tool_test.rs::testOverwritingTableInListener
+tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testPartialIndexOptionsStillPreventDeduplication	ported	crates/php2rust-doctrine-orm/tests/schema_tool_test.rs::testPartialIndexOptionsStillPreventDeduplication
+tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testPassColumnDefinitionToJoinColumn	ported	crates/php2rust-doctrine-orm/tests/schema_tool_test.rs::testPassColumnDefinitionToJoinColumn
+tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testPassColumnOptionsToJoinColumn	ported	crates/php2rust-doctrine-orm/tests/schema_tool_test.rs::testPassColumnOptionsToJoinColumn
+tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testPostGenerateEvents	ported	crates/php2rust-doctrine-orm/tests/schema_tool_test.rs::testPostGenerateEvents
+tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testQuotedIdentifiers	ported	crates/php2rust-doctrine-orm/tests/schema_tool_test.rs::testQuotedIdentifiers
+tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testRemoveUniqueIndexOverruledByPrimaryKey	ported	crates/php2rust-doctrine-orm/tests/schema_tool_test.rs::testRemoveUniqueIndexOverruledByPrimaryKey
+tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testSchemaHasProperIndexesFromUniqueConstraintAttribute	ported	crates/php2rust-doctrine-orm/tests/schema_tool_test.rs::testSchemaHasProperIndexesFromUniqueConstraintAttribute
+tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testSetDefaultStringLength	ported	crates/php2rust-doctrine-orm/tests/schema_tool_test.rs::testSetDefaultStringLength
+tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testSetDefaultStringLengthDoesNotOverrideExplicitLength	ported	crates/php2rust-doctrine-orm/tests/schema_tool_test.rs::testSetDefaultStringLengthDoesNotOverrideExplicitLength
+tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testSetDiscriminatorColumnWithCustomDefaultLength	ported	crates/php2rust-doctrine-orm/tests/schema_tool_test.rs::testSetDiscriminatorColumnWithCustomDefaultLength
+tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testSetDiscriminatorColumnWithEnumType	ported	crates/php2rust-doctrine-orm/tests/schema_tool_test.rs::testSetDiscriminatorColumnWithEnumType
+tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testSetDiscriminatorColumnWithoutLength	ported	crates/php2rust-doctrine-orm/tests/schema_tool_test.rs::testSetDiscriminatorColumnWithoutLength
+tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testUnflaggedIndexCoveredByUniqueConstraintIsDeduplicated	ported	crates/php2rust-doctrine-orm/tests/schema_tool_test.rs::testUnflaggedIndexCoveredByUniqueConstraintIsDeduplicated
+tests/Tests/ORM/Tools/SchemaValidatorTest.php	SchemaValidatorTest::testAbstractChildClassNotPresentInDiscriminator	ported	crates/php2rust-doctrine-orm/tests/schema_validator_test.rs::testAbstractChildClassNotPresentInDiscriminator
+tests/Tests/ORM/Tools/SchemaValidatorTest.php	SchemaValidatorTest::testBigIntProperty	ported	crates/php2rust-doctrine-orm/tests/schema_validator_test.rs::testBigIntProperty
+tests/Tests/ORM/Tools/SchemaValidatorTest.php	SchemaValidatorTest::testCmsModelSet	ported	crates/php2rust-doctrine-orm/tests/schema_validator_test.rs::testCmsModelSet
+tests/Tests/ORM/Tools/SchemaValidatorTest.php	SchemaValidatorTest::testInvalidAssociationTowardsMappedSuperclass	ported	crates/php2rust-doctrine-orm/tests/schema_validator_test.rs::testInvalidAssociationTowardsMappedSuperclass
+tests/Tests/ORM/Tools/SchemaValidatorTest.php	SchemaValidatorTest::testInvalidBiDirectionalRelationMappingMissingInversedByAttribute	ported	crates/php2rust-doctrine-orm/tests/schema_validator_test.rs::testInvalidBiDirectionalRelationMappingMissingInversedByAttribute
+tests/Tests/ORM/Tools/SchemaValidatorTest.php	SchemaValidatorTest::testInvalidBiDirectionalRelationMappingMissingMappedByAttribute	ported	crates/php2rust-doctrine-orm/tests/schema_validator_test.rs::testInvalidBiDirectionalRelationMappingMissingMappedByAttribute
+tests/Tests/ORM/Tools/SchemaValidatorTest.php	SchemaValidatorTest::testInvalidManyToManyJoinColumnSchema	ported	crates/php2rust-doctrine-orm/tests/schema_validator_test.rs::testInvalidManyToManyJoinColumnSchema
+tests/Tests/ORM/Tools/SchemaValidatorTest.php	SchemaValidatorTest::testInvalidManyToOneAsSoleIdentifier	ported	crates/php2rust-doctrine-orm/tests/schema_validator_test.rs::testInvalidManyToOneAsSoleIdentifier
+tests/Tests/ORM/Tools/SchemaValidatorTest.php	SchemaValidatorTest::testInvalidOrderByAssociationInverseSide	ported	crates/php2rust-doctrine-orm/tests/schema_validator_test.rs::testInvalidOrderByAssociationInverseSide
+tests/Tests/ORM/Tools/SchemaValidatorTest.php	SchemaValidatorTest::testInvalidOrderByCollectionValuedAssociation	ported	crates/php2rust-doctrine-orm/tests/schema_validator_test.rs::testInvalidOrderByCollectionValuedAssociation
+tests/Tests/ORM/Tools/SchemaValidatorTest.php	SchemaValidatorTest::testInvalidOrderByInvalidField	ported	crates/php2rust-doctrine-orm/tests/schema_validator_test.rs::testInvalidOrderByInvalidField
+tests/Tests/ORM/Tools/SchemaValidatorTest.php	SchemaValidatorTest::testInvalidToOneJoinColumnSchema	ported	crates/php2rust-doctrine-orm/tests/schema_validator_test.rs::testInvalidToOneJoinColumnSchema
+tests/Tests/ORM/Tools/SchemaValidatorTest.php	SchemaValidatorTest::testInvalidTripleAssociationAsKeyMapping	ported	crates/php2rust-doctrine-orm/tests/schema_validator_test.rs::testInvalidTripleAssociationAsKeyMapping
+tests/Tests/ORM/Tools/SchemaValidatorTest.php	SchemaValidatorTest::testMappedSuperclassNotPresentInDiscriminator	ported	crates/php2rust-doctrine-orm/tests/schema_validator_test.rs::testMappedSuperclassNotPresentInDiscriminator
+tests/Tests/ORM/Tools/SchemaValidatorTest.php	SchemaValidatorTest::testOwningSideInversedByTargetsDifferentEntity	ported	crates/php2rust-doctrine-orm/tests/schema_validator_test.rs::testOwningSideInversedByTargetsDifferentEntity
+tests/Tests/ORM/Tools/SchemaValidatorTest.php	SchemaValidatorTest::testValidManyToOneAsPartOfCompositeIdentifier	ported	crates/php2rust-doctrine-orm/tests/schema_validator_test.rs::testValidManyToOneAsPartOfCompositeIdentifier
+tests/Tests/ORM/Tools/SchemaValidatorTest.php	SchemaValidatorTest::testValidOneToOneAsIdentifierSchema	ported	crates/php2rust-doctrine-orm/tests/schema_validator_test.rs::testValidOneToOneAsIdentifierSchema
 tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testAddToIdentityMapInvalidIdentifiers	ported	crates/php2rust-doctrine-orm/tests/unit_of_work_test.rs::testAddToIdentityMapInvalidIdentifiers
 tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testAddToIdentityMapValidIdentifiers	ported	crates/php2rust-doctrine-orm/tests/unit_of_work_test.rs::testAddToIdentityMapValidIdentifiers
-tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testCascadedIdentityColumnInsert	pending	
+tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testCascadedIdentityColumnInsert	pending	EntityPersisterMock (setEntityPersister() with a persister that records its inserts, updates, deletes and exists() calls): the unit of work holds BasicEntityPersisters
 tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testCommitThrowOptimisticLockExceptionWhenConnectionCommitFails	ported	crates/php2rust-doctrine-orm/tests/unit_of_work_test.rs::testCommitThrowOptimisticLockExceptionWhenConnectionCommitFails
-tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testGetEntityStateOnVersionedEntityWithAssignedIdentifier	pending	
-tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testGetEntityStateWithAssignedIdentity	pending	
-tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testItPreservesTheOriginalExceptionOnRollbackFailure	pending	
+tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testGetEntityStateOnVersionedEntityWithAssignedIdentifier	pending	EntityPersisterMock (setEntityPersister() with a persister that records its inserts, updates, deletes and exists() calls): the unit of work holds BasicEntityPersisters
+tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testGetEntityStateWithAssignedIdentity	pending	EntityPersisterMock (setEntityPersister() with a persister that records its inserts, updates, deletes and exists() calls): the unit of work holds BasicEntityPersisters
+tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testItPreservesTheOriginalExceptionOnRollbackFailure	pending	Thrown has no previous exception; a failing rollback's error replaces the commit's
 tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testItThrowsWhenApplicationProvidedIdsCollide	ported	crates/php2rust-doctrine-orm/tests/unit_of_work_test.rs::testItThrowsWhenApplicationProvidedIdsCollide
 tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testItThrowsWhenLookingUpIdentifierForUnknownEntity	ported	crates/php2rust-doctrine-orm/tests/unit_of_work_test.rs::testItThrowsWhenLookingUpIdentifierForUnknownEntity
-tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testMultipleInsertsAreBatchedInThePersister	pending	
-tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testNewAssociatedEntityPersistenceOfNewEntitiesThroughCascadedAssociationsFirst	pending	
-tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testNewAssociatedEntityPersistenceOfNewEntitiesThroughNonCascadedAssociationsFirst	pending	
-tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testNoUndefinedIndexNoticeOnScheduleForUpdateWithoutChanges	pending	
-tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testPreviousDetectedIllegalNewNonCascadedEntitiesAreCleanedUpOnSubsequentCommits	pending	
+tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testMultipleInsertsAreBatchedInThePersister	pending	EntityPersisterMock (setEntityPersister() with a persister that records its inserts, updates, deletes and exists() calls): the unit of work holds BasicEntityPersisters
+tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testNewAssociatedEntityPersistenceOfNewEntitiesThroughCascadedAssociationsFirst	pending	EntityPersisterMock (setEntityPersister() with a persister that records its inserts, updates, deletes and exists() calls): the unit of work holds BasicEntityPersisters
+tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testNewAssociatedEntityPersistenceOfNewEntitiesThroughNonCascadedAssociationsFirst	pending	EntityPersisterMock (setEntityPersister() with a persister that records its inserts, updates, deletes and exists() calls): the unit of work holds BasicEntityPersisters
+tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testNoUndefinedIndexNoticeOnScheduleForUpdateWithoutChanges	pending	EntityPersisterMock (setEntityPersister() with a persister that records its inserts, updates, deletes and exists() calls): the unit of work holds BasicEntityPersisters
+tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testPreviousDetectedIllegalNewNonCascadedEntitiesAreCleanedUpOnSubsequentCommits	pending	EntityPersisterMock (setEntityPersister() with a persister that records its inserts, updates, deletes and exists() calls): the unit of work holds BasicEntityPersisters
 tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testRegisterRemovedOnNewEntityIsIgnored	ported	crates/php2rust-doctrine-orm/tests/unit_of_work_test.rs::testRegisterRemovedOnNewEntityIsIgnored
 tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testRegisteringAManagedInstanceRequiresANonEmptyIdentifier	ported	crates/php2rust-doctrine-orm/tests/unit_of_work_test.rs::testRegisteringAManagedInstanceRequiresANonEmptyIdentifier
 tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testRejectsChangeSetComputationForObjectsWithInvalidAssociationValue	ported	crates/php2rust-doctrine-orm/tests/unit_of_work_test.rs::testRejectsChangeSetComputationForObjectsWithInvalidAssociationValue
@@ -3198,7 +3198,7 @@ tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testRejectsPersistenceOfObjec
 tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testRemovedAndRePersistedEntitiesAreInTheIdentityMapAndAreNotGarbageCollected	ported	crates/php2rust-doctrine-orm/tests/unit_of_work_test.rs::testRemovedAndRePersistedEntitiesAreInTheIdentityMapAndAreNotGarbageCollected
 tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testRemovedEntityIsRemovedFromManyToManyCollection	ported	crates/php2rust-doctrine-orm/tests/unit_of_work_test.rs::testRemovedEntityIsRemovedFromManyToManyCollection
 tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testRemovedEntityIsRemovedFromOneToManyCollection	ported	crates/php2rust-doctrine-orm/tests/unit_of_work_test.rs::testRemovedEntityIsRemovedFromOneToManyCollection
-tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testSavingSingleEntityWithIdentityColumnForcesInsert	pending	
+tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testSavingSingleEntityWithIdentityColumnForcesInsert	pending	EntityPersisterMock (setEntityPersister() with a persister that records its inserts, updates, deletes and exists() calls): the unit of work holds BasicEntityPersisters
 tests/Tests/ORM/Utility/HierarchyDiscriminatorResolverTest.php	HierarchyDiscriminatorResolverTest::testResolveDiscriminatorsForClass	pending	
 tests/Tests/ORM/Utility/HierarchyDiscriminatorResolverTest.php	HierarchyDiscriminatorResolverTest::testResolveDiscriminatorsForClassWithNoSubclasses	pending	
 tests/Tests/ORM/Utility/IdentifierFlattenerEnumIdTest.php	IdentifierFlattenerEnumIdTest::testFlattenIdentifierWithCompositeEnumId	pending	

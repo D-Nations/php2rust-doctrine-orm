@@ -473,7 +473,7 @@ impl BasicEntityPersister {
         em: &Arc<EntityManager>,
     ) -> Result<String, Thrown> {
         // Create the column list fragment only once
-        if let Some(sql) = self.st().ctx().select_column_list_sql.clone() {
+        if let Some(sql) = self.cached_select_column_list_sql(em) {
             return Ok(sql);
         }
 
@@ -619,6 +619,7 @@ impl BasicEntityPersister {
 
         let sql = column_list.join(", ");
         self.st().ctx().select_column_list_sql = Some(sql.clone());
+        self.update_filter_hash(em);
         Ok(sql)
     }
 

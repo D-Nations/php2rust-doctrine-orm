@@ -306,12 +306,15 @@ fn related_entities(value: &Value) -> Option<Vec<Value>> {
 impl UnitOfWork {
     /// Initializes a new `UnitOfWork` instance, bound to the given
     /// `EntityManager`.
-    pub fn new(em: Weak<EntityManager>) -> Self {
+    pub fn new(
+        em: Weak<EntityManager>,
+        resolver: Arc<dyn crate::mapping::entity_listener_resolver::EntityListenerResolver>,
+    ) -> Self {
         Self {
             em,
             state: Mutex::new(State::default()),
             persisters: Mutex::new(HashMap::new()),
-            listeners_invoker: ListenersInvoker::new(),
+            listeners_invoker: ListenersInvoker::new(resolver),
         }
     }
 
@@ -2386,7 +2389,6 @@ impl UnitOfWork {
             *st = State::default();
             st.deferred_post_load_invocations = deferred;
         }
-        self.listeners_invoker.clear();
         let em = self.em()?;
         self.dispatch(&em, events::ON_CLEAR, event::ON_CLEAR_EVENT_ARGS)
     }
