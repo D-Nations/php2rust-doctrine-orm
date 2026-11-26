@@ -46,17 +46,17 @@ use crate::utility::{
 /// `CachedPersisterContext`: a set of cached SQL fragments and result set
 /// mappings for one kind of query (with or without limits).
 #[derive(Debug, Clone, Default)]
-struct CachedPersisterContext {
+pub(super) struct CachedPersisterContext {
     /// `ResultSetMapping` that is used for all queries. Is generated lazily
     /// once per request.
-    rsm: ResultSetMapping,
+    pub(super) rsm: ResultSetMapping,
     /// The SELECT column list SQL fragment used for querying entities by
     /// this persister. This SQL fragment is only generated once per
     /// request, if at all.
-    select_column_list_sql: Option<String>,
+    pub(super) select_column_list_sql: Option<String>,
     /// The JOIN SQL fragment used to eagerly load all many-to-one and
     /// one-to-one associations.
-    select_join_sql: String,
+    pub(super) select_join_sql: String,
     /// Counter for creating unique SQL table and column aliases.
     sql_alias_counter: i64,
     /// Map from class names (FQCN) to the corresponding generated SQL
@@ -65,14 +65,20 @@ struct CachedPersisterContext {
 }
 
 #[derive(Debug, Default)]
-struct PersisterState {
+pub(super) struct PersisterState {
     /// Queued inserts.
-    queued_inserts: Vec<(usize, Object)>,
+    pub(super) queued_inserts: Vec<(usize, Object)>,
     /// The map of column names to DBAL mapping types of all prepared
     /// columns used when `INSERTing` or `UPDATEing` an entity.
-    column_types: HashMap<String, String>,
+    pub(super) column_types: HashMap<String, String>,
     /// The map of quoted column names.
-    quoted_columns: HashMap<String, String>,
+    pub(super) quoted_columns: HashMap<String, String>,
+    /// `JoinedSubclassPersister::$owningTableMap`: the tables that own the
+    /// columns of the fields.
+    pub(super) owning_table_map: HashMap<String, String>,
+    /// `JoinedSubclassPersister::$quotedTableMap`: the quoted names of the
+    /// tables.
+    pub(super) quoted_table_map: HashMap<String, String>,
     no_limits_context: CachedPersisterContext,
     limits_handling_context: CachedPersisterContext,
     /// Whether the limits handling context is the current one.
@@ -80,7 +86,7 @@ struct PersisterState {
 }
 
 impl PersisterState {
-    fn ctx(&mut self) -> &mut CachedPersisterContext {
+    pub(super) fn ctx(&mut self) -> &mut CachedPersisterContext {
         if self.limits {
             &mut self.limits_handling_context
         } else {
@@ -89,28 +95,41 @@ impl PersisterState {
     }
 }
 
+/// Which persister class this is: `BasicEntityPersister` or one of its
+/// subclasses, `SingleTablePersister` and `JoinedSubclassPersister`
+/// (both `AbstractEntityInheritancePersister`s). The subclasses'
+/// overrides are in their own modules; the methods dispatch on it.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum PersisterKind {
+    Basic,
+    SingleTable,
+    JoinedSubclass,
+}
+
 /// `Doctrine\ORM\Persisters\Entity\BasicEntityPersister`.
 pub struct BasicEntityPersister {
-    em: Weak<EntityManager>,
+    pub(super) em: Weak<EntityManager>,
     /// Metadata object that describes the mapping of the mapped entity
     /// class.
-    class: Arc<ClassMetadata>,
+    pub(super) class: Arc<ClassMetadata>,
     /// The quote strategy.
-    quote_strategy: Arc<dyn QuoteStrategy>,
-    state: Mutex<PersisterState>,
+    pub(super) quote_strategy: Arc<dyn QuoteStrategy>,
+    pub(super) state: Mutex<PersisterState>,
+    pub(super) kind: PersisterKind,
 }
 
 impl std::fmt::Debug for BasicEntityPersister {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("BasicEntityPersister")
+            .field("kind", &self.kind)
             .finish_non_exhaustive()
     }
 }
 
 /// The parameters and their types.
-type Params = (Vec<Value>, Vec<ParamType>);
+pub(super) type Params = (Vec<Value>, Vec<ParamType>);
 
-fn types_of(types: Vec<ParamType>) -> ParameterTypes {
+pub(super) fn types_of(types: Vec<ParamType>) -> ParameterTypes {
     types
         .into_iter()
         .enumerate()
@@ -118,7 +137,7 @@ fn types_of(types: Vec<ParamType>) -> ParameterTypes {
         .collect()
 }
 
-fn dbal(e: &php2rust_doctrine_dbal::Exception) -> Thrown {
+pub(super) fn dbal(e: &php2rust_doctrine_dbal::Exception) -> Thrown {
     exception::from_dbal(e)
 }
 
@@ -193,20 +212,39 @@ impl BasicEntityPersister {
     /// Initializes a new `BasicEntityPersister` that uses the given
     /// `EntityManager` and persists instances of the class described by the
     /// given `ClassMetadata` descriptor.
+    ///
+    /// The kind of persister follows the class's inheritance type, as
+    /// `UnitOfWork::getEntityPersister()` chooses it.
     pub fn new(em: &Arc<EntityManager>, class: Arc<ClassMetadata>) -> Self {
+        let kind = {
+            let info = class.read();
+            if info.is_inheritance_type_single_table() {
+                PersisterKind::SingleTable
+            } else if info.is_inheritance_type_joined() {
+                PersisterKind::JoinedSubclass
+            } else {
+                PersisterKind::Basic
+            }
+        };
         Self {
             em: Arc::downgrade(em),
             class,
             quote_strategy: em.get_configuration().get_quote_strategy(),
             state: Mutex::new(PersisterState::default()),
+            kind,
         }
     }
 
-    fn st(&self) -> MutexGuard<'_, PersisterState> {
+    /// The persister class.
+    pub fn kind(&self) -> PersisterKind {
+        self.kind
+    }
+
+    pub(super) fn st(&self) -> MutexGuard<'_, PersisterState> {
         self.state.lock().unwrap_or_else(PoisonError::into_inner)
     }
 
-    fn em(&self) -> Result<Arc<EntityManager>, Thrown> {
+    pub(super) fn em(&self) -> Result<Arc<EntityManager>, Thrown> {
         self.em
             .upgrade()
             .ok_or_else(|| Thrown::new("Error", "The entity manager is gone", 0))
@@ -244,6 +282,9 @@ impl BasicEntityPersister {
     ///
     /// If no inserts are queued, invoking this method is a NOOP.
     pub async fn execute_inserts(&self) -> Result<(), Thrown> {
+        if self.kind == PersisterKind::JoinedSubclass {
+            return self.joined_execute_inserts().await;
+        }
         if self.st().queued_inserts.is_empty() {
             return Ok(());
         }
@@ -314,12 +355,17 @@ impl BasicEntityPersister {
     /// the entity is versioned. Also retrieves values of columns marked
     /// as 'non insertable' and / or 'not updatable' and assigns them back
     /// to the entities corresponding fields.
-    async fn assign_default_version_and_upsertable_values(
+    pub(super) async fn assign_default_version_and_upsertable_values(
         &self,
         em: &Arc<EntityManager>,
         entity: &Object,
         id: &PhpArray,
     ) -> Result<(), Thrown> {
+        if self.kind == PersisterKind::JoinedSubclass {
+            return self
+                .joined_assign_default_version_and_upsertable_values(em, entity, id)
+                .await;
+        }
         let values = self.fetch_version_and_not_upsertable_values(em, id).await?;
         let platform = em.get_platform();
         for (field, value) in values {
@@ -408,12 +454,23 @@ impl BasicEntityPersister {
             .collect())
     }
 
-    fn extract_identifier_types(
+    pub(super) fn extract_identifier_types(
         &self,
         em: &EntityManager,
         id: &PhpArray,
     ) -> Result<Vec<ParamType>, Thrown> {
-        let info = self.class.read();
+        self.extract_identifier_types_of(em, id, &self.class)
+    }
+
+    /// `extractIdentifierTypes($id, $versionedClass)`.
+    #[allow(clippy::unused_self, reason = "an instance method upstream")]
+    pub(super) fn extract_identifier_types_of(
+        &self,
+        em: &EntityManager,
+        id: &PhpArray,
+        class: &ClassMetadata,
+    ) -> Result<Vec<ParamType>, Thrown> {
+        let info = class.read();
         let mut types = Vec::new();
         for (field, value) in id.iter() {
             types.extend(infer_parameter_types(&key_text(field), value, &info, em)?);
@@ -425,6 +482,9 @@ impl BasicEntityPersister {
     /// current changeset in the running `UnitOfWork`. If there is no
     /// changeset, nothing is updated.
     pub async fn update(&self, entity: &Object) -> Result<(), Thrown> {
+        if self.kind == PersisterKind::JoinedSubclass {
+            return self.joined_update(entity).await;
+        }
         let em = self.em()?;
         let table_name = self.class.read().get_table_name()?;
         let update_data = self.prepare_update_data(&em, entity, false)?;
@@ -456,7 +516,7 @@ impl BasicEntityPersister {
     /// The UPDATE can optionally be versioned, which requires the entity
     /// to have a version field.
     #[allow(clippy::too_many_lines, reason = "upstream's method, in its order")]
-    async fn update_table(
+    pub(super) async fn update_table(
         &self,
         em: &Arc<EntityManager>,
         entity: &Object,
@@ -595,7 +655,7 @@ impl BasicEntityPersister {
 
     /// Deletes the join table records of the many-to-many associations of
     /// the entity.
-    async fn delete_join_table_records(
+    pub(super) async fn delete_join_table_records(
         &self,
         em: &Arc<EntityManager>,
         identifier: &PhpArray,
@@ -692,6 +752,9 @@ impl BasicEntityPersister {
     /// Subclasses may override this method to customize the semantics of
     /// entity deletion.
     pub async fn delete(&self, entity: &Object) -> Result<bool, Thrown> {
+        if self.kind == PersisterKind::JoinedSubclass {
+            return self.joined_delete(entity).await;
+        }
         let em = self.em()?;
         let platform = em.get_platform();
         let identifier = em.get_unit_of_work().get_entity_identifier(entity)?;
@@ -736,7 +799,7 @@ impl BasicEntityPersister {
     /// )
     /// </code>
     #[allow(clippy::too_many_lines, reason = "upstream's method, in its order")]
-    fn prepare_update_data(
+    pub(super) fn prepare_update_data(
         &self,
         em: &Arc<EntityManager>,
         entity: &Object,
@@ -762,8 +825,6 @@ impl BasicEntityPersister {
                 None
             }
         };
-        let owning_table = self.class.read().get_table_name()?;
-
         for (field, change) in uow.get_entity_change_set(entity).iter() {
             let field = key_text(field);
             if version_field.as_deref() == Some(field.as_str()) {
@@ -793,7 +854,8 @@ impl BasicEntityPersister {
                 self.st()
                     .column_types
                     .insert(column_name.clone(), field_mapping.r#type.clone());
-                push(owning_table.clone(), column_name, new_val);
+                drop(info);
+                push(self.get_owning_table(em, &field)?, column_name, new_val);
                 continue;
             };
 
@@ -824,6 +886,7 @@ impl BasicEntityPersister {
                 _ => None,
             };
 
+            let owning_table = self.get_owning_table(em, &field)?;
             let target_class = em.get_class_metadata(&assoc.target_entity)?;
             let target = target_class.read();
             for join_column in &assoc.join_columns {
@@ -867,11 +930,14 @@ impl BasicEntityPersister {
     /// from the currently running `UnitOfWork`.
     ///
     /// The default insert data preparation is the same as for updates.
-    fn prepare_insert_data(
+    pub(super) fn prepare_insert_data(
         &self,
         em: &Arc<EntityManager>,
         entity: &Object,
     ) -> Result<PhpArray, Thrown> {
+        if self.kind != PersisterKind::Basic {
+            return self.inheritance_prepare_insert_data(em, entity);
+        }
         self.prepare_update_data(em, entity, true)
     }
 
@@ -882,7 +948,10 @@ impl BasicEntityPersister {
     /// the name of the table the entity type of this persister is mapped
     /// to, since an entity is always persisted to a single table with a
     /// `BasicEntityPersister`.
-    pub fn get_owning_table(&self, _field_name: &str) -> Result<String, Thrown> {
+    pub fn get_owning_table(&self, em: &EntityManager, field_name: &str) -> Result<String, Thrown> {
+        if self.kind == PersisterKind::JoinedSubclass {
+            return self.joined_get_owning_table(em, field_name);
+        }
         self.class.read().get_table_name()
     }
 
@@ -913,7 +982,7 @@ impl BasicEntityPersister {
         Ok(entities.into_iter().next())
     }
 
-    async fn fetch_all(
+    pub(super) async fn fetch_all(
         &self,
         em: &Arc<EntityManager>,
         sql: &str,
@@ -1413,6 +1482,10 @@ impl BasicEntityPersister {
         offset: Option<i64>,
         order_by: Option<&PhpArray>,
     ) -> Result<String, Thrown> {
+        if self.kind == PersisterKind::JoinedSubclass {
+            return self
+                .joined_get_select_sql(em, criteria, assoc, lock_mode, limit, offset, order_by);
+        }
         self.switch_persister_context(offset, limit);
         let platform = em.get_platform();
         let mut join_sql = String::new();
@@ -1478,6 +1551,9 @@ impl BasicEntityPersister {
         em: &Arc<EntityManager>,
         criteria: PersisterCriteria<'_>,
     ) -> Result<String, Thrown> {
+        if self.kind == PersisterKind::JoinedSubclass {
+            return self.joined_get_count_sql(em, criteria);
+        }
         let platform = em.get_platform();
         let table_name = self
             .quote_strategy
@@ -1502,7 +1578,7 @@ impl BasicEntityPersister {
     }
 
     /// Gets the ORDER BY SQL snippet for ordered collections.
-    fn get_order_by_sql(
+    pub(super) fn get_order_by_sql(
         &self,
         em: &Arc<EntityManager>,
         order_by: &PhpArray,
@@ -1587,7 +1663,21 @@ impl BasicEntityPersister {
     /// `BasicEntityPersister` the resulting SQL fragment is generated only
     /// once and cached in {@link selectColumnListSql}. Subclasses may or
     /// may not do the same.
-    fn get_select_columns_sql(&self, em: &Arc<EntityManager>) -> Result<String, Thrown> {
+    pub(super) fn get_select_columns_sql(&self, em: &Arc<EntityManager>) -> Result<String, Thrown> {
+        match self.kind {
+            PersisterKind::SingleTable => return self.single_table_get_select_columns_sql(em),
+            PersisterKind::JoinedSubclass => return self.joined_get_select_columns_sql(em),
+            PersisterKind::Basic => {}
+        }
+        self.basic_get_select_columns_sql(em)
+    }
+
+    /// `BasicEntityPersister::getSelectColumnsSQL()` (`parent::` of the
+    /// subclasses).
+    pub(super) fn basic_get_select_columns_sql(
+        &self,
+        em: &Arc<EntityManager>,
+    ) -> Result<String, Thrown> {
         if let Some(sql) = self.st().ctx().select_column_list_sql.clone() {
             return Ok(sql);
         }
@@ -1673,7 +1763,7 @@ impl BasicEntityPersister {
 
     /// Gets the SQL join fragment used when selecting entities from a
     /// many-to-many association.
-    fn get_select_many_to_many_join_sql(
+    pub(super) fn get_select_many_to_many_join_sql(
         &self,
         em: &Arc<EntityManager>,
         many_to_many: &AssociationMapping,
@@ -1759,6 +1849,23 @@ impl BasicEntityPersister {
     /// Subclasses should override this method to alter or change the list
     /// of columns placed in the INSERT statements used by the persister.
     fn get_insert_column_list(&self, platform: &dyn AbstractPlatform) -> Vec<String> {
+        match self.kind {
+            PersisterKind::SingleTable => {
+                let mut columns = self.basic_get_insert_column_list(platform);
+                // Add discriminator column to the INSERT SQL
+                if let Ok(discr) = self.class.read().get_discriminator_column() {
+                    columns.push(discr.name.clone());
+                }
+                return columns;
+            }
+            PersisterKind::JoinedSubclass => return self.joined_get_insert_column_list(platform),
+            PersisterKind::Basic => {}
+        }
+        self.basic_get_insert_column_list(platform)
+    }
+
+    /// `BasicEntityPersister::getInsertColumnList()`.
+    fn basic_get_insert_column_list(&self, platform: &dyn AbstractPlatform) -> Vec<String> {
         let info = self.class.read();
         let mut columns = Vec::new();
         for (name, _) in info.property_accessors.iter() {
@@ -1800,13 +1907,16 @@ impl BasicEntityPersister {
 
     /// Gets the SQL snippet of a qualified column name for the given
     /// field name.
-    fn get_select_column_sql(
+    pub(super) fn get_select_column_sql(
         &self,
         em: &Arc<EntityManager>,
         field: &str,
         class: &ClassMetadata,
         alias: &str,
     ) -> Result<String, Thrown> {
+        if self.kind != PersisterKind::Basic {
+            return self.inheritance_get_select_column_sql(em, field, class, alias);
+        }
         let platform = em.get_platform();
         let root = if alias == "r" { "" } else { alias };
         let table_alias = self.get_sql_table_alias(&class.read().name.clone(), root);
@@ -1849,7 +1959,15 @@ impl BasicEntityPersister {
     }
 
     /// Gets the SQL table alias for the given class name.
-    fn get_sql_table_alias(&self, class_name: &str, assoc_name: &str) -> String {
+    pub(super) fn get_sql_table_alias(&self, class_name: &str, assoc_name: &str) -> String {
+        if self.kind == PersisterKind::SingleTable {
+            let root = self.class.read().root_entity_name.clone();
+            return self.basic_get_sql_table_alias(&root, assoc_name);
+        }
+        self.basic_get_sql_table_alias(class_name, assoc_name)
+    }
+
+    fn basic_get_sql_table_alias(&self, class_name: &str, assoc_name: &str) -> String {
         let key = if assoc_name.is_empty() {
             class_name.to_owned()
         } else {
@@ -1951,9 +2069,20 @@ impl BasicEntityPersister {
     }
 
     /// Gets the Select Where Condition from a Criteria object.
-    fn get_select_condition_criteria_sql(
+    pub(super) fn get_select_condition_criteria_sql(
         &self,
-        _em: &Arc<EntityManager>,
+        em: &Arc<EntityManager>,
+        criteria: &Criteria,
+    ) -> Result<String, Thrown> {
+        let condition_sql = self.basic_get_select_condition_criteria_sql(criteria)?;
+        if self.kind == PersisterKind::SingleTable {
+            return self.single_table_append_discriminator_condition(em, condition_sql);
+        }
+        Ok(condition_sql)
+    }
+
+    fn basic_get_select_condition_criteria_sql(
+        &self,
         criteria: &Criteria,
     ) -> Result<String, Thrown> {
         let Some(expression) = criteria.get_where_expression() else {
@@ -2057,7 +2186,20 @@ impl BasicEntityPersister {
 
     /// Gets the conditional SQL fragment used in the WHERE clause when
     /// selecting entities in this persister.
-    fn get_select_condition_sql(
+    pub(super) fn get_select_condition_sql(
+        &self,
+        em: &Arc<EntityManager>,
+        criteria: &PhpArray,
+        assoc: Option<&AssociationMapping>,
+    ) -> Result<String, Thrown> {
+        let condition_sql = self.basic_get_select_condition_sql(em, criteria, assoc)?;
+        if self.kind == PersisterKind::SingleTable {
+            return self.single_table_append_discriminator_condition(em, condition_sql);
+        }
+        Ok(condition_sql)
+    }
+
+    fn basic_get_select_condition_sql(
         &self,
         em: &Arc<EntityManager>,
         criteria: &PhpArray,
@@ -2265,16 +2407,9 @@ impl BasicEntityPersister {
         if criteria.is_empty() {
             return Ok(false);
         }
-        let platform = em.get_platform();
-        let alias = self.get_sql_table_alias(&self.class.read().name.clone(), "");
-        let from = format!(
-            "FROM {} {alias}",
-            self.quote_strategy
-                .get_table_name(&self.class.read(), platform)
-        );
         let mut sql = format!(
             "SELECT 1 {} WHERE {}",
-            platform.append_lock_hint(&from, LockMode::None),
+            self.get_lock_tables_sql(&em, LockMode::None)?,
             self.get_select_condition_sql(&em, &criteria, None)?
         );
         let (mut params, mut types) = self.expand_parameters(&em, &criteria)?;
@@ -2294,6 +2429,27 @@ impl BasicEntityPersister {
         Ok(value.is_some_and(|v| v.is_truthy()))
     }
 
+    /// Gets the FROM and optionally JOIN conditions to lock the entity
+    /// managed by this persister.
+    pub(super) fn get_lock_tables_sql(
+        &self,
+        em: &Arc<EntityManager>,
+        lock_mode: LockMode,
+    ) -> Result<String, Thrown> {
+        let platform = em.get_platform();
+        let alias = self.get_sql_table_alias(&self.class.read().name.clone(), "");
+        let from = format!(
+            "FROM {} {alias}",
+            self.quote_strategy
+                .get_table_name(&self.class.read(), platform)
+        );
+        let sql = platform.append_lock_hint(&from, lock_mode);
+        if self.kind == PersisterKind::JoinedSubclass {
+            return Ok(sql + &self.joined_lock_tables_join_sql(em)?);
+        }
+        Ok(sql)
+    }
+
     /// Gets an SQL column alias for a column name.
     pub fn get_sql_column_alias(&self, em: &EntityManager, column_name: &str) -> String {
         let counter = {
@@ -2311,12 +2467,12 @@ impl BasicEntityPersister {
     ///
     /// This is due to the fact that to-many associations cannot be
     /// fetch-joined when a limit is involved
-    fn switch_persister_context(&self, offset: Option<i64>, limit: Option<i64>) {
+    pub(super) fn switch_persister_context(&self, offset: Option<i64>, limit: Option<i64>) {
         self.st().limits = offset.is_some() || limit.is_some();
     }
 
     #[allow(clippy::unused_self, reason = "an instance method upstream")]
-    fn get_class_identifiers_types(
+    pub(super) fn get_class_identifiers_types(
         &self,
         em: &EntityManager,
         class: &ClassMetadata,
