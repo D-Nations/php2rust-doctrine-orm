@@ -1423,7 +1423,7 @@ tests/Tests/ORM/Functional/Ticket/GH10336Test.php	GH10336Test::testCanAccessRela
 tests/Tests/ORM/Functional/Ticket/GH10348Test.php	GH10348Test::testTheORMRemovesReferencedEmployeeBeforeReferencingEmployee	ported	crates/php2rust-doctrine-orm/tests/gh10348_test.rs::testTheORMRemovesReferencedEmployeeBeforeReferencingEmployee
 tests/Tests/ORM/Functional/Ticket/GH10387Test.php	GH10387Test::testSchemaToolCreatesColumnForFieldInTheMiddleClass	ported	crates/php2rust-doctrine-orm/tests/gh10387_test.rs::testSchemaToolCreatesColumnForFieldInTheMiddleClass
 tests/Tests/ORM/Functional/Ticket/GH10450Test.php	GH10450Test::testDuplicatePrivateFieldsShallBeRejected	ported	crates/php2rust-doctrine-orm/tests/gh10450_test.rs::testDuplicatePrivateFieldsShallBeRejected
-tests/Tests/ORM/Functional/Ticket/GH10454Test.php	GH10454Test::testProtectedPropertyMustNotBeInheritedAndReconfigured	pending	
+tests/Tests/ORM/Functional/Ticket/GH10454Test.php	GH10454Test::testProtectedPropertyMustNotBeInheritedAndReconfigured	ported	crates/php2rust-doctrine-orm/tests/gh10454_test.rs::testProtectedPropertyMustNotBeInheritedAndReconfigured
 tests/Tests/ORM/Functional/Ticket/GH10462Test.php	GH10462Test::testCharsetAndCollationOptionsOnDiscriminatedColumn	pending	
 tests/Tests/ORM/Functional/Ticket/GH10473Test.php	GH10473Test::testMappedSuperclassAssociationsCanBeResolvedToEntities	pending	
 tests/Tests/ORM/Functional/Ticket/GH10531Test.php	GH10531Test::testDeletes	pending	
