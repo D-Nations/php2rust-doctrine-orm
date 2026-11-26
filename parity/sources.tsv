@@ -884,6 +884,10 @@ crates/php2rust-doctrine-orm/tests/gh12166_test.rs	doctrine/orm	tests/Tests/ORM/
 crates/php2rust-doctrine-orm/tests/gh12166_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/GH12166/LazyEntityWithReadonlyId.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/gh12172_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/GH12172Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/gh12183_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/GH12183Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/tests/gh12225_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/GH12225/GH12225Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/tests/gh12225_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/GH12225/AbstractDirectory.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/tests/gh12225_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/GH12225/ConcreteDirectory.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/tests/gh12225_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/GH12225/MyFilter.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/gh12254_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/GH12254Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/gh12438_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/GH12438Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/gh12438_test.rs	doctrine/orm	tests/Tests/Models/GH12438/VersionableEntity.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
