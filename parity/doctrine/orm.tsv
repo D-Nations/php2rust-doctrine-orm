@@ -1440,7 +1440,7 @@ tests/Tests/ORM/Functional/Ticket/GH10747Test.php	GH10747Test::testOrphanedOneTo
 tests/Tests/ORM/Functional/Ticket/GH10752Test.php	GH10752Test::testThrowExceptionWhenRemovingPromotionThatIsInUse	ported	crates/php2rust-doctrine-orm/tests/gh10752_test.rs::testThrowExceptionWhenRemovingPromotionThatIsInUse
 tests/Tests/ORM/Functional/Ticket/GH10752Test.php	GH10752Test::testThrowExceptionWhenRemovingPromotionThatIsInUseAndOrderIsNotInMemory	ported	crates/php2rust-doctrine-orm/tests/gh10752_test.rs::testThrowExceptionWhenRemovingPromotionThatIsInUseAndOrderIsNotInMemory
 tests/Tests/ORM/Functional/Ticket/GH10808Test.php	GH10808Test::testDQLDeferredEagerLoad	ported	crates/php2rust-doctrine-orm/tests/gh10808_test.rs::testDQLDeferredEagerLoad
-tests/Tests/ORM/Functional/Ticket/GH10869Test.php	GH10869Test::testPostPersistListenerUpdatingObjectFieldWhileOtherInsertPending	pending	
+tests/Tests/ORM/Functional/Ticket/GH10869Test.php	GH10869Test::testPostPersistListenerUpdatingObjectFieldWhileOtherInsertPending	pending	its postPersist listener calls flush(); a listener's call is synchronous and flush() is async
 tests/Tests/ORM/Functional/Ticket/GH10880Test.php	GH10880Test::testProcessShouldBeUpdated	ported	crates/php2rust-doctrine-orm/tests/gh10880_test.rs::testProcessShouldBeUpdated
 tests/Tests/ORM/Functional/Ticket/GH10889Test.php	GH10889Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/gh10889_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/GH10912Test.php	GH10912Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/gh10912_test.rs::testIssue
