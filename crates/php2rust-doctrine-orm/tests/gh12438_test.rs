@@ -109,7 +109,9 @@ async fn assert_versionable(versionable: &Value, expected_ids: &[i64]) {
     assert_eq!(expected_ids.len(), coll::count(&versions).await.unwrap());
 
     for (index, expected_id) in expected_ids.iter().enumerate() {
-        let version = coll::get(&versions, index as i64).await.unwrap();
+        let version = coll::get(&versions, i64::try_from(index).unwrap())
+            .await
+            .unwrap();
 
         assert!(
             matches!(&version, Value::Object(o) if o.instance_of(VERSION_ENTITY)),
