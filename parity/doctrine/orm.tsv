@@ -1597,16 +1597,16 @@ tests/Tests/ORM/Functional/Ticket/GH9109Test.php	GH9109Test::testIssue	pending
 tests/Tests/ORM/Functional/Ticket/GH9192Test.php	GH9192Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/GH9230Test.php	GH9230Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/GH9335Test.php	GH9335Test::testFlattenIdentifierWithObjectId	pending	
-tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildNonInsertableColumnInsert	pending	the models are separate files of the ticket directory and not recorded yet
-tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildNonInsertableColumnUpdate	pending	the models are separate files of the ticket directory and not recorded yet
-tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildNonUpdatableColumnInsert	pending	the models are separate files of the ticket directory and not recorded yet
-tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildNonUpdatableColumnUpdate	pending	the models are separate files of the ticket directory and not recorded yet
-tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildNonWritableColumnInsert	pending	the models are separate files of the ticket directory and not recorded yet
-tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildNonWritableColumnUpdate	pending	the models are separate files of the ticket directory and not recorded yet
-tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildWritableColumnInsert	pending	the models are separate files of the ticket directory and not recorded yet
-tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildWritableColumnUpdate	pending	the models are separate files of the ticket directory and not recorded yet
-tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testRootColumnsInsert	pending	the models are separate files of the ticket directory and not recorded yet
-tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testRootColumnsUpdate	pending	the models are separate files of the ticket directory and not recorded yet
+tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildNonInsertableColumnInsert	pending	
+tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildNonInsertableColumnUpdate	pending	
+tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildNonUpdatableColumnInsert	pending	
+tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildNonUpdatableColumnUpdate	pending	
+tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildNonWritableColumnInsert	pending	
+tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildNonWritableColumnUpdate	pending	
+tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildWritableColumnInsert	pending	
+tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildWritableColumnUpdate	pending	
+tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testRootColumnsInsert	pending	
+tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testRootColumnsUpdate	pending	
 tests/Tests/ORM/Functional/Ticket/GH9516Test.php	GH9516Test::testEntityCanHaveInverseOneToManyAssociationWithChildMappedSuperclass	pending	
 tests/Tests/ORM/Functional/Ticket/GH9538Test.php	GH9538Test::testCanRemoveEntityWithReadonlyId	pending	
 tests/Tests/ORM/Functional/Ticket/GH9579Test.php	GH9579Test::testIssue	pending	
