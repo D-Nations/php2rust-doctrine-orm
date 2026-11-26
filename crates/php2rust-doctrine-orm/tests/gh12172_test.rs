@@ -149,4 +149,3 @@ async fn testIsUninitializedObjectNoExceptionForNonManagedObjectsWithMappingDriv
 
     assert!(!em.is_uninitialized_object(&Value::Object(std_class(&[]))));
 }
-
