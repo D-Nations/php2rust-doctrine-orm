@@ -1019,6 +1019,7 @@ crates/php2rust-doctrine-orm/tests/switch_context_test.rs	doctrine/orm	tests/Tes
 crates/php2rust-doctrine-orm/tests/table_mapping_test.rs	doctrine/orm	tests/Tests/ORM/Mapping/TableMappingTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/ticket2481_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/Ticket2481Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/ticket4646_instance_of_abstract_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/Ticket4646InstanceOfAbstractTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/tests/ticket4646_instance_of_multi_level_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/Ticket4646InstanceOfMultiLevelTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/to_many_association_mapping_test.rs	doctrine/orm	tests/Tests/ORM/Mapping/ToManyAssociationMappingTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/topological_sort_test.rs	doctrine/orm	tests/Tests/ORM/Internal/TopologicalSortTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/topological_sort_test.rs	doctrine/orm	tests/Tests/ORM/Internal/Node.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa

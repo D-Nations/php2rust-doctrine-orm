@@ -1622,7 +1622,7 @@ tests/Tests/ORM/Functional/Ticket/SwitchContextWithFilter/SwitchContextTest.php	
 tests/Tests/ORM/Functional/Ticket/SwitchContextWithFilterAndIndexedRelation/ChangeFiltersTest.php	ChangeFiltersTest::testIndexAliasUpdatedWithUpdatedFilter	ported	crates/php2rust-doctrine-orm/tests/change_filters_indexed_relation_test.rs::testIndexAliasUpdatedWithUpdatedFilter
 tests/Tests/ORM/Functional/Ticket/Ticket2481Test.php	Ticket2481Test::testEmptyInsert	ported	crates/php2rust-doctrine-orm/tests/ticket2481_test.rs::testEmptyInsert
 tests/Tests/ORM/Functional/Ticket/Ticket4646InstanceOfAbstractTest.php	Ticket4646InstanceOfAbstractTest::testInstanceOf	ported	crates/php2rust-doctrine-orm/tests/ticket4646_instance_of_abstract_test.rs::testInstanceOf
-tests/Tests/ORM/Functional/Ticket/Ticket4646InstanceOfMultiLevelTest.php	Ticket4646InstanceOfMultiLevelTest::testInstanceOf	pending	
+tests/Tests/ORM/Functional/Ticket/Ticket4646InstanceOfMultiLevelTest.php	Ticket4646InstanceOfMultiLevelTest::testInstanceOf	ported	crates/php2rust-doctrine-orm/tests/ticket4646_instance_of_multi_level_test.rs::testInstanceOf
 tests/Tests/ORM/Functional/Ticket/Ticket4646InstanceOfParametricTest.php	Ticket4646InstanceOfParametricTest::testInstanceOf	pending	
 tests/Tests/ORM/Functional/Ticket/Ticket4646InstanceOfTest.php	Ticket4646InstanceOfTest::testInstanceOf	pending	
 tests/Tests/ORM/Functional/Ticket/Ticket4646InstanceOfWithMultipleParametersTest.php	Ticket4646InstanceOfWithMultipleParametersTest::testInstanceOf	pending	
