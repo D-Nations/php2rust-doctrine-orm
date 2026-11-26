@@ -1318,7 +1318,7 @@ tests/Tests/ORM/Functional/Ticket/DDC3042Test.php	DDC3042Test::testSQLGeneration
 tests/Tests/ORM/Functional/Ticket/DDC3068Test.php	DDC3068Test::testFindUsingAnArrayOfObjectAsPrimaryKey	pending	
 tests/Tests/ORM/Functional/Ticket/DDC309Test.php	DDC309Test::testTwoToIterableHydrations	pending	
 tests/Tests/ORM/Functional/Ticket/DDC3103Test.php	DDC3103Test::testIssue	pending	
-tests/Tests/ORM/Functional/Ticket/DDC3123Test.php	DDC3123Test::testIssue	pending	the postFlush listener reads the private UnitOfWork::$extraUpdates through ReflectionProperty; the port has no accessor for it
+tests/Tests/ORM/Functional/Ticket/DDC3123Test.php	DDC3123Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc3123_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC3160Test.php	DDC3160Test::testNoUpdateOnInsert	ported	crates/php2rust-doctrine-orm/tests/ddc3160_test.rs::testNoUpdateOnInsert
 tests/Tests/ORM/Functional/Ticket/DDC3170Test.php	DDC3170Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC3192Test.php	DDC3192Test::testIssue	pending	
