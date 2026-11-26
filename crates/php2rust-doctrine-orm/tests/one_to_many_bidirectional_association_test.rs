@@ -16,6 +16,8 @@ mod orm;
 use std::sync::Arc;
 
 use php_value::{Object, Value};
+use php2rust_doctrine_collections::Criteria;
+use php2rust_doctrine_orm::collection_object as coll;
 use php2rust_doctrine_orm::entity_manager::EntityManager;
 
 use orm::*;
@@ -227,4 +229,98 @@ async fn testJoinFromOwningSide() {
     );
     let features = query.get_object_result().await.unwrap();
     assert_eq!(list(&features).len(), 0);
+}
+
+/// `Doctrine\Common\Collections\Collection`.
+const COLLECTION: &str = "Doctrine\\Common\\Collections\\Collection";
+
+/// `$this->_em->find(ECommerceProduct::class, $this->product->getId())`.
+async fn find_product(f: &Fixture) -> Object {
+    f.em.find(ECOMMERCE_PRODUCT, get(&f.product, "id"))
+        .await
+        .unwrap()
+        .unwrap()
+}
+
+/// `Criteria::create()->where(Criteria::expr()->eq('description', $description))`.
+fn description_is(description: &str) -> Criteria {
+    let mut criteria = Criteria::create();
+    criteria.r#where(Criteria::expr().eq("description", s(description)));
+    criteria
+}
+
+/// `assertInstanceOf(Collection::class, $results)`.
+fn assert_collection(results: &Value) {
+    let Value::Object(object) = results else {
+        panic!("{results:?} is not a collection");
+    };
+    assert!(object.instance_of(COLLECTION), "{}", object.class());
+}
+
+#[tokio::test]
+async fn testMatching() {
+    let f = set_up_test().await;
+    create_fixture(&f).await;
+
+    let product = find_product(&f).await;
+    let features = get(&product, "features");
+
+    let results = coll::matching(&features, &description_is("Model writing tutorial"))
+        .await
+        .unwrap();
+
+    assert_collection(&results);
+    assert_eq!(coll::count(&results).await.unwrap(), 1);
+
+    let results = coll::matching(&features, &Criteria::create())
+        .await
+        .unwrap();
+
+    assert_collection(&results);
+    assert_eq!(coll::count(&results).await.unwrap(), 2);
+}
+
+#[tokio::test]
+async fn testMatchingOnDirtyCollection() {
+    let f = set_up_test().await;
+    create_fixture(&f).await;
+
+    let product = find_product(&f).await;
+
+    let third_feature = ecommerce_feature("Model writing tutorial");
+
+    let features = get(&product, "features");
+    coll::add(&features, Value::Object(third_feature)).unwrap();
+
+    let results = coll::matching(&features, &description_is("Model writing tutorial"))
+        .await
+        .unwrap();
+
+    assert_eq!(coll::count(&results).await.unwrap(), 2);
+}
+
+#[tokio::test]
+async fn testMatchingBis() {
+    let f = set_up_test().await;
+    create_fixture(&f).await;
+
+    let product = find_product(&f).await;
+    let features = get(&product, "features");
+
+    let third_feature = ecommerce_feature("Third feature");
+    add_feature(&product, &third_feature);
+
+    let results = coll::matching(&features, &description_is("Third feature"))
+        .await
+        .unwrap();
+
+    assert_collection(&results);
+    assert_eq!(coll::count(&results).await.unwrap(), 1);
+
+    let results = coll::matching(&features, &Criteria::create())
+        .await
+        .unwrap();
+
+    assert_collection(&results);
+    assert_eq!(coll::count(&results).await.unwrap(), 3);
 }
