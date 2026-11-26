@@ -4,8 +4,7 @@
 //! This class is designed for inheritance and users can subclass this
 //! class to write their own repositories with business-specific methods
 //! to locate entities; here a subclass's methods are not ported, and the
-//! repository only reports its class name. Result set mapping builders
-//! are not ported.
+//! repository only reports its class name.
 //!
 //! PHP's `__call()` magic finders are [`EntityRepository::call`].
 //!
@@ -254,6 +253,26 @@ fn lcfirst(word: &str) -> String {
 
 /// The query builder and `matching()` of the repository.
 impl EntityRepository {
+    /// Creates a new result set mapping builder for this entity.
+    ///
+    /// The column naming strategy is "INCREMENT".
+    pub fn create_result_set_mapping_builder(
+        &self,
+        alias: &str,
+    ) -> Result<crate::query::ResultSetMappingBuilder, Thrown> {
+        let mut rsm = crate::query::ResultSetMappingBuilder::new(
+            &self.em()?,
+            Some(crate::query::ResultSetMappingBuilder::COLUMN_RENAMING_INCREMENT),
+        );
+        rsm.add_root_entity_from_class_metadata(
+            &self.entity_name,
+            alias,
+            &crate::mapping::ordered_map::OrderedMap::new(),
+            None,
+        )?;
+        Ok(rsm)
+    }
+
     /// Select all elements from a selectable that match the expression and
     /// return a new collection containing these elements.
     ///

@@ -155,7 +155,7 @@ impl LazyCriteriaCollection {
 
     /// `first()`.
     pub async fn first(&self) -> Result<Value, Thrown> {
-        self.with_collection(|c| c.first()).await
+        self.with_collection(ArrayCollection::first).await
     }
 
     /// `slice($offset, $length)`.
