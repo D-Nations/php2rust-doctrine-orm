@@ -90,7 +90,7 @@ src/Exception/MultipleSelectorsFoundException.php	MultipleSelectorsFoundExceptio
 src/Exception/NoMatchingPropertyException.php	NoMatchingPropertyException	11	ported	crates/php2rust-doctrine-orm/src/query/query_exception.rs
 src/Exception/NotSupported.php	NotSupported	35	ported	crates/php2rust-doctrine-orm/src/exception.rs
 src/Exception/ORMException.php	ORMException	6	ported	crates/php2rust-doctrine-orm/src/exception.rs
-src/Exception/PersisterException.php	PersisterException	6	pending	
+src/Exception/PersisterException.php	PersisterException	6	ported	crates/php2rust-doctrine-orm/src/exception.rs
 src/Exception/RepositoryException.php	RepositoryException	5	pending	
 src/Exception/SchemaToolException.php	SchemaToolException	6	pending	
 src/Exception/UnexpectedAssociationValue.php	UnexpectedAssociationValue	21	ported	crates/php2rust-doctrine-orm/src/exception.rs
@@ -115,7 +115,7 @@ src/Internal/StronglyConnectedComponents.php	StronglyConnectedComponents	81	port
 src/Internal/TopologicalSort.php	TopologicalSort	71	ported	crates/php2rust-doctrine-orm/src/internal/topological_sort.rs
 src/Internal/TopologicalSort/CycleDetectedException.php	CycleDetectedException	29	ported	crates/php2rust-doctrine-orm/src/internal/topological_sort.rs
 src/Internal/UnitOfWork/InsertBatch.php	InsertBatch	35	ported	crates/php2rust-doctrine-orm/src/unit_of_work.rs
-src/LazyCriteriaCollection.php	LazyCriteriaCollection	51	pending	
+src/LazyCriteriaCollection.php	LazyCriteriaCollection	51	ported	crates/php2rust-doctrine-orm/src/lazy_criteria_collection.rs
 src/Mapping/AnsiQuoteStrategy.php	AnsiQuoteStrategy	53	ported	crates/php2rust-doctrine-orm/src/mapping/quote_strategy.rs
 src/Mapping/ArrayAccessImplementation.php	ArrayAccessImplementation	51	ported	crates/php2rust-doctrine-orm/src/mapping/field_mapping.rs
 src/Mapping/AssociationMapping.php	AssociationMapping	217	ported	crates/php2rust-doctrine-orm/src/mapping/association_mapping.rs
@@ -248,10 +248,10 @@ src/Persisters/Entity/SingleTablePersister.php	SingleTablePersister	109	pending
 src/Persisters/Exception/CantUseInOperatorOnCompositeKeys.php	CantUseInOperatorOnCompositeKeys	10	ported	crates/php2rust-doctrine-orm/src/exception.rs
 src/Persisters/Exception/InvalidOrientation.php	InvalidOrientation	10	ported	crates/php2rust-doctrine-orm/src/exception.rs
 src/Persisters/Exception/UnrecognizedField.php	UnrecognizedField	15	ported	crates/php2rust-doctrine-orm/src/exception.rs
-src/Persisters/MatchingAssociationFieldRequiresObject.php	MatchingAssociationFieldRequiresObject	16	pending	
+src/Persisters/MatchingAssociationFieldRequiresObject.php	MatchingAssociationFieldRequiresObject	16	ported	crates/php2rust-doctrine-orm/src/exception.rs
 src/Persisters/PersisterException.php	PersisterException	17	pending	
-src/Persisters/SqlExpressionVisitor.php	SqlExpressionVisitor	54	pending	
-src/Persisters/SqlValueVisitor.php	SqlValueVisitor	39	pending	
+src/Persisters/SqlExpressionVisitor.php	SqlExpressionVisitor	54	ported	crates/php2rust-doctrine-orm/src/persisters/sql_expression_visitor.rs
+src/Persisters/SqlValueVisitor.php	SqlValueVisitor	39	ported	crates/php2rust-doctrine-orm/src/persisters/sql_value_visitor.rs
 src/Persisters/SqlValueVisitorImplementation.php	SqlValueVisitorImplementation SqlValueVisitorImplementation	44	pending	
 src/PessimisticLockException.php	PessimisticLockException	11	pending	
 src/Proxy/Autoloader.php	Autoloader	63	pending	
@@ -388,7 +388,7 @@ src/Query/Printer.php	Printer	26	pending
 src/Query/QueryException.php	QueryException	133	ported	crates/php2rust-doctrine-orm/src/query/query_exception.rs
 src/Query/QueryExpressionVisitor.php	QueryExpressionVisitor	124	ported	crates/php2rust-doctrine-orm/src/query/query_expression_visitor.rs
 src/Query/ResultSetMapping.php	ResultSetMapping	203	ported	crates/php2rust-doctrine-orm/src/query/result_set_mapping.rs
-src/Query/ResultSetMappingBuilder.php	ResultSetMappingBuilder	160	pending	
+src/Query/ResultSetMappingBuilder.php	ResultSetMappingBuilder	160	ported	crates/php2rust-doctrine-orm/src/query/result_set_mapping_builder.rs
 src/Query/SqlOutputWalker.php	SqlOutputWalker	21	ported	crates/php2rust-doctrine-orm/src/query/sql_walker.rs
 src/Query/SqlWalker.php	SqlWalker	1510	ported	crates/php2rust-doctrine-orm/src/query/sql_walker.rs
 src/Query/TokenType.php	TokenType	85	ported	crates/php2rust-doctrine-orm/src/query/token_type.rs

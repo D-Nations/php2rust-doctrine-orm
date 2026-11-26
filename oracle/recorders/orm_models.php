@@ -295,6 +295,11 @@ namespace {
         'ORM/Functional/QueryTest.php',
         'ORM/Functional/BasicFunctionalTest.php',
         'ORM/Functional/EntityRepositoryTest.php',
+        'ORM/Functional/EntityRepositoryCriteriaTest.php',
+        'ORM/Functional/ExtraLazyCollectionTest.php',
+        'ORM/Functional/PersistentCollectionCriteriaTest.php',
+        'ORM/LazyCriteriaCollectionTest.php',
+        'ORM/PersistentCollectionTest.php',
         'Models/Global/GlobalNamespaceModel.php',
     ];
     $before = array_merge(get_declared_classes(), get_declared_interfaces(), get_declared_traits());
