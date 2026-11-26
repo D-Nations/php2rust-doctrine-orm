@@ -1851,69 +1851,69 @@ tests/Tests/ORM/Mapping/AssociationMappingTest.php	AssociationMappingTest::testI
 tests/Tests/ORM/Mapping/AssociationMappingTest.php	AssociationMappingTest::testItThrowsWhenAccessingUnknownProperty	ported	crates/php2rust-doctrine-orm/tests/association_mapping_test.rs::testItThrowsWhenAccessingUnknownProperty
 tests/Tests/ORM/Mapping/AssociationMappingTest.php	AssociationMappingTest::testItThrowsWhenSettingUnknownProperty	ported	crates/php2rust-doctrine-orm/tests/association_mapping_test.rs::testItThrowsWhenSettingUnknownProperty
 tests/Tests/ORM/Mapping/AssociationMappingTest.php	AssociationMappingTest::testItThrowsWhenUnsettingUnknownProperty	ported	crates/php2rust-doctrine-orm/tests/association_mapping_test.rs::testItThrowsWhenUnsettingUnknownProperty
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testAssociationOverridesMapping	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testAssociations	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testAttributeOverridesMapping	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testBooleanValuesForOptionIsSetCorrectly	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testColumnDefinition	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testCompositeIdPositionOrdering	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testCustomFieldTypeFromReflection	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testCustomNamingStrategyIsRespected	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testDefaultFieldType	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testDiscriminatorColumnDefaultLength	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testDiscriminatorColumnDefaultName	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testDiscriminatorColumnDefaultType	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testDiscriminatorColumnDefaults	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testDiscriminatorColumnDefinition	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testDiscriminatorColumnEnumTypeDefinition	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testDriverCanAcceptClassLocator	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testEntityCustomGenerator	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testEntityIncorrectIndexes	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testEntityIncorrectUniqueContraint	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testEntityIndexFlagsAndPartialIndexes	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testEntityIndexes	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testEntityListeners	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testEntityListenersNamingConvention	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testEntityListenersOverride	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testEntityOptions	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testEntitySequence	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testEntityTableNameAndInheritance	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testEntityUniqueConstraints	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testEnumType	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testFetchOverrideMapping	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testFieldMappings	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testFieldMappingsColumnNames	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testFieldOptions	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testFieldTypeFromReflection	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testIdFieldOptions	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testIdentifier	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testIdentifierColumnDefinition	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testIdentifierRequiredShouldMentionParentClasses	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testInsertableColumn	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testInvalidEntityOrMappedSuperClassShouldMentionParentClasses	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testInverseOneToManyAssociation	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testInversedByOverrideMapping	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testIsTransient	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testItThrowsWhenSettingReportFieldsWhereDeclaredToFalse	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testJoinColumnOnDelete	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testJoinColumnUniqueAndNullable	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testLifecycleCallbacks	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testLifecycleCallbacksSupportMultipleMethodNames	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testManyToManyAssociationWithCascadeAll	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testManyToManyAssociationWithNestedJoinColumns	pending	
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testAssociationOverridesMapping	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testAssociationOverridesMapping
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testAssociations	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testAssociations
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testAttributeOverridesMapping	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testAttributeOverridesMapping
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testBooleanValuesForOptionIsSetCorrectly	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testBooleanValuesForOptionIsSetCorrectly
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testColumnDefinition	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testColumnDefinition
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testCompositeIdPositionOrdering	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testCompositeIdPositionOrdering
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testCustomFieldTypeFromReflection	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testCustomFieldTypeFromReflection
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testCustomNamingStrategyIsRespected	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testCustomNamingStrategyIsRespected
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testDefaultFieldType	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testDefaultFieldType
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testDiscriminatorColumnDefaultLength	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testDiscriminatorColumnDefaultLength
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testDiscriminatorColumnDefaultName	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testDiscriminatorColumnDefaultName
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testDiscriminatorColumnDefaultType	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testDiscriminatorColumnDefaultType
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testDiscriminatorColumnDefaults	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testDiscriminatorColumnDefaults
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testDiscriminatorColumnDefinition	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testDiscriminatorColumnDefinition
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testDiscriminatorColumnEnumTypeDefinition	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testDiscriminatorColumnEnumTypeDefinition
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testDriverCanAcceptClassLocator	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testDriverCanAcceptClassLocator
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testEntityCustomGenerator	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testEntityCustomGenerator
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testEntityIncorrectIndexes	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testEntityIncorrectIndexes
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testEntityIncorrectUniqueContraint	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testEntityIncorrectUniqueContraint
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testEntityIndexFlagsAndPartialIndexes	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testEntityIndexFlagsAndPartialIndexes
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testEntityIndexes	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testEntityIndexes
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testEntityListeners	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testEntityListeners
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testEntityListenersNamingConvention	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testEntityListenersNamingConvention
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testEntityListenersOverride	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testEntityListenersOverride
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testEntityOptions	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testEntityOptions
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testEntitySequence	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testEntitySequence
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testEntityTableNameAndInheritance	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testEntityTableNameAndInheritance
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testEntityUniqueConstraints	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testEntityUniqueConstraints
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testEnumType	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testEnumType
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testFetchOverrideMapping	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testFetchOverrideMapping
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testFieldMappings	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testFieldMappings
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testFieldMappingsColumnNames	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testFieldMappingsColumnNames
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testFieldOptions	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testFieldOptions
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testFieldTypeFromReflection	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testFieldTypeFromReflection
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testIdFieldOptions	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testIdFieldOptions
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testIdentifier	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testIdentifier
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testIdentifierColumnDefinition	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testIdentifierColumnDefinition
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testIdentifierRequiredShouldMentionParentClasses	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testIdentifierRequiredShouldMentionParentClasses
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testInsertableColumn	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testInsertableColumn
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testInvalidEntityOrMappedSuperClassShouldMentionParentClasses	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testInvalidEntityOrMappedSuperClassShouldMentionParentClasses
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testInverseOneToManyAssociation	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testInverseOneToManyAssociation
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testInversedByOverrideMapping	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testInversedByOverrideMapping
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testIsTransient	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testIsTransient
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testItThrowsWhenSettingReportFieldsWhereDeclaredToFalse	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testItThrowsWhenSettingReportFieldsWhereDeclaredToFalse
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testJoinColumnOnDelete	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testJoinColumnOnDelete
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testJoinColumnUniqueAndNullable	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testJoinColumnUniqueAndNullable
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testLifecycleCallbacks	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testLifecycleCallbacks
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testLifecycleCallbacksSupportMultipleMethodNames	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testLifecycleCallbacksSupportMultipleMethodNames
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testManyToManyAssociationWithCascadeAll	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testManyToManyAssociationWithCascadeAll
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testManyToManyAssociationWithNestedJoinColumns	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testManyToManyAssociationWithNestedJoinColumns
 tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testMappedSuperclassWithRepository	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testNamingStrategy	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testOrderByWithInvalidDirection	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testOrderByWithStringValues	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testOriginallyNestedAttributesDeclaredWithoutOriginalParent	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testOwningOneToOneAssociation	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testReservedWordInTableColumn	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testSchemaDefinitionViaExplicitTableSchemaAttributeProperty	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testSchemaDefinitionViaSchemaDefinedInTableNameInTableAttributeProperty	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testSecondLevelCacheMapping	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testStringFieldMappings	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testUpdatableColumn	pending	
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testVersionedField	pending	
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testNamingStrategy	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testNamingStrategy
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testOrderByWithInvalidDirection	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testOrderByWithInvalidDirection
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testOrderByWithStringValues	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testOrderByWithStringValues
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testOriginallyNestedAttributesDeclaredWithoutOriginalParent	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testOriginallyNestedAttributesDeclaredWithoutOriginalParent
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testOwningOneToOneAssociation	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testOwningOneToOneAssociation
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testReservedWordInTableColumn	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testReservedWordInTableColumn
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testSchemaDefinitionViaExplicitTableSchemaAttributeProperty	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testSchemaDefinitionViaExplicitTableSchemaAttributeProperty
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testSchemaDefinitionViaSchemaDefinedInTableNameInTableAttributeProperty	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testSchemaDefinitionViaSchemaDefinedInTableNameInTableAttributeProperty
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testSecondLevelCacheMapping	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testSecondLevelCacheMapping
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testStringFieldMappings	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testStringFieldMappings
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testUpdatableColumn	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testUpdatableColumn
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testVersionedField	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testVersionedField
 tests/Tests/ORM/Mapping/AttributeReaderTest.php	AttributeReaderTest::testDiscriminatedColumnOptions	ported	crates/php2rust-doctrine-orm/tests/attribute_reader_test.rs::testDiscriminatedColumnOptions
 tests/Tests/ORM/Mapping/AttributeReaderTest.php	AttributeReaderTest::testItThrowsWhenGettingNonRepeatableAttributeWithTheWrongMethod	ported	crates/php2rust-doctrine-orm/tests/attribute_reader_test.rs::testItThrowsWhenGettingNonRepeatableAttributeWithTheWrongMethod
 tests/Tests/ORM/Mapping/AttributeReaderTest.php	AttributeReaderTest::testItThrowsWhenGettingRepeatableAttributeWithTheWrongMethod	ported	crates/php2rust-doctrine-orm/tests/attribute_reader_test.rs::testItThrowsWhenGettingRepeatableAttributeWithTheWrongMethod

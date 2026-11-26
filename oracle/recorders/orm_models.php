@@ -282,7 +282,7 @@ namespace {
         }
 
         // The models a test file imports.
-        preg_match_all('/^use (Doctrine\\\\Tests\\\\Models\\\\[^ ;]+)(?: as [^;]+)?;/m', file_get_contents($path), $uses);
+        preg_match_all('/^use (Doctrine\\\\Tests\\\\(?:Models|ORM\\\\Mapping\\\\Fixtures)\\\\[^ ;]+)(?: as [^;]+)?;/m', file_get_contents($path), $uses);
         foreach ($uses[1] as $use) {
             load($use);
         }
