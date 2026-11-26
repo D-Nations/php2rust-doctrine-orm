@@ -1299,7 +1299,7 @@ tests/Tests/ORM/Functional/Ticket/DDC2660Test.php	DDC2660Test::testIssueWithExtr
 tests/Tests/ORM/Functional/Ticket/DDC2660Test.php	DDC2660Test::testIssueWithoutExtraColumn	ported	crates/php2rust-doctrine-orm/tests/ddc2660_test.rs::testIssueWithoutExtraColumn
 tests/Tests/ORM/Functional/Ticket/DDC2692Test.php	DDC2692Test::testIsListenerCalledOnlyOnceOnPreFlush	ported	crates/php2rust-doctrine-orm/tests/ddc2692_test.rs::testIsListenerCalledOnlyOnceOnPreFlush
 tests/Tests/ORM/Functional/Ticket/DDC2759Test.php	DDC2759Test::testCorrectNumberOfAssociationsIsReturned	ported	crates/php2rust-doctrine-orm/tests/ddc2759_test.rs::testCorrectNumberOfAssociationsIsReturned
-tests/Tests/ORM/Functional/Ticket/DDC2775Test.php	DDC2775Test::testIssueCascadeRemove	pending	
+tests/Tests/ORM/Functional/Ticket/DDC2775Test.php	DDC2775Test::testIssueCascadeRemove	ported	crates/php2rust-doctrine-orm/tests/ddc2775_test.rs::testIssueCascadeRemove
 tests/Tests/ORM/Functional/Ticket/DDC2780Test.php	DDC2780Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2780_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC2790Test.php	DDC2790Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2790_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC279Test.php	DDC279Test::testDDC279	ported	crates/php2rust-doctrine-orm/tests/ddc279_test.rs::testDDC279
