@@ -11,8 +11,8 @@
 //! The persister does not join the inverse sides of one-to-one
 //! associations and `EAGER` to-one associations into its `SELECT`; the
 //! unit of work loads them when it creates the entity (a second query,
-//! which is what PHP does without the join). Lock modes, filters and
-//! `Criteria` are not ported.
+//! which is what PHP does without the join). Lock modes and filters are
+//! not ported.
 //!
 //! Upstream: doctrine/orm src/Persisters/Entity/BasicEntityPersister.php src/Persisters/Entity/CachedPersisterContext.php
 //! Upstream: doctrine/orm src/Persisters/Entity/EntityPersister.php
@@ -21,6 +21,8 @@ use std::collections::HashMap;
 use std::sync::{Arc, Mutex, MutexGuard, PoisonError, Weak};
 
 use php_value::{Key, Object, PhpArray, Thrown, Value};
+use php2rust_doctrine_collections::Criteria;
+use php2rust_doctrine_collections::expr::{Comparison, ExpressionVisitor};
 use php2rust_doctrine_dbal::platforms::AbstractPlatform;
 use php2rust_doctrine_dbal::{LockMode, ParameterTypes, types};
 
@@ -33,6 +35,9 @@ use crate::mapping::{AssociationMapping, ClassMetadata, JoinColumnMapping, Quote
 use crate::persistent_collection::PersistentCollection;
 use crate::query::ResultSetMapping;
 use crate::unit_of_work::Hints;
+
+use super::sql_expression_visitor::SqlExpressionVisitor;
+use super::sql_value_visitor::SqlValueVisitor;
 use crate::utility::{
     ParamType, convert_to_parameter_value, flatten_identifier, get_type_of_column,
     get_type_of_field, infer_parameter_types, key_text, to_text,
@@ -115,6 +120,66 @@ fn types_of(types: Vec<ParamType>) -> ParameterTypes {
 
 fn dbal(e: &php2rust_doctrine_dbal::Exception) -> Thrown {
     exception::from_dbal(e)
+}
+
+/// The criteria of `getSelectSQL()` and `getCountSQL()`:
+/// `array|Criteria`.
+#[derive(Debug, Clone, Copy)]
+pub enum PersisterCriteria<'a> {
+    Array(&'a PhpArray),
+    Criteria(&'a Criteria),
+}
+
+impl<'a> From<&'a PhpArray> for PersisterCriteria<'a> {
+    fn from(criteria: &'a PhpArray) -> Self {
+        Self::Array(criteria)
+    }
+}
+
+impl<'a> From<&'a Criteria> for PersisterCriteria<'a> {
+    fn from(criteria: &'a Criteria) -> Self {
+        Self::Criteria(criteria)
+    }
+}
+
+/// `self::$comparisonMap[$comparison]`.
+fn comparison_sql(comparison: &str, placeholder: &str) -> Result<String, Thrown> {
+    Ok(match comparison {
+        Comparison::EQ => format!("= {placeholder}"),
+        Comparison::NEQ => format!("!= {placeholder}"),
+        Comparison::GT => format!("> {placeholder}"),
+        Comparison::GTE => format!(">= {placeholder}"),
+        Comparison::LT => format!("< {placeholder}"),
+        Comparison::LTE => format!("<= {placeholder}"),
+        Comparison::IN => format!("IN ({placeholder})"),
+        Comparison::NIN => format!("NOT IN ({placeholder})"),
+        Comparison::CONTAINS | Comparison::STARTS_WITH | Comparison::ENDS_WITH => {
+            format!("LIKE {placeholder}")
+        }
+        _ => {
+            // An undefined key of the map: `sprintf(null, ...)` under
+            // strict types.
+            return Err(Thrown::new(
+                "TypeError",
+                "sprintf(): Argument #1 ($format) must be of type string, null given",
+                0,
+            ));
+        }
+    })
+}
+
+/// The orderings of a criteria as `getOrderingsAsStringMap()` gives them.
+fn orderings_as_string_map(criteria: &Criteria) -> PhpArray {
+    let mut map = PhpArray::new();
+    for (field, direction) in criteria.get_orderings() {
+        let direction = if direction == php2rust_doctrine_collections::SortDirection::Ascending {
+            "ASC"
+        } else {
+            "DESC"
+        };
+        map.insert(field.as_str(), Value::string(direction));
+    }
+    map
 }
 
 /// One criterion of a to-many statement (`expandToManyParameters()`).
@@ -834,7 +899,7 @@ impl BasicEntityPersister {
     ) -> Result<Option<Object>, Thrown> {
         let em = self.em()?;
         self.switch_persister_context(None, limit);
-        let sql = self.get_select_sql(&em, criteria, assoc, None, limit, None, order_by)?;
+        let sql = self.get_select_sql(&em, criteria.into(), assoc, None, limit, None, order_by)?;
         let (params, types) = self.expand_parameters(&em, criteria)?;
         let rows = self.fetch_all(&em, &sql, params, types).await?;
 
@@ -1006,7 +1071,7 @@ impl BasicEntityPersister {
     pub async fn refresh(&self, id: &PhpArray, _entity: &Object) -> Result<(), Thrown> {
         let em = self.em()?;
         self.switch_persister_context(None, None);
-        let sql = self.get_select_sql(&em, id, None, None, None, None, None)?;
+        let sql = self.get_select_sql(&em, id.into(), None, None, None, None, None)?;
         let (params, types) = self.expand_parameters(&em, id)?;
         let rows = self.fetch_all(&em, &sql, params, types).await?;
         let rsm = self.get_result_set_mapping();
@@ -1021,7 +1086,7 @@ impl BasicEntityPersister {
     /// Count entities (optionally filtered by a criteria)
     pub async fn count(&self, criteria: &PhpArray) -> Result<i64, Thrown> {
         let em = self.em()?;
-        let sql = self.get_count_sql(&em, criteria)?;
+        let sql = self.get_count_sql(&em, criteria.into())?;
         let (params, types) = self.expand_parameters(&em, criteria)?;
         let value = em
             .get_connection()
@@ -1035,6 +1100,98 @@ impl BasicEntityPersister {
         })
     }
 
+    /// `count(Criteria)`: count entities filtered by a criteria.
+    pub async fn count_criteria(&self, criteria: &Criteria) -> Result<i64, Thrown> {
+        let em = self.em()?;
+        let sql = self.get_count_sql(&em, criteria.into())?;
+        let (params, types) = self.expand_criteria_parameters(&em, criteria)?;
+        let value = em
+            .get_connection()
+            .fetch_one(&sql, &PhpArray::list(params), &types_of(types))
+            .await
+            .map_err(|e| dbal(&e))?;
+        Ok(match value {
+            Some(Value::Int(i)) => i,
+            Some(other) => to_text(&other).trim().parse().unwrap_or(0),
+            None => 0,
+        })
+    }
+
+    /// Loads Entities matching the given Criteria object.
+    pub async fn load_criteria(&self, criteria: &Criteria) -> Result<Vec<Object>, Thrown> {
+        let em = self.em()?;
+        let order_by = orderings_as_string_map(criteria);
+        let limit = criteria.get_max_results();
+        let offset = criteria.get_first_result();
+        let query = self.get_select_sql(
+            &em,
+            criteria.into(),
+            None,
+            None,
+            limit,
+            offset,
+            Some(&order_by),
+        )?;
+        let (params, types) = self.expand_criteria_parameters(&em, criteria)?;
+        let rows = self.fetch_all(&em, &query, params, types).await?;
+        let rsm = self.get_result_set_mapping();
+        let mut hints = Hints {
+            defer_eager_load: true,
+            ..Hints::default()
+        };
+        hydration::hydrate_all(&em, rows, &rsm, &mut hints, None).await
+    }
+
+    /// Expands Criteria Parameters by walking the expressions and grabbing
+    /// all parameters and types from it.
+    pub fn expand_criteria_parameters(
+        &self,
+        em: &EntityManager,
+        criteria: &Criteria,
+    ) -> Result<Params, Thrown> {
+        let mut sql_params = Vec::new();
+        let mut sql_types = Vec::new();
+        let Some(expression) = criteria.get_where_expression() else {
+            return Ok((sql_params, sql_types));
+        };
+
+        let mut value_visitor = SqlValueVisitor::new();
+        value_visitor.dispatch(expression)?;
+        let (_, types) = value_visitor.get_params_and_types();
+
+        let info = self.class.read();
+        for ty in types {
+            let (field, value, operator) = (ty.field, ty.value, ty.operator);
+            if value.is_null() && (operator == Comparison::EQ || operator == Comparison::NEQ) {
+                continue;
+            }
+            if operator == Comparison::IN || operator == Comparison::NIN {
+                let values = match value {
+                    Value::Array(values) => values,
+                    other => PhpArray::list(vec![other]),
+                };
+                for item in values.values() {
+                    if item.is_null() {
+                        // Compare this to how getSelectConditionStatementSQL
+                        // creates the "[NOT] IN (...)" expression - for NULL
+                        // values, it does _not_ insert a placeholder in the
+                        // SQL and instead adds an extra ... OR ... IS NULL
+                        // condition. So we need to skip NULL values here as
+                        // well to create a parameters list that matches the
+                        // SQL.
+                        continue;
+                    }
+                    sql_params.extend(convert_to_parameter_value(item, em)?);
+                    sql_types.extend(infer_parameter_types(&field, item, &info, em)?);
+                }
+                continue;
+            }
+            sql_params.extend(convert_to_parameter_value(&value, em)?);
+            sql_types.extend(infer_parameter_types(&field, &value, &info, em)?);
+        }
+        Ok((sql_params, sql_types))
+    }
+
     /// Loads a list of entities by a list of field criteria.
     pub async fn load_all(
         &self,
@@ -1045,7 +1202,7 @@ impl BasicEntityPersister {
     ) -> Result<Vec<Object>, Thrown> {
         let em = self.em()?;
         self.switch_persister_context(offset, limit);
-        let sql = self.get_select_sql(&em, criteria, None, None, limit, offset, order_by)?;
+        let sql = self.get_select_sql(&em, criteria.into(), None, None, limit, offset, order_by)?;
         let (params, types) = self.expand_parameters(&em, criteria)?;
         let rows = self.fetch_all(&em, &sql, params, types).await?;
         let rsm = self.get_result_set_mapping();
@@ -1215,7 +1372,15 @@ impl BasicEntityPersister {
             });
         }
 
-        let sql = self.get_select_sql(em, &criteria, Some(assoc), None, limit, offset, None)?;
+        let sql = self.get_select_sql(
+            em,
+            (&criteria).into(),
+            Some(assoc),
+            None,
+            limit,
+            offset,
+            None,
+        )?;
         let (params, types) = self.expand_to_many_parameters(em, &parameters)?;
         self.fetch_all(em, &sql, params, types).await
     }
@@ -1229,7 +1394,7 @@ impl BasicEntityPersister {
     pub fn get_select_sql(
         &self,
         em: &Arc<EntityManager>,
-        criteria: &PhpArray,
+        criteria: PersisterCriteria<'_>,
         assoc: Option<&AssociationMapping>,
         lock_mode: Option<LockMode>,
         limit: Option<i64>,
@@ -1259,7 +1424,14 @@ impl BasicEntityPersister {
             order_by_sql = self.get_order_by_sql(em, &order_by, &alias)?;
         }
 
-        let condition_sql = self.get_select_condition_sql(em, criteria, assoc)?;
+        let condition_sql = match criteria {
+            PersisterCriteria::Criteria(criteria) => {
+                self.get_select_condition_criteria_sql(em, criteria)?
+            }
+            PersisterCriteria::Array(criteria) => {
+                self.get_select_condition_sql(em, criteria, assoc)?
+            }
+        };
         let column_list = self.get_select_columns_sql(em)?;
         let table_alias = self.get_sql_table_alias(&self.class.read().name.clone(), "");
         let table_name = self
@@ -1292,14 +1464,21 @@ impl BasicEntityPersister {
     pub fn get_count_sql(
         &self,
         em: &Arc<EntityManager>,
-        criteria: &PhpArray,
+        criteria: PersisterCriteria<'_>,
     ) -> Result<String, Thrown> {
         let platform = em.get_platform();
         let table_name = self
             .quote_strategy
             .get_table_name(&self.class.read(), platform);
         let table_alias = self.get_sql_table_alias(&self.class.read().name.clone(), "");
-        let condition_sql = self.get_select_condition_sql(em, criteria, None)?;
+        let condition_sql = match criteria {
+            PersisterCriteria::Criteria(criteria) => {
+                self.get_select_condition_criteria_sql(em, criteria)?
+            }
+            PersisterCriteria::Array(criteria) => {
+                self.get_select_condition_sql(em, criteria, None)?
+            }
+        };
         Ok(format!(
             "SELECT COUNT(*) FROM {table_name} {table_alias}{}",
             if condition_sql.is_empty() {
@@ -1686,15 +1865,24 @@ impl BasicEntityPersister {
         field: &str,
         value: &Value,
         assoc: Option<&AssociationMapping>,
+        comparison: Option<&str>,
     ) -> Result<String, Thrown> {
         let platform = em.get_platform();
-        let is_in = matches!(value, Value::Array(_));
+        let comparison = comparison.unwrap_or(if matches!(value, Value::Array(_)) {
+            Comparison::IN
+        } else {
+            Comparison::EQ
+        });
+
+        let mut selected_columns = Vec::new();
         let columns = self.get_select_condition_statement_column_sql(em, field, assoc)?;
-        if columns.len() > 1 && is_in {
+
+        if columns.len() > 1 && comparison == Comparison::IN {
+            // @todo try to support multi-column IN expressions.
+            // Example: (col1, col2) IN (('val1A', 'val2A'), ('val1B', 'val2B'))
             return Err(exception::cant_use_in_operator_on_composite_keys());
         }
 
-        let mut selected_columns = Vec::new();
         for column in columns {
             let mut placeholder = "?".to_owned();
             if let Some(mapping) = self.class.read().field_mappings.get(field) {
@@ -1706,12 +1894,22 @@ impl BasicEntityPersister {
                     .into_owned();
             }
 
-            if !is_in && value.is_null() {
+            // special case null value handling
+            if (comparison == Comparison::EQ || comparison == Comparison::IS) && value.is_null() {
                 selected_columns.push(format!("{column} IS NULL"));
                 continue;
             }
 
-            if let Value::Array(values) = value {
+            if comparison == Comparison::NEQ && value.is_null() {
+                selected_columns.push(format!("{column} IS NOT NULL"));
+                continue;
+            }
+
+            if comparison == Comparison::IN || comparison == Comparison::NIN {
+                let values = match value {
+                    Value::Array(values) => values.clone(),
+                    other => PhpArray::list(vec![other.clone()]),
+                };
                 if values.is_empty() {
                     selected_columns.push("1=0".to_owned());
                     continue;
@@ -1719,7 +1917,7 @@ impl BasicEntityPersister {
                 let non_null = values.values().filter(|v| !v.is_null()).count();
                 let has_null = non_null < values.len();
                 let placeholders = vec![placeholder.as_str(); non_null].join(", ");
-                let in_ = format!("{column} IN ({placeholders})");
+                let in_ = format!("{column} {}", comparison_sql(comparison, &placeholders)?);
                 if has_null {
                     if non_null > 0 {
                         selected_columns.push(format!("({in_} OR {column} IS NULL)"));
@@ -1732,9 +1930,25 @@ impl BasicEntityPersister {
                 continue;
             }
 
-            selected_columns.push(format!("{column} = {placeholder}"));
+            selected_columns.push(format!(
+                "{column} {}",
+                comparison_sql(comparison, &placeholder)?
+            ));
         }
         Ok(selected_columns.join(" AND "))
+    }
+
+    /// Gets the Select Where Condition from a Criteria object.
+    fn get_select_condition_criteria_sql(
+        &self,
+        _em: &Arc<EntityManager>,
+        criteria: &Criteria,
+    ) -> Result<String, Thrown> {
+        let Some(expression) = criteria.get_where_expression() else {
+            return Ok(String::new());
+        };
+        let mut visitor = SqlExpressionVisitor::new(self, &self.class);
+        visitor.dispatch(expression)
     }
 
     /// Builds the left-hand-side of a where condition statement.
@@ -1844,6 +2058,7 @@ impl BasicEntityPersister {
                 &key_text(field),
                 value,
                 assoc,
+                None,
             )?);
         }
         Ok(conditions.join(" AND "))
@@ -1960,7 +2175,15 @@ impl BasicEntityPersister {
             });
         }
 
-        let sql = self.get_select_sql(em, &criteria, Some(assoc), None, limit, offset, None)?;
+        let sql = self.get_select_sql(
+            em,
+            (&criteria).into(),
+            Some(assoc),
+            None,
+            limit,
+            offset,
+            None,
+        )?;
         let (params, types) = self.expand_to_many_parameters(em, &parameters)?;
         self.fetch_all(em, &sql, params, types).await
     }
@@ -2020,7 +2243,11 @@ impl BasicEntityPersister {
     }
 
     /// Checks whether the given managed entity exists in the database.
-    pub async fn exists(&self, entity: &Object) -> Result<bool, Thrown> {
+    pub async fn exists(
+        &self,
+        entity: &Object,
+        extra_conditions: Option<&Criteria>,
+    ) -> Result<bool, Thrown> {
         let em = self.em()?;
         let criteria = self.class.read().get_identifier_values(entity)?;
         if criteria.is_empty() {
@@ -2033,12 +2260,20 @@ impl BasicEntityPersister {
             self.quote_strategy
                 .get_table_name(&self.class.read(), platform)
         );
-        let sql = format!(
+        let mut sql = format!(
             "SELECT 1 {} WHERE {}",
             platform.append_lock_hint(&from, LockMode::None),
             self.get_select_condition_sql(&em, &criteria, None)?
         );
-        let (params, types) = self.expand_parameters(&em, &criteria)?;
+        let (mut params, mut types) = self.expand_parameters(&em, &criteria)?;
+        if let Some(extra_conditions) = extra_conditions {
+            sql.push_str(" AND ");
+            sql.push_str(&self.get_select_condition_criteria_sql(&em, extra_conditions)?);
+            let (criteria_params, criteria_types) =
+                self.expand_criteria_parameters(&em, extra_conditions)?;
+            params.extend(criteria_params);
+            types.extend(criteria_types);
+        }
         let value = em
             .get_connection()
             .fetch_one(&sql, &PhpArray::list(params), &types_of(types))
@@ -2084,5 +2319,45 @@ impl BasicEntityPersister {
             types.push(first.as_str().into());
         }
         Ok(types)
+    }
+}
+
+impl super::EntityPersister for BasicEntityPersister {
+    fn count_criteria<'a>(&'a self, criteria: &'a Criteria) -> crate::unit_of_work::Fut<'a, i64> {
+        Box::pin(BasicEntityPersister::count_criteria(self, criteria))
+    }
+
+    fn load_criteria<'a>(
+        &'a self,
+        criteria: &'a Criteria,
+    ) -> crate::unit_of_work::Fut<'a, Vec<Value>> {
+        Box::pin(async move {
+            Ok(BasicEntityPersister::load_criteria(self, criteria)
+                .await?
+                .into_iter()
+                .map(Value::Object)
+                .collect())
+        })
+    }
+
+    fn exists<'a>(
+        &'a self,
+        entity: &'a Object,
+        extra_conditions: Option<&'a Criteria>,
+    ) -> crate::unit_of_work::Fut<'a, bool> {
+        Box::pin(BasicEntityPersister::exists(self, entity, extra_conditions))
+    }
+
+    fn get_select_condition_statement_sql(
+        &self,
+        field: &str,
+        value: &Value,
+        assoc: Option<&AssociationMapping>,
+        comparison: Option<&str>,
+    ) -> Result<String, Thrown> {
+        let em = self.em()?;
+        BasicEntityPersister::get_select_condition_statement_sql(
+            self, &em, field, value, assoc, comparison,
+        )
     }
 }

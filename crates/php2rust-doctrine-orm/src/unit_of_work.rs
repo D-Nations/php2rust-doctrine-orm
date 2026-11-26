@@ -43,7 +43,8 @@ use crate::persisters::BasicEntityPersister;
 use crate::utility::{flatten_identifier, to_text};
 
 /// A future of the unit of work.
-pub(crate) type Fut<'a, T> = Pin<Box<dyn Future<Output = Result<T, Thrown>> + Send + 'a>>;
+/// A boxed future of a `Result`.
+pub type Fut<'a, T> = Pin<Box<dyn Future<Output = Result<T, Thrown>> + Send + 'a>>;
 
 /// An entity is in MANAGED state when its persistence is managed by an
 /// `EntityManager`.
@@ -1918,7 +1919,11 @@ impl UnitOfWork {
             }
             // db lookup
             let name = class.read().name.clone();
-            if self.get_entity_persister(&name)?.exists(entity).await? {
+            if self
+                .get_entity_persister(&name)?
+                .exists(entity, None)
+                .await?
+            {
                 return Ok(STATE_DETACHED);
             }
             return Ok(STATE_NEW);
@@ -1931,7 +1936,11 @@ impl UnitOfWork {
                 return Ok(STATE_DETACHED);
             }
             let name = class.read().name.clone();
-            if self.get_entity_persister(&name)?.exists(entity).await? {
+            if self
+                .get_entity_persister(&name)?
+                .exists(entity, None)
+                .await?
+            {
                 return Ok(STATE_DETACHED);
             }
             return Ok(STATE_NEW);
