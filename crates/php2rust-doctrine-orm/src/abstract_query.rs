@@ -483,6 +483,19 @@ impl QueryState {
         hydration::to_iterable(&self.em, mode, rows, &rsm, &mut hints, extra).await
     }
 
+    /// `hydrate_iterable()` with the generator's keys.
+    pub(crate) async fn hydrate_iterable_with_keys(
+        &self,
+        rows: Vec<PhpArray>,
+    ) -> Result<Vec<(Key, Value)>, Thrown> {
+        let rsm = self
+            .get_result_set_mapping()
+            .ok_or_else(|| Thrown::new("LogicException", "Uninitialized result set mapping.", 0))?;
+        let (mut hints, extra) = self.hydration_hints();
+        let mode = self.get_hydration_mode();
+        hydration::to_iterable_with_keys(&self.em, mode, rows, &rsm, &mut hints, extra).await
+    }
+
     /// `getSingleResult()` of an executed result.
     pub(crate) fn single_result(&self, result: Value) -> Result<Value, Thrown> {
         if self.get_hydration_mode() != HYDRATE_SINGLE_SCALAR && !result.is_truthy() {

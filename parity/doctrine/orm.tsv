@@ -882,10 +882,10 @@ tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testOp
 tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testOperatorDiv	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
 tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testOperatorMultiply	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
 tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testOperatorSub	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
-tests/Tests/ORM/Functional/QueryIterableTest.php	QueryIterableTest::testAlias	pending	
-tests/Tests/ORM/Functional/QueryIterableTest.php	QueryIterableTest::testAliasInnerJoin	pending	
-tests/Tests/ORM/Functional/QueryIterableTest.php	QueryIterableTest::testIndexByQueryWithMultipleResults	pending	
-tests/Tests/ORM/Functional/QueryIterableTest.php	QueryIterableTest::testIndexByQueryWithOneResult	pending	
+tests/Tests/ORM/Functional/QueryIterableTest.php	QueryIterableTest::testAlias	ported	crates/php2rust-doctrine-orm/tests/query_iterable_test.rs::testAlias
+tests/Tests/ORM/Functional/QueryIterableTest.php	QueryIterableTest::testAliasInnerJoin	ported	crates/php2rust-doctrine-orm/tests/query_iterable_test.rs::testAliasInnerJoin
+tests/Tests/ORM/Functional/QueryIterableTest.php	QueryIterableTest::testIndexByQueryWithMultipleResults	ported	crates/php2rust-doctrine-orm/tests/query_iterable_test.rs::testIndexByQueryWithMultipleResults
+tests/Tests/ORM/Functional/QueryIterableTest.php	QueryIterableTest::testIndexByQueryWithOneResult	ported	crates/php2rust-doctrine-orm/tests/query_iterable_test.rs::testIndexByQueryWithOneResult
 tests/Tests/ORM/Functional/QueryParameterTest.php	QueryParameterTest::testArrayParameterTypeInBuilder	pending	
 tests/Tests/ORM/Functional/QueryParameterTest.php	QueryParameterTest::testArrayParameterTypeInQuery	pending	
 tests/Tests/ORM/Functional/QueryParameterTest.php	QueryParameterTest::testDbalTypeStringInBuilder	pending	
