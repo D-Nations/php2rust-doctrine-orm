@@ -1,7 +1,8 @@
-//! `Doctrine\ORM\Internal`: the commit order graphs.
+//! `Doctrine\ORM\Internal`: the commit order graphs and the hydration.
 //!
 //! Upstream: none
 
+pub mod hydration;
 mod strongly_connected_components;
 mod topological_sort;
 
