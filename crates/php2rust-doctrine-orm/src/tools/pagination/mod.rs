@@ -4,6 +4,7 @@
 
 #![allow(clippy::doc_markdown, reason = "upstream's doc comments")]
 
+pub mod count_output_walker;
 pub mod count_walker;
 pub mod limit_subquery_walker;
 pub mod root_type_walker;
@@ -14,6 +15,7 @@ use php_value::Thrown;
 
 use crate::query::ast::IdentificationVariableDeclaration;
 
+pub use count_output_walker::CountOutputWalker;
 pub use count_walker::CountWalker;
 pub use limit_subquery_walker::LimitSubqueryWalker;
 pub use root_type_walker::RootTypeWalker;
