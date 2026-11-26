@@ -76,8 +76,8 @@ fn embedded(column_prefix: Value) -> EmbeddedClassMapping {
     .unwrap()
 }
 
-fn association(kind: AssociationKind, mapping: PhpArray) -> AssociationMapping {
-    AssociationMapping::from_mapping_array(AssociationClass::Final(kind), &mapping).unwrap()
+fn association(kind: AssociationKind, mapping: &PhpArray) -> AssociationMapping {
+    AssociationMapping::from_mapping_array(AssociationClass::Final(kind), mapping).unwrap()
 }
 
 /// `assertEquals(['name' => $mapping], $this->cm->associationMappings)`.
@@ -499,7 +499,7 @@ fn testCreateManyToOne() {
             "groups",
             association(
                 AssociationKind::ManyToOne,
-                to_one_owning(2, group_join_column(true, false), cascade_all(), 4),
+                &to_one_owning(2, group_join_column(true, false), cascade_all(), 4),
             ),
         )],
         &cm.read().association_mappings,
@@ -524,7 +524,7 @@ fn testCreateManyToOneWithIdentity() {
     let mut expected = to_one_owning(2, group_join_column(false, false), cascade_all(), 4);
     expected.insert("id", Value::Bool(true));
     assert_associations(
-        &[("groups", association(AssociationKind::ManyToOne, expected))],
+        &[("groups", association(AssociationKind::ManyToOne, &expected))],
         &cm.read().association_mappings,
     );
 }
@@ -548,7 +548,7 @@ fn testCreateOneToOne() {
             "groups",
             association(
                 AssociationKind::OneToOneOwningSide,
-                to_one_owning(1, group_join_column(true, true), cascade_all(), 4),
+                &to_one_owning(1, group_join_column(true, true), cascade_all(), 4),
             ),
         )],
         &cm.read().association_mappings,
@@ -575,7 +575,7 @@ fn testCreateOneToOneWithIdentity() {
     assert_associations(
         &[(
             "groups",
-            association(AssociationKind::OneToOneOwningSide, expected),
+            association(AssociationKind::OneToOneOwningSide, &expected),
         )],
         &cm.read().association_mappings,
     );
@@ -615,7 +615,7 @@ fn testCreateManyToMany() {
             "groups",
             association(
                 AssociationKind::ManyToManyOwningSide,
-                php_array! {
+                &php_array! {
                     "fieldName" => "groups",
                     "targetEntity" => CMS_GROUP,
                     "cascade" => cascade_all(),
@@ -692,7 +692,7 @@ fn testCreateOneToMany() {
             "groups",
             association(
                 AssociationKind::OneToMany,
-                php_array! {
+                &php_array! {
                     "fieldName" => "groups",
                     "targetEntity" => CMS_GROUP,
                     "mappedBy" => "test",
@@ -791,7 +791,7 @@ fn testOrphanRemovalOnCreateOneToOne() {
     assert_associations(
         &[(
             "groups",
-            association(AssociationKind::OneToOneOwningSide, expected),
+            association(AssociationKind::OneToOneOwningSide, &expected),
         )],
         &cm.read().association_mappings,
     );
@@ -815,7 +815,7 @@ fn testOrphanRemovalOnCreateOneToMany() {
             "groups",
             association(
                 AssociationKind::OneToMany,
-                php_array! {
+                &php_array! {
                     "fieldName" => "groups",
                     "targetEntity" => CMS_GROUP,
                     "mappedBy" => "test",
@@ -859,7 +859,7 @@ fn testOrphanRemovalOnManyToMany() {
             "groups",
             association(
                 AssociationKind::ManyToManyOwningSide,
-                php_array! {
+                &php_array! {
                     "fieldName" => "groups",
                     "targetEntity" => CMS_GROUP,
                     "cascade" => PhpArray::new(),

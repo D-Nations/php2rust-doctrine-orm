@@ -1986,7 +1986,7 @@ tests/Tests/ORM/Mapping/ClassMetadataFactoryTest.php	ClassMetadataFactoryTest::t
 tests/Tests/ORM/Mapping/ClassMetadataFactoryTest.php	ClassMetadataFactoryTest::testPostgresSticksWithSequencesWhenDbal3IsUsed	n/a: upstream skips it on DBAL 4	
 tests/Tests/ORM/Mapping/ClassMetadataFactoryTest.php	ClassMetadataFactoryTest::testPostgresSwitchesToIdentityColumnsWhenDbal4IsUsed	ported	crates/php2rust-doctrine-orm/tests/class_metadata_factory_test.rs::testPostgresSwitchesToIdentityColumnsWhenDbal4IsUsed
 tests/Tests/ORM/Mapping/ClassMetadataFactoryTest.php	ClassMetadataFactoryTest::testQuoteMetadata	ported	crates/php2rust-doctrine-orm/tests/class_metadata_factory_test.rs::testQuoteMetadata
-tests/Tests/ORM/Mapping/ClassMetadataLoadEventTest.php	ClassMetadataLoadEventTest::testEvent	pending	
+tests/Tests/ORM/Mapping/ClassMetadataLoadEventTest.php	ClassMetadataLoadEventTest::testEvent	ported	crates/php2rust-doctrine-orm/tests/class_metadata_load_event_test.rs::testEvent
 tests/Tests/ORM/Mapping/ClassMetadataTest.php	ClassMetadataTest::testAssociationOverrideCanOverrideCascade	ported	crates/php2rust-doctrine-orm/tests/class_metadata_test.rs::testAssociationOverrideCanOverrideCascade
 tests/Tests/ORM/Mapping/ClassMetadataTest.php	ClassMetadataTest::testAssociationOverrideKeepsDeclaringClass	ported	crates/php2rust-doctrine-orm/tests/class_metadata_test.rs::testAssociationOverrideKeepsDeclaringClass
 tests/Tests/ORM/Mapping/ClassMetadataTest.php	ClassMetadataTest::testAttributeOverrideKeepsDeclaringClass	ported	crates/php2rust-doctrine-orm/tests/class_metadata_test.rs::testAttributeOverrideKeepsDeclaringClass
@@ -2066,7 +2066,7 @@ tests/Tests/ORM/Mapping/EntityListenerResolverTest.php	EntityListenerResolverTes
 tests/Tests/ORM/Mapping/EntityListenerResolverTest.php	EntityListenerResolverTest::testClearOne	pending	
 tests/Tests/ORM/Mapping/EntityListenerResolverTest.php	EntityListenerResolverTest::testRegisterAndResolve	pending	
 tests/Tests/ORM/Mapping/EntityListenerResolverTest.php	EntityListenerResolverTest::testResolve	pending	
-tests/Tests/ORM/Mapping/FieldBuilderTest.php	FieldBuilderTest::testCustomIdGeneratorCanBeSet	pending	
+tests/Tests/ORM/Mapping/FieldBuilderTest.php	FieldBuilderTest::testCustomIdGeneratorCanBeSet	ported	crates/php2rust-doctrine-orm/tests/field_builder_test.rs::testCustomIdGeneratorCanBeSet
 tests/Tests/ORM/Mapping/FieldMappingTest.php	FieldMappingTest::testItSurvivesSerialization	ported	crates/php2rust-doctrine-orm/tests/field_mapping_test.rs::testItSurvivesSerialization
 tests/Tests/ORM/Mapping/InverseSideMappingTest.php	InverseSideMappingTest::testItSurvivesSerialization	ported	crates/php2rust-doctrine-orm/tests/inverse_side_mapping_test.rs::testItSurvivesSerialization
 tests/Tests/ORM/Mapping/JoinColumnMappingTest.php	JoinColumnMappingTest::testFromMappingArrayIncludesForeignKeyName	ported	crates/php2rust-doctrine-orm/tests/join_column_mapping_test.rs::testFromMappingArrayIncludesForeignKeyName

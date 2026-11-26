@@ -259,6 +259,7 @@ namespace {
         'ORM/Mapping/BasicInheritanceMappingTest.php',
         'ORM/Mapping/ClassMetadataBuilderTest.php',
         'ORM/Mapping/ClassMetadataFactoryTest.php',
+        'ORM/Mapping/ClassMetadataLoadEventTest.php',
         'ORM/Mapping/ClassMetadataTest.php',
         'ORM/Mapping/DefaultQuoteStrategyTest.php',
         'ORM/Mapping/MappingDriverTestCase.php',
