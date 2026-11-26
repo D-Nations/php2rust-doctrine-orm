@@ -276,37 +276,37 @@ tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testOr
 tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testSelectSubselect	pending	
 tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testUnnamedScalarResultsAreOneBased	pending	
 tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testUpdateAs	pending	
-tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testAddToCollectionDoesNotInitialize	pending	
-tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testAddToToManyAssociationWithGetReference	pending	
+tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testAddToCollectionDoesNotInitialize	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testAddToCollectionDoesNotInitialize
+tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testAddToToManyAssociationWithGetReference	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testAddToToManyAssociationWithGetReference
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testBasicOneToManyInnerJoin	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testBasicOneToManyInnerJoin
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testBasicOneToManyLeftJoin	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testBasicOneToManyLeftJoin
-tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testBasicOneToOne	pending	
+tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testBasicOneToOne	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testBasicOneToOne
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testBasicQuery	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testBasicQuery
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testBasicRefresh	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testBasicRefresh
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testBasicUnitsOfWorkWithOneToManyAssociation	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testBasicUnitsOfWorkWithOneToManyAssociation
-tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testCreateEntityOfProxy	pending	
-tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testDqlRefreshResetsCollection	pending	
+tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testCreateEntityOfProxy	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testCreateEntityOfProxy
+tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testDqlRefreshResetsCollection	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testDqlRefreshResetsCollection
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testFlushAndCascadePersist	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testFlushAndCascadePersist
-tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testFlushDoesNotIssueUnnecessaryUpdates	pending	
+tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testFlushDoesNotIssueUnnecessaryUpdates	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testFlushDoesNotIssueUnnecessaryUpdates
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testFlushSingleAndNoCascade	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testFlushSingleAndNoCascade
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testFlushSingleManagedEntity	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testFlushSingleManagedEntity
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testFlushSingleNewEntityThenRemove	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testFlushSingleNewEntityThenRemove
-tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testInitializeCollectionWithNewObjectsRetainsNewObjects	pending	
+tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testInitializeCollectionWithNewObjectsRetainsNewObjects	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testInitializeCollectionWithNewObjectsRetainsNewObjects
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testItThrowsWhenReferenceUsesIdAssignedByDatabase	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testItThrowsWhenReferenceUsesIdAssignedByDatabase
-tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testManyToOneFetchModeQuery	pending	
+tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testManyToOneFetchModeQuery	pending	BasicEntityPersister does not join the inverse one-to-one CmsUser::address into its SELECT, so the eager load issues 3 queries where PHP issues 2
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testNewAssociatedEntityDuringFlushThrowsException	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testNewAssociatedEntityDuringFlushThrowsException
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testNewAssociatedEntityDuringFlushThrowsException2	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testNewAssociatedEntityDuringFlushThrowsException2
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testNewAssociatedEntityDuringFlushThrowsException3	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testNewAssociatedEntityDuringFlushThrowsException3
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testOneToManyAssociationModification	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testOneToManyAssociationModification
-tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testOneToManyCascadeRemove	pending	
+tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testOneToManyCascadeRemove	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testOneToManyCascadeRemove
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testOneToManyOrphanRemoval	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testOneToManyOrphanRemoval
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testOneToOneNullUpdate	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testOneToOneNullUpdate
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testOneToOneOrphanRemoval	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testOneToOneOrphanRemoval
-tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testQueryEntityByReference	pending	
+tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testQueryEntityByReference	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testQueryEntityByReference
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testRefreshResetsCollection	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testRefreshResetsCollection
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testRemove	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testRemove
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testRemoveEntityByReference	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testRemoveEntityByReference
-tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testSetToOneAssociationWithGetReference	pending	
+tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testSetToOneAssociationWithGetReference	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testSetToOneAssociationWithGetReference
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testSingleColumnQuery	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testSingleColumnQuery
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testTextColumnSaveAndRetrieve	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testTextColumnSaveAndRetrieve
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testWrongAssociationInstance	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testWrongAssociationInstance
