@@ -1582,7 +1582,7 @@ tests/Tests/ORM/Functional/Ticket/GH7941Test.php	GH7941Test::typesShouldBeConver
 tests/Tests/ORM/Functional/Ticket/GH8055Test.php	GH8055Test::testNumericDescriminatorColumn	ported	crates/php2rust-doctrine-orm/tests/gh8055_test.rs::testNumericDescriminatorColumn
 tests/Tests/ORM/Functional/Ticket/GH8061Test.php	GH8061Test::testConvertToPHPValueSQLForNewObjectExpression	pending	
 tests/Tests/ORM/Functional/Ticket/GH8127Test.php	GH8127Test::testLoadFieldsFromAllClassesInHierarchy	ported	crates/php2rust-doctrine-orm/tests/gh8127_test.rs::testLoadFieldsFromAllClassesInHierarchy
-tests/Tests/ORM/Functional/Ticket/GH8217Test.php	GH8217Test::testNoQueriesAfterSecondFlush	pending	
+tests/Tests/ORM/Functional/Ticket/GH8217Test.php	GH8217Test::testNoQueriesAfterSecondFlush	ported	crates/php2rust-doctrine-orm/tests/gh8217_test.rs::testNoQueriesAfterSecondFlush
 tests/Tests/ORM/Functional/Ticket/GH8415Test.php	GH8415Test::testAssociationIsBasedOnBaseClass	pending	
 tests/Tests/ORM/Functional/Ticket/GH8415ToManyAssociationTest.php	GH8415ToManyAssociationTest::testToManyAssociationOnBaseClassAllowedWhenThereAreMappedSuperclassesAsChildren	pending	
 tests/Tests/ORM/Functional/Ticket/GH8443Test.php	GH8443Test::testJoinRootEntityWithForcePartialLoad	pending	
