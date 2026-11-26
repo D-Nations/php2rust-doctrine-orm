@@ -338,6 +338,7 @@ namespace {
         'ORM/Functional/Ticket/DDC117Test.php',
         'ORM/Functional/ReferenceProxyTest.php',
         'ORM/Functional/ValueObjectsTest.php',
+        'ORM/Tools/SchemaValidatorTest.php',
     ];
     $before = array_merge(get_declared_classes(), get_declared_interfaces(), get_declared_traits());
     foreach ($files as $file) {
@@ -354,6 +355,13 @@ namespace {
         }
 
         require_once $path;
+    }
+
+    // The model sets of SchemaValidatorTest::modelSetProvider().
+    foreach (['CMS', 'Company', 'ECommerce', 'Forum', 'Navigation', 'Routing'] as $modelSet) {
+        foreach (glob("$root/orm/tests/Tests/Models/$modelSet/*.php") as $modelFile) {
+            require_once $modelFile;
+        }
     }
 
     $isWanted = static function (string $name): bool {
