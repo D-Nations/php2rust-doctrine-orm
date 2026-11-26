@@ -447,17 +447,17 @@ src/Tools/Pagination/Exception/InvalidCursor.php	InvalidCursor	18	pending
 src/Tools/Pagination/Exception/RowNumberOverFunctionNotEnabled.php	RowNumberOverFunctionNotEnabled	11	ported	crates/php2rust-doctrine-orm/src/tools/pagination/row_number_over_function.rs
 src/Tools/Pagination/LimitSubqueryOutputWalker.php	LimitSubqueryOutputWalker	361	ported	crates/php2rust-doctrine-orm/src/tools/pagination/limit_subquery_output_walker.rs
 src/Tools/Pagination/LimitSubqueryWalker.php	LimitSubqueryWalker	107	ported	crates/php2rust-doctrine-orm/src/tools/pagination/limit_subquery_walker.rs
-src/Tools/Pagination/OffsetPaginator.php	OffsetPaginator	50	pending	
+src/Tools/Pagination/OffsetPaginator.php	OffsetPaginator	50	ported	crates/php2rust-doctrine-orm/src/tools/pagination/offset_paginator.rs
 src/Tools/Pagination/OrderDirection.php	OrderDirection	27	pending	
-src/Tools/Pagination/Page.php	Page	13	pending	
+src/Tools/Pagination/Page.php	Page	13	ported	crates/php2rust-doctrine-orm/src/tools/pagination/window_page.rs
 src/Tools/Pagination/Paginator.php	Paginator	63	ported	crates/php2rust-doctrine-orm/src/tools/pagination/paginator.rs
-src/Tools/Pagination/PaginatorInterface.php	PaginatorInterface	9	pending	
-src/Tools/Pagination/PaginatorQuery.php	PaginatorQuery	129	ported	crates/php2rust-doctrine-orm/src/tools/pagination/paginator.rs
+src/Tools/Pagination/PaginatorInterface.php	PaginatorInterface	9	ported	crates/php2rust-doctrine-orm/src/tools/pagination/offset_paginator.rs
+src/Tools/Pagination/PaginatorQuery.php	PaginatorQuery	129	ported	crates/php2rust-doctrine-orm/src/tools/pagination/paginator_query.rs
 src/Tools/Pagination/RootTypeWalker.php	RootTypeWalker	38	ported	crates/php2rust-doctrine-orm/src/tools/pagination/root_type_walker.rs
 src/Tools/Pagination/RowNumberOverFunction.php	RowNumberOverFunction	22	ported	crates/php2rust-doctrine-orm/src/tools/pagination/row_number_over_function.rs
 src/Tools/Pagination/WhereInWalker.php	WhereInWalker	85	ported	crates/php2rust-doctrine-orm/src/tools/pagination/where_in_walker.rs
-src/Tools/Pagination/Window.php	Window	46	pending	
-src/Tools/Pagination/WindowPage.php	WindowPage	76	pending	
+src/Tools/Pagination/Window.php	Window	46	ported	crates/php2rust-doctrine-orm/src/tools/pagination/window.rs
+src/Tools/Pagination/WindowPage.php	WindowPage	76	ported	crates/php2rust-doctrine-orm/src/tools/pagination/window_page.rs
 src/Tools/ResolveTargetEntityListener.php	ResolveTargetEntityListener	75	pending	
 src/Tools/SchemaTool.php	SchemaTool	1118	ported	crates/php2rust-doctrine-orm/src/tools/schema_tool.rs
 src/Tools/SchemaValidator.php	SchemaValidator	345	pending	
