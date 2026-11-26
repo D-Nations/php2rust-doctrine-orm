@@ -1625,7 +1625,7 @@ tests/Tests/ORM/Functional/Ticket/Ticket4646InstanceOfAbstractTest.php	Ticket464
 tests/Tests/ORM/Functional/Ticket/Ticket4646InstanceOfMultiLevelTest.php	Ticket4646InstanceOfMultiLevelTest::testInstanceOf	ported	crates/php2rust-doctrine-orm/tests/ticket4646_instance_of_multi_level_test.rs::testInstanceOf
 tests/Tests/ORM/Functional/Ticket/Ticket4646InstanceOfParametricTest.php	Ticket4646InstanceOfParametricTest::testInstanceOf	ported	crates/php2rust-doctrine-orm/tests/ticket4646_instance_of_parametric_test.rs::testInstanceOf
 tests/Tests/ORM/Functional/Ticket/Ticket4646InstanceOfTest.php	Ticket4646InstanceOfTest::testInstanceOf	ported	crates/php2rust-doctrine-orm/tests/ticket4646_instance_of_test.rs::testInstanceOf
-tests/Tests/ORM/Functional/Ticket/Ticket4646InstanceOfWithMultipleParametersTest.php	Ticket4646InstanceOfWithMultipleParametersTest::testInstanceOf	pending	
+tests/Tests/ORM/Functional/Ticket/Ticket4646InstanceOfWithMultipleParametersTest.php	Ticket4646InstanceOfWithMultipleParametersTest::testInstanceOf	ported	crates/php2rust-doctrine-orm/tests/ticket4646_instance_of_with_multiple_parameters_test.rs::testInstanceOf
 tests/Tests/ORM/Functional/TypeTest.php	TypeTest::testArray	n/a: skipped upstream on DBAL 4 (no ArrayType)	
 tests/Tests/ORM/Functional/TypeTest.php	TypeTest::testBoolean	ported	crates/php2rust-doctrine-orm/tests/type_test.rs::testBoolean
 tests/Tests/ORM/Functional/TypeTest.php	TypeTest::testDate	ported	crates/php2rust-doctrine-orm/tests/type_test.rs::testDate
