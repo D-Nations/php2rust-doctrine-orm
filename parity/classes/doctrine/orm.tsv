@@ -75,7 +75,7 @@ src/Event/PreFlushEventArgs.php	PreFlushEventArgs	7	pending
 src/Event/PrePersistEventArgs.php	PrePersistEventArgs	7	pending	
 src/Event/PreRemoveEventArgs.php	PreRemoveEventArgs	7	pending	
 src/Event/PreUpdateEventArgs.php	PreUpdateEventArgs	50	pending	
-src/Events.php	Events	21	pending	
+src/Events.php	Events	21	ported	crates/php2rust-doctrine-orm/src/events.rs
 src/Exception/ConfigurationException.php	ConfigurationException	5	pending	
 src/Exception/DuplicateFieldException.php	DuplicateFieldException	11	pending	
 src/Exception/EntityIdentityCollisionException.php	EntityIdentityCollisionException	33	pending	
@@ -110,98 +110,98 @@ src/Internal/Hydration/SimpleObjectHydrator.php	SimpleObjectHydrator	134	pending
 src/Internal/Hydration/SingleScalarHydrator.php	SingleScalarHydrator	26	pending	
 src/Internal/HydrationCompleteHandler.php	HydrationCompleteHandler	39	pending	
 src/Internal/NoUnknownNamedArguments.php	NoUnknownNamedArguments	34	pending	
-src/Internal/SQLResultCasing.php	SQLResultCasing	21	pending	
+src/Internal/SQLResultCasing.php	SQLResultCasing	21	ported	crates/php2rust-doctrine-orm/src/mapping/quote_strategy.rs
 src/Internal/StronglyConnectedComponents.php	StronglyConnectedComponents	81	pending	
 src/Internal/TopologicalSort.php	TopologicalSort	71	pending	
 src/Internal/TopologicalSort/CycleDetectedException.php	CycleDetectedException	29	pending	
 src/Internal/UnitOfWork/InsertBatch.php	InsertBatch	35	pending	
 src/LazyCriteriaCollection.php	LazyCriteriaCollection	51	pending	
-src/Mapping/AnsiQuoteStrategy.php	AnsiQuoteStrategy	53	pending	
+src/Mapping/AnsiQuoteStrategy.php	AnsiQuoteStrategy	53	ported	crates/php2rust-doctrine-orm/src/mapping/quote_strategy.rs
 src/Mapping/ArrayAccessImplementation.php	ArrayAccessImplementation	51	ported	crates/php2rust-doctrine-orm/src/mapping/field_mapping.rs
 src/Mapping/AssociationMapping.php	AssociationMapping	217	ported	crates/php2rust-doctrine-orm/src/mapping/association_mapping.rs
-src/Mapping/AssociationOverride.php	AssociationOverride	24	pending	
-src/Mapping/AssociationOverrides.php	AssociationOverrides	22	pending	
-src/Mapping/AttributeOverride.php	AttributeOverride	10	pending	
-src/Mapping/AttributeOverrides.php	AttributeOverrides	22	pending	
-src/Mapping/Builder/AssociationBuilder.php	AssociationBuilder	114	pending	
-src/Mapping/Builder/ClassMetadataBuilder.php	ClassMetadataBuilder	237	pending	
-src/Mapping/Builder/EmbeddedBuilder.php	EmbeddedBuilder	21	pending	
-src/Mapping/Builder/EntityListenerBuilder.php	EntityListenerBuilder	33	pending	
-src/Mapping/Builder/FieldBuilder.php	FieldBuilder	121	pending	
-src/Mapping/Builder/ManyToManyAssociationBuilder.php	ManyToManyAssociationBuilder	63	pending	
-src/Mapping/Builder/OneToManyAssociationBuilder.php	OneToManyAssociationBuilder	26	pending	
-src/Mapping/Cache.php	Cache	12	pending	
+src/Mapping/AssociationOverride.php	AssociationOverride	24	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
+src/Mapping/AssociationOverrides.php	AssociationOverrides	22	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
+src/Mapping/AttributeOverride.php	AttributeOverride	10	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
+src/Mapping/AttributeOverrides.php	AttributeOverrides	22	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
+src/Mapping/Builder/AssociationBuilder.php	AssociationBuilder	114	ported	crates/php2rust-doctrine-orm/src/mapping/builder.rs
+src/Mapping/Builder/ClassMetadataBuilder.php	ClassMetadataBuilder	237	ported	crates/php2rust-doctrine-orm/src/mapping/builder.rs
+src/Mapping/Builder/EmbeddedBuilder.php	EmbeddedBuilder	21	ported	crates/php2rust-doctrine-orm/src/mapping/builder.rs
+src/Mapping/Builder/EntityListenerBuilder.php	EntityListenerBuilder	33	ported	crates/php2rust-doctrine-orm/src/mapping/builder.rs crates/php2rust-doctrine-orm/src/mapping/driver/attribute_driver.rs
+src/Mapping/Builder/FieldBuilder.php	FieldBuilder	121	ported	crates/php2rust-doctrine-orm/src/mapping/builder.rs
+src/Mapping/Builder/ManyToManyAssociationBuilder.php	ManyToManyAssociationBuilder	63	ported	crates/php2rust-doctrine-orm/src/mapping/builder.rs
+src/Mapping/Builder/OneToManyAssociationBuilder.php	OneToManyAssociationBuilder	26	ported	crates/php2rust-doctrine-orm/src/mapping/builder.rs
+src/Mapping/Cache.php	Cache	12	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
 src/Mapping/ChainTypedFieldMapper.php	ChainTypedFieldMapper	21	ported	crates/php2rust-doctrine-orm/src/mapping/typed_field_mapper.rs
-src/Mapping/ChangeTrackingPolicy.php	ChangeTrackingPolicy	11	pending	
+src/Mapping/ChangeTrackingPolicy.php	ChangeTrackingPolicy	11	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
 src/Mapping/ClassMetadata.php	ClassMetadata	1426	ported	crates/php2rust-doctrine-orm/src/mapping/class_metadata.rs
-src/Mapping/ClassMetadataFactory.php	ClassMetadataFactory	511	pending	
-src/Mapping/Column.php	Column	25	pending	
-src/Mapping/CustomIdGenerator.php	CustomIdGenerator	11	pending	
+src/Mapping/ClassMetadataFactory.php	ClassMetadataFactory	511	ported	crates/php2rust-doctrine-orm/src/mapping/class_metadata_factory.rs
+src/Mapping/Column.php	Column	25	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
+src/Mapping/CustomIdGenerator.php	CustomIdGenerator	11	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
 src/Mapping/DefaultEntityListenerResolver.php	DefaultEntityListenerResolver	25	pending	
 src/Mapping/DefaultNamingStrategy.php	DefaultNamingStrategy	51	ported	crates/php2rust-doctrine-orm/src/mapping/naming_strategy.rs
-src/Mapping/DefaultQuoteStrategy.php	DefaultQuoteStrategy	111	pending	
+src/Mapping/DefaultQuoteStrategy.php	DefaultQuoteStrategy	111	ported	crates/php2rust-doctrine-orm/src/mapping/quote_strategy.rs
 src/Mapping/DefaultTypedFieldMapper.php	DefaultTypedFieldMapper	73	ported	crates/php2rust-doctrine-orm/src/mapping/typed_field_mapper.rs
-src/Mapping/DiscriminatorColumn.php	DiscriminatorColumn	17	pending	
+src/Mapping/DiscriminatorColumn.php	DiscriminatorColumn	17	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
 src/Mapping/DiscriminatorColumnMapping.php	DiscriminatorColumnMapping	50	ported	crates/php2rust-doctrine-orm/src/mapping/embedded_class_mapping.rs
-src/Mapping/DiscriminatorMap.php	DiscriminatorMap	11	pending	
-src/Mapping/Driver/AttributeDriver.php	AttributeDriver	551	pending	
-src/Mapping/Driver/AttributeReader.php	AttributeReader	84	pending	
+src/Mapping/DiscriminatorMap.php	DiscriminatorMap	11	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
+src/Mapping/Driver/AttributeDriver.php	AttributeDriver	551	ported	crates/php2rust-doctrine-orm/src/mapping/driver/attribute_driver.rs
+src/Mapping/Driver/AttributeReader.php	AttributeReader	84	ported	crates/php2rust-doctrine-orm/src/mapping/driver/attribute_reader.rs
 src/Mapping/Driver/DatabaseDriver.php	DatabaseDriver	419	pending	
 src/Mapping/Driver/LoadMappingFileImplementation.php	LoadMappingFileImplementation LoadMappingFileImplementation	21	pending	
-src/Mapping/Driver/ReflectionBasedDriver.php	ReflectionBasedDriver	25	pending	
-src/Mapping/Driver/RepeatableAttributeCollection.php	RepeatableAttributeCollection	7	pending	
+src/Mapping/Driver/ReflectionBasedDriver.php	ReflectionBasedDriver	25	ported	crates/php2rust-doctrine-orm/src/mapping/driver/attribute_driver.rs
+src/Mapping/Driver/RepeatableAttributeCollection.php	RepeatableAttributeCollection	7	ported	crates/php2rust-doctrine-orm/src/mapping/driver/attribute_reader.rs
 src/Mapping/Driver/SimplifiedXmlDriver.php	SimplifiedXmlDriver	12	pending	
 src/Mapping/Driver/XmlDriver.php	XmlDriver	711	pending	
-src/Mapping/Embeddable.php	Embeddable	7	pending	
-src/Mapping/Embedded.php	Embedded	12	pending	
+src/Mapping/Embeddable.php	Embeddable	7	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
+src/Mapping/Embedded.php	Embedded	12	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
 src/Mapping/EmbeddedClassMapping.php	EmbeddedClassMapping	42	ported	crates/php2rust-doctrine-orm/src/mapping/embedded_class_mapping.rs
-src/Mapping/Entity.php	Entity	13	pending	
+src/Mapping/Entity.php	Entity	13	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
 src/Mapping/EntityListenerResolver.php	EntityListenerResolver	8	pending	
-src/Mapping/EntityListeners.php	EntityListeners	11	pending	
+src/Mapping/EntityListeners.php	EntityListeners	11	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
 src/Mapping/Exception/InvalidCustomGenerator.php	InvalidCustomGenerator	20	ported	crates/php2rust-doctrine-orm/src/mapping/mapping_exception.rs
 src/Mapping/Exception/UnknownGeneratorType.php	UnknownGeneratorType	11	ported	crates/php2rust-doctrine-orm/src/mapping/mapping_exception.rs
 src/Mapping/FieldMapping.php	FieldMapping	87	ported	crates/php2rust-doctrine-orm/src/mapping/field_mapping.rs
-src/Mapping/GeneratedValue.php	GeneratedValue	11	pending	
+src/Mapping/GeneratedValue.php	GeneratedValue	11	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
 src/Mapping/GetReflectionClassImplementation.php	GetReflectionClassImplementation GetReflectionClassImplementation	22	ported	crates/php2rust-doctrine-orm/src/mapping/class_metadata.rs
-src/Mapping/HasLifecycleCallbacks.php	HasLifecycleCallbacks	7	pending	
-src/Mapping/Id.php	Id	11	pending	
-src/Mapping/Index.php	Index	15	pending	
-src/Mapping/InheritanceType.php	InheritanceType	11	pending	
-src/Mapping/InverseJoinColumn.php	InverseJoinColumn	8	pending	
+src/Mapping/HasLifecycleCallbacks.php	HasLifecycleCallbacks	7	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
+src/Mapping/Id.php	Id	11	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
+src/Mapping/Index.php	Index	15	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
+src/Mapping/InheritanceType.php	InheritanceType	11	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
+src/Mapping/InverseJoinColumn.php	InverseJoinColumn	8	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
 src/Mapping/InverseSideMapping.php	InverseSideMapping	17	ported	crates/php2rust-doctrine-orm/src/mapping/association_mapping.rs
-src/Mapping/JoinColumn.php	JoinColumn	8	pending	
+src/Mapping/JoinColumn.php	JoinColumn	8	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
 src/Mapping/JoinColumnMapping.php	JoinColumnMapping	57	ported	crates/php2rust-doctrine-orm/src/mapping/join_column_mapping.rs
-src/Mapping/JoinColumnProperties.php	JoinColumnProperties	18	pending	
+src/Mapping/JoinColumnProperties.php	JoinColumnProperties	18	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
 src/Mapping/JoinColumns.php	JoinColumns	9	pending	
-src/Mapping/JoinTable.php	JoinTable	23	pending	
+src/Mapping/JoinTable.php	JoinTable	23	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
 src/Mapping/JoinTableMapping.php	JoinTableMapping	83	ported	crates/php2rust-doctrine-orm/src/mapping/join_column_mapping.rs
 src/Mapping/LegacyReflectionFields.php	LegacyReflectionFields	116	pending	
-src/Mapping/ManyToMany.php	ManyToMany	17	pending	
+src/Mapping/ManyToMany.php	ManyToMany	17	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
 src/Mapping/ManyToManyAssociationMapping.php	ManyToManyAssociationMapping	5	ported	crates/php2rust-doctrine-orm/src/mapping/association_mapping.rs
 src/Mapping/ManyToManyInverseSideMapping.php	ManyToManyInverseSideMapping	5	ported	crates/php2rust-doctrine-orm/src/mapping/association_mapping.rs
 src/Mapping/ManyToManyOwningSideMapping.php	ManyToManyOwningSideMapping	154	ported	crates/php2rust-doctrine-orm/src/mapping/association_mapping.rs
-src/Mapping/ManyToOne.php	ManyToOne	14	pending	
+src/Mapping/ManyToOne.php	ManyToOne	14	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
 src/Mapping/ManyToOneAssociationMapping.php	ManyToOneAssociationMapping	5	ported	crates/php2rust-doctrine-orm/src/mapping/association_mapping.rs
-src/Mapping/MappedSuperclass.php	MappedSuperclass	12	pending	
-src/Mapping/MappingAttribute.php	MappingAttribute	5	pending	
+src/Mapping/MappedSuperclass.php	MappedSuperclass	12	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
+src/Mapping/MappingAttribute.php	MappingAttribute	5	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
 src/Mapping/MappingException.php	MappingException	574	ported	crates/php2rust-doctrine-orm/src/mapping/mapping_exception.rs
 src/Mapping/NamingStrategy.php	NamingStrategy	17	ported	crates/php2rust-doctrine-orm/src/mapping/naming_strategy.rs
-src/Mapping/OneToMany.php	OneToMany	16	pending	
+src/Mapping/OneToMany.php	OneToMany	16	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
 src/Mapping/OneToManyAssociationMapping.php	OneToManyAssociationMapping	21	ported	crates/php2rust-doctrine-orm/src/mapping/association_mapping.rs
-src/Mapping/OneToOne.php	OneToOne	16	pending	
+src/Mapping/OneToOne.php	OneToOne	16	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
 src/Mapping/OneToOneAssociationMapping.php	OneToOneAssociationMapping	5	ported	crates/php2rust-doctrine-orm/src/mapping/association_mapping.rs
 src/Mapping/OneToOneInverseSideMapping.php	OneToOneInverseSideMapping	5	ported	crates/php2rust-doctrine-orm/src/mapping/association_mapping.rs
 src/Mapping/OneToOneOwningSideMapping.php	OneToOneOwningSideMapping	5	ported	crates/php2rust-doctrine-orm/src/mapping/association_mapping.rs
-src/Mapping/OrderBy.php	OrderBy	12	pending	
+src/Mapping/OrderBy.php	OrderBy	12	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
 src/Mapping/OwningSideMapping.php	OwningSideMapping	14	ported	crates/php2rust-doctrine-orm/src/mapping/association_mapping.rs
-src/Mapping/PostLoad.php	PostLoad	7	pending	
-src/Mapping/PostPersist.php	PostPersist	7	pending	
-src/Mapping/PostRemove.php	PostRemove	7	pending	
-src/Mapping/PostUpdate.php	PostUpdate	7	pending	
-src/Mapping/PreFlush.php	PreFlush	7	pending	
-src/Mapping/PrePersist.php	PrePersist	7	pending	
-src/Mapping/PreRemove.php	PreRemove	7	pending	
-src/Mapping/PreUpdate.php	PreUpdate	7	pending	
+src/Mapping/PostLoad.php	PostLoad	7	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
+src/Mapping/PostPersist.php	PostPersist	7	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
+src/Mapping/PostRemove.php	PostRemove	7	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
+src/Mapping/PostUpdate.php	PostUpdate	7	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
+src/Mapping/PreFlush.php	PreFlush	7	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
+src/Mapping/PrePersist.php	PrePersist	7	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
+src/Mapping/PreRemove.php	PreRemove	7	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
+src/Mapping/PreUpdate.php	PreUpdate	7	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
 src/Mapping/PropertyAccessors/EmbeddablePropertyAccessor.php	EmbeddablePropertyAccessor	36	ported	crates/php2rust-doctrine-orm/src/mapping/property_accessors.rs
 src/Mapping/PropertyAccessors/EnumPropertyAccessor.php	EnumPropertyAccessor	55	ported	crates/php2rust-doctrine-orm/src/mapping/property_accessors.rs
 src/Mapping/PropertyAccessors/ObjectCastPropertyAccessor.php	ObjectCastPropertyAccessor	41	ported	crates/php2rust-doctrine-orm/src/mapping/property_accessors.rs
@@ -210,12 +210,12 @@ src/Mapping/PropertyAccessors/PropertyAccessorFactory.php	PropertyAccessorFactor
 src/Mapping/PropertyAccessors/RawValuePropertyAccessor.php	RawValuePropertyAccessor	40	ported	crates/php2rust-doctrine-orm/src/mapping/property_accessors.rs
 src/Mapping/PropertyAccessors/ReadonlyAccessor.php	ReadonlyAccessor	45	ported	crates/php2rust-doctrine-orm/src/mapping/property_accessors.rs
 src/Mapping/PropertyAccessors/TypedNoDefaultPropertyAccessor.php	TypedNoDefaultPropertyAccessor	52	ported	crates/php2rust-doctrine-orm/src/mapping/property_accessors.rs
-src/Mapping/QuoteStrategy.php	QuoteStrategy	27	pending	
-src/Mapping/ReflectionEmbeddedProperty.php	ReflectionEmbeddedProperty	33	pending	
+src/Mapping/QuoteStrategy.php	QuoteStrategy	27	ported	crates/php2rust-doctrine-orm/src/mapping/quote_strategy.rs
+src/Mapping/ReflectionEmbeddedProperty.php	ReflectionEmbeddedProperty	33	ported	crates/php2rust-doctrine-orm/src/mapping/reflection_property.rs
 src/Mapping/ReflectionEnumProperty.php	ReflectionEnumProperty	65	pending	
-src/Mapping/ReflectionReadonlyProperty.php	ReflectionReadonlyProperty	36	pending	
-src/Mapping/SequenceGenerator.php	SequenceGenerator	13	pending	
-src/Mapping/Table.php	Table	34	pending	
+src/Mapping/ReflectionReadonlyProperty.php	ReflectionReadonlyProperty	36	ported	crates/php2rust-doctrine-orm/src/mapping/reflection_property.rs
+src/Mapping/SequenceGenerator.php	SequenceGenerator	13	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
+src/Mapping/Table.php	Table	34	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
 src/Mapping/ToManyAssociationMapping.php	ToManyAssociationMapping	9	ported	crates/php2rust-doctrine-orm/src/mapping/association_mapping.rs
 src/Mapping/ToManyAssociationMappingImplementation.php	ToManyAssociationMappingImplementation	40	ported	crates/php2rust-doctrine-orm/src/mapping/association_mapping.rs
 src/Mapping/ToManyInverseSideMapping.php	ToManyInverseSideMapping	6	ported	crates/php2rust-doctrine-orm/src/mapping/association_mapping.rs
@@ -225,8 +225,8 @@ src/Mapping/ToOneInverseSideMapping.php	ToOneInverseSideMapping	21	ported	crates
 src/Mapping/ToOneOwningSideMapping.php	ToOneOwningSideMapping	147	ported	crates/php2rust-doctrine-orm/src/mapping/association_mapping.rs
 src/Mapping/TypedFieldMapper.php	TypedFieldMapper	8	ported	crates/php2rust-doctrine-orm/src/mapping/typed_field_mapper.rs
 src/Mapping/UnderscoreNamingStrategy.php	UnderscoreNamingStrategy	73	ported	crates/php2rust-doctrine-orm/src/mapping/naming_strategy.rs
-src/Mapping/UniqueConstraint.php	UniqueConstraint	14	pending	
-src/Mapping/Version.php	Version	7	pending	
+src/Mapping/UniqueConstraint.php	UniqueConstraint	14	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
+src/Mapping/Version.php	Version	7	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
 src/NativeQuery.php	NativeQuery	52	pending	
 src/NoResultException.php	NoResultException	9	pending	
 src/NonUniqueResultException.php	NonUniqueResultException	10	pending	
