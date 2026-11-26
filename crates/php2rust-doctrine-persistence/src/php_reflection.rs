@@ -212,6 +212,7 @@ pub struct MethodInfo {
     name: String,
     visibility: Visibility,
     is_static: bool,
+    required_parameters: usize,
 }
 
 impl MethodInfo {
@@ -221,7 +222,20 @@ impl MethodInfo {
             name: name.into(),
             visibility: Visibility::Public,
             is_static: false,
+            required_parameters: 0,
         }
+    }
+
+    /// Sets `ReflectionMethod::getNumberOfRequiredParameters()`.
+    #[must_use]
+    pub fn required_parameters(mut self, count: usize) -> Self {
+        self.required_parameters = count;
+        self
+    }
+
+    /// `ReflectionMethod::getNumberOfRequiredParameters()`.
+    pub fn get_number_of_required_parameters(&self) -> usize {
+        self.required_parameters
     }
 
     #[must_use]
