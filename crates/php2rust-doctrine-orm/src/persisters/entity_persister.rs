@@ -1,6 +1,8 @@
 //! `EntityPersister`: the interface of the entity persisters, as far as
 //! the criteria paths (`SqlExpressionVisitor`, `LazyCriteriaCollection`)
-//! use it. `BasicEntityPersister` is its implementation; the other
+//! use it; `CommitPersister`: the methods the unit of work's commit and
+//! `getEntityState()` call, which `UnitOfWork::set_entity_persister()`
+//! replaces for a class. `BasicEntityPersister` is its implementation; the other
 //! methods of the interface are the persister's own (the interface's
 //! file is listed with `BasicEntityPersister`).
 //!
@@ -40,4 +42,28 @@ pub trait EntityPersister: Debug + Send + Sync {
         assoc: Option<&AssociationMapping>,
         comparison: Option<&str>,
     ) -> Result<String, Thrown>;
+}
+
+/// The write methods of `Doctrine\ORM\Persisters\Entity\EntityPersister`
+/// that the unit of work calls: `addInsert()`, `executeInserts()`,
+/// `update()`, `delete()` and `exists()`.
+pub trait CommitPersister: Debug + Send + Sync {
+    /// `addInsert($entity)`: adds an entity to the queued insertions.
+    fn add_insert(&self, entity: &Object);
+
+    /// `executeInserts()`: executes all queued entity insertions.
+    fn execute_inserts(&self) -> Fut<'_, ()>;
+
+    /// `update($entity)`: updates a managed entity.
+    fn update<'a>(&'a self, entity: &'a Object) -> Fut<'a, ()>;
+
+    /// `delete($entity)`: deletes a managed entity.
+    fn delete<'a>(&'a self, entity: &'a Object) -> Fut<'a, bool>;
+
+    /// `exists($entity, $extraConditions)`.
+    fn exists<'a>(
+        &'a self,
+        entity: &'a Object,
+        extra_conditions: Option<&'a Criteria>,
+    ) -> Fut<'a, bool>;
 }

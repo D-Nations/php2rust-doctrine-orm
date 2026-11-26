@@ -2847,3 +2847,29 @@ impl super::EntityPersister for BasicEntityPersister {
         )
     }
 }
+
+impl super::CommitPersister for BasicEntityPersister {
+    fn add_insert(&self, entity: &Object) {
+        BasicEntityPersister::add_insert(self, entity);
+    }
+
+    fn execute_inserts(&self) -> crate::unit_of_work::Fut<'_, ()> {
+        Box::pin(BasicEntityPersister::execute_inserts(self))
+    }
+
+    fn update<'a>(&'a self, entity: &'a Object) -> crate::unit_of_work::Fut<'a, ()> {
+        Box::pin(BasicEntityPersister::update(self, entity))
+    }
+
+    fn delete<'a>(&'a self, entity: &'a Object) -> crate::unit_of_work::Fut<'a, bool> {
+        Box::pin(BasicEntityPersister::delete(self, entity))
+    }
+
+    fn exists<'a>(
+        &'a self,
+        entity: &'a Object,
+        extra_conditions: Option<&'a Criteria>,
+    ) -> crate::unit_of_work::Fut<'a, bool> {
+        Box::pin(BasicEntityPersister::exists(self, entity, extra_conditions))
+    }
+}

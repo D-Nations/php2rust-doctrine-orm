@@ -38,7 +38,7 @@ use crate::internal::{StronglyConnectedComponents, TopologicalSort, object_id};
 use crate::mapping::{AssociationMapping, ClassMetadata};
 use crate::object::EntityObject;
 use crate::persistent_collection::PersistentCollection;
-use crate::persisters::BasicEntityPersister;
+use crate::persisters::{BasicEntityPersister, CommitPersister};
 use crate::utility::{flatten_identifier, to_text};
 
 /// A future of the unit of work.
@@ -263,6 +263,8 @@ pub struct UnitOfWork {
     em: Weak<EntityManager>,
     state: Mutex<State>,
     persisters: Mutex<HashMap<String, Arc<BasicEntityPersister>>>,
+    /// The persisters `setEntityPersister()` set, by class name.
+    commit_persisters: Mutex<HashMap<String, Arc<dyn CommitPersister>>>,
     listeners_invoker: ListenersInvoker,
 }
 
@@ -314,6 +316,7 @@ impl UnitOfWork {
             em,
             state: Mutex::new(State::default()),
             persisters: Mutex::new(HashMap::new()),
+            commit_persisters: Mutex::new(HashMap::new()),
             listeners_invoker: ListenersInvoker::new(resolver),
         }
     }
@@ -1267,7 +1270,7 @@ impl UnitOfWork {
         let mut events_to_dispatch: Vec<(Arc<ClassMetadata>, Object, i32)> = Vec::new();
         for (class, entities) in batches {
             let invoke = self.subscribed(&em, &class, events::POST_PERSIST);
-            let persister = self.get_entity_persister(&class.read().name.clone())?;
+            let persister = self.get_commit_persister(&class.read().name.clone())?;
             for entity in &entities {
                 persister.add_insert(entity);
                 self.st().entity_insertions.remove(&object_id(entity));
@@ -1358,7 +1361,7 @@ impl UnitOfWork {
         for entity in entities {
             let oid = object_id(&entity);
             let class = em.get_class_metadata(entity.class())?;
-            let persister = self.get_entity_persister(&class.read().name.clone())?;
+            let persister = self.get_commit_persister(&class.read().name.clone())?;
             let pre_update_invoke = self.subscribed(&em, &class, events::PRE_UPDATE);
             let post_update_invoke = self.subscribed(&em, &class, events::POST_UPDATE);
 
@@ -1420,7 +1423,7 @@ impl UnitOfWork {
             self.remove_from_identity_map(&entity)?;
             let oid = object_id(&entity);
             let class = em.get_class_metadata(entity.class())?;
-            let persister = self.get_entity_persister(&class.read().name.clone())?;
+            let persister = self.get_commit_persister(&class.read().name.clone())?;
             let invoke = self.subscribed(&em, &class, events::POST_REMOVE);
 
             persister.delete(&entity).await?;
@@ -1922,7 +1925,7 @@ impl UnitOfWork {
             // db lookup
             let name = class.read().name.clone();
             if self
-                .get_entity_persister(&name)?
+                .get_commit_persister(&name)?
                 .exists(entity, None)
                 .await?
             {
@@ -1939,7 +1942,7 @@ impl UnitOfWork {
             }
             let name = class.read().name.clone();
             if self
-                .get_entity_persister(&name)?
+                .get_commit_persister(&name)?
                 .exists(entity, None)
                 .await?
             {
@@ -3106,6 +3109,30 @@ impl UnitOfWork {
     /// is the number of entities in the identity map.
     pub fn size(&self) -> usize {
         self.st().identity_map.values().map(Ordered::len).sum()
+    }
+
+    /// `setEntityPersister($entityName, $persister)` (of upstream's
+    /// `UnitOfWorkMock`): the persister of the commit and of
+    /// `getEntityState()`'s `exists()` lookup for the class.
+    pub fn set_entity_persister(&self, entity_name: &str, persister: Arc<dyn CommitPersister>) {
+        self.commit_persisters
+            .lock()
+            .unwrap_or_else(PoisonError::into_inner)
+            .insert(entity_name.to_owned(), persister);
+    }
+
+    /// The persister the commit uses for the class: the one
+    /// `set_entity_persister()` set, else `getEntityPersister()`.
+    fn get_commit_persister(&self, entity_name: &str) -> Result<Arc<dyn CommitPersister>, Thrown> {
+        if let Some(persister) = self
+            .commit_persisters
+            .lock()
+            .unwrap_or_else(PoisonError::into_inner)
+            .get(entity_name)
+        {
+            return Ok(persister.clone());
+        }
+        Ok(self.get_entity_persister(entity_name)?)
     }
 
     /// Gets the `EntityPersister` for an Entity.
