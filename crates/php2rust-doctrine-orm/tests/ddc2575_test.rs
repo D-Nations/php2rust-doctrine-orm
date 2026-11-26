@@ -23,7 +23,7 @@ use php2rust_doctrine_orm::abstract_query::HYDRATE_OBJECT;
 use orm::*;
 use ticket::*;
 
-/// `new $class($id)` of DDC2575Root or DDC2575B (`$sampleField = 0`).
+/// `new $class($id)` of `DDC2575Root` or `DDC2575B` (`$sampleField = 0`).
 fn with_id(short: &str, id: i64) -> Object {
     let object = new(short);
     set(&object, "id", Value::Int(id));
@@ -40,6 +40,7 @@ fn entity_a(root: &Object, b: &Object) -> Object {
 }
 
 #[tokio::test]
+#[allow(clippy::similar_names, reason = "upstream's names")]
 async fn testHydrationIssue() {
     let em = ticket::set_up(&["DDC2575Root", "DDC2575A", "DDC2575B"]).await;
 
