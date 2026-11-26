@@ -19,7 +19,7 @@ use crate::query::ast::{
 use crate::query::context::{DqlQuery, Hint, OutputWalkerClass, QueryComponents, QueryContext};
 use crate::query::exec::{SingleSelectSqlFinalizer, SqlFinalizer};
 use crate::query::sql_walker::{SqlWalkerState, base, dbal_error};
-use crate::query::{OutputWalker, Parameter, ParserResult, SqlWalker};
+use crate::query::{OutputWalker, Parameter, ParserResult, Query, SqlWalker};
 
 use super::RowNumberOverFunction;
 use super::{root_alias, runtime_exception};
@@ -107,6 +107,10 @@ pub struct LimitSubqueryOutputWalker<'a> {
     first_result: i64,
     max_results: Option<i64>,
     order_by_path_expressions: Vec<PathExpression>,
+    /// `$cloneQuery`: the clone of a `Query` with its parameters, hints and
+    /// no second-level cache. The walk reads the query it was given
+    /// through a view without limit and offset.
+    clone_query: Option<Rc<Query>>,
     /// We don't want to add path expressions from sub-selects into the select clause of the containing query.
     /// This state flag simply keeps track on whether we are walking on a subquery or not
     in_sub_select: bool,
@@ -131,14 +135,50 @@ fn construct<'a>(
     parser_result: Rc<RefCell<ParserResult>>,
     query_components: QueryComponents,
 ) -> Box<dyn SqlWalker<'a> + 'a> {
-    Box::new(LimitSubqueryOutputWalker {
-        state: SqlWalkerState::new(query, parser_result, query_components),
-        // Reset limit and offset
-        first_result: query.get_first_result(),
-        max_results: query.get_max_results(),
-        order_by_path_expressions: Vec::new(),
-        in_sub_select: false,
-    })
+    Box::new(LimitSubqueryOutputWalker::new(
+        query,
+        parser_result,
+        query_components,
+    ))
+}
+
+impl<'a> LimitSubqueryOutputWalker<'a> {
+    /// `new LimitSubqueryOutputWalker($query, $parserResult, $queryComponents)`.
+    pub fn new(
+        query: &'a dyn DqlQuery,
+        parser_result: Rc<RefCell<ParserResult>>,
+        query_components: QueryComponents,
+    ) -> Self {
+        let clone_query = query.as_query().map(|query| {
+            let clone_query = query.clone_query();
+
+            clone_query.set_parameters(query.get_parameters());
+            clone_query.set_cacheable(false);
+
+            for (name, value) in query.get_hints() {
+                clone_query.set_hint(&name, value);
+            }
+
+            // Reset limit and offset
+            clone_query.set_first_result(0).set_max_results(None);
+            Rc::new(clone_query)
+        });
+
+        Self {
+            state: SqlWalkerState::new(query, parser_result, query_components),
+            first_result: query.get_first_result(),
+            max_results: query.get_max_results(),
+            order_by_path_expressions: Vec::new(),
+            clone_query,
+            in_sub_select: false,
+        }
+    }
+
+    /// `getQuery()`: the clone of the query (`None` for a `DqlQuery` that
+    /// is not a `Query`).
+    pub fn get_clone_query(&self) -> Option<&Query> {
+        self.clone_query.as_deref()
+    }
 }
 
 impl LimitSubqueryOutputWalker<'_> {

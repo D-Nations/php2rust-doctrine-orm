@@ -756,63 +756,63 @@ tests/Tests/ORM/Functional/OrderedCollectionTest.php	OrderedCollectionTest::test
 tests/Tests/ORM/Functional/OrderedCollectionTest.php	OrderedCollectionTest::testLazyOneToManyCollectionIsRetrievedWithOrderByClause	pending	
 tests/Tests/ORM/Functional/OrderedCollectionTest.php	OrderedCollectionTest::testOrderedResultFromDqlQuery	pending	
 tests/Tests/ORM/Functional/OrderedJoinedTableInheritanceCollectionTest.php	OrderedJoinedTableInheritanceCollectionTest::testOrderdOneToManyCollection	pending	
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testCloneQuery	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testCountComplexWithOutputWalker	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testCountComplexWithoutOutputWalker	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testCountQueryStripsParametersInSelect	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testCountSimpleWithoutJoin	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testCountWithComplexScalarOrderBy	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testCountWithCountSubqueryInWhereClauseWithOutputWalker	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testCountWithFetchJoin	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testCustomIdTypeWithoutOutputWalker	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testDetectOutputWalker	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testDifferentResultLengthsDoNotRequireExtraQueryCacheEntries	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateComplexWithOutputWalker	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateSimpleWithOutputWalkerWithoutJoinWithComplexOrder	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateSimpleWithOutputWalkerWithoutJoinWithComplexOrderAndLimit	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateSimpleWithOutputWalkerWithoutJoinWithComplexOrderAndLimitAndOffset	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateSimpleWithoutJoin	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateSimpleWithoutJoinWithOrder	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateSimpleWithoutJoinWithOrderAndLimit	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateSimpleWithoutJoinWithOrderAndLimitAndOffset	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithCountSubqueryInWhereClause	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoin	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinOneToManyWithOrderByColumnFromBoth	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinOneToManyWithOrderByColumnFromBothWithLimitWithOutputWalker	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinOneToManyWithOrderByColumnFromBothWithLimitWithoutOutputWalker	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinOneToManyWithOrderByColumnFromJoined	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinOneToManyWithOrderByColumnFromJoinedWithLimitWithOutputWalker	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinOneToManyWithOrderByColumnFromJoinedWithLimitWithoutOutputWalker	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinOneToManyWithOrderByColumnFromRoot	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinOneToManyWithOrderByColumnFromRootWithLimit	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinOneToManyWithOrderByColumnFromRootWithLimitAndOffset	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinWithOrder	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinWithOrderAndLimit	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinWithOrderAndLimitAndOffset	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinWithOrderByColumnFromJoined	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinWithOrderByColumnFromJoinedWithLimit	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinWithOrderByColumnFromJoinedWithLimitAndOffset	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithOutputWalkersWithFetchJoinWithComplexOrderByReferencingJoined	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithOutputWalkersWithFetchJoinWithComplexOrderByReferencingJoinedWithLimit	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithOutputWalkersWithFetchJoinWithComplexOrderByReferencingJoinedWithLimitAndOffset	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithOutputWalkersWithFetchJoinWithComplexOrderByReferencingJoinedWithLimitAndOffsetWithInheritanceType	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithOutputWalkersWithRegularJoinWithComplexOrderByReferencingJoined	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithOutputWalkersWithRegularJoinWithComplexOrderByReferencingJoinedWithLimit	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithOutputWalkersWithRegularJoinWithComplexOrderByReferencingJoinedWithLimitAndOffset	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithRegularJoinWithOrderByColumnFromJoined	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithRegularJoinWithOrderByColumnFromJoinedWithLimit	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithRegularJoinWithOrderByColumnFromJoinedWithLimitAndOffset	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testJoinedClassTableInheritance	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testOffsetPaginatorIsReusableAcrossQueriesAndPages	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testOffsetPaginatorRejectsANonWindowPosition	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testOffsetPaginatorReturnsFirstPage	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testOffsetPaginatorReturnsLastPage	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testOffsetPaginatorWithFetchJoin	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testOffsetPaginatorWithFromPageNumberAndSize	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testPageItemsAreAListEvenForIndexByQueries	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testPaginationWithColumnAttributeNameDifference	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testPaginationWithSubSelectOrderByExpression	pending	functional: needs Query.php and hydration
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testQueryWalkerIsKept	pending	functional: needs Query.php and hydration
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testCloneQuery	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testCloneQuery
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testCountComplexWithOutputWalker	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testCountComplexWithOutputWalker
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testCountComplexWithoutOutputWalker	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testCountComplexWithoutOutputWalker
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testCountQueryStripsParametersInSelect	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testCountQueryStripsParametersInSelect
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testCountSimpleWithoutJoin	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testCountSimpleWithoutJoin
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testCountWithComplexScalarOrderBy	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testCountWithComplexScalarOrderBy
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testCountWithCountSubqueryInWhereClauseWithOutputWalker	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testCountWithCountSubqueryInWhereClauseWithOutputWalker
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testCountWithFetchJoin	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testCountWithFetchJoin
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testCustomIdTypeWithoutOutputWalker	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testCustomIdTypeWithoutOutputWalker
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testDetectOutputWalker	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testDetectOutputWalker
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testDifferentResultLengthsDoNotRequireExtraQueryCacheEntries	pending	the port has no query cache
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateComplexWithOutputWalker	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testIterateComplexWithOutputWalker
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateSimpleWithOutputWalkerWithoutJoinWithComplexOrder	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testIterateSimpleWithOutputWalkerWithoutJoinWithComplexOrder
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateSimpleWithOutputWalkerWithoutJoinWithComplexOrderAndLimit	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testIterateSimpleWithOutputWalkerWithoutJoinWithComplexOrderAndLimit
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateSimpleWithOutputWalkerWithoutJoinWithComplexOrderAndLimitAndOffset	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testIterateSimpleWithOutputWalkerWithoutJoinWithComplexOrderAndLimitAndOffset
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateSimpleWithoutJoin	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testIterateSimpleWithoutJoin
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateSimpleWithoutJoinWithOrder	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testIterateSimpleWithoutJoinWithOrder
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateSimpleWithoutJoinWithOrderAndLimit	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testIterateSimpleWithoutJoinWithOrderAndLimit
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateSimpleWithoutJoinWithOrderAndLimitAndOffset	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testIterateSimpleWithoutJoinWithOrderAndLimitAndOffset
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithCountSubqueryInWhereClause	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testIterateWithCountSubqueryInWhereClause
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoin	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testIterateWithFetchJoin
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinOneToManyWithOrderByColumnFromBoth	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testIterateWithFetchJoinOneToManyWithOrderByColumnFromBoth
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinOneToManyWithOrderByColumnFromBothWithLimitWithOutputWalker	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testIterateWithFetchJoinOneToManyWithOrderByColumnFromBothWithLimitWithOutputWalker
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinOneToManyWithOrderByColumnFromBothWithLimitWithoutOutputWalker	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testIterateWithFetchJoinOneToManyWithOrderByColumnFromBothWithLimitWithoutOutputWalker
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinOneToManyWithOrderByColumnFromJoined	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testIterateWithFetchJoinOneToManyWithOrderByColumnFromJoined
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinOneToManyWithOrderByColumnFromJoinedWithLimitWithOutputWalker	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testIterateWithFetchJoinOneToManyWithOrderByColumnFromJoinedWithLimitWithOutputWalker
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinOneToManyWithOrderByColumnFromJoinedWithLimitWithoutOutputWalker	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testIterateWithFetchJoinOneToManyWithOrderByColumnFromJoinedWithLimitWithoutOutputWalker
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinOneToManyWithOrderByColumnFromRoot	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testIterateWithFetchJoinOneToManyWithOrderByColumnFromRoot
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinOneToManyWithOrderByColumnFromRootWithLimit	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testIterateWithFetchJoinOneToManyWithOrderByColumnFromRootWithLimit
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinOneToManyWithOrderByColumnFromRootWithLimitAndOffset	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testIterateWithFetchJoinOneToManyWithOrderByColumnFromRootWithLimitAndOffset
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinWithOrder	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testIterateWithFetchJoinWithOrder
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinWithOrderAndLimit	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testIterateWithFetchJoinWithOrderAndLimit
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinWithOrderAndLimitAndOffset	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testIterateWithFetchJoinWithOrderAndLimitAndOffset
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinWithOrderByColumnFromJoined	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testIterateWithFetchJoinWithOrderByColumnFromJoined
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinWithOrderByColumnFromJoinedWithLimit	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testIterateWithFetchJoinWithOrderByColumnFromJoinedWithLimit
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithFetchJoinWithOrderByColumnFromJoinedWithLimitAndOffset	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testIterateWithFetchJoinWithOrderByColumnFromJoinedWithLimitAndOffset
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithOutputWalkersWithFetchJoinWithComplexOrderByReferencingJoined	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testIterateWithOutputWalkersWithFetchJoinWithComplexOrderByReferencingJoined
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithOutputWalkersWithFetchJoinWithComplexOrderByReferencingJoinedWithLimit	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testIterateWithOutputWalkersWithFetchJoinWithComplexOrderByReferencingJoinedWithLimit
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithOutputWalkersWithFetchJoinWithComplexOrderByReferencingJoinedWithLimitAndOffset	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testIterateWithOutputWalkersWithFetchJoinWithComplexOrderByReferencingJoinedWithLimitAndOffset
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithOutputWalkersWithFetchJoinWithComplexOrderByReferencingJoinedWithLimitAndOffsetWithInheritanceType	pending	the single table inheritance persister (SingleTablePersister) is not ported
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithOutputWalkersWithRegularJoinWithComplexOrderByReferencingJoined	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testIterateWithOutputWalkersWithRegularJoinWithComplexOrderByReferencingJoined
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithOutputWalkersWithRegularJoinWithComplexOrderByReferencingJoinedWithLimit	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testIterateWithOutputWalkersWithRegularJoinWithComplexOrderByReferencingJoinedWithLimit
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithOutputWalkersWithRegularJoinWithComplexOrderByReferencingJoinedWithLimitAndOffset	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testIterateWithOutputWalkersWithRegularJoinWithComplexOrderByReferencingJoinedWithLimitAndOffset
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithRegularJoinWithOrderByColumnFromJoined	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testIterateWithRegularJoinWithOrderByColumnFromJoined
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithRegularJoinWithOrderByColumnFromJoinedWithLimit	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testIterateWithRegularJoinWithOrderByColumnFromJoinedWithLimit
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateWithRegularJoinWithOrderByColumnFromJoinedWithLimitAndOffset	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testIterateWithRegularJoinWithOrderByColumnFromJoinedWithLimitAndOffset
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testJoinedClassTableInheritance	pending	joined (class table) inheritance persisters are not ported
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testOffsetPaginatorIsReusableAcrossQueriesAndPages	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testOffsetPaginatorIsReusableAcrossQueriesAndPages
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testOffsetPaginatorRejectsANonWindowPosition	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testOffsetPaginatorRejectsANonWindowPosition
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testOffsetPaginatorReturnsFirstPage	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testOffsetPaginatorReturnsFirstPage
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testOffsetPaginatorReturnsLastPage	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testOffsetPaginatorReturnsLastPage
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testOffsetPaginatorWithFetchJoin	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testOffsetPaginatorWithFetchJoin
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testOffsetPaginatorWithFromPageNumberAndSize	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testOffsetPaginatorWithFromPageNumberAndSize
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testPageItemsAreAListEvenForIndexByQueries	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testPageItemsAreAListEvenForIndexByQueries
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testPaginationWithColumnAttributeNameDifference	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testPaginationWithColumnAttributeNameDifference
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testPaginationWithSubSelectOrderByExpression	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testPaginationWithSubSelectOrderByExpression
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testQueryWalkerIsKept	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testQueryWalkerIsKept
 tests/Tests/ORM/Functional/ParserResultSerializationTest.php	ParserResultSerializationTest::testSerializeParserResultForQueryWithSqlOutputWalker	pending	
 tests/Tests/ORM/Functional/ParserResultSerializationTest.php	ParserResultSerializationTest::testSerializeParserResultForQueryWithSqlWalker	pending	
 tests/Tests/ORM/Functional/ParserResultSerializationTest.php	ParserResultSerializationTest::testSymfony44ProvidedData	pending	
@@ -3077,7 +3077,7 @@ tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubquery
 tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryWithSortOracle	pending	OraclePlatform (ROW_NUMBER() SQL); the DBAL port has only SQLitePlatform
 tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryWithSortPg	pending	PostgreSQLPlatform (ROW_NUMBER() SQL); the DBAL port has only SQLitePlatform
 tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testParsingQueryWithDifferentLimitOffsetValuesTakesOnlyOneCacheEntry	pending	the port has no query cache (Configuration::setQueryCache)
-tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testSubqueryClonedCompletely	pending	the walker borrows the query instead of cloning a Query; waits for the port of Query.php
+tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testSubqueryClonedCompletely	ported	crates/php2rust-doctrine-orm/tests/limit_subquery_output_walker_test.rs::testSubqueryClonedCompletely
 tests/Tests/ORM/Tools/Pagination/LimitSubqueryWalkerTest.php	LimitSubqueryWalkerTest::testAggQueryMixedResultsWithNameAndSort	ported	crates/php2rust-doctrine-orm/tests/limit_subquery_walker_test.rs::testAggQueryMixedResultsWithNameAndSort
 tests/Tests/ORM/Tools/Pagination/LimitSubqueryWalkerTest.php	LimitSubqueryWalkerTest::testAggQueryMultipleMixedResultsWithSort	ported	crates/php2rust-doctrine-orm/tests/limit_subquery_walker_test.rs::testAggQueryMultipleMixedResultsWithSort
 tests/Tests/ORM/Tools/Pagination/LimitSubqueryWalkerTest.php	LimitSubqueryWalkerTest::testCountQueryMixedResultsWithName	ported	crates/php2rust-doctrine-orm/tests/limit_subquery_walker_test.rs::testCountQueryMixedResultsWithName
@@ -3088,41 +3088,41 @@ tests/Tests/ORM/Tools/Pagination/LimitSubqueryWalkerTest.php	LimitSubqueryWalker
 tests/Tests/ORM/Tools/Pagination/LimitSubqueryWalkerTest.php	LimitSubqueryWalkerTest::testLimitSubqueryWithSortFunction	ported	crates/php2rust-doctrine-orm/tests/limit_subquery_walker_test.rs::testLimitSubqueryWithSortFunction
 tests/Tests/ORM/Tools/Pagination/LimitSubqueryWalkerTest.php	LimitSubqueryWalkerTest::testLimitSubqueryWithSortOnAssociation	ported	crates/php2rust-doctrine-orm/tests/limit_subquery_walker_test.rs::testLimitSubqueryWithSortOnAssociation
 tests/Tests/ORM/Tools/Pagination/LimitSubqueryWalkerTest.php	LimitSubqueryWalkerTest::testLimitSubqueryWithSortWithArbitraryJoin	ported	crates/php2rust-doctrine-orm/tests/limit_subquery_walker_test.rs::testLimitSubqueryWithSortWithArbitraryJoin
-tests/Tests/ORM/Tools/Pagination/OffsetPaginatorTest.php	OffsetPaginatorTest::testExtraParametersAreStrippedWhenWalkerRemovingOriginalSelectElementsIsUsed	pending	
-tests/Tests/ORM/Tools/Pagination/OffsetPaginatorTest.php	OffsetPaginatorTest::testPaginatingDoesCareAboutExtraParametersWithoutOutputWalkersWhenResultIsNotEmpty	pending	
-tests/Tests/ORM/Tools/Pagination/OffsetPaginatorTest.php	OffsetPaginatorTest::testPaginatingDoesNotCareAboutExtraParametersWithoutOutputWalkersWhenResultIsEmpty	pending	
-tests/Tests/ORM/Tools/Pagination/PaginatorTest.php	PaginatorTest::testExtraParametersAreStrippedWhenWalkerRemovingOriginalSelectElementsIsUsed	pending	count() and getIterator() run queries: waits for the port of Query.php and hydration
-tests/Tests/ORM/Tools/Pagination/PaginatorTest.php	PaginatorTest::testPaginatorNotCaringAboutExtraParametersWithoutOutputWalkers	pending	count() and getIterator() run queries: waits for the port of Query.php and hydration
-tests/Tests/ORM/Tools/Pagination/PaginatorTest.php	PaginatorTest::testgetIteratorDoesCareAboutExtraParametersWithoutOutputWalkersWhenResultIsNotEmpty	pending	count() and getIterator() run queries: waits for the port of Query.php and hydration
+tests/Tests/ORM/Tools/Pagination/OffsetPaginatorTest.php	OffsetPaginatorTest::testExtraParametersAreStrippedWhenWalkerRemovingOriginalSelectElementsIsUsed	ported	crates/php2rust-doctrine-orm/tests/offset_paginator_test.rs::testExtraParametersAreStrippedWhenWalkerRemovingOriginalSelectElementsIsUsed
+tests/Tests/ORM/Tools/Pagination/OffsetPaginatorTest.php	OffsetPaginatorTest::testPaginatingDoesCareAboutExtraParametersWithoutOutputWalkersWhenResultIsNotEmpty	ported	crates/php2rust-doctrine-orm/tests/offset_paginator_test.rs::testPaginatingDoesCareAboutExtraParametersWithoutOutputWalkersWhenResultIsNotEmpty
+tests/Tests/ORM/Tools/Pagination/OffsetPaginatorTest.php	OffsetPaginatorTest::testPaginatingDoesNotCareAboutExtraParametersWithoutOutputWalkersWhenResultIsEmpty	ported	crates/php2rust-doctrine-orm/tests/offset_paginator_test.rs::testPaginatingDoesNotCareAboutExtraParametersWithoutOutputWalkersWhenResultIsEmpty
+tests/Tests/ORM/Tools/Pagination/PaginatorTest.php	PaginatorTest::testExtraParametersAreStrippedWhenWalkerRemovingOriginalSelectElementsIsUsed	ported	crates/php2rust-doctrine-orm/tests/paginator_test.rs::testExtraParametersAreStrippedWhenWalkerRemovingOriginalSelectElementsIsUsed
+tests/Tests/ORM/Tools/Pagination/PaginatorTest.php	PaginatorTest::testPaginatorNotCaringAboutExtraParametersWithoutOutputWalkers	ported	crates/php2rust-doctrine-orm/tests/paginator_test.rs::testPaginatorNotCaringAboutExtraParametersWithoutOutputWalkers
+tests/Tests/ORM/Tools/Pagination/PaginatorTest.php	PaginatorTest::testgetIteratorDoesCareAboutExtraParametersWithoutOutputWalkersWhenResultIsNotEmpty	ported	crates/php2rust-doctrine-orm/tests/paginator_test.rs::testgetIteratorDoesCareAboutExtraParametersWithoutOutputWalkersWhenResultIsNotEmpty
 tests/Tests/ORM/Tools/Pagination/RootTypeWalkerTest.php	RootTypeWalkerTest::testResolveTypeMapping	ported	crates/php2rust-doctrine-orm/tests/root_type_walker_test.rs::testResolveTypeMapping
 tests/Tests/ORM/Tools/Pagination/WhereInWalkerTest.php	WhereInWalkerTest::testDqlQueryTransformation	ported	crates/php2rust-doctrine-orm/tests/where_in_walker_test.rs::testDqlQueryTransformation
-tests/Tests/ORM/Tools/Pagination/WindowPageTest.php	WindowPageTest::testFirstPageHasNextButNoPreviousPage	pending	
-tests/Tests/ORM/Tools/Pagination/WindowPageTest.php	WindowPageTest::testGetItemsAndCount	pending	
-tests/Tests/ORM/Tools/Pagination/WindowPageTest.php	WindowPageTest::testGetLastWindow	pending	
-tests/Tests/ORM/Tools/Pagination/WindowPageTest.php	WindowPageTest::testGetLastWindowOnEmptyResultSetPointsAtTheFirstPage	pending	
-tests/Tests/ORM/Tools/Pagination/WindowPageTest.php	WindowPageTest::testGetNextWindow	pending	
-tests/Tests/ORM/Tools/Pagination/WindowPageTest.php	WindowPageTest::testGetNextWindowThrowsWhenNoNextPage	pending	
-tests/Tests/ORM/Tools/Pagination/WindowPageTest.php	WindowPageTest::testGetPageCount	pending	
-tests/Tests/ORM/Tools/Pagination/WindowPageTest.php	WindowPageTest::testGetPageCountIsAtLeastOneOnEmptyResultSet	pending	
-tests/Tests/ORM/Tools/Pagination/WindowPageTest.php	WindowPageTest::testGetPageNumber	pending	
-tests/Tests/ORM/Tools/Pagination/WindowPageTest.php	WindowPageTest::testGetPreviousWindow	pending	
-tests/Tests/ORM/Tools/Pagination/WindowPageTest.php	WindowPageTest::testGetPreviousWindowThrowsWhenNoPreviousPage	pending	
-tests/Tests/ORM/Tools/Pagination/WindowPageTest.php	WindowPageTest::testGetTotalCount	pending	
-tests/Tests/ORM/Tools/Pagination/WindowPageTest.php	WindowPageTest::testGetWindow	pending	
-tests/Tests/ORM/Tools/Pagination/WindowPageTest.php	WindowPageTest::testLastPageHasPreviousButNoNextPage	pending	
-tests/Tests/ORM/Tools/Pagination/WindowPageTest.php	WindowPageTest::testMiddlePageHasBothPages	pending	
-tests/Tests/ORM/Tools/Pagination/WindowPageTest.php	WindowPageTest::testSinglePageHasNoNavigation	pending	
-tests/Tests/ORM/Tools/Pagination/WindowTest.php	WindowTest::testFromPageNumberAndSize	pending	
-tests/Tests/ORM/Tools/Pagination/WindowTest.php	WindowTest::testFromPageNumberAndSizeWithPageNumberBelowOneThrows	pending	
-tests/Tests/ORM/Tools/Pagination/WindowTest.php	WindowTest::testGetPageNumber	pending	
-tests/Tests/ORM/Tools/Pagination/WindowTest.php	WindowTest::testGetters	pending	
-tests/Tests/ORM/Tools/Pagination/WindowTest.php	WindowTest::testIsImmutable	pending	
-tests/Tests/ORM/Tools/Pagination/WindowTest.php	WindowTest::testNegativeFirstResultThrows	pending	
-tests/Tests/ORM/Tools/Pagination/WindowTest.php	WindowTest::testNext	pending	
-tests/Tests/ORM/Tools/Pagination/WindowTest.php	WindowTest::testPrevious	pending	
-tests/Tests/ORM/Tools/Pagination/WindowTest.php	WindowTest::testPreviousIsClampedAtZero	pending	
-tests/Tests/ORM/Tools/Pagination/WindowTest.php	WindowTest::testWindowIsFinal	pending	
-tests/Tests/ORM/Tools/Pagination/WindowTest.php	WindowTest::testZeroMaxResultsThrows	pending	
+tests/Tests/ORM/Tools/Pagination/WindowPageTest.php	WindowPageTest::testFirstPageHasNextButNoPreviousPage	ported	crates/php2rust-doctrine-orm/tests/window_page_test.rs::testFirstPageHasNextButNoPreviousPage
+tests/Tests/ORM/Tools/Pagination/WindowPageTest.php	WindowPageTest::testGetItemsAndCount	ported	crates/php2rust-doctrine-orm/tests/window_page_test.rs::testGetItemsAndCount
+tests/Tests/ORM/Tools/Pagination/WindowPageTest.php	WindowPageTest::testGetLastWindow	ported	crates/php2rust-doctrine-orm/tests/window_page_test.rs::testGetLastWindow
+tests/Tests/ORM/Tools/Pagination/WindowPageTest.php	WindowPageTest::testGetLastWindowOnEmptyResultSetPointsAtTheFirstPage	ported	crates/php2rust-doctrine-orm/tests/window_page_test.rs::testGetLastWindowOnEmptyResultSetPointsAtTheFirstPage
+tests/Tests/ORM/Tools/Pagination/WindowPageTest.php	WindowPageTest::testGetNextWindow	ported	crates/php2rust-doctrine-orm/tests/window_page_test.rs::testGetNextWindow
+tests/Tests/ORM/Tools/Pagination/WindowPageTest.php	WindowPageTest::testGetNextWindowThrowsWhenNoNextPage	ported	crates/php2rust-doctrine-orm/tests/window_page_test.rs::testGetNextWindowThrowsWhenNoNextPage
+tests/Tests/ORM/Tools/Pagination/WindowPageTest.php	WindowPageTest::testGetPageCount	ported	crates/php2rust-doctrine-orm/tests/window_page_test.rs::testGetPageCount
+tests/Tests/ORM/Tools/Pagination/WindowPageTest.php	WindowPageTest::testGetPageCountIsAtLeastOneOnEmptyResultSet	ported	crates/php2rust-doctrine-orm/tests/window_page_test.rs::testGetPageCountIsAtLeastOneOnEmptyResultSet
+tests/Tests/ORM/Tools/Pagination/WindowPageTest.php	WindowPageTest::testGetPageNumber	ported	crates/php2rust-doctrine-orm/tests/window_page_test.rs::testGetPageNumber
+tests/Tests/ORM/Tools/Pagination/WindowPageTest.php	WindowPageTest::testGetPreviousWindow	ported	crates/php2rust-doctrine-orm/tests/window_page_test.rs::testGetPreviousWindow
+tests/Tests/ORM/Tools/Pagination/WindowPageTest.php	WindowPageTest::testGetPreviousWindowThrowsWhenNoPreviousPage	ported	crates/php2rust-doctrine-orm/tests/window_page_test.rs::testGetPreviousWindowThrowsWhenNoPreviousPage
+tests/Tests/ORM/Tools/Pagination/WindowPageTest.php	WindowPageTest::testGetTotalCount	ported	crates/php2rust-doctrine-orm/tests/window_page_test.rs::testGetTotalCount
+tests/Tests/ORM/Tools/Pagination/WindowPageTest.php	WindowPageTest::testGetWindow	ported	crates/php2rust-doctrine-orm/tests/window_page_test.rs::testGetWindow
+tests/Tests/ORM/Tools/Pagination/WindowPageTest.php	WindowPageTest::testLastPageHasPreviousButNoNextPage	ported	crates/php2rust-doctrine-orm/tests/window_page_test.rs::testLastPageHasPreviousButNoNextPage
+tests/Tests/ORM/Tools/Pagination/WindowPageTest.php	WindowPageTest::testMiddlePageHasBothPages	ported	crates/php2rust-doctrine-orm/tests/window_page_test.rs::testMiddlePageHasBothPages
+tests/Tests/ORM/Tools/Pagination/WindowPageTest.php	WindowPageTest::testSinglePageHasNoNavigation	ported	crates/php2rust-doctrine-orm/tests/window_page_test.rs::testSinglePageHasNoNavigation
+tests/Tests/ORM/Tools/Pagination/WindowTest.php	WindowTest::testFromPageNumberAndSize	ported	crates/php2rust-doctrine-orm/tests/window_test.rs::testFromPageNumberAndSize
+tests/Tests/ORM/Tools/Pagination/WindowTest.php	WindowTest::testFromPageNumberAndSizeWithPageNumberBelowOneThrows	ported	crates/php2rust-doctrine-orm/tests/window_test.rs::testFromPageNumberAndSizeWithPageNumberBelowOneThrows
+tests/Tests/ORM/Tools/Pagination/WindowTest.php	WindowTest::testGetPageNumber	ported	crates/php2rust-doctrine-orm/tests/window_test.rs::testGetPageNumber
+tests/Tests/ORM/Tools/Pagination/WindowTest.php	WindowTest::testGetters	ported	crates/php2rust-doctrine-orm/tests/window_test.rs::testGetters
+tests/Tests/ORM/Tools/Pagination/WindowTest.php	WindowTest::testIsImmutable	ported	crates/php2rust-doctrine-orm/tests/window_test.rs::testIsImmutable
+tests/Tests/ORM/Tools/Pagination/WindowTest.php	WindowTest::testNegativeFirstResultThrows	ported	crates/php2rust-doctrine-orm/tests/window_test.rs::testNegativeFirstResultThrows
+tests/Tests/ORM/Tools/Pagination/WindowTest.php	WindowTest::testNext	ported	crates/php2rust-doctrine-orm/tests/window_test.rs::testNext
+tests/Tests/ORM/Tools/Pagination/WindowTest.php	WindowTest::testPrevious	ported	crates/php2rust-doctrine-orm/tests/window_test.rs::testPrevious
+tests/Tests/ORM/Tools/Pagination/WindowTest.php	WindowTest::testPreviousIsClampedAtZero	ported	crates/php2rust-doctrine-orm/tests/window_test.rs::testPreviousIsClampedAtZero
+tests/Tests/ORM/Tools/Pagination/WindowTest.php	WindowTest::testWindowIsFinal	n/a: a Rust struct has no subclasses	
+tests/Tests/ORM/Tools/Pagination/WindowTest.php	WindowTest::testZeroMaxResultsThrows	ported	crates/php2rust-doctrine-orm/tests/window_test.rs::testZeroMaxResultsThrows
 tests/Tests/ORM/Tools/ResolveTargetEntityListenerTest.php	ResolveTargetEntityListenerTest::testAssertTableColumnsAreNotAddedInManyToMany	pending	
 tests/Tests/ORM/Tools/ResolveTargetEntityListenerTest.php	ResolveTargetEntityListenerTest::testDoesResolveTargetEntitiesInDQLAlsoWithInterfaces	pending	
 tests/Tests/ORM/Tools/ResolveTargetEntityListenerTest.php	ResolveTargetEntityListenerTest::testResolveTargetEntityListenerCanResolveTargetEntity	pending	

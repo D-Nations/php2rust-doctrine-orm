@@ -5,9 +5,9 @@
 //! write `LIMIT 20 OFFSET 10`, so upstream's SQL is the same; the tests on
 //! the `PostgreSQLPlatform` and `OraclePlatform` (the `ROW_NUMBER()` SQL)
 //! are pending.
-//! `testSubqueryClonedCompletely` is pending: the walker borrows the query
-//! (and resets the limit and offset in a view of it) instead of cloning a
-//! `Query`. `testParsingQueryWithDifferentLimitOffsetValuesTakesOnlyOneCacheEntry`
+//! `testSubqueryClonedCompletely` runs on a `Query` of the functional test
+//! entity manager (`tests/common/orm.rs`); the walker's `getQuery()` is
+//! `get_clone_query()`. `testParsingQueryWithDifferentLimitOffsetValuesTakesOnlyOneCacheEntry`
 //! is pending: the port has no query cache.
 //!
 //! Upstream: doctrine/orm tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php
@@ -23,9 +23,16 @@
 mod dql;
 #[path = "common/models.rs"]
 mod models;
+#[path = "common/orm.rs"]
+mod orm;
 
-use php2rust_doctrine_orm::query::context::QueryContext;
+use std::cell::RefCell;
+use std::rc::Rc;
+
+use php_value::Value;
+use php2rust_doctrine_orm::query::ParserResult;
 use php2rust_doctrine_orm::query::context::{HINT_CUSTOM_OUTPUT_WALKER, HYDRATE_ARRAY, Hint};
+use php2rust_doctrine_orm::query::context::{QueryComponents, QueryContext};
 use php2rust_doctrine_orm::tools::pagination::LimitSubqueryOutputWalker;
 
 use dql::{TestEntityManager, TestQuery};
@@ -50,6 +57,40 @@ fn assert_query_sql(expected_sql: &str, dql: &str) {
     let query = create_query(&entity_manager, dql);
 
     assert_eq!(sql, query.get_single_sql().unwrap());
+}
+
+#[test]
+fn testSubqueryClonedCompletely() {
+    let em = orm::entity_manager(orm::connection(), None);
+    let query = em.create_query(r"SELECT p FROM Doctrine\Tests\ORM\Tools\Pagination\MyBlogPost p");
+    query.set_hint(
+        HINT_CUSTOM_OUTPUT_WALKER,
+        Hint::OutputWalker(LimitSubqueryOutputWalker::CLASS),
+    );
+    query.set_first_result(10);
+    query.set_max_results(Some(20));
+    query.set_parameter("dummy-param", 123, None);
+    query.set_hint("dummy-hint", Hint::Value(Value::from("dummy-value")));
+    query.set_cacheable(true);
+
+    let walker = LimitSubqueryOutputWalker::new(
+        &query,
+        Rc::new(RefCell::new(ParserResult::new())),
+        QueryComponents::new(),
+    );
+    let clone = walker.get_clone_query().expect("a Query");
+
+    assert!(!std::ptr::eq(std::ptr::from_ref(&query), clone));
+    assert!(clone.has_hint("dummy-hint"));
+    assert!(matches!(
+        clone.get_hint("dummy-hint"),
+        Hint::Value(value) if value.identical(&Value::from("dummy-value"))
+    ));
+    // `assertNotSame($query->getParameters(), ...)`: the parameters are
+    // copied values.
+    let param = clone.get_parameter("dummy-param").expect("a Parameter");
+    assert!(param.get_value().identical(&Value::Int(123)));
+    assert!(!clone.is_cacheable());
 }
 
 #[test]

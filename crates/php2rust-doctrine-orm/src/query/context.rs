@@ -355,6 +355,12 @@ pub trait DqlQuery {
             Hint::Value(Value::Bool(false) | Value::Null)
         )
     }
+
+    /// The query as a [`crate::query::Query`], for a walker that clones it
+    /// (`clone $query`); `None` for another `DqlQuery`.
+    fn as_query(&self) -> Option<&crate::query::Query> {
+        None
+    }
 }
 
 /// `$query->getHint(Query::HINT_LOCK_MODE) ?: LockMode::NONE`: `None` for a

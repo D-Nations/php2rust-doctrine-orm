@@ -1,21 +1,15 @@
-//! `Paginator` and the `PaginatorQuery` trait it uses: the queries the
-//! paginator derives from the query it pages (the count query, the clones
-//! with the walker hints) on the [`Query`]. `count()` and
-//! `getIterator()`, which run those queries, are not ported yet.
+//! `Paginator`: the legacy, stateful paginator over a [`Query`].
 //!
-//! Upstream: doctrine/orm src/Tools/Pagination/Paginator.php src/Tools/Pagination/PaginatorQuery.php
+//! Upstream: doctrine/orm src/Tools/Pagination/Paginator.php
 
-use php_value::{Key, Thrown, Value};
+use std::sync::{Mutex, PoisonError};
 
-use crate::mapping::quote_strategy::sql_result_casing;
-use crate::query::context::{
-    HINT_CUSTOM_OUTPUT_WALKER, HINT_CUSTOM_TREE_WALKERS, Hint, TreeWalkerClass,
-};
-use crate::query::result_set_mapping::ResultSetMapping;
-use crate::query::{Parser, Query};
+use php_value::{PhpArray, Thrown};
+
+use crate::query::Query;
 use crate::query_builder::QueryBuilder;
 
-use super::{CountOutputWalker, CountWalker};
+use super::paginator_query::{PaginatorQuery, sum_of_first_columns};
 
 /// The paginator can handle various complex scenarios with DQL.
 ///
@@ -24,11 +18,10 @@ use super::{CountOutputWalker, CountWalker};
 #[derive(Debug)]
 pub struct Paginator {
     query: Query,
+    count: Mutex<Option<i64>>,
     fetch_join_collection: bool,
-    /// Whether to force the use of an output walker. Null lets the paginator
-    /// decide. The legacy Paginator exposes a setter for it, the
-    /// stateless paginators take it as a constructor argument.
-    use_output_walkers: Option<bool>,
+    /// `use PaginatorQuery`.
+    shared: PaginatorQuery,
 }
 
 impl Paginator {
@@ -42,8 +35,9 @@ impl Paginator {
     pub fn new(query: Query, fetch_join_collection: bool) -> Self {
         Self {
             query,
+            count: Mutex::new(None),
             fetch_join_collection,
-            use_output_walkers: None,
+            shared: PaginatorQuery::default(),
         }
     }
 
@@ -68,114 +62,54 @@ impl Paginator {
 
     /// Returns whether the paginator will use an output walker.
     pub fn get_use_output_walkers(&self) -> Option<bool> {
-        self.use_output_walkers
+        self.shared.use_output_walkers
     }
 
     /// Sets whether the paginator will use an output walker.
     pub fn set_use_output_walkers(&mut self, use_output_walkers: Option<bool>) -> &mut Self {
-        self.use_output_walkers = use_output_walkers;
+        self.shared.use_output_walkers = use_output_walkers;
         self
     }
 
-    /// Determines whether to use an output walker for the query.
-    pub fn use_output_walker(&self, query: &Query) -> bool {
-        match self.use_output_walkers {
-            None => !query.get_hint(HINT_CUSTOM_OUTPUT_WALKER).is_truthy(),
-            Some(use_output_walkers) => use_output_walkers,
-        }
+    /// The `PaginatorQuery` methods (private upstream).
+    pub fn paginator_query(&self) -> &PaginatorQuery {
+        &self.shared
     }
 
-    /// `cloneQuery($query)`.
-    pub fn clone_query(query: &Query) -> Query {
-        let clone_query = query.clone_query();
-
-        clone_query.set_parameters(query.get_parameters());
-        clone_query.set_cacheable(false);
-
-        for (name, value) in query.get_hints() {
-            clone_query.set_hint(&name, value);
-        }
-
-        clone_query
-    }
-
-    /// `getCountQuery($query)`.
+    /// `getCountQuery($query)` (private upstream).
     pub fn get_count_query(&self, query: &Query) -> Result<Query, Thrown> {
-        // As opposed to using self::cloneQuery, the following code does not transfer
-        // a potentially existing result set mapping (either set directly by the user,
-        // or taken from the parser result from a previous invocation of Query::parse())
-        // to the new query object. This is fine, since we are going to completely change the
-        // select clause, so a previously existing result set mapping (RSM) is probably wrong anyway.
-        // In the case of using output walkers, we are even creating a new RSM down below.
-        // In the case of using a tree walker, we want to have a new RSM created by the parser.
-        let count_query = query
-            .get_entity_manager()
-            .create_query(&query.get_dql().unwrap_or_default());
-        count_query.set_parameters(query.get_parameters());
-        count_query.set_cacheable(false);
-        for (name, value) in query.get_hints() {
-            count_query.set_hint(&name, value);
-        }
-
-        if !count_query.has_hint(CountWalker::HINT_DISTINCT) {
-            count_query.set_hint(CountWalker::HINT_DISTINCT, Hint::Value(Value::Bool(true)));
-        }
-
-        if self.use_output_walker(&count_query) {
-            let platform = count_query.get_entity_manager().get_platform(); // law of demeter win
-
-            let mut rsm = ResultSetMapping::new();
-            rsm.add_scalar_result(
-                &sql_result_casing(platform, "dctrn_count"),
-                "count",
-                "string",
-            );
-
-            count_query.set_hint(
-                HINT_CUSTOM_OUTPUT_WALKER,
-                Hint::OutputWalker(CountOutputWalker::CLASS),
-            );
-            count_query.set_result_set_mapping(rsm)?;
-        } else {
-            Self::append_tree_walker(&count_query, CountWalker::CLASS)?;
-            Self::unbind_unused_query_params(&count_query)?;
-        }
-
-        count_query.set_first_result(0).set_max_results(None);
-
-        Ok(count_query)
+        self.shared.get_count_query(query)
     }
 
-    /// Appends a custom tree walker to the tree walkers hint.
-    pub fn append_tree_walker(query: &Query, walker_class: TreeWalkerClass) -> Result<(), Thrown> {
-        let mut hints = match query.get_hint(HINT_CUSTOM_TREE_WALKERS) {
-            Hint::Value(Value::Bool(false)) => Vec::new(),
-            Hint::TreeWalkers(hints) => hints,
-            // `$hints[] = ...` on a scalar.
-            _ => {
-                return Err(Thrown::new(
-                    "Error",
-                    "Cannot use a scalar value as an array",
-                    0,
-                ));
-            }
+    /// `count()`.
+    pub async fn count(&self) -> Result<i64, Thrown> {
+        let known = *self.count.lock().unwrap_or_else(PoisonError::into_inner);
+        if let Some(count) = known {
+            return Ok(count);
+        }
+        let count = match self
+            .shared
+            .get_count_query(&self.query)?
+            .get_scalar_result()
+            .await
+        {
+            Ok(rows) => sum_of_first_columns(&rows),
+            Err(e) if e.class == "Doctrine\\ORM\\NoResultException" => 0,
+            Err(e) => return Err(e),
         };
-
-        hints.push(walker_class);
-        query.set_hint(HINT_CUSTOM_TREE_WALKERS, Hint::TreeWalkers(hints));
-        Ok(())
+        *self.count.lock().unwrap_or_else(PoisonError::into_inner) = Some(count);
+        Ok(count)
     }
 
-    /// `unbindUnusedQueryParams($query)`.
-    pub fn unbind_unused_query_params(query: &Query) -> Result<(), Thrown> {
-        let parser_result = Parser::new(query)?.parse()?;
-        let parameter_mappings = parser_result.borrow().get_parameter_mappings().clone();
-        let mut parameters = query.get_parameters();
-
-        parameters
-            .retain(|parameter| parameter_mappings.contains_key(&Key::from(parameter.get_name())));
-
-        query.set_parameters(parameters);
-        Ok(())
+    /// `getIterator()`: the result, with its keys.
+    pub async fn get_iterator(&self) -> Result<PhpArray, Thrown> {
+        self.shared
+            .get_result_for_offset(
+                &self.query,
+                self.query.get_first_result(),
+                self.query.get_max_results(),
+                self.fetch_join_collection,
+            )
+            .await
     }
 }
