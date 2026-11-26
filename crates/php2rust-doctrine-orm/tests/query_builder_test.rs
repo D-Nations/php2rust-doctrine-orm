@@ -1,9 +1,9 @@
 //! QueryBuilderTest.php at doctrine/orm 00c2fd70da291cca1ec75f4dae5344fe3df588fa.
-//! The test entity manager is `getTestEntityManager()`
-//! (`tests/common/dql.rs`), behind an `Arc` as the builder holds it. The
+//! The test entity manager is an `EntityManager` on an unopened in-memory
+//! `SQLite` connection, behind an `Arc` as the builder holds it. The
 //! variadic arguments are `Vec`s of values (`args![...]`); an omitted
 //! `$order` is `None`, an explicit `null` `Some(Order::Null)`.
-//! `getQuery()` gives the `Query` stand-in (`StandInQuery`). PHPUnit's
+//! `getQuery()` gives a `Query`. PHPUnit's
 //! `assertEquals()` of parameter collections compares each parameter's
 //! name, value, type and whether the type was specified.
 //! `testWhereWithUnexpectedNamedArguments` has no counterpart: Rust has no
@@ -30,14 +30,18 @@ use php_value::compare::loose_equals;
 use php_value::{PhpArray, Thrown, Value};
 use php2rust_doctrine_collections::Criteria;
 use php2rust_doctrine_collections::SortDirection as CriteriaSortDirection;
+use php2rust_doctrine_dbal::DriverManager;
 use php2rust_doctrine_dbal::WrapperParameterType;
+use php2rust_doctrine_orm::configuration::Configuration;
+use php2rust_doctrine_orm::entity_manager::EntityManager;
+use php2rust_doctrine_orm::mapping::driver::AttributeDriver;
 use php2rust_doctrine_orm::object::EntityObject;
-use php2rust_doctrine_orm::query::context::{DqlQuery, Hint, QueryContext};
+use php2rust_doctrine_orm::query::context::{Hint, QueryContext};
 use php2rust_doctrine_orm::query::expr::{self, Andx, Join, ORDER_DEPRECATION, Order};
-use php2rust_doctrine_orm::query::{Parameter, ParameterTypeInferer, SortDirection, StandInQuery};
+use php2rust_doctrine_orm::query::{Parameter, ParameterTypeInferer, Query, SortDirection};
 use php2rust_doctrine_orm::{QueryBuilder, QueryType};
 
-use dql::{ExpectDeprecation, TestEntityManager, thrown};
+use dql::{ExpectDeprecation, thrown};
 
 const CMS_USER: &str = r"Doctrine\Tests\Models\CMS\CmsUser";
 const CMS_ARTICLE: &str = r"Doctrine\Tests\Models\CMS\CmsArticle";
@@ -55,12 +59,25 @@ macro_rules! args {
 }
 
 struct SetUp {
-    entity_manager: Arc<TestEntityManager>,
+    entity_manager: Arc<EntityManager>,
 }
 
+/// `getTestEntityManager()`: an entity manager on an in-memory `SQLite`
+/// connection (it is not opened: the builder and `getQuery()` do not
+/// query), so that `getQuery()` gives a `Query`.
 fn set_up() -> SetUp {
+    models::register_query_models();
+    let mut params = PhpArray::new();
+    params.insert("driver", Value::string("pdo_sqlite"));
+    params.insert("memory", Value::Bool(true));
+    let conn = Arc::new(DriverManager::get_connection(params, None).unwrap());
+    let mut config = Configuration::new();
+    config.set_metadata_driver_impl(Arc::new(
+        AttributeDriver::new(Vec::<String>::new(), true).unwrap(),
+    ));
+    config.enable_native_lazy_objects(true).unwrap();
     SetUp {
-        entity_manager: Arc::new(TestEntityManager::new()),
+        entity_manager: EntityManager::create(conn, config, None).unwrap(),
     }
 }
 
@@ -1050,12 +1067,12 @@ fn testGetQuery() -> TestResult {
     let t = set_up();
     let mut qb = t.create_query_builder();
     qb.select(args!["u"])?.from(CMS_USER, "u", None)?;
-    let q: StandInQuery = qb.get_query()?;
+    let q: Query = qb.get_query()?;
 
-    // `$q::class === Query::class`: the type is the `Query` (stand-in).
+    // `$q::class === Query::class`: the type is the `Query`.
     assert_eq!(
         r"SELECT u FROM Doctrine\Tests\Models\CMS\CmsUser u",
-        q.get_dql()
+        q.get_dql().unwrap_or_default()
     );
     Ok(())
 }
@@ -1322,7 +1339,7 @@ fn testMultipleIsolatedQueryConstruction() -> TestResult {
 
     assert_eq!(
         r"SELECT u FROM Doctrine\Tests\Models\CMS\CmsUser u WHERE u.name = :name",
-        q1.get_dql()
+        q1.get_dql().unwrap_or_default()
     );
     assert_eq!(1, q1.get_parameters().len());
 
@@ -1334,7 +1351,7 @@ fn testMultipleIsolatedQueryConstruction() -> TestResult {
 
     assert_eq!(
         r"SELECT u FROM Doctrine\Tests\Models\CMS\CmsUser u WHERE u.name = :name AND u.id = :id",
-        q2.get_dql()
+        q2.get_dql().unwrap_or_default()
     );
     // two different, independent queries
     assert!(!std::ptr::eq(&raw const q1, &raw const q2));

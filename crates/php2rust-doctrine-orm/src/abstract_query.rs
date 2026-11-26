@@ -97,6 +97,11 @@ struct Inner {
     hints: Vec<(String, Hint)>,
     hydration_mode: i64,
     result_set_mapping: Option<ResultSetMapping>,
+    // The second-level cache options (the cache itself is not ported).
+    cacheable: bool,
+    lifetime: i64,
+    cache_region: Option<String>,
+    cache_mode: Option<i64>,
 }
 
 /// The state of an `AbstractQuery`.
@@ -155,6 +160,10 @@ impl QueryState {
                 hints: default_hints(&self.em),
                 hydration_mode: st.hydration_mode,
                 result_set_mapping: st.result_set_mapping.clone(),
+                cacheable: st.cacheable,
+                lifetime: st.lifetime,
+                cache_region: st.cache_region.clone(),
+                cache_mode: st.cache_mode,
             }),
         }
     }
@@ -375,6 +384,42 @@ impl QueryState {
         self.st().hints.clone()
     }
 
+    /// Enable/disable second level query (result) caching for this query.
+    pub fn set_cacheable(&self, cacheable: bool) {
+        self.st().cacheable = cacheable;
+    }
+
+    pub fn is_cacheable(&self) -> bool {
+        self.st().cacheable
+    }
+
+    pub fn set_cache_region(&self, cache_region: &str) {
+        self.st().cache_region = Some(cache_region.to_owned());
+    }
+
+    /// Obtain the name of the second level query cache region in which
+    /// query results will be stored.
+    pub fn get_cache_region(&self) -> Option<String> {
+        self.st().cache_region.clone()
+    }
+
+    /// Sets the life-time for this query into second level cache.
+    pub fn set_lifetime(&self, lifetime: i64) {
+        self.st().lifetime = lifetime;
+    }
+
+    pub fn get_lifetime(&self) -> i64 {
+        self.st().lifetime
+    }
+
+    pub fn get_cache_mode(&self) -> Option<i64> {
+        self.st().cache_mode
+    }
+
+    pub fn set_cache_mode(&self, cache_mode: Option<i64>) {
+        self.st().cache_mode = cache_mode;
+    }
+
     /// The query hints as the unit of work and the hydrators read them.
     pub(crate) fn hydration_hints(&self) -> (Hints, HydrationHints) {
         let st = self.st();
@@ -572,6 +617,43 @@ macro_rules! abstract_query_methods {
         /// The query hints that are currently set.
         pub fn get_hints(&self) -> Vec<(String, $crate::query::context::Hint)> {
             self.state().get_hints()
+        }
+
+        /// Enable/disable second level query (result) caching for this query.
+        pub fn set_cacheable(&self, cacheable: bool) -> &Self {
+            self.state().set_cacheable(cacheable);
+            self
+        }
+
+        pub fn is_cacheable(&self) -> bool {
+            self.state().is_cacheable()
+        }
+
+        pub fn set_cache_region(&self, cache_region: &str) -> &Self {
+            self.state().set_cache_region(cache_region);
+            self
+        }
+
+        pub fn get_cache_region(&self) -> Option<String> {
+            self.state().get_cache_region()
+        }
+
+        pub fn set_lifetime(&self, lifetime: i64) -> &Self {
+            self.state().set_lifetime(lifetime);
+            self
+        }
+
+        pub fn get_lifetime(&self) -> i64 {
+            self.state().get_lifetime()
+        }
+
+        pub fn get_cache_mode(&self) -> Option<i64> {
+            self.state().get_cache_mode()
+        }
+
+        pub fn set_cache_mode(&self, cache_mode: Option<i64>) -> &Self {
+            self.state().set_cache_mode(cache_mode);
+            self
         }
 
         /// Executes the query.

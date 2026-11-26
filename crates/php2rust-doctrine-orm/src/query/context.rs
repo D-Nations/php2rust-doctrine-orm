@@ -217,6 +217,13 @@ pub trait QueryContext {
         false
     }
 
+    /// The entity manager behind the handle, when it is one (the tests'
+    /// stand-ins are not): what `QueryBuilder::getQuery()` creates its
+    /// `Query` with.
+    fn as_entity_manager(self: Arc<Self>) -> Option<Arc<crate::entity_manager::EntityManager>> {
+        None
+    }
+
     /// `getFilters()->getEnabledFilters()`.
     fn get_enabled_filters(&self) -> Vec<Arc<dyn SqlFilterConstraint>> {
         Vec::new()
@@ -394,6 +401,10 @@ fn function_class(class_name: Option<String>) -> Option<FunctionFactory> {
 
 /// The entity manager as the parser and the walkers see it.
 impl QueryContext for crate::entity_manager::EntityManager {
+    fn as_entity_manager(self: Arc<Self>) -> Option<Arc<crate::entity_manager::EntityManager>> {
+        Some(self)
+    }
+
     fn get_class_metadata(&self, class_name: &str) -> Result<Arc<ClassMetadata>, Thrown> {
         crate::entity_manager::EntityManager::get_class_metadata(self, class_name)
     }

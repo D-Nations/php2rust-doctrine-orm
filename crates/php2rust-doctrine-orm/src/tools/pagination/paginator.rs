@@ -1,8 +1,7 @@
 //! `Paginator` and the `PaginatorQuery` trait it uses: the queries the
 //! paginator derives from the query it pages (the count query, the clones
-//! with the walker hints). `count()` and `getIterator()` run those
-//! queries and wait for the port of `Query.php`; the paginator works on
-//! the [`StandInQuery`] until then.
+//! with the walker hints) on the [`Query`]. `count()` and
+//! `getIterator()`, which run those queries, are not ported yet.
 //!
 //! Upstream: doctrine/orm src/Tools/Pagination/Paginator.php src/Tools/Pagination/PaginatorQuery.php
 
@@ -10,10 +9,10 @@ use php_value::{Key, Thrown, Value};
 
 use crate::mapping::quote_strategy::sql_result_casing;
 use crate::query::context::{
-    DqlQuery, HINT_CUSTOM_OUTPUT_WALKER, HINT_CUSTOM_TREE_WALKERS, Hint, TreeWalkerClass,
+    HINT_CUSTOM_OUTPUT_WALKER, HINT_CUSTOM_TREE_WALKERS, Hint, TreeWalkerClass,
 };
 use crate::query::result_set_mapping::ResultSetMapping;
-use crate::query::{Parser, StandInQuery};
+use crate::query::{Parser, Query};
 use crate::query_builder::QueryBuilder;
 
 use super::{CountOutputWalker, CountWalker};
@@ -24,7 +23,7 @@ use super::{CountOutputWalker, CountWalker};
 ///             Use OffsetPaginator instead.
 #[derive(Debug)]
 pub struct Paginator {
-    query: StandInQuery,
+    query: Query,
     fetch_join_collection: bool,
     /// Whether to force the use of an output walker. Null lets the paginator
     /// decide. The legacy Paginator exposes a setter for it, the
@@ -40,7 +39,7 @@ impl Paginator {
 
     /// `new Paginator($query, $fetchJoinCollection)` of a `Query`
     /// (`$fetchJoinCollection` is `true` by default).
-    pub fn new(query: StandInQuery, fetch_join_collection: bool) -> Self {
+    pub fn new(query: Query, fetch_join_collection: bool) -> Self {
         Self {
             query,
             fetch_join_collection,
@@ -58,7 +57,7 @@ impl Paginator {
     }
 
     /// Returns the query.
-    pub fn get_query(&self) -> &StandInQuery {
+    pub fn get_query(&self) -> &Query {
         &self.query
     }
 
@@ -79,7 +78,7 @@ impl Paginator {
     }
 
     /// Determines whether to use an output walker for the query.
-    pub fn use_output_walker(&self, query: &StandInQuery) -> bool {
+    pub fn use_output_walker(&self, query: &Query) -> bool {
         match self.use_output_walkers {
             None => !query.get_hint(HINT_CUSTOM_OUTPUT_WALKER).is_truthy(),
             Some(use_output_walkers) => use_output_walkers,
@@ -87,7 +86,7 @@ impl Paginator {
     }
 
     /// `cloneQuery($query)`.
-    pub fn clone_query(query: &StandInQuery) -> StandInQuery {
+    pub fn clone_query(query: &Query) -> Query {
         let clone_query = query.clone_query();
 
         clone_query.set_parameters(query.get_parameters());
@@ -101,7 +100,7 @@ impl Paginator {
     }
 
     /// `getCountQuery($query)`.
-    pub fn get_count_query(&self, query: &StandInQuery) -> Result<StandInQuery, Thrown> {
+    pub fn get_count_query(&self, query: &Query) -> Result<Query, Thrown> {
         // As opposed to using self::cloneQuery, the following code does not transfer
         // a potentially existing result set mapping (either set directly by the user,
         // or taken from the parser result from a previous invocation of Query::parse())
@@ -109,7 +108,9 @@ impl Paginator {
         // select clause, so a previously existing result set mapping (RSM) is probably wrong anyway.
         // In the case of using output walkers, we are even creating a new RSM down below.
         // In the case of using a tree walker, we want to have a new RSM created by the parser.
-        let count_query = StandInQuery::new(query.entity_manager(), &query.get_dql());
+        let count_query = query
+            .get_entity_manager()
+            .create_query(&query.get_dql().unwrap_or_default());
         count_query.set_parameters(query.get_parameters());
         count_query.set_cacheable(false);
         for (name, value) in query.get_hints() {
@@ -121,7 +122,7 @@ impl Paginator {
         }
 
         if self.use_output_walker(&count_query) {
-            let platform = count_query.get_entity_manager().get_database_platform(); // law of demeter win
+            let platform = count_query.get_entity_manager().get_platform(); // law of demeter win
 
             let mut rsm = ResultSetMapping::new();
             rsm.add_scalar_result(
@@ -134,22 +135,19 @@ impl Paginator {
                 HINT_CUSTOM_OUTPUT_WALKER,
                 Hint::OutputWalker(CountOutputWalker::CLASS),
             );
-            count_query.set_result_set_mapping(rsm);
+            count_query.set_result_set_mapping(rsm)?;
         } else {
             Self::append_tree_walker(&count_query, CountWalker::CLASS)?;
             Self::unbind_unused_query_params(&count_query)?;
         }
 
-        count_query.set_first_result(Some(0)).set_max_results(None);
+        count_query.set_first_result(0).set_max_results(None);
 
         Ok(count_query)
     }
 
     /// Appends a custom tree walker to the tree walkers hint.
-    pub fn append_tree_walker(
-        query: &StandInQuery,
-        walker_class: TreeWalkerClass,
-    ) -> Result<(), Thrown> {
+    pub fn append_tree_walker(query: &Query, walker_class: TreeWalkerClass) -> Result<(), Thrown> {
         let mut hints = match query.get_hint(HINT_CUSTOM_TREE_WALKERS) {
             Hint::Value(Value::Bool(false)) => Vec::new(),
             Hint::TreeWalkers(hints) => hints,
@@ -169,7 +167,7 @@ impl Paginator {
     }
 
     /// `unbindUnusedQueryParams($query)`.
-    pub fn unbind_unused_query_params(query: &StandInQuery) -> Result<(), Thrown> {
+    pub fn unbind_unused_query_params(query: &Query) -> Result<(), Thrown> {
         let parser_result = Parser::new(query)?.parse()?;
         let parameter_mappings = parser_result.borrow().get_parameter_mappings().clone();
         let mut parameters = query.get_parameters();
