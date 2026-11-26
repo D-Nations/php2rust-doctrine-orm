@@ -538,11 +538,11 @@ tests/Tests/ORM/Functional/IdentityMapTest.php	IdentityMapTest::testCollectionVa
 tests/Tests/ORM/Functional/IdentityMapTest.php	IdentityMapTest::testCollectionValuedAssociationIdentityMapBehaviorWithRefreshQuery	ported	crates/php2rust-doctrine-orm/tests/identity_map_test.rs::testCollectionValuedAssociationIdentityMapBehaviorWithRefreshQuery
 tests/Tests/ORM/Functional/IdentityMapTest.php	IdentityMapTest::testSingleValuedAssociationIdentityMapBehaviorWithRefresh	ported	crates/php2rust-doctrine-orm/tests/identity_map_test.rs::testSingleValuedAssociationIdentityMapBehaviorWithRefresh
 tests/Tests/ORM/Functional/IdentityMapTest.php	IdentityMapTest::testSingleValuedAssociationIdentityMapBehaviorWithRefreshQuery	ported	crates/php2rust-doctrine-orm/tests/identity_map_test.rs::testSingleValuedAssociationIdentityMapBehaviorWithRefreshQuery
-tests/Tests/ORM/Functional/IndexByAssociationTest.php	IndexByAssociationTest::testDqlOverrideIndexBy	pending	
-tests/Tests/ORM/Functional/IndexByAssociationTest.php	IndexByAssociationTest::testManyToMany	pending	
-tests/Tests/ORM/Functional/IndexByAssociationTest.php	IndexByAssociationTest::testManyToOneDQL	pending	
-tests/Tests/ORM/Functional/IndexByAssociationTest.php	IndexByAssociationTest::testManyToOneFinder	pending	
-tests/Tests/ORM/Functional/IndexByAssociationTest.php	IndexByAssociationTest::testManytoManyDQL	pending	
+tests/Tests/ORM/Functional/IndexByAssociationTest.php	IndexByAssociationTest::testDqlOverrideIndexBy	ported	crates/php2rust-doctrine-orm/tests/index_by_association_test.rs::testDqlOverrideIndexBy
+tests/Tests/ORM/Functional/IndexByAssociationTest.php	IndexByAssociationTest::testManyToMany	ported	crates/php2rust-doctrine-orm/tests/index_by_association_test.rs::testManyToMany
+tests/Tests/ORM/Functional/IndexByAssociationTest.php	IndexByAssociationTest::testManyToOneDQL	ported	crates/php2rust-doctrine-orm/tests/index_by_association_test.rs::testManyToOneDQL
+tests/Tests/ORM/Functional/IndexByAssociationTest.php	IndexByAssociationTest::testManyToOneFinder	ported	crates/php2rust-doctrine-orm/tests/index_by_association_test.rs::testManyToOneFinder
+tests/Tests/ORM/Functional/IndexByAssociationTest.php	IndexByAssociationTest::testManytoManyDQL	ported	crates/php2rust-doctrine-orm/tests/index_by_association_test.rs::testManytoManyDQL
 tests/Tests/ORM/Functional/InsertableUpdatableTest.php	InsertableUpdatableTest::testNotInsertableIsFetchedFromDatabase	pending	
 tests/Tests/ORM/Functional/InsertableUpdatableTest.php	InsertableUpdatableTest::testNotUpdatableIsFetched	pending	
 tests/Tests/ORM/Functional/InvalidMappingDefinitionTest.php	InvalidMappingDefinitionTest::testManyToManyRelationWithJoinTableOnTheWrongSide	pending	
