@@ -1428,8 +1428,8 @@ tests/Tests/ORM/Functional/Ticket/GH10462Test.php	GH10462Test::testCharsetAndCol
 tests/Tests/ORM/Functional/Ticket/GH10473Test.php	GH10473Test::testMappedSuperclassAssociationsCanBeResolvedToEntities	pending	
 tests/Tests/ORM/Functional/Ticket/GH10531Test.php	GH10531Test::testDeletes	ported	crates/php2rust-doctrine-orm/tests/gh10531_test.rs::testDeletes
 tests/Tests/ORM/Functional/Ticket/GH10531Test.php	GH10531Test::testInserts	ported	crates/php2rust-doctrine-orm/tests/gh10531_test.rs::testInserts
-tests/Tests/ORM/Functional/Ticket/GH10532Test.php	GH10532Test::testDeletes	pending	
-tests/Tests/ORM/Functional/Ticket/GH10532Test.php	GH10532Test::testInserts	pending	
+tests/Tests/ORM/Functional/Ticket/GH10532Test.php	GH10532Test::testDeletes	ported	crates/php2rust-doctrine-orm/tests/gh10532_test.rs::testDeletes
+tests/Tests/ORM/Functional/Ticket/GH10532Test.php	GH10532Test::testInserts	ported	crates/php2rust-doctrine-orm/tests/gh10532_test.rs::testInserts
 tests/Tests/ORM/Functional/Ticket/GH10566Test.php	GH10566Test::testInsertion	pending	
 tests/Tests/ORM/Functional/Ticket/GH10566Test.php	GH10566Test::testRemoval	pending	
 tests/Tests/ORM/Functional/Ticket/GH10625Test.php	GH10625Test::testLoadFieldsFromAllClassesInHierarchy	pending	
