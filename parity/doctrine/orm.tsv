@@ -1587,9 +1587,9 @@ tests/Tests/ORM/Functional/Ticket/GH8415Test.php	GH8415Test::testAssociationIsBa
 tests/Tests/ORM/Functional/Ticket/GH8415ToManyAssociationTest.php	GH8415ToManyAssociationTest::testToManyAssociationOnBaseClassAllowedWhenThereAreMappedSuperclassesAsChildren	ported	crates/php2rust-doctrine-orm/tests/gh8415_to_many_association_test.rs::testToManyAssociationOnBaseClassAllowedWhenThereAreMappedSuperclassesAsChildren
 tests/Tests/ORM/Functional/Ticket/GH8443Test.php	GH8443Test::testJoinRootEntityWithForcePartialLoad	ported	crates/php2rust-doctrine-orm/tests/gh8443_test.rs::testJoinRootEntityWithForcePartialLoad
 tests/Tests/ORM/Functional/Ticket/GH8443Test.php	GH8443Test::testJoinRootEntityWithOnlyOneEntityInHierarchy	ported	crates/php2rust-doctrine-orm/tests/gh8443_test.rs::testJoinRootEntityWithOnlyOneEntityInHierarchy
-tests/Tests/ORM/Functional/Ticket/GH8499Test.php	GH8499Test::testOptimisticLockWithDateTimeForVersion	pending	
-tests/Tests/ORM/Functional/Ticket/GH8499Test.php	GH8499Test::testOptimisticLockWithDateTimeForVersionThrowsException	pending	
-tests/Tests/ORM/Functional/Ticket/GH8499Test.php	GH8499Test::testOptimisticTimestampSetsDefaultValue	pending	
+tests/Tests/ORM/Functional/Ticket/GH8499Test.php	GH8499Test::testOptimisticLockWithDateTimeForVersion	ported	crates/php2rust-doctrine-orm/tests/gh8499_test.rs::testOptimisticLockWithDateTimeForVersion
+tests/Tests/ORM/Functional/Ticket/GH8499Test.php	GH8499Test::testOptimisticLockWithDateTimeForVersionThrowsException	ported	crates/php2rust-doctrine-orm/tests/gh8499_test.rs::testOptimisticLockWithDateTimeForVersionThrowsException
+tests/Tests/ORM/Functional/Ticket/GH8499Test.php	GH8499Test::testOptimisticTimestampSetsDefaultValue	ported	crates/php2rust-doctrine-orm/tests/gh8499_test.rs::testOptimisticTimestampSetsDefaultValue
 tests/Tests/ORM/Functional/Ticket/GH8663Test.php	GH8663Test::testDeletedEntity	pending	
 tests/Tests/ORM/Functional/Ticket/GH8914Test.php	GH8914Test::testDiscriminatorMapWithSeveralLevelsIsSupported	pending	
 tests/Tests/ORM/Functional/Ticket/GH9027Test.php	GH9027Test::testUnitOfWorkHandlesNullRelations	pending	
