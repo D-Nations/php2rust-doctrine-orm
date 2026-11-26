@@ -1597,16 +1597,16 @@ tests/Tests/ORM/Functional/Ticket/GH9109Test.php	GH9109Test::testIssue	ported	cr
 tests/Tests/ORM/Functional/Ticket/GH9192Test.php	GH9192Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/gh9192_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/GH9230Test.php	GH9230Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/gh9230_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/GH9335Test.php	GH9335Test::testFlattenIdentifierWithObjectId	ported	crates/php2rust-doctrine-orm/tests/gh9335_test.rs::testFlattenIdentifierWithObjectId
-tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildNonInsertableColumnInsert	pending	
-tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildNonInsertableColumnUpdate	pending	
-tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildNonUpdatableColumnInsert	pending	
-tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildNonUpdatableColumnUpdate	pending	
-tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildNonWritableColumnInsert	pending	
-tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildNonWritableColumnUpdate	pending	
-tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildWritableColumnInsert	pending	
-tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildWritableColumnUpdate	pending	
-tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testRootColumnsInsert	pending	
-tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testRootColumnsUpdate	pending	
+tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildNonInsertableColumnInsert	ported	crates/php2rust-doctrine-orm/tests/gh9467_test.rs::testChildNonInsertableColumnInsert
+tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildNonInsertableColumnUpdate	ported	crates/php2rust-doctrine-orm/tests/gh9467_test.rs::testChildNonInsertableColumnUpdate
+tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildNonUpdatableColumnInsert	ported	crates/php2rust-doctrine-orm/tests/gh9467_test.rs::testChildNonUpdatableColumnInsert
+tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildNonUpdatableColumnUpdate	ported	crates/php2rust-doctrine-orm/tests/gh9467_test.rs::testChildNonUpdatableColumnUpdate
+tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildNonWritableColumnInsert	ported	crates/php2rust-doctrine-orm/tests/gh9467_test.rs::testChildNonWritableColumnInsert
+tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildNonWritableColumnUpdate	ported	crates/php2rust-doctrine-orm/tests/gh9467_test.rs::testChildNonWritableColumnUpdate
+tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildWritableColumnInsert	ported	crates/php2rust-doctrine-orm/tests/gh9467_test.rs::testChildWritableColumnInsert
+tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildWritableColumnUpdate	ported	crates/php2rust-doctrine-orm/tests/gh9467_test.rs::testChildWritableColumnUpdate
+tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testRootColumnsInsert	ported	crates/php2rust-doctrine-orm/tests/gh9467_test.rs::testRootColumnsInsert
+tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testRootColumnsUpdate	ported	crates/php2rust-doctrine-orm/tests/gh9467_test.rs::testRootColumnsUpdate
 tests/Tests/ORM/Functional/Ticket/GH9516Test.php	GH9516Test::testEntityCanHaveInverseOneToManyAssociationWithChildMappedSuperclass	ported	crates/php2rust-doctrine-orm/tests/gh9516_test.rs::testEntityCanHaveInverseOneToManyAssociationWithChildMappedSuperclass
 tests/Tests/ORM/Functional/Ticket/GH9538Test.php	GH9538Test::testCanRemoveEntityWithReadonlyId	ported	crates/php2rust-doctrine-orm/tests/gh9538_test.rs::testCanRemoveEntityWithReadonlyId
 tests/Tests/ORM/Functional/Ticket/GH9579Test.php	GH9579Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/gh9579_test.rs::testIssue
