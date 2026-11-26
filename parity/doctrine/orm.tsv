@@ -1467,7 +1467,7 @@ tests/Tests/ORM/Functional/Ticket/GH11112Test.php	GH11112Test::testSubqueryLimit
 tests/Tests/ORM/Functional/Ticket/GH11135Test.php	GH11135Test::testOverrideInheritsDeclaringClass	ported	crates/php2rust-doctrine-orm/tests/gh11135_test.rs::testOverrideInheritsDeclaringClass
 tests/Tests/ORM/Functional/Ticket/GH11149/GH11149Test.php	GH11149Test::testFetchEagerModeWithIndexBy	pending	the models are separate files of the ticket directory and not recorded yet
 tests/Tests/ORM/Functional/Ticket/GH11163Test.php	GH11163Test::testFetchEagerModeWithOrderBy	ported	crates/php2rust-doctrine-orm/tests/gh11163_test.rs::testFetchEagerModeWithOrderBy
-tests/Tests/ORM/Functional/Ticket/GH11199Test.php	GH11199Test::testGH11199	pending	
+tests/Tests/ORM/Functional/Ticket/GH11199Test.php	GH11199Test::testGH11199	ported	crates/php2rust-doctrine-orm/tests/gh11199_test.rs::testGH11199
 tests/Tests/ORM/Functional/Ticket/GH11341Test.php	GH11341Test::testDiscriminatorValue	pending	
 tests/Tests/ORM/Functional/Ticket/GH11341Test.php	GH11341Test::testInstanceOf	pending	
 tests/Tests/ORM/Functional/Ticket/GH11386/GH11386Test.php	GH11386Test::testInitializeClonedProxy	pending	the models are separate files of the ticket directory and not recorded yet
