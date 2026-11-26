@@ -1502,7 +1502,7 @@ tests/Tests/ORM/Functional/Ticket/GH5742Test.php	GH5742Test::testManyToManyColle
 tests/Tests/ORM/Functional/Ticket/GH5742Test.php	GH5742Test::testUpdateOneToOneToNewEntityBeforePreviousEntityCanBeRemoved	ported	crates/php2rust-doctrine-orm/tests/gh5742_test.rs::testUpdateOneToOneToNewEntityBeforePreviousEntityCanBeRemoved
 tests/Tests/ORM/Functional/Ticket/GH5762Test.php	GH5762Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/gh5762_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/GH5804Test.php	GH5804Test::testTextColumnSaveAndRetrieve2	pending	
-tests/Tests/ORM/Functional/Ticket/GH5887Test.php	GH5887Test::testLazyLoadsForeignEntitiesInOneToOneRelationWhileHavingCustomIdObject	pending	
+tests/Tests/ORM/Functional/Ticket/GH5887Test.php	GH5887Test::testLazyLoadsForeignEntitiesInOneToOneRelationWhileHavingCustomIdObject	ported	crates/php2rust-doctrine-orm/tests/gh5887_test.rs::testLazyLoadsForeignEntitiesInOneToOneRelationWhileHavingCustomIdObject
 tests/Tests/ORM/Functional/Ticket/GH5988Test.php	GH5988Test::testDelete	pending	
 tests/Tests/ORM/Functional/Ticket/GH5998Test.php	GH5998Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/gh5998_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/GH6029Test.php	GH6029Test::testManyToManyAssociation	ported	crates/php2rust-doctrine-orm/tests/gh6029_test.rs::testManyToManyAssociation
