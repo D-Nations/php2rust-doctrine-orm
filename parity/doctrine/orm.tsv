@@ -1578,7 +1578,7 @@ tests/Tests/ORM/Functional/Ticket/GH7864Test.php	GH7864Test::testExtraLazyRemove
 tests/Tests/ORM/Functional/Ticket/GH7869Test.php	GH7869Test::testDQLDeferredEagerLoad	pending	needs EntityManagerDecorator and a mock that counts getClassMetadata() calls
 tests/Tests/ORM/Functional/Ticket/GH7875Test.php	GH7875Test::testUpdateSchemaSql	pending	needs SchemaTool::getUpdateSchemaSql(), which is not ported
 tests/Tests/ORM/Functional/Ticket/GH7875Test.php	GH7875Test::testUpdateSchemaSqlWithSchemaAssetFilter	pending	needs SchemaTool::getUpdateSchemaSql(), which is not ported
-tests/Tests/ORM/Functional/Ticket/GH7941Test.php	GH7941Test::typesShouldBeConvertedForDQLFunctions	pending	
+tests/Tests/ORM/Functional/Ticket/GH7941Test.php	GH7941Test::typesShouldBeConvertedForDQLFunctions	pending	the DBAL port does not register SQLite's user-defined SQRT() function
 tests/Tests/ORM/Functional/Ticket/GH8055Test.php	GH8055Test::testNumericDescriminatorColumn	ported	crates/php2rust-doctrine-orm/tests/gh8055_test.rs::testNumericDescriminatorColumn
 tests/Tests/ORM/Functional/Ticket/GH8061Test.php	GH8061Test::testConvertToPHPValueSQLForNewObjectExpression	pending	
 tests/Tests/ORM/Functional/Ticket/GH8127Test.php	GH8127Test::testLoadFieldsFromAllClassesInHierarchy	ported	crates/php2rust-doctrine-orm/tests/gh8127_test.rs::testLoadFieldsFromAllClassesInHierarchy
