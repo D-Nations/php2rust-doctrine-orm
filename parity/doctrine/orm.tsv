@@ -1160,7 +1160,7 @@ tests/Tests/ORM/Functional/Ticket/DDC1040Test.php	DDC1040Test::testUseMultiplePo
 tests/Tests/ORM/Functional/Ticket/DDC1041Test.php	DDC1041Test::testGrabWrongSubtypeReturnsNull	ported	crates/php2rust-doctrine-orm/tests/ddc1041_test.rs::testGrabWrongSubtypeReturnsNull
 tests/Tests/ORM/Functional/Ticket/DDC1043Test.php	DDC1043Test::testChangeSetPlusWeirdPHPCastingIntCastingRule	ported	crates/php2rust-doctrine-orm/tests/ddc1043_test.rs::testChangeSetPlusWeirdPHPCastingIntCastingRule
 tests/Tests/ORM/Functional/Ticket/DDC1080Test.php	DDC1080Test::testHydration	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1113Test.php	DDC1113Test::testIssue	pending	
+tests/Tests/ORM/Functional/Ticket/DDC1113Test.php	DDC1113Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc1113_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC1129Test.php	DDC1129Test::testVersionFieldIgnoredInChangesetComputation	ported	crates/php2rust-doctrine-orm/tests/ddc1129_test.rs::testVersionFieldIgnoredInChangesetComputation
 tests/Tests/ORM/Functional/Ticket/DDC1163Test.php	DDC1163Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testArrayHydrationWithCompositeKey	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testArrayHydrationWithCompositeKey
@@ -1183,34 +1183,34 @@ tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testOneToOneForeign
 tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testReferencesToForeignKeyEntities	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testReferencesToForeignKeyEntities
 tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testRemoveCompositeElement	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testRemoveCompositeElement
 tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testUpdateAssociationEntity	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testUpdateAssociationEntity
-tests/Tests/ORM/Functional/Ticket/DDC1181Test.php	DDC1181Test::testIssue	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1193Test.php	DDC1193Test::testIssue	pending	
+tests/Tests/ORM/Functional/Ticket/DDC1181Test.php	DDC1181Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc1181_test.rs::testIssue
+tests/Tests/ORM/Functional/Ticket/DDC1193Test.php	DDC1193Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc1193_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC1209Test.php	DDC1209Test::testCompositeIdentifierCanHaveCustomType	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1209Test.php	DDC1209Test::testIdentifierCanHaveCustomType	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1225Test.php	DDC1225Test::testIssue	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1228Test.php	DDC1228Test::testOneToOnePersist	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1228Test.php	DDC1228Test::testRefresh	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1238Test.php	DDC1238Test::testIssue	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1238Test.php	DDC1238Test::testIssueProxyClear	pending	
+tests/Tests/ORM/Functional/Ticket/DDC1225Test.php	DDC1225Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc1225_test.rs::testIssue
+tests/Tests/ORM/Functional/Ticket/DDC1228Test.php	DDC1228Test::testOneToOnePersist	ported	crates/php2rust-doctrine-orm/tests/ddc1228_test.rs::testOneToOnePersist
+tests/Tests/ORM/Functional/Ticket/DDC1228Test.php	DDC1228Test::testRefresh	ported	crates/php2rust-doctrine-orm/tests/ddc1228_test.rs::testRefresh
+tests/Tests/ORM/Functional/Ticket/DDC1238Test.php	DDC1238Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc1238_test.rs::testIssue
+tests/Tests/ORM/Functional/Ticket/DDC1238Test.php	DDC1238Test::testIssueProxyClear	ported	crates/php2rust-doctrine-orm/tests/ddc1238_test.rs::testIssueProxyClear
 tests/Tests/ORM/Functional/Ticket/DDC1250Test.php	DDC1250Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1300Test.php	DDC1300Test::testIssue	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1301Test.php	DDC1301Test::testCountNotInitializesLegacyCollection	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1301Test.php	DDC1301Test::testCountNotInitializesLegacyCollectionWithForeignIdentifier	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1301Test.php	DDC1301Test::testCountNotInitializesLegacyManyToManyCollection	pending	
+tests/Tests/ORM/Functional/Ticket/DDC1301Test.php	DDC1301Test::testCountNotInitializesLegacyCollection	ported	crates/php2rust-doctrine-orm/tests/ddc1301_test.rs::testCountNotInitializesLegacyCollection
+tests/Tests/ORM/Functional/Ticket/DDC1301Test.php	DDC1301Test::testCountNotInitializesLegacyCollectionWithForeignIdentifier	ported	crates/php2rust-doctrine-orm/tests/ddc1301_test.rs::testCountNotInitializesLegacyCollectionWithForeignIdentifier
+tests/Tests/ORM/Functional/Ticket/DDC1301Test.php	DDC1301Test::testCountNotInitializesLegacyManyToManyCollection	ported	crates/php2rust-doctrine-orm/tests/ddc1301_test.rs::testCountNotInitializesLegacyManyToManyCollection
 tests/Tests/ORM/Functional/Ticket/DDC1306Test.php	DDC1306Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc1306_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC1335Test.php	DDC1335Test::testDql	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1335Test.php	DDC1335Test::testIndexByUnique	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1335Test.php	DDC1335Test::testIndexWithJoin	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1335Test.php	DDC1335Test::testTicket	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1400Test.php	DDC1400Test::testFailingCase	pending	
-tests/Tests/ORM/Functional/Ticket/DDC142Test.php	DDC142Test::testCreateRetrieveUpdateDelete	pending	
+tests/Tests/ORM/Functional/Ticket/DDC142Test.php	DDC142Test::testCreateRetrieveUpdateDelete	ported	crates/php2rust-doctrine-orm/tests/ddc142_test.rs::testCreateRetrieveUpdateDelete
 tests/Tests/ORM/Functional/Ticket/DDC1430Test.php	DDC1430Test::testOrderByAllObjectFields	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1430Test.php	DDC1430Test::testOrderByFields	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1430Test.php	DDC1430Test::testTicket	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1436Test.php	DDC1436Test::testIdentityMap	pending	
 tests/Tests/ORM/Functional/Ticket/DDC144Test.php	DDC144Test::testIssue	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1452Test.php	DDC1452Test::testFetchJoinOneToOneFromInverse	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1452Test.php	DDC1452Test::testIssue	pending	
+tests/Tests/ORM/Functional/Ticket/DDC1452Test.php	DDC1452Test::testFetchJoinOneToOneFromInverse	ported	crates/php2rust-doctrine-orm/tests/ddc1452_test.rs::testFetchJoinOneToOneFromInverse
+tests/Tests/ORM/Functional/Ticket/DDC1452Test.php	DDC1452Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc1452_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC1454Test.php	DDC1454Test::testFailingCase	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1458Test.php	DDC1458Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1461Test.php	DDC1461Test::testChangeDetectionDeferredExplicit	pending	
@@ -1251,14 +1251,14 @@ tests/Tests/ORM/Functional/Ticket/DDC1778Test.php	DDC1778Test::testClear	ported	
 tests/Tests/ORM/Functional/Ticket/DDC1778Test.php	DDC1778Test::testRemove	ported	crates/php2rust-doctrine-orm/tests/ddc1778_test.rs::testRemove
 tests/Tests/ORM/Functional/Ticket/DDC1778Test.php	DDC1778Test::testRemoveElement	ported	crates/php2rust-doctrine-orm/tests/ddc1778_test.rs::testRemoveElement
 tests/Tests/ORM/Functional/Ticket/DDC1787Test.php	DDC1787Test::testIssue	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1843Test.php	DDC1843Test::testCreateRetrieveUpdateDelete	pending	
+tests/Tests/ORM/Functional/Ticket/DDC1843Test.php	DDC1843Test::testCreateRetrieveUpdateDelete	ported	crates/php2rust-doctrine-orm/tests/ddc1843_test.rs::testCreateRetrieveUpdateDelete
 tests/Tests/ORM/Functional/Ticket/DDC1884Test.php	DDC1884Test::testSelectFromInverseSideWithCompositePkAndSolelyIdentifierColumnsUsingFetchJoins	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1884Test.php	DDC1884Test::testSelectFromInverseSideWithCompositePkUsingFetchJoins	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1884Test.php	DDC1884Test::testSelectFromOwningSideUsingFetchJoins	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1885Test.php	DDC1885Test::testClearAll	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1885Test.php	DDC1885Test::testCountExtraLazy	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1885Test.php	DDC1885Test::testCreateRetrieveUpdateDelete	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1885Test.php	DDC1885Test::testRemoveItem	pending	
+tests/Tests/ORM/Functional/Ticket/DDC1885Test.php	DDC1885Test::testClearAll	ported	crates/php2rust-doctrine-orm/tests/ddc1885_test.rs::testClearAll
+tests/Tests/ORM/Functional/Ticket/DDC1885Test.php	DDC1885Test::testCountExtraLazy	ported	crates/php2rust-doctrine-orm/tests/ddc1885_test.rs::testCountExtraLazy
+tests/Tests/ORM/Functional/Ticket/DDC1885Test.php	DDC1885Test::testCreateRetrieveUpdateDelete	ported	crates/php2rust-doctrine-orm/tests/ddc1885_test.rs::testCreateRetrieveUpdateDelete
+tests/Tests/ORM/Functional/Ticket/DDC1885Test.php	DDC1885Test::testRemoveItem	ported	crates/php2rust-doctrine-orm/tests/ddc1885_test.rs::testRemoveItem
 tests/Tests/ORM/Functional/Ticket/DDC1918Test.php	DDC1918Test::testLastPageCorrect	ported	crates/php2rust-doctrine-orm/tests/ddc1918_test.rs::testLastPageCorrect
 tests/Tests/ORM/Functional/Ticket/DDC1925Test.php	DDC1925Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC192Test.php	DDC192Test::testSchemaCreation	pending	
@@ -1289,7 +1289,7 @@ tests/Tests/ORM/Functional/Ticket/DDC237Test.php	DDC237Test::testUninitializedPr
 tests/Tests/ORM/Functional/Ticket/DDC2387Test.php	DDC2387Test::testCompositeAssociationKeyDetection	pending	
 tests/Tests/ORM/Functional/Ticket/DDC2415Test.php	DDC2415Test::testTicket	pending	
 tests/Tests/ORM/Functional/Ticket/DDC2494Test.php	DDC2494Test::testIssue	pending	
-tests/Tests/ORM/Functional/Ticket/DDC2519Test.php	DDC2519Test::testIssue	pending	
+tests/Tests/ORM/Functional/Ticket/DDC2519Test.php	DDC2519Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2519_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC2575Test.php	DDC2575Test::testHydrationIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC2579Test.php	DDC2579Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC258Test.php	DDC258Test::testIssue	pending	
