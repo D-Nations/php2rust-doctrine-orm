@@ -14,6 +14,7 @@ pub use query_builder::QueryBuilder;
 pub use query_type::QueryType;
 
 pub mod abstract_query;
+pub mod cache;
 pub mod collection_object;
 pub mod configuration;
 pub mod deprecations;
