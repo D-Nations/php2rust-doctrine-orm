@@ -205,6 +205,7 @@ crates/php2rust-doctrine-orm/src/mapping/attributes.rs	doctrine/orm	src/Mapping/
 crates/php2rust-doctrine-orm/src/mapping/attributes.rs	doctrine/orm	src/Mapping/PreFlush.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/mapping/class_metadata.rs	doctrine/orm	src/Mapping/ClassMetadata.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/mapping/class_metadata.rs	doctrine/orm	src/Mapping/GetReflectionClassImplementation.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/src/mapping/class_metadata_factory.rs	doctrine/orm	src/Mapping/ClassMetadataFactory.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/mapping/driver/attribute_driver.rs	doctrine/orm	src/Mapping/Driver/AttributeDriver.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/mapping/driver/attribute_driver.rs	doctrine/orm	src/Mapping/Driver/ReflectionBasedDriver.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/mapping/driver/attribute_driver.rs	doctrine/orm	src/Mapping/Builder/EntityListenerBuilder.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
@@ -230,6 +231,10 @@ crates/php2rust-doctrine-orm/src/mapping/property_accessors.rs	doctrine/orm	src/
 crates/php2rust-doctrine-orm/src/mapping/property_accessors.rs	doctrine/orm	src/Mapping/PropertyAccessors/ReadonlyAccessor.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/mapping/property_accessors.rs	doctrine/orm	src/Mapping/PropertyAccessors/EnumPropertyAccessor.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/mapping/property_accessors.rs	doctrine/orm	src/Mapping/PropertyAccessors/EmbeddablePropertyAccessor.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/src/mapping/quote_strategy.rs	doctrine/orm	src/Mapping/QuoteStrategy.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/src/mapping/quote_strategy.rs	doctrine/orm	src/Mapping/DefaultQuoteStrategy.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/src/mapping/quote_strategy.rs	doctrine/orm	src/Mapping/AnsiQuoteStrategy.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/src/mapping/quote_strategy.rs	doctrine/orm	src/Internal/SQLResultCasing.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/mapping/typed_field_mapper.rs	doctrine/orm	src/Mapping/TypedFieldMapper.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/mapping/typed_field_mapper.rs	doctrine/orm	src/Mapping/DefaultTypedFieldMapper.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/mapping/typed_field_mapper.rs	doctrine/orm	src/Mapping/ChainTypedFieldMapper.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
@@ -253,6 +258,7 @@ crates/php2rust-doctrine-orm/src/query/parameter_type_inferer.rs	doctrine/orm	sr
 crates/php2rust-doctrine-orm/src/query/token_type.rs	doctrine/orm	src/Query/TokenType.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/association_mapping_test.rs	doctrine/orm	tests/Tests/ORM/Mapping/AssociationMappingTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/attribute_reader_test.rs	doctrine/orm	tests/Tests/ORM/Mapping/AttributeReaderTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/tests/class_metadata_factory_test.rs	doctrine/orm	tests/Tests/ORM/Mapping/ClassMetadataFactoryTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/class_metadata_test.rs	doctrine/orm	tests/Tests/ORM/Mapping/ClassMetadataTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/common/models.rs	doctrine/orm	tests/Tests/Models/CMS/CmsUser.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/common/models.rs	doctrine/orm	tests/Tests/Models/CMS/CmsAddress.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
