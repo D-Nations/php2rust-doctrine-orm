@@ -1432,7 +1432,7 @@ tests/Tests/ORM/Functional/Ticket/GH10532Test.php	GH10532Test::testDeletes	porte
 tests/Tests/ORM/Functional/Ticket/GH10532Test.php	GH10532Test::testInserts	ported	crates/php2rust-doctrine-orm/tests/gh10532_test.rs::testInserts
 tests/Tests/ORM/Functional/Ticket/GH10566Test.php	GH10566Test::testInsertion	ported	crates/php2rust-doctrine-orm/tests/gh10566_test.rs::testInsertion
 tests/Tests/ORM/Functional/Ticket/GH10566Test.php	GH10566Test::testRemoval	ported	crates/php2rust-doctrine-orm/tests/gh10566_test.rs::testRemoval
-tests/Tests/ORM/Functional/Ticket/GH10625Test.php	GH10625Test::testLoadFieldsFromAllClassesInHierarchy	pending	
+tests/Tests/ORM/Functional/Ticket/GH10625Test.php	GH10625Test::testLoadFieldsFromAllClassesInHierarchy	ported	crates/php2rust-doctrine-orm/tests/gh10625_test.rs::testLoadFieldsFromAllClassesInHierarchy
 tests/Tests/ORM/Functional/Ticket/GH10661/GH10661Test.php	GH10661Test::testMetadataFieldTypeNotCoherentWithEntityPropertyType	pending	the models are separate files of the ticket directory and not recorded yet
 tests/Tests/ORM/Functional/Ticket/GH10661/GH10661Test.php	GH10661Test::testMetadataFieldTypeNotCoherentWithEntityPropertyTypeWithInheritance	pending	the models are separate files of the ticket directory and not recorded yet
 tests/Tests/ORM/Functional/Ticket/GH10661/GH10661Test.php	GH10661Test::testPropertyTypeErrorsCanBeSilenced	pending	the models are separate files of the ticket directory and not recorded yet
