@@ -76,7 +76,10 @@ impl Join {
             ("joinType", Value::from(self.join_type.as_str())),
             ("join", Value::from(self.join.as_str())),
             ("alias", php::nullable(self.alias.as_deref())),
-            ("conditionType", php::nullable(self.condition_type.as_deref())),
+            (
+                "conditionType",
+                php::nullable(self.condition_type.as_deref()),
+            ),
             ("condition", self.condition.clone()),
             ("indexBy", php::nullable(self.index_by.as_deref())),
         ]

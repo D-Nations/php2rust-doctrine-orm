@@ -121,7 +121,10 @@ impl OrderBy {
 
     /// `count()`.
     pub fn count(&self) -> usize {
-        self.parts.lock().unwrap_or_else(PoisonError::into_inner).len()
+        self.parts
+            .lock()
+            .unwrap_or_else(PoisonError::into_inner)
+            .len()
     }
 
     /// `getParts()`.
@@ -138,7 +141,12 @@ impl OrderBy {
             ("separator", Value::from(Self::SEPARATOR)),
             ("postSeparator", Value::from(Self::POST_SEPARATOR)),
             ("allowedClasses", Value::Array(PhpArray::new())),
-            ("parts", Value::Array(PhpArray::list(self.get_parts().into_iter().map(Value::from)))),
+            (
+                "parts",
+                Value::Array(PhpArray::list(
+                    self.get_parts().into_iter().map(Value::from),
+                )),
+            ),
         ]
     }
 

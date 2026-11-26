@@ -49,7 +49,11 @@ impl From {
     /// `__toString()`.
     pub fn try_to_string(&self) -> Result<PhpString, Thrown> {
         let mut out = format!("{} {}", self.from, self.alias);
-        if let Some(index_by) = self.index_by.as_deref().filter(|i| php::string_is_truthy(i)) {
+        if let Some(index_by) = self
+            .index_by
+            .as_deref()
+            .filter(|i| php::string_is_truthy(i))
+        {
             out.push_str(" INDEX BY ");
             out.push_str(index_by);
         }

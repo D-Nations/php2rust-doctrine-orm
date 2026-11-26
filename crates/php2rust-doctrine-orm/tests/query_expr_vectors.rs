@@ -30,7 +30,14 @@ fn object(o: impl PhpObject) -> Value {
 }
 
 fn text(value: &Value) -> String {
-    String::from_utf8(value.as_string().expect("a string argument").as_bytes().to_vec()).unwrap()
+    String::from_utf8(
+        value
+            .as_string()
+            .expect("a string argument")
+            .as_bytes()
+            .to_vec(),
+    )
+    .unwrap()
 }
 
 fn opt_text(value: Option<&Value>) -> Option<String> {
@@ -63,7 +70,11 @@ fn order(value: &Value) -> Order {
 
 /// A `SortDirection` case as a value (`["dir", case]`).
 fn direction(case: &str) -> Value {
-    object(php_value::object::EnumCase::new(SortDirection::CLASS, case, None))
+    object(php_value::object::EnumCase::new(
+        SortDirection::CLASS,
+        case,
+        None,
+    ))
 }
 
 #[allow(clippy::too_many_lines, reason = "one arm per Expr method")]
@@ -107,7 +118,11 @@ fn build(spec: &Json) -> Result<Value, Thrown> {
     let name = head.as_str().unwrap();
     let e = Expr::new();
     if kind == "new" {
-        let args_or_empty = || a.first().cloned().unwrap_or(Value::Array(php_value::PhpArray::new()));
+        let args_or_empty = || {
+            a.first()
+                .cloned()
+                .unwrap_or(Value::Array(php_value::PhpArray::new()))
+        };
         return Ok(match name {
             "Func" => object(Func::new(text(&a[0]), arg(1))),
             "Andx" => object(Andx::new(args_or_empty())?),
@@ -118,7 +133,11 @@ fn build(spec: &Json) -> Result<Value, Thrown> {
             "Composite" => object(Composite::new(args_or_empty())?),
             "Math" => object(Math::new(arg(0), text(&a[1]), arg(2))),
             "Comparison" => object(Comparison::new(arg(0), text(&a[1]), arg(2))),
-            "From" => object(From::new(text(&a[0]), text(&a[1]), opt_text(a.get(2)).as_deref())),
+            "From" => object(From::new(
+                text(&a[0]),
+                text(&a[1]),
+                opt_text(a.get(2)).as_deref(),
+            )),
             "Join" => object(Join::new(
                 text(&a[0]),
                 text(&a[1]),
@@ -129,7 +148,8 @@ fn build(spec: &Json) -> Result<Value, Thrown> {
             )),
             "OrderBy" => object(OrderBy::new(
                 opt_text(a.first()).as_deref(),
-                a.get(1).map_or(Order::Direction(SortDirection::Ascending), order),
+                a.get(1)
+                    .map_or(Order::Direction(SortDirection::Ascending), order),
             )),
             other => panic!("new {other}"),
         });
@@ -215,5 +235,16 @@ fn recorded_expressions() {
             ));
         }
     }
-    assert!(failures.is_empty(), "{} of {} cases differ:\n{}", failures.len(), cases.len(), failures.iter().take(40).cloned().collect::<Vec<_>>().join("\n"));
+    assert!(
+        failures.is_empty(),
+        "{} of {} cases differ:\n{}",
+        failures.len(),
+        cases.len(),
+        failures
+            .iter()
+            .take(40)
+            .cloned()
+            .collect::<Vec<_>>()
+            .join("\n")
+    );
 }

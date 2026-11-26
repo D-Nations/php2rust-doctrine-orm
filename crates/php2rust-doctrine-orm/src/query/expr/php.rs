@@ -7,7 +7,9 @@
 
 use php_value::{Key, PhpArray, PhpObject, PhpString, Thrown, Value};
 
-use super::{Andx, Comparison, Composite, From, Func, GroupBy, Join, Literal, Math, OrderBy, Orx, Select};
+use super::{
+    Andx, Comparison, Composite, From, Func, GroupBy, Join, Literal, Math, OrderBy, Orx, Select,
+};
 
 /// An expression class: its `__toString()`, which can throw when a part
 /// cannot be converted to a string.
@@ -51,7 +53,9 @@ pub(crate) fn as_expression(object: &dyn PhpObject) -> Option<&dyn DqlExpression
             })*
         };
     }
-    downcast!(Andx, Orx, Composite, Select, GroupBy, Literal, Comparison, Func, Math, From, Join, OrderBy);
+    downcast!(
+        Andx, Orx, Composite, Select, GroupBy, Literal, Comparison, Func, Math, From, Join, OrderBy
+    );
     None
 }
 
@@ -122,7 +126,10 @@ pub(crate) fn iterator_to_array(object: &dyn PhpObject) -> Option<Result<PhpArra
             other => {
                 return Some(Err(Thrown::new(
                     "TypeError",
-                    format!("Cannot access offset of type {} on array", other.debug_type()),
+                    format!(
+                        "Cannot access offset of type {} on array",
+                        other.debug_type()
+                    ),
                     0,
                 )));
             }

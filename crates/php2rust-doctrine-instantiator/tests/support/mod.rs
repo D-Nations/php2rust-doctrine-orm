@@ -34,17 +34,21 @@ fn constructor() -> MethodInfo {
     MethodInfo::new("__construct")
 }
 
+#[allow(clippy::too_many_lines, reason = "one declaration per class")]
 pub fn declare_assets() {
     static DECLARED: Once = Once::new();
     DECLARED.call_once(|| {
-        let array_object = || -> Result<Object, Thrown> { Ok(Arc::new(ArrayObject::new(PhpArray::new()))) };
+        let array_object =
+            || -> Result<Object, Thrown> { Ok(Arc::new(ArrayObject::new(PhpArray::new()))) };
         for info in [
             // PHP's classes.
             ClassInfo::interface("Traversable").internal(),
             ClassInfo::interface("IteratorAggregate")
                 .internal()
                 .implements("Traversable"),
-            ClassInfo::interface("Iterator").internal().implements("Traversable"),
+            ClassInfo::interface("Iterator")
+                .internal()
+                .implements("Traversable"),
             ClassInfo::interface("ArrayAccess").internal(),
             ClassInfo::interface("Countable").internal(),
             ClassInfo::interface("Serializable").internal(),
@@ -70,14 +74,19 @@ pub fn declare_assets() {
                     Ok(Arc::new(ArrayIterator::new(PhpArray::new())) as Object)
                 })),
             ClassInfo::class("XMLReader").internal(),
-            ClassInfo::class("PharException").internal().extends("Exception"),
-            ClassInfo::class("PDORow").internal().final_class().new_instance(Arc::new(|| {
-                Err(Thrown::new(
-                    "Exception",
-                    "Unserialization of 'PDORow' is not allowed",
-                    0,
-                ))
-            })),
+            ClassInfo::class("PharException")
+                .internal()
+                .extends("Exception"),
+            ClassInfo::class("PDORow")
+                .internal()
+                .final_class()
+                .new_instance(Arc::new(|| {
+                    Err(Thrown::new(
+                        "Exception",
+                        "Unserialization of 'PDORow' is not allowed",
+                        0,
+                    ))
+                })),
             // The assets.
             ClassInfo::class(asset("AbstractClassAsset")).abstract_class(),
             ClassInfo::class(asset("ArrayObjectAsset"))

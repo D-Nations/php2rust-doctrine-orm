@@ -224,7 +224,9 @@ fn testNotLikeExpr() {
     let expr = set_up();
     assert_eq!(
         "a.description NOT LIKE :description",
-        s(expr.not_like("a.description", ":description").try_to_string())
+        s(expr
+            .not_like("a.description", ":description")
+            .try_to_string())
     );
 }
 
@@ -233,12 +235,18 @@ fn testConcatExpr() {
     let expr = set_up();
     assert_eq!(
         "CONCAT(u.first_name, u.last_name)",
-        s(expr.concat(vec![v("u.first_name"), v("u.last_name")]).try_to_string())
+        s(expr
+            .concat(vec![v("u.first_name"), v("u.last_name")])
+            .try_to_string())
     );
     assert_eq!(
         "CONCAT(u.first_name, u.middle_name, u.last_name)",
         s(expr
-            .concat(vec![v("u.first_name"), v("u.middle_name"), v("u.last_name")])
+            .concat(vec![
+                v("u.first_name"),
+                v("u.middle_name"),
+                v("u.last_name")
+            ])
             .try_to_string())
     );
 }
@@ -271,19 +279,28 @@ fn testSubstringExprAcceptsTwoArguments() {
 #[test]
 fn testLowerExpr() {
     let expr = set_up();
-    assert_eq!("LOWER(u.first_name)", s(expr.lower("u.first_name").try_to_string()));
+    assert_eq!(
+        "LOWER(u.first_name)",
+        s(expr.lower("u.first_name").try_to_string())
+    );
 }
 
 #[test]
 fn testUpperExpr() {
     let expr = set_up();
-    assert_eq!("UPPER(u.first_name)", s(expr.upper("u.first_name").try_to_string()));
+    assert_eq!(
+        "UPPER(u.first_name)",
+        s(expr.upper("u.first_name").try_to_string())
+    );
 }
 
 #[test]
 fn testLengthExpr() {
     let expr = set_up();
-    assert_eq!("LENGTH(u.first_name)", s(expr.length("u.first_name").try_to_string()));
+    assert_eq!(
+        "LENGTH(u.first_name)",
+        s(expr.length("u.first_name").try_to_string())
+    );
 }
 
 #[test]
@@ -533,8 +550,14 @@ fn testExpressionGetter() {
 
     // Comparison
     let comparison = Comparison::new("foo", Comparison::EQ, "bar");
-    assert!(values_equal(&[v("foo")], std::slice::from_ref(comparison.get_left_expr())));
-    assert!(values_equal(&[v("bar")], std::slice::from_ref(comparison.get_right_expr())));
+    assert!(values_equal(
+        &[v("foo")],
+        std::slice::from_ref(comparison.get_left_expr())
+    ));
+    assert!(values_equal(
+        &[v("bar")],
+        std::slice::from_ref(comparison.get_right_expr())
+    ));
     assert_eq!(Comparison::EQ, comparison.get_operator());
 
     // From
@@ -550,7 +573,10 @@ fn testExpressionGetter() {
 
     // GroupBy
     let group = GroupBy::new(Value::Array(PhpArray::list([v("foo DESC"), v("bar ASC")]))).unwrap();
-    assert!(values_equal(&[v("foo DESC"), v("bar ASC")], &group.get_parts()));
+    assert!(values_equal(
+        &[v("foo DESC"), v("bar ASC")],
+        &group.get_parts()
+    ));
 
     // Join
     let join = Join::new(
@@ -563,7 +589,10 @@ fn testExpressionGetter() {
     );
     assert_eq!(Join::INNER_JOIN, join.get_join_type());
     assert_eq!(Some(Join::WITH), join.get_condition_type());
-    assert!(values_equal(&[v("b.bar_id = 1")], std::slice::from_ref(join.get_condition())));
+    assert!(values_equal(
+        &[v("b.bar_id = 1")],
+        std::slice::from_ref(join.get_condition())
+    ));
     assert_eq!(Some("b.bar_id"), join.get_index_by());
     assert_eq!("f.bar", join.get_join());
     assert_eq!(Some("b"), join.get_alias());
@@ -574,8 +603,14 @@ fn testExpressionGetter() {
 
     // Math
     let math = Math::new(10, "+", 20);
-    assert!(values_equal(&[Value::Int(10)], std::slice::from_ref(math.get_left_expr())));
-    assert!(values_equal(&[Value::Int(20)], std::slice::from_ref(math.get_right_expr())));
+    assert!(values_equal(
+        &[Value::Int(10)],
+        std::slice::from_ref(math.get_left_expr())
+    ));
+    assert!(values_equal(
+        &[Value::Int(20)],
+        std::slice::from_ref(math.get_right_expr())
+    ));
     assert_eq!("+", math.get_operator());
 
     // OrderBy
@@ -584,7 +619,10 @@ fn testExpressionGetter() {
 
     // Andx
     let orx = Orx::new(Value::Array(PhpArray::list([v("foo = 1"), v("bar = 2")]))).unwrap();
-    assert!(values_equal(&[v("foo = 1"), v("bar = 2")], &orx.get_parts()));
+    assert!(values_equal(
+        &[v("foo = 1"), v("bar = 2")],
+        &orx.get_parts()
+    ));
 
     // Select
     let select = Select::new(Value::Array(PhpArray::list([v("foo"), v("bar")]))).unwrap();
@@ -646,6 +684,9 @@ fn testLegacyOrderByAdd() {
     let order_expr = OrderBy::new(Some("u.username"), SortDirection::Descending);
     let verify = expect_deprecation_with_identifier(ORDER_DEPRECATION);
     order_expr.add("u.lastname", Some("DESC".into()));
-    assert_eq!("u.username DESC, u.lastname DESC", s(order_expr.try_to_string()));
+    assert_eq!(
+        "u.username DESC, u.lastname DESC",
+        s(order_expr.try_to_string())
+    );
     verify();
 }

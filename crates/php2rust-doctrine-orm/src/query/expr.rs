@@ -282,12 +282,18 @@ impl Expr {
 
     /// Creates an IN() expression with the given arguments.
     pub fn r#in(&self, x: &str, y: impl Into<Value>) -> Result<Func, Thrown> {
-        Ok(Func::new(format!("{x} IN"), Self::quote_iterable(y.into())?))
+        Ok(Func::new(
+            format!("{x} IN"),
+            Self::quote_iterable(y.into())?,
+        ))
     }
 
     /// Creates a NOT IN() expression with the given arguments.
     pub fn not_in(&self, x: &str, y: impl Into<Value>) -> Result<Func, Thrown> {
-        Ok(Func::new(format!("{x} NOT IN"), Self::quote_iterable(y.into())?))
+        Ok(Func::new(
+            format!("{x} NOT IN"),
+            Self::quote_iterable(y.into())?,
+        ))
     }
 
     /// Creates an IS NULL expression with the given arguments.

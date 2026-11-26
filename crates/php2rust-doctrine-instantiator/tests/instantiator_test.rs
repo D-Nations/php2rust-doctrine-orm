@@ -67,8 +67,14 @@ fn get_instantiable_classes() -> Vec<String> {
 /// Provides a list of instantiable classes (existing)
 fn get_invalid_class_names() -> Vec<(&'static str, String)> {
     vec![
-        ("invalid string", format!("{SELF_CLASS}{}", support::uniqid())),
-        ("interface", "Doctrine\\Instantiator\\InstantiatorInterface".to_owned()),
+        (
+            "invalid string",
+            format!("{SELF_CLASS}{}", support::uniqid()),
+        ),
+        (
+            "interface",
+            "Doctrine\\Instantiator\\InstantiatorInterface".to_owned(),
+        ),
         ("abstract class", support::asset("AbstractClassAsset")),
         ("trait", support::asset("SimpleTraitAsset")),
         ("enum", support::asset("SimpleEnumAsset")),
@@ -105,7 +111,10 @@ fn testExceptionOnUnSerializationException() {
     let error = instantiator.instantiate("PDORow").unwrap_err();
 
     assert!(matches!(error, InstantiatorError::UnexpectedValue(_)));
-    assert!(is_a(&error.to_thrown().class, UnexpectedValueException::CLASS));
+    assert!(is_a(
+        &error.to_thrown().class,
+        UnexpectedValueException::CLASS
+    ));
 }
 
 #[test]
@@ -114,7 +123,10 @@ fn testInstantiationFromNonExistingClass() {
         let instantiator = set_up();
         let error = instantiator.instantiate(&invalid_class_name).unwrap_err();
 
-        assert!(matches!(error, InstantiatorError::InvalidArgument(_)), "{label}");
+        assert!(
+            matches!(error, InstantiatorError::InvalidArgument(_)),
+            "{label}"
+        );
         assert!(
             is_a(&error.to_thrown().class, InvalidArgumentException::CLASS),
             "{label}"
@@ -151,16 +163,18 @@ fn testInstancesAreNotCloned() {
     // eval("namespace $namespace; #[\AllowDynamicProperties] class $className {}")
     let class_name_with_namespace = format!("{NAMESPACE}\\{class_name}");
     let declared = class_name_with_namespace.clone();
-    register_class(ClassInfo::class(class_name_with_namespace.clone()).new_instance(Arc::new(
-        move || {
+    register_class(
+        ClassInfo::class(class_name_with_namespace.clone()).new_instance(Arc::new(move || {
             Ok(Arc::new(DynamicObject {
                 class: declared.clone(),
                 properties: Mutex::new(PhpArray::new()),
             }) as php_value::Object)
-        },
-    )));
+        })),
+    );
 
-    let instance = instantiator.instantiate(&class_name_with_namespace).unwrap();
+    let instance = instantiator
+        .instantiate(&class_name_with_namespace)
+        .unwrap();
 
     (instance.as_ref() as &dyn Any)
         .downcast_ref::<DynamicObject>()
@@ -170,7 +184,9 @@ fn testInstancesAreNotCloned() {
         .unwrap()
         .insert(Key::from("foo"), Value::from("bar"));
 
-    let instance2 = instantiator.instantiate(&class_name_with_namespace).unwrap();
+    let instance2 = instantiator
+        .instantiate(&class_name_with_namespace)
+        .unwrap();
 
     assert!(!instance2.properties().contains_key(&Key::from("foo")));
 }

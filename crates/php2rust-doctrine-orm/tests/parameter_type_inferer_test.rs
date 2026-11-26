@@ -51,8 +51,16 @@ fn provider_parameter_type_inferer() -> Vec<(&'static str, Value, WrapperParamet
     vec![
         ("integer", Value::Int(1), Types::INTEGER.into()),
         ("string", Value::from("bar"), ParameterType::String.into()),
-        ("numeric_string", Value::from("1"), ParameterType::String.into()),
-        ("datetime_object", DateTime::object(now), Types::DATETIME_MUTABLE.into()),
+        (
+            "numeric_string",
+            Value::from("1"),
+            ParameterType::String.into(),
+        ),
+        (
+            "datetime_object",
+            DateTime::object(now),
+            Types::DATETIME_MUTABLE.into(),
+        ),
         (
             "datetime_immutable_object",
             Value::Object(Arc::new(now)),
@@ -63,17 +71,37 @@ fn provider_parameter_type_inferer() -> Vec<(&'static str, Value, WrapperParamet
             Value::Object(Arc::new(DateInterval::new(b"P1D").unwrap().unwrap())),
             Types::DATEINTERVAL.into(),
         ),
-        ("array_of_int", list(vec![Value::Int(2)]), ArrayParameterType::Integer.into()),
-        ("array_of_string", list(vec![Value::from("foo")]), ArrayParameterType::String.into()),
+        (
+            "array_of_int",
+            list(vec![Value::Int(2)]),
+            ArrayParameterType::Integer.into(),
+        ),
+        (
+            "array_of_string",
+            list(vec![Value::from("foo")]),
+            ArrayParameterType::String.into(),
+        ),
         (
             "array_of_numeric_string",
             list(vec![Value::from("1"), Value::from("2")]),
             ArrayParameterType::String.into(),
         ),
-        ("empty_array", list(vec![]), ArrayParameterType::String.into()),
+        (
+            "empty_array",
+            list(vec![]),
+            ArrayParameterType::String.into(),
+        ),
         ("boolean", Value::Bool(true), Types::BOOLEAN.into()),
-        ("int_backed_enum", access_level_admin(), Types::INTEGER.into()),
-        ("string_backed_enum", user_status_active(), Types::STRING.into()),
+        (
+            "int_backed_enum",
+            access_level_admin(),
+            Types::INTEGER.into(),
+        ),
+        (
+            "string_backed_enum",
+            user_status_active(),
+            Types::STRING.into(),
+        ),
         (
             "array_of_int_backed_enum",
             list(vec![access_level_admin()]),
@@ -90,6 +118,10 @@ fn provider_parameter_type_inferer() -> Vec<(&'static str, Value, WrapperParamet
 #[test]
 fn testParameterTypeInferer() {
     for (label, value, expected) in provider_parameter_type_inferer() {
-        assert_eq!(expected, ParameterTypeInferer::infer_type(&value), "{label}");
+        assert_eq!(
+            expected,
+            ParameterTypeInferer::infer_type(&value),
+            "{label}"
+        );
     }
 }

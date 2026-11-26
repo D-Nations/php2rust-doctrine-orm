@@ -2,9 +2,9 @@
 //!
 //! Upstream: doctrine/orm src/Query/ParameterTypeInferer.php
 
+use php_value::date_interval::DateInterval;
 use php_value::datetime::{DateTime, DateTimeImmutable};
 use php_value::object::EnumCase;
-use php_value::date_interval::DateInterval;
 use php_value::{PhpObject, Value};
 use php2rust_doctrine_dbal::types::Types;
 use php2rust_doctrine_dbal::{ArrayParameterType, ParameterType, WrapperParameterType};

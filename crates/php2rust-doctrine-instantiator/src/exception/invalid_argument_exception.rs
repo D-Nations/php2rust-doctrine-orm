@@ -4,7 +4,9 @@
 
 use std::fmt;
 
-use php2rust_doctrine_persistence::php_reflection::{ReflectionClass, interface_exists, trait_exists};
+use php2rust_doctrine_persistence::php_reflection::{
+    ReflectionClass, interface_exists, trait_exists,
+};
 
 use super::ExceptionInterface;
 

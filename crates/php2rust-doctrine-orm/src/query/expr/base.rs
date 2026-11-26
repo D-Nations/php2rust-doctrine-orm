@@ -119,7 +119,10 @@ impl Base {
 
     /// `count()`.
     pub(crate) fn count(&self) -> usize {
-        self.parts.lock().unwrap_or_else(PoisonError::into_inner).len()
+        self.parts
+            .lock()
+            .unwrap_or_else(PoisonError::into_inner)
+            .len()
     }
 
     /// The parts (`getParts()` of the subclasses that have it).
@@ -135,14 +138,25 @@ impl Base {
     pub(crate) fn array_cast(&self) -> PhpArray {
         let kind = self.kind;
         let mut array = PhpArray::new();
-        array.insert(php::protected("preSeparator"), Value::from(kind.pre_separator));
+        array.insert(
+            php::protected("preSeparator"),
+            Value::from(kind.pre_separator),
+        );
         array.insert(php::protected("separator"), Value::from(kind.separator));
-        array.insert(php::protected("postSeparator"), Value::from(kind.post_separator));
+        array.insert(
+            php::protected("postSeparator"),
+            Value::from(kind.post_separator),
+        );
         array.insert(
             php::protected("allowedClasses"),
-            Value::Array(PhpArray::list(kind.allowed_classes.iter().map(|c| Value::from(*c)))),
+            Value::Array(PhpArray::list(
+                kind.allowed_classes.iter().map(|c| Value::from(*c)),
+            )),
         );
-        array.insert(php::protected("parts"), Value::Array(PhpArray::list(self.parts())));
+        array.insert(
+            php::protected("parts"),
+            Value::Array(PhpArray::list(self.parts())),
+        );
         array
     }
 
@@ -195,9 +209,7 @@ fn has_spaced_or_and(s: &[u8]) -> bool {
         space(s[i])
             && [&b"or"[..], &b"and"[..]].iter().any(|word| {
                 let end = i + 1 + word.len();
-                s.len() > end
-                    && s[i + 1..end].eq_ignore_ascii_case(word)
-                    && space(s[end])
+                s.len() > end && s[i + 1..end].eq_ignore_ascii_case(word) && space(s[end])
             })
     })
 }
@@ -211,7 +223,14 @@ pub(crate) fn base_of(object: &dyn php_value::PhpObject) -> Option<&Base> {
             })*
         };
     }
-    downcast!(super::Andx, super::Orx, super::Composite, super::Select, super::GroupBy, super::Literal);
+    downcast!(
+        super::Andx,
+        super::Orx,
+        super::Composite,
+        super::Select,
+        super::GroupBy,
+        super::Literal
+    );
     None
 }
 

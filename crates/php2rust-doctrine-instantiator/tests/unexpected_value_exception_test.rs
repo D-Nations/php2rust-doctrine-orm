@@ -48,8 +48,13 @@ fn testFromSerializationTriggeredException() {
 fn testFromUncleanUnSerialization() {
     support::declare_assets();
     let reflection = ReflectionClass::new(&support::asset("AbstractClassAsset")).unwrap();
-    let exception =
-        UnexpectedValueException::from_unclean_un_serialization(&reflection, "foo", 123, "bar", 456);
+    let exception = UnexpectedValueException::from_unclean_un_serialization(
+        &reflection,
+        "foo",
+        123,
+        "bar",
+        456,
+    );
 
     assert_eq!(
         format!(

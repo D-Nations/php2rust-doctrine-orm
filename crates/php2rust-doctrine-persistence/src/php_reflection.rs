@@ -253,7 +253,10 @@ impl MethodInfo {
 
 /// A declared class, interface, trait or enum.
 #[derive(Clone)]
-#[allow(clippy::struct_excessive_bools, reason = "the flags PHP keeps on a class entry")]
+#[allow(
+    clippy::struct_excessive_bools,
+    reason = "the flags PHP keeps on a class entry"
+)]
 pub struct ClassInfo {
     name: String,
     kind: ClassKind,
@@ -499,21 +502,41 @@ static CLASSES: LazyLock<RwLock<ClassTable>> = LazyLock::new(|| {
     };
     for info in [
         ClassInfo::class("stdClass").internal(),
-        ClassInfo::interface("Throwable").internal().implements("Stringable"),
+        ClassInfo::interface("Throwable")
+            .internal()
+            .implements("Stringable"),
         ClassInfo::interface("Stringable").internal(),
         ClassInfo::interface("UnitEnum").internal(),
-        ClassInfo::interface("BackedEnum").internal().implements("UnitEnum"),
-        ClassInfo::class("Exception").internal().implements("Throwable"),
+        ClassInfo::interface("BackedEnum")
+            .internal()
+            .implements("UnitEnum"),
+        ClassInfo::class("Exception")
+            .internal()
+            .implements("Throwable"),
         ClassInfo::class("Error").internal().implements("Throwable"),
         ClassInfo::class("TypeError").internal().extends("Error"),
         ClassInfo::class("ValueError").internal().extends("Error"),
-        ClassInfo::class("AssertionError").internal().extends("Error"),
-        ClassInfo::class("ErrorException").internal().extends("Exception"),
-        ClassInfo::class("LogicException").internal().extends("Exception"),
-        ClassInfo::class("InvalidArgumentException").internal().extends("LogicException"),
-        ClassInfo::class("RuntimeException").internal().extends("Exception"),
-        ClassInfo::class("UnexpectedValueException").internal().extends("RuntimeException"),
-        ClassInfo::class("ReflectionException").internal().extends("Exception"),
+        ClassInfo::class("AssertionError")
+            .internal()
+            .extends("Error"),
+        ClassInfo::class("ErrorException")
+            .internal()
+            .extends("Exception"),
+        ClassInfo::class("LogicException")
+            .internal()
+            .extends("Exception"),
+        ClassInfo::class("InvalidArgumentException")
+            .internal()
+            .extends("LogicException"),
+        ClassInfo::class("RuntimeException")
+            .internal()
+            .extends("Exception"),
+        ClassInfo::class("UnexpectedValueException")
+            .internal()
+            .extends("RuntimeException"),
+        ClassInfo::class("ReflectionException")
+            .internal()
+            .extends("Exception"),
         ClassInfo::class(format!("{PERSISTENCE}Mapping\\MappingException")).extends("Exception"),
         ClassInfo::interface(format!("{PERSISTENCE}Proxy")),
         ClassInfo::interface(format!("{PERSISTENCE}ObjectManager")),
@@ -808,10 +831,7 @@ impl ReflectionClass {
         let mut public: Vec<String> = Vec::new();
         for c in chain.iter().rev() {
             for p in &c.info.properties {
-                if p.visibility == Visibility::Public
-                    && !p.is_static
-                    && !public.contains(&p.name)
-                {
+                if p.visibility == Visibility::Public && !p.is_static && !public.contains(&p.name) {
                     public.push(p.name.clone());
                 }
             }
@@ -823,7 +843,10 @@ impl ReflectionClass {
                 properties.insert(key, value.clone());
             }
         }
-        Ok(Arc::new(GenericObject::new(self.info.name.clone(), properties)))
+        Ok(Arc::new(GenericObject::new(
+            self.info.name.clone(),
+            properties,
+        )))
     }
 
     /// `getParentClass()`: `None` for `false`.
