@@ -539,3 +539,38 @@ pub fn assert_loose_eq(expected: &Value, actual: &Value) {
         "{expected:?} != {actual:?}"
     );
 }
+
+/// The values of a query result (an array).
+pub fn list(value: &Value) -> Vec<Value> {
+    match value {
+        Value::Array(array) => array.values().cloned().collect(),
+        other => panic!("not an array: {other:?}"),
+    }
+}
+
+/// `$value[$key]`.
+pub fn at(value: &Value, key: impl Into<php_value::Key>) -> Value {
+    match value {
+        Value::Array(array) => array.get(&key.into()).cloned().unwrap_or(Value::Null),
+        other => panic!("not an array: {other:?}"),
+    }
+}
+
+/// A value that is an object.
+pub fn obj(value: &Value) -> Object {
+    match value {
+        Value::Object(object) => object.clone(),
+        other => panic!("not an object: {other:?}"),
+    }
+}
+
+/// `IterableTester::assertResultsAreTheSame($query)`.
+pub async fn assert_results_are_the_same(query: &php2rust_doctrine_orm::query::Query) {
+    use php2rust_doctrine_orm::abstract_query::{HYDRATE_ARRAY, HYDRATE_OBJECT};
+    for mode in [HYDRATE_OBJECT, HYDRATE_ARRAY] {
+        let result = query.get_result(mode).await.unwrap();
+        let iterable = query.to_iterable(None, mode).await.unwrap();
+        let iterable = Value::Array(PhpArray::list(iterable));
+        assert!(result.identical(&iterable), "{result:?} !== {iterable:?}");
+    }
+}

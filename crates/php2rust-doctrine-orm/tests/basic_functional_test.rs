@@ -506,3 +506,89 @@ async fn testItThrowsWhenReferenceUsesIdAssignedByDatabase() {
     assert!(message(&e).contains("another object of class"));
     assert!(message(&e).contains("was already present for the same ID"));
 }
+
+#[tokio::test]
+async fn testBasicQuery() {
+    let em = set_up(&CMS_MODELS).await;
+    let user = cms_user_with("Guilherme", "gblanco", "developer");
+    em.persist(&user).unwrap();
+    em.flush().await.unwrap();
+
+    let query = em.create_query("select u from Doctrine\\Tests\\Models\\CMS\\CmsUser u");
+
+    let users = list(&query.get_object_result().await.unwrap());
+    assert_eq!(users.len(), 1);
+    let u0 = obj(&users[0]);
+    assert_eq!(get(&u0, "name"), s("Guilherme"));
+    assert_eq!(get(&u0, "username"), s("gblanco"));
+    assert_eq!(get(&u0, "status"), s("developer"));
+
+    em.clear().unwrap();
+
+    assert_results_are_the_same(&query).await;
+
+    let users_array = query.get_array_result().await.unwrap();
+    assert_eq!(list(&users_array).len(), 1);
+    assert_eq!(at(&at(&users_array, 0), "name"), s("Guilherme"));
+    assert_eq!(at(&at(&users_array, 0), "username"), s("gblanco"));
+    assert_eq!(at(&at(&users_array, 0), "status"), s("developer"));
+
+    let users_scalar = query.get_scalar_result().await.unwrap();
+    assert_eq!(list(&users_scalar).len(), 1);
+    assert_eq!(at(&at(&users_scalar, 0), "u_name"), s("Guilherme"));
+    assert_eq!(at(&at(&users_scalar, 0), "u_username"), s("gblanco"));
+    assert_eq!(at(&at(&users_scalar, 0), "u_status"), s("developer"));
+}
+
+#[tokio::test]
+async fn testBasicOneToManyInnerJoin() {
+    let em = set_up(&CMS_MODELS).await;
+    let user = cms_user_with("Guilherme", "gblanco", "developer");
+    em.persist(&user).unwrap();
+    em.flush().await.unwrap();
+
+    let query = em.create_query(
+        "select u from Doctrine\\Tests\\Models\\CMS\\CmsUser u join u.phonenumbers p",
+    );
+    let users = list(&query.get_object_result().await.unwrap());
+    assert_eq!(users.len(), 0);
+}
+
+#[tokio::test]
+async fn testBasicOneToManyLeftJoin() {
+    let em = set_up(&CMS_MODELS).await;
+    let user = cms_user_with("Guilherme", "gblanco", "developer");
+    em.persist(&user).unwrap();
+    em.flush().await.unwrap();
+
+    let query = em.create_query(
+        "select u,p from Doctrine\\Tests\\Models\\CMS\\CmsUser u left join u.phonenumbers p",
+    );
+    let users = list(&query.get_object_result().await.unwrap());
+    assert_eq!(users.len(), 1);
+    let u0 = obj(&users[0]);
+    assert_eq!(get(&u0, "name"), s("Guilherme"));
+    assert_eq!(get(&u0, "username"), s("gblanco"));
+    assert_eq!(get(&u0, "status"), s("developer"));
+    let phonenumbers = get(&u0, "phonenumbers");
+    let pc = php2rust_doctrine_orm::persistent_collection::PersistentCollection::from_value(&phonenumbers)
+        .expect("a PersistentCollection");
+    assert!(pc.is_initialized());
+    assert_eq!(pc.count().await.unwrap(), 0);
+}
+
+#[tokio::test]
+async fn testSingleColumnQuery() {
+    let em = set_up(&CMS_MODELS).await;
+    let gregoire = cms_user_with("Gregoire", "greg0ire", "developer");
+    em.persist(&gregoire).unwrap();
+    let bhushan = cms_user_with("Bhushan", "bhushan", "developer");
+    em.persist(&bhushan).unwrap();
+    em.flush().await.unwrap();
+
+    let query = em.create_query(
+        "select u.username from Doctrine\\Tests\\Models\\CMS\\CmsUser u order by u.username DESC",
+    );
+    let users = list(&query.get_single_column_result().await.unwrap());
+    assert_eq!(users, vec![s("greg0ire"), s("bhushan")]);
+}
