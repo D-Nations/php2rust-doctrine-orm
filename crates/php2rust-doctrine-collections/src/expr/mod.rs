@@ -4,11 +4,13 @@
 //!
 //! Upstream: doctrine/collections src/Expr/Expression.php
 
+mod closure_expression_visitor;
 mod comparison;
 mod composite_expression;
 mod expression_visitor;
 mod value;
 
+pub use closure_expression_visitor::{ClosureExpressionVisitor, Comparator, Filter, Walked};
 pub use comparison::Comparison;
 pub use composite_expression::CompositeExpression;
 pub use expression_visitor::ExpressionVisitor;

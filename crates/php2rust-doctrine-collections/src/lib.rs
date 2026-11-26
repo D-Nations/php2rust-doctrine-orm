@@ -14,6 +14,8 @@ pub mod deprecations;
 pub mod expr;
 mod expression_builder;
 mod order;
+mod php;
+pub mod reflection;
 mod sort_direction;
 
 pub use criteria::{Criteria, Direction};

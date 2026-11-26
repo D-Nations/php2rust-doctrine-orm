@@ -3,7 +3,7 @@ src/AbstractLazyCollection.php	AbstractLazyCollection	225	pending
 src/ArrayCollection.php	ArrayCollection	264	pending	
 src/Collection.php	Collection	19	pending	
 src/Criteria.php	Criteria	132	ported	crates/php2rust-doctrine-collections/src/criteria.rs
-src/Expr/ClosureExpressionVisitor.php	ClosureExpressionVisitor	146	pending	
+src/Expr/ClosureExpressionVisitor.php	ClosureExpressionVisitor	146	ported	crates/php2rust-doctrine-collections/src/expr/closure_expression_visitor.rs
 src/Expr/Comparison.php	Comparison	44	ported	crates/php2rust-doctrine-collections/src/expr/comparison.rs
 src/Expr/CompositeExpression.php	CompositeExpression	42	ported	crates/php2rust-doctrine-collections/src/expr/composite_expression.rs
 src/Expr/Expression.php	Expression	6	ported	crates/php2rust-doctrine-collections/src/expr/mod.rs
