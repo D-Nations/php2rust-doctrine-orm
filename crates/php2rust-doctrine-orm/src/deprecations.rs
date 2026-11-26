@@ -1,4 +1,4 @@
-//! The part of doctrine/deprecations' `Deprecation` class that the query
+//! The part of doctrine/deprecations' `Deprecation` class that the ORM's
 //! tests observe (`VerifyDeprecations`): `Deprecation::trigger()` counts
 //! each triggered deprecation by its link while tracking is enabled, and
 //! otherwise does nothing (the library's default: no logging, no

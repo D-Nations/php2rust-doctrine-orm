@@ -2,7 +2,6 @@
 //!
 //! Upstream: none
 
-pub mod deprecations;
 pub mod expr;
 mod lexer;
 mod parameter;

@@ -4,7 +4,7 @@
 //! `assertEquals()` with a string compares the string. The generator rows
 //! of the iterable providers are a `\Generator` stand-in that `foreach`
 //! traverses (`PhpObject::traverse()`). `VerifyDeprecations` is
-//! `query::deprecations`. The five subquery tests (`exists()`, `all()`,
+//! `crate::deprecations`. The five subquery tests (`exists()`, `all()`,
 //! `some()`, `any()`, `not()` of a `QueryBuilder`) need the entity manager
 //! and query builder, which are not ported; they stay pending.
 //!
@@ -19,7 +19,7 @@
 
 use php_value::object::StdClass;
 use php_value::{PhpArray, PhpObject, PhpString, Value};
-use php2rust_doctrine_orm::query::deprecations;
+use php2rust_doctrine_orm::deprecations;
 use php2rust_doctrine_orm::query::expr::{
     Andx, Comparison, From, Func, GroupBy, Join, Literal, Math, ORDER_DEPRECATION, OrderBy, Orx,
     Select,

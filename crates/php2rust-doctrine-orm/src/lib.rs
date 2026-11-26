@@ -10,4 +10,9 @@
 #[doc = include_str!("../README.md")]
 struct ReadmeExample;
 
+pub mod deprecations;
+pub mod events;
+pub mod id;
+pub mod mapping;
+pub mod object;
 pub mod query;

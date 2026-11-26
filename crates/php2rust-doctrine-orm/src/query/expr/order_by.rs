@@ -7,8 +7,8 @@ use std::sync::{Mutex, PoisonError};
 use php_value::{PhpArray, PhpString, Thrown, Value};
 
 use super::php::expression_object;
+use crate::deprecations;
 use crate::query::SortDirection;
-use crate::query::deprecations;
 
 /// The deprecation of an `$order` that is not a `SortDirection`.
 pub const ORDER_DEPRECATION: &str = "https://github.com/doctrine/orm/issues/11313";

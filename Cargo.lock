@@ -633,8 +633,12 @@ dependencies = [
 name = "php2rust-doctrine-orm"
 version = "0.1.0"
 dependencies = [
+ "php2rust-doctrine-collections",
  "php2rust-doctrine-dbal",
+ "php2rust-doctrine-event-manager",
+ "php2rust-doctrine-inflector",
  "php2rust-doctrine-lexer",
+ "php2rust-doctrine-persistence",
  "php2rust-value",
  "serde_json",
 ]

@@ -16,11 +16,12 @@ use std::sync::Arc;
 
 use php_value::vectors::{self, Outcome};
 use php_value::{PhpObject, Thrown, Value};
+use php2rust_doctrine_orm::deprecations;
 use php2rust_doctrine_orm::query::expr::{
     self, Andx, Comparison, Composite, From, Func, GroupBy, Join, Literal, Math, ORDER_DEPRECATION,
     Order, OrderBy, Orx, Select,
 };
-use php2rust_doctrine_orm::query::{Expr, SortDirection, deprecations};
+use php2rust_doctrine_orm::query::{Expr, SortDirection};
 use serde_json::Value as Json;
 
 const DATA: &str = include_str!("data/query_expr.json");
