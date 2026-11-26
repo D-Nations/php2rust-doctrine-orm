@@ -53,12 +53,12 @@ tests/Mapping/Driver/FileClassLocatorTest.php	FileClassLocatorTest::testCreateFr
 tests/Mapping/Driver/FileClassLocatorTest.php	FileClassLocatorTest::testGetClassNames	pending	
 tests/Mapping/Driver/FileClassLocatorTest.php	FileClassLocatorTest::testGetClassNamesWithEmptyIterator	pending	
 tests/Mapping/Driver/FileClassLocatorTest.php	FileClassLocatorTest::testWithPharFiles	pending	
-tests/Mapping/DriverChainTest.php	DriverChainTest::testDefaultDriver	pending	
-tests/Mapping/DriverChainTest.php	DriverChainTest::testDefaultDriverGetAllClassNames	pending	
-tests/Mapping/DriverChainTest.php	DriverChainTest::testDelegateToMatchingNamespaceDriver	pending	
-tests/Mapping/DriverChainTest.php	DriverChainTest::testGatherAllClassNames	pending	
-tests/Mapping/DriverChainTest.php	DriverChainTest::testIsTransient	pending	
-tests/Mapping/DriverChainTest.php	DriverChainTest::testLoadMetadataShouldThrowMappingExceptionWhenNoDelegatorWasFound	pending	
+tests/Mapping/DriverChainTest.php	DriverChainTest::testDefaultDriver	ported	crates/php2rust-doctrine-persistence/tests/driver_chain_test.rs::testDefaultDriver
+tests/Mapping/DriverChainTest.php	DriverChainTest::testDefaultDriverGetAllClassNames	ported	crates/php2rust-doctrine-persistence/tests/driver_chain_test.rs::testDefaultDriverGetAllClassNames
+tests/Mapping/DriverChainTest.php	DriverChainTest::testDelegateToMatchingNamespaceDriver	ported	crates/php2rust-doctrine-persistence/tests/driver_chain_test.rs::testDelegateToMatchingNamespaceDriver
+tests/Mapping/DriverChainTest.php	DriverChainTest::testGatherAllClassNames	ported	crates/php2rust-doctrine-persistence/tests/driver_chain_test.rs::testGatherAllClassNames
+tests/Mapping/DriverChainTest.php	DriverChainTest::testIsTransient	ported	crates/php2rust-doctrine-persistence/tests/driver_chain_test.rs::testIsTransient
+tests/Mapping/DriverChainTest.php	DriverChainTest::testLoadMetadataShouldThrowMappingExceptionWhenNoDelegatorWasFound	ported	crates/php2rust-doctrine-persistence/tests/driver_chain_test.rs::testLoadMetadataShouldThrowMappingExceptionWhenNoDelegatorWasFound
 tests/Mapping/FileDriverTest.php	FileDriverTest::testGetAllClassNamesBothSources	pending	
 tests/Mapping/FileDriverTest.php	FileDriverTest::testGetAllClassNamesBothSourcesNoDupes	pending	
 tests/Mapping/FileDriverTest.php	FileDriverTest::testGetAllClassNamesFromMappingFile	pending	
