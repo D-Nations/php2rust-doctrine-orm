@@ -37,7 +37,7 @@ pub mod proxy_factory {
     pub const AUTOGENERATE_ALWAYS: i64 = 1;
     /// Autogenerate the proxy class when the proxy file does not exist.
     pub const AUTOGENERATE_FILE_NOT_EXISTS: i64 = 2;
-    /// Generate the proxy classes using eval().
+    /// Generate the proxy classes using `eval()`.
     pub const AUTOGENERATE_EVAL: i64 = 3;
     /// Autogenerate the proxy class when the proxy file does not exist or
     /// when the proxied file changed.

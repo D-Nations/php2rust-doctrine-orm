@@ -139,7 +139,8 @@ fn testInvalidToOneJoinColumnSchema() {
 #[test]
 fn testValidOneToOneAsIdentifierSchema() {
     let f = set_up();
-    f.em.get_class_metadata(tools!("DDC1587ValidEntity1")).unwrap();
+    f.em.get_class_metadata(tools!("DDC1587ValidEntity1"))
+        .unwrap();
 
     let ce = f.validate_class(tools!("DDC1587ValidEntity2"));
 

@@ -68,8 +68,18 @@ fn testClearOne() {
 
     resolver.clear(Some(class_name1));
 
-    assert!(resolver.resolve(class_name1).unwrap().instance_of(class_name1));
-    assert!(resolver.resolve(class_name2).unwrap().instance_of(class_name2));
+    assert!(
+        resolver
+            .resolve(class_name1)
+            .unwrap()
+            .instance_of(class_name1)
+    );
+    assert!(
+        resolver
+            .resolve(class_name2)
+            .unwrap()
+            .instance_of(class_name2)
+    );
 
     assert!(!same(&obj1, &resolver.resolve(class_name1).unwrap()));
     assert!(same(&obj2, &resolver.resolve(class_name2).unwrap()));
@@ -92,8 +102,18 @@ fn testClearAll() {
 
     resolver.clear(None);
 
-    assert!(resolver.resolve(class_name1).unwrap().instance_of(class_name1));
-    assert!(resolver.resolve(class_name2).unwrap().instance_of(class_name2));
+    assert!(
+        resolver
+            .resolve(class_name1)
+            .unwrap()
+            .instance_of(class_name1)
+    );
+    assert!(
+        resolver
+            .resolve(class_name2)
+            .unwrap()
+            .instance_of(class_name2)
+    );
 
     assert!(!same(&obj1, &resolver.resolve(class_name1).unwrap()));
     assert!(!same(&obj2, &resolver.resolve(class_name2).unwrap()));

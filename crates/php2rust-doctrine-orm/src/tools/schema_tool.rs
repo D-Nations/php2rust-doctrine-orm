@@ -398,7 +398,10 @@ impl SchemaTool {
             let table_event_args =
                 GenerateSchemaTableEventArgs::new(class_metadata.clone(), schema, &table_name);
             let dispatched = event_manager
-                .dispatch_event(tool_events::POST_GENERATE_SCHEMA_TABLE, Some(&table_event_args))
+                .dispatch_event(
+                    tool_events::POST_GENERATE_SCHEMA_TABLE,
+                    Some(&table_event_args),
+                )
                 .map_err(event::listener_error);
             // Always retrieve the schema (listener may have mutated it)
             let (new_schema, new_table) = table_event_args.into_parts();

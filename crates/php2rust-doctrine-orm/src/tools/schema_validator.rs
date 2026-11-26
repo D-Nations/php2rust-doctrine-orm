@@ -36,7 +36,10 @@ const BUILTIN_TYPES_MAP: [(&str, &[&str]); 12] = [
 
 /// `array_diff($a, $b)`: the values of `$a` that are not in `$b`.
 fn array_diff(a: &[String], b: &[String]) -> Vec<String> {
-    a.iter().filter(|value| !b.contains(value)).cloned().collect()
+    a.iter()
+        .filter(|value| !b.contains(value))
+        .cloned()
+        .collect()
 }
 
 /// `array_values()` of an array of strings.
@@ -85,10 +88,7 @@ impl SchemaValidator {
     }
 
     /// Validates a single class of the current.
-    #[allow(
-        clippy::too_many_lines,
-        reason = "validateClass(), in its order"
-    )]
+    #[allow(clippy::too_many_lines, reason = "validateClass(), in its order")]
     pub fn validate_class(&self, class: &ClassMetadata) -> Result<Vec<String>, Thrown> {
         let class = class.read().clone();
         let mut ce = Vec::new();
@@ -109,7 +109,8 @@ impl SchemaValidator {
 
         for (field_name, assoc) in class.association_mappings.iter() {
             let target_entity = &assoc.target_entity;
-            if !php_reflection::class_exists(target_entity) || self.em.is_transient(target_entity)?
+            if !php_reflection::class_exists(target_entity)
+                || self.em.is_transient(target_entity)?
             {
                 ce.push(format!(
                     "The target entity '{target_entity}' specified on {name}#{field_name} is unknown or not an entity."
@@ -376,7 +377,10 @@ fn validate_properties_types(class: &ClassMetadataInfo) -> Vec<String> {
     clippy::too_many_lines,
     reason = "the closure of validatePropertiesTypes(), in its order"
 )]
-fn validate_property_type(class: &ClassMetadataInfo, field_mapping: &FieldMapping) -> Option<String> {
+fn validate_property_type(
+    class: &ClassMetadataInfo,
+    field_mapping: &FieldMapping,
+) -> Option<String> {
     let name = &class.name;
     let field_name = &field_mapping.field_name;
     let property_type = class
@@ -392,8 +396,8 @@ fn validate_property_type(class: &ClassMetadataInfo, field_mapping: &FieldMappin
     }
 
     // If the property type is not a named type, we cannot check it
-    let property_type = property_type
-        .filter(|ty| !ty.contains('|') && !ty.contains('&') && ty != "mixed")?;
+    let property_type =
+        property_type.filter(|ty| !ty.contains('|') && !ty.contains('&') && ty != "mixed")?;
 
     // If the metadata field type is not a mapped built-in type, we cannot check it
     let metadata_field_type = find_built_in_type(&field_mapping.r#type)?;

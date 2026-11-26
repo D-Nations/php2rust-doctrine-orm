@@ -35,9 +35,9 @@ use php2rust_doctrine_event_manager::{
 };
 use php2rust_doctrine_orm::entity_manager::EntityManager;
 use php2rust_doctrine_orm::mapping::class_metadata::ClassMetadataInfo;
-use php2rust_doctrine_orm::mapping::{ClassMetadata, UnderscoreNamingStrategy};
 use php2rust_doctrine_orm::mapping::class_metadata::INHERITANCE_TYPE_SINGLE_TABLE;
 use php2rust_doctrine_orm::mapping::naming_strategy::CASE_LOWER;
+use php2rust_doctrine_orm::mapping::{ClassMetadata, UnderscoreNamingStrategy};
 use php2rust_doctrine_orm::tools::event::{GenerateSchemaEventArgs, GenerateSchemaTableEventArgs};
 use php2rust_doctrine_orm::tools::schema_tool::SchemaTool;
 use php2rust_doctrine_orm::tools::tool_events;
@@ -86,7 +86,9 @@ fn schema_of(em: &Arc<EntityManager>, classes: &[&str]) -> Schema {
         .iter()
         .map(|class| em.get_class_metadata(class).unwrap())
         .collect();
-    SchemaTool::new(em).get_schema_from_metadata(&classes).unwrap()
+    SchemaTool::new(em)
+        .get_schema_from_metadata(&classes)
+        .unwrap()
 }
 
 /// A PHP array of string keys.
@@ -256,7 +258,10 @@ fn testPassColumnDefinitionToJoinColumn() {
     assert!(table.has_column("avatar_id"));
     assert_eq!(
         Some(custom_column_def),
-        table.get_column("avatar_id").unwrap().get_column_definition()
+        table
+            .get_column("avatar_id")
+            .unwrap()
+            .get_column_definition()
     );
 }
 
@@ -280,7 +285,10 @@ fn testPassColumnOptionsToJoinColumn() {
     );
 
     assert_eq!(
-        table_category.get_column("id").unwrap().get_platform_options(),
+        table_category
+            .get_column("id")
+            .unwrap()
+            .get_platform_options(),
         table_board
             .get_column("category_id")
             .unwrap()
@@ -610,7 +618,10 @@ fn testIdenticalSingleTableInheritanceAssociationsShareOneForeignKey() {
     let em = get_test_entity_manager();
     let schema = schema_of(
         &em,
-        &[tools!("GH12609IdenticalBase"), tools!("GH12609IdenticalRef")],
+        &[
+            tools!("GH12609IdenticalBase"),
+            tools!("GH12609IdenticalRef"),
+        ],
     );
 
     let table = schema.get_table("gh12609_identical_base").unwrap();
@@ -655,7 +666,7 @@ fn testDerivedCompositeKey() {
 
     assert_eq!(2, child_table_foreign_keys.len());
 
-    let expected_columns: [(&str, (&[&str], &[&str])); 2] = [
+    let expected_columns: [(&str, Columns); 2] = [
         ("joined_derived_identity", (&["keyPart1_id"], &["id"])),
         (
             "joined_derived_root",
@@ -665,8 +676,9 @@ fn testDerivedCompositeKey() {
 
     for foreign_key in child_table_foreign_keys.values() {
         let referenced = foreign_key.get_referenced_table_name().unwrap().to_string();
-        let Some((_, (local_columns, foreign_columns))) =
-            expected_columns.iter().find(|(name, _)| *name == referenced)
+        let Some((_, (local_columns, foreign_columns))) = expected_columns
+            .iter()
+            .find(|(name, _)| *name == referenced)
         else {
             panic!("{referenced}");
         };
@@ -682,9 +694,22 @@ fn testDerivedCompositeKey() {
     }
 }
 
+/// The local and foreign columns of a foreign key.
+type Columns = (&'static [&'static str], &'static [&'static str]);
+
+/// A row of `provideJoinedHierarchiesWithAssociationAsIdentifier()`: the
+/// row name, the class names, the root table name, its `onDelete` and the
+/// child table names.
+type JoinedHierarchy = (
+    &'static str,
+    Vec<&'static str>,
+    &'static str,
+    Option<&'static str>,
+    Vec<&'static str>,
+);
+
 /// `provideJoinedHierarchiesWithAssociationAsIdentifier()`.
-fn provide_joined_hierarchies_with_association_as_identifier()
--> [(&'static str, Vec<&'static str>, &'static str, Option<&'static str>, Vec<&'static str>); 4] {
+fn provide_joined_hierarchies_with_association_as_identifier() -> [JoinedHierarchy; 4] {
     [
         (
             "one-to-one identifier",
@@ -794,9 +819,13 @@ fn map_incorrect_fields(metadata: &mut ClassMetadataInfo) {
         .map_field(php_array! { "id" => true, "fieldName" => "id" })
         .unwrap();
 
-    metadata.map_field(php_array! { "fieldName" => "index" }).unwrap();
+    metadata
+        .map_field(php_array! { "fieldName" => "index" })
+        .unwrap();
 
-    metadata.map_field(php_array! { "fieldName" => "table" }).unwrap();
+    metadata
+        .map_field(php_array! { "fieldName" => "table" })
+        .unwrap();
 
     metadata
         .map_field(php_array! { "fieldName" => "fieldName" })

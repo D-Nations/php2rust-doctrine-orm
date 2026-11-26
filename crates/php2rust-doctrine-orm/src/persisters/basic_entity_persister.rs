@@ -9,7 +9,7 @@
 //! their associations (not DQL).
 //!
 //! The inverse sides of one-to-one associations and `EAGER` to-one
-//! associations are LEFT JOINed into the `SELECT` (`getSelectColumnsSQL()`)
+//! associations are joined (`LEFT JOIN`) into the `SELECT` (`getSelectColumnsSQL()`)
 //! and hydrated by the object hydrator; without a join the simple object
 //! hydrator is used. The SQL filters apply to `getSelectSQL()`,
 //! `getCountSQL()`, `exists()` and the joins.
@@ -1780,6 +1780,7 @@ impl BasicEntityPersister {
 
     /// `BasicEntityPersister::getSelectColumnsSQL()` (`parent::` of the
     /// subclasses).
+    #[allow(clippy::too_many_lines, reason = "getSelectColumnsSQL(), in its order")]
     pub(super) fn basic_get_select_columns_sql(
         &self,
         em: &Arc<EntityManager>,
@@ -1957,7 +1958,11 @@ impl BasicEntityPersister {
                 }
             }
 
-            select_join_sql.push_str(&format!(" {join_table_name} {join_table_alias} ON "));
+            select_join_sql.push(' ');
+            select_join_sql.push_str(&join_table_name);
+            select_join_sql.push(' ');
+            select_join_sql.push_str(&join_table_alias);
+            select_join_sql.push_str(" ON ");
             select_join_sql.push_str(&join_condition.join(" AND "));
             self.st().ctx().select_join_sql.push_str(&select_join_sql);
         }
