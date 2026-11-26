@@ -1637,10 +1637,10 @@ tests/Tests/ORM/Functional/TypeTest.php	TypeTest::testFindByDateWithString	porte
 tests/Tests/ORM/Functional/TypeTest.php	TypeTest::testFindByTimeWithString	ported	crates/php2rust-doctrine-orm/tests/type_test.rs::testFindByTimeWithString
 tests/Tests/ORM/Functional/TypeTest.php	TypeTest::testObject	n/a: skipped upstream on DBAL 4 (no ObjectType)	
 tests/Tests/ORM/Functional/TypeTest.php	TypeTest::testTime	ported	crates/php2rust-doctrine-orm/tests/type_test.rs::testTime
-tests/Tests/ORM/Functional/TypeValueSqlTest.php	TypeValueSqlTest::testSelectDQL	pending	
-tests/Tests/ORM/Functional/TypeValueSqlTest.php	TypeValueSqlTest::testTypeValueSqlWithAssociations	pending	
-tests/Tests/ORM/Functional/TypeValueSqlTest.php	TypeValueSqlTest::testUpperCaseStringType	pending	
-tests/Tests/ORM/Functional/TypeValueSqlTest.php	TypeValueSqlTest::testUpperCaseStringTypeWhenColumnNameIsDefined	pending	
+tests/Tests/ORM/Functional/TypeValueSqlTest.php	TypeValueSqlTest::testSelectDQL	ported	crates/php2rust-doctrine-orm/tests/type_value_sql_test.rs::testSelectDQL
+tests/Tests/ORM/Functional/TypeValueSqlTest.php	TypeValueSqlTest::testTypeValueSqlWithAssociations	ported	crates/php2rust-doctrine-orm/tests/type_value_sql_test.rs::testTypeValueSqlWithAssociations
+tests/Tests/ORM/Functional/TypeValueSqlTest.php	TypeValueSqlTest::testUpperCaseStringType	ported	crates/php2rust-doctrine-orm/tests/type_value_sql_test.rs::testUpperCaseStringType
+tests/Tests/ORM/Functional/TypeValueSqlTest.php	TypeValueSqlTest::testUpperCaseStringTypeWhenColumnNameIsDefined	ported	crates/php2rust-doctrine-orm/tests/type_value_sql_test.rs::testUpperCaseStringTypeWhenColumnNameIsDefined
 tests/Tests/ORM/Functional/UnitOfWorkLifecycleTest.php	UnitOfWorkLifecycleTest::testAddToIdentityMapWithoutIdentity	pending	
 tests/Tests/ORM/Functional/UnitOfWorkLifecycleTest.php	UnitOfWorkLifecycleTest::testMarkReadOnlyNonManaged	pending	
 tests/Tests/ORM/Functional/UnitOfWorkLifecycleTest.php	UnitOfWorkLifecycleTest::testScheduleInsertDeleted	pending	
