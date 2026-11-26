@@ -58,8 +58,8 @@ async fn testIndexByAssociation() {
         .await
         .unwrap()
         .unwrap();
-    let participants = PersistentCollection::from_value(&get(&e, "participants"))
-        .expect("a PersistentCollection");
+    let participants =
+        PersistentCollection::from_value(&get(&e, "participants")).expect("a PersistentCollection");
     let keys = participants.get_keys().await.unwrap();
     assert_loose_eq(
         &Value::Array(php_value::PhpArray::list([Value::Int(1), Value::Int(2)])),

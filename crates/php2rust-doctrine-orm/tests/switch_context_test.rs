@@ -95,7 +95,10 @@ async fn set_up() -> (Arc<EntityManager>, Arc<SqlFilter>) {
     .await;
     em.get_configuration()
         .add_filter(PRACTICE_CONTEXT_SQL_FILTER, PRACTICE_CONTEXT_SQL_FILTER);
-    let sql_filter = em.get_filters().enable(PRACTICE_CONTEXT_SQL_FILTER).unwrap();
+    let sql_filter = em
+        .get_filters()
+        .enable(PRACTICE_CONTEXT_SQL_FILTER)
+        .unwrap();
     (em, sql_filter)
 }
 
@@ -118,7 +121,11 @@ fn insurance(practice: &Object, name: &str) -> Object {
 fn patient(name: &str) -> Object {
     let patient = new_object(&class("Patient"));
     set(&patient, "name", s(name));
-    set(&patient, "insurances", ArrayCollectionObject::value(PhpArray::new()));
+    set(
+        &patient,
+        "insurances",
+        ArrayCollectionObject::value(PhpArray::new()),
+    );
     patient
 }
 
@@ -217,27 +224,45 @@ async fn testSwitchContext() {
         .set_parameter("practiceId", get(&practice_a, "id"), None)
         .unwrap();
     clear_cached_data(&em, &[&patent_gena, &patient_egor]).await;
-    assert_eq!(1, coll::count(&get(&patient_egor, "insurances")).await.unwrap());
+    assert_eq!(
+        1,
+        coll::count(&get(&patient_egor, "insurances"))
+            .await
+            .unwrap()
+    );
     first_insurance(&patient_egor, "PrimaryPatInsurance").await;
     assert_loose_eq(
         &s("Aetna in Practice A"),
         &insurance_name(&patient_egor, "PrimaryPatInsurance").await,
     );
-    assert_eq!(0, coll::count(&get(&patent_gena, "insurances")).await.unwrap());
-    sql_filter.set_parameter("practiceId", Value::Null, None).unwrap();
+    assert_eq!(
+        0,
+        coll::count(&get(&patent_gena, "insurances")).await.unwrap()
+    );
+    sql_filter
+        .set_parameter("practiceId", Value::Null, None)
+        .unwrap();
 
     // switchPracticeContext($practiceB, ...)
     sql_filter
         .set_parameter("practiceId", get(&practice_b, "id"), None)
         .unwrap();
     clear_cached_data(&em, &[&patent_gena, &patient_egor]).await;
-    assert_eq!(1, coll::count(&get(&patient_egor, "insurances")).await.unwrap());
+    assert_eq!(
+        1,
+        coll::count(&get(&patient_egor, "insurances"))
+            .await
+            .unwrap()
+    );
     first_insurance(&patient_egor, "PrimaryPatInsurance").await;
     assert_loose_eq(
         &s("Humana in Practice B"),
         &insurance_name(&patient_egor, "PrimaryPatInsurance").await,
     );
-    assert_eq!(2, coll::count(&get(&patent_gena, "insurances")).await.unwrap());
+    assert_eq!(
+        2,
+        coll::count(&get(&patent_gena, "insurances")).await.unwrap()
+    );
     first_insurance(&patent_gena, "PrimaryPatInsurance").await;
     first_insurance(&patent_gena, "SecondaryPatInsurance").await;
     assert_loose_eq(
@@ -248,5 +273,7 @@ async fn testSwitchContext() {
         &s("Custom in Practice B"),
         &insurance_name(&patent_gena, "SecondaryPatInsurance").await,
     );
-    sql_filter.set_parameter("practiceId", Value::Null, None).unwrap();
+    sql_filter
+        .set_parameter("practiceId", Value::Null, None)
+        .unwrap();
 }

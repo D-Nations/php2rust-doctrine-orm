@@ -42,7 +42,11 @@ async fn testNoQueriesAfterSecondFlush() {
     let (em, log) = query_log::set_up_logged(&classes).await;
 
     let collection = new("GH8217Collection");
-    set(&collection, "items", ArrayCollectionObject::value(PhpArray::new()));
+    set(
+        &collection,
+        "items",
+        ArrayCollectionObject::value(PhpArray::new()),
+    );
     add_item(&collection, 0);
     add_item(&collection, 1);
     em.persist(&collection).unwrap();

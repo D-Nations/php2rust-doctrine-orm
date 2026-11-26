@@ -83,10 +83,6 @@ fn testJoinTableName() {
 
     assert_eq!(
         get_table_full_name(&table),
-        strategy.get_join_table_name(
-            cm.association_mappings.get("user").unwrap(),
-            &cm,
-            &platform
-        )
+        strategy.get_join_table_name(cm.association_mappings.get("user").unwrap(), &cm, &platform)
     );
 }

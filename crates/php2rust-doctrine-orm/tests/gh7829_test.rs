@@ -31,7 +31,10 @@ use query_log::QueryLog;
 async fn set_up() -> (Arc<EntityManager>, Arc<QueryLog>) {
     let (em, log) = query_log::set_up_logged(&CMS_MODELS).await;
 
-    let article = cms_article("Skip Limit Subquery", "Skip Limit Subquery if not required.");
+    let article = cms_article(
+        "Skip Limit Subquery",
+        "Skip Limit Subquery if not required.",
+    );
     em.persist(&article).unwrap();
     em.flush().await.unwrap();
     em.clear().unwrap();

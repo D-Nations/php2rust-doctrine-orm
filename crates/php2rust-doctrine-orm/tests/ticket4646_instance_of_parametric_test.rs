@@ -34,7 +34,10 @@ async fn testInstanceOf() {
     let query = em.create_query(dql);
     query.set_parameter(
         "parameter",
-        Value::Object(em.get_class_metadata(&class("PersonTicket4646Parametric")).unwrap()),
+        Value::Object(
+            em.get_class_metadata(&class("PersonTicket4646Parametric"))
+                .unwrap(),
+        ),
         None,
     );
     let result = list(&query.get_object_result().await.unwrap());

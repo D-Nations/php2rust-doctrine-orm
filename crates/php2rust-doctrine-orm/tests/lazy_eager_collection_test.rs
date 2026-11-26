@@ -44,8 +44,16 @@ async fn testRefreshRefreshesBothLazyAndEagerCollections() {
     ])
     .await;
     let user = with_data("LazyEagerCollectionUser", "Guilherme");
-    set(&user, "addresses", ArrayCollectionObject::value(PhpArray::new()));
-    set(&user, "phones", ArrayCollectionObject::value(PhpArray::new()));
+    set(
+        &user,
+        "addresses",
+        ArrayCollectionObject::value(PhpArray::new()),
+    );
+    set(
+        &user,
+        "phones",
+        ArrayCollectionObject::value(PhpArray::new()),
+    );
 
     let ph = with_data("LazyEagerCollectionPhone", "12345");
     add(&user, "phones", &ph);

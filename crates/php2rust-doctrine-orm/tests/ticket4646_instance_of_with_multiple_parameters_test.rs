@@ -22,7 +22,13 @@ use ticket::*;
 
 #[tokio::test]
 async fn testInstanceOf() {
-    let em = ticket::set_up(&["PersonTicket4646Multiple", "EmployeeTicket4646Multiple", "ManagerTicket4646Multiple", "InternTicket4646Multiple"]).await;
+    let em = ticket::set_up(&[
+        "PersonTicket4646Multiple",
+        "EmployeeTicket4646Multiple",
+        "ManagerTicket4646Multiple",
+        "InternTicket4646Multiple",
+    ])
+    .await;
     em.persist(&new("PersonTicket4646Multiple")).unwrap();
     em.persist(&new("EmployeeTicket4646Multiple")).unwrap();
     em.persist(&new("ManagerTicket4646Multiple")).unwrap();

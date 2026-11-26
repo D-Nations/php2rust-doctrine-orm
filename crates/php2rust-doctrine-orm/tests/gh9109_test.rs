@@ -38,7 +38,11 @@ async fn testIssue() {
     set(&user, "lastName", s(user_last_name));
 
     let product = new("GH9109Product");
-    set(&product, "buyers", ArrayCollectionObject::value(PhpArray::new()));
+    set(
+        &product,
+        "buyers",
+        ArrayCollectionObject::value(PhpArray::new()),
+    );
     set(&product, "title", s(product_title));
 
     em.persist(&user).unwrap();
@@ -60,7 +64,9 @@ async fn testIssue() {
     assert_loose_eq(&s(product_title), &get(&persisted_product, "title"));
 
     // assert Product has a Buyer
-    let count = coll::count(&get(&persisted_product, "buyers")).await.unwrap();
+    let count = coll::count(&get(&persisted_product, "buyers"))
+        .await
+        .unwrap();
     assert_eq!(1, count);
 
     let find_one_by = async |field: &str, value: &str| {

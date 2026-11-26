@@ -29,7 +29,11 @@ use ticket::*;
 /// `new GH7761Entity()`.
 fn entity() -> php_value::Object {
     let entity = new("GH7761Entity");
-    set(&entity, "children", ArrayCollectionObject::value(PhpArray::new()));
+    set(
+        &entity,
+        "children",
+        ArrayCollectionObject::value(PhpArray::new()),
+    );
     entity
 }
 

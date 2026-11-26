@@ -33,7 +33,11 @@ fn add_tweet(user: &Object, tweet: &Object) {
 async fn testExtraLazyRemoveElement() {
     let em = ticket::set_up(&["GH7864User", "GH7864Tweet"]).await;
     let user = new("GH7864User");
-    set(&user, "tweets", ArrayCollectionObject::value(PhpArray::new()));
+    set(
+        &user,
+        "tweets",
+        ArrayCollectionObject::value(PhpArray::new()),
+    );
     set(&user, "name", s("test"));
 
     let tweet1 = new("GH7864Tweet");
@@ -41,7 +45,11 @@ async fn testExtraLazyRemoveElement() {
     add_tweet(&user, &tweet1);
 
     let tweet2 = new("GH7864Tweet");
-    set(&tweet2, "content", s("Goodbye, and thanks for all the fish"));
+    set(
+        &tweet2,
+        "content",
+        s("Goodbye, and thanks for all the fish"),
+    );
     add_tweet(&user, &tweet2);
 
     em.persist(&user).unwrap();

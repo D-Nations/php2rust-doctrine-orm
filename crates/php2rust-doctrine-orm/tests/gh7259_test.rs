@@ -26,7 +26,13 @@ use orm::*;
 use ticket::*;
 
 async fn set_up() -> Arc<EntityManager> {
-    set_up_with_foreign_keys(&["GH7259Space", "GH7259File", "GH7259FileVersion", "GH7259Feed"]).await
+    set_up_with_foreign_keys(&[
+        "GH7259Space",
+        "GH7259File",
+        "GH7259FileVersion",
+        "GH7259Feed",
+    ])
+    .await
 }
 
 #[tokio::test]

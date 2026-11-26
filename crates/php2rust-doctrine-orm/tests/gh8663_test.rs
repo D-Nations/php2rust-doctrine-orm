@@ -26,7 +26,12 @@ use ticket::*;
 async fn testDeletedEntity() {
     let em = ticket::set_up(&["GH8663VersionedEntity"]).await;
     let result = em
-        .find_with_lock(&class("GH8663VersionedEntity"), Value::Int(1), LockMode::Optimistic, None)
+        .find_with_lock(
+            &class("GH8663VersionedEntity"),
+            Value::Int(1),
+            LockMode::Optimistic,
+            None,
+        )
         .await
         .unwrap();
 

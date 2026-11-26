@@ -45,7 +45,11 @@ async fn testManyToManyPersisterIsNullComparison() {
     em.flush().await.unwrap();
     em.clear().unwrap();
 
-    let parent = em.find(GH7717_PARENT, Value::Int(1)).await.unwrap().unwrap();
+    let parent = em
+        .find(GH7717_PARENT, Value::Int(1))
+        .await
+        .unwrap()
+        .unwrap();
 
     // `Criteria::ASC` is not defined in collections 3: `Criteria::create()`.
     let mut criteria = Criteria::create();

@@ -77,7 +77,12 @@ async fn set_up(configure: impl FnOnce(&mut Configuration)) -> Arc<EntityManager
     let em = orm::entity_manager_with(orm::connection(), configure);
     orm::create_schema(&em, &[&class("GH7286Entity")]).await;
 
-    for (r#type, version) in [(s("foo"), 1), (s("foo"), 2), (s("bar"), 3), (Value::Null, 4)] {
+    for (r#type, version) in [
+        (s("foo"), 1),
+        (s("foo"), 2),
+        (s("bar"), 3),
+        (Value::Null, 4),
+    ] {
         // new GH7286Entity($type, $version)
         let entity = new("GH7286Entity");
         set(&entity, "type", r#type);

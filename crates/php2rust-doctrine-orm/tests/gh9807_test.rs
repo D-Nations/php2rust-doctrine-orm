@@ -50,9 +50,21 @@ async fn testHydrateJoinedCollectionWithFirstNullishRow() {
         .unwrap();
 
     let result_set = hydration::rows(&[
-        &[("id_0", Value::Int(1)), ("id_1", Value::Null), ("value_2", Value::Null)],
-        &[("id_0", Value::Int(1)), ("id_1", Value::Int(1)), ("value_2", s("2"))],
-        &[("id_0", Value::Int(1)), ("id_1", Value::Int(2)), ("value_2", s("2"))],
+        &[
+            ("id_0", Value::Int(1)),
+            ("id_1", Value::Null),
+            ("value_2", Value::Null),
+        ],
+        &[
+            ("id_0", Value::Int(1)),
+            ("id_1", Value::Int(1)),
+            ("value_2", s("2")),
+        ],
+        &[
+            ("id_0", Value::Int(1)),
+            ("id_1", Value::Int(2)),
+            ("value_2", s("2")),
+        ],
     ]);
 
     let result = list(
@@ -62,5 +74,8 @@ async fn testHydrateJoinedCollectionWithFirstNullishRow() {
     );
 
     assert_instance_of("GH9807Main", &result[0]);
-    assert_eq!(2, coll::count(&get(&obj(&result[0]), "joins")).await.unwrap());
+    assert_eq!(
+        2,
+        coll::count(&get(&obj(&result[0]), "joins")).await.unwrap()
+    );
 }

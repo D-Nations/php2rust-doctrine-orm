@@ -30,11 +30,7 @@ async fn testNumericDescriminatorColumn() {
     em.clear().unwrap();
 
     let repository = em.get_repository(&class("GH8055SubClass")).unwrap();
-    let hydrated = repository
-        .find(get(&entity, "id"))
-        .await
-        .unwrap()
-        .unwrap();
+    let hydrated = repository.find(get(&entity, "id")).await.unwrap().unwrap();
 
     assert!(s("test").identical(&get(&hydrated, "value")));
 }

@@ -34,7 +34,11 @@ async fn testUnitOfWorkHandlesNullRelations() {
         em.get_configuration().get_entity_listener_resolver(),
     );
     let mut hints = Hints {
-        fetch_mode: vec![(class("GH9027Cart"), "customer".to_owned(), Some(FETCH_EAGER))],
+        fetch_mode: vec![(
+            class("GH9027Cart"),
+            "customer".to_owned(),
+            Some(FETCH_EAGER),
+        )],
         ..Hints::default()
     };
 

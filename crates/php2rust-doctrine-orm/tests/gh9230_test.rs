@@ -31,12 +31,22 @@ fn failing_values_before_fix() -> Vec<(&'static str, &'static str, Value, Value)
         ("string=null", "name", Value::Null, s("test name")),
         ("int=0", "counter", Value::Int(0), Value::Int(1)),
         ("int=null", "counter", Value::Null, Value::Int(1)),
-        ("bool=false", "enabled", Value::Bool(false), Value::Bool(true)),
+        (
+            "bool=false",
+            "enabled",
+            Value::Bool(false),
+            Value::Bool(true),
+        ),
         ("bool=null", "enabled", Value::Null, Value::Bool(true)),
         ("float=0.0", "price", Value::Float(0.0), Value::Float(1.1)),
         ("float=-0.0", "price", Value::Float(-0.0), Value::Float(1.1)),
         ("float=null", "price", Value::Null, Value::Float(1.1)),
-        ("json=[]", "extra", Value::Array(PhpArray::new()), Value::Int(1)),
+        (
+            "json=[]",
+            "extra",
+            Value::Array(PhpArray::new()),
+            Value::Int(1),
+        ),
         ("json=0", "extra", Value::Int(0), Value::Int(1)),
         ("json=0.0", "extra", Value::Float(0.0), Value::Int(1)),
         ("json=false", "extra", Value::Bool(false), Value::Int(1)),
@@ -97,7 +107,9 @@ async fn testIssue() {
         em.clear().unwrap();
 
         let counter_repository = em.get_repository(&class("GH9230Entity")).unwrap();
-        let mut qb = counter_repository.create_query_builder("counter", None).unwrap();
+        let mut qb = counter_repository
+            .create_query_builder("counter", None)
+            .unwrap();
         qb.select(vec![s(&format!("counter.{property}"))]).unwrap();
         let query = qb.get_query().unwrap();
         let values = query.get_single_column_result().await.unwrap();

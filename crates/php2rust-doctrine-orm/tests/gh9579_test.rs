@@ -30,10 +30,18 @@ async fn set_up() -> Arc<EntityManager> {
     let em = ticket::set_up(&["GH9579Container", "GH9579Item", "GH9579Part"]).await;
 
     let container = new("GH9579Container");
-    set(&container, "items", ArrayCollectionObject::value(PhpArray::new()));
+    set(
+        &container,
+        "items",
+        ArrayCollectionObject::value(PhpArray::new()),
+    );
 
     let item = new("GH9579Item");
-    set(&item, "parts", ArrayCollectionObject::value(PhpArray::new()));
+    set(
+        &item,
+        "parts",
+        ArrayCollectionObject::value(PhpArray::new()),
+    );
     set_obj(&item, "container", &container);
     set_obj(&container, "currentItem", &item);
 

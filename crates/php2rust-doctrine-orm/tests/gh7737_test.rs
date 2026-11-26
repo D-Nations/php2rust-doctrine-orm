@@ -42,7 +42,11 @@ async fn set_up() -> Arc<EntityManager> {
     // new GH7737Person(1)
     let person = new("GH7737Person");
     set(&person, "id", Value::Int(1));
-    set(&person, "groups", ArrayCollectionObject::value(PhpArray::new()));
+    set(
+        &person,
+        "groups",
+        ArrayCollectionObject::value(PhpArray::new()),
+    );
     coll::add(&get(&person, "groups"), Value::Object(group1.clone())).unwrap();
 
     em.persist(&person).unwrap();

@@ -39,9 +39,7 @@ async fn testSimpleArrayTypeHydratedCorrectly() {
     em.flush().await.unwrap();
     em.clear().unwrap();
 
-    let repository = em
-        .get_repository(&class("GH7505AbstractResponse"))
-        .unwrap();
+    let repository = em.get_repository(&class("GH7505AbstractResponse")).unwrap();
 
     let array_response = repository
         .find(get(&array_response, "id"))

@@ -19,7 +19,6 @@ mod orm;
 #[path = "common/ticket.rs"]
 mod ticket;
 
-
 use std::sync::Arc;
 
 use php_value::{Object, Value};

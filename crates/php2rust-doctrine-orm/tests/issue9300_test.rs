@@ -30,7 +30,11 @@ async fn set_up() -> std::sync::Arc<php2rust_doctrine_orm::entity_manager::Entit
 /// `new Issue9300Child()`.
 fn child() -> php_value::Object {
     let child = new_object(ISSUE9300_CHILD);
-    set(&child, "parents", ArrayCollectionObject::value(PhpArray::new()));
+    set(
+        &child,
+        "parents",
+        ArrayCollectionObject::value(PhpArray::new()),
+    );
     child
 }
 
