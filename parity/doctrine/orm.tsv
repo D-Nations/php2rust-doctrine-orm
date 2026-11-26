@@ -1611,7 +1611,7 @@ tests/Tests/ORM/Functional/Ticket/GH9516Test.php	GH9516Test::testEntityCanHaveIn
 tests/Tests/ORM/Functional/Ticket/GH9538Test.php	GH9538Test::testCanRemoveEntityWithReadonlyId	ported	crates/php2rust-doctrine-orm/tests/gh9538_test.rs::testCanRemoveEntityWithReadonlyId
 tests/Tests/ORM/Functional/Ticket/GH9579Test.php	GH9579Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/gh9579_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/GH9807Test.php	GH9807Test::testHydrateJoinedCollectionWithFirstNullishRow	ported	crates/php2rust-doctrine-orm/tests/gh9807_test.rs::testHydrateJoinedCollectionWithFirstNullishRow
-tests/Tests/ORM/Functional/Ticket/Issue5989Test.php	Issue5989Test::testSimpleArrayTypeHydratedCorrectlyInJoinedInheritance	pending	
+tests/Tests/ORM/Functional/Ticket/Issue5989Test.php	Issue5989Test::testSimpleArrayTypeHydratedCorrectlyInJoinedInheritance	ported	crates/php2rust-doctrine-orm/tests/issue5989_test.rs::testSimpleArrayTypeHydratedCorrectlyInJoinedInheritance
 tests/Tests/ORM/Functional/Ticket/Issue9300Test.php	Issue9300Test::testPersistedCollectionIsPresentInOriginalDataAfterFlush	pending	
 tests/Tests/ORM/Functional/Ticket/Issue9300Test.php	Issue9300Test::testPersistingCollectionAfterFlushWorksAsExpected	pending	
 tests/Tests/ORM/Functional/Ticket/LazyEagerCollectionTest.php	LazyEagerCollectionTest::testRefreshRefreshesBothLazyAndEagerCollections	pending	
