@@ -19,6 +19,7 @@ pub mod naming_strategy;
 pub mod ordered_map;
 pub mod property_accessors;
 pub mod property_value;
+pub mod quote_strategy;
 pub mod typed_field_mapper;
 
 pub use association_mapping::{
@@ -29,6 +30,7 @@ pub use embedded_class_mapping::{ColumnPrefix, DiscriminatorColumnMapping, Embed
 pub use field_mapping::{FieldMapping, MappingProperties};
 pub use join_column_mapping::{JoinColumnMapping, JoinTableMapping};
 pub use naming_strategy::{DefaultNamingStrategy, NamingStrategy, UnderscoreNamingStrategy};
+pub use quote_strategy::{AnsiQuoteStrategy, DefaultQuoteStrategy, QuoteStrategy};
 pub use property_value::{Sleep, serialize_object};
 
 /// Declares the ORM's own classes in persistence's class registry (the
