@@ -7,6 +7,7 @@
 
 mod cache_entry;
 mod cache_key;
+pub mod collection_persister;
 pub mod configuration;
 mod default_cache;
 pub mod exception;
@@ -26,12 +27,15 @@ pub use cache_entry::{
 pub use cache_key::{
     CacheKey, CollectionCacheKey, EntityCacheKey, QueryCacheKey, TimestampCacheKey,
 };
+pub use collection_persister::{AbstractCollectionPersister, CachedCollectionPersister};
 pub use configuration::{
     CacheConfiguration, QueryCacheValidator, RegionsConfiguration, TimestampQueryCacheValidator,
 };
 pub use default_cache::{Cache, DefaultCache};
 pub use factory::{CacheFactory, DefaultCacheFactory};
-pub use hydrator::{DefaultEntityHydrator, EntityHydrator};
+pub use hydrator::{
+    CollectionHydrator, DefaultCollectionHydrator, DefaultEntityHydrator, EntityHydrator,
+};
 pub use lock::Lock;
 pub use lock::uniqid;
 pub use persister::{AbstractEntityPersister, CacheUsage, CachedEntityPersister, CachedPersister};

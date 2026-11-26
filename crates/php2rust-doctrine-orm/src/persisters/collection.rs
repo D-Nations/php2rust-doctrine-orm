@@ -24,7 +24,7 @@ use crate::mapping::ordered_map::OrderedMap;
 use crate::mapping::{AssociationMapping, ClassMetadataInfo};
 use crate::persistent_collection::PersistentCollection;
 use crate::query::ResultSetMappingBuilder;
-use crate::unit_of_work::{Hints, STATE_MANAGED, STATE_NEW};
+use crate::unit_of_work::{Fut, Hints, STATE_MANAGED, STATE_NEW};
 use crate::utility::{
     ParamType, convert_to_parameter_value, get_type_of_column, infer_parameter_types, key_text,
     to_text,
@@ -1321,4 +1321,143 @@ fn get_limit_sql(em: &EntityManager, criteria: &Criteria) -> Result<String, Thro
                 0,
             )
         })
+}
+
+/// `Doctrine\ORM\Persisters\Collection\CollectionPersister`: define the
+/// behavior that should be implemented by all collection persisters.
+pub trait CollectionPersister: std::fmt::Debug + Send + Sync {
+    /// Deletes the persistent state represented by the given collection.
+    fn delete<'a>(&'a self, collection: &'a Arc<PersistentCollection>) -> Fut<'a, ()>;
+
+    /// Updates the given collection, synchronizing its state with the
+    /// database by inserting, updating and deleting individual elements.
+    fn update<'a>(&'a self, collection: &'a Arc<PersistentCollection>) -> Fut<'a, ()>;
+
+    /// Counts the size of this persistent collection.
+    fn count<'a>(&'a self, collection: &'a Arc<PersistentCollection>) -> Fut<'a, i64>;
+
+    /// Slices elements.
+    fn slice<'a>(
+        &'a self,
+        collection: &'a Arc<PersistentCollection>,
+        offset: i64,
+        length: Option<i64>,
+    ) -> Fut<'a, PhpArray>;
+
+    /// Checks for existence of an element.
+    fn contains<'a>(
+        &'a self,
+        collection: &'a Arc<PersistentCollection>,
+        element: &'a Object,
+    ) -> Fut<'a, bool>;
+
+    /// Checks for existence of a key.
+    fn contains_key<'a>(
+        &'a self,
+        collection: &'a Arc<PersistentCollection>,
+        key: &'a Key,
+    ) -> Fut<'a, bool>;
+
+    /// Gets an element by key.
+    fn get<'a>(
+        &'a self,
+        collection: &'a Arc<PersistentCollection>,
+        index: &'a Value,
+    ) -> Fut<'a, Option<Object>>;
+
+    /// Loads association entities matching the given Criteria object.
+    fn load_criteria<'a>(
+        &'a self,
+        collection: &'a Arc<PersistentCollection>,
+        criteria: &'a Criteria,
+    ) -> Fut<'a, Vec<Value>>;
+}
+
+/// `OneToManyPersister` or `ManyToManyPersister`, as the collection's
+/// mapping chooses (the functions of this module).
+#[derive(Debug)]
+pub struct DefaultCollectionPersister {
+    em: std::sync::Weak<EntityManager>,
+    one_to_many: bool,
+}
+
+impl DefaultCollectionPersister {
+    /// `new OneToManyPersister($em)` (`one_to_many`) or
+    /// `new ManyToManyPersister($em)`.
+    pub fn new(em: &Arc<EntityManager>, one_to_many: bool) -> Self {
+        Self {
+            em: Arc::downgrade(em),
+            one_to_many,
+        }
+    }
+
+    /// The upstream class.
+    pub fn get_class_name(&self) -> &'static str {
+        if self.one_to_many {
+            "Doctrine\\ORM\\Persisters\\Collection\\OneToManyPersister"
+        } else {
+            "Doctrine\\ORM\\Persisters\\Collection\\ManyToManyPersister"
+        }
+    }
+
+    fn em(&self) -> Result<Arc<EntityManager>, Thrown> {
+        self.em
+            .upgrade()
+            .ok_or_else(|| Thrown::new("Error", "The EntityManager is gone.", 0))
+    }
+}
+
+impl CollectionPersister for DefaultCollectionPersister {
+    fn delete<'a>(&'a self, collection: &'a Arc<PersistentCollection>) -> Fut<'a, ()> {
+        Box::pin(async move { delete(&self.em()?, collection).await })
+    }
+
+    fn update<'a>(&'a self, collection: &'a Arc<PersistentCollection>) -> Fut<'a, ()> {
+        Box::pin(async move { update(&self.em()?, collection).await })
+    }
+
+    fn count<'a>(&'a self, collection: &'a Arc<PersistentCollection>) -> Fut<'a, i64> {
+        Box::pin(async move { count(&self.em()?, collection).await })
+    }
+
+    fn slice<'a>(
+        &'a self,
+        collection: &'a Arc<PersistentCollection>,
+        offset: i64,
+        length: Option<i64>,
+    ) -> Fut<'a, PhpArray> {
+        Box::pin(async move { slice(&self.em()?, collection, offset, length).await })
+    }
+
+    fn contains<'a>(
+        &'a self,
+        collection: &'a Arc<PersistentCollection>,
+        element: &'a Object,
+    ) -> Fut<'a, bool> {
+        Box::pin(async move { contains(&self.em()?, collection, element).await })
+    }
+
+    fn contains_key<'a>(
+        &'a self,
+        collection: &'a Arc<PersistentCollection>,
+        key: &'a Key,
+    ) -> Fut<'a, bool> {
+        Box::pin(async move { contains_key(&self.em()?, collection, key).await })
+    }
+
+    fn get<'a>(
+        &'a self,
+        collection: &'a Arc<PersistentCollection>,
+        index: &'a Value,
+    ) -> Fut<'a, Option<Object>> {
+        Box::pin(async move { get(&self.em()?, collection, index).await })
+    }
+
+    fn load_criteria<'a>(
+        &'a self,
+        collection: &'a Arc<PersistentCollection>,
+        criteria: &'a Criteria,
+    ) -> Fut<'a, Vec<Value>> {
+        Box::pin(async move { load_criteria(&self.em()?, collection, criteria).await })
+    }
 }

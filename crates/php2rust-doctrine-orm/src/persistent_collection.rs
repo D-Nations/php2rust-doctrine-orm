@@ -28,7 +28,7 @@ use crate::internal::object_id;
 use crate::lazy_criteria_collection::LazyCriteriaCollection;
 use crate::mapping::class_metadata::FETCH_EXTRA_LAZY;
 use crate::mapping::{AssociationMapping, ClassMetadata};
-use crate::persisters::collection as collection_persister;
+use crate::persisters::collection::CollectionPersister;
 use crate::utility::to_text;
 
 /// `Doctrine\ORM\PersistentCollection`.
@@ -402,6 +402,15 @@ impl PersistentCollection {
         Ok(self.get_mapping()?.fetch == Some(FETCH_EXTRA_LAZY))
     }
 
+    /// `$this->getUnitOfWork()->getCollectionPersister($this->getMapping())`.
+    fn collection_persister(
+        &self,
+        em: &Arc<EntityManager>,
+    ) -> Result<Arc<dyn CollectionPersister>, Thrown> {
+        em.get_unit_of_work()
+            .get_collection_persister(&self.get_mapping()?)
+    }
+
     /// `containsKey($key)`.
     pub async fn contains_key(self: &Arc<Self>, key: &Key) -> Result<bool, Thrown> {
         if self.is_extra_lazy_uninitialized()? && self.get_mapping()?.index_by.is_some() {
@@ -409,7 +418,10 @@ impl PersistentCollection {
                 return Ok(true);
             }
             let em = self.entity_manager()?;
-            return collection_persister::contains_key(&em, self, key).await;
+            return self
+                .collection_persister(&em)?
+                .contains_key(self, key)
+                .await;
         }
         self.initialize().await?;
         Ok(self.st().collection.contains_key(key))
@@ -429,7 +441,10 @@ impl PersistentCollection {
                 ));
             };
             let em = self.entity_manager()?;
-            return collection_persister::contains(&em, self, element).await;
+            return self
+                .collection_persister(&em)?
+                .contains(self, element)
+                .await;
         }
         self.initialize().await?;
         Ok(self.st().collection.contains(element))
@@ -457,7 +472,9 @@ impl PersistentCollection {
                         .map_or(Value::Null, Value::Object));
                 }
             }
-            return Ok(collection_persister::get(&em, self, &key.to_value())
+            return Ok(self
+                .collection_persister(&em)?
+                .get(self, &key.to_value())
                 .await?
                 .map_or(Value::Null, Value::Object));
         }
@@ -475,7 +492,7 @@ impl PersistentCollection {
                 .is_some_and(|a| a.fetch == Some(FETCH_EXTRA_LAZY));
         if extra_lazy {
             let em = self.entity_manager()?;
-            let count = collection_persister::count(&em, self).await?;
+            let count = self.collection_persister(&em)?.count(self).await?;
             let dirty = if self.is_dirty() {
                 self.st().collection.count()
             } else {
@@ -554,7 +571,10 @@ impl PersistentCollection {
     pub async fn first(self: &Arc<Self>) -> Result<Value, Thrown> {
         if !self.is_dirty() && self.is_extra_lazy_uninitialized()? {
             let em = self.entity_manager()?;
-            let slice = collection_persister::slice(&em, self, 0, Some(1)).await?;
+            let slice = self
+                .collection_persister(&em)?
+                .slice(self, 0, Some(1))
+                .await?;
             return Ok(slice.values().next().cloned().unwrap_or(Value::Bool(false)));
         }
         self.initialize().await?;
@@ -580,7 +600,10 @@ impl PersistentCollection {
     ) -> Result<PhpArray, Thrown> {
         if !self.is_dirty() && self.is_extra_lazy_uninitialized()? {
             let em = self.entity_manager()?;
-            return collection_persister::slice(&em, self, offset, length).await;
+            return self
+                .collection_persister(&em)?
+                .slice(self, offset, length)
+                .await;
         }
         self.initialize().await?;
         Ok(self.st().collection.slice(offset, length))
@@ -601,7 +624,10 @@ impl PersistentCollection {
         let association = self.get_mapping()?;
         let em = self.entity_manager()?;
         if association.is_many_to_many() {
-            let elements = collection_persister::load_criteria(&em, self, criteria).await?;
+            let elements = self
+                .collection_persister(&em)?
+                .load_criteria(self, criteria)
+                .await?;
             return Ok(ArrayCollectionObject::value(PhpArray::list(elements)));
         }
 

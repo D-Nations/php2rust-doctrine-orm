@@ -6,9 +6,7 @@
 //! `ReadWriteCachedEntityPersister`; [`CacheUsage`] names which, and
 //! `get_class_name()` gives the upstream class).
 //!
-//! The collection loads go to the wrapped persister: the collection
-//! persisters are not cached here (`UnitOfWork::getCollectionPersister()`
-//! has no cached collection persister). `count(queuedCache)` is
+//! `count(queuedCache)` is
 //! `queued_cache_len()`. A criteria's orderings enter the query hash as
 //! their `ASC`/`DESC` names.
 //!
@@ -43,8 +41,8 @@ use super::exception::cannot_update_read_only_entity;
 use super::hydrator::{EntityHydrator, em_of};
 use super::logging::CacheLogger;
 use super::{
-    Cache, CacheEntry, EntityCacheKey, Lock, MODE_NORMAL, QueryCacheKey, Region, TimestampCacheKey,
-    TimestampRegion,
+    Cache, CacheEntry, CollectionCacheKey, EntityCacheKey, Lock, MODE_NORMAL, QueryCacheKey,
+    Region, TimestampCacheKey, TimestampRegion,
 };
 
 /// `Doctrine\ORM\Cache\Persister\CachedPersister`: interface for
@@ -615,6 +613,86 @@ impl AbstractEntityPersister {
         }
     }
 
+    /// `loadManyToManyCollection()` / `loadOneToManyCollection()`: the
+    /// collection from its cache region when its persister is cached.
+    async fn load_cached_collection(
+        &self,
+        assoc: &AssociationMapping,
+        source_entity: &Object,
+        collection: &Arc<PersistentCollection>,
+        one_to_many: bool,
+    ) -> Result<Vec<Object>, Thrown> {
+        let em = self.em()?;
+        let uow = em.get_unit_of_work();
+        let load = || {
+            if one_to_many {
+                self.persister
+                    .load_one_to_many_collection(assoc, source_entity, collection)
+            } else {
+                self.persister
+                    .load_many_to_many_collection(assoc, source_entity, collection)
+            }
+        };
+        let Some(persister) = uow.get_cached_collection_persister(assoc)? else {
+            return load().await;
+        };
+
+        let owner = collection.get_owner().ok_or_else(|| {
+            Thrown::new(
+                "TypeError",
+                "Doctrine\\ORM\\UnitOfWork::getEntityIdentifier(): Argument #1 ($entity) must be of type object, null given",
+                0,
+            )
+        })?;
+        let owner_id = uow.get_entity_identifier(&owner)?;
+        let key = self.build_collection_cache_key(&em, assoc, &owner_id)?;
+        if let Some(list) = persister.load_collection_cache(collection, &key).await? {
+            if let Some(logger) = self.logger() {
+                logger.collection_cache_hit(&persister.get_cache_region().get_name(), &key);
+            }
+            return Ok(list
+                .values()
+                .filter_map(|value| match value {
+                    Value::Object(entity) => Some(entity.clone()),
+                    _ => None,
+                })
+                .collect());
+        }
+
+        let list = load().await?;
+
+        persister.store_collection_cache(
+            &key,
+            &PhpArray::list(list.iter().cloned().map(Value::Object)),
+        )?;
+
+        if let Some(logger) = self.logger() {
+            logger.collection_cache_miss(&persister.get_cache_region().get_name(), &key);
+        }
+
+        Ok(list)
+    }
+
+    /// `buildCollectionCacheKey()`, with the SQL filters' hash.
+    fn build_collection_cache_key(
+        &self,
+        em: &EntityManager,
+        association: &AssociationMapping,
+        owner_id: &PhpArray,
+    ) -> Result<CollectionCacheKey, Thrown> {
+        let root = em
+            .get_class_metadata(&association.source_entity)?
+            .read()
+            .root_entity_name
+            .clone();
+        Ok(CollectionCacheKey::with_filter_hash(
+            root,
+            association.field_name.as_str(),
+            owner_id,
+            &em.get_filters().get_hash(),
+        ))
+    }
+
     fn evict_queued(&self, items: &[Queued]) -> Result<(), Thrown> {
         for item in items {
             if let Queued::Locked { key, .. } | Queued::Key(key) = item {
@@ -948,8 +1026,7 @@ impl EntityPersisterInterface for AbstractEntityPersister {
         source_entity: &'a Object,
         collection: &'a Arc<PersistentCollection>,
     ) -> Fut<'a, Vec<Object>> {
-        self.persister
-            .load_many_to_many_collection(assoc, source_entity, collection)
+        Box::pin(self.load_cached_collection(assoc, source_entity, collection, false))
     }
 
     fn get_one_to_many_collection<'a>(
@@ -969,8 +1046,7 @@ impl EntityPersisterInterface for AbstractEntityPersister {
         source_entity: &'a Object,
         collection: &'a Arc<PersistentCollection>,
     ) -> Fut<'a, Vec<Object>> {
-        self.persister
-            .load_one_to_many_collection(assoc, source_entity, collection)
+        Box::pin(self.load_cached_collection(assoc, source_entity, collection, true))
     }
 }
 
