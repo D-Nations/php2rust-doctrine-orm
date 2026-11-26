@@ -16,9 +16,9 @@
 use std::sync::atomic::{AtomicU64, Ordering};
 use std::sync::{Arc, PoisonError, RwLock, RwLockReadGuard, RwLockWriteGuard};
 
+use crate::query::SortDirection;
 use php_value::object::{EnumCase, GenericObject};
 use php_value::{Key, Object, PhpArray, Thrown, Value};
-use php2rust_doctrine_collections::SortDirection;
 use php2rust_doctrine_persistence::mapping::{
     ClassMetadata as PersistenceClassMetadata, ReflectionService,
 };

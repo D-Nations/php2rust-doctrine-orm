@@ -16,6 +16,7 @@ php2rust-doctrine-inflector = { path = "../php2rust-doctrine-inflector" }
 php2rust-doctrine-persistence = { path = "../php2rust-doctrine-persistence" }
 
 [dev-dependencies]
+php-value = { workspace = true, features = ["vectors"] }
 serde_json = "1.0.154"
 
 [lints]

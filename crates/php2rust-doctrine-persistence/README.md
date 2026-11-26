@@ -27,6 +27,12 @@ whose provided methods are the PHP methods (overridable; `parent::` calls
 go to the free functions of the same module). What PHP throws is a
 `php_value::Thrown` with PHP's class, message and code. The classes PHP's
 reflection would find are declared with `php_reflection::register_class`.
+The registry also carries what doctrine/instantiator reads: abstract,
+final and internal flags, `trait_exists()`, `enum_exists()` and
+`ReflectionClass::newInstanceWithoutConstructor()` (PHP's `Error` and
+`ReflectionException` texts, checked against PHP 8.4.27; a blank instance
+comes from the class's `new_instance()` factory, or is a `GenericObject`
+with the public defaults).
 
 | Contract | Source | Evidence |
 |---|---|---|

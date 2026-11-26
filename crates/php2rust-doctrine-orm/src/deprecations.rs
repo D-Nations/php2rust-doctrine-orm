@@ -52,7 +52,7 @@ pub fn count(link: &str) -> u64 {
 pub(crate) fn trigger(link: &str, message: impl FnOnce() -> String) {
     TRACKED.with(|tracked| {
         if let Some(counts) = tracked.borrow_mut().as_mut() {
-            let _ = message;
+            let _ = message();
             *counts.entry(link.to_owned()).or_insert(0) += 1;
         }
     });
