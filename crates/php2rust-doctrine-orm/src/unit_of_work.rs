@@ -1738,6 +1738,13 @@ impl UnitOfWork {
         st.extra_updates.insert(oid, (entity.clone(), changeset));
     }
 
+    /// The extra updates scheduled for the running commit, as (entity,
+    /// changeset) tuples: what a test reads of the private
+    /// `$extraUpdates` through `ReflectionProperty`.
+    pub fn get_scheduled_extra_updates(&self) -> Vec<(Object, PhpArray)> {
+        self.st().extra_updates.values().cloned().collect()
+    }
+
     /// Checks whether an entity is registered as dirty in the unit of
     /// work. Note: Is not very useful currently as dirty entities are only
     /// registered at commit time.
