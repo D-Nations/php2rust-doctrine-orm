@@ -1559,7 +1559,7 @@ tests/Tests/ORM/Functional/Ticket/GH7629Test.php	GH7629Test::testPersistAfterRem
 tests/Tests/ORM/Functional/Ticket/GH7661Test.php	GH7661Test::testIndexByAssociation	ported	crates/php2rust-doctrine-orm/tests/gh7661_test.rs::testIndexByAssociation
 tests/Tests/ORM/Functional/Ticket/GH7684Test.php	GH7684Test::testIssue	pending	needs the DatabaseDriver (reverse engineering), which is not ported
 tests/Tests/ORM/Functional/Ticket/GH7717Test.php	GH7717Test::testManyToManyPersisterIsNullComparison	ported	crates/php2rust-doctrine-orm/tests/gh7717_test.rs::testManyToManyPersisterIsNullComparison
-tests/Tests/ORM/Functional/Ticket/GH7735Test.php	GH7735Test::findByReturnsCachedEntity	pending	
+tests/Tests/ORM/Functional/Ticket/GH7735Test.php	GH7735Test::findByReturnsCachedEntity	pending	needs the second-level cache
 tests/Tests/ORM/Functional/Ticket/GH7737Test.php	GH7737Test::memberOfCriteriaShouldBeCompatibleWithQueryBuilder	ported	crates/php2rust-doctrine-orm/tests/gh7737_test.rs::memberOfCriteriaShouldBeCompatibleWithQueryBuilder
 tests/Tests/ORM/Functional/Ticket/GH7761Test.php	GH7761Test::testCollectionClearDoesClearIfPersisted	ported	crates/php2rust-doctrine-orm/tests/gh7761_test.rs::testCollectionClearDoesClearIfPersisted
 tests/Tests/ORM/Functional/Ticket/GH7761Test.php	GH7761Test::testCollectionClearDoesNotClearIfNotPersisted	ported	crates/php2rust-doctrine-orm/tests/gh7761_test.rs::testCollectionClearDoesNotClearIfNotPersisted
