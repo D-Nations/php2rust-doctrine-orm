@@ -2,10 +2,11 @@
 //! The entities all use a custom type that converts the value as
 //! identifier(s) (`common/rot13.rs`). Each test has its own database, so
 //! `tearDownAfterClass()` has nothing to drop.
-//! The tests that load the inverse side are pending: its one-to-one has
-//! two join columns, which PHP only loads through the persister's LEFT
-//! JOIN of the inverse one-to-one (not ported yet); without it
-//! `loadOneToOneEntity()` throws, as it would in PHP.
+//! The inverse side's one-to-one has two join columns: it is loaded
+//! through the persister's LEFT JOIN of the inverse one-to-one. A lazy
+//! proxy does not load on a property read here, so the proxy test calls
+//! `initialize_object()` where PHP's property read would.
+//! `#[Depends]` is a fresh fixture.
 //!
 //! Upstream: doctrine/orm tests/Tests/ORM/Functional/ValueConversionType/OneToOneCompositeIdTest.php
 
@@ -28,6 +29,8 @@ mod vct;
 use std::sync::Arc;
 
 use php2rust_doctrine_orm::entity_manager::EntityManager;
+
+use php_value::Value;
 
 use orm::s;
 use vct::*;
@@ -94,4 +97,54 @@ async fn testThatTheValueOfIdentifiersAreConvertedInTheDatabase() {
         "SELECT associated_id2 FROM vct_owning_onetoone_compositeid LIMIT 1",
     )
     .await;
+}
+
+/// `['id1' => 'abc', 'id2' => 'def']`.
+fn inversed_id() -> Value {
+    ids(&[("id1", s("abc")), ("id2", s("def"))])
+}
+
+#[tokio::test]
+async fn testThatEntitiesAreFetchedFromTheDatabase() {
+    let em = set_up().await;
+
+    let inv = find(&em, &inversed(), inversed_id()).await;
+    let own = find(&em, &owning(), s("ghi")).await;
+
+    assert_instance_of(&inversed(), &inv);
+    assert_instance_of(&owning(), &own);
+}
+
+#[tokio::test]
+async fn testThatTheValueOfIdentifiersAreConvertedBackAfterBeingFetchedFromTheDatabase() {
+    let em = set_up().await;
+
+    let inv = find(&em, &inversed(), inversed_id()).await;
+    let own = find(&em, &owning(), s("ghi")).await;
+
+    assert_field("abc", &inv, "id1");
+    assert_field("def", &inv, "id2");
+    assert_field("ghi", &own, "id3");
+}
+
+#[tokio::test]
+async fn testThatTheProxyFromOwningToInversedIsLoaded() {
+    let em = set_up().await;
+    let own = find(&em, &owning(), s("ghi")).await;
+
+    let inversed_proxy = orm::get_object(&own, "associatedEntity").unwrap();
+
+    em.initialize_object(&inversed_proxy).await.unwrap();
+    assert_field("some value to be loaded", &inversed_proxy, "someProperty");
+}
+
+#[tokio::test]
+async fn testThatTheEntityFromInversedToOwningIsEagerLoaded() {
+    let em = set_up().await;
+    let inv = find(&em, &inversed(), inversed_id()).await;
+
+    assert_instance_of(
+        &owning(),
+        &orm::get_object(&inv, "associatedEntity").unwrap(),
+    );
 }

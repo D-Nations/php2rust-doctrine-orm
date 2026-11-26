@@ -36,7 +36,7 @@ use crate::mapping::{
 };
 use crate::persistent_collection::PersistentCollection;
 use crate::query::ResultSetMapping;
-use crate::unit_of_work::Hints;
+use crate::unit_of_work::{Fut, Hints};
 
 use super::sql_expression_visitor::SqlExpressionVisitor;
 use super::sql_value_visitor::SqlValueVisitor;
@@ -131,7 +131,8 @@ impl std::fmt::Debug for BasicEntityPersister {
 }
 
 /// The parameters and their types.
-pub(super) type Params = (Vec<Value>, Vec<ParamType>);
+/// The expanded parameters of a query and their types.
+pub type Params = (Vec<Value>, Vec<ParamType>);
 
 /// `getJoinSQLForJoinColumns()`: a `LEFT JOIN` if one of the join
 /// columns is nullable, an `INNER JOIN` otherwise.
@@ -1000,12 +1001,21 @@ impl BasicEntityPersister {
         entity: Option<&Object>,
         assoc: Option<&AssociationMapping>,
         hints: Hints,
+        lock_mode: Option<LockMode>,
         limit: Option<i64>,
         order_by: Option<&PhpArray>,
     ) -> Result<Option<Object>, Thrown> {
         let em = self.em()?;
         self.switch_persister_context(None, limit);
-        let sql = self.get_select_sql(&em, criteria.into(), assoc, None, limit, None, order_by)?;
+        let sql = self.get_select_sql(
+            &em,
+            criteria.into(),
+            assoc,
+            lock_mode,
+            limit,
+            None,
+            order_by,
+        )?;
         let (params, types) = self.expand_parameters(&em, criteria)?;
         let rows = self.fetch_all(&em, &sql, params, types).await?;
 
@@ -1042,7 +1052,7 @@ impl BasicEntityPersister {
         identifier: &PhpArray,
         entity: Option<&Object>,
     ) -> Result<Option<Object>, Thrown> {
-        self.load(identifier, entity, None, Hints::default(), None, None)
+        self.load(identifier, entity, None, Hints::default(), None, None, None)
             .await
     }
 
@@ -1081,7 +1091,7 @@ impl BasicEntityPersister {
             }
 
             let target_entity = self
-                .load(identifier, None, Some(assoc), hints, None, None)
+                .load(identifier, None, Some(assoc), hints, None, None, None)
                 .await?;
 
             // Complete bidirectional association, if necessary
@@ -1163,6 +1173,7 @@ impl BasicEntityPersister {
                 Hints::default(),
                 None,
                 None,
+                None,
             )
             .await?;
         if let Some(target_entity) = &target_entity {
@@ -1196,6 +1207,32 @@ impl BasicEntityPersister {
         // hydrator when nothing is joined (the same entity).
         self.hydrate_entities(&em, rows, &rsm, &mut hints, None, None)
             .await?;
+        Ok(())
+    }
+
+    /// Locks all rows of this entity matching the given criteria with
+    /// the specified pessimistic lock mode.
+    pub async fn lock(&self, criteria: &PhpArray, lock_mode: LockMode) -> Result<(), Thrown> {
+        let em = self.em()?;
+        let condition_sql = self.get_select_condition_sql(&em, criteria, None)?;
+        let platform = em.get_platform();
+        let lock_sql = match lock_mode {
+            LockMode::PessimisticRead => crate::query::utility::get_read_lock_sql(platform),
+            LockMode::PessimisticWrite => crate::query::utility::get_write_lock_sql(platform),
+            LockMode::None | LockMode::Optimistic => "",
+        };
+        let lock = self.get_lock_tables_sql(&em, lock_mode)?;
+        let where_ = if condition_sql.is_empty() {
+            " ".to_owned()
+        } else {
+            format!(" WHERE {condition_sql} ")
+        };
+        let sql = format!("SELECT 1 {lock}{where_}{lock_sql}");
+        let (params, types) = self.expand_parameters(&em, criteria)?;
+        let conn = em.get_connection();
+        conn.execute_query(&sql, &PhpArray::list(params), &types_of(types))
+            .await
+            .map_err(|e| dbal(&e))?;
         Ok(())
     }
 
@@ -2850,5 +2887,211 @@ impl super::EntityPersister for BasicEntityPersister {
         BasicEntityPersister::get_select_condition_statement_sql(
             self, &em, field, value, assoc, comparison,
         )
+    }
+}
+
+impl super::CommitPersister for BasicEntityPersister {
+    fn add_insert(&self, entity: &Object) {
+        BasicEntityPersister::add_insert(self, entity);
+    }
+
+    fn execute_inserts(&self) -> crate::unit_of_work::Fut<'_, ()> {
+        Box::pin(BasicEntityPersister::execute_inserts(self))
+    }
+
+    fn update<'a>(&'a self, entity: &'a Object) -> crate::unit_of_work::Fut<'a, ()> {
+        Box::pin(BasicEntityPersister::update(self, entity))
+    }
+
+    fn delete<'a>(&'a self, entity: &'a Object) -> crate::unit_of_work::Fut<'a, bool> {
+        Box::pin(BasicEntityPersister::delete(self, entity))
+    }
+
+    fn exists<'a>(
+        &'a self,
+        entity: &'a Object,
+        extra_conditions: Option<&'a Criteria>,
+    ) -> crate::unit_of_work::Fut<'a, bool> {
+        Box::pin(BasicEntityPersister::exists(self, entity, extra_conditions))
+    }
+}
+
+impl super::EntityPersisterInterface for BasicEntityPersister {
+    fn get_class_metadata(&self) -> Arc<ClassMetadata> {
+        Arc::clone(&self.class)
+    }
+
+    fn get_result_set_mapping(&self) -> ResultSetMapping {
+        BasicEntityPersister::get_result_set_mapping(self)
+    }
+
+    fn get_inserts(&self) -> Vec<Object> {
+        BasicEntityPersister::get_inserts(self)
+    }
+
+    fn get_select_sql(
+        &self,
+        criteria: PersisterCriteria<'_>,
+        assoc: Option<&AssociationMapping>,
+        lock_mode: Option<LockMode>,
+        limit: Option<i64>,
+        offset: Option<i64>,
+        order_by: Option<&PhpArray>,
+    ) -> Result<String, Thrown> {
+        let em = self.em()?;
+        BasicEntityPersister::get_select_sql(
+            self, &em, criteria, assoc, lock_mode, limit, offset, order_by,
+        )
+    }
+
+    fn get_count_sql(&self, criteria: PersisterCriteria<'_>) -> Result<String, Thrown> {
+        let em = self.em()?;
+        BasicEntityPersister::get_count_sql(self, &em, criteria)
+    }
+
+    fn get_insert_sql(&self) -> Result<String, Thrown> {
+        let em = self.em()?;
+        BasicEntityPersister::get_insert_sql(self, &em)
+    }
+
+    fn expand_parameters(&self, criteria: &PhpArray) -> Result<Params, Thrown> {
+        let em = self.em()?;
+        BasicEntityPersister::expand_parameters(self, &em, criteria)
+    }
+
+    fn expand_criteria_parameters(&self, criteria: &Criteria) -> Result<Params, Thrown> {
+        let em = self.em()?;
+        BasicEntityPersister::expand_criteria_parameters(self, &em, criteria)
+    }
+
+    fn get_owning_table(&self, field_name: &str) -> Result<String, Thrown> {
+        let em = self.em()?;
+        BasicEntityPersister::get_owning_table(self, &em, field_name)
+    }
+
+    fn load<'a>(
+        &'a self,
+        criteria: &'a PhpArray,
+        entity: Option<&'a Object>,
+        assoc: Option<&'a AssociationMapping>,
+        hints: Hints,
+        lock_mode: Option<LockMode>,
+        limit: Option<i64>,
+        order_by: Option<&'a PhpArray>,
+    ) -> Fut<'a, Option<Object>> {
+        Box::pin(BasicEntityPersister::load(
+            self, criteria, entity, assoc, hints, lock_mode, limit, order_by,
+        ))
+    }
+
+    fn load_by_id<'a>(
+        &'a self,
+        identifier: &'a PhpArray,
+        entity: Option<&'a Object>,
+    ) -> Fut<'a, Option<Object>> {
+        Box::pin(BasicEntityPersister::load_by_id(self, identifier, entity))
+    }
+
+    fn load_all<'a>(
+        &'a self,
+        criteria: &'a PhpArray,
+        order_by: Option<&'a PhpArray>,
+        limit: Option<i64>,
+        offset: Option<i64>,
+    ) -> Fut<'a, Vec<Object>> {
+        Box::pin(BasicEntityPersister::load_all(
+            self, criteria, order_by, limit, offset,
+        ))
+    }
+
+    fn load_one_to_one_entity<'a>(
+        &'a self,
+        assoc: &'a AssociationMapping,
+        source_entity: &'a Object,
+        identifier: Option<&'a PhpArray>,
+    ) -> Fut<'a, Option<Object>> {
+        Box::pin(BasicEntityPersister::load_one_to_one_entity(
+            self,
+            assoc,
+            source_entity,
+            identifier,
+        ))
+    }
+
+    fn refresh<'a>(
+        &'a self,
+        id: &'a PhpArray,
+        entity: &'a Object,
+        lock_mode: Option<LockMode>,
+    ) -> Fut<'a, ()> {
+        Box::pin(BasicEntityPersister::refresh(self, id, entity, lock_mode))
+    }
+
+    fn count<'a>(&'a self, criteria: &'a PhpArray) -> Fut<'a, i64> {
+        Box::pin(BasicEntityPersister::count(self, criteria))
+    }
+
+    fn lock<'a>(&'a self, criteria: &'a PhpArray, lock_mode: LockMode) -> Fut<'a, ()> {
+        Box::pin(BasicEntityPersister::lock(self, criteria, lock_mode))
+    }
+
+    fn get_many_to_many_collection<'a>(
+        &'a self,
+        assoc: &'a AssociationMapping,
+        source_entity: &'a Object,
+        offset: Option<i64>,
+        limit: Option<i64>,
+    ) -> Fut<'a, PhpArray> {
+        Box::pin(BasicEntityPersister::get_many_to_many_collection(
+            self,
+            assoc,
+            source_entity,
+            offset,
+            limit,
+        ))
+    }
+
+    fn load_many_to_many_collection<'a>(
+        &'a self,
+        assoc: &'a AssociationMapping,
+        source_entity: &'a Object,
+        collection: &'a Arc<PersistentCollection>,
+    ) -> Fut<'a, Vec<Object>> {
+        Box::pin(BasicEntityPersister::load_many_to_many_collection(
+            self,
+            assoc,
+            source_entity,
+            collection,
+        ))
+    }
+
+    fn get_one_to_many_collection<'a>(
+        &'a self,
+        assoc: &'a AssociationMapping,
+        source_entity: &'a Object,
+        offset: Option<i64>,
+        limit: Option<i64>,
+    ) -> Fut<'a, PhpArray> {
+        Box::pin(BasicEntityPersister::get_one_to_many_collection(
+            self,
+            assoc,
+            source_entity,
+            offset,
+            limit,
+        ))
+    }
+
+    fn load_one_to_many_collection<'a>(
+        &'a self,
+        assoc: &'a AssociationMapping,
+        source_entity: &'a Object,
+        collection: &'a Arc<PersistentCollection>,
+    ) -> Fut<'a, Vec<Object>> {
+        Box::pin(BasicEntityPersister::load_one_to_many_collection(
+            self,
+            assoc,
+            source_entity,
+            collection,
+        ))
     }
 }

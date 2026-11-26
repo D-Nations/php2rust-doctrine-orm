@@ -6,8 +6,7 @@
 //! deprecations. `enableNativeLazyObjects(false)` triggers the
 //! deprecation, then is refused (the port only has native lazy objects).
 //!
-//! Pending: the query, hydration and metadata caches and the second level
-//! cache configuration (not ported).
+//! Pending: the query, hydration and metadata caches (not ported).
 
 #![allow(non_snake_case)]
 #![allow(
@@ -19,6 +18,7 @@
 use std::sync::Arc;
 
 use php_value::{Object, Thrown};
+use php2rust_doctrine_orm::cache::CacheConfiguration;
 use php2rust_doctrine_orm::configuration::{Configuration, proxy_factory};
 use php2rust_doctrine_orm::deprecations;
 use php2rust_doctrine_orm::mapping::driver::attribute_driver::AttributeDriver;
@@ -285,6 +285,25 @@ fn testSetGetEntityListenerResolver() {
     assert!(same(
         &resolver,
         &configuration.get_entity_listener_resolver()
+    ));
+}
+
+#[test]
+fn testSetGetSecondLevelCacheConfig() {
+    let mut configuration = set_up();
+    let mock_class = Arc::new(CacheConfiguration::new());
+
+    assert!(
+        configuration
+            .get_second_level_cache_configuration()
+            .is_none()
+    );
+    configuration.set_second_level_cache_configuration(mock_class.clone());
+    assert!(same(
+        &mock_class,
+        &configuration
+            .get_second_level_cache_configuration()
+            .unwrap()
     ));
 }
 
