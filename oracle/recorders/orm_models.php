@@ -300,6 +300,7 @@ namespace {
         'ORM/Functional/PersistentCollectionCriteriaTest.php',
         'ORM/LazyCriteriaCollectionTest.php',
         'ORM/PersistentCollectionTest.php',
+        'ORM/Functional/NativeQueryTest.php',
         'Models/Global/GlobalNamespaceModel.php',
     ];
     $before = array_merge(get_declared_classes(), get_declared_interfaces(), get_declared_traits());
