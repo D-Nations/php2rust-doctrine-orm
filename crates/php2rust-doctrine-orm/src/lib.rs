@@ -24,6 +24,7 @@ pub mod events;
 pub mod exception;
 pub mod id;
 pub mod internal;
+pub mod lazy_criteria_collection;
 pub mod mapping;
 pub mod native_query;
 pub mod object;

@@ -15,6 +15,7 @@ use std::sync::{Arc, Mutex, MutexGuard, PoisonError};
 use php_value::{Key, Object, PhpArray, PhpObject, Thrown, Value};
 use php2rust_doctrine_collections::ArrayCollection;
 
+use crate::lazy_criteria_collection::LazyCriteriaCollection;
 use crate::persistent_collection::PersistentCollection;
 
 /// `Doctrine\Common\Collections\ArrayCollection`.
@@ -103,6 +104,7 @@ impl PhpObject for ArrayCollectionObject {
 pub enum CollectionRef {
     Array(Arc<ArrayCollectionObject>),
     Persistent(Arc<PersistentCollection>),
+    Lazy(Arc<LazyCriteriaCollection>),
 }
 
 impl CollectionRef {
@@ -115,7 +117,10 @@ impl CollectionRef {
         if let Some(c) = downcast::<ArrayCollectionObject>(object) {
             return Some(Self::Array(c));
         }
-        downcast::<PersistentCollection>(object).map(Self::Persistent)
+        if let Some(c) = downcast::<PersistentCollection>(object) {
+            return Some(Self::Persistent(c));
+        }
+        downcast::<LazyCriteriaCollection>(object).map(Self::Lazy)
     }
 }
 
@@ -135,6 +140,16 @@ fn not_a_collection(value: &Value) -> Thrown {
     )
 }
 
+/// A synchronous change of a lazy criteria collection: it would have to
+/// load its elements first, which is `async`.
+fn lazy_sync(method: &str) -> Thrown {
+    Thrown::new(
+        "LogicException",
+        format!("LazyCriteriaCollection::{method}() loads the collection; initialize() it first"),
+        0,
+    )
+}
+
 fn of(value: &Value) -> Result<CollectionRef, Thrown> {
     CollectionRef::of(value).ok_or_else(|| not_a_collection(value))
 }
@@ -144,6 +159,7 @@ pub fn add(collection: &Value, element: Value) -> Result<(), Thrown> {
     match of(collection)? {
         CollectionRef::Array(c) => c.lock().add(element),
         CollectionRef::Persistent(c) => c.add(element),
+        CollectionRef::Lazy(_) => Err(lazy_sync("add")),
     }
 }
 
@@ -152,6 +168,7 @@ pub async fn to_array(collection: &Value) -> Result<PhpArray, Thrown> {
     match of(collection)? {
         CollectionRef::Array(c) => Ok(c.lock().to_array()),
         CollectionRef::Persistent(c) => c.to_array().await,
+        CollectionRef::Lazy(c) => c.to_array().await,
     }
 }
 
@@ -160,6 +177,7 @@ pub async fn count(collection: &Value) -> Result<usize, Thrown> {
     match of(collection)? {
         CollectionRef::Array(c) => Ok(c.lock().count()),
         CollectionRef::Persistent(c) => c.count().await,
+        CollectionRef::Lazy(c) => Ok(usize::try_from(c.count().await?).unwrap_or(0)),
     }
 }
 
@@ -169,6 +187,7 @@ pub async fn get(collection: &Value, key: impl Into<Key>) -> Result<Value, Throw
     match of(collection)? {
         CollectionRef::Array(c) => Ok(c.lock().get(&key)),
         CollectionRef::Persistent(c) => c.get(&key).await,
+        CollectionRef::Lazy(c) => c.get(&key).await,
     }
 }
 
@@ -181,6 +200,7 @@ pub async fn set(collection: &Value, key: impl Into<Key>, value: Value) -> Resul
             Ok(())
         }
         CollectionRef::Persistent(c) => c.set(key, value).await,
+        CollectionRef::Lazy(c) => c.with_collection(|c| c.set(key, value)).await,
     }
 }
 
@@ -190,6 +210,7 @@ pub async fn remove(collection: &Value, key: impl Into<Key>) -> Result<Value, Th
     match of(collection)? {
         CollectionRef::Array(c) => Ok(c.lock().remove(&key)),
         CollectionRef::Persistent(c) => c.remove(&key).await,
+        CollectionRef::Lazy(c) => c.with_collection(|c| c.remove(&key)).await,
     }
 }
 
@@ -198,6 +219,7 @@ pub async fn remove_element(collection: &Value, element: &Value) -> Result<bool,
     match of(collection)? {
         CollectionRef::Array(c) => Ok(c.lock().remove_element(element)),
         CollectionRef::Persistent(c) => c.remove_element(element).await,
+        CollectionRef::Lazy(c) => c.with_collection(|c| c.remove_element(element)).await,
     }
 }
 
@@ -206,6 +228,7 @@ pub async fn contains(collection: &Value, element: &Value) -> Result<bool, Throw
     match of(collection)? {
         CollectionRef::Array(c) => Ok(c.lock().contains(element)),
         CollectionRef::Persistent(c) => c.contains(element).await,
+        CollectionRef::Lazy(c) => c.contains(element).await,
     }
 }
 
@@ -215,6 +238,7 @@ pub async fn contains_key(collection: &Value, key: impl Into<Key>) -> Result<boo
     match of(collection)? {
         CollectionRef::Array(c) => Ok(c.lock().contains_key(&key)),
         CollectionRef::Persistent(c) => c.contains_key(&key).await,
+        CollectionRef::Lazy(c) => c.contains_key(&key).await,
     }
 }
 
@@ -226,6 +250,7 @@ pub async fn clear(collection: &Value) -> Result<(), Thrown> {
             Ok(())
         }
         CollectionRef::Persistent(c) => c.clear().await,
+        CollectionRef::Lazy(c) => c.with_collection(ArrayCollection::clear).await,
     }
 }
 
@@ -234,6 +259,7 @@ pub async fn is_empty(collection: &Value) -> Result<bool, Thrown> {
     match of(collection)? {
         CollectionRef::Array(c) => Ok(c.lock().is_empty()),
         CollectionRef::Persistent(c) => c.is_empty().await,
+        CollectionRef::Lazy(c) => c.is_empty().await,
     }
 }
 
@@ -242,6 +268,7 @@ pub async fn first(collection: &Value) -> Result<Value, Thrown> {
     match of(collection)? {
         CollectionRef::Array(c) => Ok(c.lock().first()),
         CollectionRef::Persistent(c) => c.first().await,
+        CollectionRef::Lazy(c) => c.first().await,
     }
 }
 
