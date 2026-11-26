@@ -169,13 +169,13 @@ tests/CriteriaTest.php	CriteriaTest::testOrderings	pending
 tests/CriteriaTest.php	CriteriaTest::testOrderingsWithMixedOrderTypes	pending	
 tests/CriteriaTest.php	CriteriaTest::testWhere	pending	
 tests/DerivedCollectionTest.php	DerivedCollectionTest::testDerivedClassCreation	pending	
-tests/Expr/ComparisonTest.php	ComparisonTest::testVisit	pending	
-tests/Expr/CompositeExpressionTest.php	CompositeExpressionTest::testExceptions	pending	
-tests/Expr/CompositeExpressionTest.php	CompositeExpressionTest::testGetExpressionList	pending	
-tests/Expr/CompositeExpressionTest.php	CompositeExpressionTest::testGetType	pending	
-tests/Expr/CompositeExpressionTest.php	CompositeExpressionTest::testVisitor	pending	
-tests/Expr/ValueTest.php	ValueTest::testGetter	pending	
-tests/Expr/ValueTest.php	ValueTest::testVisitor	pending	
+tests/Expr/ComparisonTest.php	ComparisonTest::testVisit	ported	crates/php2rust-doctrine-collections/tests/expr_comparison_test.rs::testVisit
+tests/Expr/CompositeExpressionTest.php	CompositeExpressionTest::testExceptions	ported	crates/php2rust-doctrine-collections/tests/expr_composite_expression_test.rs::testExceptions
+tests/Expr/CompositeExpressionTest.php	CompositeExpressionTest::testGetExpressionList	ported	crates/php2rust-doctrine-collections/tests/expr_composite_expression_test.rs::testGetExpressionList
+tests/Expr/CompositeExpressionTest.php	CompositeExpressionTest::testGetType	ported	crates/php2rust-doctrine-collections/tests/expr_composite_expression_test.rs::testGetType
+tests/Expr/CompositeExpressionTest.php	CompositeExpressionTest::testVisitor	ported	crates/php2rust-doctrine-collections/tests/expr_composite_expression_test.rs::testVisitor
+tests/Expr/ValueTest.php	ValueTest::testGetter	ported	crates/php2rust-doctrine-collections/tests/expr_value_test.rs::testGetter
+tests/Expr/ValueTest.php	ValueTest::testVisitor	ported	crates/php2rust-doctrine-collections/tests/expr_value_test.rs::testVisitor
 tests/ExpressionBuilderTest.php	ExpressionBuilderTest::testAndX	pending	
 tests/ExpressionBuilderTest.php	ExpressionBuilderTest::testContains	pending	
 tests/ExpressionBuilderTest.php	ExpressionBuilderTest::testEndsWith	pending	
