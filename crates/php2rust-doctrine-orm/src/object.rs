@@ -293,7 +293,8 @@ pub type ListenerMethodBody = Arc<
         + Sync,
 >;
 
-static LISTENER_METHODS: RwLock<Vec<(String, String, ListenerMethodBody)>> = RwLock::new(Vec::new());
+static LISTENER_METHODS: RwLock<Vec<(String, String, ListenerMethodBody)>> =
+    RwLock::new(Vec::new());
 
 /// Declares the body of the entity listener method `$class::$method()`.
 pub fn register_listener_method(class: &str, method: &str, body: ListenerMethodBody) {

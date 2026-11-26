@@ -38,7 +38,10 @@ fn owner_of(collection: &PersistentCollection) -> Result<Object, Thrown> {
 
 /// `CollectionPersister::delete()`: deletes the persistent state
 /// represented by the given collection.
-pub async fn delete(em: &Arc<EntityManager>, collection: &Arc<PersistentCollection>) -> Result<(), Thrown> {
+pub async fn delete(
+    em: &Arc<EntityManager>,
+    collection: &Arc<PersistentCollection>,
+) -> Result<(), Thrown> {
     let mapping = collection.get_mapping()?;
     if mapping.is_one_to_many() {
         one_to_many_delete(em, collection, &mapping).await
@@ -50,7 +53,10 @@ pub async fn delete(em: &Arc<EntityManager>, collection: &Arc<PersistentCollecti
 /// `CollectionPersister::update()`: updates the given collection,
 /// synchronizing its state with the database by inserting, updating and
 /// deleting individual elements.
-pub async fn update(em: &Arc<EntityManager>, collection: &Arc<PersistentCollection>) -> Result<(), Thrown> {
+pub async fn update(
+    em: &Arc<EntityManager>,
+    collection: &Arc<PersistentCollection>,
+) -> Result<(), Thrown> {
     let mapping = collection.get_mapping()?;
     if mapping.is_one_to_many() {
         // This can never happen. One to many can only be inverse side.
@@ -84,20 +90,37 @@ async fn one_to_many_delete(
     // deleteEntityCollection()
     let platform = em.get_platform();
     let quote_strategy = em.get_configuration().get_quote_strategy();
-    let identifier = em.get_unit_of_work().get_entity_identifier(&owner_of(collection)?)?;
+    let identifier = em
+        .get_unit_of_work()
+        .get_entity_identifier(&owner_of(collection)?)?;
     let source_class = em.get_class_metadata(&mapping.source_entity)?;
     let owning = em.get_metadata_factory().get_owning_side(mapping)?;
     let mut columns = Vec::new();
     let mut parameters = Vec::new();
     let mut types: Vec<ParamType> = Vec::new();
     for join_column in &owning.join_columns {
-        columns.push(quote_strategy.get_join_column_name(join_column, &target_class.read(), platform));
-        let field = source_class.read().get_field_for_column(&join_column.referenced_column_name)?;
-        parameters.push(identifier.get(&field.as_str().into()).cloned().unwrap_or(Value::Null));
+        columns.push(quote_strategy.get_join_column_name(
+            join_column,
+            &target_class.read(),
+            platform,
+        ));
+        let field = source_class
+            .read()
+            .get_field_for_column(&join_column.referenced_column_name)?;
+        parameters.push(
+            identifier
+                .get(&field.as_str().into())
+                .cloned()
+                .unwrap_or(Value::Null),
+        );
         types.push(
-            get_type_of_column(&join_column.referenced_column_name, &source_class.read(), em)?
-                .as_str()
-                .into(),
+            get_type_of_column(
+                &join_column.referenced_column_name,
+                &source_class.read(),
+                em,
+            )?
+            .as_str()
+            .into(),
         );
     }
     let mut statement = format!(
@@ -114,11 +137,11 @@ async fn one_to_many_delete(
             } else {
                 target.discriminator_map.keys().map(Key::to_value).collect()
             };
-            statement.push_str(&format!(
-                " AND {} IN ({})",
-                discriminator_column.name,
-                vec!["?"; discriminator_values.len()].join(", ")
-            ));
+            statement.push_str(" AND ");
+            statement.push_str(&discriminator_column.name);
+            statement.push_str(" IN (");
+            statement.push_str(&vec!["?"; discriminator_values.len()].join(", "));
+            statement.push(')');
             for value in discriminator_values {
                 parameters.push(value);
                 types.push(discriminator_column.r#type.as_str().into());
@@ -141,10 +164,17 @@ async fn many_to_many_delete(
         return Ok(()); // ignore inverse side
     }
     let class = em.get_class_metadata(&mapping.source_entity)?;
-    let join_table = mapping.join_table.clone().unwrap_or_else(|| crate::mapping::JoinTableMapping::new(""));
+    let join_table = mapping
+        .join_table
+        .clone()
+        .unwrap_or_else(|| crate::mapping::JoinTableMapping::new(""));
     let mut types: Vec<ParamType> = Vec::new();
     for join_column in &join_table.join_columns {
-        types.push(get_type_of_column(&join_column.referenced_column_name, &class.read(), em)?.as_str().into());
+        types.push(
+            get_type_of_column(&join_column.referenced_column_name, &class.read(), em)?
+                .as_str()
+                .into(),
+        );
     }
 
     // getDeleteSQL()
@@ -160,7 +190,10 @@ async fn many_to_many_delete(
             .iter()
             .map(|jc| quote_strategy.get_join_column_name(jc, &info, platform))
             .collect();
-        let sql = format!("DELETE FROM {join_table_name} WHERE {} = ?", columns.join(" = ? AND "));
+        let sql = format!(
+            "DELETE FROM {join_table_name} WHERE {} = ?",
+            columns.join(" = ? AND ")
+        );
 
         // getDeleteSQLParameters()
         let identifier = em.get_unit_of_work().get_entity_identifier(&owner)?;
@@ -175,7 +208,12 @@ async fn many_to_many_delete(
                     Some(field) => field.clone(),
                     None => source.get_field_for_column(&ref_column)?,
                 };
-                params.push(identifier.get(&field.as_str().into()).cloned().unwrap_or(Value::Null));
+                params.push(
+                    identifier
+                        .get(&field.as_str().into())
+                        .cloned()
+                        .unwrap_or(Value::Null),
+                );
             }
             params
         };
@@ -188,6 +226,7 @@ async fn many_to_many_delete(
     Ok(())
 }
 
+#[allow(clippy::too_many_lines, reason = "upstream's method, in its order")]
 async fn many_to_many_update(
     em: &Arc<EntityManager>,
     collection: &Arc<PersistentCollection>,
@@ -200,7 +239,10 @@ async fn many_to_many_update(
     let quote_strategy = em.get_configuration().get_quote_strategy();
     let class = em.get_class_metadata(&mapping.source_entity)?;
     let target_class = em.get_class_metadata(&mapping.target_entity)?;
-    let join_table = mapping.join_table.clone().unwrap_or_else(|| crate::mapping::JoinTableMapping::new(""));
+    let join_table = mapping
+        .join_table
+        .clone()
+        .unwrap_or_else(|| crate::mapping::JoinTableMapping::new(""));
 
     // getDeleteRowSQL()
     let (delete_sql, delete_types, insert_sql, insert_types) = {
@@ -210,12 +252,28 @@ async fn many_to_many_update(
         let mut delete_columns = Vec::new();
         let mut delete_types: Vec<ParamType> = Vec::new();
         for join_column in &join_table.join_columns {
-            delete_columns.push(quote_strategy.get_join_column_name(join_column, &source, platform));
-            delete_types.push(get_type_of_column(&join_column.referenced_column_name, &source, em)?.as_str().into());
+            delete_columns.push(quote_strategy.get_join_column_name(
+                join_column,
+                &source,
+                platform,
+            ));
+            delete_types.push(
+                get_type_of_column(&join_column.referenced_column_name, &source, em)?
+                    .as_str()
+                    .into(),
+            );
         }
         for join_column in &join_table.inverse_join_columns {
-            delete_columns.push(quote_strategy.get_join_column_name(join_column, &target, platform));
-            delete_types.push(get_type_of_column(&join_column.referenced_column_name, &target, em)?.as_str().into());
+            delete_columns.push(quote_strategy.get_join_column_name(
+                join_column,
+                &target,
+                platform,
+            ));
+            delete_types.push(
+                get_type_of_column(&join_column.referenced_column_name, &target, em)?
+                    .as_str()
+                    .into(),
+            );
         }
         let delete_sql = format!(
             "DELETE FROM {join_table_name} WHERE {} = ?",
@@ -226,12 +284,28 @@ async fn many_to_many_update(
         let mut insert_columns = Vec::new();
         let mut insert_types: Vec<ParamType> = Vec::new();
         for join_column in &join_table.join_columns {
-            insert_columns.push(quote_strategy.get_join_column_name(join_column, &target, platform));
-            insert_types.push(get_type_of_column(&join_column.referenced_column_name, &source, em)?.as_str().into());
+            insert_columns.push(quote_strategy.get_join_column_name(
+                join_column,
+                &target,
+                platform,
+            ));
+            insert_types.push(
+                get_type_of_column(&join_column.referenced_column_name, &source, em)?
+                    .as_str()
+                    .into(),
+            );
         }
         for join_column in &join_table.inverse_join_columns {
-            insert_columns.push(quote_strategy.get_join_column_name(join_column, &target, platform));
-            insert_types.push(get_type_of_column(&join_column.referenced_column_name, &target, em)?.as_str().into());
+            insert_columns.push(quote_strategy.get_join_column_name(
+                join_column,
+                &target,
+                platform,
+            ));
+            insert_types.push(
+                get_type_of_column(&join_column.referenced_column_name, &target, em)?
+                    .as_str()
+                    .into(),
+            );
         }
         let insert_sql = format!(
             "INSERT INTO {join_table_name} ({}) VALUES ({})",
@@ -243,18 +317,30 @@ async fn many_to_many_update(
 
     let conn = em.get_connection();
     for element in collection.get_delete_diff() {
-        let Value::Object(element) = element else { continue };
+        let Value::Object(element) = element else {
+            continue;
+        };
         let params = collect_join_table_column_parameters(em, collection, mapping, &element)?;
-        conn.execute_statement(&delete_sql, &PhpArray::list(params), &types_of(delete_types.clone()))
-            .await
-            .map_err(|e| exception::from_dbal(&e))?;
+        conn.execute_statement(
+            &delete_sql,
+            &PhpArray::list(params),
+            &types_of(delete_types.clone()),
+        )
+        .await
+        .map_err(|e| exception::from_dbal(&e))?;
     }
     for element in collection.get_insert_diff() {
-        let Value::Object(element) = element else { continue };
+        let Value::Object(element) = element else {
+            continue;
+        };
         let params = collect_join_table_column_parameters(em, collection, mapping, &element)?;
-        conn.execute_statement(&insert_sql, &PhpArray::list(params), &types_of(insert_types.clone()))
-            .await
-            .map_err(|e| exception::from_dbal(&e))?;
+        conn.execute_statement(
+            &insert_sql,
+            &PhpArray::list(params),
+            &types_of(insert_types.clone()),
+        )
+        .await
+        .map_err(|e| exception::from_dbal(&e))?;
     }
     Ok(())
 }
@@ -284,21 +370,48 @@ fn collect_join_table_column_parameters(
         let key = Key::from(join_table_column.as_str());
         let is_relation_to_source = mapping.relation_to_source_key_columns.contains_key(&key);
         if !is_composite {
-            params.push(if is_relation_to_source { ids1.pop() } else { ids2.pop() }.unwrap_or(Value::Null));
+            params.push(
+                if is_relation_to_source {
+                    ids1.pop()
+                } else {
+                    ids2.pop()
+                }
+                .unwrap_or(Value::Null),
+            );
             continue;
         }
         if is_relation_to_source {
-            let column = to_text(mapping.relation_to_source_key_columns.get(&key).unwrap_or(&Value::Null));
+            let column = to_text(
+                mapping
+                    .relation_to_source_key_columns
+                    .get(&key)
+                    .unwrap_or(&Value::Null),
+            );
             let field = class1.read().get_field_for_column(&column)?;
-            params.push(identifier1.get(&field.as_str().into()).cloned().unwrap_or(Value::Null));
+            params.push(
+                identifier1
+                    .get(&field.as_str().into())
+                    .cloned()
+                    .unwrap_or(Value::Null),
+            );
             continue;
         }
-        let column = to_text(mapping.relation_to_target_key_columns.get(&key).unwrap_or(&Value::Null));
+        let column = to_text(
+            mapping
+                .relation_to_target_key_columns
+                .get(&key)
+                .unwrap_or(&Value::Null),
+        );
         let field = match &class2 {
             Some(class2) => class2.read().get_field_for_column(&column)?,
             None => key_text(&key),
         };
-        params.push(identifier2.get(&field.as_str().into()).cloned().unwrap_or(Value::Null));
+        params.push(
+            identifier2
+                .get(&field.as_str().into())
+                .cloned()
+                .unwrap_or(Value::Null),
+        );
     }
     Ok(params)
 }

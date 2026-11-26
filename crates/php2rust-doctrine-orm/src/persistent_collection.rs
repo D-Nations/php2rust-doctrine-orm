@@ -1,4 +1,4 @@
-//! A PersistentCollection represents a collection of elements that have
+//! A `PersistentCollection` represents a collection of elements that have
 //! persistent state.
 //!
 //! Collections of entities represent only the associations (links) to
@@ -47,7 +47,7 @@ struct State {
     /// bi-directional.
     back_ref_field_name: Option<String>,
     /// Whether the collection is dirty and needs to be synchronized with
-    /// the database when the UnitOfWork that manages its persistent state
+    /// the database when the `UnitOfWork` that manages its persistent state
     /// commits.
     is_dirty: bool,
 }
@@ -61,7 +61,8 @@ pub struct PersistentCollection {
 
 impl std::fmt::Debug for PersistentCollection {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("PersistentCollection").finish_non_exhaustive()
+        f.debug_struct("PersistentCollection")
+            .finish_non_exhaustive()
     }
 }
 
@@ -131,7 +132,7 @@ impl PersistentCollection {
     }
 
     /// Sets the collection's owning entity together with the
-    /// AssociationMapping that describes the association between the owner
+    /// `AssociationMapping` that describes the association between the owner
     /// and the elements of the collection.
     pub fn set_owner(&self, entity: &Object, assoc: &AssociationMapping) {
         let mut st = self.st();
@@ -156,13 +157,19 @@ impl PersistentCollection {
     /// INTERNAL: Adds an element to a collection during hydration. This
     /// will automatically complete bidirectional associations in the case
     /// of a one-to-many association.
+    #[allow(
+        clippy::needless_pass_by_value,
+        reason = "the collection takes the element, as PHP's method does"
+    )]
     pub fn hydrate_add(&self, element: Value) -> Result<(), Thrown> {
         let (back_ref, is_one_to_many, owner) = {
             let mut st = self.st();
             st.collection.add(element.clone())?;
             (
                 st.back_ref_field_name.clone(),
-                st.association.as_ref().is_some_and(AssociationMapping::is_one_to_many),
+                st.association
+                    .as_ref()
+                    .is_some_and(AssociationMapping::is_one_to_many),
                 st.owner.as_ref().and_then(Weak::upgrade),
             )
         };
@@ -183,13 +190,19 @@ impl PersistentCollection {
     }
 
     /// INTERNAL: Sets a keyed element in the collection during hydration.
+    #[allow(
+        clippy::needless_pass_by_value,
+        reason = "the collection takes the element, as PHP's method does"
+    )]
     pub fn hydrate_set(&self, key: Key, element: Value) -> Result<(), Thrown> {
         let (back_ref, is_one_to_many, owner) = {
             let mut st = self.st();
             st.collection.set(key, element.clone());
             (
                 st.back_ref_field_name.clone(),
-                st.association.as_ref().is_some_and(AssociationMapping::is_one_to_many),
+                st.association
+                    .as_ref()
+                    .is_some_and(AssociationMapping::is_one_to_many),
                 st.owner.as_ref().and_then(Weak::upgrade),
             )
         };
@@ -197,9 +210,11 @@ impl PersistentCollection {
             && !back_ref.is_empty()
             && let Some(type_class) = &self.type_class
         {
-            type_class
-                .read()
-                .set_field_value(element, &back_ref, owner.map_or(Value::Null, Value::Object))?;
+            type_class.read().set_field_value(
+                element,
+                &back_ref,
+                owner.map_or(Value::Null, Value::Object),
+            )?;
         }
         Ok(())
     }
@@ -410,6 +425,10 @@ impl PersistentCollection {
     }
 
     /// `add($value)`: does not initialize the collection.
+    #[allow(
+        clippy::needless_pass_by_value,
+        reason = "the collection takes the element, as PHP's method does"
+    )]
     pub fn add(&self, value: Value) -> Result<(), Thrown> {
         self.st().collection.add(value.clone())?;
         self.changed();
@@ -475,7 +494,11 @@ impl PersistentCollection {
     }
 
     /// `slice($offset, $length)`.
-    pub async fn slice(self: &Arc<Self>, offset: i64, length: Option<i64>) -> Result<PhpArray, Thrown> {
+    pub async fn slice(
+        self: &Arc<Self>,
+        offset: i64,
+        length: Option<i64>,
+    ) -> Result<PhpArray, Thrown> {
         self.initialize().await?;
         Ok(self.st().collection.slice(offset, length))
     }
@@ -505,7 +528,11 @@ impl PersistentCollection {
         let elements = self.unwrap();
         let initialized = self.is_initialized();
         let association = self.st().association.clone();
-        let copy = Self::new(em.as_ref(), self.type_class.clone(), ArrayCollection::new(elements));
+        let copy = Self::new(
+            em.as_ref(),
+            self.type_class.clone(),
+            ArrayCollection::new(elements),
+        );
         {
             let mut st = copy.st();
             st.initialized = initialized;
@@ -547,7 +574,10 @@ impl PersistentCollection {
 
     /// The collection was dirty: the objects added before the
     /// initialization that the database did not give back are added again.
-    fn restore_new_objects_in_dirty_collection(&self, new_objects: &PhpArray) -> Result<(), Thrown> {
+    fn restore_new_objects_in_dirty_collection(
+        &self,
+        new_objects: &PhpArray,
+    ) -> Result<(), Thrown> {
         let loaded = self.unwrap();
         let loaded_oids: Vec<usize> = loaded
             .values()

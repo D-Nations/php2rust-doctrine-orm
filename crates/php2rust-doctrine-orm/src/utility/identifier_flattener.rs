@@ -1,5 +1,5 @@
-//! The IdentifierFlattener utility now houses some of the identifier
-//! manipulation logic from the UnitOfWork.
+//! The `IdentifierFlattener` utility now houses some of the identifier
+//! manipulation logic from the `UnitOfWork`.
 //!
 //! Upstream: doctrine/orm src/Utility/IdentifierFlattener.php
 
@@ -33,13 +33,17 @@ pub fn flatten_identifier(
                     let values = target_info.get_identifier_values(object)?;
                     flatten_identifier(em, &target_info, &values)?
                 };
-                flat_id.insert(field.as_str(), Value::from(implode_values(&associated).as_str()));
+                flat_id.insert(
+                    field.as_str(),
+                    Value::from(implode_values(&associated).as_str()),
+                );
                 continue;
             }
             let mut associated = Vec::new();
             for join_column in &assoc.join_columns {
                 associated.push(to_text(
-                    id.get(&join_column.name.as_str().into()).unwrap_or(&Value::Null),
+                    id.get(&join_column.name.as_str().into())
+                        .unwrap_or(&Value::Null),
                 ));
             }
             flat_id.insert(field.as_str(), Value::from(associated.join(" ").as_str()));

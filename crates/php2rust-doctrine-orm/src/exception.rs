@@ -123,10 +123,9 @@ fn new_entity_found_through_relationship_message(
         obj_to_str(entity)
     );
     if !entity.is_stringable() {
-        message.push_str(&format!(
-            " If you cannot find out which entity causes the problem implement '{}#__toString()' to get a clue.",
-            association.target_entity
-        ));
+        message.push_str(" If you cannot find out which entity causes the problem implement '");
+        message.push_str(&association.target_entity);
+        message.push_str("#__toString()' to get a clue.");
     }
     message
 }
@@ -209,7 +208,10 @@ pub fn entity_is_removed(entity: &Object, operation: &str) -> Thrown {
 pub fn detached_entity_cannot(entity: &Object, operation: &str) -> Thrown {
     new(
         ORM_INVALID_ARGUMENT_EXCEPTION,
-        format!("Detached entity {} cannot be {operation}", obj_to_str(entity)),
+        format!(
+            "Detached entity {} cannot be {operation}",
+            obj_to_str(entity)
+        ),
     )
 }
 
@@ -279,7 +281,10 @@ pub fn no_identifier_found(class_name: &str) -> Thrown {
 // Exception/*
 
 pub fn entity_manager_closed() -> Thrown {
-    new(ENTITY_MANAGER_CLOSED, "The EntityManager is closed.".to_owned())
+    new(
+        ENTITY_MANAGER_CLOSED,
+        "The EntityManager is closed.".to_owned(),
+    )
 }
 
 pub fn missing_identifier_field(field_name: &str, class_name: &str) -> Thrown {
@@ -325,7 +330,9 @@ pub fn unexpected_association_value(
 ) -> Thrown {
     new(
         UNEXPECTED_ASSOCIATION_VALUE,
-        format!("Found entity of type {given} on association {class}#{association}, but expecting {expected}"),
+        format!(
+            "Found entity of type {given} on association {class}#{association}, but expecting {expected}"
+        ),
     )
 }
 
@@ -380,7 +387,10 @@ pub fn unrecognized_field(class_name: &str, field: &str) -> Thrown {
 
 // Repository\Exception\InvalidFindByCall
 
-pub fn invalid_find_by_call_from_inverse_side_usage(entity_name: &str, association: &str) -> Thrown {
+pub fn invalid_find_by_call_from_inverse_side_usage(
+    entity_name: &str,
+    association: &str,
+) -> Thrown {
     new(
         INVALID_FIND_BY_CALL,
         format!(
@@ -402,7 +412,9 @@ pub fn optimistic_lock_failed(entity: &Object) -> Thrown {
 pub fn lock_failed_version_mismatch(expected: &str, actual: &str) -> Thrown {
     new(
         OPTIMISTIC_LOCK_EXCEPTION,
-        format!("The optimistic lock failed, version {expected} was expected, but is actually {actual}"),
+        format!(
+            "The optimistic lock failed, version {expected} was expected, but is actually {actual}"
+        ),
     )
 }
 

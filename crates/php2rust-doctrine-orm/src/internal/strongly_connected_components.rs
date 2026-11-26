@@ -1,4 +1,4 @@
-//! StronglyConnectedComponents implements Tarjan's algorithm to find
+//! `StronglyConnectedComponents` implements Tarjan's algorithm to find
 //! strongly connected components (SCC) in a directed graph. This algorithm
 //! has a linear running time based on nodes (V) and edges between the
 //! nodes (E), resulting in a computational complexity of O(V + E).

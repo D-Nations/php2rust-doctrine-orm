@@ -6,8 +6,8 @@
 mod identifier_flattener;
 mod persister_helper;
 
-pub use identifier_flattener::flatten_identifier;
 pub(crate) use identifier_flattener::backed_value as identifier_flattener_backed;
+pub use identifier_flattener::flatten_identifier;
 pub use persister_helper::{
     ParamType, convert_to_parameter_value, get_type_of_column, get_type_of_field,
     infer_parameter_types,

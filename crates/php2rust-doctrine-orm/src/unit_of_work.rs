@@ -1,4 +1,4 @@
-//! The UnitOfWork is responsible for tracking changes to objects during
+//! The `UnitOfWork` is responsible for tracking changes to objects during
 //! an "object-level" transaction and for writing out changes to the
 //! database in the correct order.
 //!
@@ -29,7 +29,9 @@ use php2rust_doctrine_event_manager::EventDispatcher;
 
 use crate::collection_object::{ArrayCollectionObject, downcast};
 use crate::entity_manager::EntityManager;
-use crate::event::{self, LifecycleEventArgs, ListenersInvoker, ManagerEventArgs, PreUpdateEventArgs};
+use crate::event::{
+    self, LifecycleEventArgs, ListenersInvoker, ManagerEventArgs, PreUpdateEventArgs,
+};
 use crate::events;
 use crate::exception;
 use crate::id::IdGenerator;
@@ -44,17 +46,17 @@ use crate::utility::{flatten_identifier, to_text};
 pub(crate) type Fut<'a, T> = Pin<Box<dyn Future<Output = Result<T, Thrown>> + Send + 'a>>;
 
 /// An entity is in MANAGED state when its persistence is managed by an
-/// EntityManager.
+/// `EntityManager`.
 pub const STATE_MANAGED: i32 = 1;
 /// An entity is new if it has just been instantiated (i.e. using the
-/// "new" operator) and is not (yet) managed by an EntityManager.
+/// "new" operator) and is not (yet) managed by an `EntityManager`.
 pub const STATE_NEW: i32 = 2;
 /// A detached entity is an instance with persistent state and identity
-/// that is not (or no longer) associated with an EntityManager (and a
-/// UnitOfWork).
+/// that is not (or no longer) associated with an `EntityManager` (and a
+/// `UnitOfWork`).
 pub const STATE_DETACHED: i32 = 3;
 /// A removed entity instance is an instance with a persistent identity,
-/// associated with an EntityManager, whose persistent state will be
+/// associated with an `EntityManager`, whose persistent state will be
 /// deleted on commit.
 pub const STATE_REMOVED: i32 = 4;
 
@@ -86,11 +88,9 @@ pub struct Hints {
 
 impl Hints {
     fn is_fetched(&self, field: &str) -> bool {
-        self.fetch_alias.as_ref().is_some_and(|alias| {
-            self.fetched
-                .iter()
-                .any(|(a, f)| a == alias && f == field)
-        })
+        self.fetch_alias
+            .as_ref()
+            .is_some_and(|alias| self.fetched.iter().any(|(a, f)| a == alias && f == field))
     }
 
     fn fetch_mode(&mut self, class: &str, field: &str, default: Option<i64>) -> Option<i64> {
@@ -175,7 +175,10 @@ impl<K: Clone + Eq + Hash, V> Ordered<K, V> {
         self.iter().map(|(_, v)| v)
     }
 
-
+    #[allow(
+        clippy::needless_pass_by_value,
+        reason = "the key is stored when it is missing"
+    )]
     fn get_or_default(&mut self, key: K) -> &mut V
     where
         V: Default,
@@ -226,7 +229,7 @@ struct State {
     /// All pending collection updates.
     collection_updates: CollectionMap,
     /// List of collections visited during changeset calculation on a
-    /// commit-phase of a UnitOfWork.
+    /// commit-phase of a `UnitOfWork`.
     visited_collections: CollectionMap,
     /// List of collections visited during the changeset calculation that
     /// contain to-be-removed entities and need to have keys removed
@@ -239,7 +242,13 @@ struct State {
     /// Map of entities to load eagerly (root class => id hash => id).
     eager_loading_entities: Ordered<String, Ordered<String, Value>>,
     /// Collections to load eagerly (`sourceEntity#fieldName`).
-    eager_loading_collections: Ordered<String, (AssociationMapping, Ordered<String, Arc<PersistentCollection>>)>,
+    eager_loading_collections: Ordered<
+        String,
+        (
+            AssociationMapping,
+            Ordered<String, Arc<PersistentCollection>>,
+        ),
+    >,
     /// The deferred postLoad invocations (`HydrationCompleteHandler`).
     deferred_post_load_invocations: Vec<(Arc<ClassMetadata>, i32, Object)>,
 }
@@ -290,8 +299,8 @@ fn related_entities(value: &Value) -> Option<Vec<Value>> {
 }
 
 impl UnitOfWork {
-    /// Initializes a new UnitOfWork instance, bound to the given
-    /// EntityManager.
+    /// Initializes a new `UnitOfWork` instance, bound to the given
+    /// `EntityManager`.
     pub fn new(em: Weak<EntityManager>) -> Self {
         Self {
             em,
@@ -306,9 +315,9 @@ impl UnitOfWork {
     }
 
     fn em(&self) -> Result<Arc<EntityManager>, Thrown> {
-        self.em.upgrade().ok_or_else(|| {
-            Thrown::new("Error", "The entity manager is gone", 0)
-        })
+        self.em
+            .upgrade()
+            .ok_or_else(|| Thrown::new("Error", "The entity manager is gone", 0))
     }
 
     /// The listeners invoker.
@@ -316,6 +325,7 @@ impl UnitOfWork {
         &self.listeners_invoker
     }
 
+    #[allow(clippy::unused_self, reason = "an instance method upstream")]
     fn subscribed(&self, em: &EntityManager, class: &ClassMetadata, event: &str) -> i32 {
         ListenersInvoker::get_subscribed_systems(&class.read(), &em.get_event_manager(), event)
     }
@@ -335,14 +345,20 @@ impl UnitOfWork {
             .invoke(&info, &em.get_event_manager(), event, entity, &args, invoke)
     }
 
-    fn dispatch(&self, em: &Arc<EntityManager>, name: &str, args_class: &'static str) -> Result<(), Thrown> {
+    #[allow(clippy::unused_self, reason = "an instance method upstream")]
+    fn dispatch(
+        &self,
+        em: &Arc<EntityManager>,
+        name: &str,
+        args_class: &'static str,
+    ) -> Result<(), Thrown> {
         let args = ManagerEventArgs::new(args_class, em.clone());
         em.get_event_manager()
             .dispatch_event(name, Some(&args))
             .map_err(event::listener_error)
     }
 
-    /// Commits the UnitOfWork, executing all operations that have been
+    /// Commits the `UnitOfWork`, executing all operations that have been
     /// postponed up to this point. The state of all managed entities will
     /// be synchronized with the database.
     ///
@@ -397,7 +413,11 @@ impl UnitOfWork {
         if let Err(e) = outcome {
             em.close();
             if connection.is_transaction_active() {
-                let _ = connection.roll_back().await;
+                // A failing rollback replaces the error (PHP's `finally`).
+                connection
+                    .roll_back()
+                    .await
+                    .map_err(|e| exception::from_dbal(&e))?;
             }
             return Err(e);
         }
@@ -410,7 +430,11 @@ impl UnitOfWork {
             .map(|(k, v)| (*k, v.clone()))
             .collect();
         for (coid, coll) in visited {
-            let keys = self.st().pending_collection_element_removals.get(&coid).cloned();
+            let keys = self
+                .st()
+                .pending_collection_element_removals
+                .get(&coid)
+                .cloned();
             if let Some(keys) = keys {
                 for key in keys {
                     coll.remove(&key).await?;
@@ -565,7 +589,7 @@ impl UnitOfWork {
     /// are detected, then a reference to the entity is stored there to
     /// mark it for an update.
     ///
-    /// `collectionDeletions`: If a PersistentCollection has been
+    /// `collectionDeletions`: If a `PersistentCollection` has been
     /// de-referenced in a fully MANAGED entity, the reference is stored
     /// there to mark it for deletion.
     pub fn compute_change_set<'a>(
@@ -577,7 +601,11 @@ impl UnitOfWork {
     }
 
     #[allow(clippy::too_many_lines, reason = "computeChangeSet(), in its order")]
-    async fn do_compute_change_set(&self, class: &Arc<ClassMetadata>, entity: &Object) -> Result<(), Thrown> {
+    async fn do_compute_change_set(
+        &self,
+        class: &Arc<ClassMetadata>,
+        entity: &Object,
+    ) -> Result<(), Thrown> {
         let em = self.em()?;
         let oid = object_id(entity);
 
@@ -591,7 +619,8 @@ impl UnitOfWork {
             em.get_class_metadata(entity.class())?
         };
 
-        let invoke = self.subscribed(&em, &class, events::PRE_FLUSH) & !ListenersInvoker::INVOKE_MANAGER;
+        let invoke =
+            self.subscribed(&em, &class, events::PRE_FLUSH) & !ListenersInvoker::INVOKE_MANAGER;
         if invoke != ListenersInvoker::INVOKE_NONE {
             let args = ManagerEventArgs::new(event::PRE_FLUSH_EVENT_ARGS, em.clone());
             let info = class.read();
@@ -605,7 +634,10 @@ impl UnitOfWork {
             )?;
         }
 
-        let accessors: Vec<(String, Arc<dyn crate::mapping::property_accessors::PropertyAccessor>)> = class
+        let accessors: Vec<(
+            String,
+            Arc<dyn crate::mapping::property_accessors::PropertyAccessor>,
+        )> = class
             .read()
             .property_accessors
             .iter()
@@ -645,7 +677,11 @@ impl UnitOfWork {
                 };
                 let Some(assoc) = assoc else { continue };
                 let target = em.get_class_metadata(&assoc.target_entity)?;
-                let pc = PersistentCollection::new(Some(&em), Some(target), ArrayCollection::new(elements));
+                let pc = PersistentCollection::new(
+                    Some(&em),
+                    Some(target),
+                    ArrayCollection::new(elements),
+                );
                 pc.set_owner(entity, &assoc);
                 let not_empty = !pc.unwrap().is_empty();
                 pc.set_dirty(not_empty);
@@ -676,10 +712,16 @@ impl UnitOfWork {
                         let prop = crate::utility::key_text(prop_name);
                         match info.association_mappings.get(&prop) {
                             None => {
-                                change_set.insert(prop_name.clone(), pair(Value::Null, actual_value.clone()));
+                                change_set.insert(
+                                    prop_name.clone(),
+                                    pair(Value::Null, actual_value.clone()),
+                                );
                             }
                             Some(assoc) if assoc.is_to_one_owning_side() => {
-                                change_set.insert(prop_name.clone(), pair(Value::Null, actual_value.clone()));
+                                change_set.insert(
+                                    prop_name.clone(),
+                                    pair(Value::Null, actual_value.clone()),
+                                );
                             }
                             Some(_) => {}
                         }
@@ -709,7 +751,10 @@ impl UnitOfWork {
                             Value::Array(values) => {
                                 let mut out = PhpArray::new();
                                 for (k, v) in values.iter() {
-                                    out.insert(k.clone(), crate::utility::identifier_flattener_backed(v.clone()));
+                                    out.insert(
+                                        k.clone(),
+                                        crate::utility::identifier_flattener_backed(v.clone()),
+                                    );
                                 }
                                 Value::Array(out)
                             }
@@ -739,7 +784,11 @@ impl UnitOfWork {
                                 actual_coll.initialize().await?;
                                 let new_value = actual_coll.clone_collection().await?;
                                 new_value.set_owner(entity, &assoc);
-                                class.read().set_field_value(entity, &prop_name, new_value.value())?;
+                                class.read().set_field_value(
+                                    entity,
+                                    &prop_name,
+                                    new_value.value(),
+                                )?;
                             }
                             Some(_) => {}
                         }
@@ -759,7 +808,10 @@ impl UnitOfWork {
 
                     if assoc.is_to_one() {
                         if assoc.is_owning_side() {
-                            change_set.insert(prop_key.clone(), pair(org_value.clone(), actual_value.clone()));
+                            change_set.insert(
+                                prop_key.clone(),
+                                pair(org_value.clone(), actual_value.clone()),
+                            );
                         }
                         if let (Value::Object(org), true) = (&org_value, assoc.orphan_removal) {
                             self.schedule_orphan_removal(org);
@@ -777,8 +829,12 @@ impl UnitOfWork {
         }
 
         // Look for changes in associations of the entity
-        let associations: Vec<AssociationMapping> =
-            class.read().association_mappings.values().cloned().collect();
+        let associations: Vec<AssociationMapping> = class
+            .read()
+            .association_mappings
+            .values()
+            .cloned()
+            .collect();
         for assoc in associations {
             let val = class.read().get_field_value(entity, &assoc.field_name)?;
             if val.is_null() {
@@ -804,7 +860,7 @@ impl UnitOfWork {
     /// Computes all the changes that have been done to entities and
     /// collections since the last commit and stores these changes in the
     /// _entityChangeSet map temporarily for access by the persisters,
-    /// until the UoW commit is finished.
+    /// until the `UoW` commit is finished.
     pub async fn compute_change_sets(&self) -> Result<(), Thrown> {
         let em = self.em()?;
         // Compute changes for INSERTed entities first. This must always
@@ -827,15 +883,16 @@ impl UnitOfWork {
                 continue;
             }
 
-            let entities_to_process: Vec<Object> = if class.read().is_change_tracking_deferred_implicit() {
-                entities
-            } else {
-                self.st()
-                    .scheduled_for_synchronization
-                    .get(&class_name)
-                    .map(|m| m.values().cloned().collect())
-                    .unwrap_or_default()
-            };
+            let entities_to_process: Vec<Object> =
+                if class.read().is_change_tracking_deferred_implicit() {
+                    entities
+                } else {
+                    self.st()
+                        .scheduled_for_synchronization
+                        .get(&class_name)
+                        .map(|m| m.values().cloned().collect())
+                        .unwrap_or_default()
+                };
 
             for entity in entities_to_process {
                 // Ignore uninitialized proxy objects
@@ -888,9 +945,16 @@ impl UnitOfWork {
             let unwrapped: Vec<(Key, Value)> = if assoc.is_to_one() {
                 vec![(Key::Int(0), value.clone())]
             } else if let Some(pc) = PersistentCollection::from_value(value) {
-                pc.unwrap().iter().map(|(k, v)| (k.clone(), v.clone())).collect()
+                pc.unwrap()
+                    .iter()
+                    .map(|(k, v)| (k.clone(), v.clone()))
+                    .collect()
             } else if let Some(ac) = ArrayCollectionObject::from_value(value) {
-                ac.lock().to_array().iter().map(|(k, v)| (k.clone(), v.clone())).collect()
+                ac.lock()
+                    .to_array()
+                    .iter()
+                    .map(|(k, v)| (k.clone(), v.clone()))
+                    .collect()
             } else if let Value::Array(array) = value {
                 array.iter().map(|(k, v)| (k.clone(), v.clone())).collect()
             } else {
@@ -901,10 +965,18 @@ impl UnitOfWork {
 
             for (key, entry) in unwrapped {
                 let Value::Object(entry_object) = &entry else {
-                    return Err(exception::invalid_association(&target_name, assoc, &entry.debug_type()));
+                    return Err(exception::invalid_association(
+                        &target_name,
+                        assoc,
+                        &entry.debug_type(),
+                    ));
                 };
                 if !entry_object.instance_of(&target_name) {
-                    return Err(exception::invalid_association(&target_name, assoc, &entry.debug_type()));
+                    return Err(exception::invalid_association(
+                        &target_name,
+                        assoc,
+                        &entry.debug_type(),
+                    ));
                 }
 
                 let state = self.get_entity_state_assumed(entry_object, STATE_NEW);
@@ -946,7 +1018,10 @@ impl UnitOfWork {
                             let coid = pc.oid();
                             let mut st = self.st();
                             st.visited_collections.insert(coid, pc);
-                            let keys = st.pending_collection_element_removals.entry(coid).or_default();
+                            let keys = st
+                                .pending_collection_element_removals
+                                .entry(coid)
+                                .or_default();
                             if !keys.contains(&key) {
                                 keys.push(key);
                             }
@@ -976,10 +1051,21 @@ impl UnitOfWork {
         let oid = object_id(entity);
         let invoke = self.subscribed(&em, class, events::PRE_PERSIST);
         if invoke != ListenersInvoker::INVOKE_NONE {
-            self.invoke_lifecycle(&em, class, events::PRE_PERSIST, event::PRE_PERSIST_EVENT_ARGS, entity, invoke)?;
+            self.invoke_lifecycle(
+                &em,
+                class,
+                events::PRE_PERSIST,
+                event::PRE_PERSIST_EVENT_ARGS,
+                entity,
+                invoke,
+            )?;
         }
 
-        let id_gen = class.read().id_generator.clone().unwrap_or(IdGenerator::Assigned);
+        let id_gen = class
+            .read()
+            .id_generator
+            .clone()
+            .unwrap_or(IdGenerator::Assigned);
         if !id_gen.is_post_insert_generator() {
             let id_value = match &id_gen {
                 IdGenerator::Assigned => self.generate_assigned_id(&em, entity)?,
@@ -1011,7 +1097,11 @@ impl UnitOfWork {
 
     /// `AssignedGenerator::generateId()`: the identifier values the entity
     /// was given.
-    fn generate_assigned_id(&self, em: &EntityManager, entity: &Object) -> Result<PhpArray, Thrown> {
+    fn generate_assigned_id(
+        &self,
+        em: &EntityManager,
+        entity: &Object,
+    ) -> Result<PhpArray, Thrown> {
         let class = em.get_class_metadata(entity.class())?;
         let (id_fields, assoc_fields) = {
             let info = class.read();
@@ -1039,16 +1129,24 @@ impl UnitOfWork {
         Ok(identifier)
     }
 
-    fn has_missing_ids_which_are_foreign_keys(&self, class: &ClassMetadata, id_value: &PhpArray) -> bool {
+    #[allow(clippy::unused_self, reason = "an instance method upstream")]
+    fn has_missing_ids_which_are_foreign_keys(
+        &self,
+        class: &ClassMetadata,
+        id_value: &PhpArray,
+    ) -> bool {
         let info = class.read();
         id_value.iter().any(|(field, value)| {
-            value.is_null() && info.association_mappings.contains_key(&crate::utility::key_text(field))
+            value.is_null()
+                && info
+                    .association_mappings
+                    .contains_key(&crate::utility::key_text(field))
         })
     }
 
     /// INTERNAL: Computes the changeset of an individual entity,
-    /// independently of the computeChangeSets() routine that is used at
-    /// the beginning of a UnitOfWork#commit().
+    /// independently of the `computeChangeSets()` routine that is used at
+    /// the beginning of a `UnitOfWork#commit()`.
     ///
     /// The passed entity must be a managed entity. If the entity already
     /// has a change set because this method is invoked during a commit
@@ -1105,7 +1203,10 @@ impl UnitOfWork {
                     Value::Array(values) => {
                         let mut out = PhpArray::new();
                         for (k, v) in values.iter() {
-                            out.insert(k.clone(), crate::utility::identifier_flattener_backed(v.clone()));
+                            out.insert(
+                                k.clone(),
+                                crate::utility::identifier_flattener_backed(v.clone()),
+                            );
                         }
                         Value::Array(out)
                     }
@@ -1141,7 +1242,10 @@ impl UnitOfWork {
         let mut batches: Vec<(Arc<ClassMetadata>, Vec<Object>)> = Vec::new();
         for entity in order {
             let entity_class = em.get_class_metadata(entity.class())?;
-            let assigned = matches!(entity_class.read().id_generator, Some(IdGenerator::Assigned));
+            let assigned = matches!(
+                entity_class.read().id_generator,
+                Some(IdGenerator::Assigned)
+            );
             match batches.last_mut() {
                 Some((current, entities))
                     if current.read().name == entity_class.read().name && assigned =>
@@ -1178,7 +1282,14 @@ impl UnitOfWork {
         // Defer dispatching `postPersist` events to until all entities
         // have been inserted and post-insert IDs have been assigned.
         for (class, entity, invoke) in events_to_dispatch {
-            self.invoke_lifecycle(&em, &class, events::POST_PERSIST, event::POST_PERSIST_EVENT_ARGS, &entity, invoke)?;
+            self.invoke_lifecycle(
+                &em,
+                &class,
+                events::POST_PERSIST,
+                event::POST_PERSIST_EVENT_ARGS,
+                &entity,
+                invoke,
+            )?;
         }
         Ok(())
     }
@@ -1194,7 +1305,10 @@ impl UnitOfWork {
             let info = class.read();
             (
                 info.get_identifier_field_names().to_vec(),
-                info.association_mappings.keys().map(str::to_owned).collect::<Vec<_>>(),
+                info.association_mappings
+                    .keys()
+                    .map(str::to_owned)
+                    .collect::<Vec<_>>(),
             )
         };
         for id_field in id_fields {
@@ -1208,7 +1322,11 @@ impl UnitOfWork {
             }
             identifier.insert(
                 id_field.as_str(),
-                if value.is_null() { orig_value.clone() } else { value },
+                if value.is_null() {
+                    orig_value.clone()
+                } else {
+                    value
+                },
             );
             self.st()
                 .original_entity_data
@@ -1271,7 +1389,14 @@ impl UnitOfWork {
             self.st().entity_updates.remove(&oid);
 
             if post_update_invoke != ListenersInvoker::INVOKE_NONE {
-                self.invoke_lifecycle(&em, &class, events::POST_UPDATE, event::POST_UPDATE_EVENT_ARGS, &entity, post_update_invoke)?;
+                self.invoke_lifecycle(
+                    &em,
+                    &class,
+                    events::POST_UPDATE,
+                    event::POST_UPDATE_EVENT_ARGS,
+                    &entity,
+                    post_update_invoke,
+                )?;
             }
         }
         Ok(())
@@ -1322,7 +1447,14 @@ impl UnitOfWork {
         // Defer dispatching `postRemove` events to until all entities have
         // been removed.
         for (class, entity, invoke) in events_to_dispatch {
-            self.invoke_lifecycle(&em, &class, events::POST_REMOVE, event::POST_REMOVE_EVENT_ARGS, &entity, invoke)?;
+            self.invoke_lifecycle(
+                &em,
+                &class,
+                events::POST_REMOVE,
+                event::POST_REMOVE_EVENT_ARGS,
+                &entity,
+                invoke,
+            )?;
         }
         Ok(())
     }
@@ -1348,7 +1480,9 @@ impl UnitOfWork {
                 if !assoc.is_to_one_owning_side() {
                     continue;
                 }
-                let Value::Object(target_entity) = info.get_field_value(entity, &assoc.field_name)? else {
+                let Value::Object(target_entity) =
+                    info.get_field_value(entity, &assoc.field_name)?
+                else {
                     continue;
                 };
                 // An entity that references back to itself _and_ uses an
@@ -1425,13 +1559,19 @@ impl UnitOfWork {
                 if !assoc.is_to_one_owning_side() {
                     continue;
                 }
-                let Some(on_delete) = assoc.join_columns.first().and_then(|jc| jc.on_delete.clone()) else {
+                let Some(on_delete) = assoc
+                    .join_columns
+                    .first()
+                    .and_then(|jc| jc.on_delete.clone())
+                else {
                     continue;
                 };
-                if on_delete.to_ascii_lowercase() != "cascade" {
+                if !on_delete.eq_ignore_ascii_case("cascade") {
                     continue;
                 }
-                let Value::Object(target_entity) = info.get_field_value(entity, &assoc.field_name)? else {
+                let Value::Object(target_entity) =
+                    info.get_field_value(entity, &assoc.field_name)?
+                else {
                     continue;
                 };
                 // If the association does not refer to another entity or
@@ -1480,12 +1620,17 @@ impl UnitOfWork {
                 // DBMS will temporarily set the foreign key to NULL (SET
                 // NULL). If the other entity is deleted first, there's no
                 // need to break the cycle.
-                if let Some(on_delete) = assoc.join_columns.first().and_then(|jc| jc.on_delete.clone())
-                    && on_delete.to_ascii_lowercase() == "set null"
+                if let Some(on_delete) = assoc
+                    .join_columns
+                    .first()
+                    .and_then(|jc| jc.on_delete.clone())
+                    && on_delete.eq_ignore_ascii_case("set null")
                 {
                     continue;
                 }
-                let Value::Object(target_entity) = info.get_field_value(entity, &assoc.field_name)? else {
+                let Value::Object(target_entity) =
+                    info.get_field_value(entity, &assoc.field_name)?
+                else {
                     continue;
                 };
                 // If the association does not refer to another entity or
@@ -1554,7 +1699,10 @@ impl UnitOfWork {
         let oid = object_id(entity);
         let mut st = self.st();
         if !st.entity_identifiers.contains_key(&oid) {
-            return Err(exception::entity_has_no_identity(entity, "scheduling for update"));
+            return Err(exception::entity_has_no_identity(
+                entity,
+                "scheduling for update",
+            ));
         }
         if st.entity_deletions.contains(&oid) {
             return Err(exception::entity_is_removed(entity, "schedule for update"));
@@ -1592,7 +1740,12 @@ impl UnitOfWork {
     /// Checks whether an entity is registered to be checked in the unit
     /// of work.
     pub fn is_scheduled_for_dirty_check(&self, entity: &Object) -> Result<bool, Thrown> {
-        let root = self.em()?.get_class_metadata(entity.class())?.read().root_entity_name.clone();
+        let root = self
+            .em()?
+            .get_class_metadata(entity.class())?
+            .read()
+            .root_entity_name
+            .clone();
         Ok(self
             .st()
             .scheduled_for_synchronization
@@ -1648,9 +1801,15 @@ impl UnitOfWork {
         let id_hash = self.get_id_hash_by_entity(entity)?;
         let class_name = class_metadata.read().root_entity_name.clone();
         let mut st = self.st();
-        if let Some(existing) = st.identity_map.get(&class_name).and_then(|m| m.get(&id_hash)) {
+        if let Some(existing) = st
+            .identity_map
+            .get(&class_name)
+            .and_then(|m| m.get(&id_hash))
+        {
             if !same(existing, entity) {
-                return Err(exception::entity_identity_collision(existing, entity, &id_hash));
+                return Err(exception::entity_identity_collision(
+                    existing, entity, &id_hash,
+                ));
             }
             return Ok(false);
         }
@@ -1678,7 +1837,12 @@ impl UnitOfWork {
             .cloned()
             .unwrap_or_default();
         if identifier.is_empty() || identifier.values().any(Value::is_null) {
-            let name = self.em()?.get_class_metadata(entity.class())?.read().name.clone();
+            let name = self
+                .em()?
+                .get_class_metadata(entity.class())?
+                .read()
+                .name
+                .clone();
             return Err(exception::entity_without_identity(&name, entity));
         }
         Ok(Self::get_id_hash_by_identifier(&identifier))
@@ -1714,7 +1878,9 @@ impl UnitOfWork {
                 info.is_identifier_natural(),
                 info.is_versioned,
                 info.version_field.clone(),
-                info.id_generator.as_ref().is_some_and(IdGenerator::is_post_insert_generator),
+                info.id_generator
+                    .as_ref()
+                    .is_some_and(IdGenerator::is_post_insert_generator),
                 info.root_entity_name.clone(),
             )
         };
@@ -1729,11 +1895,17 @@ impl UnitOfWork {
             // Check for a version field, if available, to avoid a db
             // lookup.
             if versioned && let Some(version_field) = version_field {
-                return Ok(if class.read().get_field_value(entity, &version_field)?.is_truthy() {
-                    STATE_DETACHED
-                } else {
-                    STATE_NEW
-                });
+                return Ok(
+                    if class
+                        .read()
+                        .get_field_value(entity, &version_field)?
+                        .is_truthy()
+                    {
+                        STATE_DETACHED
+                    } else {
+                        STATE_NEW
+                    },
+                );
             }
             // Last try before db lookup: check the identity map.
             if self.try_get_by_id(&id, &root).is_some() {
@@ -1767,10 +1939,18 @@ impl UnitOfWork {
     pub fn remove_from_identity_map(&self, entity: &Object) -> Result<bool, Thrown> {
         let oid = object_id(entity);
         let class_metadata = self.em()?.get_class_metadata(entity.class())?;
-        let identifier = self.st().entity_identifiers.get(&oid).cloned().unwrap_or_default();
+        let identifier = self
+            .st()
+            .entity_identifiers
+            .get(&oid)
+            .cloned()
+            .unwrap_or_default();
         let id_hash = Self::get_id_hash_by_identifier(&identifier);
         if id_hash.is_empty() {
-            return Err(exception::entity_has_no_identity(entity, "remove from identity map"));
+            return Err(exception::entity_has_no_identity(
+                entity,
+                "remove from identity map",
+            ));
         }
         let class_name = class_metadata.read().root_entity_name.clone();
         let mut st = self.st();
@@ -1800,7 +1980,7 @@ impl UnitOfWork {
     }
 
     /// Checks whether an entity is registered in the identity map of this
-    /// UnitOfWork.
+    /// `UnitOfWork`.
     pub fn is_in_identity_map(&self, entity: &Object) -> Result<bool, Thrown> {
         let oid = object_id(entity);
         let Some(identifier) = self.st().entity_identifiers.get(&oid).cloned() else {
@@ -1827,7 +2007,7 @@ impl UnitOfWork {
 
     /// Persists an entity as part of the current unit of work.
     ///
-    /// This method is internally called during persist() cascades as it
+    /// This method is internally called during `persist()` cascades as it
     /// tracks the already visited entities to prevent infinite recursions.
     fn do_persist(&self, entity: &Object, visited: &mut HashSet<usize>) -> Result<(), Thrown> {
         let oid = object_id(entity);
@@ -1878,7 +2058,7 @@ impl UnitOfWork {
 
     /// Deletes an entity as part of the current unit of work.
     ///
-    /// This method is internally called during delete() cascades as it
+    /// This method is internally called during `delete()` cascades as it
     /// tracks the already visited entities to prevent infinite
     /// recursions.
     fn do_remove<'a>(&'a self, entity: &'a Object, visited: &'a mut HashSet<usize>) -> Fut<'a, ()> {
@@ -1905,7 +2085,14 @@ impl UnitOfWork {
                 STATE_MANAGED => {
                     let invoke = self.subscribed(&em, &class, events::PRE_REMOVE);
                     if invoke != ListenersInvoker::INVOKE_NONE {
-                        self.invoke_lifecycle(&em, &class, events::PRE_REMOVE, event::PRE_REMOVE_EVENT_ARGS, entity, invoke)?;
+                        self.invoke_lifecycle(
+                            &em,
+                            &class,
+                            events::PRE_REMOVE,
+                            event::PRE_REMOVE_EVENT_ARGS,
+                            entity,
+                            invoke,
+                        )?;
                     }
                     self.schedule_for_delete(entity)?;
                 }
@@ -1926,7 +2113,12 @@ impl UnitOfWork {
     }
 
     /// Executes a detach operation on the given entity.
-    fn do_detach(&self, entity: &Object, visited: &mut HashSet<usize>, no_cascade: bool) -> Result<(), Thrown> {
+    fn do_detach(
+        &self,
+        entity: &Object,
+        visited: &mut HashSet<usize>,
+        no_cascade: bool,
+    ) -> Result<(), Thrown> {
         let oid = object_id(entity);
         if !visited.insert(oid) {
             return Ok(()); // Prevent infinite recursion
@@ -1963,7 +2155,11 @@ impl UnitOfWork {
     }
 
     /// Executes a refresh operation on an entity.
-    fn do_refresh<'a>(&'a self, entity: &'a Object, visited: &'a mut HashSet<usize>) -> Fut<'a, ()> {
+    fn do_refresh<'a>(
+        &'a self,
+        entity: &'a Object,
+        visited: &'a mut HashSet<usize>,
+    ) -> Fut<'a, ()> {
         Box::pin(async move {
             let oid = object_id(entity);
             if !visited.insert(oid) {
@@ -1975,7 +2171,12 @@ impl UnitOfWork {
             }
             self.cascade_refresh(entity, visited).await?;
 
-            let id = self.st().entity_identifiers.get(&oid).cloned().unwrap_or_default();
+            let id = self
+                .st()
+                .entity_identifiers
+                .get(&oid)
+                .cloned()
+                .unwrap_or_default();
             let fields = class.read().get_identifier_field_names().to_vec();
             let mut criteria = PhpArray::new();
             for (field, value) in fields.iter().zip(id.values()) {
@@ -1988,7 +2189,11 @@ impl UnitOfWork {
         })
     }
 
-    async fn cascade_refresh(&self, entity: &Object, visited: &mut HashSet<usize>) -> Result<(), Thrown> {
+    async fn cascade_refresh(
+        &self,
+        entity: &Object,
+        visited: &mut HashSet<usize>,
+    ) -> Result<(), Thrown> {
         let class = self.em()?.get_class_metadata(entity.class())?;
         let associations: Vec<AssociationMapping> = class
             .read()
@@ -2056,7 +2261,11 @@ impl UnitOfWork {
                 if !assoc.is_to_many() {
                     let target = em.get_class_metadata(&assoc.target_entity)?;
                     let name = target.read().name.clone();
-                    return Err(exception::invalid_association(&name, &assoc, &related.debug_type()));
+                    return Err(exception::invalid_association(
+                        &name,
+                        &assoc,
+                        &related.debug_type(),
+                    ));
                 }
                 for related_entity in entities {
                     match related_entity {
@@ -2077,12 +2286,20 @@ impl UnitOfWork {
                 let Value::Object(o) = &related else {
                     let target = em.get_class_metadata(&assoc.target_entity)?;
                     let name = target.read().name.clone();
-                    return Err(exception::invalid_association(&name, &assoc, &related.debug_type()));
+                    return Err(exception::invalid_association(
+                        &name,
+                        &assoc,
+                        &related.debug_type(),
+                    ));
                 };
                 if !o.instance_of(&assoc.target_entity) {
                     let target = em.get_class_metadata(&assoc.target_entity)?;
                     let name = target.read().name.clone();
-                    return Err(exception::invalid_association(&name, &assoc, &related.debug_type()));
+                    return Err(exception::invalid_association(
+                        &name,
+                        &assoc,
+                        &related.debug_type(),
+                    ));
                 }
                 self.do_persist(o, visited)?;
             }
@@ -2091,7 +2308,11 @@ impl UnitOfWork {
     }
 
     /// Cascades the delete operation to associated entities.
-    async fn cascade_remove(&self, entity: &Object, visited: &mut HashSet<usize>) -> Result<(), Thrown> {
+    async fn cascade_remove(
+        &self,
+        entity: &Object,
+        visited: &mut HashSet<usize>,
+    ) -> Result<(), Thrown> {
         let class = self.em()?.get_class_metadata(entity.class())?;
         let associations: Vec<AssociationMapping> = class
             .read()
@@ -2131,7 +2352,7 @@ impl UnitOfWork {
         Ok(())
     }
 
-    /// Clears the UnitOfWork.
+    /// Clears the `UnitOfWork`.
     pub fn clear(&self) -> Result<(), Thrown> {
         {
             let mut st = self.st();
@@ -2144,9 +2365,9 @@ impl UnitOfWork {
         self.dispatch(&em, events::ON_CLEAR, event::ON_CLEAR_EVENT_ARGS)
     }
 
-    /// INTERNAL: Schedules an orphaned entity for removal. The remove()
+    /// INTERNAL: Schedules an orphaned entity for removal. The `remove()`
     /// operation will be invoked on that entity at the beginning of the
-    /// next commit of this UnitOfWork.
+    /// next commit of this `UnitOfWork`.
     pub fn schedule_orphan_removal(&self, entity: &Object) {
         self.st()
             .orphan_removals
@@ -2159,7 +2380,7 @@ impl UnitOfWork {
     }
 
     /// INTERNAL: Schedules a complete collection for removal when this
-    /// UnitOfWork commits.
+    /// `UnitOfWork` commits.
     pub fn schedule_collection_deletion(&self, coll: &Arc<PersistentCollection>) {
         let coid = coll.oid();
         let mut st = self.st();
@@ -2187,7 +2408,12 @@ impl UnitOfWork {
     }
 
     #[allow(clippy::too_many_lines, reason = "createEntity(), in its order")]
-    async fn do_create_entity(&self, class_name: &str, data: PhpArray, hints: &mut Hints) -> Result<Object, Thrown> {
+    async fn do_create_entity(
+        &self,
+        class_name: &str,
+        data: PhpArray,
+        hints: &mut Hints,
+    ) -> Result<Object, Thrown> {
         let em = self.em()?;
         let class = em.get_class_metadata(class_name)?;
 
@@ -2290,9 +2516,17 @@ impl UnitOfWork {
                             .entry(oid)
                             .or_default()
                             .insert(field.as_str(), Value::Object(related.clone()));
-                        class.read().set_field_value(&entity, &field, Value::Object(related.clone()))?;
+                        class.read().set_field_value(
+                            &entity,
+                            &field,
+                            Value::Object(related.clone()),
+                        )?;
                         if let Some(mapped_by) = &assoc.mapped_by {
-                            target_class.read().set_field_value(&related, mapped_by, Value::Object(entity.clone()))?;
+                            target_class.read().set_field_value(
+                                &related,
+                                mapped_by,
+                                Value::Object(entity.clone()),
+                            )?;
                         }
                         continue;
                     }
@@ -2301,9 +2535,11 @@ impl UnitOfWork {
                         .get_entity_persister(&assoc.target_entity)?
                         .load_one_to_one_entity(&assoc, &entity, None)
                         .await?;
-                    class
-                        .read()
-                        .set_field_value(&entity, &field, loaded.map_or(Value::Null, Value::Object))?;
+                    class.read().set_field_value(
+                        &entity,
+                        &field,
+                        loaded.map_or(Value::Null, Value::Object),
+                    )?;
                     continue;
                 }
 
@@ -2311,7 +2547,11 @@ impl UnitOfWork {
                     && self.st().entity_states.contains_key(&object_id(&related))
                 {
                     // use the entity association
-                    class.read().set_field_value(&entity, &field, Value::Object(related.clone()))?;
+                    class.read().set_field_value(
+                        &entity,
+                        &field,
+                        Value::Object(related.clone()),
+                    )?;
                     self.st()
                         .original_entity_data
                         .entry(oid)
@@ -2331,14 +2571,25 @@ impl UnitOfWork {
                             .cloned()
                             .unwrap_or(Value::Null);
                         if !join_column_value.is_null() {
-                            let join_column_value = crate::utility::identifier_flattener_backed(join_column_value);
+                            let join_column_value =
+                                crate::utility::identifier_flattener_backed(join_column_value);
                             if target.contains_foreign_identifier {
-                                associated_id.insert(target.get_field_for_column(&target_column)?.as_str(), join_column_value);
+                                associated_id.insert(
+                                    target.get_field_for_column(&target_column)?.as_str(),
+                                    join_column_value,
+                                );
                             } else {
-                                let field_name = target.field_names.get(&target_column).cloned().unwrap_or_default();
+                                let field_name = target
+                                    .field_names
+                                    .get(&target_column)
+                                    .cloned()
+                                    .unwrap_or_default();
                                 associated_id.insert(field_name.as_str(), join_column_value);
                             }
-                        } else if target.identifier.contains(&target.get_field_for_column(&target_column)?) {
+                        } else if target
+                            .identifier
+                            .contains(&target.get_field_for_column(&target_column)?)
+                        {
                             // the missing key is part of target's entity
                             // primary key
                             associated_id = PhpArray::new();
@@ -2373,53 +2624,65 @@ impl UnitOfWork {
                     )
                 };
 
-                let new_value: Option<Object> = if let Some(found) = self.get_by_id_hash(&related_id_hash, &target_root) {
-                    // If this is an uninitialized proxy, we are deferring
-                    // eager loads, this association is marked as eager
-                    // fetch, and its an uninitialized proxy, we add it to
-                    // the eager loading map.
-                    if fetch_mode == Some(FETCH_EAGER)
-                        && hints.defer_eager_load
-                        && !target_composite
-                        && self.is_uninitialized_object(&Value::Object(found.clone()))
-                    {
-                        let first = associated_id.values().next().cloned().unwrap_or(Value::Null);
-                        self.st()
-                            .eager_loading_entities
-                            .get_or_default(target_root.clone())
-                            .insert(related_id_hash.clone(), first);
-                    }
-                    Some(found)
-                } else if target_subclasses {
-                    // If it might be a subtype, it can not be lazy. There
-                    // isn't even a way to use deferred eager loading here.
-                    self.get_entity_persister(&assoc.target_entity)?
-                        .load_one_to_one_entity(&assoc, &entity, Some(&associated_id))
-                        .await?
-                } else {
-                    let normalized_associated_id = self.normalize_identifier(&target_class, &associated_id)?;
-                    if fetch_mode != Some(FETCH_EAGER) {
-                        // TODO: Is there a faster approach?
-                        let proxy = em.get_proxy(&assoc.target_entity, &normalized_associated_id)?;
-                        self.register_managed_proxy(&proxy, associated_id.clone())?;
-                        Some(proxy)
-                    } else if hints.defer_eager_load && !target_composite {
-                        // Deferred eager load only works for single
-                        // identifier classes
-                        let first = normalized_associated_id.values().next().cloned().unwrap_or(Value::Null);
-                        self.st()
-                            .eager_loading_entities
-                            .get_or_default(target_root.clone())
-                            .insert(related_id_hash.clone(), first);
-                        let proxy = em.get_proxy(&assoc.target_entity, &normalized_associated_id)?;
-                        self.register_managed_proxy(&proxy, associated_id.clone())?;
-                        Some(proxy)
-                    } else {
-                        // TODO: This is very imperformant, ignore it?
-                        em.find(&assoc.target_entity, Value::Array(normalized_associated_id))
+                let new_value: Option<Object> =
+                    if let Some(found) = self.get_by_id_hash(&related_id_hash, &target_root) {
+                        // If this is an uninitialized proxy, we are deferring
+                        // eager loads, this association is marked as eager
+                        // fetch, and its an uninitialized proxy, we add it to
+                        // the eager loading map.
+                        if fetch_mode == Some(FETCH_EAGER)
+                            && hints.defer_eager_load
+                            && !target_composite
+                            && self.is_uninitialized_object(&Value::Object(found.clone()))
+                        {
+                            let first = associated_id
+                                .values()
+                                .next()
+                                .cloned()
+                                .unwrap_or(Value::Null);
+                            self.st()
+                                .eager_loading_entities
+                                .get_or_default(target_root.clone())
+                                .insert(related_id_hash.clone(), first);
+                        }
+                        Some(found)
+                    } else if target_subclasses {
+                        // If it might be a subtype, it can not be lazy. There
+                        // isn't even a way to use deferred eager loading here.
+                        self.get_entity_persister(&assoc.target_entity)?
+                            .load_one_to_one_entity(&assoc, &entity, Some(&associated_id))
                             .await?
-                    }
-                };
+                    } else {
+                        let normalized_associated_id =
+                            self.normalize_identifier(&target_class, &associated_id)?;
+                        if fetch_mode != Some(FETCH_EAGER) {
+                            // TODO: Is there a faster approach?
+                            let proxy =
+                                em.get_proxy(&assoc.target_entity, &normalized_associated_id)?;
+                            self.register_managed_proxy(&proxy, associated_id.clone())?;
+                            Some(proxy)
+                        } else if hints.defer_eager_load && !target_composite {
+                            // Deferred eager load only works for single
+                            // identifier classes
+                            let first = normalized_associated_id
+                                .values()
+                                .next()
+                                .cloned()
+                                .unwrap_or(Value::Null);
+                            self.st()
+                                .eager_loading_entities
+                                .get_or_default(target_root.clone())
+                                .insert(related_id_hash.clone(), first);
+                            let proxy =
+                                em.get_proxy(&assoc.target_entity, &normalized_associated_id)?;
+                            self.register_managed_proxy(&proxy, associated_id.clone())?;
+                            Some(proxy)
+                        } else {
+                            // TODO: This is very imperformant, ignore it?
+                            em.find(&assoc.target_entity, Value::Array(normalized_associated_id))
+                                .await?
+                        }
+                    };
 
                 let new_value_v = new_value.clone().map_or(Value::Null, Value::Object);
                 self.st()
@@ -2438,9 +2701,11 @@ impl UnitOfWork {
                         .get(inversed_by)
                         .map(|a| a.field_name.clone());
                     if let Some(inverse_field) = inverse_field {
-                        target_class
-                            .read()
-                            .set_field_value(new_value, &inverse_field, Value::Object(entity.clone()))?;
+                        target_class.read().set_field_value(
+                            new_value,
+                            &inverse_field,
+                            Value::Object(entity.clone()),
+                        )?;
                     }
                 }
                 continue;
@@ -2448,7 +2713,9 @@ impl UnitOfWork {
 
             // Ignore if its a cached collection
             if let Some(Value::Object(_)) = data.get(&field_key)
-                && let Some(pc) = data.get(&field_key).and_then(PersistentCollection::from_value)
+                && let Some(pc) = data
+                    .get(&field_key)
+                    .and_then(PersistentCollection::from_value)
             {
                 pc.set_owner(&entity, &assoc);
                 class.read().set_field_value(&entity, &field, pc.value())?;
@@ -2461,16 +2728,28 @@ impl UnitOfWork {
             }
 
             // Inject collection
-            let p_coll = PersistentCollection::new(Some(&em), Some(target_class.clone()), ArrayCollection::new(PhpArray::new()));
+            let p_coll = PersistentCollection::new(
+                Some(&em),
+                Some(target_class.clone()),
+                ArrayCollection::new(PhpArray::new()),
+            );
             p_coll.set_owner(&entity, &assoc);
             p_coll.set_initialized(false);
-            class.read().set_field_value(&entity, &field, p_coll.value())?;
+            class
+                .read()
+                .set_field_value(&entity, &field, p_coll.value())?;
 
             if fetch_mode == Some(FETCH_EAGER) {
                 let mapped_by_join_columns = assoc
                     .mapped_by
                     .as_ref()
-                    .and_then(|m| target_class.read().association_mappings.get(m).map(|a| a.join_columns.len()))
+                    .and_then(|m| {
+                        target_class
+                            .read()
+                            .association_mappings
+                            .get(m)
+                            .map(|a| a.join_columns.len())
+                    })
                     .unwrap_or(0);
                 if assoc.is_one_to_many() && mapped_by_join_columns <= 1 && !assoc.is_indexed() {
                     self.schedule_collection_for_batch_loading(&p_coll, &class)?;
@@ -2510,7 +2789,14 @@ impl UnitOfWork {
         let to_invoke = std::mem::take(&mut self.st().deferred_post_load_invocations);
         let em = self.em()?;
         for (class, invoke, entity) in to_invoke {
-            self.invoke_lifecycle(&em, &class, events::POST_LOAD, event::POST_LOAD_EVENT_ARGS, &entity, invoke)?;
+            self.invoke_lifecycle(
+                &em,
+                &class,
+                events::POST_LOAD,
+                event::POST_LOAD_EVENT_ARGS,
+                &entity,
+                invoke,
+            )?;
         }
         Ok(())
     }
@@ -2541,7 +2827,10 @@ impl UnitOfWork {
             let ids: Vec<Value> = ids.values().cloned().collect();
             for batch in ids.chunks(batch_size) {
                 let mut criteria = PhpArray::new();
-                criteria.insert(id_field.as_str(), Value::Array(PhpArray::list(batch.iter().cloned())));
+                criteria.insert(
+                    id_field.as_str(),
+                    Value::Array(PhpArray::list(batch.iter().cloned())),
+                );
                 self.get_entity_persister(entity_name)?
                     .load_all(&criteria, None, None, None)
                     .await?;
@@ -2568,8 +2857,10 @@ impl UnitOfWork {
         let batch_size = usize::try_from(em.get_configuration().get_eager_fetch_batch_size())
             .unwrap_or(1)
             .max(1);
-        let all: Vec<(String, Arc<PersistentCollection>)> =
-            collections.iter().map(|(k, v)| (k.clone(), v.clone())).collect();
+        let all: Vec<(String, Arc<PersistentCollection>)> = collections
+            .iter()
+            .map(|(k, v)| (k.clone(), v.clone()))
+            .collect();
 
         for batch in all.chunks(batch_size) {
             let entities: Vec<Value> = batch
@@ -2585,33 +2876,36 @@ impl UnitOfWork {
 
             let target_class = em.get_class_metadata(&target_entity)?;
             for target_value in found {
-                let source_entity = target_class.read().get_field_value(&target_value, &mapped_by)?;
-                let id_hash = match &source_entity {
-                    Value::Object(source) => {
-                        let info = class.read();
-                        let values = info.get_identifier_values(source)?;
-                        crate::utility::implode_values(&flatten_identifier(&em, &info, &values)?)
-                    }
-                    _ => {
-                        let data = self.get_original_entity_data(&target_value);
-                        let join_columns = target_class
-                            .read()
-                            .association_mappings
-                            .get(&mapped_by)
-                            .map(|a| a.join_columns.clone())
-                            .unwrap_or_default();
-                        join_columns
-                            .iter()
-                            .map(|jc| to_text(data.get(&jc.name.as_str().into()).unwrap_or(&Value::Null)))
-                            .collect::<Vec<_>>()
-                            .join(" ")
-                    }
+                let source_entity = target_class
+                    .read()
+                    .get_field_value(&target_value, &mapped_by)?;
+                let id_hash = if let Value::Object(source) = &source_entity {
+                    let info = class.read();
+                    let values = info.get_identifier_values(source)?;
+                    crate::utility::implode_values(&flatten_identifier(&em, &info, &values)?)
+                } else {
+                    let data = self.get_original_entity_data(&target_value);
+                    let join_columns = target_class
+                        .read()
+                        .association_mappings
+                        .get(&mapped_by)
+                        .map(|a| a.join_columns.clone())
+                        .unwrap_or_default();
+                    join_columns
+                        .iter()
+                        .map(|jc| {
+                            to_text(data.get(&jc.name.as_str().into()).unwrap_or(&Value::Null))
+                        })
+                        .collect::<Vec<_>>()
+                        .join(" ")
                 };
                 let Some((_, coll)) = batch.iter().find(|(k, _)| *k == id_hash) else {
                     continue;
                 };
                 if let Some(index_by) = &mapping.index_by {
-                    let key = target_class.read().get_field_value(&target_value, index_by)?;
+                    let key = target_class
+                        .read()
+                        .get_field_value(&target_value, index_by)?;
                     let key = Key::from_value(&key).unwrap_or(Key::Int(0));
                     coll.hydrate_set(key, Value::Object(target_value))?;
                 } else {
@@ -2629,16 +2923,23 @@ impl UnitOfWork {
 
     /// Initializes (loads) an uninitialized persistent collection of an
     /// entity.
-    pub async fn load_collection(&self, collection: &Arc<PersistentCollection>) -> Result<(), Thrown> {
+    pub async fn load_collection(
+        &self,
+        collection: &Arc<PersistentCollection>,
+    ) -> Result<(), Thrown> {
         let assoc = collection.get_mapping()?;
         let persister = self.get_entity_persister(&assoc.target_entity)?;
-        let owner = collection.get_owner().ok_or_else(|| {
-            Thrown::new("TypeError", "The collection has no owner", 0)
-        })?;
+        let owner = collection
+            .get_owner()
+            .ok_or_else(|| Thrown::new("TypeError", "The collection has no owner", 0))?;
         if assoc.is_one_to_many() {
-            persister.load_one_to_many_collection(&assoc, &owner, collection).await?;
+            persister
+                .load_one_to_many_collection(&assoc, &owner, collection)
+                .await?;
         } else if assoc.is_many_to_many() {
-            persister.load_many_to_many_collection(&assoc, &owner, collection).await?;
+            persister
+                .load_many_to_many_collection(&assoc, &owner, collection)
+                .await?;
         }
         collection.set_initialized(true);
         Ok(())
@@ -2671,13 +2972,18 @@ impl UnitOfWork {
         Ok(())
     }
 
-    /// Gets the identity map of the UnitOfWork: root class name => id hash
+    /// Gets the identity map of the `UnitOfWork`: root class name => id hash
     /// => entity.
     pub fn get_identity_map(&self) -> Vec<(String, Vec<(String, Object)>)> {
         self.st()
             .identity_map
             .iter()
-            .map(|(k, v)| (k.clone(), v.iter().map(|(h, e)| (h.clone(), e.clone())).collect()))
+            .map(|(k, v)| {
+                (
+                    k.clone(),
+                    v.iter().map(|(h, e)| (h.clone(), e.clone())).collect(),
+                )
+            })
             .collect()
     }
 
@@ -2693,7 +2999,9 @@ impl UnitOfWork {
     }
 
     pub fn set_original_entity_data(&self, entity: &Object, data: PhpArray) {
-        self.st().original_entity_data.insert(object_id(entity), data);
+        self.st()
+            .original_entity_data
+            .insert(object_id(entity), data);
     }
 
     /// INTERNAL: Sets a property value of the original data array of an
@@ -2710,13 +3018,15 @@ impl UnitOfWork {
     /// array of identifier values. If the entity has a composite
     /// identifier then the identifier values are in the same order as the
     /// identifier field names as returned by
-    /// ClassMetadata#getIdentifierFieldNames().
+    /// `ClassMetadata#getIdentifierFieldNames()`.
     pub fn get_entity_identifier(&self, entity: &Object) -> Result<PhpArray, Thrown> {
         self.st()
             .entity_identifiers
             .get(&object_id(entity))
             .cloned()
-            .ok_or_else(|| exception::no_identifier_found(&Value::Object(entity.clone()).debug_type()))
+            .ok_or_else(|| {
+                exception::no_identifier_found(&Value::Object(entity.clone()).debug_type())
+            })
     }
 
     /// Processes an entity instance to extract their identifier values.
@@ -2731,11 +3041,14 @@ impl UnitOfWork {
             class.read().get_identifier_values(entity)?
         };
         let first = class.read().identifier.first().cloned().unwrap_or_default();
-        Ok(values.get(&first.as_str().into()).cloned().unwrap_or(Value::Null))
+        Ok(values
+            .get(&first.as_str().into())
+            .cloned()
+            .unwrap_or(Value::Null))
     }
 
     /// Tries to find an entity with the given identifier in the identity
-    /// map of this UnitOfWork.
+    /// map of this `UnitOfWork`.
     pub fn try_get_by_id(&self, id: &PhpArray, root_class_name: &str) -> Option<Object> {
         let id_hash = Self::get_id_hash_by_identifier(id);
         self.get_by_id_hash(&id_hash, root_class_name)
@@ -2743,7 +3056,12 @@ impl UnitOfWork {
 
     /// Schedules an entity for dirty-checking at commit-time.
     pub fn schedule_for_dirty_check(&self, entity: &Object) -> Result<(), Thrown> {
-        let root = self.em()?.get_class_metadata(entity.class())?.read().root_entity_name.clone();
+        let root = self
+            .em()?
+            .get_class_metadata(entity.class())?
+            .read()
+            .root_entity_name
+            .clone();
         self.st()
             .scheduled_for_synchronization
             .get_or_default(root)
@@ -2751,19 +3069,22 @@ impl UnitOfWork {
         Ok(())
     }
 
-    /// Checks whether the UnitOfWork has any pending insertions.
+    /// Checks whether the `UnitOfWork` has any pending insertions.
     pub fn has_pending_insertions(&self) -> bool {
         !self.st().entity_insertions.is_empty()
     }
 
-    /// Calculates the size of the UnitOfWork. The size of the UnitOfWork
+    /// Calculates the size of the `UnitOfWork`. The size of the `UnitOfWork`
     /// is the number of entities in the identity map.
     pub fn size(&self) -> usize {
         self.st().identity_map.values().map(Ordered::len).sum()
     }
 
-    /// Gets the EntityPersister for an Entity.
-    pub fn get_entity_persister(&self, entity_name: &str) -> Result<Arc<BasicEntityPersister>, Thrown> {
+    /// Gets the `EntityPersister` for an Entity.
+    pub fn get_entity_persister(
+        &self,
+        entity_name: &str,
+    ) -> Result<Arc<BasicEntityPersister>, Thrown> {
         if let Some(persister) = self
             .persisters
             .lock()
@@ -2788,7 +3109,12 @@ impl UnitOfWork {
     }
 
     /// INTERNAL: Registers an entity as managed.
-    pub fn register_managed(&self, entity: &Object, id: PhpArray, data: PhpArray) -> Result<(), Thrown> {
+    pub fn register_managed(
+        &self,
+        entity: &Object,
+        id: PhpArray,
+        data: PhpArray,
+    ) -> Result<(), Thrown> {
         let oid = object_id(entity);
         {
             let mut st = self.st();
@@ -2805,17 +3131,17 @@ impl UnitOfWork {
         self.register_managed(entity, id, PhpArray::new())
     }
 
-    /// Gets the currently scheduled entity insertions in this UnitOfWork.
+    /// Gets the currently scheduled entity insertions in this `UnitOfWork`.
     pub fn get_scheduled_entity_insertions(&self) -> Vec<Object> {
         self.st().entity_insertions.values().cloned().collect()
     }
 
-    /// Gets the currently scheduled entity updates in this UnitOfWork.
+    /// Gets the currently scheduled entity updates in this `UnitOfWork`.
     pub fn get_scheduled_entity_updates(&self) -> Vec<Object> {
         self.st().entity_updates.values().cloned().collect()
     }
 
-    /// Gets the currently scheduled entity deletions in this UnitOfWork.
+    /// Gets the currently scheduled entity deletions in this `UnitOfWork`.
     pub fn get_scheduled_entity_deletions(&self) -> Vec<Object> {
         self.st().entity_deletions.values().cloned().collect()
     }
@@ -2850,7 +3176,11 @@ impl UnitOfWork {
             LockMode::Optimistic => {
                 let (versioned, name, version_field) = {
                     let info = class.read();
-                    (info.is_versioned, info.name.clone(), info.version_field.clone())
+                    (
+                        info.is_versioned,
+                        info.name.clone(),
+                        info.version_field.clone(),
+                    )
                 };
                 if !versioned {
                     return Err(exception::not_versioned(&name));
@@ -2891,14 +3221,22 @@ impl UnitOfWork {
             let em = self.em()?;
             let class = em.get_class_metadata(obj.class())?;
             let name = class.read().name.clone();
-            let id = self.st().entity_identifiers.get(&object_id(obj)).cloned().unwrap_or_default();
+            let id = self
+                .st()
+                .entity_identifiers
+                .get(&object_id(obj))
+                .cloned()
+                .unwrap_or_default();
             let identifier = self.normalize_identifier(&class, &id)?;
             let found = self
                 .get_entity_persister(&name)?
                 .load_by_id(&identifier, Some(obj))
                 .await?;
             if found.is_none() {
-                return Err(exception::entity_not_found_from_class_name_and_identifier(&name, &crate::utility::string_pairs(&id)));
+                return Err(exception::entity_not_found_from_class_name_and_identifier(
+                    &name,
+                    &crate::utility::string_pairs(&id),
+                ));
             }
             ghost.set_lazy(false);
         }
@@ -2915,9 +3253,9 @@ impl UnitOfWork {
     }
 
     /// Marks an entity as read-only so that it will not be considered for
-    /// updates during UnitOfWork#commit().
+    /// updates during `UnitOfWork#commit()`.
     ///
-    /// This operation cannot be undone as some parts of the UnitOfWork
+    /// This operation cannot be undone as some parts of the `UnitOfWork`
     /// now keep gathering information on the entity.
     pub fn mark_read_only(&self, object: &Object) -> Result<(), Thrown> {
         if !self.is_in_identity_map(object)? {
@@ -2942,7 +3280,12 @@ impl UnitOfWork {
             return Ok(false);
         }
         let identifier = |entity: &Object| -> Result<PhpArray, Thrown> {
-            if let Some(id) = self.st().entity_identifiers.get(&object_id(entity)).cloned() {
+            if let Some(id) = self
+                .st()
+                .entity_identifiers
+                .get(&object_id(entity))
+                .cloned()
+            {
                 return Ok(id);
             }
             let info = class.read();
@@ -2951,10 +3294,13 @@ impl UnitOfWork {
         };
         let id1 = identifier(entity1)?;
         let id2 = identifier(entity2)?;
-        Ok(id1 == id2 || Self::get_id_hash_by_identifier(&id1) == Self::get_id_hash_by_identifier(&id2))
+        Ok(id1 == id2
+            || Self::get_id_hash_by_identifier(&id1) == Self::get_id_hash_by_identifier(&id2))
     }
 
-    fn assert_that_there_are_no_unintentionally_non_persisted_associations(&self) -> Result<(), Thrown> {
+    fn assert_that_there_are_no_unintentionally_non_persisted_associations(
+        &self,
+    ) -> Result<(), Thrown> {
         let entities_needing_cascade_persist: Vec<(AssociationMapping, Object)> = {
             let mut st = self.st();
             let detected = std::mem::take(&mut st.non_cascaded_new_detected_entities);
@@ -2996,7 +3342,11 @@ impl UnitOfWork {
     /// Given a flat identifier, this method will produce another
     /// identifier, with association identifiers replaced by references to
     /// the associated entities.
-    fn normalize_identifier(&self, target_class: &ClassMetadata, flat_identifier: &PhpArray) -> Result<PhpArray, Thrown> {
+    fn normalize_identifier(
+        &self,
+        target_class: &ClassMetadata,
+        flat_identifier: &PhpArray,
+    ) -> Result<PhpArray, Thrown> {
         let em = self.em()?;
         let mut normalized_associated_id = PhpArray::new();
         let fields = target_class.read().get_identifier_field_names().to_vec();
@@ -3009,30 +3359,43 @@ impl UnitOfWork {
                 normalized_associated_id.insert(name.as_str(), value.clone());
                 continue;
             }
-            let target_id_class = em.get_class_metadata(&target_class.read().get_association_target_class(&name)?)?;
-            let first = target_id_class.read().identifier.first().cloned().unwrap_or_default();
+            let target_id_class =
+                em.get_class_metadata(&target_class.read().get_association_target_class(&name)?)?;
+            let first = target_id_class
+                .read()
+                .identifier
+                .first()
+                .cloned()
+                .unwrap_or_default();
             let mut inner = PhpArray::new();
             inner.insert(first.as_str(), value.clone());
             let inner = self.normalize_identifier(&target_id_class, &inner)?;
             let target_name = target_id_class.read().get_name().to_owned();
             let reference = em.get_reference(&target_name, Value::Array(inner))?;
-            normalized_associated_id.insert(name.as_str(), reference.map_or(Value::Null, Value::Object));
+            normalized_associated_id
+                .insert(name.as_str(), reference.map_or(Value::Null, Value::Object));
         }
         Ok(normalized_associated_id)
     }
 
     /// Assign a post-insert generated ID to an entity
     ///
-    /// This is used by EntityPersisters after they inserted entities into
+    /// This is used by `EntityPersisters` after they inserted entities into
     /// the DB. It will place the assigned ID values in the entity's fields
     /// and start tracking the entity in the identity map.
-    pub fn assign_post_insert_id(&self, entity: &Object, generated_id: &Value) -> Result<(), Thrown> {
+    pub fn assign_post_insert_id(
+        &self,
+        entity: &Object,
+        generated_id: &Value,
+    ) -> Result<(), Thrown> {
         let class = self.em()?.get_class_metadata(entity.class())?;
         let id_field = class.read().get_single_identifier_field_name()?;
         let id_value = self.convert_single_field_identifier_to_php_value(&class, generated_id)?;
         let oid = object_id(entity);
 
-        class.read().set_field_value(entity, &id_field, id_value.clone())?;
+        class
+            .read()
+            .set_field_value(entity, &id_field, id_value.clone())?;
         {
             let mut st = self.st();
             let mut identifier = PhpArray::new();

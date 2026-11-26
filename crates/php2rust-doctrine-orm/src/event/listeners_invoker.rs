@@ -53,13 +53,18 @@ impl ListenersInvoker {
     }
 
     fn resolve(&self, class: &str) -> Result<Object, Thrown> {
-        let mut instances = self.instances.lock().unwrap_or_else(PoisonError::into_inner);
-        if let Some((_, instance)) = instances.iter().find(|(c, _)| c.eq_ignore_ascii_case(class)) {
+        let mut instances = self
+            .instances
+            .lock()
+            .unwrap_or_else(PoisonError::into_inner);
+        if let Some((_, instance)) = instances
+            .iter()
+            .find(|(c, _)| c.eq_ignore_ascii_case(class))
+        {
             return Ok(instance.clone());
         }
-        let instance = EntityObject::object(class).ok_or_else(|| {
-            Thrown::new("Error", format!("Class \"{class}\" not found"), 0)
-        })?;
+        let instance = EntityObject::object(class)
+            .ok_or_else(|| Thrown::new("Error", format!("Class \"{class}\" not found"), 0))?;
         instances.push((class.to_owned(), instance.clone()));
         Ok(instance)
     }

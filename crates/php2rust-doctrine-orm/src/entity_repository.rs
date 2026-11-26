@@ -1,4 +1,4 @@
-//! An EntityRepository serves as a repository for entities with generic
+//! An `EntityRepository` serves as a repository for entities with generic
 //! as well as business specific methods for retrieving entities.
 //!
 //! This class is designed for inheritance and users can subclass this
@@ -42,7 +42,11 @@ impl fmt::Debug for EntityRepository {
 impl EntityRepository {
     /// Initializes a new `EntityRepository`.
     pub fn new(em: &Arc<EntityManager>, class: Arc<ClassMetadata>) -> Self {
-        Self::with_class(em, class, crate::configuration::ENTITY_REPOSITORY_CLASS.to_owned())
+        Self::with_class(
+            em,
+            class,
+            crate::configuration::ENTITY_REPOSITORY_CLASS.to_owned(),
+        )
     }
 
     /// A repository of the given repository class.
@@ -191,7 +195,10 @@ impl EntityRepository {
         let inflector = InflectorFactory::create()
             .and_then(|factory| factory.build())
             .map_err(|e| Thrown::new("Error", e.to_string(), 0))?;
-        let classified = inflector.classify(by.as_bytes()).to_string_lossy().into_owned();
+        let classified = inflector
+            .classify(by.as_bytes())
+            .to_string_lossy()
+            .into_owned();
         let field_name = lcfirst(&classified);
 
         let known = {

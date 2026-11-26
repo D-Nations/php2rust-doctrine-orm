@@ -1,6 +1,6 @@
-//! The EntityManager is the central access point to ORM functionality.
+//! The `EntityManager` is the central access point to ORM functionality.
 //!
-//! It is a facade to all different ORM subsystems such as UnitOfWork,
+//! It is a facade to all different ORM subsystems such as `UnitOfWork`,
 //! Query Language and Repository API. The entity manager is shared
 //! (`Arc`): [`EntityManager::create`] gives it, and the unit of work, the
 //! persisters and the repositories hold it weakly.
@@ -16,8 +16,8 @@
 use std::sync::{Arc, PoisonError, RwLock};
 
 use php_value::{Key, Object, PhpArray, Thrown, Value};
-use php2rust_doctrine_dbal::{Connection, LockMode};
 use php2rust_doctrine_dbal::platforms::{AbstractPlatform, SQLitePlatform};
+use php2rust_doctrine_dbal::{Connection, LockMode};
 use php2rust_doctrine_event_manager::EventManager;
 use php2rust_doctrine_persistence::mapping::AbstractClassMetadataFactory;
 
@@ -27,8 +27,8 @@ use crate::entity_repository::EntityRepository;
 use crate::exception;
 use crate::mapping::class_metadata_factory::{FactoryConfiguration, SharedPlatform};
 use crate::mapping::{ClassMetadata, ClassMetadataFactory};
-use crate::repository::RepositoryFactory;
 use crate::object::EntityObject;
+use crate::repository::RepositoryFactory;
 use crate::unit_of_work::{Hints, UnitOfWork};
 
 /// `Doctrine\ORM\EntityManager`.
@@ -52,8 +52,8 @@ impl std::fmt::Debug for EntityManager {
 }
 
 impl EntityManager {
-    /// Creates a new EntityManager that operates on the given database
-    /// connection and uses the given Configuration and EventManager
+    /// Creates a new `EntityManager` that operates on the given database
+    /// connection and uses the given Configuration and `EventManager`
     /// implementations.
     pub fn create(
         conn: Arc<Connection>,
@@ -86,7 +86,7 @@ impl EntityManager {
         }))
     }
 
-    /// Gets the database connection object used by the EntityManager.
+    /// Gets the database connection object used by the `EntityManager`.
     pub fn get_connection(&self) -> &Arc<Connection> {
         &self.conn
     }
@@ -128,7 +128,8 @@ impl EntityManager {
         if outcome.is_err() {
             self.close();
             if self.conn.is_transaction_active() {
-                let _ = self.conn.roll_back().await;
+                // A failing rollback replaces the error (PHP's `finally`).
+                self.rollback().await?;
             }
         }
         outcome
@@ -172,7 +173,8 @@ impl EntityManager {
     /// An uninitialized proxy of the identity map is initialized before it
     /// is returned (PHP initializes it on its first property access).
     pub async fn find(&self, class_name: &str, id: Value) -> Result<Option<Object>, Thrown> {
-        self.find_with_lock(class_name, id, LockMode::None, None).await
+        self.find_with_lock(class_name, id, LockMode::None, None)
+            .await
     }
 
     /// Finds an Entity by its identifier, with a lock mode and the
@@ -180,6 +182,7 @@ impl EntityManager {
     ///
     /// The `SQLite` platform has no lock clause, so a pessimistic lock
     /// loads as `LockMode::NONE` does (inside the required transaction).
+    #[allow(clippy::too_many_lines, reason = "find(), in its order")]
     pub async fn find_with_lock(
         &self,
         class_name: &str,
@@ -208,7 +211,10 @@ impl EntityManager {
                     return Err(exception::invalid_composite_identifier());
                 }
                 let mut array = PhpArray::new();
-                array.insert(identifier.first().cloned().unwrap_or_default().as_str(), other);
+                array.insert(
+                    identifier.first().cloned().unwrap_or_default().as_str(),
+                    other,
+                );
                 array
             }
         };
@@ -300,10 +306,16 @@ impl EntityManager {
         lock_mode: LockMode,
         lock_version: Option<&Value>,
     ) -> Result<(), Thrown> {
-        self.unit_of_work.lock(entity, lock_mode, lock_version).await
+        self.unit_of_work
+            .lock(entity, lock_mode, lock_version)
+            .await
     }
 
-    fn check_lock_requirements(&self, lock_mode: LockMode, class: &ClassMetadata) -> Result<(), Thrown> {
+    fn check_lock_requirements(
+        &self,
+        lock_mode: LockMode,
+        class: &ClassMetadata,
+    ) -> Result<(), Thrown> {
         match lock_mode {
             LockMode::Optimistic => {
                 let info = class.read();
@@ -341,7 +353,10 @@ impl EntityManager {
             Value::Array(id) => id,
             other => {
                 let mut array = PhpArray::new();
-                array.insert(identifier.first().cloned().unwrap_or_default().as_str(), other);
+                array.insert(
+                    identifier.first().cloned().unwrap_or_default().as_str(),
+                    other,
+                );
                 array
             }
         };
@@ -390,14 +405,14 @@ impl EntityManager {
         Ok(proxy)
     }
 
-    /// Clears the EntityManager. All entities that are currently managed
-    /// by this EntityManager become detached.
+    /// Clears the `EntityManager`. All entities that are currently managed
+    /// by this `EntityManager` become detached.
     pub fn clear(&self) -> Result<(), Thrown> {
         self.unit_of_work.clear()
     }
 
-    /// Closes the EntityManager. All entities that are currently managed
-    /// by this EntityManager become detached. The EntityManager may no
+    /// Closes the `EntityManager`. All entities that are currently managed
+    /// by this `EntityManager` become detached. The `EntityManager` may no
     /// longer be used after it is closed.
     pub fn close(&self) {
         let _ = self.clear();
@@ -408,7 +423,7 @@ impl EntityManager {
         *self.closed.read().unwrap_or_else(PoisonError::into_inner)
     }
 
-    /// Tells the EntityManager to make an instance managed and persistent.
+    /// Tells the `EntityManager` to make an instance managed and persistent.
     pub fn persist(&self, object: &Object) -> Result<(), Thrown> {
         self.error_if_closed()?;
         self.unit_of_work.persist(object)
@@ -427,19 +442,22 @@ impl EntityManager {
         self.unit_of_work.refresh(object).await
     }
 
-    /// Detaches an entity from the EntityManager, causing a managed entity
+    /// Detaches an entity from the `EntityManager`, causing a managed entity
     /// to become detached.
     pub fn detach(&self, object: &Object) -> Result<(), Thrown> {
         self.unit_of_work.detach(object)
     }
 
     /// Gets the repository for an entity class.
-    pub fn get_repository(self: &Arc<Self>, class_name: &str) -> Result<Arc<EntityRepository>, Thrown> {
+    pub fn get_repository(
+        self: &Arc<Self>,
+        class_name: &str,
+    ) -> Result<Arc<EntityRepository>, Thrown> {
         self.repository_factory.get_repository(self, class_name)
     }
 
     /// Determines whether an entity instance is managed in this
-    /// EntityManager.
+    /// `EntityManager`.
     pub fn contains(&self, object: &Object) -> Result<bool, Thrown> {
         Ok(self.unit_of_work.is_scheduled_for_insert(object)
             || self.unit_of_work.is_in_identity_map(object)?

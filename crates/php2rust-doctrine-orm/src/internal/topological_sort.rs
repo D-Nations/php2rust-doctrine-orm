@@ -1,4 +1,4 @@
-//! TopologicalSort implements topological sorting, which is an ordering
+//! `TopologicalSort` implements topological sorting, which is an ordering
 //! algorithm for directed graphs (DG) using a depth-first searching (DFS)
 //! to traverse the graph built in memory.
 //! This algorithm has a linear running time based on nodes (V) and edges
@@ -47,7 +47,8 @@ pub struct CycleDetectedException {
 }
 
 impl CycleDetectedException {
-    pub const CLASS: &'static str = "Doctrine\\ORM\\Internal\\TopologicalSort\\CycleDetectedException";
+    pub const CLASS: &'static str =
+        "Doctrine\\ORM\\Internal\\TopologicalSort\\CycleDetectedException";
     pub const MESSAGE: &'static str = "A cycle has been detected, so a topological sort is not possible. The getCycle() method provides the list of nodes that form the cycle.";
 
     pub fn new(start_node: Object) -> Self {

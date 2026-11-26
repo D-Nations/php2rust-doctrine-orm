@@ -96,11 +96,7 @@ impl std::fmt::Debug for PreUpdateEventArgs {
 }
 
 impl PreUpdateEventArgs {
-    pub fn new(
-        entity: Object,
-        em: Arc<EntityManager>,
-        change_set: Handle<PhpArray>,
-    ) -> Self {
+    pub fn new(entity: Object, em: Arc<EntityManager>, change_set: Handle<PhpArray>) -> Self {
         Self {
             object: entity,
             object_manager: em,
@@ -143,12 +139,12 @@ impl PreUpdateEventArgs {
 
     fn change(&self, field: &str, index: i64) -> Result<Value, Thrown> {
         self.assert_valid_field(field)?;
-        Ok(self.entity_change_set.with(|set| {
-            match set.get(&field.into()) {
+        Ok(self
+            .entity_change_set
+            .with(|set| match set.get(&field.into()) {
                 Some(Value::Array(pair)) => pair.get(&index.into()).cloned().unwrap_or(Value::Null),
                 _ => Value::Null,
-            }
-        }))
+            }))
     }
 
     /// Gets the old value of the changeset of the changed field.
@@ -228,5 +224,6 @@ pub fn event_args_class(args: &dyn EventArgs) -> Option<&'static str> {
     if any.downcast_ref::<PreUpdateEventArgs>().is_some() {
         return Some(PRE_UPDATE_EVENT_ARGS);
     }
-    any.downcast_ref::<ManagerEventArgs>().map(ManagerEventArgs::class)
+    any.downcast_ref::<ManagerEventArgs>()
+        .map(ManagerEventArgs::class)
 }

@@ -27,6 +27,10 @@ pub const ENTITY_REPOSITORY_CLASS: &str = "Doctrine\\ORM\\EntityRepository";
 
 /// `Doctrine\ORM\Configuration`.
 #[derive(Clone)]
+#[allow(
+    clippy::struct_excessive_bools,
+    reason = "upstream's configuration flags"
+)]
 pub struct Configuration {
     identity_generation_preferences: Vec<(String, i64)>,
     proxy_dir: Option<String>,

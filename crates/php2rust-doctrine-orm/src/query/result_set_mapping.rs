@@ -1,4 +1,4 @@
-//! A ResultSetMapping describes how a result set of an SQL query maps to
+//! A `ResultSetMapping` describes how a result set of an SQL query maps to
 //! a Doctrine result.
 //!
 //! The public array properties are ordered maps keyed by alias or column
@@ -83,7 +83,7 @@ impl ResultSetMapping {
         }
     }
 
-    /// Adds an entity result to this ResultSetMapping.
+    /// Adds an entity result to this `ResultSetMapping`.
     pub fn add_entity_result(
         &mut self,
         class: &str,
@@ -109,8 +109,7 @@ impl ResultSetMapping {
     pub fn set_discriminator_column(&mut self, alias: &str, discr_column: &str) -> &mut Self {
         self.discriminator_columns
             .insert(alias, discr_column.to_owned());
-        self.column_owner_map
-            .insert(discr_column, alias.to_owned());
+        self.column_owner_map.insert(discr_column, alias.to_owned());
         self
     }
 
@@ -169,8 +168,7 @@ impl ResultSetMapping {
     ) -> &mut Self {
         self.field_mappings
             .insert(column_name, field_name.to_owned());
-        self.column_owner_map
-            .insert(column_name, alias.to_owned());
+        self.column_owner_map.insert(column_name, alias.to_owned());
         let declaring_class = match declaring_class {
             Some(class) if !class.is_empty() => class.to_owned(),
             _ => self.alias_map.get(alias).cloned().unwrap_or_default(),
@@ -224,8 +222,7 @@ impl ResultSetMapping {
         is_partial: bool,
     ) -> &mut Self {
         self.alias_map.insert(alias, class.to_owned());
-        self.parent_alias_map
-            .insert(alias, parent_alias.to_owned());
+        self.parent_alias_map.insert(alias, parent_alias.to_owned());
         self.relation_map.insert(alias, relation.to_owned());
         if is_partial {
             self.partial_aliases.insert(alias, true);
@@ -241,8 +238,7 @@ impl ResultSetMapping {
         r#type: &str,
     ) -> &mut Self {
         self.scalar_mappings.insert(column_name, alias.into());
-        self.type_mappings
-            .insert(column_name, r#type.to_owned());
+        self.type_mappings.insert(column_name, r#type.to_owned());
         if !self.is_mixed && !self.field_mappings.is_empty() {
             self.is_mixed = true;
         }
@@ -250,8 +246,7 @@ impl ResultSetMapping {
     }
 
     pub fn add_enum_result(&mut self, column_name: &str, enum_type: &str) -> &mut Self {
-        self.enum_mappings
-            .insert(column_name, enum_type.to_owned());
+        self.enum_mappings.insert(column_name, enum_type.to_owned());
         self
     }
 
@@ -324,8 +319,7 @@ impl ResultSetMapping {
     ) -> &mut Self {
         self.meta_mappings
             .insert(column_name, field_name.to_owned());
-        self.column_owner_map
-            .insert(column_name, alias.to_owned());
+        self.column_owner_map.insert(column_name, alias.to_owned());
         if is_identifier_column {
             if !self.is_identifier_column.contains_key(alias) {
                 self.is_identifier_column.insert(alias, OrderedMap::new());

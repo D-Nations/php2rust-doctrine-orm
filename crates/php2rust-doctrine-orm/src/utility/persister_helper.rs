@@ -57,7 +57,11 @@ pub fn get_type_of_field(
     let target = target.read();
     let mut types = Vec::new();
     for join_column in &join_columns {
-        types.push(get_type_of_column(&join_column.referenced_column_name, &target, em)?);
+        types.push(get_type_of_column(
+            &join_column.referenced_column_name,
+            &target,
+            em,
+        )?);
     }
     Ok(types)
 }
@@ -132,7 +136,11 @@ pub fn infer_parameter_types(
             &assoc.source_to_target_key_columns
         };
         for column in columns.values() {
-            types.push(get_type_of_column(&to_text(column), &target, em)?.as_str().into());
+            types.push(
+                get_type_of_column(&to_text(column), &target, em)?
+                    .as_str()
+                    .into(),
+            );
         }
     } else {
         types.push(ParameterType::String.into());
@@ -196,7 +204,10 @@ fn convert_individual_value(value: &Value, em: &EntityManager) -> Result<Vec<Val
     let class = em.get_class_metadata(object.class())?;
     let (composite, values) = {
         let info = class.read();
-        (info.is_identifier_composite, info.get_identifier_values(object)?)
+        (
+            info.is_identifier_composite,
+            info.get_identifier_values(object)?,
+        )
     };
     if composite {
         let mut new_value = Vec::new();
@@ -205,5 +216,7 @@ fn convert_individual_value(value: &Value, em: &EntityManager) -> Result<Vec<Val
         }
         return Ok(new_value);
     }
-    Ok(vec![em.get_unit_of_work().get_single_identifier_value(object)?])
+    Ok(vec![
+        em.get_unit_of_work().get_single_identifier_value(object)?,
+    ])
 }

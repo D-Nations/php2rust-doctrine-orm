@@ -1,11 +1,11 @@
-//! A BasicEntityPersister maps an entity to a single table in a
+//! A `BasicEntityPersister` maps an entity to a single table in a
 //! relational database.
 //!
 //! A persister is always responsible for a single entity type.
 //!
-//! EntityPersisters are used during a UnitOfWork to apply any changes to
+//! `EntityPersisters` are used during a `UnitOfWork` to apply any changes to
 //! the persistent state of entities onto a relational database when the
-//! UnitOfWork is committed, as well as for basic querying of entities and
+//! `UnitOfWork` is committed, as well as for basic querying of entities and
 //! their associations (not DQL).
 //!
 //! The persister does not join the inverse sides of one-to-one
@@ -42,7 +42,7 @@ use crate::utility::{
 /// mappings for one kind of query (with or without limits).
 #[derive(Debug, Clone, Default)]
 struct CachedPersisterContext {
-    /// ResultSetMapping that is used for all queries. Is generated lazily
+    /// `ResultSetMapping` that is used for all queries. Is generated lazily
     /// once per request.
     rsm: ResultSetMapping,
     /// The SELECT column list SQL fragment used for querying entities by
@@ -64,7 +64,7 @@ struct PersisterState {
     /// Queued inserts.
     queued_inserts: Vec<(usize, Object)>,
     /// The map of column names to DBAL mapping types of all prepared
-    /// columns used when INSERTing or UPDATEing an entity.
+    /// columns used when `INSERTing` or `UPDATEing` an entity.
     column_types: HashMap<String, String>,
     /// The map of quoted column names.
     quoted_columns: HashMap<String, String>,
@@ -97,7 +97,8 @@ pub struct BasicEntityPersister {
 
 impl std::fmt::Debug for BasicEntityPersister {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("BasicEntityPersister").finish_non_exhaustive()
+        f.debug_struct("BasicEntityPersister")
+            .finish_non_exhaustive()
     }
 }
 
@@ -125,8 +126,8 @@ struct ToManyCriterion {
 
 impl BasicEntityPersister {
     /// Initializes a new `BasicEntityPersister` that uses the given
-    /// EntityManager and persists instances of the class described by the
-    /// given ClassMetadata descriptor.
+    /// `EntityManager` and persists instances of the class described by the
+    /// given `ClassMetadata` descriptor.
     pub fn new(em: &Arc<EntityManager>, class: Arc<ClassMetadata>) -> Self {
         Self {
             em: Arc::downgrade(em),
@@ -156,7 +157,7 @@ impl BasicEntityPersister {
     }
 
     /// Adds an entity to the queued insertions. The entity remains
-    /// queued until executeInserts() is invoked.
+    /// queued until `executeInserts()` is invoked.
     pub fn add_insert(&self, entity: &Object) {
         let oid = object_id(entity);
         let mut st = self.st();
@@ -167,7 +168,11 @@ impl BasicEntityPersister {
 
     /// Gets the queued inserts.
     pub fn get_inserts(&self) -> Vec<Object> {
-        self.st().queued_inserts.iter().map(|(_, e)| e.clone()).collect()
+        self.st()
+            .queued_inserts
+            .iter()
+            .map(|(_, e)| e.clone())
+            .collect()
     }
 
     /// Executes all queued entity insertions.
@@ -202,11 +207,10 @@ impl BasicEntityPersister {
                 for (column, value) in data.iter() {
                     let column = key_text(column);
                     params.push(value.clone());
-                    types.push(
-                        column_types
-                            .get(&column)
-                            .map_or_else(|| php2rust_doctrine_dbal::ParameterType::String.into(), |t| t.as_str().into()),
-                    );
+                    types.push(column_types.get(&column).map_or_else(
+                        || php2rust_doctrine_dbal::ParameterType::String.into(),
+                        |t| t.as_str().into(),
+                    ));
                 }
             }
             conn.execute_statement(&sql, &PhpArray::list(params), &types_of(types))
@@ -216,7 +220,13 @@ impl BasicEntityPersister {
             let id = if is_post_insert_id {
                 // IdentityGenerator::generateId()
                 let generated_id = conn.last_insert_id().await.map_err(|e| dbal(&e))?;
-                let id_field = self.class.read().identifier.first().cloned().unwrap_or_default();
+                let id_field = self
+                    .class
+                    .read()
+                    .identifier
+                    .first()
+                    .cloned()
+                    .unwrap_or_default();
                 let mut id = PhpArray::new();
                 id.insert(id_field.as_str(), generated_id.clone());
                 uow.assign_post_insert_id(&entity, &generated_id)?;
@@ -226,7 +236,8 @@ impl BasicEntityPersister {
             };
 
             if requires_fetch {
-                self.assign_default_version_and_upsertable_values(&em, &entity, &id).await?;
+                self.assign_default_version_and_upsertable_values(&em, &entity, &id)
+                    .await?;
             }
             self.st().queued_inserts.retain(|(k, _)| *k != key);
         }
@@ -286,10 +297,16 @@ impl BasicEntityPersister {
                 }
             }
             let table_name = self.quote_strategy.get_table_name(&info, platform);
-            let identifier = self.quote_strategy.get_identifier_column_names(&info, platform);
+            let identifier = self
+                .quote_strategy
+                .get_identifier_column_names(&info, platform);
             let sql = format!(
                 "SELECT {} FROM {table_name} WHERE {} = ?",
-                column_names.iter().map(|(_, c)| c.as_str()).collect::<Vec<_>>().join(", "),
+                column_names
+                    .iter()
+                    .map(|(_, c)| c.as_str())
+                    .collect::<Vec<_>>()
+                    .join(", "),
                 identifier.join(" = ? AND ")
             );
             let flat_id = flatten_identifier(em, &info, id)?;
@@ -298,7 +315,11 @@ impl BasicEntityPersister {
         let types = self.extract_identifier_types(em, id)?;
         let values = em
             .get_connection()
-            .fetch_numeric(&sql, &PhpArray::list(flat_id.values().cloned()), &types_of(types))
+            .fetch_numeric(
+                &sql,
+                &PhpArray::list(flat_id.values().cloned()),
+                &types_of(types),
+            )
             .await
             .map_err(|e| dbal(&e))?;
         let Some(values) = values else {
@@ -322,7 +343,11 @@ impl BasicEntityPersister {
             .collect())
     }
 
-    fn extract_identifier_types(&self, em: &EntityManager, id: &PhpArray) -> Result<Vec<ParamType>, Thrown> {
+    fn extract_identifier_types(
+        &self,
+        em: &EntityManager,
+        id: &PhpArray,
+    ) -> Result<Vec<ParamType>, Thrown> {
         let info = self.class.read();
         let mut types = Vec::new();
         for (field, value) in id.iter() {
@@ -332,7 +357,7 @@ impl BasicEntityPersister {
     }
 
     /// Updates a managed entity. The entity is updated according to its
-    /// current changeset in the running UnitOfWork. If there is no
+    /// current changeset in the running `UnitOfWork`. If there is no
     /// changeset, nothing is updated.
     pub async fn update(&self, entity: &Object) -> Result<(), Thrown> {
         let em = self.em()?;
@@ -356,7 +381,8 @@ impl BasicEntityPersister {
             .await?;
         if requires_fetch {
             let id = self.class.read().get_identifier_values(entity)?;
-            self.assign_default_version_and_upsertable_values(&em, entity, &id).await?;
+            self.assign_default_version_and_upsertable_values(&em, entity, &id)
+                .await?;
         }
         Ok(())
     }
@@ -364,6 +390,7 @@ impl BasicEntityPersister {
     /// Performs an UPDATE statement for an entity on a specific table.
     /// The UPDATE can optionally be versioned, which requires the entity
     /// to have a version field.
+    #[allow(clippy::too_many_lines, reason = "upstream's method, in its order")]
     async fn update_table(
         &self,
         em: &Arc<EntityManager>,
@@ -387,10 +414,13 @@ impl BasicEntityPersister {
                 let mut placeholder = "?".to_owned();
                 let mut column = column_name.clone();
                 if let Some(field_name) = info.field_names.get(&column_name) {
-                    column = self.quote_strategy.get_column_name(field_name, &info, platform);
+                    column = self
+                        .quote_strategy
+                        .get_column_name(field_name, &info, platform);
                     if info.field_mappings.contains_key(field_name) {
                         let ty = column_types.get(&column_name).cloned().unwrap_or_default();
-                        let ty = types::get_type(&ty).map_err(|e| Thrown::new(e.class(), e.message(), 0))?;
+                        let ty = types::get_type(&ty)
+                            .map_err(|e| Thrown::new(e.class(), e.message(), 0))?;
                         placeholder = ty
                             .convert_to_database_value_sql(b"?", platform)
                             .to_string_lossy()
@@ -401,11 +431,10 @@ impl BasicEntityPersister {
                 }
                 params.push(value.clone());
                 set.push(format!("{column} = {placeholder}"));
-                types.push(
-                    column_types
-                        .get(&column_name)
-                        .map_or_else(|| php2rust_doctrine_dbal::ParameterType::String.into(), |t| t.as_str().into()),
-                );
+                types.push(column_types.get(&column_name).map_or_else(
+                    || php2rust_doctrine_dbal::ParameterType::String.into(),
+                    |t| t.as_str().into(),
+                ));
             }
         }
 
@@ -413,8 +442,16 @@ impl BasicEntityPersister {
         let identifier = em.get_unit_of_work().get_entity_identifier(entity)?;
         let id_fields = self.class.read().identifier.clone();
         for id_field in id_fields {
-            let id_value = identifier.get(&id_field.as_str().into()).cloned().unwrap_or(Value::Null);
-            let assoc = self.class.read().association_mappings.get(&id_field).cloned();
+            let id_value = identifier
+                .get(&id_field.as_str().into())
+                .cloned()
+                .unwrap_or(Value::Null);
+            let assoc = self
+                .class
+                .read()
+                .association_mappings
+                .get(&id_field)
+                .cloned();
             let Some(assoc) = assoc else {
                 let info = self.class.read();
                 params.push(id_value);
@@ -425,20 +462,29 @@ impl BasicEntityPersister {
                         .unwrap_or_default()
                         .into(),
                 );
-                where_.push(self.quote_strategy.get_column_name(&id_field, &info, platform));
+                where_.push(
+                    self.quote_strategy
+                        .get_column_name(&id_field, &info, platform),
+                );
                 continue;
             };
             params.push(id_value);
             if let Some(join_column) = assoc.join_columns.first() {
                 let info = self.class.read();
-                where_.push(self.quote_strategy.get_join_column_name(join_column, &info, platform));
+                where_.push(
+                    self.quote_strategy
+                        .get_join_column_name(join_column, &info, platform),
+                );
             }
             let target_mapping = em.get_class_metadata(&assoc.target_entity)?;
             let target = target_mapping.read();
             let first = target.identifier.first().cloned().unwrap_or_default();
             let target_type = get_type_of_field(&first, &target, em)?;
             let Some(first_type) = target_type.first() else {
-                return Err(exception::unrecognized_field(&self.class.read().name, &first));
+                return Err(exception::unrecognized_field(
+                    &self.class.read().name,
+                    &first,
+                ));
             };
             types.push(first_type.as_str().into());
         }
@@ -451,7 +497,9 @@ impl BasicEntityPersister {
                 .get(&version_field)
                 .map(|m| m.r#type.clone())
                 .unwrap_or_default();
-            let version_column = self.quote_strategy.get_column_name(&version_field, &info, platform);
+            let version_column =
+                self.quote_strategy
+                    .get_column_name(&version_field, &info, platform);
             where_.push(version_column.clone());
             types.push(version_field_type.as_str().into());
             params.push(info.get_field_value(entity, &version_field)?);
@@ -489,7 +537,13 @@ impl BasicEntityPersister {
         types: &[ParamType],
     ) -> Result<(), Thrown> {
         let platform = em.get_platform();
-        let mappings: Vec<AssociationMapping> = self.class.read().association_mappings.values().cloned().collect();
+        let mappings: Vec<AssociationMapping> = self
+            .class
+            .read()
+            .association_mappings
+            .values()
+            .cloned()
+            .collect();
         for mapping in mappings {
             if !mapping.is_many_to_many() || mapping.is_on_delete_cascade == Some(true) {
                 continue;
@@ -522,15 +576,23 @@ impl BasicEntityPersister {
                 let info = class.read();
                 let keys: Vec<String> = join_columns
                     .iter()
-                    .map(|jc| self.quote_strategy.get_join_column_name(jc, &info, platform))
+                    .map(|jc| {
+                        self.quote_strategy
+                            .get_join_column_name(jc, &info, platform)
+                    })
                     .collect();
                 let other_keys: Vec<String> = other_columns
                     .iter()
-                    .map(|jc| self.quote_strategy.get_join_column_name(jc, &info, platform))
+                    .map(|jc| {
+                        self.quote_strategy
+                            .get_join_column_name(jc, &info, platform)
+                    })
                     .collect();
-                let join_table_name = self
-                    .quote_strategy
-                    .get_join_table_name(&association, &self.class.read(), platform);
+                let join_table_name = self.quote_strategy.get_join_table_name(
+                    &association,
+                    &self.class.read(),
+                    platform,
+                );
                 (keys, other_keys, join_table_name)
             };
             let conn = em.get_connection();
@@ -545,9 +607,13 @@ impl BasicEntityPersister {
                 .await
                 .map_err(|e| dbal(&e))?;
             if self_referential {
-                conn.delete(&join_table_name, &combine(&other_keys), &types_of(types.to_vec()))
-                    .await
-                    .map_err(|e| dbal(&e))?;
+                conn.delete(
+                    &join_table_name,
+                    &combine(&other_keys),
+                    &types_of(types.to_vec()),
+                )
+                .await
+                .map_err(|e| dbal(&e))?;
             }
         }
         Ok(())
@@ -568,7 +634,8 @@ impl BasicEntityPersister {
             let info = self.class.read();
             (
                 self.quote_strategy.get_table_name(&info, platform),
-                self.quote_strategy.get_identifier_column_names(&info, platform),
+                self.quote_strategy
+                    .get_identifier_column_names(&info, platform),
             )
         };
         let mut id = PhpArray::new();
@@ -576,7 +643,8 @@ impl BasicEntityPersister {
             id.insert(column.as_str(), value.clone());
         }
         let types = self.get_class_identifiers_types(&em, &self.class)?;
-        self.delete_join_table_records(&em, &identifier, &types).await?;
+        self.delete_join_table_records(&em, &identifier, &types)
+            .await?;
         let deleted = em
             .get_connection()
             .delete(&table_name, &id, &types_of(types))
@@ -588,7 +656,7 @@ impl BasicEntityPersister {
     /// Prepares the changeset of an entity for database insertion
     /// (UPDATE).
     ///
-    /// The changeset is obtained from the currently running UnitOfWork.
+    /// The changeset is obtained from the currently running `UnitOfWork`.
     ///
     /// During this preparation the array that is passed as the second
     /// parameter is filled with <columnName> => <value> pairs, grouped by
@@ -602,7 +670,13 @@ impl BasicEntityPersister {
     ///    ...
     /// )
     /// </code>
-    fn prepare_update_data(&self, em: &Arc<EntityManager>, entity: &Object, is_insert: bool) -> Result<PhpArray, Thrown> {
+    #[allow(clippy::too_many_lines, reason = "upstream's method, in its order")]
+    fn prepare_update_data(
+        &self,
+        em: &Arc<EntityManager>,
+        entity: &Object,
+        is_insert: bool,
+    ) -> Result<PhpArray, Thrown> {
         let platform = em.get_platform();
         let uow = em.get_unit_of_work();
         let mut result: Vec<(String, PhpArray)> = Vec::new();
@@ -617,7 +691,11 @@ impl BasicEntityPersister {
         };
         let version_field = {
             let info = self.class.read();
-            if info.is_versioned { info.version_field.clone() } else { None }
+            if info.is_versioned {
+                info.version_field.clone()
+            } else {
+                None
+            }
         };
         let owning_table = self.class.read().get_table_name()?;
 
@@ -663,10 +741,14 @@ impl BasicEntityPersister {
                 let oid = object_id(target);
                 let queued = self.st().queued_inserts.iter().any(|(o, _)| *o == oid);
                 if (queued || uow.is_scheduled_for_insert(target))
-                    && !(object_id(target) == object_id(entity) && self.class.read().is_identifier_natural())
+                    && !(object_id(target) == object_id(entity)
+                        && self.class.read().is_identifier_natural())
                 {
                     let mut extra = PhpArray::new();
-                    extra.insert(field.as_str(), Value::Array(PhpArray::list([Value::Null, new_val.clone()])));
+                    extra.insert(
+                        field.as_str(),
+                        Value::Array(PhpArray::list([Value::Null, new_val.clone()])),
+                    );
                     uow.schedule_extra_update(entity, extra);
                     new_val = Value::Null;
                 }
@@ -682,13 +764,16 @@ impl BasicEntityPersister {
             for join_column in &assoc.join_columns {
                 let source_column = join_column.name.clone();
                 let target_column = join_column.referenced_column_name.clone();
-                let quoted_column = self
-                    .quote_strategy
-                    .get_join_column_name(join_column, &self.class.read(), platform);
+                let quoted_column = self.quote_strategy.get_join_column_name(
+                    join_column,
+                    &self.class.read(),
+                    platform,
+                );
                 let ty = get_type_of_column(&target_column, &target, em)?;
                 {
                     let mut st = self.st();
-                    st.quoted_columns.insert(source_column.clone(), quoted_column);
+                    st.quoted_columns
+                        .insert(source_column.clone(), quoted_column);
                     st.column_types.insert(source_column.clone(), ty);
                 }
                 let new_value = match &new_val_id {
@@ -714,20 +799,24 @@ impl BasicEntityPersister {
 
     /// Prepares the data changeset of a managed entity for database
     /// insertion (initial INSERT). The changeset of the entity is obtained
-    /// from the currently running UnitOfWork.
+    /// from the currently running `UnitOfWork`.
     ///
     /// The default insert data preparation is the same as for updates.
-    fn prepare_insert_data(&self, em: &Arc<EntityManager>, entity: &Object) -> Result<PhpArray, Thrown> {
+    fn prepare_insert_data(
+        &self,
+        em: &Arc<EntityManager>,
+        entity: &Object,
+    ) -> Result<PhpArray, Thrown> {
         self.prepare_update_data(em, entity, true)
     }
 
     /// Gets the name of the table that owns the column the given field is
     /// mapped to.
     ///
-    /// The default implementation in BasicEntityPersister always returns
+    /// The default implementation in `BasicEntityPersister` always returns
     /// the name of the table the entity type of this persister is mapped
     /// to, since an entity is always persisted to a single table with a
-    /// BasicEntityPersister.
+    /// `BasicEntityPersister`.
     pub fn get_owning_table(&self, _field_name: &str) -> Result<String, Thrown> {
         self.class.read().get_table_name()
     }
@@ -775,8 +864,13 @@ impl BasicEntityPersister {
     }
 
     /// Loads an entity by identifier.
-    pub async fn load_by_id(&self, identifier: &PhpArray, entity: Option<&Object>) -> Result<Option<Object>, Thrown> {
-        self.load(identifier, entity, None, Hints::default(), None, None).await
+    pub async fn load_by_id(
+        &self,
+        identifier: &PhpArray,
+        entity: Option<&Object>,
+    ) -> Result<Option<Object>, Thrown> {
+        self.load(identifier, entity, None, Hints::default(), None, None)
+            .await
     }
 
     /// Loads an entity of this persister's mapped class as part of a
@@ -790,7 +884,10 @@ impl BasicEntityPersister {
         let em = self.em()?;
         let empty = PhpArray::new();
         let identifier = identifier.unwrap_or(&empty);
-        if let Some(found) = em.get_unit_of_work().try_get_by_id(identifier, &assoc.target_entity) {
+        if let Some(found) = em
+            .get_unit_of_work()
+            .try_get_by_id(identifier, &assoc.target_entity)
+        {
             return Ok(Some(found));
         }
 
@@ -810,33 +907,48 @@ impl BasicEntityPersister {
                 hints.fetched.push(("r".to_owned(), inv.clone()));
             }
 
-            let target_entity = self.load(identifier, None, Some(assoc), hints, None, None).await?;
+            let target_entity = self
+                .load(identifier, None, Some(assoc), hints, None, None)
+                .await?;
 
             // Complete bidirectional association, if necessary
             if let (Some(target_entity), true, Some(inv)) =
                 (&target_entity, is_inverse_single_valued, &assoc.inversed_by)
             {
-                target_class
-                    .read()
-                    .set_field_value(target_entity, inv, Value::Object(source_entity.clone()))?;
+                target_class.read().set_field_value(
+                    target_entity,
+                    inv,
+                    Value::Object(source_entity.clone()),
+                )?;
             }
             return Ok(target_entity);
         }
 
         let mapped_by = assoc.mapped_by.clone().unwrap_or_default();
         let source_class = em.get_class_metadata(&assoc.source_entity)?;
-        let owning_assoc = target_class.read().get_association_mapping(&mapped_by)?.clone();
+        let owning_assoc = target_class
+            .read()
+            .get_association_mapping(&mapped_by)?
+            .clone();
 
         let mut computed_identifier = PhpArray::new();
         let mut source_entity_data: Option<PhpArray> = None;
 
         // TRICKY: since the association is specular source and target
         // are flipped
-        for (source_key_column, target_key_column) in owning_assoc.target_to_source_key_columns.iter() {
+        for (source_key_column, target_key_column) in
+            owning_assoc.target_to_source_key_columns.iter()
+        {
             let source_key_column = key_text(source_key_column);
             let target_key_column = to_text(target_key_column);
-            let target_field = target_class.read().get_field_for_column(&target_key_column)?;
-            let source_field = source_class.read().field_names.get(&source_key_column).cloned();
+            let target_field = target_class
+                .read()
+                .get_field_for_column(&target_key_column)?;
+            let source_field = source_class
+                .read()
+                .field_names
+                .get(&source_key_column)
+                .cloned();
             match source_field {
                 None => {
                     // The likely case here is that the column is a join
@@ -847,8 +959,10 @@ impl BasicEntityPersister {
                     // we directly reference the column-keyed data used
                     // to initialize the source entity before throwing an
                     // exception.
-                    let data = source_entity_data
-                        .get_or_insert_with(|| em.get_unit_of_work().get_original_entity_data(source_entity));
+                    let data = source_entity_data.get_or_insert_with(|| {
+                        em.get_unit_of_work()
+                            .get_original_entity_data(source_entity)
+                    });
                     match data.get(&source_key_column.as_str().into()) {
                         Some(value) if !value.is_null() => {
                             computed_identifier.insert(target_field.as_str(), value.clone());
@@ -869,12 +983,21 @@ impl BasicEntityPersister {
         }
 
         let target_entity = self
-            .load(&computed_identifier, None, Some(assoc), Hints::default(), None, None)
+            .load(
+                &computed_identifier,
+                None,
+                Some(assoc),
+                Hints::default(),
+                None,
+                None,
+            )
             .await?;
         if let Some(target_entity) = &target_entity {
-            target_class
-                .read()
-                .set_field_value(target_entity, &mapped_by, Value::Object(source_entity.clone()))?;
+            target_class.read().set_field_value(
+                target_entity,
+                &mapped_by,
+                Value::Object(source_entity.clone()),
+            )?;
         }
         Ok(target_entity)
     }
@@ -1006,7 +1129,8 @@ impl BasicEntityPersister {
         let rows = self
             .get_many_to_many_statement(&em, assoc, source_entity, None, None)
             .await?;
-        self.load_collection_from_statement(&em, assoc, rows, collection).await
+        self.load_collection_from_statement(&em, assoc, rows, collection)
+            .await
     }
 
     async fn get_many_to_many_statement(
@@ -1026,46 +1150,64 @@ impl BasicEntityPersister {
             em.get_class_metadata(&assoc.target_entity)?
         };
         let association = em.get_metadata_factory().get_owning_side(assoc)?;
-        let join_table = association.join_table.clone().unwrap_or_else(|| crate::mapping::JoinTableMapping::new(""));
+        let join_table = association
+            .join_table
+            .clone()
+            .unwrap_or_else(|| crate::mapping::JoinTableMapping::new(""));
         let join_columns = if assoc.is_owning_side() {
             join_table.join_columns.clone()
         } else {
             join_table.inverse_join_columns.clone()
         };
-        let quoted_join_table = self
-            .quote_strategy
-            .get_join_table_name(&association, &class.read(), platform);
+        let quoted_join_table =
+            self.quote_strategy
+                .get_join_table_name(&association, &class.read(), platform);
 
         let mut criteria = PhpArray::new();
         let mut parameters = Vec::new();
         for join_column in &join_columns {
             let source_key_column = join_column.referenced_column_name.clone();
-            let quoted_key_column = self
-                .quote_strategy
-                .get_join_column_name(join_column, &class.read(), platform);
+            let quoted_key_column =
+                self.quote_strategy
+                    .get_join_column_name(join_column, &class.read(), platform);
             let (field, value) = {
                 let source = source_class.read();
                 if source.contains_foreign_identifier {
                     let field = source.get_field_for_column(&source_key_column)?;
                     let mut value = source.get_field_value(source_entity, &field)?;
-                    if let (Some(assoc), Value::Object(related)) = (source.association_mappings.get(&field), &value) {
+                    if let (Some(assoc), Value::Object(related)) =
+                        (source.association_mappings.get(&field), &value)
+                    {
                         let id = em.get_unit_of_work().get_entity_identifier(related)?;
                         let target = em.get_class_metadata(&assoc.target_entity)?;
-                        let first = target.read().identifier.first().cloned().unwrap_or_default();
-                        value = id.get(&first.as_str().into()).cloned().unwrap_or(Value::Null);
+                        let first = target
+                            .read()
+                            .identifier
+                            .first()
+                            .cloned()
+                            .unwrap_or_default();
+                        value = id
+                            .get(&first.as_str().into())
+                            .cloned()
+                            .unwrap_or(Value::Null);
                     }
                     (field, value)
                 } else if let Some(field) = source.field_names.get(&source_key_column) {
                     let value = source.get_field_value(source_entity, field)?;
                     (field.clone(), value)
                 } else {
-                    return Err(crate::mapping::mapping_exception::join_column_must_point_to_mapped_field(
-                        &source.name,
-                        &source_key_column,
-                    ));
+                    return Err(
+                        crate::mapping::mapping_exception::join_column_must_point_to_mapped_field(
+                            &source.name,
+                            &source_key_column,
+                        ),
+                    );
                 }
             };
-            criteria.insert(format!("{quoted_join_table}.{quoted_key_column}").as_str(), value.clone());
+            criteria.insert(
+                format!("{quoted_join_table}.{quoted_key_column}").as_str(),
+                value.clone(),
+            );
             parameters.push(ToManyCriterion {
                 value,
                 field,
@@ -1080,7 +1222,10 @@ impl BasicEntityPersister {
 
     /// Gets the SELECT SQL to select one or more entities by a set of
     /// field criteria.
-    #[allow(clippy::too_many_arguments, reason = "getSelectSQL(), as PHP declares it")]
+    #[allow(
+        clippy::too_many_arguments,
+        reason = "getSelectSQL(), as PHP declares it"
+    )]
     pub fn get_select_sql(
         &self,
         em: &Arc<EntityManager>,
@@ -1117,7 +1262,9 @@ impl BasicEntityPersister {
         let condition_sql = self.get_select_condition_sql(em, criteria, assoc)?;
         let column_list = self.get_select_columns_sql(em)?;
         let table_alias = self.get_sql_table_alias(&self.class.read().name.clone(), "");
-        let table_name = self.quote_strategy.get_table_name(&self.class.read(), platform);
+        let table_name = self
+            .quote_strategy
+            .get_table_name(&self.class.read(), platform);
 
         let select = format!("SELECT {column_list}");
         let from = format!(" FROM {table_name} {table_alias}");
@@ -1131,14 +1278,26 @@ impl BasicEntityPersister {
         let query = format!("{select}{lock}{join}{where_}{order_by_sql}");
         platform
             .modify_limit_query(&query, limit, offset.unwrap_or(0))
-            .map_err(|e| Thrown::new("Doctrine\\DBAL\\Exception\\InvalidArgumentException", e.message(), 0))
+            .map_err(|e| {
+                Thrown::new(
+                    "Doctrine\\DBAL\\Exception\\InvalidArgumentException",
+                    e.message(),
+                    0,
+                )
+            })
     }
 
     /// Get the COUNT SQL to count entities (optionally filtered by a
     /// criteria)
-    pub fn get_count_sql(&self, em: &Arc<EntityManager>, criteria: &PhpArray) -> Result<String, Thrown> {
+    pub fn get_count_sql(
+        &self,
+        em: &Arc<EntityManager>,
+        criteria: &PhpArray,
+    ) -> Result<String, Thrown> {
         let platform = em.get_platform();
-        let table_name = self.quote_strategy.get_table_name(&self.class.read(), platform);
+        let table_name = self
+            .quote_strategy
+            .get_table_name(&self.class.read(), platform);
         let table_alias = self.get_sql_table_alias(&self.class.read().name.clone(), "");
         let condition_sql = self.get_select_condition_sql(em, criteria, None)?;
         Ok(format!(
@@ -1152,7 +1311,12 @@ impl BasicEntityPersister {
     }
 
     /// Gets the ORDER BY SQL snippet for ordered collections.
-    fn get_order_by_sql(&self, em: &Arc<EntityManager>, order_by: &PhpArray, base_table_alias: &str) -> Result<String, Thrown> {
+    fn get_order_by_sql(
+        &self,
+        em: &Arc<EntityManager>,
+        order_by: &PhpArray,
+        base_table_alias: &str,
+    ) -> Result<String, Thrown> {
         let platform = em.get_platform();
         let mut order_by_list = Vec::new();
         for (field_name, orientation) in order_by.iter() {
@@ -1167,13 +1331,18 @@ impl BasicEntityPersister {
                 other => to_text(other).trim().to_ascii_uppercase(),
             };
             if orientation != "ASC" && orientation != "DESC" {
-                return Err(exception::invalid_orientation(&self.class.read().name, &field_name));
+                return Err(exception::invalid_orientation(
+                    &self.class.read().name,
+                    &field_name,
+                ));
             }
 
             let (field_inherited, assoc) = {
                 let info = self.class.read();
                 (
-                    info.field_mappings.get(&field_name).map(|m| m.inherited.clone()),
+                    info.field_mappings
+                        .get(&field_name)
+                        .map(|m| m.inherited.clone()),
                     info.association_mappings.get(&field_name).cloned(),
                 )
             };
@@ -1182,9 +1351,9 @@ impl BasicEntityPersister {
                     Some(inherited) => self.get_sql_table_alias(&inherited, ""),
                     None => base_table_alias.to_owned(),
                 };
-                let column_name = self
-                    .quote_strategy
-                    .get_column_name(&field_name, &self.class.read(), platform);
+                let column_name =
+                    self.quote_strategy
+                        .get_column_name(&field_name, &self.class.read(), platform);
                 order_by_list.push(format!("{table_alias}.{column_name} {orientation}"));
                 continue;
             }
@@ -1201,15 +1370,20 @@ impl BasicEntityPersister {
                     None => base_table_alias.to_owned(),
                 };
                 for join_column in &association.join_columns {
-                    let column_name = self
-                        .quote_strategy
-                        .get_join_column_name(join_column, &self.class.read(), platform);
+                    let column_name = self.quote_strategy.get_join_column_name(
+                        join_column,
+                        &self.class.read(),
+                        platform,
+                    );
                     order_by_list.push(format!("{table_alias}.{column_name} {orientation}"));
                 }
                 continue;
             }
 
-            return Err(exception::unrecognized_field(&self.class.read().name, &field_name));
+            return Err(exception::unrecognized_field(
+                &self.class.read().name,
+                &field_name,
+            ));
         }
         Ok(format!(" ORDER BY {}", order_by_list.join(", ")))
     }
@@ -1219,7 +1393,7 @@ impl BasicEntityPersister {
     ///
     /// Subclasses should override this method to alter or change the
     /// select column list SQL fragment. Note that in the implementation of
-    /// BasicEntityPersister the resulting SQL fragment is generated only
+    /// `BasicEntityPersister` the resulting SQL fragment is generated only
     /// once and cached in {@link selectColumnListSql}. Subclasses may or
     /// may not do the same.
     fn get_select_columns_sql(&self, em: &Arc<EntityManager>) -> Result<String, Thrown> {
@@ -1228,7 +1402,10 @@ impl BasicEntityPersister {
         }
         let mut column_list = Vec::new();
         let class_name = self.class.read().name.clone();
-        self.st().ctx().rsm.add_entity_result(&class_name, "r", None); // r for root
+        self.st()
+            .ctx()
+            .rsm
+            .add_entity_result(&class_name, "r", None); // r for root
 
         let field_names: Vec<String> = self.class.read().field_names.values().cloned().collect();
         for field in field_names {
@@ -1245,7 +1422,8 @@ impl BasicEntityPersister {
             .map(|(k, v)| (k.to_owned(), v.clone()))
             .collect();
         for (assoc_field, assoc) in associations {
-            let assoc_column_sql = self.get_select_column_association_sql(em, &assoc_field, &assoc, &self.class, "r")?;
+            let assoc_column_sql =
+                self.get_select_column_association_sql(em, &assoc_field, &assoc, &self.class, "r")?;
             if !assoc_column_sql.is_empty() {
                 column_list.push(assoc_column_sql);
             }
@@ -1273,48 +1451,74 @@ impl BasicEntityPersister {
         let mut column_list = Vec::new();
         let target_class = em.get_class_metadata(&assoc.target_entity)?;
         let is_identifier = assoc.id == Some(true);
-        let sql_table_alias = self.get_sql_table_alias(&class.read().name.clone(), if alias == "r" { "" } else { alias });
+        let sql_table_alias = self.get_sql_table_alias(
+            &class.read().name.clone(),
+            if alias == "r" { "" } else { alias },
+        );
 
         for join_column in &assoc.join_columns {
-            let quoted_column = self
-                .quote_strategy
-                .get_join_column_name(join_column, &self.class.read(), platform);
+            let quoted_column =
+                self.quote_strategy
+                    .get_join_column_name(join_column, &self.class.read(), platform);
             let result_column_name = self.get_sql_column_alias(em, &join_column.name);
-            let ty = get_type_of_column(&join_column.referenced_column_name, &target_class.read(), em)?;
-            self.st()
-                .ctx()
-                .rsm
-                .add_meta_result(alias, &result_column_name, &join_column.name, is_identifier, Some(&ty));
-            column_list.push(format!("{sql_table_alias}.{quoted_column} AS {result_column_name}"));
+            let ty = get_type_of_column(
+                &join_column.referenced_column_name,
+                &target_class.read(),
+                em,
+            )?;
+            self.st().ctx().rsm.add_meta_result(
+                alias,
+                &result_column_name,
+                &join_column.name,
+                is_identifier,
+                Some(&ty),
+            );
+            column_list.push(format!(
+                "{sql_table_alias}.{quoted_column} AS {result_column_name}"
+            ));
         }
         Ok(column_list.join(", "))
     }
 
     /// Gets the SQL join fragment used when selecting entities from a
     /// many-to-many association.
-    fn get_select_many_to_many_join_sql(&self, em: &Arc<EntityManager>, many_to_many: &AssociationMapping) -> Result<String, Thrown> {
+    fn get_select_many_to_many_join_sql(
+        &self,
+        em: &Arc<EntityManager>,
+        many_to_many: &AssociationMapping,
+    ) -> Result<String, Thrown> {
         let platform = em.get_platform();
         let mut conditions = Vec::new();
         let source_table_alias = self.get_sql_table_alias(&self.class.read().name.clone(), "");
         let association = em.get_metadata_factory().get_owning_side(many_to_many)?;
         let info = self.class.read();
-        let join_table_name = self.quote_strategy.get_join_table_name(&association, &info, platform);
-        let join_table = association.join_table.clone().unwrap_or_else(|| crate::mapping::JoinTableMapping::new(""));
+        let join_table_name =
+            self.quote_strategy
+                .get_join_table_name(&association, &info, platform);
+        let join_table = association
+            .join_table
+            .clone()
+            .unwrap_or_else(|| crate::mapping::JoinTableMapping::new(""));
         let join_columns: Vec<JoinColumnMapping> = if many_to_many.is_owning_side() {
             join_table.inverse_join_columns.clone()
         } else {
             join_table.join_columns.clone()
         };
         for join_column in &join_columns {
-            let quoted_source_column = self.quote_strategy.get_join_column_name(join_column, &info, platform);
-            let quoted_target_column = self
-                .quote_strategy
-                .get_referenced_join_column_name(join_column, &info, platform);
+            let quoted_source_column =
+                self.quote_strategy
+                    .get_join_column_name(join_column, &info, platform);
+            let quoted_target_column =
+                self.quote_strategy
+                    .get_referenced_join_column_name(join_column, &info, platform);
             conditions.push(format!(
                 "{source_table_alias}.{quoted_target_column} = {join_table_name}.{quoted_source_column}"
             ));
         }
-        Ok(format!(" INNER JOIN {join_table_name} ON {}", conditions.join(" AND ")))
+        Ok(format!(
+            " INNER JOIN {join_table_name} ON {}",
+            conditions.join(" AND ")
+        ))
     }
 
     /// Gets the INSERT SQL used by the persister to persist a new entity.
@@ -1376,12 +1580,18 @@ impl BasicEntityPersister {
             if let Some(assoc) = info.association_mappings.get(name) {
                 if assoc.is_to_one_owning_side() {
                     for join_column in &assoc.join_columns {
-                        columns.push(self.quote_strategy.get_join_column_name(join_column, &info, platform));
+                        columns.push(self.quote_strategy.get_join_column_name(
+                            join_column,
+                            &info,
+                            platform,
+                        ));
                     }
                 }
                 continue;
             }
-            if !info.is_id_generator_identity() || info.identifier.first().map(String::as_str) != Some(name) {
+            if !info.is_id_generator_identity()
+                || info.identifier.first().map(String::as_str) != Some(name)
+            {
                 let Some(mapping) = info.field_mappings.get(name) else {
                     continue;
                 };
@@ -1389,7 +1599,9 @@ impl BasicEntityPersister {
                     continue;
                 }
                 columns.push(self.quote_strategy.get_column_name(name, &info, platform));
-                self.st().column_types.insert(name.to_owned(), mapping.r#type.clone());
+                self.st()
+                    .column_types
+                    .insert(name.to_owned(), mapping.r#type.clone());
             }
         }
         columns
@@ -1397,7 +1609,13 @@ impl BasicEntityPersister {
 
     /// Gets the SQL snippet of a qualified column name for the given
     /// field name.
-    fn get_select_column_sql(&self, em: &Arc<EntityManager>, field: &str, class: &ClassMetadata, alias: &str) -> Result<String, Thrown> {
+    fn get_select_column_sql(
+        &self,
+        em: &Arc<EntityManager>,
+        field: &str,
+        class: &ClassMetadata,
+        alias: &str,
+    ) -> Result<String, Thrown> {
         let platform = em.get_platform();
         let root = if alias == "r" { "" } else { alias };
         let table_alias = self.get_sql_table_alias(&class.read().name.clone(), root);
@@ -1427,7 +1645,9 @@ impl BasicEntityPersister {
         };
         {
             let mut st = self.st();
-            st.ctx().rsm.add_field_result(alias, &column_alias, field, None);
+            st.ctx()
+                .rsm
+                .add_field_result(alias, &column_alias, field, None);
             if let Some(enum_type) = enum_type.filter(|t| !t.is_empty()) {
                 st.ctx().rsm.add_enum_result(&column_alias, &enum_type);
             }
@@ -1478,7 +1698,8 @@ impl BasicEntityPersister {
         for column in columns {
             let mut placeholder = "?".to_owned();
             if let Some(mapping) = self.class.read().field_mappings.get(field) {
-                let ty = types::get_type(&mapping.r#type).map_err(|e| Thrown::new(e.class(), e.message(), 0))?;
+                let ty = types::get_type(&mapping.r#type)
+                    .map_err(|e| Thrown::new(e.class(), e.message(), 0))?;
                 placeholder = ty
                     .convert_to_database_value_sql(placeholder.as_bytes(), platform)
                     .to_string_lossy()
@@ -1537,7 +1758,8 @@ impl BasicEntityPersister {
             let alias = self.get_sql_table_alias(&class_name, "");
             return Ok(vec![format!(
                 "{alias}.{}",
-                self.quote_strategy.get_column_name(field, &self.class.read(), platform)
+                self.quote_strategy
+                    .get_column_name(field, &self.class.read(), platform)
             )]);
         }
 
@@ -1547,10 +1769,19 @@ impl BasicEntityPersister {
                 let Some(assoc) = assoc else {
                     return Err(Thrown::new("AssertionError", "assert($assoc !== null)", 0));
                 };
-                let association = if association.is_owning_side() { association } else { assoc.clone() };
+                let association = if association.is_owning_side() {
+                    association
+                } else {
+                    assoc.clone()
+                };
                 let info = self.class.read();
-                let join_table_name = self.quote_strategy.get_join_table_name(&association, &info, platform);
-                let join_table = association.join_table.clone().unwrap_or_else(|| crate::mapping::JoinTableMapping::new(""));
+                let join_table_name =
+                    self.quote_strategy
+                        .get_join_table_name(&association, &info, platform);
+                let join_table = association
+                    .join_table
+                    .clone()
+                    .unwrap_or_else(|| crate::mapping::JoinTableMapping::new(""));
                 let join_columns = if assoc.is_owning_side() {
                     join_table.join_columns
                 } else {
@@ -1559,19 +1790,27 @@ impl BasicEntityPersister {
                 for join_column in &join_columns {
                     columns.push(format!(
                         "{join_table_name}.{}",
-                        self.quote_strategy.get_join_column_name(join_column, &info, platform)
+                        self.quote_strategy
+                            .get_join_column_name(join_column, &info, platform)
                     ));
                 }
             } else {
                 if !association.is_owning_side() {
-                    return Err(exception::invalid_find_by_call_from_inverse_side_usage(&class_name, field));
+                    return Err(exception::invalid_find_by_call_from_inverse_side_usage(
+                        &class_name,
+                        field,
+                    ));
                 }
                 let class_name = association.inherited.clone().unwrap_or(class_name);
                 let alias = self.get_sql_table_alias(&class_name, "");
                 for join_column in &association.join_columns {
                     columns.push(format!(
                         "{alias}.{}",
-                        self.quote_strategy.get_join_column_name(join_column, &self.class.read(), platform)
+                        self.quote_strategy.get_join_column_name(
+                            join_column,
+                            &self.class.read(),
+                            platform
+                        )
                     ));
                 }
             }
@@ -1600,7 +1839,12 @@ impl BasicEntityPersister {
     ) -> Result<String, Thrown> {
         let mut conditions = Vec::new();
         for (field, value) in criteria.iter() {
-            conditions.push(self.get_select_condition_statement_sql(em, &key_text(field), value, assoc)?);
+            conditions.push(self.get_select_condition_statement_sql(
+                em,
+                &key_text(field),
+                value,
+                assoc,
+            )?);
         }
         Ok(conditions.join(" AND "))
     }
@@ -1633,7 +1877,8 @@ impl BasicEntityPersister {
         let rows = self
             .get_one_to_many_statement(&em, assoc, source_entity, None, None)
             .await?;
-        self.load_collection_from_statement(&em, assoc, rows, collection).await
+        self.load_collection_from_statement(&em, assoc, rows, collection)
+            .await
     }
 
     /// Builds criteria and execute SQL statement to fetch the one to many
@@ -1650,7 +1895,11 @@ impl BasicEntityPersister {
         let mut criteria = PhpArray::new();
         let mut parameters = Vec::new();
         let mapped_by = assoc.mapped_by.clone().unwrap_or_default();
-        let owning_assoc = self.class.read().get_association_mapping(&mapped_by)?.clone();
+        let owning_assoc = self
+            .class
+            .read()
+            .get_association_mapping(&mapped_by)?
+            .clone();
         let source_class = em.get_class_metadata(&assoc.source_entity)?;
         let alias_class = owning_assoc
             .inherited
@@ -1658,20 +1907,35 @@ impl BasicEntityPersister {
             .unwrap_or_else(|| self.class.read().name.clone());
         let table_alias = self.get_sql_table_alias(&alias_class, "");
 
-        for (source_key_column, target_key_column) in owning_assoc.target_to_source_key_columns.iter() {
+        for (source_key_column, target_key_column) in
+            owning_assoc.target_to_source_key_columns.iter()
+        {
             let source_key_column = key_text(source_key_column);
             let target_key_column = to_text(target_key_column);
             let source = source_class.read();
             if source.contains_foreign_identifier {
                 let field = source.get_field_for_column(&source_key_column)?;
                 let mut value = source.get_field_value(source_entity, &field)?;
-                if let (Some(assoc), Value::Object(related)) = (source.association_mappings.get(&field), &value) {
+                if let (Some(assoc), Value::Object(related)) =
+                    (source.association_mappings.get(&field), &value)
+                {
                     let id = em.get_unit_of_work().get_entity_identifier(related)?;
                     let target = em.get_class_metadata(&assoc.target_entity)?;
-                    let first = target.read().identifier.first().cloned().unwrap_or_default();
-                    value = id.get(&first.as_str().into()).cloned().unwrap_or(Value::Null);
+                    let first = target
+                        .read()
+                        .identifier
+                        .first()
+                        .cloned()
+                        .unwrap_or_default();
+                    value = id
+                        .get(&first.as_str().into())
+                        .cloned()
+                        .unwrap_or(Value::Null);
                 }
-                criteria.insert(format!("{table_alias}.{target_key_column}").as_str(), value.clone());
+                criteria.insert(
+                    format!("{table_alias}.{target_key_column}").as_str(),
+                    value.clone(),
+                );
                 parameters.push(ToManyCriterion {
                     value,
                     field,
@@ -1679,9 +1943,16 @@ impl BasicEntityPersister {
                 });
                 continue;
             }
-            let field = source.field_names.get(&source_key_column).cloned().unwrap_or_default();
+            let field = source
+                .field_names
+                .get(&source_key_column)
+                .cloned()
+                .unwrap_or_default();
             let value = source.get_field_value(source_entity, &field)?;
-            criteria.insert(format!("{table_alias}.{target_key_column}").as_str(), value.clone());
+            criteria.insert(
+                format!("{table_alias}.{target_key_column}").as_str(),
+                value.clone(),
+            );
             parameters.push(ToManyCriterion {
                 value,
                 field,
@@ -1696,7 +1967,11 @@ impl BasicEntityPersister {
 
     /// Expands the parameters from the given criteria and use the correct
     /// binding types if found.
-    pub fn expand_parameters(&self, em: &EntityManager, criteria: &PhpArray) -> Result<Params, Thrown> {
+    pub fn expand_parameters(
+        &self,
+        em: &EntityManager,
+        criteria: &PhpArray,
+    ) -> Result<Params, Thrown> {
         let info = self.class.read();
         let mut params = Vec::new();
         let mut types = Vec::new();
@@ -1719,9 +1994,14 @@ impl BasicEntityPersister {
     }
 
     /// Expands the parameters from the given criteria and use the correct
-    /// binding types if found, specialized for OneToMany or ManyToMany
+    /// binding types if found, specialized for `OneToMany` or `ManyToMany`
     /// associations.
-    fn expand_to_many_parameters(&self, em: &EntityManager, criteria: &[ToManyCriterion]) -> Result<Params, Thrown> {
+    #[allow(clippy::unused_self, reason = "an instance method upstream")]
+    fn expand_to_many_parameters(
+        &self,
+        em: &EntityManager,
+        criteria: &[ToManyCriterion],
+    ) -> Result<Params, Thrown> {
         let mut params = Vec::new();
         let mut types = Vec::new();
         for criterion in criteria {
@@ -1750,7 +2030,8 @@ impl BasicEntityPersister {
         let alias = self.get_sql_table_alias(&self.class.read().name.clone(), "");
         let from = format!(
             "FROM {} {alias}",
-            self.quote_strategy.get_table_name(&self.class.read(), platform)
+            self.quote_strategy
+                .get_table_name(&self.class.read(), platform)
         );
         let sql = format!(
             "SELECT 1 {} WHERE {}",
@@ -1787,7 +2068,12 @@ impl BasicEntityPersister {
         self.st().limits = offset.is_some() || limit.is_some();
     }
 
-    fn get_class_identifiers_types(&self, em: &EntityManager, class: &ClassMetadata) -> Result<Vec<ParamType>, Thrown> {
+    #[allow(clippy::unused_self, reason = "an instance method upstream")]
+    fn get_class_identifiers_types(
+        &self,
+        em: &EntityManager,
+        class: &ClassMetadata,
+    ) -> Result<Vec<ParamType>, Thrown> {
         let info = class.read();
         let mut types = Vec::new();
         for field_name in &info.identifier {

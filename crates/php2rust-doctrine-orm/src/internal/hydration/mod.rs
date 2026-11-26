@@ -16,8 +16,8 @@ use php2rust_doctrine_dbal::types;
 use crate::entity_manager::EntityManager;
 use crate::persistent_collection::PersistentCollection;
 use crate::query::ResultSetMapping;
-use crate::unit_of_work::Hints;
 use crate::unit_of_work::Fut;
+use crate::unit_of_work::Hints;
 use crate::utility::{key_text, to_text};
 
 /// Where the hydrated entities go besides the result: the collection
@@ -80,7 +80,8 @@ async fn do_hydrate_all(
                 ));
             }
             // hydrateColumnInfo()
-            let (field_name, type_name) = if let Some(field_name) = rsm.field_mappings.get(&column) {
+            let (field_name, type_name) = if let Some(field_name) = rsm.field_mappings.get(&column)
+            {
                 let declaring = rsm
                     .declaring_classes
                     .get(&column)
@@ -104,7 +105,8 @@ async fn do_hydrate_all(
             let value_is_null = value.is_null();
             let mut value = value.clone();
             if let Some(type_name) = type_name {
-                let ty = types::get_type(&type_name).map_err(|e| Thrown::new(e.class(), e.message(), 0))?;
+                let ty = types::get_type(&type_name)
+                    .map_err(|e| Thrown::new(e.class(), e.message(), 0))?;
                 value = ty
                     .convert_to_php_value(&value, platform)
                     .map_err(|e| crate::exception::from_conversion(&e))?;
@@ -113,7 +115,7 @@ async fn do_hydrate_all(
             // Prevent overwrite in case of inherit classes using same
             // property name (See AbstractHydrator)
             let key = Key::from(field_name.as_str());
-            if !data.get(&key).is_some_and(|v| !v.is_null()) || !value_is_null {
+            if data.get(&key).is_none_or(Value::is_null) || !value_is_null {
                 data.insert(key, value);
             }
         }
@@ -129,10 +131,15 @@ async fn do_hydrate_all(
                 Some(index_by) => {
                     let entity_class = em.get_class_metadata(entity.class())?;
                     let key = entity_class.read().get_field_value(&entity, index_by)?;
-                    let key = Key::from_value(&key).unwrap_or_else(|| Key::from(to_text(&key).as_str()));
-                    target.collection.hydrate_set(key, Value::Object(entity.clone()))?;
+                    let key =
+                        Key::from_value(&key).unwrap_or_else(|| Key::from(to_text(&key).as_str()));
+                    target
+                        .collection
+                        .hydrate_set(key, Value::Object(entity.clone()))?;
                 }
-                None => target.collection.hydrate_add(Value::Object(entity.clone()))?,
+                None => target
+                    .collection
+                    .hydrate_add(Value::Object(entity.clone()))?,
             }
         }
         result.push(entity);
@@ -172,10 +179,13 @@ fn register_managed(
             };
             id.insert(
                 field_name.as_str(),
-                data.get(&key.as_str().into()).cloned().unwrap_or(Value::Null),
+                data.get(&key.as_str().into())
+                    .cloned()
+                    .unwrap_or(Value::Null),
             );
         }
         id
     };
-    em.get_unit_of_work().register_managed(entity, id, data.clone())
+    em.get_unit_of_work()
+        .register_managed(entity, id, data.clone())
 }

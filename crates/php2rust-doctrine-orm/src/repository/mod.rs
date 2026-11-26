@@ -32,13 +32,14 @@ pub trait RepositoryFactory: Send + Sync {
 /// `Doctrine\ORM\Repository\DefaultRepositoryFactory`.
 #[derive(Default)]
 pub struct DefaultRepositoryFactory {
-    /// The list of EntityRepository instances.
+    /// The list of `EntityRepository` instances.
     repository_list: Mutex<HashMap<String, Arc<EntityRepository>>>,
 }
 
 impl fmt::Debug for DefaultRepositoryFactory {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.debug_struct("DefaultRepositoryFactory").finish_non_exhaustive()
+        f.debug_struct("DefaultRepositoryFactory")
+            .finish_non_exhaustive()
     }
 }
 
