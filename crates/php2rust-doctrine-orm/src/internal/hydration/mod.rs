@@ -226,8 +226,7 @@ async fn do_hydrate_all(
         if let Some(target) = &collection {
             match &target.index_by {
                 Some(index_by) => {
-                    let entity_class = em.get_class_metadata(entity.class())?;
-                    let key = entity_class.read().get_field_value(&entity, index_by)?;
+                    let key = index_by_value(em, &entity, index_by)?;
                     let key =
                         Key::from_value(&key).unwrap_or_else(|| Key::from(to_text(&key).as_str()));
                     target
@@ -250,6 +249,60 @@ async fn do_hydrate_all(
 }
 
 /// `AbstractHydrator::registerManaged()`.
+/// `$row[$rsm->indexByMap[$alias]]` for an entity loaded into an indexed
+/// collection: the value of the `indexBy` field, or, for the column of an
+/// association (`addIndexBy()` finds its meta mapping), the referenced
+/// identifier of the associated entity.
+pub(crate) fn index_by_value(
+    em: &EntityManager,
+    entity: &Object,
+    index_by: &str,
+) -> Result<Value, Thrown> {
+    let class = em.get_class_metadata(entity.class())?;
+    let join_column = {
+        let class = class.read();
+        if class.has_field(index_by) || class.association_mappings.contains_key(index_by) {
+            None
+        } else {
+            class
+                .association_mappings
+                .iter()
+                .find_map(|(field, assoc)| {
+                    assoc
+                        .join_columns
+                        .iter()
+                        .find(|jc| jc.name == index_by)
+                        .map(|jc| {
+                            (
+                                field.to_owned(),
+                                assoc.target_entity.clone(),
+                                jc.referenced_column_name.clone(),
+                            )
+                        })
+                })
+        }
+    };
+    let Some((field, target_entity, referenced_column)) = join_column else {
+        return class.read().get_field_value(entity, index_by);
+    };
+    let Value::Object(target) = class.read().get_field_value(entity, &field)? else {
+        return Ok(Value::Null);
+    };
+    let target_class = em.get_class_metadata(&target_entity)?;
+    let target_class = target_class.read();
+    let target_field = target_class.get_field_for_column(&referenced_column)?;
+    let mut value = target_class.get_field_value(&target, &target_field)?;
+    if value.is_null() {
+        // A reference: its identifier.
+        value = target_class
+            .get_identifier_values(&target)?
+            .get(&Key::from(target_field.as_str()))
+            .cloned()
+            .unwrap_or(Value::Null);
+    }
+    Ok(value)
+}
+
 pub(crate) fn register_managed(
     em: &EntityManager,
     class_name: &str,

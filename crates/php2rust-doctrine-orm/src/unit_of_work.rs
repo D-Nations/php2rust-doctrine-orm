@@ -2930,9 +2930,8 @@ impl UnitOfWork {
                     continue;
                 };
                 if let Some(index_by) = &mapping.index_by {
-                    let key = target_class
-                        .read()
-                        .get_field_value(&target_value, index_by)?;
+                    let key =
+                        crate::internal::hydration::index_by_value(&em, &target_value, index_by)?;
                     let key = Key::from_value(&key).unwrap_or(Key::Int(0));
                     coll.hydrate_set(key, Value::Object(target_value))?;
                 } else {
