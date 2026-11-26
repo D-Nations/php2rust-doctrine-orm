@@ -7,6 +7,8 @@ pub mod context;
 pub mod dql_query;
 pub mod exec;
 pub mod expr;
+pub mod filter;
+pub mod filter_collection;
 mod lexer;
 mod parameter;
 mod parameter_type_inferer;
@@ -23,6 +25,8 @@ pub(crate) mod utility;
 
 pub use dql_query::Query;
 pub use expr::Expr;
+pub use filter::{FilterConstraint, SqlFilter, register_filter_class};
+pub use filter_collection::FilterCollection;
 pub use lexer::Lexer;
 pub use parameter::{Parameter, ParameterName};
 pub use parameter_type_inferer::ParameterTypeInferer;

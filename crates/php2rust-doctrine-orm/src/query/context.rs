@@ -444,4 +444,16 @@ impl QueryContext for crate::entity_manager::EntityManager {
     fn get_custom_datetime_function(&self, name: &str) -> Option<FunctionFactory> {
         function_class(self.get_configuration().get_custom_datetime_function(name))
     }
+
+    fn has_filters(&self) -> bool {
+        crate::entity_manager::EntityManager::has_filters(self)
+    }
+
+    fn get_enabled_filters(&self) -> Vec<Arc<dyn SqlFilterConstraint>> {
+        self.get_filters()
+            .get_enabled_filters()
+            .into_iter()
+            .map(|(_, filter)| filter as Arc<dyn SqlFilterConstraint>)
+            .collect()
+    }
 }
