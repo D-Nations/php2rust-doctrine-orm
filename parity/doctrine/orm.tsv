@@ -1293,7 +1293,7 @@ tests/Tests/ORM/Functional/Ticket/DDC2519Test.php	DDC2519Test::testIssue	ported	
 tests/Tests/ORM/Functional/Ticket/DDC2575Test.php	DDC2575Test::testHydrationIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2575_test.rs::testHydrationIssue
 tests/Tests/ORM/Functional/Ticket/DDC2579Test.php	DDC2579Test::testIssue	pending	a custom DBAL type of the test file (the recorder cannot load a DBAL Type subclass)
 tests/Tests/ORM/Functional/Ticket/DDC258Test.php	DDC258Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc258_test.rs::testIssue
-tests/Tests/ORM/Functional/Ticket/DDC2602Test.php	DDC2602Test::testPostLoadListenerShouldBeAbleToRunQueries	pending	
+tests/Tests/ORM/Functional/Ticket/DDC2602Test.php	DDC2602Test::testPostLoadListenerShouldBeAbleToRunQueries	pending	its postLoad listener runs a DQL query; a listener's call is synchronous and the query is async
 tests/Tests/ORM/Functional/Ticket/DDC2655Test.php	DDC2655Test::testSingleScalarOneOrNullResult	ported	crates/php2rust-doctrine-orm/tests/ddc2655_test.rs::testSingleScalarOneOrNullResult
 tests/Tests/ORM/Functional/Ticket/DDC2660Test.php	DDC2660Test::testIssueWithExtraColumn	ported	crates/php2rust-doctrine-orm/tests/ddc2660_test.rs::testIssueWithExtraColumn
 tests/Tests/ORM/Functional/Ticket/DDC2660Test.php	DDC2660Test::testIssueWithoutExtraColumn	ported	crates/php2rust-doctrine-orm/tests/ddc2660_test.rs::testIssueWithoutExtraColumn
