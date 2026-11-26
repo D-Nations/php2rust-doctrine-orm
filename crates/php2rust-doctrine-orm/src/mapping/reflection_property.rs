@@ -91,24 +91,24 @@ impl ReflectionEmbeddedProperty {
 
     /// `setValue()`: instantiates the embedded object when it is null.
     pub fn set_value(&self, object: &dyn PhpObject, value: Value) -> Result<(), Thrown> {
-        let embedded_object = match self.parent_property.get_value(object)? {
-            Value::Object(embedded_object) => embedded_object,
-            _ => {
-                let embedded_object =
-                    EntityObject::object(&self.embedded_class).ok_or_else(|| {
-                        Thrown::new(
-                            "Doctrine\\Instantiator\\Exception\\InvalidArgumentException",
-                            format!(
-                                "The provided class \"{}\" does not exist",
-                                self.embedded_class
-                            ),
-                            0,
-                        )
-                    })?;
-                self.parent_property
-                    .set_value(object, Value::Object(embedded_object.clone()))?;
-                embedded_object
-            }
+        let embedded_object = if let Value::Object(embedded_object) =
+            self.parent_property.get_value(object)?
+        {
+            embedded_object
+        } else {
+            let embedded_object = EntityObject::object(&self.embedded_class).ok_or_else(|| {
+                Thrown::new(
+                    "Doctrine\\Instantiator\\Exception\\InvalidArgumentException",
+                    format!(
+                        "The provided class \"{}\" does not exist",
+                        self.embedded_class
+                    ),
+                    0,
+                )
+            })?;
+            self.parent_property
+                .set_value(object, Value::Object(embedded_object.clone()))?;
+            embedded_object
         };
 
         self.child_property
