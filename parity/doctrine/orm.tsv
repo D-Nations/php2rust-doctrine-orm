@@ -218,26 +218,26 @@ tests/Tests/ORM/Cache/StatisticsCacheLoggerTest.php	StatisticsCacheLoggerTest::t
 tests/Tests/ORM/Cache/StatisticsCacheLoggerTest.php	StatisticsCacheLoggerTest::testEntityCache	pending	
 tests/Tests/ORM/Cache/StatisticsCacheLoggerTest.php	StatisticsCacheLoggerTest::testMultipleCaches	pending	
 tests/Tests/ORM/Cache/StatisticsCacheLoggerTest.php	StatisticsCacheLoggerTest::testQueryCache	pending	
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testAddGetCustomDatetimeFunction	pending	
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testAddGetCustomHydrationMode	pending	
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testAddGetCustomNumericFunction	pending	
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testAddGetCustomStringFunction	pending	
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testAddGetCustomDatetimeFunction	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testAddGetCustomDatetimeFunction
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testAddGetCustomHydrationMode	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testAddGetCustomHydrationMode
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testAddGetCustomNumericFunction	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testAddGetCustomNumericFunction
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testAddGetCustomStringFunction	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testAddGetCustomStringFunction
 tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testAddGetFilters	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testAddGetFilters
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testDisablingNativeLazyObjectsIsDeprecated	pending	
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetCustomHydrationModes	pending	
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetAutoGenerateProxyClasses	pending	
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetClassMetadataFactoryName	pending	
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetEntityListenerResolver	pending	
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetHydrationCache	pending	
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetMetadataCache	pending	
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetMetadataDriverImpl	pending	
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetNamingStrategy	pending	
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetProxyDir	pending	
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetProxyNamespace	pending	
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetQueryCache	pending	
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetQuoteStrategy	pending	
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetSecondLevelCacheConfig	pending	
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetTypedFieldMapper	pending	
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testDisablingNativeLazyObjectsIsDeprecated	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testDisablingNativeLazyObjectsIsDeprecated
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetCustomHydrationModes	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetCustomHydrationModes
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetAutoGenerateProxyClasses	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetAutoGenerateProxyClasses
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetClassMetadataFactoryName	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetClassMetadataFactoryName
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetEntityListenerResolver	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetEntityListenerResolver
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetHydrationCache	pending	the query, hydration and metadata caches and the second level cache configuration are not ported
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetMetadataCache	pending	the query, hydration and metadata caches and the second level cache configuration are not ported
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetMetadataDriverImpl	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetMetadataDriverImpl
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetNamingStrategy	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetNamingStrategy
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetProxyDir	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetProxyDir
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetProxyNamespace	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetProxyNamespace
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetQueryCache	pending	the query, hydration and metadata caches and the second level cache configuration are not ported
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetQuoteStrategy	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetQuoteStrategy
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetSecondLevelCacheConfig	pending	the query, hydration and metadata caches and the second level cache configuration are not ported
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetTypedFieldMapper	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetTypedFieldMapper
 tests/Tests/ORM/Entity/ConstructorTest.php	ConstructorTest::testFieldInitializationInConstructor	pending	
 tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testAffectedByErrorIfClosedException	pending	
 tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testCreateNativeQuery	pending	
