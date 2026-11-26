@@ -10,10 +10,22 @@
 #[doc = include_str!("../README.md")]
 struct ReadmeExample;
 
+pub mod collection_object;
+pub mod configuration;
 pub mod deprecations;
+pub mod entity_manager;
+pub mod entity_repository;
+pub mod event;
 pub mod events;
+pub mod exception;
 pub mod id;
 pub mod internal;
 pub mod mapping;
 pub mod object;
+pub mod persistent_collection;
+pub mod persisters;
 pub mod query;
+pub mod repository;
+pub mod tools;
+pub mod unit_of_work;
+pub mod utility;
