@@ -49,8 +49,9 @@ use crate::query::context::{
 use crate::query::exec::{
     PreparedExecutorFinalizer, SingleSelectSqlFinalizer, SqlExecutor, SqlFinalizer,
 };
-use crate::query::parser_result::{ParserResult, ResultSetMapping};
+use crate::query::parser_result::ParserResult;
 use crate::query::query_exception;
+use crate::query::result_set_mapping::ResultSetMapping;
 use crate::query::sort_direction::SortDirection;
 use crate::query::utility;
 
@@ -1986,11 +1987,15 @@ pub mod base {
             .get(&(alias.clone(), field.clone()))
             .cloned()
         {
-            rsm(w, |rsm| rsm.add_index_by_scalar(&column));
+            rsm(w, |rsm| {
+                rsm.add_index_by_scalar(&column);
+            });
             return Ok(());
         }
 
-        rsm(w, |rsm| rsm.add_index_by(&alias, &field));
+        rsm(w, |rsm| {
+            rsm.add_index_by(&alias, &field);
+        });
         Ok(())
     }
 
@@ -2304,7 +2309,9 @@ pub mod base {
             w.walk_index_by(index_by)?;
         } else if relation.is_indexed() {
             let index_by = relation.index_by()?.to_owned();
-            rsm(w, |rsm| rsm.add_index_by(joined_dql_alias, &index_by));
+            rsm(w, |rsm| {
+                rsm.add_index_by(joined_dql_alias, &index_by);
+            });
         }
 
         Ok(sql)
@@ -2611,7 +2618,7 @@ pub mod base {
                     rsm(w, |rsm| {
                         rsm.add_scalar_result(
                             &column_alias,
-                            &Key::from(result_alias.as_str()),
+                            Key::from(result_alias.as_str()),
                             &field_mapping.r#type,
                         );
                     });
@@ -2623,7 +2630,9 @@ pub mod base {
                     if let Some(enum_type) =
                         field_mapping.enum_type.as_deref().filter(|e| truthy(e))
                     {
-                        rsm(w, |rsm| rsm.add_enum_result(&column_alias, enum_type));
+                        rsm(w, |rsm| {
+                            rsm.add_enum_result(&column_alias, enum_type);
+                        });
                     }
                 }
             }
@@ -2655,7 +2664,7 @@ pub mod base {
                 if let Node::Function(function) = expr {
                     if let Some(type_name) = function.return_type_name() {
                         rsm(w, |rsm| {
-                            rsm.add_scalar_result(&column_alias, &result_alias, &type_name);
+                            rsm.add_scalar_result(&column_alias, result_alias.clone(), &type_name);
                         });
                         return Ok(sql);
                     }
@@ -2668,14 +2677,14 @@ pub mod base {
                         let type_name = php2rust_doctrine_dbal::types::lookup_name(&type_)
                             .map_err(|e| dbal_error(e.into()))?;
                         rsm(w, |rsm| {
-                            rsm.add_scalar_result(&column_alias, &result_alias, &type_name);
+                            rsm.add_scalar_result(&column_alias, result_alias.clone(), &type_name);
                         });
                         return Ok(sql);
                     }
                 }
 
                 rsm(w, |rsm| {
-                    rsm.add_scalar_result(&column_alias, &result_alias, "string");
+                    rsm.add_scalar_result(&column_alias, result_alias.clone(), "string");
                 });
             }
 
@@ -2691,7 +2700,7 @@ pub mod base {
 
                 if !hidden {
                     rsm(w, |rsm| {
-                        rsm.add_scalar_result(&column_alias, &result_alias, "string");
+                        rsm.add_scalar_result(&column_alias, result_alias.clone(), "string");
                     });
                 }
             }
@@ -2982,7 +2991,9 @@ pub mod base {
                     if let Some(enum_type) =
                         field_mapping.enum_type.as_deref().filter(|e| truthy(e))
                     {
-                        rsm(w, |rsm| rsm.add_enum_result(&column_alias, enum_type));
+                        rsm(w, |rsm| {
+                            rsm.add_enum_result(&column_alias, enum_type);
+                        });
                     }
                 }
 
@@ -3038,7 +3049,7 @@ pub mod base {
                 ("argIndex", arg_index.to_value()),
             ]);
             rsm(w, |rsm| {
-                rsm.add_scalar_result(&column_alias, &Key::Int(result_alias), &field_type);
+                rsm.add_scalar_result(&column_alias, Key::Int(result_alias), &field_type);
                 rsm.new_object_mappings
                     .insert(column_alias.as_str(), mapping);
             });

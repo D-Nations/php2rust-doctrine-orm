@@ -3,8 +3,10 @@
 //! `HierarchyDiscriminatorResolver::resolveDiscriminatorsForClass()`,
 //! the `LockSqlHelper` trait and `JoinedSubclassPersister::getOwningTable()`
 //! (which the walker reaches through the unit of work's entity persister).
+//! `get_type_of_column()` is `crate::utility::persister_helper`'s over a
+//! [`QueryContext`] instead of the `EntityManager`.
 //!
-//! Upstream: doctrine/orm src/Utility/PersisterHelper.php src/Utility/HierarchyDiscriminatorResolver.php src/Utility/LockSqlHelper.php
+//! Upstream: doctrine/orm src/Utility/HierarchyDiscriminatorResolver.php src/Utility/LockSqlHelper.php
 
 use std::sync::Arc;
 

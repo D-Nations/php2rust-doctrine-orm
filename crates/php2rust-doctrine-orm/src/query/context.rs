@@ -174,7 +174,7 @@ pub trait QueryContext {
     fn quote(&self, value: &str) -> Result<String, Thrown>;
 
     /// `getConfiguration()->getQuoteStrategy()`.
-    fn get_quote_strategy(&self) -> &dyn QuoteStrategy;
+    fn get_quote_strategy(&self) -> Arc<dyn QuoteStrategy>;
 
     /// `getConfiguration()->getCustomStringFunction($name)` (the name is
     /// case-insensitive).
@@ -330,5 +330,74 @@ pub(crate) fn lock_mode_hint(query: &dyn DqlQuery) -> Option<LockMode> {
         Hint::LockMode(mode) => Some(mode),
         hint if !hint.is_truthy() => Some(LockMode::None),
         _ => None,
+    }
+}
+
+/// The function classes `new $className($name)` can construct: the
+/// `Configuration` names a custom function by its class, and Rust has no
+/// classes to instantiate by name, so each class registers its
+/// constructor here.
+fn function_classes()
+-> &'static std::sync::RwLock<std::collections::HashMap<String, FunctionFactory>> {
+    static CLASSES: std::sync::OnceLock<
+        std::sync::RwLock<std::collections::HashMap<String, FunctionFactory>>,
+    > = std::sync::OnceLock::new();
+    CLASSES.get_or_init(Default::default)
+}
+
+/// Registers the constructor of a custom DQL function class, for the
+/// class names an `EntityManager`'s `Configuration` holds.
+pub fn register_function_class(class_name: &str, factory: FunctionFactory) {
+    let mut classes = match function_classes().write() {
+        Ok(classes) => classes,
+        Err(poisoned) => poisoned.into_inner(),
+    };
+    classes.insert(class_name.trim_start_matches('\\').to_owned(), factory);
+}
+
+/// The constructor of a registered function class.
+fn function_class(class_name: Option<String>) -> Option<FunctionFactory> {
+    let class_name = class_name?;
+    let classes = match function_classes().read() {
+        Ok(classes) => classes,
+        Err(poisoned) => poisoned.into_inner(),
+    };
+    classes.get(class_name.trim_start_matches('\\')).cloned()
+}
+
+/// The entity manager as the parser and the walkers see it.
+impl QueryContext for crate::entity_manager::EntityManager {
+    fn get_class_metadata(&self, class_name: &str) -> Result<Arc<ClassMetadata>, Thrown> {
+        crate::entity_manager::EntityManager::get_class_metadata(self, class_name)
+    }
+
+    fn get_owning_side(&self, assoc: &AssociationMapping) -> Result<AssociationMapping, Thrown> {
+        self.get_metadata_factory().get_owning_side(assoc)
+    }
+
+    fn get_database_platform(&self) -> &dyn AbstractPlatform {
+        self.get_platform()
+    }
+
+    fn quote(&self, value: &str) -> Result<String, Thrown> {
+        // The driver's quoting, once the connection is open.
+        php2rust_doctrine_dbal::ConnectionStandIn::quote(&**self.get_connection(), value)
+            .map_err(crate::query::sql_walker::dbal_error)
+    }
+
+    fn get_quote_strategy(&self) -> Arc<dyn QuoteStrategy> {
+        self.get_configuration().get_quote_strategy()
+    }
+
+    fn get_custom_string_function(&self, name: &str) -> Option<FunctionFactory> {
+        function_class(self.get_configuration().get_custom_string_function(name))
+    }
+
+    fn get_custom_numeric_function(&self, name: &str) -> Option<FunctionFactory> {
+        function_class(self.get_configuration().get_custom_numeric_function(name))
+    }
+
+    fn get_custom_datetime_function(&self, name: &str) -> Option<FunctionFactory> {
+        function_class(self.get_configuration().get_custom_datetime_function(name))
     }
 }

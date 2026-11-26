@@ -12,6 +12,7 @@
 //!
 //! Upstream: none
 
+use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, PoisonError, RwLock};
 
 use php_value::{Object, PhpArray, PhpObject, Thrown, Value};
@@ -38,6 +39,9 @@ pub struct EntityObject {
     /// property.
     properties: RwLock<Vec<(String, Option<Value>)>>,
     proxy: Option<RwLock<ProxyState>>,
+    /// PHP 8.4's lazy ghost state (`ReflectionClass::newLazyGhost()`):
+    /// `true` while the object is an uninitialized lazy object.
+    lazy: AtomicBool,
 }
 
 /// `Doctrine\ORM\Proxy\InternalProxy`.
@@ -82,6 +86,7 @@ impl EntityObject {
             class: info.name().to_owned(),
             properties: RwLock::new(properties),
             proxy,
+            lazy: AtomicBool::new(false),
         }))
     }
 
@@ -100,6 +105,12 @@ impl EntityObject {
             .and_then(|(_, value)| value.clone())
     }
 
+    /// Writes a declared property (`$object->name = $value`): `false` when
+    /// the class declares no such property.
+    pub fn set(&self, name: &str, value: Value) -> bool {
+        self.write(name, Some(value)).is_some()
+    }
+
     /// Whether a declared property is initialized.
     pub fn is_initialized(&self, name: &str) -> bool {
         self.get(name).is_some()
@@ -112,6 +123,17 @@ impl EntityObject {
             let state = state.read().unwrap_or_else(PoisonError::into_inner);
             (state.initialized, state.set_initialized_calls)
         })
+    }
+
+    /// `ReflectionClass::isUninitializedLazyObject()`.
+    pub fn is_uninitialized_lazy_object(&self) -> bool {
+        self.lazy.load(Ordering::SeqCst)
+    }
+
+    /// Makes the object an uninitialized lazy ghost (`newLazyGhost()`), or
+    /// marks it initialized (`markLazyObjectAsInitialized()`).
+    pub fn set_lazy(&self, lazy: bool) {
+        self.lazy.store(lazy, Ordering::SeqCst);
     }
 
     fn write(&self, name: &str, value: Option<Value>) -> Option<Result<(), Thrown>> {
@@ -147,6 +169,61 @@ impl PhpObject for EntityObject {
 
     fn instance_of(&self, class: &str) -> bool {
         php_reflection::is_a(&self.class, class)
+    }
+}
+
+/// The body of a method the ORM calls on an entity (a lifecycle
+/// callback, `$entity->$callback($eventArgs)`): what a compiler would
+/// emit for the PHP method. It gets the entity and the event arguments.
+pub type MethodBody = Arc<
+    dyn Fn(&Object, &dyn php2rust_doctrine_event_manager::EventArgs) -> Result<(), Thrown>
+        + Send
+        + Sync,
+>;
+
+static METHODS: RwLock<Vec<(String, String, MethodBody)>> = RwLock::new(Vec::new());
+
+/// Declares the body of `$class::$method()`.
+pub fn register_method(class: &str, method: &str, body: MethodBody) {
+    let mut methods = METHODS.write().unwrap_or_else(PoisonError::into_inner);
+    methods.retain(|(c, m, _)| !(c == class && m.eq_ignore_ascii_case(method)));
+    methods.push((class.to_owned(), method.to_owned(), body));
+}
+
+/// The body of `$class::$method()`, looked up through the parent classes
+/// (method names are case-insensitive).
+pub fn find_method(class: &str, method: &str) -> Option<MethodBody> {
+    let methods = METHODS.read().unwrap_or_else(PoisonError::into_inner);
+    let mut current = Some(class.to_owned());
+    let mut depth = 0;
+    while let Some(name) = current {
+        if let Some((_, _, body)) = methods
+            .iter()
+            .find(|(c, m, _)| *c == name && m.eq_ignore_ascii_case(method))
+        {
+            return Some(body.clone());
+        }
+        depth += 1;
+        current = php_reflection::class_info(&name)
+            .and_then(|info| info.parent().map(str::to_owned))
+            .filter(|_| depth < 64);
+    }
+    None
+}
+
+/// `$object->$method($eventArgs)`: PHP's `Error` for an undefined method.
+pub fn call_method(
+    object: &Object,
+    method: &str,
+    args: &dyn php2rust_doctrine_event_manager::EventArgs,
+) -> Result<(), Thrown> {
+    match find_method(object.class(), method) {
+        Some(body) => body(object, args),
+        None => Err(Thrown::new(
+            "Error",
+            format!("Call to undefined method {}::{method}()", object.class()),
+            0,
+        )),
     }
 }
 
@@ -204,5 +281,65 @@ impl Proxy for EntityObject {
         state.initialized = initialized;
         state.set_initialized_calls += 1;
         Some(())
+    }
+}
+
+/// The body of an entity listener's method
+/// (`$listener->$method($entity, $eventArgs)`): it gets the listener
+/// instance, the entity and the event arguments.
+pub type ListenerMethodBody = Arc<
+    dyn Fn(&Object, &Object, &dyn php2rust_doctrine_event_manager::EventArgs) -> Result<(), Thrown>
+        + Send
+        + Sync,
+>;
+
+static LISTENER_METHODS: RwLock<Vec<(String, String, ListenerMethodBody)>> =
+    RwLock::new(Vec::new());
+
+/// Declares the body of the entity listener method `$class::$method()`.
+pub fn register_listener_method(class: &str, method: &str, body: ListenerMethodBody) {
+    let mut methods = LISTENER_METHODS
+        .write()
+        .unwrap_or_else(PoisonError::into_inner);
+    methods.retain(|(c, m, _)| !(c == class && m.eq_ignore_ascii_case(method)));
+    methods.push((class.to_owned(), method.to_owned(), body));
+}
+
+/// `$listener->$method($entity, $eventArgs)`.
+pub fn call_listener_method(
+    listener: &Object,
+    method: &str,
+    entity: &Object,
+    args: &dyn php2rust_doctrine_event_manager::EventArgs,
+) -> Result<(), Thrown> {
+    let body = {
+        let methods = LISTENER_METHODS
+            .read()
+            .unwrap_or_else(PoisonError::into_inner);
+        let mut current = Some(listener.class().to_owned());
+        let mut found = None;
+        let mut depth = 0;
+        while let Some(name) = current {
+            if let Some((_, _, body)) = methods
+                .iter()
+                .find(|(c, m, _)| *c == name && m.eq_ignore_ascii_case(method))
+            {
+                found = Some(body.clone());
+                break;
+            }
+            depth += 1;
+            current = php_reflection::class_info(&name)
+                .and_then(|info| info.parent().map(str::to_owned))
+                .filter(|_| depth < 64);
+        }
+        found
+    };
+    match body {
+        Some(body) => body(listener, entity, args),
+        None => Err(Thrown::new(
+            "Error",
+            format!("Call to undefined method {}::{method}()", listener.class()),
+            0,
+        )),
     }
 }

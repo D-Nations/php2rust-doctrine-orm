@@ -45,7 +45,7 @@ use crate::models;
 pub struct TestEntityManager {
     factory: ClassMetadataFactory,
     platform: Box<dyn AbstractPlatform>,
-    quote_strategy: DefaultQuoteStrategy,
+    quote_strategy: Arc<dyn QuoteStrategy>,
     pub custom_string_functions: RefCell<HashMap<String, FunctionFactory>>,
     pub custom_numeric_functions: RefCell<HashMap<String, FunctionFactory>>,
     pub custom_datetime_functions: RefCell<HashMap<String, FunctionFactory>>,
@@ -67,7 +67,7 @@ impl TestEntityManager {
         Self {
             factory,
             platform,
-            quote_strategy: DefaultQuoteStrategy::new(),
+            quote_strategy: Arc::new(DefaultQuoteStrategy::new()),
             custom_string_functions: RefCell::new(HashMap::new()),
             custom_numeric_functions: RefCell::new(HashMap::new()),
             custom_datetime_functions: RefCell::new(HashMap::new()),
@@ -119,8 +119,8 @@ impl QueryContext for TestEntityManager {
         Ok(format!("'{value}'"))
     }
 
-    fn get_quote_strategy(&self) -> &dyn QuoteStrategy {
-        &self.quote_strategy
+    fn get_quote_strategy(&self) -> Arc<dyn QuoteStrategy> {
+        self.quote_strategy.clone()
     }
 
     fn get_custom_string_function(&self, name: &str) -> Option<FunctionFactory> {
