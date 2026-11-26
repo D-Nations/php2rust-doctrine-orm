@@ -32,7 +32,10 @@ fn testIssue() {
             "initialValue" => "1",
         ])
         .identical(&Value::Array(
-            class_metadata.sequence_generator_definition.clone().unwrap()
+            class_metadata
+                .sequence_generator_definition
+                .clone()
+                .unwrap()
         ))
     );
 }
