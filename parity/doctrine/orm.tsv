@@ -2,22 +2,22 @@
 tests/Tests/ORM/AbstractQueryTest.php	AbstractQueryTest::testItMakesHydrationCacheProfilesAwareOfTheResultCache	pending	
 tests/Tests/ORM/AbstractQueryTest.php	AbstractQueryTest::testItMakesResultCacheProfilesAwareOfTheResultCache	pending	
 tests/Tests/ORM/AbstractQueryTest.php	AbstractQueryTest::testSettingTheResultCacheIsPossibleWithoutCallingDeprecatedMethods	pending	
-tests/Tests/ORM/Cache/CacheConfigTest.php	CacheConfigTest::testSetGetCacheFactory	pending	
-tests/Tests/ORM/Cache/CacheConfigTest.php	CacheConfigTest::testSetGetCacheLogger	pending	
-tests/Tests/ORM/Cache/CacheConfigTest.php	CacheConfigTest::testSetGetQueryValidator	pending	
-tests/Tests/ORM/Cache/CacheConfigTest.php	CacheConfigTest::testSetGetRegionLifetime	pending	
-tests/Tests/ORM/Cache/CacheKeyTest.php	CacheKeyTest::testCollectionCacheKeyAssociationCollision	pending	
-tests/Tests/ORM/Cache/CacheKeyTest.php	CacheKeyTest::testCollectionCacheKeyIdentifierCollision	pending	
-tests/Tests/ORM/Cache/CacheKeyTest.php	CacheKeyTest::testCollectionCacheKeyIdentifierOrder	pending	
-tests/Tests/ORM/Cache/CacheKeyTest.php	CacheKeyTest::testCollectionCacheKeyIdentifierType	pending	
-tests/Tests/ORM/Cache/CacheKeyTest.php	CacheKeyTest::testConstructor	pending	
-tests/Tests/ORM/Cache/CacheKeyTest.php	CacheKeyTest::testEntityCacheKeyIdentifierCollision	pending	
-tests/Tests/ORM/Cache/CacheKeyTest.php	CacheKeyTest::testEntityCacheKeyIdentifierOrder	pending	
-tests/Tests/ORM/Cache/CacheKeyTest.php	CacheKeyTest::testEntityCacheKeyIdentifierType	pending	
-tests/Tests/ORM/Cache/CacheLoggerChainTest.php	CacheLoggerChainTest::testCollectionCacheChain	pending	
-tests/Tests/ORM/Cache/CacheLoggerChainTest.php	CacheLoggerChainTest::testEntityCacheChain	pending	
-tests/Tests/ORM/Cache/CacheLoggerChainTest.php	CacheLoggerChainTest::testGetAndSetLogger	pending	
-tests/Tests/ORM/Cache/CacheLoggerChainTest.php	CacheLoggerChainTest::testQueryCacheChain	pending	
+tests/Tests/ORM/Cache/CacheConfigTest.php	CacheConfigTest::testSetGetCacheFactory	ported	crates/php2rust-doctrine-orm/tests/cache_config_test.rs::testSetGetCacheFactory
+tests/Tests/ORM/Cache/CacheConfigTest.php	CacheConfigTest::testSetGetCacheLogger	ported	crates/php2rust-doctrine-orm/tests/cache_config_test.rs::testSetGetCacheLogger
+tests/Tests/ORM/Cache/CacheConfigTest.php	CacheConfigTest::testSetGetQueryValidator	ported	crates/php2rust-doctrine-orm/tests/cache_config_test.rs::testSetGetQueryValidator
+tests/Tests/ORM/Cache/CacheConfigTest.php	CacheConfigTest::testSetGetRegionLifetime	ported	crates/php2rust-doctrine-orm/tests/cache_config_test.rs::testSetGetRegionLifetime
+tests/Tests/ORM/Cache/CacheKeyTest.php	CacheKeyTest::testCollectionCacheKeyAssociationCollision	ported	crates/php2rust-doctrine-orm/tests/cache_key_test.rs::testCollectionCacheKeyAssociationCollision
+tests/Tests/ORM/Cache/CacheKeyTest.php	CacheKeyTest::testCollectionCacheKeyIdentifierCollision	ported	crates/php2rust-doctrine-orm/tests/cache_key_test.rs::testCollectionCacheKeyIdentifierCollision
+tests/Tests/ORM/Cache/CacheKeyTest.php	CacheKeyTest::testCollectionCacheKeyIdentifierOrder	ported	crates/php2rust-doctrine-orm/tests/cache_key_test.rs::testCollectionCacheKeyIdentifierOrder
+tests/Tests/ORM/Cache/CacheKeyTest.php	CacheKeyTest::testCollectionCacheKeyIdentifierType	ported	crates/php2rust-doctrine-orm/tests/cache_key_test.rs::testCollectionCacheKeyIdentifierType
+tests/Tests/ORM/Cache/CacheKeyTest.php	CacheKeyTest::testConstructor	ported	crates/php2rust-doctrine-orm/tests/cache_key_test.rs::testConstructor
+tests/Tests/ORM/Cache/CacheKeyTest.php	CacheKeyTest::testEntityCacheKeyIdentifierCollision	ported	crates/php2rust-doctrine-orm/tests/cache_key_test.rs::testEntityCacheKeyIdentifierCollision
+tests/Tests/ORM/Cache/CacheKeyTest.php	CacheKeyTest::testEntityCacheKeyIdentifierOrder	ported	crates/php2rust-doctrine-orm/tests/cache_key_test.rs::testEntityCacheKeyIdentifierOrder
+tests/Tests/ORM/Cache/CacheKeyTest.php	CacheKeyTest::testEntityCacheKeyIdentifierType	ported	crates/php2rust-doctrine-orm/tests/cache_key_test.rs::testEntityCacheKeyIdentifierType
+tests/Tests/ORM/Cache/CacheLoggerChainTest.php	CacheLoggerChainTest::testCollectionCacheChain	ported	crates/php2rust-doctrine-orm/tests/cache_logger_chain_test.rs::testCollectionCacheChain
+tests/Tests/ORM/Cache/CacheLoggerChainTest.php	CacheLoggerChainTest::testEntityCacheChain	ported	crates/php2rust-doctrine-orm/tests/cache_logger_chain_test.rs::testEntityCacheChain
+tests/Tests/ORM/Cache/CacheLoggerChainTest.php	CacheLoggerChainTest::testGetAndSetLogger	ported	crates/php2rust-doctrine-orm/tests/cache_logger_chain_test.rs::testGetAndSetLogger
+tests/Tests/ORM/Cache/CacheLoggerChainTest.php	CacheLoggerChainTest::testQueryCacheChain	ported	crates/php2rust-doctrine-orm/tests/cache_logger_chain_test.rs::testQueryCacheChain
 tests/Tests/ORM/Cache/DefaultCacheFactoryTest.php	DefaultCacheFactoryTest::testBuildCachedCollectionPersisterException	pending	
 tests/Tests/ORM/Cache/DefaultCacheFactoryTest.php	DefaultCacheFactoryTest::testBuildCachedCollectionPersisterNonStrictReadWrite	pending	
 tests/Tests/ORM/Cache/DefaultCacheFactoryTest.php	DefaultCacheFactoryTest::testBuildCachedCollectionPersisterReadOnly	pending	
@@ -78,24 +78,24 @@ tests/Tests/ORM/Cache/DefaultQueryCacheTest.php	DefaultQueryCacheTest::testPutTo
 tests/Tests/ORM/Cache/DefaultQueryCacheTest.php	DefaultQueryCacheTest::testRefreshModeWritesToCache	pending	
 tests/Tests/ORM/Cache/DefaultQueryCacheTest.php	DefaultQueryCacheTest::testScalarResultException	pending	
 tests/Tests/ORM/Cache/DefaultQueryCacheTest.php	DefaultQueryCacheTest::testSupportMultipleRootEntitiesException	pending	
-tests/Tests/ORM/Cache/DefaultRegionTest.php	DefaultRegionTest::corruptedDataDoesNotLeakIntoApplicationWhenGettingMultipleEntries	pending	
-tests/Tests/ORM/Cache/DefaultRegionTest.php	DefaultRegionTest::corruptedDataDoesNotLeakIntoApplicationWhenGettingSingleEntry	pending	
-tests/Tests/ORM/Cache/DefaultRegionTest.php	DefaultRegionTest::testEvictAll	pending	
-tests/Tests/ORM/Cache/DefaultRegionTest.php	DefaultRegionTest::testGetMulti	pending	
-tests/Tests/ORM/Cache/DefaultRegionTest.php	DefaultRegionTest::testGetMultiPreservesOrderAndKeys	pending	
-tests/Tests/ORM/Cache/DefaultRegionTest.php	DefaultRegionTest::testGetters	pending	
-tests/Tests/ORM/Cache/DefaultRegionTest.php	DefaultRegionTest::testPutGetContainsEvict	pending	
-tests/Tests/ORM/Cache/DefaultRegionTest.php	DefaultRegionTest::testSharedRegion	pending	
-tests/Tests/ORM/Cache/FileLockRegionTest.php	FileLockRegionTest::testEvictAll	pending	
-tests/Tests/ORM/Cache/FileLockRegionTest.php	FileLockRegionTest::testGetRegionName	pending	
-tests/Tests/ORM/Cache/FileLockRegionTest.php	FileLockRegionTest::testLockAndUnlock	pending	
-tests/Tests/ORM/Cache/FileLockRegionTest.php	FileLockRegionTest::testLockLifetime	pending	
-tests/Tests/ORM/Cache/FileLockRegionTest.php	FileLockRegionTest::testLockWithExistingLock	pending	
-tests/Tests/ORM/Cache/FileLockRegionTest.php	FileLockRegionTest::testLockedEvict	pending	
-tests/Tests/ORM/Cache/FileLockRegionTest.php	FileLockRegionTest::testLockedEvictAll	pending	
-tests/Tests/ORM/Cache/FileLockRegionTest.php	FileLockRegionTest::testPutGetContainsEvict	pending	
-tests/Tests/ORM/Cache/FileLockRegionTest.php	FileLockRegionTest::testPutWithExistingLock	pending	
-tests/Tests/ORM/Cache/FileLockRegionTest.php	FileLockRegionTest::testUnlockWithExistingLock	pending	
+tests/Tests/ORM/Cache/DefaultRegionTest.php	DefaultRegionTest::corruptedDataDoesNotLeakIntoApplicationWhenGettingMultipleEntries	ported	crates/php2rust-doctrine-orm/tests/default_region_test.rs::corruptedDataDoesNotLeakIntoApplicationWhenGettingMultipleEntries
+tests/Tests/ORM/Cache/DefaultRegionTest.php	DefaultRegionTest::corruptedDataDoesNotLeakIntoApplicationWhenGettingSingleEntry	ported	crates/php2rust-doctrine-orm/tests/default_region_test.rs::corruptedDataDoesNotLeakIntoApplicationWhenGettingSingleEntry
+tests/Tests/ORM/Cache/DefaultRegionTest.php	DefaultRegionTest::testEvictAll	ported	crates/php2rust-doctrine-orm/tests/default_region_test.rs::testEvictAll
+tests/Tests/ORM/Cache/DefaultRegionTest.php	DefaultRegionTest::testGetMulti	ported	crates/php2rust-doctrine-orm/tests/default_region_test.rs::testGetMulti
+tests/Tests/ORM/Cache/DefaultRegionTest.php	DefaultRegionTest::testGetMultiPreservesOrderAndKeys	ported	crates/php2rust-doctrine-orm/tests/default_region_test.rs::testGetMultiPreservesOrderAndKeys
+tests/Tests/ORM/Cache/DefaultRegionTest.php	DefaultRegionTest::testGetters	ported	crates/php2rust-doctrine-orm/tests/default_region_test.rs::testGetters
+tests/Tests/ORM/Cache/DefaultRegionTest.php	DefaultRegionTest::testPutGetContainsEvict	ported	crates/php2rust-doctrine-orm/tests/default_region_test.rs::testPutGetContainsEvict
+tests/Tests/ORM/Cache/DefaultRegionTest.php	DefaultRegionTest::testSharedRegion	ported	crates/php2rust-doctrine-orm/tests/default_region_test.rs::testSharedRegion
+tests/Tests/ORM/Cache/FileLockRegionTest.php	FileLockRegionTest::testEvictAll	ported	crates/php2rust-doctrine-orm/tests/file_lock_region_test.rs::testEvictAll
+tests/Tests/ORM/Cache/FileLockRegionTest.php	FileLockRegionTest::testGetRegionName	ported	crates/php2rust-doctrine-orm/tests/file_lock_region_test.rs::testGetRegionName
+tests/Tests/ORM/Cache/FileLockRegionTest.php	FileLockRegionTest::testLockAndUnlock	ported	crates/php2rust-doctrine-orm/tests/file_lock_region_test.rs::testLockAndUnlock
+tests/Tests/ORM/Cache/FileLockRegionTest.php	FileLockRegionTest::testLockLifetime	ported	crates/php2rust-doctrine-orm/tests/file_lock_region_test.rs::testLockLifetime
+tests/Tests/ORM/Cache/FileLockRegionTest.php	FileLockRegionTest::testLockWithExistingLock	ported	crates/php2rust-doctrine-orm/tests/file_lock_region_test.rs::testLockWithExistingLock
+tests/Tests/ORM/Cache/FileLockRegionTest.php	FileLockRegionTest::testLockedEvict	ported	crates/php2rust-doctrine-orm/tests/file_lock_region_test.rs::testLockedEvict
+tests/Tests/ORM/Cache/FileLockRegionTest.php	FileLockRegionTest::testLockedEvictAll	ported	crates/php2rust-doctrine-orm/tests/file_lock_region_test.rs::testLockedEvictAll
+tests/Tests/ORM/Cache/FileLockRegionTest.php	FileLockRegionTest::testPutGetContainsEvict	ported	crates/php2rust-doctrine-orm/tests/file_lock_region_test.rs::testPutGetContainsEvict
+tests/Tests/ORM/Cache/FileLockRegionTest.php	FileLockRegionTest::testPutWithExistingLock	ported	crates/php2rust-doctrine-orm/tests/file_lock_region_test.rs::testPutWithExistingLock
+tests/Tests/ORM/Cache/FileLockRegionTest.php	FileLockRegionTest::testUnlockWithExistingLock	ported	crates/php2rust-doctrine-orm/tests/file_lock_region_test.rs::testUnlockWithExistingLock
 tests/Tests/ORM/Cache/Persister/Collection/NonStrictReadWriteCachedCollectionPersisterTest.php	NonStrictReadWriteCachedCollectionPersisterTest::testImplementsEntityPersister	pending	
 tests/Tests/ORM/Cache/Persister/Collection/NonStrictReadWriteCachedCollectionPersisterTest.php	NonStrictReadWriteCachedCollectionPersisterTest::testInvokeContains	pending	
 tests/Tests/ORM/Cache/Persister/Collection/NonStrictReadWriteCachedCollectionPersisterTest.php	NonStrictReadWriteCachedCollectionPersisterTest::testInvokeContainsKey	pending	
@@ -214,10 +214,10 @@ tests/Tests/ORM/Cache/Persister/Entity/ReadWriteCachedEntityPersisterTest.php	Re
 tests/Tests/ORM/Cache/Persister/Entity/ReadWriteCachedEntityPersisterTest.php	ReadWriteCachedEntityPersisterTest::testUpdateLockFailureShouldIgnoreQueue	pending	
 tests/Tests/ORM/Cache/Persister/Entity/ReadWriteCachedEntityPersisterTest.php	ReadWriteCachedEntityPersisterTest::testUpdateShouldLockItem	pending	
 tests/Tests/ORM/Cache/Persister/Entity/ReadWriteCachedEntityPersisterTest.php	ReadWriteCachedEntityPersisterTest::testUpdateTransactionRollBackShouldEvictItem	pending	
-tests/Tests/ORM/Cache/StatisticsCacheLoggerTest.php	StatisticsCacheLoggerTest::testCollectionCache	pending	
-tests/Tests/ORM/Cache/StatisticsCacheLoggerTest.php	StatisticsCacheLoggerTest::testEntityCache	pending	
-tests/Tests/ORM/Cache/StatisticsCacheLoggerTest.php	StatisticsCacheLoggerTest::testMultipleCaches	pending	
-tests/Tests/ORM/Cache/StatisticsCacheLoggerTest.php	StatisticsCacheLoggerTest::testQueryCache	pending	
+tests/Tests/ORM/Cache/StatisticsCacheLoggerTest.php	StatisticsCacheLoggerTest::testCollectionCache	ported	crates/php2rust-doctrine-orm/tests/statistics_cache_logger_test.rs::testCollectionCache
+tests/Tests/ORM/Cache/StatisticsCacheLoggerTest.php	StatisticsCacheLoggerTest::testEntityCache	ported	crates/php2rust-doctrine-orm/tests/statistics_cache_logger_test.rs::testEntityCache
+tests/Tests/ORM/Cache/StatisticsCacheLoggerTest.php	StatisticsCacheLoggerTest::testMultipleCaches	ported	crates/php2rust-doctrine-orm/tests/statistics_cache_logger_test.rs::testMultipleCaches
+tests/Tests/ORM/Cache/StatisticsCacheLoggerTest.php	StatisticsCacheLoggerTest::testQueryCache	ported	crates/php2rust-doctrine-orm/tests/statistics_cache_logger_test.rs::testQueryCache
 tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testAddGetCustomDatetimeFunction	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testAddGetCustomDatetimeFunction
 tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testAddGetCustomHydrationMode	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testAddGetCustomHydrationMode
 tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testAddGetCustomNumericFunction	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testAddGetCustomNumericFunction
