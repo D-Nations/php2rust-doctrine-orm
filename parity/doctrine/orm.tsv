@@ -1596,7 +1596,7 @@ tests/Tests/ORM/Functional/Ticket/GH9027Test.php	GH9027Test::testUnitOfWorkHandl
 tests/Tests/ORM/Functional/Ticket/GH9109Test.php	GH9109Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/gh9109_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/GH9192Test.php	GH9192Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/gh9192_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/GH9230Test.php	GH9230Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/gh9230_test.rs::testIssue
-tests/Tests/ORM/Functional/Ticket/GH9335Test.php	GH9335Test::testFlattenIdentifierWithObjectId	pending	
+tests/Tests/ORM/Functional/Ticket/GH9335Test.php	GH9335Test::testFlattenIdentifierWithObjectId	ported	crates/php2rust-doctrine-orm/tests/gh9335_test.rs::testFlattenIdentifierWithObjectId
 tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildNonInsertableColumnInsert	pending	
 tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildNonInsertableColumnUpdate	pending	
 tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildNonUpdatableColumnInsert	pending	
