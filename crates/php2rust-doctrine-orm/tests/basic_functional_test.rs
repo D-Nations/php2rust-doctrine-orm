@@ -12,12 +12,17 @@
 mod models;
 #[path = "common/orm.rs"]
 mod orm;
+#[path = "common/query_log.rs"]
+mod query_log;
 
+use php_value::compare::loose_equals as loose;
 use php_value::{Object, Value};
 use php2rust_doctrine_orm::collection_object as coll;
 use php2rust_doctrine_orm::exception::{
     ENTITY_IDENTITY_COLLISION_EXCEPTION, ORM_INVALID_ARGUMENT_EXCEPTION,
 };
+use php2rust_doctrine_orm::persistent_collection::PersistentCollection;
+use php2rust_doctrine_orm::query::context::{HINT_REFRESH, Hint};
 use php2rust_doctrine_orm::unit_of_work::{STATE_MANAGED, STATE_NEW, STATE_REMOVED};
 
 use orm::*;
@@ -597,4 +602,424 @@ async fn testSingleColumnQuery() {
     );
     let users = list(&query.get_single_column_result().await.unwrap());
     assert_eq!(users, vec![s("greg0ire"), s("bhushan")]);
+}
+
+/// `$this->isUninitializedObject($value)`.
+fn is_uninitialized(
+    em: &php2rust_doctrine_orm::entity_manager::EntityManager,
+    value: &Value,
+) -> bool {
+    em.is_uninitialized_object(value)
+}
+
+/// `$collection->isInitialized()` of a persistent collection property.
+fn is_initialized(object: &Object, name: &str) -> bool {
+    PersistentCollection::from_value(&get(object, name))
+        .expect("a persistent collection")
+        .is_initialized()
+}
+
+/// The user with three phone numbers (`100` to `102`).
+fn gblanco_with_three_phonenumbers() -> Object {
+    let user = cms_user_with("Guilherme", "gblanco", "developer");
+
+    for i in 0..3 {
+        let phone = cms_phonenumber(&(100 + i).to_string());
+        add_phonenumber(&user, &phone);
+    }
+    user
+}
+
+async fn single(
+    em: &std::sync::Arc<php2rust_doctrine_orm::entity_manager::EntityManager>,
+    dql: &str,
+) -> Object {
+    obj(&em.create_query(dql).get_single_result(None).await.unwrap())
+}
+
+#[tokio::test]
+async fn testBasicOneToOne() {
+    let em = set_up(&CMS_MODELS).await;
+    let user = cms_user_with("Roman", "romanb", "developer");
+
+    let address = cms_address("Germany", "12345", "Berlin");
+
+    set(&user, "address", Value::Object(address.clone())); // inverse side
+    set(&address, "user", Value::Object(user.clone())); // owning side!
+
+    em.persist(&user).unwrap();
+    em.flush().await.unwrap();
+
+    // Check that the foreign key has been set
+    let user_id = fetch_one_with(
+        &em,
+        "SELECT user_id FROM cms_addresses WHERE id=?",
+        vec![get(&address, "id")],
+    )
+    .await;
+    assert!(
+        matches!(user_id, Value::Int(_))
+            || user_id
+                .to_php_string()
+                .is_some_and(|s| s.to_string_lossy().parse::<f64>().is_ok()),
+        "{user_id:?} is not numeric"
+    );
+
+    em.clear().unwrap();
+
+    let query =
+        em.create_query("select u from \\Doctrine\\Tests\\Models\\CMS\\CmsUser u where u.id=?1");
+    query.set_parameter(1, user_id, None);
+    let user2 = obj(&query.get_single_result(None).await.unwrap());
+
+    // Address has been eager-loaded because it cant be lazy
+    let address2 = get(&user2, "address");
+    assert!(matches!(&address2, Value::Object(o) if o.class() == CMS_ADDRESS));
+    assert!(!is_uninitialized(&em, &address2));
+}
+
+#[tokio::test]
+async fn testOneToManyCascadeRemove() {
+    let em = set_up(&CMS_MODELS).await;
+    let user = gblanco_with_three_phonenumbers();
+
+    em.persist(&user).unwrap();
+    em.flush().await.unwrap();
+    em.clear().unwrap();
+
+    let gblanco = single(
+        &em,
+        "select u from Doctrine\\Tests\\Models\\CMS\\CmsUser u where u.username='gblanco'",
+    )
+    .await;
+
+    em.remove(&gblanco).await.unwrap();
+    em.flush().await.unwrap();
+
+    em.clear().unwrap();
+
+    for dql in [
+        "select count(p.phonenumber) from Doctrine\\Tests\\Models\\CMS\\CmsPhonenumber p",
+        "select count(u.id) from Doctrine\\Tests\\Models\\CMS\\CmsUser u",
+    ] {
+        let count = em
+            .create_query(dql)
+            .get_single_scalar_result()
+            .await
+            .unwrap();
+        assert!(loose(&Value::Int(0), &count), "{count:?}");
+    }
+}
+
+#[tokio::test]
+async fn testFlushDoesNotIssueUnnecessaryUpdates() {
+    let (em, log) = query_log::set_up_logged(&CMS_MODELS).await;
+    let user = cms_user_with("Guilherme", "gblanco", "developer");
+
+    let address = cms_address("Germany", "12345", "Berlin");
+
+    set(&address, "user", Value::Object(user.clone()));
+    set(&user, "address", Value::Object(address.clone()));
+
+    let article = cms_article("A Test Article!", "Lorem ipsum dolor sunt.");
+    // $article->setAuthor($user)
+    set(&article, "user", Value::Object(user.clone()));
+
+    em.persist(&article).unwrap();
+    em.persist(&user).unwrap();
+
+    em.flush().await.unwrap();
+    em.clear().unwrap();
+
+    let user2 = single(
+        &em,
+        "select u,a,ad from Doctrine\\Tests\\Models\\CMS\\CmsUser u join u.articles a join u.address ad",
+    )
+    .await;
+
+    assert_eq!(count_of(&user2, "articles").await, 1);
+    assert!(matches!(get(&user2, "address"), Value::Object(o) if o.class() == CMS_ADDRESS));
+
+    log.reset_and_enable();
+    em.flush().await.unwrap();
+
+    assert_eq!(log.queries().len(), 0, "{:?}", log.queries());
+}
+
+#[tokio::test]
+async fn testDqlRefreshResetsCollection() {
+    let em = set_up(&CMS_MODELS).await;
+    let user = cms_user_with("Guilherme", "gblanco", "developer");
+
+    // Add a phonenumber
+    let ph1 = cms_phonenumber("12345");
+    add_phonenumber(&user, &ph1);
+
+    // Add a phonenumber
+    let ph2 = cms_phonenumber("54321");
+
+    em.persist(&user).unwrap();
+    em.persist(&ph1).unwrap();
+    em.persist(&ph2).unwrap();
+    em.flush().await.unwrap();
+
+    add_phonenumber(&user, &ph2);
+
+    assert_eq!(count_of(&user, "phonenumbers").await, 2);
+    let dql = "SELECT u FROM Doctrine\\Tests\\Models\\CMS\\CmsUser u WHERE u.id = ?1";
+    let query = em.create_query(dql);
+    query.set_parameter(1, get(&user, "id"), None);
+    query.set_hint(HINT_REFRESH, Hint::Value(Value::Bool(true)));
+    let user = obj(&query.get_single_result(None).await.unwrap());
+
+    assert_eq!(count_of(&user, "phonenumbers").await, 1);
+}
+
+#[tokio::test]
+async fn testAddToCollectionDoesNotInitialize() {
+    let em = set_up(&CMS_MODELS).await;
+    let user = gblanco_with_three_phonenumbers();
+
+    em.persist(&user).unwrap();
+    em.flush().await.unwrap();
+    em.clear().unwrap();
+
+    assert_eq!(count_of(&user, "phonenumbers").await, 3);
+
+    let gblanco = single(
+        &em,
+        "select u from Doctrine\\Tests\\Models\\CMS\\CmsUser u where u.username='gblanco'",
+    )
+    .await;
+
+    assert!(!is_initialized(&gblanco, "phonenumbers"));
+
+    let new_phone = cms_phonenumber("555");
+    add_phonenumber(&gblanco, &new_phone);
+
+    assert!(!is_initialized(&gblanco, "phonenumbers"));
+    em.persist(&gblanco).unwrap();
+
+    em.flush().await.unwrap();
+    em.clear().unwrap();
+
+    let gblanco2 = single(
+        &em,
+        "select u, p from Doctrine\\Tests\\Models\\CMS\\CmsUser u join u.phonenumbers p where u.username='gblanco'",
+    )
+    .await;
+    assert_eq!(count_of(&gblanco2, "phonenumbers").await, 4);
+}
+
+#[tokio::test]
+async fn testInitializeCollectionWithNewObjectsRetainsNewObjects() {
+    let em = set_up(&CMS_MODELS).await;
+    let user = gblanco_with_three_phonenumbers();
+
+    em.persist(&user).unwrap();
+    em.flush().await.unwrap();
+    em.clear().unwrap();
+
+    assert_eq!(count_of(&user, "phonenumbers").await, 3);
+
+    let gblanco = single(
+        &em,
+        "select u from Doctrine\\Tests\\Models\\CMS\\CmsUser u where u.username='gblanco'",
+    )
+    .await;
+
+    assert!(!is_initialized(&gblanco, "phonenumbers"));
+
+    let new_phone = cms_phonenumber("555");
+    add_phonenumber(&gblanco, &new_phone);
+
+    assert!(!is_initialized(&gblanco, "phonenumbers"));
+    assert_eq!(count_of(&gblanco, "phonenumbers").await, 4);
+    assert!(is_initialized(&gblanco, "phonenumbers"));
+
+    em.flush().await.unwrap();
+    em.clear().unwrap();
+
+    let gblanco2 = single(
+        &em,
+        "select u, p from Doctrine\\Tests\\Models\\CMS\\CmsUser u join u.phonenumbers p where u.username='gblanco'",
+    )
+    .await;
+    assert_eq!(count_of(&gblanco2, "phonenumbers").await, 4);
+}
+
+#[tokio::test]
+async fn testSetToOneAssociationWithGetReference() {
+    let em = set_up(&CMS_MODELS).await;
+    let user = cms_user_with("Guilherme", "gblanco", "developer");
+    em.persist(&user).unwrap();
+
+    let address = cms_address("Germany", "12345", "Berlin");
+    em.persist(&address).unwrap();
+
+    em.flush().await.unwrap();
+    let user_id = get(&user, "id");
+    em.clear().unwrap();
+    let user = em.find(CMS_USER, user_id).await.unwrap().unwrap();
+
+    // Assume we only got the identifier of the address and now want to attach
+    // that address to the user without actually loading it, using getReference().
+    let address_ref = em
+        .get_reference(CMS_ADDRESS, get(&address, "id"))
+        .await
+        .unwrap()
+        .unwrap();
+
+    // Ugh! Initializes address 'cause of $address->setUser($user)! (PHP
+    // initializes the ghost on the property write.)
+    em.initialize_object(&address_ref).await.unwrap();
+    set_address(&user, &address_ref);
+
+    em.flush().await.unwrap();
+    em.clear().unwrap();
+
+    // Assume we only got the identifier of the user and now want to attach
+    // the article to the user without actually loading it, using getReference().
+    let user_ref = em
+        .get_reference(CMS_USER, get(&user, "id"))
+        .await
+        .unwrap()
+        .unwrap();
+    assert!(is_uninitialized(&em, &Value::Object(user_ref.clone())));
+
+    let article = cms_article("topic", "text");
+    // $article->setAuthor($userRef)
+    set(&article, "user", Value::Object(user_ref.clone()));
+
+    em.persist(&article).unwrap();
+    em.flush().await.unwrap();
+
+    assert!(is_uninitialized(&em, &Value::Object(user_ref.clone())));
+
+    em.clear().unwrap();
+
+    // Check with a fresh load that the association is indeed there
+    let gblanco = single(
+        &em,
+        "select u, a from Doctrine\\Tests\\Models\\CMS\\CmsUser u join u.articles a where u.username='gblanco'",
+    )
+    .await;
+
+    assert_eq!(gblanco.class(), CMS_USER);
+    let article0 = obj(&coll::get(&get(&gblanco, "articles"), 0).await.unwrap());
+    assert_eq!(article0.class(), CMS_ARTICLE);
+    assert!(get(&article, "id").identical(&get(&article0, "id")));
+    assert!(s("text").identical(&get(&article0, "text")));
+}
+
+#[tokio::test]
+async fn testAddToToManyAssociationWithGetReference() {
+    let em = set_up(&CMS_MODELS).await;
+    let group = cms_group("admins");
+    em.persist(&group).unwrap();
+    em.flush().await.unwrap();
+    em.clear().unwrap();
+
+    // Assume we only got the identifier of the user and now want to attach
+    // the article to the user without actually loading it, using getReference().
+    let group_ref = em
+        .get_reference(CMS_GROUP, get(&group, "id"))
+        .await
+        .unwrap()
+        .unwrap();
+    assert!(is_uninitialized(&em, &Value::Object(group_ref.clone())));
+
+    let user = cms_user();
+    set(&user, "name", s("Guilherme"));
+    set(&user, "username", s("gblanco"));
+    coll::add(&get(&user, "groups"), Value::Object(group_ref.clone())).unwrap();
+
+    em.persist(&user).unwrap();
+    em.flush().await.unwrap();
+
+    assert!(is_uninitialized(&em, &Value::Object(group_ref.clone())));
+
+    em.clear().unwrap();
+
+    // Check with a fresh load that the association is indeed there
+    let gblanco = single(
+        &em,
+        "select u, a from Doctrine\\Tests\\Models\\CMS\\CmsUser u join u.groups a where u.username='gblanco'",
+    )
+    .await;
+
+    assert_eq!(gblanco.class(), CMS_USER);
+    let group0 = obj(&coll::get(&get(&gblanco, "groups"), 0).await.unwrap());
+    assert_eq!(group0.class(), CMS_GROUP);
+    assert!(get(&group, "id").identical(&get(&group0, "id")));
+    assert!(s("admins").identical(&get(&group0, "name")));
+}
+
+#[tokio::test]
+async fn testQueryEntityByReference() {
+    let em = set_up(&CMS_MODELS).await;
+    let user = cms_user_with("Guilherme", "gblanco", "developer");
+
+    let address = cms_address("Germany", "12345", "Berlin");
+
+    set_address(&user, &address);
+
+    let persisted = user.clone();
+    em.wrap_in_transaction(|em| async move {
+        em.persist(&persisted)?;
+        Ok(())
+    })
+    .await
+    .unwrap();
+    em.clear().unwrap();
+
+    let user_ref = em
+        .get_reference(CMS_USER, get(&user, "id"))
+        .await
+        .unwrap()
+        .unwrap();
+    let query = em.create_query(
+        "select a from Doctrine\\Tests\\Models\\CMS\\CmsAddress a where a.user = :user",
+    );
+    query.set_parameter("user", Value::Object(user_ref.clone()), None);
+    let address2 = obj(&query.get_single_result(None).await.unwrap());
+
+    assert!(same_value(&get(&address2, "user"), &user_ref));
+    assert!(is_uninitialized(&em, &Value::Object(user_ref.clone())));
+    assert!(loose(&s("Germany"), &get(&address2, "country")));
+    assert!(loose(&s("Berlin"), &get(&address2, "city")));
+    assert!(loose(&s("12345"), &get(&address2, "zip")));
+}
+
+#[tokio::test]
+async fn testCreateEntityOfProxy() {
+    let em = set_up(&CMS_MODELS).await;
+    let user = cms_user_with("Guilherme", "gblanco", "developer");
+
+    // Add a phonenumber
+    let ph1 = cms_phonenumber("12345");
+    add_phonenumber(&user, &ph1);
+
+    // Add a phonenumber
+    let ph2 = cms_phonenumber("54321");
+
+    em.persist(&user).unwrap();
+    em.persist(&ph1).unwrap();
+    em.persist(&ph2).unwrap();
+    em.flush().await.unwrap();
+    em.clear().unwrap();
+
+    let user_id = get(&user, "id");
+    let _user = em
+        .get_reference(CMS_USER, user_id.clone())
+        .await
+        .unwrap()
+        .unwrap();
+
+    let dql = "SELECT u FROM Doctrine\\Tests\\Models\\CMS\\CmsUser u WHERE u.id = ?1";
+    let query = em.create_query(dql);
+    query.set_parameter(1, user_id, None);
+    let user = obj(&query.get_single_result(None).await.unwrap());
+
+    assert_eq!(count_of(&user, "phonenumbers").await, 1);
 }

@@ -8,10 +8,7 @@
 //! Each filter class registers its constructor
 //! (`register_filter_class()`), as the configuration names it by class.
 //!
-//! Pending: the extra-lazy collection operations of the cms models, the
-//! extra-lazy many-to-many `count()` and `contains()` of the company
-//! models (the many-to-many persister's filter SQL), and the query cache
-//! (not ported); see the parity rows.
+//! Pending: the query cache (not ported); see the parity rows.
 //!
 //! Upstream: doctrine/orm tests/Tests/ORM/Functional/SQLFilterTest.php
 
@@ -37,13 +34,15 @@ use php2rust_doctrine_orm::collection_object as coll;
 use php2rust_doctrine_orm::configuration::Configuration;
 use php2rust_doctrine_orm::entity_manager::EntityManager;
 use php2rust_doctrine_orm::mapping::ClassMetadataInfo;
+use php2rust_doctrine_orm::mapping::class_metadata::FETCH_EXTRA_LAZY;
+use php2rust_doctrine_orm::persistent_collection::PersistentCollection;
 use php2rust_doctrine_orm::query::context::HYDRATE_OBJECT;
 use php2rust_doctrine_orm::query::{FilterConstraint, SqlFilter, register_filter_class};
 use php2rust_doctrine_persistence::php_reflection::ReflectionClass;
 
 use orm::{
-    CMS_ADDRESS, CMS_GROUP, CMS_MODELS, CMS_USER, add_group, cms_address, cms_article, cms_group,
-    cms_user_with, get, set,
+    CMS_ADDRESS, CMS_ARTICLE, CMS_GROUP, CMS_MODELS, CMS_USER, add_group, cms_address, cms_article,
+    cms_group, cms_user_with, get, set,
 };
 
 const NS: &str = "Doctrine\\Tests\\ORM\\Functional\\";
@@ -55,6 +54,7 @@ const COMPANY_PERSON_NAME_FILTER: &str =
     "Doctrine\\Tests\\ORM\\Functional\\CompanyPersonNameFilter";
 const COMPLETED_CONTRACT_FILTER: &str = "Doctrine\\Tests\\ORM\\Functional\\CompletedContractFilter";
 const COMPANY_EVENT_FILTER: &str = "Doctrine\\Tests\\ORM\\Functional\\CompanyEventFilter";
+const CMS_ARTICLE_TOPIC_FILTER: &str = "Doctrine\\Tests\\ORM\\Functional\\CMSArticleTopicFilter";
 const FILTER_EXCEPTION: &str = "Doctrine\\ORM\\Query\\Filter\\FilterException";
 
 // The filters
@@ -209,6 +209,28 @@ impl FilterConstraint for CompanyEventFilter {
     }
 }
 
+/// `CMSArticleTopicFilter extends SQLFilter`.
+struct CmsArticleTopicFilter;
+
+impl FilterConstraint for CmsArticleTopicFilter {
+    fn add_filter_constraint(
+        &self,
+        filter: &SqlFilter,
+        target_entity: &ClassMetadataInfo,
+        target_table_alias: &str,
+    ) -> Result<String, Thrown> {
+        if target_entity.name != CMS_ARTICLE {
+            return Ok(String::new());
+        }
+
+        // getParam uses connection to quote the value.
+        Ok(format!(
+            "{target_table_alias}.topic = {}",
+            filter.get_parameter("topic")?
+        ))
+    }
+}
+
 fn register_filters() {
     fn register(class: &'static str, constraint: fn() -> Box<dyn FilterConstraint>) {
         register_filter_class(
@@ -227,6 +249,7 @@ fn register_filters() {
         Box::new(CompletedContractFilter)
     });
     register(COMPANY_EVENT_FILTER, || Box::new(CompanyEventFilter));
+    register(CMS_ARTICLE_TOPIC_FILTER, || Box::new(CmsArticleTopicFilter));
 }
 
 // The test case
@@ -259,6 +282,7 @@ fn configure_filters(em: &EntityManager) {
 struct Fixture {
     user_id: Value,
     user_id2: Value,
+    article_id2: Value,
     group_id: Value,
     group_id2: Value,
 }
@@ -303,9 +327,59 @@ async fn load_fixture_data(em: &Arc<EntityManager>) -> Fixture {
     Fixture {
         user_id: get(&user, "id"),
         user_id2: get(&user2, "id"),
+        article_id2: get(&article2, "id"),
         group_id: get(&group, "id"),
         group_id2: get(&group2, "id"),
     }
+}
+
+/// `loadLazyFixtureData()`.
+async fn load_lazy_fixture_data(em: &Arc<EntityManager>) -> Fixture {
+    {
+        let class = em.get_class_metadata(CMS_USER).unwrap();
+        let mut class = class.write();
+        for field in ["articles", "groups"] {
+            class.association_mappings.get_mut(field).unwrap().fetch = Some(FETCH_EXTRA_LAZY);
+        }
+    }
+    load_fixture_data(em).await
+}
+
+fn use_cms_article_topic_filter(em: &EntityManager) {
+    let conf = em.get_configuration();
+    conf.add_filter("article_topic", &format!("\\{NS}CMSArticleTopicFilter"));
+    em.get_filters()
+        .enable("article_topic")
+        .unwrap()
+        .set_parameter("topic", Value::string("Test1"), Some(Types::STRING))
+        .unwrap();
+}
+
+fn is_initialized(object: &php_value::Object, name: &str) -> bool {
+    PersistentCollection::from_value(&get(object, name))
+        .expect("a persistent collection")
+        .is_initialized()
+}
+
+async fn count_of(object: &php_value::Object, name: &str) -> usize {
+    coll::count(&get(object, name)).await.unwrap()
+}
+
+async fn contains(object: &php_value::Object, name: &str, element: &php_value::Object) -> bool {
+    coll::contains(&get(object, name), &Value::Object(element.clone()))
+        .await
+        .unwrap()
+}
+
+async fn slice_count(object: &php_value::Object, name: &str) -> usize {
+    coll::slice(&get(object, name), 0, Some(10))
+        .await
+        .unwrap()
+        .len()
+}
+
+async fn find(em: &Arc<EntityManager>, class: &str, id: &Value) -> php_value::Object {
+    em.find(class, id.clone()).await.unwrap().unwrap()
 }
 
 fn use_cms_group_prefix_filter(em: &EntityManager) {
@@ -763,6 +837,93 @@ async fn testOneToOneInverseSideWithFilter() {
 }
 
 #[tokio::test]
+async fn testOneToManyExtraLazyCountWithFilter() {
+    let em = set_up().await;
+    let f = load_lazy_fixture_data(&em).await;
+    let user = find(&em, CMS_USER, &f.user_id).await;
+
+    assert!(!is_initialized(&user, "articles"));
+    assert_eq!(count_of(&user, "articles").await, 2);
+
+    use_cms_article_topic_filter(&em);
+
+    assert_eq!(count_of(&user, "articles").await, 1);
+}
+
+#[tokio::test]
+async fn testOneToManyExtraLazyContainsWithFilter() {
+    let em = set_up().await;
+    let f = load_lazy_fixture_data(&em).await;
+    let user = find(&em, CMS_USER, &f.user_id).await;
+    let filtered_article = find(&em, CMS_ARTICLE, &f.article_id2).await;
+
+    assert!(!is_initialized(&user, "articles"));
+    assert!(contains(&user, "articles", &filtered_article).await);
+
+    use_cms_article_topic_filter(&em);
+
+    assert!(!contains(&user, "articles", &filtered_article).await);
+}
+
+#[tokio::test]
+async fn testOneToManyExtraLazySliceWithFilter() {
+    let em = set_up().await;
+    let f = load_lazy_fixture_data(&em).await;
+    let user = find(&em, CMS_USER, &f.user_id).await;
+
+    assert!(!is_initialized(&user, "articles"));
+    assert_eq!(slice_count(&user, "articles").await, 2);
+
+    use_cms_article_topic_filter(&em);
+
+    assert_eq!(slice_count(&user, "articles").await, 1);
+}
+
+#[tokio::test]
+async fn testManyToManyExtraLazyCountWithFilter() {
+    let em = set_up().await;
+    let f = load_lazy_fixture_data(&em).await;
+
+    let user = find(&em, CMS_USER, &f.user_id2).await;
+
+    assert!(!is_initialized(&user, "groups"));
+    assert_eq!(count_of(&user, "groups").await, 2);
+
+    use_cms_group_prefix_filter(&em);
+
+    assert_eq!(count_of(&user, "groups").await, 1);
+}
+
+#[tokio::test]
+async fn testManyToManyExtraLazyContainsWithFilter() {
+    let em = set_up().await;
+    let f = load_lazy_fixture_data(&em).await;
+    let user = find(&em, CMS_USER, &f.user_id2).await;
+    let filtered_article = find(&em, CMS_GROUP, &f.group_id2).await;
+
+    assert!(!is_initialized(&user, "groups"));
+    assert!(contains(&user, "groups", &filtered_article).await);
+
+    use_cms_group_prefix_filter(&em);
+
+    assert!(!contains(&user, "groups", &filtered_article).await);
+}
+
+#[tokio::test]
+async fn testManyToManyExtraLazySliceWithFilter() {
+    let em = set_up().await;
+    let f = load_lazy_fixture_data(&em).await;
+    let user = find(&em, CMS_USER, &f.user_id2).await;
+
+    assert!(!is_initialized(&user, "groups"));
+    assert_eq!(slice_count(&user, "groups").await, 2);
+
+    use_cms_group_prefix_filter(&em);
+
+    assert_eq!(slice_count(&user, "groups").await, 1);
+}
+
+#[tokio::test]
 async fn testManyToManyFilter() {
     let em = set_up().await;
     load_fixture_data(&em).await;
@@ -853,7 +1014,6 @@ async fn find_all_count(em: &Arc<EntityManager>, class: &str) -> usize {
 #[derive(Default)]
 struct CompanyFixture {
     manager_id: Value,
-    #[allow(dead_code, reason = "read by the pending many-to-many contains test")]
     manager_id2: Value,
     contract_id1: Value,
     contract_id2: Value,
@@ -1032,29 +1192,42 @@ fn use_completed_contract_filter(em: &EntityManager) {
         .unwrap();
 }
 
-/// `$collection->isInitialized()`.
-fn is_initialized(object: &php_value::Object, name: &str) -> bool {
-    php2rust_doctrine_orm::persistent_collection::PersistentCollection::from_value(&get(
-        object, name,
-    ))
-    .expect("a persistent collection")
-    .is_initialized()
+#[tokio::test]
+async fn testManyToManyExtraLazyCountWithFilterOnSTI() {
+    let em = set_up().await;
+    let f = load_company_single_table_inheritance_fixture_data(&em).await;
+
+    let manager = find(&em, company::COMPANY_MANAGER, &f.manager_id).await;
+
+    assert!(!is_initialized(&manager, "managedContracts"));
+    assert_eq!(orm::count_of(&manager, "managedContracts").await, 4);
+
+    // Enable the filter
+    use_completed_contract_filter(&em);
+
+    assert!(!is_initialized(&manager, "managedContracts"));
+    assert_eq!(orm::count_of(&manager, "managedContracts").await, 2);
 }
 
-async fn find(em: &EntityManager, class: &str, id: &Value) -> php_value::Object {
-    em.find(class, id.clone()).await.unwrap().unwrap()
-}
+#[tokio::test]
+async fn testManyToManyExtraLazyContainsWithFilterOnSTI() {
+    let em = set_up().await;
+    let f = load_company_single_table_inheritance_fixture_data(&em).await;
 
-async fn contains(object: &php_value::Object, name: &str, element: &php_value::Object) -> bool {
-    orm::contains(object, name, element).await
-}
+    let manager = find(&em, company::COMPANY_MANAGER, &f.manager_id).await;
+    let contract1 = find(&em, company::COMPANY_CONTRACT, &f.contract_id1).await;
+    let contract2 = find(&em, company::COMPANY_CONTRACT, &f.contract_id2).await;
 
-/// `count($object->$name->slice(0, 10))`.
-async fn slice_count(object: &php_value::Object, name: &str) -> usize {
-    coll::slice(&get(object, name), 0, Some(10))
-        .await
-        .unwrap()
-        .len()
+    assert!(!is_initialized(&manager, "managedContracts"));
+    assert!(contains(&manager, "managedContracts", &contract1).await);
+    assert!(contains(&manager, "managedContracts", &contract2).await);
+
+    // Enable the filter
+    use_completed_contract_filter(&em);
+
+    assert!(!is_initialized(&manager, "managedContracts"));
+    assert!(!contains(&manager, "managedContracts", &contract1).await);
+    assert!(contains(&manager, "managedContracts", &contract2).await);
 }
 
 #[tokio::test]
@@ -1086,6 +1259,44 @@ fn use_person_name_filter(em: &EntityManager, name: &str) {
         .unwrap()
         .set_parameter("name", Value::string(name), Some(Types::STRING))
         .unwrap();
+}
+
+#[tokio::test]
+async fn testManyToManyExtraLazyCountWithFilterOnCTI() {
+    let em = set_up().await;
+    let f = load_company_single_table_inheritance_fixture_data(&em).await;
+
+    let contract = find(&em, company::COMPANY_FLEX_ULTRA_CONTRACT, &f.contract_id1).await;
+
+    assert!(!is_initialized(&contract, "managers"));
+    assert_eq!(orm::count_of(&contract, "managers").await, 2);
+
+    // Enable the filter
+    use_person_name_filter(&em, "Benjamin");
+
+    assert!(!is_initialized(&contract, "managers"));
+    assert_eq!(orm::count_of(&contract, "managers").await, 1);
+}
+
+#[tokio::test]
+async fn testManyToManyExtraLazyContainsWithFilterOnCTI() {
+    let em = set_up().await;
+    let f = load_company_single_table_inheritance_fixture_data(&em).await;
+
+    let contract = find(&em, company::COMPANY_FLEX_ULTRA_CONTRACT, &f.contract_id1).await;
+    let manager1 = find(&em, company::COMPANY_MANAGER, &f.manager_id).await;
+    let manager2 = find(&em, company::COMPANY_MANAGER, &f.manager_id2).await;
+
+    assert!(!is_initialized(&contract, "managers"));
+    assert!(contains(&contract, "managers", &manager1).await);
+    assert!(contains(&contract, "managers", &manager2).await);
+
+    // Enable the filter
+    use_person_name_filter(&em, "Benjamin");
+
+    assert!(!is_initialized(&contract, "managers"));
+    assert!(!contains(&contract, "managers", &manager1).await);
+    assert!(contains(&contract, "managers", &manager2).await);
 }
 
 #[tokio::test]

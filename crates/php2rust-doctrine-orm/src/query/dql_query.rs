@@ -227,6 +227,32 @@ impl Query {
         }
     }
 
+    /// `iterator_to_array($query->toIterable($parameters, $hydrationMode),
+    /// true)`: the yielded values under the generator's keys (the
+    /// index-by keys of an `INDEX BY` query).
+    pub async fn to_iterable_array(
+        &self,
+        parameters: Option<&PhpArray>,
+        hydration_mode: i64,
+    ) -> Result<PhpArray, Thrown> {
+        self.state
+            .set_hint(HINT_INTERNAL_ITERATION, Hint::Value(Value::Bool(true)));
+        self.set_hydration_mode(hydration_mode);
+        if let Some(parameters) = parameters.filter(|p| !p.is_empty()) {
+            self.state.set_parameters_array(parameters);
+        }
+        let executed = self.do_execute().await?;
+        let yielded = match executed {
+            Executed::Rows(rows) => self.state.hydrate_iterable_with_keys(rows).await?,
+            Executed::Count(count) => vec![(Key::Int(0), Value::Int(count))],
+        };
+        let mut array = PhpArray::new();
+        for (key, value) in yielded {
+            array.insert(key, value);
+        }
+        Ok(array)
+    }
+
     /// `_doExecute()`.
     async fn do_execute(&self) -> Result<Executed, Thrown> {
         let (executor, params, types) = self.prepare_execution()?;
