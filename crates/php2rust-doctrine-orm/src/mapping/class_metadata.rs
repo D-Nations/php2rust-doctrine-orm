@@ -2163,3 +2163,404 @@ pub fn constant(name: &str) -> Option<i64> {
         _ => return None,
     })
 }
+
+fn object(class: &str, properties: PhpArray) -> Value {
+    Value::Object(Arc::new(GenericObject::new(class, properties)))
+}
+
+fn sleep_object(value: &dyn crate::mapping::property_value::Sleep) -> Value {
+    object(&value.class_name(), value.sleep())
+}
+
+fn map_of<V>(map: &OrderedMap<V>, f: impl Fn(&V) -> Value) -> Value {
+    let mut array = PhpArray::new();
+    for (key, value) in map.iter() {
+        array.insert(key, f(value));
+    }
+    Value::Array(array)
+}
+
+fn strings_value(strings: &[String]) -> Value {
+    pv::from_strings(strings)
+}
+
+impl IdGenerator {
+    /// The generator object as PHP serializes it (`SequenceGenerator`'s
+    /// `__serialize()`).
+    fn to_object(&self) -> Value {
+        let mut properties = PhpArray::new();
+        if let Self::Sequence {
+            sequence_name,
+            allocation_size,
+        } = self
+        {
+            properties.insert("allocationSize", Value::Int(*allocation_size));
+            properties.insert("sequenceName", Value::from(sequence_name.as_str()));
+        }
+        object(self.class_name(), properties)
+    }
+
+    fn from_object(object: &Object) -> Self {
+        let class = object.class();
+        let is = |name: &str| class.eq_ignore_ascii_case(name);
+        if is(Self::Assigned.class_name()) {
+            Self::Assigned
+        } else if is(Self::Identity.class_name()) {
+            Self::Identity
+        } else if is(Self::BigIntegerIdentity.class_name()) {
+            Self::BigIntegerIdentity
+        } else if is("Doctrine\\ORM\\Id\\SequenceGenerator") {
+            let properties = object.properties();
+            Self::Sequence {
+                sequence_name: text_of(pv::get(&properties, "sequenceName")).unwrap_or_default(),
+                allocation_size: int_of(pv::get(&properties, "allocationSize")).unwrap_or(0),
+            }
+        } else {
+            Self::Custom {
+                class: class.to_owned(),
+            }
+        }
+    }
+}
+
+impl ClassMetadataInfo {
+    /// `__sleep()`: the names of the serialized properties.
+    pub fn sleep_names(&self) -> Vec<&'static str> {
+        let mut serialized = vec![
+            "associationMappings",
+            "columnNames",
+            "fieldMappings",
+            "fieldNames",
+            "embeddedClasses",
+            "identifier",
+            "identifierPositions",
+            "isIdentifierComposite",
+            "name",
+            "namespace",
+            "table",
+            "rootEntityName",
+            "idGenerator",
+        ];
+        if self.change_tracking_policy != CHANGETRACKING_DEFERRED_IMPLICIT {
+            serialized.push("changeTrackingPolicy");
+        }
+        if self
+            .custom_repository_class_name
+            .as_deref()
+            .is_some_and(|name| !name.is_empty() && name != "0")
+        {
+            serialized.push("customRepositoryClassName");
+        }
+        if self.inheritance_type != INHERITANCE_TYPE_NONE {
+            serialized.extend([
+                "inheritanceType",
+                "discriminatorColumn",
+                "discriminatorValue",
+                "discriminatorMap",
+                "parentClasses",
+                "subClasses",
+            ]);
+        }
+        if self.generator_type != GENERATOR_TYPE_NONE {
+            serialized.push("generatorType");
+            if self.generator_type == GENERATOR_TYPE_SEQUENCE {
+                serialized.push("sequenceGeneratorDefinition");
+            }
+        }
+        let flags = [
+            (self.is_mapped_superclass, "isMappedSuperclass"),
+            (self.is_embedded_class, "isEmbeddedClass"),
+            (
+                self.contains_foreign_identifier,
+                "containsForeignIdentifier",
+            ),
+            (self.contains_enum_identifier, "containsEnumIdentifier"),
+        ];
+        serialized.extend(flags.iter().filter(|(set, _)| *set).map(|(_, name)| *name));
+        if self.is_versioned {
+            serialized.extend(["isVersioned", "versionField"]);
+        }
+        if !self.lifecycle_callbacks.is_empty() {
+            serialized.push("lifecycleCallbacks");
+        }
+        if !self.entity_listeners.is_empty() {
+            serialized.push("entityListeners");
+        }
+        if self.is_read_only {
+            serialized.push("isReadOnly");
+        }
+        if self
+            .custom_generator_definition
+            .as_ref()
+            .is_some_and(|d| !d.is_empty())
+        {
+            serialized.push("customGeneratorDefinition");
+        }
+        if self.cache.as_ref().is_some_and(|c| !c.is_empty()) {
+            serialized.push("cache");
+        }
+        if self.requires_fetch_after_change {
+            serialized.push("requiresFetchAfterChange");
+        }
+        serialized
+    }
+
+    /// A serialized property's value; `None` for an uninitialized one
+    /// (`serialize()` leaves it out).
+    fn sleep_value(&self, name: &str) -> Option<Value> {
+        let opt_array = |a: &Option<PhpArray>| a.clone().map_or(Value::Null, Value::Array);
+        Some(match name {
+            "associationMappings" => map_of(&self.association_mappings, |m| sleep_object(m)),
+            "columnNames" => map_of(&self.column_names, |s| Value::from(s.as_str())),
+            "fieldMappings" => map_of(&self.field_mappings, |m| sleep_object(m)),
+            "fieldNames" => map_of(&self.field_names, |s| Value::from(s.as_str())),
+            "embeddedClasses" => map_of(&self.embedded_classes, |m| sleep_object(m)),
+            "identifier" => strings_value(&self.identifier),
+            "identifierPositions" => map_of(&self.identifier_positions, |p| Value::Int(*p)),
+            "isIdentifierComposite" => Value::Bool(self.is_identifier_composite),
+            "name" => Value::from(self.name.as_str()),
+            "namespace" => Value::from(self.namespace.as_deref()?),
+            "table" => Value::Array(self.table.clone()),
+            "rootEntityName" => Value::from(self.root_entity_name.as_str()),
+            "idGenerator" => self.id_generator.as_ref()?.to_object(),
+            "changeTrackingPolicy" => Value::Int(self.change_tracking_policy),
+            "customRepositoryClassName" => {
+                pv::from_opt_string(self.custom_repository_class_name.as_ref())
+            }
+            "inheritanceType" => Value::Int(self.inheritance_type),
+            "discriminatorColumn" => self
+                .discriminator_column
+                .as_ref()
+                .map_or(Value::Null, |c| sleep_object(c)),
+            "discriminatorValue" => self.discriminator_value.clone(),
+            "discriminatorMap" => Value::Array(self.discriminator_map.clone()),
+            "parentClasses" => strings_value(&self.parent_classes),
+            "subClasses" => strings_value(&self.sub_classes),
+            "generatorType" => Value::Int(self.generator_type),
+            "sequenceGeneratorDefinition" => opt_array(&self.sequence_generator_definition),
+            "isMappedSuperclass" => Value::Bool(self.is_mapped_superclass),
+            "isEmbeddedClass" => Value::Bool(self.is_embedded_class),
+            "containsForeignIdentifier" => Value::Bool(self.contains_foreign_identifier),
+            "containsEnumIdentifier" => Value::Bool(self.contains_enum_identifier),
+            "isVersioned" => Value::Bool(self.is_versioned),
+            "versionField" => pv::from_opt_string(self.version_field.as_ref()),
+            "lifecycleCallbacks" => map_of(&self.lifecycle_callbacks, |c| strings_value(c)),
+            "entityListeners" => map_of(&self.entity_listeners, |listeners| {
+                Value::Array(PhpArray::list(listeners.iter().map(|l| {
+                    let mut listener = PhpArray::new();
+                    listener.insert("class", Value::from(l.class.as_str()));
+                    listener.insert("method", Value::from(l.method.as_str()));
+                    Value::Array(listener)
+                })))
+            }),
+            "isReadOnly" => Value::Bool(self.is_read_only),
+            "customGeneratorDefinition" => opt_array(&self.custom_generator_definition),
+            "cache" => opt_array(&self.cache),
+            "requiresFetchAfterChange" => Value::Bool(self.requires_fetch_after_change),
+            _ => return None,
+        })
+    }
+
+    /// Restores a property `unserialize()` read.
+    #[allow(clippy::too_many_lines, reason = "one arm per serialized property")]
+    fn wake_value(&mut self, name: &str, value: &Value) -> Result<(), Thrown> {
+        let c = CLASS;
+        let objects = |value: &Value| -> Result<Vec<(String, Object)>, Thrown> {
+            pv::array(value, c, name)?
+                .iter()
+                .map(|(key, value)| match value {
+                    Value::Object(object) => Ok((pv::key_name(key), Arc::clone(object))),
+                    other => Err(pv::cannot_assign(other, c, name, "array")),
+                })
+                .collect()
+        };
+        let strings_map = |value: &Value| -> Result<OrderedMap<String>, Thrown> {
+            pv::array(value, c, name)?
+                .iter()
+                .map(|(key, value)| Ok((pv::key_name(key), pv::string(value, c, name)?)))
+                .collect()
+        };
+        match name {
+            "associationMappings" => {
+                self.association_mappings = OrderedMap::new();
+                for (key, object) in objects(value)? {
+                    let mapping = AssociationMapping::from_properties(
+                        object.class(),
+                        &object.properties(),
+                        None,
+                    )
+                    .ok_or_else(|| pv::cannot_assign(value, c, name, "array"))?;
+                    self.association_mappings.insert(key, mapping);
+                }
+            }
+            "fieldMappings" => {
+                self.field_mappings = OrderedMap::new();
+                for (key, object) in objects(value)? {
+                    self.field_mappings
+                        .insert(key, FieldMapping::from_properties(&object.properties())?);
+                }
+            }
+            "embeddedClasses" => {
+                self.embedded_classes = OrderedMap::new();
+                for (key, object) in objects(value)? {
+                    self.embedded_classes.insert(
+                        key,
+                        EmbeddedClassMapping::from_properties(&object.properties())?,
+                    );
+                }
+            }
+            "columnNames" => self.column_names = strings_map(value)?,
+            "fieldNames" => self.field_names = strings_map(value)?,
+            "identifier" => self.identifier = pv::strings(value, c, name)?,
+            "identifierPositions" => {
+                self.identifier_positions = pv::array(value, c, name)?
+                    .iter()
+                    .map(|(key, value)| {
+                        Ok((pv::key_name(key), pv::opt_int(value, c, name)?.unwrap_or(0)))
+                    })
+                    .collect::<Result<_, Thrown>>()?;
+            }
+            "isIdentifierComposite" => self.is_identifier_composite = pv::bool(value, c, name)?,
+            "name" => self.name = pv::string(value, c, name)?,
+            "namespace" => self.namespace = Some(pv::string(value, c, name)?),
+            "table" => self.table = pv::array(value, c, name)?,
+            "rootEntityName" => self.root_entity_name = pv::string(value, c, name)?,
+            "idGenerator" => {
+                self.id_generator = match value {
+                    Value::Object(object) => Some(IdGenerator::from_object(object)),
+                    other => return Err(pv::cannot_assign(other, c, name, "AbstractIdGenerator")),
+                };
+            }
+            "changeTrackingPolicy" => {
+                self.change_tracking_policy = pv::opt_int(value, c, name)?.unwrap_or(0);
+            }
+            "customRepositoryClassName" => {
+                self.custom_repository_class_name = pv::opt_string(value, c, name)?;
+            }
+            "inheritanceType" => self.inheritance_type = pv::opt_int(value, c, name)?.unwrap_or(0),
+            "discriminatorColumn" => {
+                self.discriminator_column = match value {
+                    Value::Object(object) => Some(DiscriminatorColumnMapping::from_properties(
+                        &object.properties(),
+                    )?),
+                    _ => None,
+                };
+            }
+            "discriminatorValue" => self.discriminator_value = value.clone(),
+            "discriminatorMap" => self.discriminator_map = pv::array(value, c, name)?,
+            "parentClasses" => self.parent_classes = pv::strings(value, c, name)?,
+            "subClasses" => self.sub_classes = pv::strings(value, c, name)?,
+            "generatorType" => self.generator_type = pv::opt_int(value, c, name)?.unwrap_or(0),
+            "sequenceGeneratorDefinition" => {
+                self.sequence_generator_definition = pv::opt_array(value, c, name)?;
+            }
+            "isMappedSuperclass" => self.is_mapped_superclass = pv::bool(value, c, name)?,
+            "isEmbeddedClass" => self.is_embedded_class = pv::bool(value, c, name)?,
+            "containsForeignIdentifier" => {
+                self.contains_foreign_identifier = pv::bool(value, c, name)?;
+            }
+            "containsEnumIdentifier" => self.contains_enum_identifier = pv::bool(value, c, name)?,
+            "isVersioned" => self.is_versioned = pv::bool(value, c, name)?,
+            "versionField" => self.version_field = pv::opt_string(value, c, name)?,
+            "lifecycleCallbacks" => {
+                self.lifecycle_callbacks = pv::array(value, c, name)?
+                    .iter()
+                    .map(|(key, value)| Ok((pv::key_name(key), pv::strings(value, c, name)?)))
+                    .collect::<Result<_, Thrown>>()?;
+            }
+            "entityListeners" => {
+                let mut listeners = OrderedMap::new();
+                for (event, list) in pv::array(value, c, name)?.iter() {
+                    let list = pv::array(list, c, name)?
+                        .values()
+                        .map(|listener| {
+                            let listener = pv::array(listener, c, name)?;
+                            Ok(EntityListener {
+                                class: text_of(pv::get(&listener, "class")).unwrap_or_default(),
+                                method: text_of(pv::get(&listener, "method")).unwrap_or_default(),
+                            })
+                        })
+                        .collect::<Result<Vec<_>, Thrown>>()?;
+                    listeners.insert(pv::key_name(event), list);
+                }
+                self.entity_listeners = listeners;
+            }
+            "isReadOnly" => self.is_read_only = pv::bool(value, c, name)?,
+            "customGeneratorDefinition" => {
+                self.custom_generator_definition = pv::opt_array(value, c, name)?;
+            }
+            "cache" => self.cache = pv::opt_array(value, c, name)?,
+            "requiresFetchAfterChange" => {
+                self.requires_fetch_after_change = pv::bool(value, c, name)?;
+            }
+            // PHP would make a dynamic property; this port has none.
+            _ => {}
+        }
+        Ok(())
+    }
+}
+
+impl crate::mapping::property_value::Sleep for ClassMetadataInfo {
+    fn class_name(&self) -> String {
+        CLASS.to_owned()
+    }
+
+    fn sleep(&self) -> PhpArray {
+        let mut array = PhpArray::new();
+        for name in self.sleep_names() {
+            if let Some(value) = self.sleep_value(name) {
+                array.insert(name, value);
+            }
+        }
+        array
+    }
+}
+
+impl ClassMetadata {
+    /// `serialize($metadata)`.
+    pub fn serialize(&self) -> php_value::PhpString {
+        pv::serialize_object(&*self.read())
+    }
+
+    /// `unserialize()` of a serialized `ClassMetadata`: the object
+    /// without reflection (call `wakeup_reflection()`), with the default
+    /// naming strategy and typed field mapper (PHP leaves them
+    /// uninitialized).
+    pub fn unserialize(data: &[u8]) -> Result<Self, Thrown> {
+        let mut classes: Vec<&str> = vec![
+            CLASS,
+            FieldMapping::CLASS,
+            EmbeddedClassMapping::CLASS,
+            DiscriminatorColumnMapping::CLASS,
+            crate::mapping::join_column_mapping::JoinColumnMapping::CLASS,
+            crate::mapping::join_column_mapping::JoinTableMapping::CLASS,
+            "Doctrine\\ORM\\Id\\AssignedGenerator",
+            "Doctrine\\ORM\\Id\\IdentityGenerator",
+            "Doctrine\\ORM\\Id\\BigIntegerIdentityGenerator",
+            "Doctrine\\ORM\\Id\\SequenceGenerator",
+        ];
+        classes.extend(
+            crate::mapping::association_mapping::AssociationKind::ALL
+                .iter()
+                .map(|kind| kind.class_name()),
+        );
+        let not_metadata = || {
+            Thrown::new(
+                "TypeError",
+                format!("The serialized data is not a {CLASS}"),
+                0,
+            )
+        };
+        let (class, properties) =
+            pv::unserialize_object(data, &classes).ok_or_else(not_metadata)?;
+        if !class.eq_ignore_ascii_case(CLASS) {
+            return Err(not_metadata());
+        }
+        let name = text_of(pv::get(&properties, "name")).unwrap_or_default();
+        let mut info = ClassMetadataInfo::new(name, None, None);
+        for (key, value) in properties.iter() {
+            info.wake_value(&pv::key_name(key), value)?;
+        }
+        Ok(Self::from_info(info))
+    }
+}

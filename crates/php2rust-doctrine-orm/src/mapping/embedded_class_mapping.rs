@@ -127,14 +127,20 @@ impl EmbeddedClassMapping {
         if class != Self::CLASS {
             return None;
         }
-        let mut mapping =
-            Self::new(pv::string(pv::required(&properties, "class"), Self::CLASS, "class").ok()?);
+        Self::from_properties(&properties).ok()
+    }
+
+    /// The object from its serialized properties.
+    pub fn from_properties(properties: &PhpArray) -> Result<Self, Thrown> {
+        let mut mapping = Self::new(pv::string(
+            pv::required(properties, "class"),
+            Self::CLASS,
+            "class",
+        )?);
         for (key, value) in properties.iter() {
-            mapping
-                .set_property(&pv::key_name(key), value.clone())
-                .ok()?;
+            mapping.set_property(&pv::key_name(key), value.clone())?;
         }
-        Some(mapping)
+        Ok(mapping)
     }
 }
 
@@ -283,18 +289,21 @@ impl DiscriminatorColumnMapping {
         if class != Self::CLASS {
             return None;
         }
+        Self::from_properties(&properties).ok()
+    }
+
+    /// The object from its serialized properties.
+    pub fn from_properties(properties: &PhpArray) -> Result<Self, Thrown> {
         let c = Self::CLASS;
         let mut mapping = Self::new(
-            pv::string(pv::required(&properties, "type"), c, "type").ok()?,
-            pv::string(pv::required(&properties, "fieldName"), c, "fieldName").ok()?,
-            pv::string(pv::required(&properties, "name"), c, "name").ok()?,
+            pv::string(pv::required(properties, "type"), c, "type")?,
+            pv::string(pv::required(properties, "fieldName"), c, "fieldName")?,
+            pv::string(pv::required(properties, "name"), c, "name")?,
         );
         for (key, value) in properties.iter() {
-            mapping
-                .set_property(&pv::key_name(key), value.clone())
-                .ok()?;
+            mapping.set_property(&pv::key_name(key), value.clone())?;
         }
-        Some(mapping)
+        Ok(mapping)
     }
 }
 

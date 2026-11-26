@@ -1132,13 +1132,27 @@ impl AssociationMapping {
         }
         names.extend([JoinColumnMapping::CLASS, JoinTableMapping::CLASS]);
         let (class, properties) = pv::unserialize_object(data, &names)?;
+        Self::from_properties(&class, &properties, custom)
+    }
+
+    /// The object of class `class` (a final class, or `custom`) from its
+    /// serialized properties.
+    pub fn from_properties(
+        class: &str,
+        properties: &PhpArray,
+        custom: Option<&AssociationClass>,
+    ) -> Option<Self> {
         let class = AssociationKind::ALL
             .iter()
-            .find(|kind| kind.class_name() == class)
+            .find(|kind| kind.class_name().eq_ignore_ascii_case(class))
             .map(|kind| AssociationClass::Final(*kind))
-            .or_else(|| custom.filter(|c| c.name() == class).cloned())?;
+            .or_else(|| {
+                custom
+                    .filter(|c| c.name().eq_ignore_ascii_case(class))
+                    .cloned()
+            })?;
         let field = |key: &str| {
-            pv::get(&properties, key)
+            pv::get(properties, key)
                 .and_then(Value::to_php_string)
                 .map(|s| pv::text(&s))
         };

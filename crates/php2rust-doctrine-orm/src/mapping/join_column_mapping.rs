@@ -119,7 +119,7 @@ impl JoinColumnMapping {
     }
 
     /// The object as a PHP value (its properties as an object).
-    pub(crate) fn to_object(&self) -> Value {
+    pub fn to_object(&self) -> Value {
         Value::Object(Arc::new(GenericObject::new(Self::CLASS, self.sleep())))
     }
 
@@ -346,7 +346,7 @@ impl JoinTableMapping {
         array
     }
 
-    pub(crate) fn to_object(&self) -> Value {
+    pub fn to_object(&self) -> Value {
         Value::Object(Arc::new(GenericObject::new(Self::CLASS, self.sleep())))
     }
 
