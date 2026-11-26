@@ -1567,7 +1567,7 @@ tests/Tests/ORM/Functional/Ticket/GH7767Test.php	GH7767Test::testMatchingOverrul
 tests/Tests/ORM/Functional/Ticket/GH7767Test.php	GH7767Test::testMatchingRespectsCollectionOrdering	ported	crates/php2rust-doctrine-orm/tests/gh7767_test.rs::testMatchingRespectsCollectionOrdering
 tests/Tests/ORM/Functional/Ticket/GH7820Test.php	GH7820Test::testPaginatorDoesNotForceCacheToUpdateEntries	pending	needs the query cache
 tests/Tests/ORM/Functional/Ticket/GH7820Test.php	GH7820Test::testPaginatorQueriesWillBeCached	pending	needs the query cache
-tests/Tests/ORM/Functional/Ticket/GH7820Test.php	GH7820Test::testWillFindSongsInPaginator	pending	
+tests/Tests/ORM/Functional/Ticket/GH7820Test.php	GH7820Test::testWillFindSongsInPaginator	ported	crates/php2rust-doctrine-orm/tests/gh7820_test.rs::testWillFindSongsInPaginator
 tests/Tests/ORM/Functional/Ticket/GH7820Test.php	GH7820Test::testWillFindSongsInPaginatorEvenWithCachedQueryParsing	pending	needs the query cache
 tests/Tests/ORM/Functional/Ticket/GH7829Test.php	GH7829Test::testPaginatorWithLimitSubquery	ported	crates/php2rust-doctrine-orm/tests/gh7829_test.rs::testPaginatorWithLimitSubquery
 tests/Tests/ORM/Functional/Ticket/GH7829Test.php	GH7829Test::testPaginatorWithLimitSubquerySkipped	ported	crates/php2rust-doctrine-orm/tests/gh7829_test.rs::testPaginatorWithLimitSubquerySkipped
