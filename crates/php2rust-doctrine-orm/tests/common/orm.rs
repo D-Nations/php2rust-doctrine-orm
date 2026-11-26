@@ -10,7 +10,7 @@
 
 #![allow(dead_code, reason = "each test binary uses a part of the helpers")]
 
-use std::sync::Arc;
+use std::sync::{Arc, Once};
 
 use php_value::{Object, PhpArray, Thrown, Value};
 use php2rust_doctrine_dbal::{Connection, DriverManager};
@@ -20,7 +20,7 @@ use php2rust_doctrine_orm::configuration::Configuration;
 use php2rust_doctrine_orm::entity_manager::EntityManager;
 use php2rust_doctrine_orm::mapping::ClassMetadata;
 use php2rust_doctrine_orm::mapping::driver::AttributeDriver;
-use php2rust_doctrine_orm::object::EntityObject;
+use php2rust_doctrine_orm::object::{EntityObject, register_listener_method};
 use php2rust_doctrine_orm::tools::SchemaTool;
 
 use super::models;
@@ -58,6 +58,7 @@ pub fn connection() -> Arc<Connection> {
 /// `getEntityManager()`: the attribute driver, native lazy objects.
 pub fn entity_manager(conn: Arc<Connection>, event_manager: Option<EventManager>) -> Arc<EntityManager> {
     models::register();
+    register_methods();
     let mut config = Configuration::new();
     config.set_metadata_driver_impl(Arc::new(
         AttributeDriver::new(Vec::<String>::new(), true).unwrap(),
@@ -138,6 +139,45 @@ pub fn append(object: &Object, name: &str, value: Value) {
 pub fn add_tag(user: &Object, tag: &Object) {
     append(user, "tags", Value::Object(tag.clone()));
     append(tag, "users", Value::Object(user.clone()));
+}
+
+/// The models' method bodies the ORM calls.
+fn register_methods() {
+    static ONCE: Once = Once::new();
+    ONCE.call_once(|| {
+        // CmsAddressListener: `$this->calls[__FUNCTION__][] = func_get_args();`
+        // (the event arguments are not kept: a list of the entity).
+        for method in [
+            "prePersist",
+            "postPersist",
+            "preUpdate",
+            "postUpdate",
+            "preRemove",
+            "postRemove",
+            "postLoad",
+            "preFlush",
+        ] {
+            register_listener_method(
+                &format!("{CMS}CmsAddressListener"),
+                method,
+                Arc::new(move |listener, entity, _args| {
+                    let mut calls = match get(listener, "calls") {
+                        Value::Array(calls) => calls,
+                        _ => PhpArray::new(),
+                    };
+                    let mut list = match calls.get(&method.into()) {
+                        Some(Value::Array(list)) => list.clone(),
+                        _ => PhpArray::new(),
+                    };
+                    list.push(Value::Array(PhpArray::list([Value::Object(entity.clone())])))
+                        .map_err(|_| Thrown::new("Error", "Cannot add element to the array", 0))?;
+                    calls.insert(method, Value::Array(list));
+                    set(listener, "calls", Value::Array(calls));
+                    Ok(())
+                }),
+            );
+        }
+    });
 }
 
 // Models
@@ -268,5 +308,15 @@ pub async fn fetch_one(em: &EntityManager, sql: &str) -> Value {
 
 /// The message of an error.
 pub fn message(e: &Thrown) -> String {
-    e.message.to_string()
+    e.message.to_string_lossy().into_owned()
+}
+
+/// `count($object->$name)`.
+pub async fn count_of(object: &Object, name: &str) -> usize {
+    coll::count(&get(object, name)).await.unwrap()
+}
+
+/// `$object->$name = $value` for an object.
+pub fn set_obj(object: &Object, name: &str, value: &Object) {
+    set(object, name, Value::Object(value.clone()));
 }
