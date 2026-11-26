@@ -850,6 +850,11 @@ impl BasicEntityPersister {
             }
             let mut new_val = match change {
                 Value::Array(pair) => pair.get(&Key::Int(1)).cloned().unwrap_or(Value::Null),
+                // `$change[1]` of a string is its second byte (an empty
+                // string, with PHP's warning, past its end).
+                Value::String(text) => {
+                    Value::String(text.as_bytes().get(1..2).unwrap_or_default().into())
+                }
                 _ => Value::Null,
             };
 
