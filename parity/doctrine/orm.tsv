@@ -1342,7 +1342,7 @@ tests/Tests/ORM/Functional/Ticket/DDC3644Test.php	DDC3644Test::testIssueWithJoin
 tests/Tests/ORM/Functional/Ticket/DDC3644Test.php	DDC3644Test::testIssueWithRegularEntity	ported	crates/php2rust-doctrine-orm/tests/ddc3644_test.rs::testIssueWithRegularEntity
 tests/Tests/ORM/Functional/Ticket/DDC3719Test.php	DDC3719Test::testCriteriaOnNotOwningSide	ported	crates/php2rust-doctrine-orm/tests/ddc3719_test.rs::testCriteriaOnNotOwningSide
 tests/Tests/ORM/Functional/Ticket/DDC371Test.php	DDC371Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc371_test.rs::testIssue
-tests/Tests/ORM/Functional/Ticket/DDC3785Test.php	DDC3785Test::testOwningValueObjectIdIsCorrectlyTransformedWhenRemovingOrphanedChildEntities	pending	a custom DBAL type of the test file (the recorder cannot load a DBAL Type subclass)
+tests/Tests/ORM/Functional/Ticket/DDC3785Test.php	DDC3785Test::testOwningValueObjectIdIsCorrectlyTransformedWhenRemovingOrphanedChildEntities	pending	
 tests/Tests/ORM/Functional/Ticket/DDC381Test.php	DDC381Test::testCallUnserializedProxyMethods	pending	serialize()/unserialize() of a proxy is not ported
 tests/Tests/ORM/Functional/Ticket/DDC3967Test.php	DDC3967Test::testIdentifierCachedWithProperType	pending	
 tests/Tests/ORM/Functional/Ticket/DDC4003Test.php	DDC4003Test::testReadsThroughRepositorySameDataThatItWroteInCache	pending	
