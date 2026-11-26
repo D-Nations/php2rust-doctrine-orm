@@ -1492,9 +1492,9 @@ tests/Tests/ORM/Functional/Ticket/GH12254Test.php	GH12254Test::testFindByEmptyAr
 tests/Tests/ORM/Functional/Ticket/GH12254Test.php	GH12254Test::testFindByInNullableField	ported	crates/php2rust-doctrine-orm/tests/gh12254_test.rs::testFindByInNullableField
 tests/Tests/ORM/Functional/Ticket/GH12403Test.php	GH12403Test::testAssociationTargetCanSilentlyCompleteNativeLazyInitialization	pending	
 tests/Tests/ORM/Functional/Ticket/GH12403Test.php	GH12403Test::testChangeIsPersistedAfterEntityIsInitializedWithoutGoingThroughCreateEntity	pending	
-tests/Tests/ORM/Functional/Ticket/GH12438Test.php	GH12438Test::testFetchAll	pending	
-tests/Tests/ORM/Functional/Ticket/GH12438Test.php	GH12438Test::testFetchWithJoinCondition	pending	
-tests/Tests/ORM/Functional/Ticket/GH12438Test.php	GH12438Test::testFetchWithJoinConditionWithoutAssociation	pending	
+tests/Tests/ORM/Functional/Ticket/GH12438Test.php	GH12438Test::testFetchAll	ported	crates/php2rust-doctrine-orm/tests/gh12438_test.rs::testFetchAll
+tests/Tests/ORM/Functional/Ticket/GH12438Test.php	GH12438Test::testFetchWithJoinCondition	ported	crates/php2rust-doctrine-orm/tests/gh12438_test.rs::testFetchWithJoinCondition
+tests/Tests/ORM/Functional/Ticket/GH12438Test.php	GH12438Test::testFetchWithJoinConditionWithoutAssociation	ported	crates/php2rust-doctrine-orm/tests/gh12438_test.rs::testFetchWithJoinConditionWithoutAssociation
 tests/Tests/ORM/Functional/Ticket/GH12505/GH12505Test.php	GH12505Test::testHydrateManyToManyIndexedByInheritedIdAfterFilterChange	pending	the models are separate files of the ticket directory and not recorded yet
 tests/Tests/ORM/Functional/Ticket/GH2947Test.php	GH2947Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/GH5562Test.php	GH5562Test::testCacheShouldBeUpdatedWhenAssociationChanges	pending	
