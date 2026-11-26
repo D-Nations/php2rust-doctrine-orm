@@ -1,14 +1,31 @@
-//! `Doctrine\ORM\Internal\Hydration`: the hydration the persisters use.
+//! `Doctrine\ORM\Internal\Hydration`: the hydrators.
 //!
 //! The persisters hydrate entities with the simple object hydrator; the
 //! loads of collections add the hydrated entities to the collection as
 //! the object hydrator does (`hydrateAdd()` / `hydrateSet()`), without
-//! joined entities. The object and array hydrators of DQL queries are
-//! not ported, nor are enum fields' cases built from the backing values.
+//! joined entities. The queries hydrate with [`hydrate`] in their
+//! hydration mode. Enum fields' cases are not built from the backing
+//! values (PHP's enums), and custom hydration modes are not ported.
 //!
-//! Upstream: doctrine/orm src/Internal/Hydration/AbstractHydrator.php src/Internal/Hydration/SimpleObjectHydrator.php
+//! Upstream: doctrine/orm src/Internal/Hydration/SimpleObjectHydrator.php src/Internal/Hydration/ScalarHydrator.php src/Internal/Hydration/SingleScalarHydrator.php src/Internal/Hydration/ScalarColumnHydrator.php
+
+mod abstract_hydrator;
+mod array_hydrator;
+mod object_hydrator;
 
 use std::sync::Arc;
+
+pub use abstract_hydrator::{
+    HYDRATION_EXCEPTION, MULTIPLE_SELECTORS_FOUND, NewObjectConstructor, empty_discriminator_value,
+    invalid_discriminator_value, missing_discriminator_column,
+    missing_discriminator_meta_mapping_column, multiple_selectors_found, non_unique_result,
+    parent_object_of_relation_not_found, partial_object_hydration_disallowed,
+    register_new_object_class,
+};
+pub(crate) use abstract_hydrator::register_classes;
+use abstract_hydrator::Columns;
+use array_hydrator::ArrayHydrator;
+use object_hydrator::ObjectHydrator;
 
 use php_value::{Key, Object, PhpArray, Thrown, Value};
 use php2rust_doctrine_dbal::types;
@@ -153,7 +170,7 @@ async fn do_hydrate_all(
 }
 
 /// `AbstractHydrator::registerManaged()`.
-fn register_managed(
+pub(crate) fn register_managed(
     em: &EntityManager,
     class_name: &str,
     entity: &Object,
@@ -188,4 +205,188 @@ fn register_managed(
     };
     em.get_unit_of_work()
         .register_managed(entity, id, data.clone())
+}
+
+/// The hints of a hydration besides the unit of work's
+/// ([`Hints`]): `$hints[UnitOfWork::HINT_DEFEREAGERLOAD]` as set on the
+/// query (`None` when not set) and `$hints['collection']`.
+#[derive(Default)]
+pub struct HydrationHints {
+    pub defer_eager_load: Option<bool>,
+    pub collection: Option<Arc<PersistentCollection>>,
+}
+
+/// `$em->newHydrator($hydrationMode)->hydrateAll($stmt, $rsm, $hints)`.
+pub async fn hydrate(
+    em: &Arc<EntityManager>,
+    hydration_mode: i64,
+    rows: Vec<PhpArray>,
+    rsm: &ResultSetMapping,
+    hints: &mut Hints,
+    extra: HydrationHints,
+) -> Result<Value, Thrown> {
+    use crate::query::context::{
+        HYDRATE_ARRAY, HYDRATE_OBJECT, HYDRATE_SCALAR, HYDRATE_SCALAR_COLUMN,
+        HYDRATE_SIMPLEOBJECT, HYDRATE_SINGLE_SCALAR,
+    };
+    match hydration_mode {
+        HYDRATE_OBJECT => {
+            let mut hydrator =
+                ObjectHydrator::new(em, rsm, hints, extra.defer_eager_load, extra.collection);
+            let result = match hydrator.prepare() {
+                Ok(()) => hydrator.hydrate_all_data(rows).await,
+                Err(e) => Err(e),
+            };
+            let cleanup = hydrator.cleanup().await;
+            let result = result?;
+            cleanup?;
+            Ok(Value::Array(result))
+        }
+        HYDRATE_ARRAY => {
+            let mut hydrator = ArrayHydrator::new(em, rsm, hints.force_dbal_type_conversion);
+            hydrator.prepare();
+            Ok(Value::Array(hydrator.hydrate_all_data(&rows)?))
+        }
+        HYDRATE_SCALAR => {
+            let mut columns = Columns::new(em, rsm, hints.force_dbal_type_conversion);
+            let mut result = Vec::new();
+            for row in &rows {
+                result.push(Value::Array(columns.gather_scalar_row_data(row)?));
+            }
+            Ok(Value::Array(PhpArray::list(result)))
+        }
+        HYDRATE_SINGLE_SCALAR => {
+            let num_rows = rows.len();
+            if num_rows == 0 {
+                return Err(crate::abstract_query::no_result());
+            }
+            if num_rows > 1 {
+                return Err(crate::abstract_query::non_unique_result(Some(
+                    "The query returned multiple rows. Change the query or use a different result function like getScalarResult().",
+                )));
+            }
+            let mut columns = Columns::new(em, rsm, hints.force_dbal_type_conversion);
+            let result = columns.gather_scalar_row_data(&rows[0])?;
+            if result.len() > 1 {
+                return Err(crate::abstract_query::non_unique_result(Some(
+                    "The query returned a row containing multiple columns. Change the query or use a different result function like getScalarResult().",
+                )));
+            }
+            Ok(result.values().next().cloned().unwrap_or(Value::Null))
+        }
+        HYDRATE_SIMPLEOBJECT => {
+            let entities = hydrate_all(em, rows, rsm, hints, None).await?;
+            Ok(Value::Array(PhpArray::list(
+                entities.into_iter().map(Value::Object),
+            )))
+        }
+        HYDRATE_SCALAR_COLUMN => {
+            if rsm.field_mappings.len() > 1 {
+                let selectors: Vec<String> = rsm.field_mappings.values().cloned().collect();
+                return Err(multiple_selectors_found(&selectors));
+            }
+            Ok(Value::Array(PhpArray::list(rows.into_iter().map(|row| {
+                row.values().next().cloned().unwrap_or(Value::Null)
+            }))))
+        }
+        other => Err(crate::exception::invalid_hydration_mode(&other.to_string())),
+    }
+}
+
+/// `toIterable($stmt, $rsm, $hints)`: the yielded values, row by row
+/// (the rows are read whole).
+pub async fn to_iterable(
+    em: &Arc<EntityManager>,
+    hydration_mode: i64,
+    rows: Vec<PhpArray>,
+    rsm: &ResultSetMapping,
+    hints: &mut Hints,
+    extra: HydrationHints,
+) -> Result<Vec<Value>, Thrown> {
+    use crate::query::context::{HYDRATE_ARRAY, HYDRATE_OBJECT, HYDRATE_SCALAR, HYDRATE_SIMPLEOBJECT};
+    let index_by = !rsm.index_by_map.is_empty();
+    let mut yielded = Vec::new();
+    let mut yield_row = |result: PhpArray| {
+        if result.len() == 1 {
+            if index_by {
+                yielded.extend(result.values().cloned());
+            } else if let Some((_, last)) = result.last() {
+                yielded.push(last.clone());
+            }
+        } else if matches!(result.values().next(), Some(Value::Object(_))) {
+            yielded.push(Value::Array(result));
+        } else {
+            // array_merge(...$result)
+            let mut merged = PhpArray::new();
+            for value in result.values() {
+                if let Value::Array(row) = value {
+                    for (k, v) in row.iter() {
+                        match k {
+                            Key::Int(_) => {
+                                let _ = merged.push(v.clone());
+                            }
+                            Key::Str(_) => merged.insert(k.clone(), v.clone()),
+                        }
+                    }
+                }
+            }
+            yielded.push(Value::Array(merged));
+        }
+    };
+    match hydration_mode {
+        HYDRATE_OBJECT => {
+            let mut hydrator =
+                ObjectHydrator::new(em, rsm, hints, extra.defer_eager_load, extra.collection);
+            let mut outcome = hydrator.prepare();
+            if outcome.is_ok() {
+                for row in rows {
+                    let mut result = PhpArray::new();
+                    if let Err(e) = hydrator.hydrate_row_data(&row, &mut result).await {
+                        outcome = Err(e);
+                        break;
+                    }
+                    hydrator.cleanup_after_row_iteration();
+                    yield_row(result);
+                }
+            }
+            let cleanup = hydrator.cleanup().await;
+            outcome?;
+            cleanup?;
+        }
+        HYDRATE_ARRAY => {
+            let mut hydrator = ArrayHydrator::new(em, rsm, hints.force_dbal_type_conversion);
+            hydrator.prepare();
+            for row in &rows {
+                let mut result = PhpArray::new();
+                hydrator.hydrate_row_data(row, &mut result)?;
+                yield_row(result);
+            }
+        }
+        HYDRATE_SCALAR => {
+            let mut columns = Columns::new(em, rsm, hints.force_dbal_type_conversion);
+            for row in &rows {
+                let mut result = PhpArray::new();
+                let _ = result.push(Value::Array(columns.gather_scalar_row_data(row)?));
+                yield_row(result);
+            }
+        }
+        HYDRATE_SIMPLEOBJECT => {
+            for row in rows {
+                let entities = hydrate_all(em, vec![row], rsm, hints, None).await?;
+                let mut result = PhpArray::new();
+                for entity in entities {
+                    let _ = result.push(Value::Object(entity));
+                }
+                yield_row(result);
+            }
+        }
+        _ => {
+            return Err(Thrown::new(
+                HYDRATION_EXCEPTION,
+                "hydrateRowData() not implemented by this hydrator.",
+                0,
+            ));
+        }
+    }
+    Ok(yielded)
 }
