@@ -36,6 +36,11 @@ assert_eq!(PhpString::from("O'Neil"), lexer.token().unwrap().value);
 | The builders (`ClassMetadataBuilder`, `FieldBuilder`, `EmbeddedBuilder`, the association builders, `EntityListenerBuilder`) | `Mapping/Builder/*.php` | ClassMetadataBuilderTest (38), FieldBuilderTest (1) |
 | Naming strategies (`DefaultNamingStrategy`, `UnderscoreNamingStrategy`), quote strategies (`DefaultQuoteStrategy`, `AnsiQuoteStrategy`), typed field mappers (`DefaultTypedFieldMapper`, `ChainTypedFieldMapper`) | `Mapping/*NamingStrategy.php`, `*QuoteStrategy.php`, `*TypedFieldMapper.php`, `Internal/SQLResultCasing.php` | NamingStrategyTest (6), QuoteStrategyTest (8), AnsiQuoteStrategyTest (8), DefaultQuoteStrategyTest (2), TypedFieldMapperTest (1, 12 rows), TypedEnumFieldMapperTest (1) |
 | The property accessors (`RawValue`, `ObjectCast`, `TypedNoDefault`, `Readonly`, `Enum`, `Embeddable`, the factory) and the legacy `ReflectionReadonlyProperty`/`ReflectionEmbeddedProperty` | `Mapping/PropertyAccessors/*.php`, `ReflectionReadonlyProperty.php`, `ReflectionEmbeddedProperty.php` | the PropertyAccessors tests (10), ReflectionReadonlyPropertyTest (3), ReflectionEmbeddedPropertyTest (2, 6 rows each) |
+| `Query\Parser`: the DQL grammar (`QueryLanguage()` down to the terminals), the deferred validations (identification and result variables, partial objects, path expressions, `NEW` objects), the built-in and custom string, numeric and datetime functions, the `QueryException` syntax and semantical texts; `AbstractSchemaName()`, `match()` | `Query/Parser.php`, `Query/QueryException.php`, `Query/AST/ASTException.php` | LanguageRecognitionTest (112 of 113), ParserTest (6) |
+| `Query\AST`: the nodes (as `ast::Node`, double-dispatched to the walker) and the functions (`ABS` ... `UPPER`, `IDENTITY`, `SIZE`, `DATE_ADD`/`DATE_SUB`, the bit functions); `ExpressionWithReturnType` and the deprecated `TypedExpression` (deprecation `https://github.com/doctrine/orm/pull/12543`) | `Query/AST/*.php`, `Query/AST/Functions/*.php` | the SqlGeneration tests; TypedExpressionDeprecationTest (2) |
+| `Query\SqlWalker` and `SqlOutputWalker`: the SQL of SELECT, UPDATE and DELETE statements on the platform, table aliases, class table and single table inheritance, ordered collections, filters, lock hints, `HINT_FORCE_PARTIAL_LOAD`, limit and offset, custom DBAL types' `convertToPHPValueSQL()`, the result set mapping the walker fills; `OutputWalker::getFinalizer()` | `Query/SqlWalker.php`, `Query/SqlOutputWalker.php`, `Query/OutputWalker.php` | SelectSqlGenerationTest (172 of 185), UpdateSqlGenerationTest (18), DeleteSqlGenerationTest (28), SqlWalkerTest (2) |
+| `TreeWalker`, `TreeWalkerAdapter`, `TreeWalkerChain`: walkers that change the AST (`&mut`) before the output walker; `setQueryComponent()`'s check | `Query/TreeWalker.php`, `TreeWalkerAdapter.php`, `TreeWalkerChain.php` | CustomTreeWalkersTest (5), CustomTreeWalkersJoinTest (2) |
+| `ParserResult`, the executors and finalizers as data (`SqlExecutor` with its kind and SQL statements, `SingleSelectSqlFinalizer`, `PreparedExecutorFinalizer`), the deprecation `https://github.com/doctrine/orm/pull/11188` | `Query/ParserResult.php`, `Query/Exec/*.php` | ParserResultTest (5) |
 | `TopologicalSort` and `StronglyConnectedComponents` (commit order, cycle breaking on optional edges, `CycleDetectedException`) | `Internal/TopologicalSort.php`, `Internal/StronglyConnectedComponents.php` | TopologicalSortTest, StronglyConnectedComponentsTest |
 | `EntityManager` (async where it reaches the database): `create()` (`MissingMappingDriverImplementation`), `find()`/`find_with_lock()` (identifier normalization, `invalidCompositeIdentifier`, `MissingIdentifierField`, `UnrecognizedIdentifierFields`, lock requirements: `OptimisticLockException::notVersioned`, `TransactionRequiredException`), `getReference()`, `persist()`, `remove()`, `refresh()`, `detach()`, `contains()`, `clear()`, `close()` (`EntityManagerClosed`), `flush()`, `wrapInTransaction()`, `beginTransaction()`/`commit()`/`rollback()`, `getRepository()`, `lock()`; `Configuration` (`setDefaultRepositoryClassName()`'s `InvalidEntityRepository`) | `EntityManager.php`, `Configuration.php`, `Proxy/ProxyFactory.php` (native lazy ghosts) | BasicFunctionalTest (19), EntityRepositoryTest (35) |
 | `UnitOfWork` (UnitOfWorkTest runs on a stubbed driver connection, as upstream's mocks): change sets (scalars, to-one, collections, `recomputeSingleEntityChangeSet()`), commit order by `TopologicalSort`, identity map (`EntityIdentityCollisionException`), cascades (persist, remove, refresh, detach), orphan removal, collection deletions and updates, entity states, `createEntity()` (lazy to-one proxies, deferred eager loads), the ORMInvalidArgumentException texts (`newEntityFoundThroughRelationship`, `invalidAssociation`, ...) | `UnitOfWork.php`, `ORMInvalidArgumentException.php`, `Exception/*.php`, `EntityNotFoundException.php`, `OptimisticLockException.php` | BasicFunctionalTest, UnitOfWorkTest (12), the OneToMany*/ManyToMany* association tests (24), LifecycleCallbackTest (7) |
@@ -44,7 +49,7 @@ assert_eq!(PhpString::from("O'Neil"), lexer.token().unwrap().value);
 | `EntityRepository` (`find()`, `findAll()`, `findBy()`, `findOneBy()`, `count()`, `__call()` magic finders with `InvalidMagicMethodCall`), `DefaultRepositoryFactory` | `EntityRepository.php`, `Repository/*.php` | EntityRepositoryTest |
 | Lifecycle events: `ListenersInvoker` (callbacks, entity listeners, event manager), the event args classes, `PreUpdateEventArgs` | `Event/*.php` | LifecycleCallbackTest |
 | `SchemaTool::createSchema()`/`dropSchema()`/`getSchemaFromMetadata()` for no and single-table inheritance (columns, join columns and tables, indexes, unique constraints, foreign keys) | `Tools/SchemaTool.php` | the functional tests' schemas |
-| `ResultSetMapping` | `Query/ResultSetMapping.php` | the persister's mappings |
+| `ResultSetMapping` | `Query/ResultSetMapping.php` | the persister's mappings; the SQL walker's result mappings |
 
 `Lexer::new()` returns doctrine/lexer's `PcreError`, which the DQL
 patterns never cause.
@@ -109,6 +114,44 @@ attributes); `RawValuePropertyAccessorTest` (PHP 8.4 property hooks);
 and `QuoteStrategyTest::testConfiguration` (the entity manager and its
 `Configuration`).
 
+DQL, not reproduced and so not claimed:
+
+- The parser and the walkers see the entity manager and the query
+  through two traits, `query::context::QueryContext` (class metadata,
+  the owning side of an association, the platform, `quote()`, the quote
+  strategy, the custom functions, the enabled filters) and `DqlQuery`
+  (the DQL, hints, hydration mode, parameters, first and max results).
+  `EntityManager` implements `QueryContext` (its `quote()` is the
+  driver's and needs an open connection; it has no filters yet); `Query`
+  is not ported, and the tests implement `DqlQuery` in
+  `tests/common/dql.rs` over `EntityManagerMock`'s stand-in, whose
+  connection quotes as `'%s'`, as upstream's stub does.
+- The `Configuration` names a custom function by class; Rust cannot
+  instantiate a class by name, so a function class registers its
+  constructor with `query::context::register_function_class()`. An
+  unregistered class is an unknown function.
+- The walker fills `query::ResultSetMapping` (`Query/ResultSetMapping.php`).
+- Executors are data: `execute()` (it needs a connection) is not ported.
+  Only DBAL's `SQLitePlatform` exists.
+- Walker and tree walker classes are `OutputWalkerClass` and
+  `TreeWalkerClass` values (a name and a constructor), not class-string
+  hints. A walker method an AST node calls and PHP lacks
+  (`walkWhenClauseExpression()`, ...) gives PHP's `Error` text.
+- DQL is read as UTF-8 (lossy); assertions are treated as disabled, as
+  in production PHP. `Thrown` has no previous exception, and a
+  `TypeError` lacks ", called in ...".
+- `query::utility` holds what the walkers use from the persisters and
+  helpers outside `Query` (`PersisterHelper`,
+  `HierarchyDiscriminatorResolver`, `LockSqlHelper`,
+  `JoinedSubclassPersister::getOwningTable()`).
+- Test parameters whose value is an entity or a `ClassMetadata` are
+  `null`; the SQL does not depend on them. `setEntityNamespaces()` in
+  `LanguageRecognitionTest::testRejectsInvalidDQL` is left out (the
+  parser does not read it).
+
+DQL pending: the SelectSqlGenerationTest tests on `MySQLPlatform`,
+`PostgreSQLPlatform` and `OraclePlatform` (11; the DBAL port has only
+`SQLitePlatform`).
 Persistence, not reproduced and so not claimed:
 
 - The DBAL is async, so the entity manager, unit of work, persisters,

@@ -77,7 +77,7 @@ src/Event/PreRemoveEventArgs.php	PreRemoveEventArgs	7	ported	crates/php2rust-doc
 src/Event/PreUpdateEventArgs.php	PreUpdateEventArgs	50	ported	crates/php2rust-doctrine-orm/src/event/mod.rs
 src/Events.php	Events	21	ported	crates/php2rust-doctrine-orm/src/events.rs
 src/Exception/ConfigurationException.php	ConfigurationException	5	pending	
-src/Exception/DuplicateFieldException.php	DuplicateFieldException	11	pending	
+src/Exception/DuplicateFieldException.php	DuplicateFieldException	11	ported	crates/php2rust-doctrine-orm/src/query/query_exception.rs
 src/Exception/EntityIdentityCollisionException.php	EntityIdentityCollisionException	33	ported	crates/php2rust-doctrine-orm/src/exception.rs
 src/Exception/EntityManagerClosed.php	EntityManagerClosed	10	ported	crates/php2rust-doctrine-orm/src/exception.rs
 src/Exception/EntityMissingAssignedId.php	EntityMissingAssignedId	14	ported	crates/php2rust-doctrine-orm/src/exception.rs
@@ -87,7 +87,7 @@ src/Exception/ManagerException.php	ManagerException	6	pending
 src/Exception/MissingIdentifierField.php	MissingIdentifierField	15	ported	crates/php2rust-doctrine-orm/src/exception.rs
 src/Exception/MissingMappingDriverImplementation.php	MissingMappingDriverImplementation	13	ported	crates/php2rust-doctrine-orm/src/exception.rs
 src/Exception/MultipleSelectorsFoundException.php	MultipleSelectorsFoundException	18	pending	
-src/Exception/NoMatchingPropertyException.php	NoMatchingPropertyException	11	pending	
+src/Exception/NoMatchingPropertyException.php	NoMatchingPropertyException	11	ported	crates/php2rust-doctrine-orm/src/query/query_exception.rs
 src/Exception/NotSupported.php	NotSupported	35	ported	crates/php2rust-doctrine-orm/src/exception.rs
 src/Exception/ORMException.php	ORMException	6	ported	crates/php2rust-doctrine-orm/src/exception.rs
 src/Exception/PersisterException.php	PersisterException	6	pending	
@@ -260,106 +260,106 @@ src/Proxy/InternalProxy.php	InternalProxy	7	pending
 src/Proxy/NotAProxyClass.php	NotAProxyClass	16	pending	
 src/Proxy/ProxyFactory.php	ProxyFactory	399	ported	crates/php2rust-doctrine-orm/src/entity_manager.rs
 src/Query.php	Query	367	pending	
-src/Query/AST/ASTException.php	ASTException	11	pending	
-src/Query/AST/AggregateExpression.php	AggregateExpression	16	pending	
-src/Query/AST/ArithmeticExpression.php	ArithmeticExpression	20	pending	
-src/Query/AST/ArithmeticFactor.php	ArithmeticFactor	23	pending	
-src/Query/AST/ArithmeticTerm.php	ArithmeticTerm	13	pending	
-src/Query/AST/BetweenExpression.php	BetweenExpression	17	pending	
-src/Query/AST/CoalesceExpression.php	CoalesceExpression	13	pending	
-src/Query/AST/CollectionMemberExpression.php	CollectionMemberExpression	16	pending	
-src/Query/AST/ComparisonExpression.php	ComparisonExpression	16	pending	
-src/Query/AST/ConditionalExpression.php	ConditionalExpression	13	pending	
-src/Query/AST/ConditionalFactor.php	ConditionalFactor	15	pending	
-src/Query/AST/ConditionalPrimary.php	ConditionalPrimary	20	pending	
-src/Query/AST/ConditionalTerm.php	ConditionalTerm	13	pending	
-src/Query/AST/DeleteClause.php	DeleteClause	14	pending	
-src/Query/AST/DeleteStatement.php	DeleteStatement	14	pending	
-src/Query/AST/EmptyCollectionComparisonExpression.php	EmptyCollectionComparisonExpression	15	pending	
-src/Query/AST/EntityAsDtoArgumentExpression.php	EntityAsDtoArgumentExpression	19	pending	
-src/Query/AST/ExistsExpression.php	ExistsExpression	15	pending	
-src/Query/AST/ExpressionWithReturnType.php	ExpressionWithReturnType	6	pending	
-src/Query/AST/FromClause.php	FromClause	13	pending	
-src/Query/AST/Functions/AbsFunction.php	AbsFunction	23	pending	
-src/Query/AST/Functions/AvgFunction.php	AvgFunction	17	pending	
-src/Query/AST/Functions/BitAndFunction.php	BitAndFunction	28	pending	
-src/Query/AST/Functions/BitOrFunction.php	BitOrFunction	28	pending	
-src/Query/AST/Functions/ConcatFunction.php	ConcatFunction	36	pending	
-src/Query/AST/Functions/CountFunction.php	CountFunction	29	pending	
-src/Query/AST/Functions/CurrentDateFunction.php	CurrentDateFunction	18	pending	
-src/Query/AST/Functions/CurrentTimeFunction.php	CurrentTimeFunction	18	pending	
-src/Query/AST/Functions/CurrentTimestampFunction.php	CurrentTimestampFunction	18	pending	
-src/Query/AST/Functions/DateAddFunction.php	DateAddFunction	66	pending	
-src/Query/AST/Functions/DateDiffFunction.php	DateDiffFunction	27	pending	
-src/Query/AST/Functions/DateSubFunction.php	DateSubFunction	49	pending	
-src/Query/AST/Functions/FunctionNode.php	FunctionNode	17	pending	
-src/Query/AST/Functions/IdentityFunction.php	IdentityFunction	64	pending	
-src/Query/AST/Functions/LengthFunction.php	LengthFunction	35	pending	
-src/Query/AST/Functions/LocateFunction.php	LocateFunction	40	pending	
-src/Query/AST/Functions/LowerFunction.php	LowerFunction	25	pending	
-src/Query/AST/Functions/MaxFunction.php	MaxFunction	17	pending	
-src/Query/AST/Functions/MinFunction.php	MinFunction	17	pending	
-src/Query/AST/Functions/ModFunction.php	ModFunction	27	pending	
-src/Query/AST/Functions/SizeFunction.php	SizeFunction	77	pending	
-src/Query/AST/Functions/SqrtFunction.php	SqrtFunction	25	pending	
-src/Query/AST/Functions/SubstringFunction.php	SubstringFunction	38	pending	
-src/Query/AST/Functions/SumFunction.php	SumFunction	17	pending	
-src/Query/AST/Functions/TrimFunction.php	TrimFunction	82	pending	
-src/Query/AST/Functions/UpperFunction.php	UpperFunction	25	pending	
-src/Query/AST/GeneralCaseExpression.php	GeneralCaseExpression	15	pending	
-src/Query/AST/GroupByClause.php	GroupByClause	13	pending	
-src/Query/AST/HavingClause.php	HavingClause	13	pending	
-src/Query/AST/IdentificationVariableDeclaration.php	IdentificationVariableDeclaration	16	pending	
-src/Query/AST/InListExpression.php	InListExpression	16	pending	
-src/Query/AST/InSubselectExpression.php	InSubselectExpression	16	pending	
-src/Query/AST/IndexBy.php	IndexBy	14	pending	
-src/Query/AST/InputParameter.php	InputParameter	25	pending	
-src/Query/AST/InstanceOfExpression.php	InstanceOfExpression	16	pending	
-src/Query/AST/Join.php	Join	19	pending	
-src/Query/AST/JoinAssociationDeclaration.php	JoinAssociationDeclaration	16	pending	
-src/Query/AST/JoinAssociationPathExpression.php	JoinAssociationPathExpression	10	pending	
-src/Query/AST/JoinClassPathExpression.php	JoinClassPathExpression	15	pending	
-src/Query/AST/JoinVariableDeclaration.php	JoinVariableDeclaration	13	pending	
-src/Query/AST/LikeExpression.php	LikeExpression	18	pending	
-src/Query/AST/Literal.php	Literal	19	pending	
-src/Query/AST/NewObjectExpression.php	NewObjectExpression	16	pending	
-src/Query/AST/Node.php	Node	54	pending	
-src/Query/AST/NullComparisonExpression.php	NullComparisonExpression	15	pending	
-src/Query/AST/NullIfExpression.php	NullIfExpression	13	pending	
-src/Query/AST/OrderByClause.php	OrderByClause	15	pending	
-src/Query/AST/OrderByItem.php	OrderByItem	23	pending	
-src/Query/AST/ParenthesisExpression.php	ParenthesisExpression	13	pending	
-src/Query/AST/PartialObjectExpression.php	PartialObjectExpression	10	pending	
-src/Query/AST/PathExpression.php	PathExpression	20	pending	
-src/Query/AST/Phase2OptimizableConditional.php	Phase2OptimizableConditional	5	pending	
-src/Query/AST/QuantifiedExpression.php	QuantifiedExpression	27	pending	
-src/Query/AST/RangeVariableDeclaration.php	RangeVariableDeclaration	16	pending	
-src/Query/AST/SelectClause.php	SelectClause	15	pending	
-src/Query/AST/SelectExpression.php	SelectExpression	16	pending	
-src/Query/AST/SelectStatement.php	SelectStatement	17	pending	
-src/Query/AST/SimpleArithmeticExpression.php	SimpleArithmeticExpression	13	pending	
-src/Query/AST/SimpleCaseExpression.php	SimpleCaseExpression	16	pending	
-src/Query/AST/SimpleSelectClause.php	SimpleSelectClause	15	pending	
-src/Query/AST/SimpleSelectExpression.php	SimpleSelectExpression	14	pending	
-src/Query/AST/SimpleWhenClause.php	SimpleWhenClause	15	pending	
-src/Query/AST/Subselect.php	Subselect	17	pending	
-src/Query/AST/SubselectFromClause.php	SubselectFromClause	13	pending	
-src/Query/AST/SubselectIdentificationVariableDeclaration.php	SubselectIdentificationVariableDeclaration	10	pending	
-src/Query/AST/TypedExpression.php	TypedExpression	7	pending	
-src/Query/AST/UpdateClause.php	UpdateClause	16	pending	
-src/Query/AST/UpdateItem.php	UpdateItem	13	pending	
-src/Query/AST/UpdateStatement.php	UpdateStatement	14	pending	
-src/Query/AST/WhenClause.php	WhenClause	15	pending	
-src/Query/AST/WhereClause.php	WhereClause	13	pending	
-src/Query/Exec/AbstractSqlExecutor.php	AbstractSqlExecutor	26	pending	
-src/Query/Exec/FinalizedSelectExecutor.php	FinalizedSelectExecutor	15	pending	
-src/Query/Exec/MultiTableDeleteExecutor.php	MultiTableDeleteExecutor	77	pending	
-src/Query/Exec/MultiTableUpdateExecutor.php	MultiTableUpdateExecutor	116	pending	
-src/Query/Exec/PreparedExecutorFinalizer.php	PreparedExecutorFinalizer	15	pending	
-src/Query/Exec/SingleSelectExecutor.php	SingleSelectExecutor	24	pending	
-src/Query/Exec/SingleSelectSqlFinalizer.php	SingleSelectSqlFinalizer	32	pending	
-src/Query/Exec/SingleTableDeleteUpdateExecutor.php	SingleTableDeleteUpdateExecutor	24	pending	
-src/Query/Exec/SqlFinalizer.php	SqlFinalizer	7	pending	
+src/Query/AST/ASTException.php	ASTException	11	ported	crates/php2rust-doctrine-orm/src/query/query_exception.rs
+src/Query/AST/AggregateExpression.php	AggregateExpression	16	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/ArithmeticExpression.php	ArithmeticExpression	20	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/ArithmeticFactor.php	ArithmeticFactor	23	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/ArithmeticTerm.php	ArithmeticTerm	13	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/BetweenExpression.php	BetweenExpression	17	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/CoalesceExpression.php	CoalesceExpression	13	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/CollectionMemberExpression.php	CollectionMemberExpression	16	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/ComparisonExpression.php	ComparisonExpression	16	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/ConditionalExpression.php	ConditionalExpression	13	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/ConditionalFactor.php	ConditionalFactor	15	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/ConditionalPrimary.php	ConditionalPrimary	20	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/ConditionalTerm.php	ConditionalTerm	13	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/DeleteClause.php	DeleteClause	14	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/DeleteStatement.php	DeleteStatement	14	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/EmptyCollectionComparisonExpression.php	EmptyCollectionComparisonExpression	15	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/EntityAsDtoArgumentExpression.php	EntityAsDtoArgumentExpression	19	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/ExistsExpression.php	ExistsExpression	15	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/ExpressionWithReturnType.php	ExpressionWithReturnType	6	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/FromClause.php	FromClause	13	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/Functions/AbsFunction.php	AbsFunction	23	ported	crates/php2rust-doctrine-orm/src/query/ast/functions.rs
+src/Query/AST/Functions/AvgFunction.php	AvgFunction	17	ported	crates/php2rust-doctrine-orm/src/query/ast/functions.rs
+src/Query/AST/Functions/BitAndFunction.php	BitAndFunction	28	ported	crates/php2rust-doctrine-orm/src/query/ast/functions.rs
+src/Query/AST/Functions/BitOrFunction.php	BitOrFunction	28	ported	crates/php2rust-doctrine-orm/src/query/ast/functions.rs
+src/Query/AST/Functions/ConcatFunction.php	ConcatFunction	36	ported	crates/php2rust-doctrine-orm/src/query/ast/functions.rs
+src/Query/AST/Functions/CountFunction.php	CountFunction	29	ported	crates/php2rust-doctrine-orm/src/query/ast/functions.rs
+src/Query/AST/Functions/CurrentDateFunction.php	CurrentDateFunction	18	ported	crates/php2rust-doctrine-orm/src/query/ast/functions.rs
+src/Query/AST/Functions/CurrentTimeFunction.php	CurrentTimeFunction	18	ported	crates/php2rust-doctrine-orm/src/query/ast/functions.rs
+src/Query/AST/Functions/CurrentTimestampFunction.php	CurrentTimestampFunction	18	ported	crates/php2rust-doctrine-orm/src/query/ast/functions.rs
+src/Query/AST/Functions/DateAddFunction.php	DateAddFunction	66	ported	crates/php2rust-doctrine-orm/src/query/ast/functions.rs
+src/Query/AST/Functions/DateDiffFunction.php	DateDiffFunction	27	ported	crates/php2rust-doctrine-orm/src/query/ast/functions.rs
+src/Query/AST/Functions/DateSubFunction.php	DateSubFunction	49	ported	crates/php2rust-doctrine-orm/src/query/ast/functions.rs
+src/Query/AST/Functions/FunctionNode.php	FunctionNode	17	ported	crates/php2rust-doctrine-orm/src/query/ast/functions.rs
+src/Query/AST/Functions/IdentityFunction.php	IdentityFunction	64	ported	crates/php2rust-doctrine-orm/src/query/ast/functions.rs
+src/Query/AST/Functions/LengthFunction.php	LengthFunction	35	ported	crates/php2rust-doctrine-orm/src/query/ast/functions.rs
+src/Query/AST/Functions/LocateFunction.php	LocateFunction	40	ported	crates/php2rust-doctrine-orm/src/query/ast/functions.rs
+src/Query/AST/Functions/LowerFunction.php	LowerFunction	25	ported	crates/php2rust-doctrine-orm/src/query/ast/functions.rs
+src/Query/AST/Functions/MaxFunction.php	MaxFunction	17	ported	crates/php2rust-doctrine-orm/src/query/ast/functions.rs
+src/Query/AST/Functions/MinFunction.php	MinFunction	17	ported	crates/php2rust-doctrine-orm/src/query/ast/functions.rs
+src/Query/AST/Functions/ModFunction.php	ModFunction	27	ported	crates/php2rust-doctrine-orm/src/query/ast/functions.rs
+src/Query/AST/Functions/SizeFunction.php	SizeFunction	77	ported	crates/php2rust-doctrine-orm/src/query/ast/functions.rs
+src/Query/AST/Functions/SqrtFunction.php	SqrtFunction	25	ported	crates/php2rust-doctrine-orm/src/query/ast/functions.rs
+src/Query/AST/Functions/SubstringFunction.php	SubstringFunction	38	ported	crates/php2rust-doctrine-orm/src/query/ast/functions.rs
+src/Query/AST/Functions/SumFunction.php	SumFunction	17	ported	crates/php2rust-doctrine-orm/src/query/ast/functions.rs
+src/Query/AST/Functions/TrimFunction.php	TrimFunction	82	ported	crates/php2rust-doctrine-orm/src/query/ast/functions.rs
+src/Query/AST/Functions/UpperFunction.php	UpperFunction	25	ported	crates/php2rust-doctrine-orm/src/query/ast/functions.rs
+src/Query/AST/GeneralCaseExpression.php	GeneralCaseExpression	15	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/GroupByClause.php	GroupByClause	13	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/HavingClause.php	HavingClause	13	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/IdentificationVariableDeclaration.php	IdentificationVariableDeclaration	16	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/InListExpression.php	InListExpression	16	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/InSubselectExpression.php	InSubselectExpression	16	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/IndexBy.php	IndexBy	14	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/InputParameter.php	InputParameter	25	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/InstanceOfExpression.php	InstanceOfExpression	16	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/Join.php	Join	19	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/JoinAssociationDeclaration.php	JoinAssociationDeclaration	16	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/JoinAssociationPathExpression.php	JoinAssociationPathExpression	10	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/JoinClassPathExpression.php	JoinClassPathExpression	15	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/JoinVariableDeclaration.php	JoinVariableDeclaration	13	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/LikeExpression.php	LikeExpression	18	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/Literal.php	Literal	19	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/NewObjectExpression.php	NewObjectExpression	16	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/Node.php	Node	54	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/NullComparisonExpression.php	NullComparisonExpression	15	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/NullIfExpression.php	NullIfExpression	13	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/OrderByClause.php	OrderByClause	15	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/OrderByItem.php	OrderByItem	23	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/ParenthesisExpression.php	ParenthesisExpression	13	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/PartialObjectExpression.php	PartialObjectExpression	10	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/PathExpression.php	PathExpression	20	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/Phase2OptimizableConditional.php	Phase2OptimizableConditional	5	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/QuantifiedExpression.php	QuantifiedExpression	27	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/RangeVariableDeclaration.php	RangeVariableDeclaration	16	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/SelectClause.php	SelectClause	15	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/SelectExpression.php	SelectExpression	16	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/SelectStatement.php	SelectStatement	17	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/SimpleArithmeticExpression.php	SimpleArithmeticExpression	13	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/SimpleCaseExpression.php	SimpleCaseExpression	16	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/SimpleSelectClause.php	SimpleSelectClause	15	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/SimpleSelectExpression.php	SimpleSelectExpression	14	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/SimpleWhenClause.php	SimpleWhenClause	15	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/Subselect.php	Subselect	17	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/SubselectFromClause.php	SubselectFromClause	13	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/SubselectIdentificationVariableDeclaration.php	SubselectIdentificationVariableDeclaration	10	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/TypedExpression.php	TypedExpression	7	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/UpdateClause.php	UpdateClause	16	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/UpdateItem.php	UpdateItem	13	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/UpdateStatement.php	UpdateStatement	14	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/WhenClause.php	WhenClause	15	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/AST/WhereClause.php	WhereClause	13	ported	crates/php2rust-doctrine-orm/src/query/ast.rs
+src/Query/Exec/AbstractSqlExecutor.php	AbstractSqlExecutor	26	ported	crates/php2rust-doctrine-orm/src/query/exec.rs
+src/Query/Exec/FinalizedSelectExecutor.php	FinalizedSelectExecutor	15	ported	crates/php2rust-doctrine-orm/src/query/exec.rs
+src/Query/Exec/MultiTableDeleteExecutor.php	MultiTableDeleteExecutor	77	ported	crates/php2rust-doctrine-orm/src/query/exec.rs
+src/Query/Exec/MultiTableUpdateExecutor.php	MultiTableUpdateExecutor	116	ported	crates/php2rust-doctrine-orm/src/query/exec.rs
+src/Query/Exec/PreparedExecutorFinalizer.php	PreparedExecutorFinalizer	15	ported	crates/php2rust-doctrine-orm/src/query/exec.rs
+src/Query/Exec/SingleSelectExecutor.php	SingleSelectExecutor	24	ported	crates/php2rust-doctrine-orm/src/query/exec.rs
+src/Query/Exec/SingleSelectSqlFinalizer.php	SingleSelectSqlFinalizer	32	ported	crates/php2rust-doctrine-orm/src/query/exec.rs
+src/Query/Exec/SingleTableDeleteUpdateExecutor.php	SingleTableDeleteUpdateExecutor	24	ported	crates/php2rust-doctrine-orm/src/query/exec.rs
+src/Query/Exec/SqlFinalizer.php	SqlFinalizer	7	ported	crates/php2rust-doctrine-orm/src/query/exec.rs
 src/Query/Expr.php	Expr	226	ported	crates/php2rust-doctrine-orm/src/query/expr.rs
 src/Query/Expr/Andx.php	Andx	18	ported	crates/php2rust-doctrine-orm/src/query/expr/andx.rs
 src/Query/Expr/Base.php	Base	59	ported	crates/php2rust-doctrine-orm/src/query/expr/base.rs
@@ -379,22 +379,22 @@ src/Query/Filter/Parameter.php	Parameter	13	pending
 src/Query/Filter/SQLFilter.php	SQLFilter	85	pending	
 src/Query/FilterCollection.php	FilterCollection	112	pending	
 src/Query/Lexer.php	Lexer	92	ported	crates/php2rust-doctrine-orm/src/query/lexer.rs
-src/Query/OutputWalker.php	OutputWalker	7	pending	
+src/Query/OutputWalker.php	OutputWalker	7	ported	crates/php2rust-doctrine-orm/src/query/sql_walker.rs
 src/Query/Parameter.php	Parameter	41	ported	crates/php2rust-doctrine-orm/src/query/parameter.rs
 src/Query/ParameterTypeInferer.php	ParameterTypeInferer	52	ported	crates/php2rust-doctrine-orm/src/query/parameter_type_inferer.rs
-src/Query/Parser.php	Parser	2140	pending	
-src/Query/ParserResult.php	ParserResult	81	pending	
+src/Query/Parser.php	Parser	2140	ported	crates/php2rust-doctrine-orm/src/query/parser.rs
+src/Query/ParserResult.php	ParserResult	81	ported	crates/php2rust-doctrine-orm/src/query/parser_result.rs
 src/Query/Printer.php	Printer	26	pending	
-src/Query/QueryException.php	QueryException	133	pending	
+src/Query/QueryException.php	QueryException	133	ported	crates/php2rust-doctrine-orm/src/query/query_exception.rs
 src/Query/QueryExpressionVisitor.php	QueryExpressionVisitor	124	pending	
 src/Query/ResultSetMapping.php	ResultSetMapping	203	ported	crates/php2rust-doctrine-orm/src/query/result_set_mapping.rs
 src/Query/ResultSetMappingBuilder.php	ResultSetMappingBuilder	160	pending	
-src/Query/SqlOutputWalker.php	SqlOutputWalker	21	pending	
-src/Query/SqlWalker.php	SqlWalker	1510	pending	
+src/Query/SqlOutputWalker.php	SqlOutputWalker	21	ported	crates/php2rust-doctrine-orm/src/query/sql_walker.rs
+src/Query/SqlWalker.php	SqlWalker	1510	ported	crates/php2rust-doctrine-orm/src/query/sql_walker.rs
 src/Query/TokenType.php	TokenType	85	ported	crates/php2rust-doctrine-orm/src/query/token_type.rs
-src/Query/TreeWalker.php	TreeWalker	11	pending	
-src/Query/TreeWalkerAdapter.php	TreeWalkerAdapter	51	pending	
-src/Query/TreeWalkerChain.php	TreeWalkerChain	47	pending	
+src/Query/TreeWalker.php	TreeWalker	11	ported	crates/php2rust-doctrine-orm/src/query/tree_walker.rs
+src/Query/TreeWalkerAdapter.php	TreeWalkerAdapter	51	ported	crates/php2rust-doctrine-orm/src/query/tree_walker.rs
+src/Query/TreeWalkerChain.php	TreeWalkerChain	47	ported	crates/php2rust-doctrine-orm/src/query/tree_walker.rs
 src/QueryBuilder.php	QueryBuilder	707	pending	
 src/QueryType.php	QueryType	8	pending	
 src/Repository/DefaultRepositoryFactory.php	DefaultRepositoryFactory	24	ported	crates/php2rust-doctrine-orm/src/repository/mod.rs
@@ -466,7 +466,7 @@ src/Tools/ToolsException.php	ToolsException	16	ported	crates/php2rust-doctrine-o
 src/TransactionRequiredException.php	TransactionRequiredException	11	ported	crates/php2rust-doctrine-orm/src/exception.rs
 src/UnexpectedResultException.php	UnexpectedResultException	7	pending	
 src/UnitOfWork.php	UnitOfWork	1956	ported	crates/php2rust-doctrine-orm/src/unit_of_work.rs
-src/Utility/HierarchyDiscriminatorResolver.php	HierarchyDiscriminatorResolver	26	pending	
+src/Utility/HierarchyDiscriminatorResolver.php	HierarchyDiscriminatorResolver	26	ported	crates/php2rust-doctrine-orm/src/query/utility.rs
 src/Utility/IdentifierFlattener.php	IdentifierFlattener	50	ported	crates/php2rust-doctrine-orm/src/utility/identifier_flattener.rs
-src/Utility/LockSqlHelper.php	LockSqlHelper	28	pending	
+src/Utility/LockSqlHelper.php	LockSqlHelper	28	ported	crates/php2rust-doctrine-orm/src/query/utility.rs
 src/Utility/PersisterHelper.php	PersisterHelper	190	ported	crates/php2rust-doctrine-orm/src/utility/persister_helper.rs

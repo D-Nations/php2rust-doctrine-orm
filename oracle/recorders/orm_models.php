@@ -200,6 +200,7 @@ namespace {
                 'name' => $method->name,
                 'visibility' => $method->isPrivate() ? 'private' : ($method->isProtected() ? 'protected' : 'public'),
                 'static' => $method->isStatic(),
+                'required' => $method->getNumberOfRequiredParameters(),
                 'attributes' => attributes($method->getAttributes()),
             ];
         }
