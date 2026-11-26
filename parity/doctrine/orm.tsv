@@ -1583,7 +1583,7 @@ tests/Tests/ORM/Functional/Ticket/GH8055Test.php	GH8055Test::testNumericDescrimi
 tests/Tests/ORM/Functional/Ticket/GH8061Test.php	GH8061Test::testConvertToPHPValueSQLForNewObjectExpression	pending	
 tests/Tests/ORM/Functional/Ticket/GH8127Test.php	GH8127Test::testLoadFieldsFromAllClassesInHierarchy	ported	crates/php2rust-doctrine-orm/tests/gh8127_test.rs::testLoadFieldsFromAllClassesInHierarchy
 tests/Tests/ORM/Functional/Ticket/GH8217Test.php	GH8217Test::testNoQueriesAfterSecondFlush	ported	crates/php2rust-doctrine-orm/tests/gh8217_test.rs::testNoQueriesAfterSecondFlush
-tests/Tests/ORM/Functional/Ticket/GH8415Test.php	GH8415Test::testAssociationIsBasedOnBaseClass	pending	
+tests/Tests/ORM/Functional/Ticket/GH8415Test.php	GH8415Test::testAssociationIsBasedOnBaseClass	ported	crates/php2rust-doctrine-orm/tests/gh8415_test.rs::testAssociationIsBasedOnBaseClass
 tests/Tests/ORM/Functional/Ticket/GH8415ToManyAssociationTest.php	GH8415ToManyAssociationTest::testToManyAssociationOnBaseClassAllowedWhenThereAreMappedSuperclassesAsChildren	pending	
 tests/Tests/ORM/Functional/Ticket/GH8443Test.php	GH8443Test::testJoinRootEntityWithForcePartialLoad	pending	
 tests/Tests/ORM/Functional/Ticket/GH8443Test.php	GH8443Test::testJoinRootEntityWithOnlyOneEntityInHierarchy	pending	
