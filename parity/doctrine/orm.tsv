@@ -571,22 +571,22 @@ tests/Tests/ORM/Functional/Locking/GearmanLockTest.php	GearmanLockTest::testLock
 tests/Tests/ORM/Functional/Locking/GearmanLockTest.php	GearmanLockTest::testLock2	pending	
 tests/Tests/ORM/Functional/Locking/GearmanLockTest.php	GearmanLockTest::testLock3	pending	
 tests/Tests/ORM/Functional/Locking/GearmanLockTest.php	GearmanLockTest::testLock4	pending	
-tests/Tests/ORM/Functional/Locking/LockTest.php	LockTest::testFindWithLockModeNoneDoesNotRefreshManagedEntity	pending	
-tests/Tests/ORM/Functional/Locking/LockTest.php	LockTest::testFindWithNullLockModeIsDeprecated	pending	
-tests/Tests/ORM/Functional/Locking/LockTest.php	LockTest::testFindWithoutLockModeIsNotDeprecated	pending	
-tests/Tests/ORM/Functional/Locking/LockTest.php	LockTest::testLockOptimisticNonVersionedThrowsExceptionInDQL	pending	
-tests/Tests/ORM/Functional/Locking/LockTest.php	LockTest::testLockPessimisticRead	pending	
-tests/Tests/ORM/Functional/Locking/LockTest.php	LockTest::testLockPessimisticReadNoTransactionThrowsException	pending	
-tests/Tests/ORM/Functional/Locking/LockTest.php	LockTest::testLockPessimisticWrite	pending	
-tests/Tests/ORM/Functional/Locking/LockTest.php	LockTest::testLockPessimisticWriteNoTransactionThrowsException	pending	
-tests/Tests/ORM/Functional/Locking/LockTest.php	LockTest::testLockUnmanagedEntityThrowsException	pending	
-tests/Tests/ORM/Functional/Locking/LockTest.php	LockTest::testLockUnversionedEntityThrowsException	pending	
-tests/Tests/ORM/Functional/Locking/LockTest.php	LockTest::testLockVersionedEntity	pending	
-tests/Tests/ORM/Functional/Locking/LockTest.php	LockTest::testLockVersionedEntityMismatchThrowsException	pending	
-tests/Tests/ORM/Functional/Locking/LockTest.php	LockTest::testLockWithLockModeNoneDoesNotRequireTransaction	pending	
-tests/Tests/ORM/Functional/Locking/LockTest.php	LockTest::testRefreshWithLockPessimisticWrite	pending	
-tests/Tests/ORM/Functional/Locking/LockTest.php	LockTest::testRefreshWithLockPessimisticWriteNoTransactionThrowsException	pending	
-tests/Tests/ORM/Functional/Locking/LockTest.php	LockTest::testRefreshWithNullLockModeIsDeprecated	pending	
+tests/Tests/ORM/Functional/Locking/LockTest.php	LockTest::testFindWithLockModeNoneDoesNotRefreshManagedEntity	ported	crates/php2rust-doctrine-orm/tests/lock_test.rs::testFindWithLockModeNoneDoesNotRefreshManagedEntity
+tests/Tests/ORM/Functional/Locking/LockTest.php	LockTest::testFindWithNullLockModeIsDeprecated	ported	crates/php2rust-doctrine-orm/tests/lock_test.rs::testFindWithNullLockModeIsDeprecated
+tests/Tests/ORM/Functional/Locking/LockTest.php	LockTest::testFindWithoutLockModeIsNotDeprecated	ported	crates/php2rust-doctrine-orm/tests/lock_test.rs::testFindWithoutLockModeIsNotDeprecated
+tests/Tests/ORM/Functional/Locking/LockTest.php	LockTest::testLockOptimisticNonVersionedThrowsExceptionInDQL	ported	crates/php2rust-doctrine-orm/tests/lock_test.rs::testLockOptimisticNonVersionedThrowsExceptionInDQL
+tests/Tests/ORM/Functional/Locking/LockTest.php	LockTest::testLockPessimisticRead	n/a: upstream skips it on SQLite (Database Driver has no Write Lock support.)	
+tests/Tests/ORM/Functional/Locking/LockTest.php	LockTest::testLockPessimisticReadNoTransactionThrowsException	ported	crates/php2rust-doctrine-orm/tests/lock_test.rs::testLockPessimisticReadNoTransactionThrowsException
+tests/Tests/ORM/Functional/Locking/LockTest.php	LockTest::testLockPessimisticWrite	n/a: upstream skips it on SQLite (Database Driver has no Write Lock support.)	
+tests/Tests/ORM/Functional/Locking/LockTest.php	LockTest::testLockPessimisticWriteNoTransactionThrowsException	ported	crates/php2rust-doctrine-orm/tests/lock_test.rs::testLockPessimisticWriteNoTransactionThrowsException
+tests/Tests/ORM/Functional/Locking/LockTest.php	LockTest::testLockUnmanagedEntityThrowsException	ported	crates/php2rust-doctrine-orm/tests/lock_test.rs::testLockUnmanagedEntityThrowsException
+tests/Tests/ORM/Functional/Locking/LockTest.php	LockTest::testLockUnversionedEntityThrowsException	ported	crates/php2rust-doctrine-orm/tests/lock_test.rs::testLockUnversionedEntityThrowsException
+tests/Tests/ORM/Functional/Locking/LockTest.php	LockTest::testLockVersionedEntity	ported	crates/php2rust-doctrine-orm/tests/lock_test.rs::testLockVersionedEntity
+tests/Tests/ORM/Functional/Locking/LockTest.php	LockTest::testLockVersionedEntityMismatchThrowsException	ported	crates/php2rust-doctrine-orm/tests/lock_test.rs::testLockVersionedEntityMismatchThrowsException
+tests/Tests/ORM/Functional/Locking/LockTest.php	LockTest::testLockWithLockModeNoneDoesNotRequireTransaction	ported	crates/php2rust-doctrine-orm/tests/lock_test.rs::testLockWithLockModeNoneDoesNotRequireTransaction
+tests/Tests/ORM/Functional/Locking/LockTest.php	LockTest::testRefreshWithLockPessimisticWrite	n/a: upstream skips it on SQLite (Database Driver has no Write Lock support.)	
+tests/Tests/ORM/Functional/Locking/LockTest.php	LockTest::testRefreshWithLockPessimisticWriteNoTransactionThrowsException	ported	crates/php2rust-doctrine-orm/tests/lock_test.rs::testRefreshWithLockPessimisticWriteNoTransactionThrowsException
+tests/Tests/ORM/Functional/Locking/LockTest.php	LockTest::testRefreshWithNullLockModeIsDeprecated	ported	crates/php2rust-doctrine-orm/tests/lock_test.rs::testRefreshWithNullLockModeIsDeprecated
 tests/Tests/ORM/Functional/Locking/OptimisticTest.php	OptimisticTest::testJoinedChildFailureThrowsException	ported	crates/php2rust-doctrine-orm/tests/optimistic_test.rs::testJoinedChildFailureThrowsException
 tests/Tests/ORM/Functional/Locking/OptimisticTest.php	OptimisticTest::testJoinedChildInsertSetsInitialVersionValue	ported	crates/php2rust-doctrine-orm/tests/optimistic_test.rs::testJoinedChildInsertSetsInitialVersionValue
 tests/Tests/ORM/Functional/Locking/OptimisticTest.php	OptimisticTest::testJoinedParentFailureThrowsException	ported	crates/php2rust-doctrine-orm/tests/optimistic_test.rs::testJoinedParentFailureThrowsException
