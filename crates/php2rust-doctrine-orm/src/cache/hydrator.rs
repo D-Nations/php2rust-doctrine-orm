@@ -2,7 +2,12 @@
 //! `DefaultEntityHydrator`, which builds an entity's cache entry from
 //! its original data and creates the entity back from an entry.
 //!
+//! The collection cache hydrator: the `CollectionHydrator` interface
+//! and `DefaultCollectionHydrator`, which keeps a collection as the cache
+//! keys of its elements; a collection is a PHP array of its elements.
+//!
 //! Upstream: doctrine/orm src/Cache/EntityHydrator.php src/Cache/DefaultEntityHydrator.php
+//! Upstream: doctrine/orm src/Cache/CollectionHydrator.php src/Cache/DefaultCollectionHydrator.php
 
 use std::fmt::Debug;
 use std::sync::{Arc, Weak};
@@ -15,7 +20,12 @@ use crate::mapping::class_metadata::FETCH_EAGER;
 use crate::unit_of_work::{Fut, Hints};
 use crate::utility::flatten_identifier;
 
-use super::{AssociationCacheEntry, CacheEntry, EntityCacheEntry, EntityCacheKey};
+use crate::persistent_collection::PersistentCollection;
+
+use super::{
+    AssociationCacheEntry, CacheEntry, CollectionCacheEntry, CollectionCacheKey, EntityCacheEntry,
+    EntityCacheKey,
+};
 
 /// `Doctrine\ORM\Cache\EntityHydrator`: hydrator cache entry for
 /// entities.
@@ -319,6 +329,131 @@ impl EntityHydrator for DefaultEntityHydrator {
             let result = uow.create_entity(&entry.class, data, &mut hints).await?;
             uow.hydration_complete()?;
             Ok(Some(result))
+        })
+    }
+}
+
+/// `Doctrine\ORM\Cache\CollectionHydrator`: hydrator cache entry for
+/// collections.
+pub trait CollectionHydrator: Debug + Send + Sync {
+    /// Builds the cache entry of a collection (`$collection` as an
+    /// array of its elements).
+    fn build_cache_entry(
+        &self,
+        metadata: &ClassMetadata,
+        key: &CollectionCacheKey,
+        collection: &PhpArray,
+    ) -> Result<CollectionCacheEntry, Thrown>;
+
+    /// Loads the elements of a cached collection into `collection`;
+    /// `None` when one of them is not cached.
+    fn load_cache_entry<'a>(
+        &'a self,
+        metadata: &'a ClassMetadata,
+        key: &'a CollectionCacheKey,
+        entry: &'a CollectionCacheEntry,
+        collection: &'a Arc<PersistentCollection>,
+    ) -> Fut<'a, Option<PhpArray>>;
+}
+
+/// `Doctrine\ORM\Cache\DefaultCollectionHydrator`: default hydrator
+/// cache for collections.
+#[derive(Debug)]
+pub struct DefaultCollectionHydrator {
+    em: Weak<EntityManager>,
+}
+
+impl DefaultCollectionHydrator {
+    pub fn new(em: &Arc<EntityManager>) -> Self {
+        Self {
+            em: Arc::downgrade(em),
+        }
+    }
+}
+
+impl CollectionHydrator for DefaultCollectionHydrator {
+    fn build_cache_entry(
+        &self,
+        metadata: &ClassMetadata,
+        _key: &CollectionCacheKey,
+        collection: &PhpArray,
+    ) -> Result<CollectionCacheEntry, Thrown> {
+        let em = em_of(&self.em)?;
+        let uow = em.get_unit_of_work();
+        let root = metadata.read().root_entity_name.clone();
+        let mut data = Vec::with_capacity(collection.len());
+        for (index, entity) in collection {
+            let Value::Object(entity) = entity else {
+                return Err(Thrown::new(
+                    "TypeError",
+                    format!(
+                        "Doctrine\\ORM\\UnitOfWork::getEntityIdentifier(): Argument #1 ($entity) must be of type object, {} given",
+                        entity.debug_type()
+                    ),
+                    0,
+                ));
+            };
+            let identifier = uow.get_entity_identifier(entity)?;
+            data.push((
+                index.clone(),
+                EntityCacheKey::new(root.as_str(), &identifier).into(),
+            ));
+        }
+        Ok(CollectionCacheEntry::new(data))
+    }
+
+    fn load_cache_entry<'a>(
+        &'a self,
+        metadata: &'a ClassMetadata,
+        key: &'a CollectionCacheKey,
+        entry: &'a CollectionCacheEntry,
+        collection: &'a Arc<PersistentCollection>,
+    ) -> Fut<'a, Option<PhpArray>> {
+        Box::pin(async move {
+            let em = em_of(&self.em)?;
+            let uow = em.get_unit_of_work();
+            let assoc = metadata
+                .read()
+                .association_mappings
+                .get(&key.association)
+                .cloned()
+                .ok_or_else(|| {
+                    Thrown::new(
+                        "Error",
+                        format!("Undefined array key \"{}\"", key.association),
+                        0,
+                    )
+                })?;
+            let target_persister = uow
+                .get_cached_entity_persister(&assoc.target_entity)?
+                .ok_or_else(|| super::persister::not_cached(&assoc.target_entity))?;
+            let target_region = target_persister.get_cache_region();
+
+            let Some(entity_entries) = target_region.get_multiple(entry)? else {
+                return Ok(None);
+            };
+
+            let mut list = PhpArray::new();
+            for (index, entity_entry) in entity_entries {
+                let CacheEntry::Entity(entity_entry) = entity_entry else {
+                    return Err(Thrown::new(
+                        "Error",
+                        "Call to undefined method resolveAssociationEntries()",
+                        0,
+                    ));
+                };
+                let data = resolve_association_entries(&entity_entry, &em).await?;
+                let mut hints = cache_hints();
+                let entity = uow
+                    .create_entity(&entity_entry.class, data, &mut hints)
+                    .await?;
+                collection.hydrate_set(index.clone(), Value::Object(entity.clone()))?;
+                list.insert(index, Value::Object(entity));
+            }
+
+            uow.hydration_complete()?;
+
+            Ok(Some(list))
         })
     }
 }

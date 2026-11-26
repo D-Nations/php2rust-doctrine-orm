@@ -1,13 +1,16 @@
 //! Helpers shared by the second-level cache tests that need an entity
 //! manager: `OrmTestCase::enableSecondLevelCache()` with
-//! `getTestEntityManager()`, the `Region`, `ConcurrentRegion` and
-//! `EntityPersister` mocks (`createMock()`: each records its calls and
+//! `getTestEntityManager()`, the `Region`, `ConcurrentRegion`,
+//! `EntityPersister` and `CollectionPersister` mocks (`createMock()`: each records its calls and
 //! returns what the test sets, or its type's default: `''`, `false`,
 //! `null`, `[]`, `0`), and the `Doctrine\Tests\Models\Cache` models'
 //! constructors.
 //!
 //! Upstream: doctrine/orm tests/Tests/OrmTestCase.php
 //! Upstream: doctrine/orm tests/Tests/Models/Cache/Country.php
+//! Upstream: doctrine/orm tests/Tests/Models/Cache/State.php
+//! Upstream: doctrine/orm tests/Tests/Models/Cache/City.php
+//! Upstream: doctrine/orm tests/Tests/Models/Cache/Restaurant.php
 
 #![allow(dead_code, reason = "each test file uses a subset")]
 #![allow(
@@ -19,7 +22,7 @@
 use std::collections::{HashMap, VecDeque};
 use std::sync::{Arc, Mutex};
 
-use php_value::{Object, PhpArray, Thrown, Value};
+use php_value::{Key, Object, PhpArray, Thrown, Value};
 use php2rust_doctrine_collections::Criteria;
 use php2rust_doctrine_dbal::LockMode;
 use php2rust_doctrine_orm::cache::pool::ArrayAdapter;
@@ -28,14 +31,20 @@ use php2rust_doctrine_orm::cache::{
     CacheConfiguration, CacheEntry, CacheKey, CollectionCacheEntry, ConcurrentRegion,
     DefaultCacheFactory, Lock, Region,
 };
+use php2rust_doctrine_orm::collection_object::ArrayCollectionObject;
 use php2rust_doctrine_orm::entity_manager::EntityManager;
+use php2rust_doctrine_orm::mapping::driver::AttributeDriver;
+use php2rust_doctrine_orm::mapping::driver::attribute_driver::Paths;
 use php2rust_doctrine_orm::mapping::{AssociationMapping, ClassMetadata};
 use php2rust_doctrine_orm::persistent_collection::PersistentCollection;
+use php2rust_doctrine_orm::persisters::collection::CollectionPersister;
 use php2rust_doctrine_orm::persisters::{
     CommitPersister, EntityPersister, EntityPersisterInterface, Params, PersisterCriteria,
 };
 use php2rust_doctrine_orm::query::ResultSetMapping;
 use php2rust_doctrine_orm::unit_of_work::{Fut, Hints};
+use php2rust_doctrine_persistence::mapping::driver::ClassLocator;
+use php2rust_doctrine_persistence::php_reflection::{self, ClassKind};
 
 use crate::orm;
 
@@ -43,6 +52,7 @@ pub const NS: &str = "Doctrine\\Tests\\Models\\Cache\\";
 pub const COUNTRY: &str = "Doctrine\\Tests\\Models\\Cache\\Country";
 pub const STATE: &str = "Doctrine\\Tests\\Models\\Cache\\State";
 pub const CITY: &str = "Doctrine\\Tests\\Models\\Cache\\City";
+pub const RESTAURANT: &str = "Doctrine\\Tests\\Models\\Cache\\Restaurant";
 
 /// The test entity manager with the second level cache, its pool and its
 /// cache factory.
@@ -53,8 +63,25 @@ pub struct Slc {
     pub cache_config: Arc<CacheConfiguration>,
 }
 
-/// `enableSecondLevelCache()` and `getTestEntityManager()`: a
-/// `DefaultCacheFactory` over a new `ArrayAdapter`.
+/// The classes of `tests/Tests/Models/Cache`: the recorded classes and
+/// enums of its namespace.
+#[derive(Debug)]
+pub struct CacheModelsLocator;
+
+impl ClassLocator for CacheModelsLocator {
+    fn get_class_names(&self) -> Result<Vec<String>, Thrown> {
+        Ok(php_reflection::declared()
+            .iter()
+            .filter(|class| matches!(class.kind(), ClassKind::Class | ClassKind::Enum))
+            .map(|class| class.name().to_owned())
+            .filter(|name| name.starts_with(NS))
+            .collect())
+    }
+}
+
+/// `enableSecondLevelCache()` and `getTestEntityManager()` (the attribute
+/// driver over `Models/Cache`): a `DefaultCacheFactory` over a new
+/// `ArrayAdapter`.
 pub fn slc_entity_manager() -> Slc {
     let pool = Arc::new(ArrayAdapter::new());
     let cache_config = Arc::new(CacheConfiguration::new());
@@ -65,6 +92,10 @@ pub fn slc_entity_manager() -> Slc {
     cache_config.set_cache_factory(factory.clone());
     let config = Arc::clone(&cache_config);
     let em = orm::entity_manager_with(orm::connection(), move |c| {
+        let locator: Arc<dyn ClassLocator> = Arc::new(CacheModelsLocator);
+        c.set_metadata_driver_impl(Arc::new(
+            AttributeDriver::new(Paths::Locator(locator), true).unwrap(),
+        ));
         c.set_second_level_cache_enabled(true);
         c.set_second_level_cache_configuration(config);
     });
@@ -81,6 +112,88 @@ pub fn country(name: &str) -> Object {
     let country = orm::new_object(COUNTRY);
     orm::set(&country, "name", Value::string(name));
     country
+}
+
+/// `new State($name)`.
+pub fn state(name: &str) -> Object {
+    state_in(name, None)
+}
+
+/// `new State($name, $country)`.
+pub fn state_in(name: &str, country: Option<&Object>) -> Object {
+    let state = orm::new_object(STATE);
+    orm::set(&state, "name", Value::string(name));
+    orm::set(
+        &state,
+        "country",
+        country.map_or(Value::Null, |c| Value::Object(c.clone())),
+    );
+    orm::set(
+        &state,
+        "cities",
+        ArrayCollectionObject::value(PhpArray::new()),
+    );
+    state
+}
+
+/// `new City($name, $state)`.
+pub fn city(name: &str, state: Option<&Object>) -> Object {
+    let city = orm::new_object(CITY);
+    orm::set(&city, "name", Value::string(name));
+    orm::set(
+        &city,
+        "state",
+        state.map_or(Value::Null, |s| Value::Object(s.clone())),
+    );
+    orm::set(
+        &city,
+        "travels",
+        ArrayCollectionObject::value(PhpArray::new()),
+    );
+    orm::set(
+        &city,
+        "attractions",
+        ArrayCollectionObject::value(PhpArray::new()),
+    );
+    city
+}
+
+/// `new Restaurant($name, $city)`.
+pub fn restaurant(name: &str, city: &Object) -> Object {
+    let restaurant = orm::new_object(RESTAURANT);
+    orm::set(&restaurant, "name", Value::string(name));
+    orm::set(&restaurant, "city", Value::Object(city.clone()));
+    orm::set(
+        &restaurant,
+        "infos",
+        ArrayCollectionObject::value(PhpArray::new()),
+    );
+    restaurant
+}
+
+/// `$this->$field[] = $element` on a collection property.
+pub fn add_to(entity: &Object, field: &str, element: &Object) {
+    let collection = orm::get(entity, field);
+    if let Some(collection) = ArrayCollectionObject::from_value(&collection) {
+        collection
+            .lock()
+            .add(Value::Object(element.clone()))
+            .unwrap();
+    } else if let Some(collection) = PersistentCollection::from_value(&collection) {
+        collection.add(Value::Object(element.clone())).unwrap();
+    } else {
+        panic!("{field} is not a collection");
+    }
+}
+
+/// `$state->addCity($city)`.
+pub fn add_city(state: &Object, city: &Object) {
+    add_to(state, "cities", city);
+}
+
+/// `$city->addAttraction($attraction)`.
+pub fn add_attraction(city: &Object, attraction: &Object) {
+    add_to(city, "attractions", attraction);
 }
 
 /// A PHP array of string keys.
@@ -705,5 +818,131 @@ impl EntityPersisterInterface for EntityPersisterMock {
             ],
         );
         Box::pin(async move { Ok(ret) })
+    }
+}
+
+/// `createMock(CollectionPersister::class)`.
+#[derive(Debug, Default)]
+pub struct CollectionPersisterMock {
+    pub recorder: Recorder,
+}
+
+impl CollectionPersisterMock {
+    pub fn new() -> Arc<Self> {
+        Arc::new(Self::default())
+    }
+
+    /// The collection argument (`identicalTo($collection)`).
+    pub fn collection(collection: &Arc<PersistentCollection>) -> Arg {
+        Arg::Text(format!("{:p}", Arc::as_ptr(collection)))
+    }
+}
+
+impl CollectionPersister for CollectionPersisterMock {
+    fn delete<'a>(&'a self, collection: &'a Arc<PersistentCollection>) -> Fut<'a, ()> {
+        self.recorder
+            .record("delete", vec![Self::collection(collection)]);
+        Box::pin(async { Ok(()) })
+    }
+
+    fn update<'a>(&'a self, collection: &'a Arc<PersistentCollection>) -> Fut<'a, ()> {
+        self.recorder
+            .record("update", vec![Self::collection(collection)]);
+        Box::pin(async { Ok(()) })
+    }
+
+    fn count<'a>(&'a self, collection: &'a Arc<PersistentCollection>) -> Fut<'a, i64> {
+        let ret = self
+            .recorder
+            .record("count", vec![Self::collection(collection)]);
+        Box::pin(async move {
+            Ok(match ret {
+                Some(Ret::Int(count)) => count,
+                _ => 0,
+            })
+        })
+    }
+
+    fn slice<'a>(
+        &'a self,
+        collection: &'a Arc<PersistentCollection>,
+        offset: i64,
+        length: Option<i64>,
+    ) -> Fut<'a, PhpArray> {
+        let ret = self.recorder.record(
+            "slice",
+            vec![
+                Self::collection(collection),
+                Arg::Value(Value::Int(offset)),
+                Arg::opt_int(length),
+            ],
+        );
+        Box::pin(async move {
+            Ok(match ret {
+                Some(Ret::Array(array)) => array,
+                Some(Ret::Objects(objects)) => {
+                    PhpArray::list(objects.into_iter().map(Value::Object))
+                }
+                _ => PhpArray::new(),
+            })
+        })
+    }
+
+    fn contains<'a>(
+        &'a self,
+        collection: &'a Arc<PersistentCollection>,
+        element: &'a Object,
+    ) -> Fut<'a, bool> {
+        let ret = ret_bool(self.recorder.record(
+            "contains",
+            vec![Self::collection(collection), Arg::object(element)],
+        ));
+        Box::pin(async move { Ok(ret) })
+    }
+
+    fn contains_key<'a>(
+        &'a self,
+        collection: &'a Arc<PersistentCollection>,
+        key: &'a Key,
+    ) -> Fut<'a, bool> {
+        let ret = ret_bool(self.recorder.record(
+            "containsKey",
+            vec![Self::collection(collection), Arg::Value(key.to_value())],
+        ));
+        Box::pin(async move { Ok(ret) })
+    }
+
+    fn get<'a>(
+        &'a self,
+        collection: &'a Arc<PersistentCollection>,
+        index: &'a Value,
+    ) -> Fut<'a, Option<Object>> {
+        let ret = self.recorder.record(
+            "get",
+            vec![Self::collection(collection), Arg::Value(index.clone())],
+        );
+        Box::pin(async move {
+            Ok(match ret {
+                Some(Ret::Object(object)) => object,
+                _ => None,
+            })
+        })
+    }
+
+    fn load_criteria<'a>(
+        &'a self,
+        collection: &'a Arc<PersistentCollection>,
+        criteria: &'a Criteria,
+    ) -> Fut<'a, Vec<Value>> {
+        let ret = self.recorder.record(
+            "loadCriteria",
+            vec![Self::collection(collection), Arg::criteria(criteria)],
+        );
+        Box::pin(async move {
+            Ok(match ret {
+                Some(Ret::Objects(objects)) => objects.into_iter().map(Value::Object).collect(),
+                _ => Vec::new(),
+            })
+        })
     }
 }

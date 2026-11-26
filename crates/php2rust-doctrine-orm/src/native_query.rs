@@ -54,6 +54,18 @@ impl NativeQuery {
             .clone()
     }
 
+    /// `getResultSetMapping()`.
+    fn get_result_set_mapping(&self) -> Result<crate::query::ResultSetMapping, Thrown> {
+        self.state
+            .get_result_set_mapping()
+            .ok_or_else(|| Thrown::new("LogicException", "Uninitialized result set mapping.", 0))
+    }
+
+    /// `getHash()`.
+    fn get_hash(&self) -> Result<String, Thrown> {
+        self.state.get_hash(&self.get_sql())
+    }
+
     /// `_doExecute()`.
     async fn do_execute(&self) -> Result<Executed, Thrown> {
         let mut parameters = PhpArray::new();

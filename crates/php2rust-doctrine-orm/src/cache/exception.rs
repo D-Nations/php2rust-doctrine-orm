@@ -12,6 +12,9 @@
 use php_value::Thrown;
 
 pub const CACHE_EXCEPTION: &str = "Doctrine\\ORM\\Cache\\CacheException";
+/// `Doctrine\ORM\Cache\Exception\CacheException`, the base of the
+/// `Cache\Exception` classes.
+pub const EXCEPTION_CACHE_EXCEPTION: &str = "Doctrine\\ORM\\Cache\\Exception\\CacheException";
 pub const LOCK_EXCEPTION: &str = "Doctrine\\ORM\\Cache\\LockException";
 pub const CANNOT_UPDATE_READ_ONLY_COLLECTION: &str =
     "Doctrine\\ORM\\Cache\\Exception\\CannotUpdateReadOnlyCollection";
@@ -25,6 +28,28 @@ pub const INVALID_ARGUMENT_EXCEPTION: &str = "InvalidArgumentException";
 pub const LOGIC_EXCEPTION: &str = "LogicException";
 pub const PSR_INVALID_ARGUMENT_EXCEPTION: &str =
     "Symfony\\Component\\Cache\\Exception\\InvalidArgumentException";
+
+/// Declares the cache exception classes in persistence's class registry.
+pub(crate) fn register_classes() {
+    use php2rust_doctrine_persistence::php_reflection::{ClassInfo, register_class};
+
+    register_class(
+        ClassInfo::class(CACHE_EXCEPTION)
+            .extends(LOGIC_EXCEPTION)
+            .implements("Doctrine\\ORM\\Exception\\ORMException"),
+    );
+    register_class(ClassInfo::class(LOCK_EXCEPTION).extends(CACHE_EXCEPTION));
+    register_class(ClassInfo::class(EXCEPTION_CACHE_EXCEPTION).extends(CACHE_EXCEPTION));
+    for class in [
+        CANNOT_UPDATE_READ_ONLY_COLLECTION,
+        CANNOT_UPDATE_READ_ONLY_ENTITY,
+        FEATURE_NOT_IMPLEMENTED,
+        NON_CACHEABLE_ENTITY,
+        NON_CACHEABLE_ENTITY_ASSOCIATION,
+    ] {
+        register_class(ClassInfo::class(class).extends(EXCEPTION_CACHE_EXCEPTION));
+    }
+}
 
 fn new(class: &str, message: String) -> Thrown {
     Thrown::new(class, message, 0)

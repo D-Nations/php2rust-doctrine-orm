@@ -26,7 +26,7 @@ use php2rust_doctrine_collections::ArrayCollection;
 use php2rust_doctrine_dbal::LockMode;
 use php2rust_doctrine_event_manager::EventDispatcher;
 
-use crate::cache::CachedEntityPersister;
+use crate::cache::{CachedCollectionPersister, CachedEntityPersister};
 use crate::collection_object::{ArrayCollectionObject, downcast};
 use crate::entity_manager::EntityManager;
 use crate::event::{
@@ -39,7 +39,16 @@ use crate::internal::{StronglyConnectedComponents, TopologicalSort, object_id};
 use crate::mapping::{AssociationMapping, ClassMetadata};
 use crate::object::EntityObject;
 use crate::persistent_collection::PersistentCollection;
+use crate::persisters::collection::{CollectionPersister, DefaultCollectionPersister};
 use crate::persisters::{BasicEntityPersister, CommitPersister, EntityPersisterInterface};
+
+/// `$collectionPersisters`: each role's persister, and the persister as a
+/// `CachedCollectionPersister` when it is cached.
+type CollectionPersisters = Vec<(
+    String,
+    Arc<dyn CollectionPersister>,
+    Option<Arc<dyn CachedCollectionPersister>>,
+)>;
 use crate::utility::{flatten_identifier, to_text};
 
 /// A future of the unit of work.
@@ -270,6 +279,8 @@ pub struct UnitOfWork {
     commit_persisters: Mutex<HashMap<String, Arc<dyn CommitPersister>>>,
     /// The second-level cache's entity persisters, by entity name.
     cached_persisters: Mutex<HashMap<String, Arc<dyn CachedEntityPersister>>>,
+    /// `$collectionPersisters`, by role, with the cached ones.
+    collection_persisters: Mutex<CollectionPersisters>,
     listeners_invoker: ListenersInvoker,
 }
 
@@ -323,6 +334,7 @@ impl UnitOfWork {
             persisters: Mutex::new(HashMap::new()),
             commit_persisters: Mutex::new(HashMap::new()),
             cached_persisters: Mutex::new(HashMap::new()),
+            collection_persisters: Mutex::default(),
             listeners_invoker: ListenersInvoker::new(resolver),
         }
     }
@@ -481,7 +493,9 @@ impl UnitOfWork {
                 .read()
                 .is_change_tracking_deferred_implicit();
             if implicit || self.is_scheduled_for_dirty_check(&owner)? {
-                crate::persisters::collection::delete(em, &collection_to_delete).await?;
+                self.get_collection_persister(&collection_to_delete.get_mapping()?)?
+                    .delete(&collection_to_delete)
+                    .await?;
             }
         }
 
@@ -515,7 +529,9 @@ impl UnitOfWork {
         let updates: Vec<Arc<PersistentCollection>> =
             self.st().collection_updates.values().cloned().collect();
         for collection_to_update in updates {
-            crate::persisters::collection::update(em, &collection_to_update).await?;
+            self.get_collection_persister(&collection_to_update.get_mapping()?)?
+                .update(&collection_to_update)
+                .await?;
         }
 
         // Entity deletions come last. Their order only needs to take care
@@ -2991,7 +3007,7 @@ impl UnitOfWork {
         collection: &Arc<PersistentCollection>,
     ) -> Result<(), Thrown> {
         let assoc = collection.get_mapping()?;
-        let persister = self.get_entity_persister(&assoc.target_entity)?;
+        let persister = self.get_entity_persister_interface(&assoc.target_entity)?;
         let owner = collection
             .get_owner()
             .ok_or_else(|| Thrown::new("TypeError", "The collection has no owner", 0))?;
@@ -3232,21 +3248,85 @@ impl UnitOfWork {
         &self,
         association: &AssociationMapping,
     ) -> Result<Option<Arc<dyn crate::cache::Region>>, Thrown> {
-        let em = self.em()?;
-        if !em.get_configuration().is_second_level_cache_enabled() {
-            return Ok(None);
+        Ok(self
+            .get_cached_collection_persister(association)?
+            .map(|persister| persister.get_cache_region()))
+    }
+
+    /// `getCollectionPersister()`: the collection persister of an
+    /// association (the second-level cache's when it is cached).
+    pub fn get_collection_persister(
+        &self,
+        association: &AssociationMapping,
+    ) -> Result<Arc<dyn CollectionPersister>, Thrown> {
+        let role = if association.cache.is_some() {
+            format!("{}::{}", association.source_entity, association.field_name)
+        } else {
+            association.r#type()?.to_string()
+        };
+        if let Some((_, persister, _)) = self
+            .collection_persisters()
+            .iter()
+            .find(|(name, _, _)| *name == role)
+        {
+            return Ok(Arc::clone(persister));
         }
-        let Some(cache) = &association.cache else {
-            return Ok(None);
+        let em = self.em()?;
+        let basic: Arc<dyn CollectionPersister> = Arc::new(DefaultCollectionPersister::new(
+            &em,
+            association.is_one_to_many(),
+        ));
+        let (persister, cached) = if em.get_configuration().is_second_level_cache_enabled()
+            && association.cache.is_some()
+        {
+            let factory = em
+                .get_configuration()
+                .get_second_level_cache_configuration()
+                .and_then(|config| config.get_cache_factory())
+                .ok_or_else(|| {
+                    Thrown::new(
+                        "Error",
+                        "Call to a member function buildCachedCollectionPersister() on null",
+                        0,
+                    )
+                })?;
+            let cached = factory.build_cached_collection_persister(&em, basic, association)?;
+            let persister: Arc<dyn CollectionPersister> = cached.clone();
+            (persister, Some(cached))
+        } else {
+            (basic, None)
         };
-        let Some(factory) = em
-            .get_configuration()
-            .get_second_level_cache_configuration()
-            .and_then(|config| config.get_cache_factory())
-        else {
-            return Ok(None);
-        };
-        Ok(Some(factory.get_region(cache)?))
+        self.collection_persisters()
+            .push((role, Arc::clone(&persister), cached));
+        Ok(persister)
+    }
+
+    /// The second-level cache's persister of a collection-valued
+    /// association, when the cache is enabled and the association is
+    /// cached (`getCollectionPersister()` of a `CachedCollectionPersister`).
+    pub fn get_cached_collection_persister(
+        &self,
+        association: &AssociationMapping,
+    ) -> Result<Option<Arc<dyn CachedCollectionPersister>>, Thrown> {
+        let persister = self.get_collection_persister(association)?;
+        Ok(self
+            .collection_persisters()
+            .iter()
+            .find(|(_, p, _)| std::ptr::addr_eq(Arc::as_ptr(p), Arc::as_ptr(&persister)))
+            .and_then(|(_, _, cached)| cached.clone()))
+    }
+
+    fn collection_persisters(&self) -> MutexGuard<'_, CollectionPersisters> {
+        self.collection_persisters
+            .lock()
+            .unwrap_or_else(PoisonError::into_inner)
+    }
+
+    fn cached_collection_persisters(&self) -> Vec<Arc<dyn CachedCollectionPersister>> {
+        self.collection_persisters()
+            .iter()
+            .filter_map(|(_, _, cached)| cached.clone())
+            .collect()
     }
 
     fn cached_persisters(&self) -> Vec<Arc<dyn CachedEntityPersister>> {
@@ -3262,11 +3342,17 @@ impl UnitOfWork {
         for persister in self.cached_persisters() {
             persister.after_transaction_complete()?;
         }
+        for persister in self.cached_collection_persisters() {
+            persister.after_transaction_complete()?;
+        }
         Ok(())
     }
 
     fn after_transaction_rolled_back(&self) -> Result<(), Thrown> {
         for persister in self.cached_persisters() {
+            persister.after_transaction_rolled_back()?;
+        }
+        for persister in self.cached_collection_persisters() {
             persister.after_transaction_rolled_back()?;
         }
         Ok(())
@@ -3415,8 +3501,10 @@ impl UnitOfWork {
                 .cloned()
                 .unwrap_or_default();
             let identifier = self.normalize_identifier(&class, &id).await?;
+            // The proxy factory's persister: the cached one when the
+            // entity is cached.
             let found = self
-                .get_entity_persister(&name)?
+                .get_entity_persister_interface(&name)?
                 .load_by_id(&identifier, Some(obj))
                 .await?;
             if found.is_none() {

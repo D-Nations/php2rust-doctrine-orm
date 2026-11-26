@@ -117,6 +117,61 @@ impl Query {
         parser_result.prepare_sql_executor(self)
     }
 
+    /// `getResultSetMapping()`: the mapping, parsing the query when none
+    /// is set.
+    fn get_result_set_mapping(&self) -> Result<crate::query::ResultSetMapping, Thrown> {
+        if let Some(rsm) = self.state.get_result_set_mapping() {
+            return Ok(rsm);
+        }
+        let parser_result = Parser::new(self)?.parse()?;
+        let rsm = parser_result.borrow().get_result_set_mapping().clone();
+        self.dst().state = STATE_CLEAN;
+        self.state.result_set_mapping_or(|| rsm.clone());
+        Ok(self.state.get_result_set_mapping().unwrap_or(rsm))
+    }
+
+    /// `getHash()`: `sha1(parent::getHash() . '-' . $this->firstResult .
+    /// '-' . $this->maxResults)`. Public, as the tests call it by
+    /// reflection.
+    pub fn get_hash(&self) -> Result<String, Thrown> {
+        let sql = match self.get_sql()? {
+            SqlStatements::One(sql) => sql,
+            // `$query . '-'` of an array.
+            SqlStatements::Many(_) => "Array".to_owned(),
+        };
+        let parent = self.state.get_hash(&sql)?;
+        let (first_result, max_results) = {
+            let dst = self.dst();
+            (dst.first_result, dst.max_results)
+        };
+        let max_results = max_results.map(|m| m.to_string()).unwrap_or_default();
+        Ok(crate::cache::sha1_hex(
+            format!("{parent}-{first_result}-{max_results}").as_bytes(),
+        ))
+    }
+
+    /// `evictEntityCacheRegion()`.
+    fn evict_entity_cache_region(&self) -> Result<(), Thrown> {
+        let ast = Parser::new(self)?.get_ast()?;
+        let class_name = match ast {
+            crate::query::ast::Statement::Select(_) => {
+                return Err(query_exception::new(
+                    "The hint \"HINT_CACHE_EVICT\" is not valid for select statements.",
+                ));
+            }
+            crate::query::ast::Statement::Delete(delete) => {
+                delete.delete_clause.abstract_schema_name
+            }
+            crate::query::ast::Statement::Update(update) => {
+                update.update_clause.abstract_schema_name
+            }
+        };
+        if let Some(cache) = self.get_entity_manager().get_cache() {
+            cache.evict_entity_region(&class_name)?;
+        }
+        Ok(())
+    }
+
     /// Frees the resources used by the query object.
     pub fn free(&self) {
         self.state.free();
@@ -287,6 +342,11 @@ impl Query {
                 mapping_count,
                 param_count,
             ));
+        }
+
+        // evict all cache for the entity region
+        if self.state.has_cache() && self.get_hint(HINT_CACHE_EVICT).is_truthy() {
+            self.evict_entity_cache_region()?;
         }
 
         let (params, types) = self.process_parameter_mappings(&param_mappings, &parameters)?;
