@@ -11,21 +11,25 @@
 //! The collection is a PHP object (an entity's property holds it); the
 //! methods that make PHP initialize it (`count()`, `get()`, `toArray()`,
 //! ...) are `async` here, as loading reads the database. `add()` does not
-//! initialize the collection and stays synchronous. `EXTRA_LAZY`
-//! associations load like `LAZY` ones (the extra-lazy paths of
-//! `count()`, `contains()`, `get()` and `slice()` are not ported), and
-//! `matching()` is not ported. The owner is held weakly (PHP holds it).
+//! initialize the collection and stays synchronous. `matching()` gives
+//! the matched collection as a value: an `ArrayCollection` object or a
+//! `LazyCriteriaCollection`. The owner is held weakly (PHP holds it).
 //!
 //! Upstream: doctrine/orm src/PersistentCollection.php src/PersistentCollectionImplementation.php
 
 use std::sync::{Arc, Mutex, MutexGuard, PoisonError, Weak};
 
 use php_value::{Key, Object, PhpArray, PhpObject, Thrown, Value};
-use php2rust_doctrine_collections::ArrayCollection;
+use php2rust_doctrine_collections::{ArrayCollection, Criteria, SortDirection};
 
+use crate::collection_object::ArrayCollectionObject;
 use crate::entity_manager::EntityManager;
 use crate::internal::object_id;
+use crate::lazy_criteria_collection::LazyCriteriaCollection;
+use crate::mapping::class_metadata::FETCH_EXTRA_LAZY;
 use crate::mapping::{AssociationMapping, ClassMetadata};
+use crate::persisters::collection as collection_persister;
+use crate::utility::to_text;
 
 /// `Doctrine\ORM\PersistentCollection`.
 pub const CLASS: &str = "Doctrine\\ORM\\PersistentCollection";
@@ -389,26 +393,96 @@ impl PersistentCollection {
         Ok(removed)
     }
 
+    /// Whether the collection is not initialized and its association is
+    /// `EXTRA_LAZY`.
+    fn is_extra_lazy_uninitialized(&self) -> Result<bool, Thrown> {
+        if self.is_initialized() {
+            return Ok(false);
+        }
+        Ok(self.get_mapping()?.fetch == Some(FETCH_EXTRA_LAZY))
+    }
+
     /// `containsKey($key)`.
     pub async fn contains_key(self: &Arc<Self>, key: &Key) -> Result<bool, Thrown> {
+        if self.is_extra_lazy_uninitialized()? && self.get_mapping()?.index_by.is_some() {
+            if self.st().collection.contains_key(key) {
+                return Ok(true);
+            }
+            let em = self.entity_manager()?;
+            return collection_persister::contains_key(&em, self, key).await;
+        }
         self.initialize().await?;
         Ok(self.st().collection.contains_key(key))
     }
 
     /// `contains($element)`.
     pub async fn contains(self: &Arc<Self>, element: &Value) -> Result<bool, Thrown> {
+        if self.is_extra_lazy_uninitialized()? {
+            if self.st().collection.contains(element) {
+                return Ok(true);
+            }
+            let Value::Object(element) = element else {
+                return Err(Thrown::new(
+                    "TypeError",
+                    "Doctrine\\ORM\\Persisters\\Collection\\CollectionPersister::contains(): Argument #2 ($element) must be of type object",
+                    0,
+                ));
+            };
+            let em = self.entity_manager()?;
+            return collection_persister::contains(&em, self, element).await;
+        }
         self.initialize().await?;
         Ok(self.st().collection.contains(element))
     }
 
     /// `get($key)`.
     pub async fn get(self: &Arc<Self>, key: &Key) -> Result<Value, Thrown> {
+        if self.is_extra_lazy_uninitialized()?
+            && let Some(index_by) = self.get_mapping()?.index_by
+        {
+            let em = self.entity_manager()?;
+            if let Some(type_class) = &self.type_class {
+                let (composite, is_identifier, name) = {
+                    let info = type_class.read();
+                    (
+                        info.is_identifier_composite,
+                        info.is_identifier(&index_by),
+                        info.name.clone(),
+                    )
+                };
+                if !composite && is_identifier {
+                    return Ok(em
+                        .find(&name, key.to_value())
+                        .await?
+                        .map_or(Value::Null, Value::Object));
+                }
+            }
+            return Ok(collection_persister::get(&em, self, &key.to_value())
+                .await?
+                .map_or(Value::Null, Value::Object));
+        }
         self.initialize().await?;
         Ok(self.st().collection.get(key))
     }
 
     /// `count()`.
     pub async fn count(self: &Arc<Self>) -> Result<usize, Thrown> {
+        let extra_lazy = !self.is_initialized()
+            && self
+                .st()
+                .association
+                .as_ref()
+                .is_some_and(|a| a.fetch == Some(FETCH_EXTRA_LAZY));
+        if extra_lazy {
+            let em = self.entity_manager()?;
+            let count = collection_persister::count(&em, self).await?;
+            let dirty = if self.is_dirty() {
+                self.st().collection.count()
+            } else {
+                0
+            };
+            return Ok(usize::try_from(count).unwrap_or(0) + dirty);
+        }
         self.initialize().await?;
         Ok(self.st().collection.count())
     }
@@ -478,6 +552,11 @@ impl PersistentCollection {
 
     /// `first()`.
     pub async fn first(self: &Arc<Self>) -> Result<Value, Thrown> {
+        if !self.is_dirty() && self.is_extra_lazy_uninitialized()? {
+            let em = self.entity_manager()?;
+            let slice = collection_persister::slice(&em, self, 0, Some(1)).await?;
+            return Ok(slice.values().next().cloned().unwrap_or(Value::Bool(false)));
+        }
         self.initialize().await?;
         Ok(self.st().collection.first())
     }
@@ -499,8 +578,63 @@ impl PersistentCollection {
         offset: i64,
         length: Option<i64>,
     ) -> Result<PhpArray, Thrown> {
+        if !self.is_dirty() && self.is_extra_lazy_uninitialized()? {
+            let em = self.entity_manager()?;
+            return collection_persister::slice(&em, self, offset, length).await;
+        }
         self.initialize().await?;
         Ok(self.st().collection.slice(offset, length))
+    }
+
+    /// Selects all elements from a selectable that match the expression
+    /// and return a new collection containing these elements.
+    pub async fn matching(self: &Arc<Self>, criteria: &Criteria) -> Result<Value, Thrown> {
+        if self.is_dirty() {
+            self.initialize().await?;
+        }
+
+        if self.is_initialized() {
+            let matched = self.st().collection.matching(criteria)?;
+            return Ok(ArrayCollectionObject::value(matched.to_array()));
+        }
+
+        let association = self.get_mapping()?;
+        let em = self.entity_manager()?;
+        if association.is_many_to_many() {
+            let elements = collection_persister::load_criteria(&em, self, criteria).await?;
+            return Ok(ArrayCollectionObject::value(PhpArray::list(elements)));
+        }
+
+        let builder = Criteria::expr();
+        let back_ref_field_name = self.st().back_ref_field_name.clone().unwrap_or_default();
+        let owner_expression = builder.eq(
+            &back_ref_field_name,
+            self.get_owner().map_or(Value::Null, Value::Object),
+        );
+        let expression: php2rust_doctrine_collections::expr::Expression =
+            match criteria.get_where_expression() {
+                Some(expression) => builder
+                    .and_x([expression.clone(), owner_expression.into()])?
+                    .into(),
+                None => owner_expression.into(),
+            };
+
+        let mut criteria = criteria.clone();
+        criteria.r#where(expression);
+
+        order_criteria_by_association(&mut criteria, &association);
+
+        let persister = em
+            .get_unit_of_work()
+            .get_entity_persister(&association.target_entity)?;
+
+        if association.fetch == Some(FETCH_EXTRA_LAZY) {
+            return Ok(LazyCriteriaCollection::new(persister, criteria).value());
+        }
+        let elements = persister.load_criteria(&criteria).await?;
+        Ok(ArrayCollectionObject::value(PhpArray::list(
+            elements.into_iter().map(Value::Object),
+        )))
     }
 
     /// `toArray()`.
@@ -597,6 +731,39 @@ impl PersistentCollection {
         }
         Ok(())
     }
+}
+
+/// `CompatOrderings::orderCriteriaByAssociation()` (collections 3.1): the
+/// criteria's orderings, or else the association's `orderBy`.
+fn order_criteria_by_association(criteria: &mut Criteria, association: &AssociationMapping) {
+    if !criteria.get_orderings().is_empty() {
+        let orderings = criteria.get_orderings();
+        criteria.order_by(orderings);
+        return;
+    }
+    let orderings: Vec<(String, SortDirection)> = association
+        .order_by()
+        .iter()
+        .map(|(field, order)| {
+            let direction = match order {
+                Value::Object(o) if o.class().ends_with("SortDirection") => {
+                    match o.property(b"name").map(|n| to_text(&n)).as_deref() {
+                        Some("Ascending") => SortDirection::Ascending,
+                        _ => SortDirection::Descending,
+                    }
+                }
+                other => {
+                    if to_text(other).eq_ignore_ascii_case("ASC") {
+                        SortDirection::Ascending
+                    } else {
+                        SortDirection::Descending
+                    }
+                }
+            };
+            (crate::utility::key_text(field), direction)
+        })
+        .collect();
+    criteria.order_by(orderings);
 }
 
 impl PhpObject for PersistentCollection {
