@@ -44,6 +44,8 @@ pub struct EntityManager {
     /// Whether `getFilters()` created the collection (`$filterCollection
     /// !== null`).
     filters_used: std::sync::atomic::AtomicBool,
+    /// The second level cache regions API.
+    cache: std::sync::OnceLock<Arc<dyn crate::cache::Cache>>,
 }
 
 impl std::fmt::Debug for EntityManager {
@@ -82,7 +84,7 @@ impl EntityManager {
         metadata_factory.set_entity_manager(factory_config);
         let repository_factory = config.get_repository_factory();
         let entity_listener_resolver = config.get_entity_listener_resolver();
-        Ok(Arc::new_cyclic(|weak| Self {
+        let em = Arc::new_cyclic(|weak| Self {
             conn,
             config,
             metadata_factory,
@@ -93,7 +95,30 @@ impl EntityManager {
             closed: RwLock::new(false),
             filter_collection: crate::query::FilterCollection::new(weak.clone()),
             filters_used: std::sync::atomic::AtomicBool::new(false),
-        }))
+            cache: std::sync::OnceLock::new(),
+        });
+        if em.config.is_second_level_cache_enabled() {
+            let cache_factory = em
+                .config
+                .get_second_level_cache_configuration()
+                .and_then(|cache_config| cache_config.get_cache_factory())
+                .ok_or_else(|| {
+                    Thrown::new(
+                        "Error",
+                        "Call to a member function createCache() on null",
+                        0,
+                    )
+                })?;
+            let cache = cache_factory.create_cache(&em)?;
+            let _ = em.cache.set(cache);
+        }
+        Ok(em)
+    }
+
+    /// `getCache()`: the second level cache regions API, when the second
+    /// level cache is enabled.
+    pub fn get_cache(&self) -> Option<Arc<dyn crate::cache::Cache>> {
+        self.cache.get().cloned()
     }
 
     /// Creates a new `Query` object.
@@ -312,7 +337,7 @@ impl EntityManager {
                 }
                 LockMode::PessimisticRead | LockMode::PessimisticWrite => {
                     self.unit_of_work
-                        .get_entity_persister(&name)?
+                        .get_entity_persister_interface(&name)?
                         .refresh(&sorted_id, &entity, Some(lock_mode))
                         .await?;
                 }
@@ -327,11 +352,19 @@ impl EntityManager {
             return Ok(Some(entity)); // Hit!
         }
 
-        let persister = self.unit_of_work.get_entity_persister(&name)?;
+        let persister = self.unit_of_work.get_entity_persister_interface(&name)?;
         match lock_mode {
             LockMode::Optimistic => {
                 let entity = persister
-                    .load(&sorted_id, None, None, Hints::default(), None, None)
+                    .load(
+                        &sorted_id,
+                        None,
+                        None,
+                        Hints::default(),
+                        Some(lock_mode),
+                        None,
+                        None,
+                    )
                     .await?;
                 if let Some(entity) = &entity {
                     self.unit_of_work
@@ -342,7 +375,15 @@ impl EntityManager {
             }
             LockMode::PessimisticRead | LockMode::PessimisticWrite => {
                 persister
-                    .load(&sorted_id, None, None, Hints::default(), None, None)
+                    .load(
+                        &sorted_id,
+                        None,
+                        None,
+                        Hints::default(),
+                        Some(lock_mode),
+                        None,
+                        None,
+                    )
                     .await
             }
             LockMode::None => persister.load_by_id(&sorted_id, None).await,

@@ -1,60 +1,60 @@
 # doctrine/orm at 00c2fd70da291cca1ec75f4dae5344fe3df588fa: upstream file	classes	code lines	status	rust files
 src/AbstractQuery.php	AbstractQuery	548	ported	crates/php2rust-doctrine-orm/src/abstract_query.rs
-src/Cache.php	Cache	27	pending	
-src/Cache/AssociationCacheEntry.php	AssociationCacheEntry	14	pending	
-src/Cache/CacheConfiguration.php	CacheConfiguration	44	pending	
-src/Cache/CacheEntry.php	CacheEntry	5	pending	
-src/Cache/CacheException.php	CacheException	16	pending	
-src/Cache/CacheFactory.php	CacheFactory	25	pending	
-src/Cache/CacheKey.php	CacheKey	8	pending	
-src/Cache/CollectionCacheEntry.php	CollectionCacheEntry	12	pending	
-src/Cache/CollectionCacheKey.php	CollectionCacheKey	21	pending	
+src/Cache.php	Cache	27	ported	crates/php2rust-doctrine-orm/src/cache/default_cache.rs
+src/Cache/AssociationCacheEntry.php	AssociationCacheEntry	14	ported	crates/php2rust-doctrine-orm/src/cache/cache_entry.rs
+src/Cache/CacheConfiguration.php	CacheConfiguration	44	ported	crates/php2rust-doctrine-orm/src/cache/configuration.rs
+src/Cache/CacheEntry.php	CacheEntry	5	ported	crates/php2rust-doctrine-orm/src/cache/cache_entry.rs
+src/Cache/CacheException.php	CacheException	16	ported	crates/php2rust-doctrine-orm/src/cache/exception.rs
+src/Cache/CacheFactory.php	CacheFactory	25	ported	crates/php2rust-doctrine-orm/src/cache/factory.rs
+src/Cache/CacheKey.php	CacheKey	8	ported	crates/php2rust-doctrine-orm/src/cache/cache_key.rs
+src/Cache/CollectionCacheEntry.php	CollectionCacheEntry	12	ported	crates/php2rust-doctrine-orm/src/cache/cache_entry.rs
+src/Cache/CollectionCacheKey.php	CollectionCacheKey	21	ported	crates/php2rust-doctrine-orm/src/cache/cache_key.rs
 src/Cache/CollectionHydrator.php	CollectionHydrator	10	pending	
-src/Cache/ConcurrentRegion.php	ConcurrentRegion	7	pending	
-src/Cache/DefaultCache.php	DefaultCache	181	pending	
-src/Cache/DefaultCacheFactory.php	DefaultCacheFactory	147	pending	
+src/Cache/ConcurrentRegion.php	ConcurrentRegion	7	ported	crates/php2rust-doctrine-orm/src/cache/region.rs
+src/Cache/DefaultCache.php	DefaultCache	181	ported	crates/php2rust-doctrine-orm/src/cache/default_cache.rs
+src/Cache/DefaultCacheFactory.php	DefaultCacheFactory	147	ported	crates/php2rust-doctrine-orm/src/cache/factory.rs
 src/Cache/DefaultCollectionHydrator.php	DefaultCollectionHydrator	51	pending	
-src/Cache/DefaultEntityHydrator.php	DefaultEntityHydrator	127	pending	
-src/Cache/DefaultQueryCache.php	DefaultQueryCache	279	pending	
-src/Cache/EntityCacheEntry.php	EntityCacheEntry	25	pending	
-src/Cache/EntityCacheKey.php	EntityCacheKey	18	pending	
-src/Cache/EntityHydrator.php	EntityHydrator	8	pending	
-src/Cache/Exception/CacheException.php	CacheException	6	pending	
-src/Cache/Exception/CannotUpdateReadOnlyCollection.php	CannotUpdateReadOnlyCollection	14	pending	
-src/Cache/Exception/CannotUpdateReadOnlyEntity.php	CannotUpdateReadOnlyEntity	10	pending	
-src/Cache/Exception/FeatureNotImplemented.php	FeatureNotImplemented	21	pending	
-src/Cache/Exception/NonCacheableEntity.php	NonCacheableEntity	13	pending	
-src/Cache/Exception/NonCacheableEntityAssociation.php	NonCacheableEntityAssociation	14	pending	
-src/Cache/Lock.php	Lock	18	pending	
-src/Cache/LockException.php	LockException	6	pending	
-src/Cache/Logging/CacheLogger.php	CacheLogger	17	pending	
-src/Cache/Logging/CacheLoggerChain.php	CacheLoggerChain	75	pending	
-src/Cache/Logging/StatisticsCacheLogger.php	StatisticsCacheLogger	105	pending	
-src/Cache/Persister/CachedPersister.php	CachedPersister	9	pending	
+src/Cache/DefaultEntityHydrator.php	DefaultEntityHydrator	127	ported	crates/php2rust-doctrine-orm/src/cache/hydrator.rs
+src/Cache/DefaultQueryCache.php	DefaultQueryCache	279	ported	crates/php2rust-doctrine-orm/src/cache/query_cache.rs
+src/Cache/EntityCacheEntry.php	EntityCacheEntry	25	ported	crates/php2rust-doctrine-orm/src/cache/cache_entry.rs
+src/Cache/EntityCacheKey.php	EntityCacheKey	18	ported	crates/php2rust-doctrine-orm/src/cache/cache_key.rs
+src/Cache/EntityHydrator.php	EntityHydrator	8	ported	crates/php2rust-doctrine-orm/src/cache/hydrator.rs
+src/Cache/Exception/CacheException.php	CacheException	6	ported	crates/php2rust-doctrine-orm/src/cache/exception.rs
+src/Cache/Exception/CannotUpdateReadOnlyCollection.php	CannotUpdateReadOnlyCollection	14	ported	crates/php2rust-doctrine-orm/src/cache/exception.rs
+src/Cache/Exception/CannotUpdateReadOnlyEntity.php	CannotUpdateReadOnlyEntity	10	ported	crates/php2rust-doctrine-orm/src/cache/exception.rs
+src/Cache/Exception/FeatureNotImplemented.php	FeatureNotImplemented	21	ported	crates/php2rust-doctrine-orm/src/cache/exception.rs
+src/Cache/Exception/NonCacheableEntity.php	NonCacheableEntity	13	ported	crates/php2rust-doctrine-orm/src/cache/exception.rs
+src/Cache/Exception/NonCacheableEntityAssociation.php	NonCacheableEntityAssociation	14	ported	crates/php2rust-doctrine-orm/src/cache/exception.rs
+src/Cache/Lock.php	Lock	18	ported	crates/php2rust-doctrine-orm/src/cache/lock.rs
+src/Cache/LockException.php	LockException	6	ported	crates/php2rust-doctrine-orm/src/cache/exception.rs
+src/Cache/Logging/CacheLogger.php	CacheLogger	17	ported	crates/php2rust-doctrine-orm/src/cache/logging.rs
+src/Cache/Logging/CacheLoggerChain.php	CacheLoggerChain	75	ported	crates/php2rust-doctrine-orm/src/cache/logging.rs
+src/Cache/Logging/StatisticsCacheLogger.php	StatisticsCacheLogger	105	ported	crates/php2rust-doctrine-orm/src/cache/logging.rs
+src/Cache/Persister/CachedPersister.php	CachedPersister	9	ported	crates/php2rust-doctrine-orm/src/cache/persister.rs
 src/Cache/Persister/Collection/AbstractCollectionPersister.php	AbstractCollectionPersister	132	pending	
 src/Cache/Persister/Collection/CachedCollectionPersister.php	CachedCollectionPersister	15	pending	
 src/Cache/Persister/Collection/NonStrictReadWriteCachedCollectionPersister.php	NonStrictReadWriteCachedCollectionPersister	53	pending	
 src/Cache/Persister/Collection/ReadOnlyCachedCollectionPersister.php	ReadOnlyCachedCollectionPersister	18	pending	
 src/Cache/Persister/Collection/ReadWriteCachedCollectionPersister.php	ReadWriteCachedCollectionPersister	81	pending	
-src/Cache/Persister/CompatOrderings.php	CompatOrderings	67	pending	
-src/Cache/Persister/Entity/AbstractEntityPersister.php	AbstractEntityPersister	404	pending	
-src/Cache/Persister/Entity/CachedEntityPersister.php	CachedEntityPersister	11	pending	
-src/Cache/Persister/Entity/NonStrictReadWriteCachedEntityPersister.php	NonStrictReadWriteCachedEntityPersister	61	pending	
-src/Cache/Persister/Entity/ReadOnlyCachedEntityPersister.php	ReadOnlyCachedEntityPersister	11	pending	
-src/Cache/Persister/Entity/ReadWriteCachedEntityPersister.php	ReadWriteCachedEntityPersister	78	pending	
-src/Cache/QueryCache.php	QueryCache	10	pending	
-src/Cache/QueryCacheEntry.php	QueryCacheEntry	17	pending	
-src/Cache/QueryCacheKey.php	QueryCacheKey	14	pending	
-src/Cache/QueryCacheValidator.php	QueryCacheValidator	6	pending	
-src/Cache/Region.php	Region	13	pending	
-src/Cache/Region/DefaultRegion.php	DefaultRegion	86	pending	
-src/Cache/Region/FileLockRegion.php	FileLockRegion	141	pending	
-src/Cache/Region/UpdateTimestampCache.php	UpdateTimestampCache	12	pending	
-src/Cache/RegionsConfiguration.php	RegionsConfiguration	44	pending	
-src/Cache/TimestampCacheEntry.php	TimestampCacheEntry	15	pending	
-src/Cache/TimestampCacheKey.php	TimestampCacheKey	9	pending	
-src/Cache/TimestampQueryCacheValidator.php	TimestampQueryCacheValidator	27	pending	
-src/Cache/TimestampRegion.php	TimestampRegion	6	pending	
+src/Cache/Persister/CompatOrderings.php	CompatOrderings	67	ported	crates/php2rust-doctrine-orm/src/cache/persister.rs
+src/Cache/Persister/Entity/AbstractEntityPersister.php	AbstractEntityPersister	404	ported	crates/php2rust-doctrine-orm/src/cache/persister.rs
+src/Cache/Persister/Entity/CachedEntityPersister.php	CachedEntityPersister	11	ported	crates/php2rust-doctrine-orm/src/cache/persister.rs
+src/Cache/Persister/Entity/NonStrictReadWriteCachedEntityPersister.php	NonStrictReadWriteCachedEntityPersister	61	ported	crates/php2rust-doctrine-orm/src/cache/persister.rs
+src/Cache/Persister/Entity/ReadOnlyCachedEntityPersister.php	ReadOnlyCachedEntityPersister	11	ported	crates/php2rust-doctrine-orm/src/cache/persister.rs
+src/Cache/Persister/Entity/ReadWriteCachedEntityPersister.php	ReadWriteCachedEntityPersister	78	ported	crates/php2rust-doctrine-orm/src/cache/persister.rs
+src/Cache/QueryCache.php	QueryCache	10	ported	crates/php2rust-doctrine-orm/src/cache/query_cache.rs
+src/Cache/QueryCacheEntry.php	QueryCacheEntry	17	ported	crates/php2rust-doctrine-orm/src/cache/cache_entry.rs
+src/Cache/QueryCacheKey.php	QueryCacheKey	14	ported	crates/php2rust-doctrine-orm/src/cache/cache_key.rs
+src/Cache/QueryCacheValidator.php	QueryCacheValidator	6	ported	crates/php2rust-doctrine-orm/src/cache/configuration.rs
+src/Cache/Region.php	Region	13	ported	crates/php2rust-doctrine-orm/src/cache/region.rs
+src/Cache/Region/DefaultRegion.php	DefaultRegion	86	ported	crates/php2rust-doctrine-orm/src/cache/region.rs
+src/Cache/Region/FileLockRegion.php	FileLockRegion	141	ported	crates/php2rust-doctrine-orm/src/cache/region.rs
+src/Cache/Region/UpdateTimestampCache.php	UpdateTimestampCache	12	ported	crates/php2rust-doctrine-orm/src/cache/region.rs
+src/Cache/RegionsConfiguration.php	RegionsConfiguration	44	ported	crates/php2rust-doctrine-orm/src/cache/configuration.rs
+src/Cache/TimestampCacheEntry.php	TimestampCacheEntry	15	ported	crates/php2rust-doctrine-orm/src/cache/cache_entry.rs
+src/Cache/TimestampCacheKey.php	TimestampCacheKey	9	ported	crates/php2rust-doctrine-orm/src/cache/cache_key.rs
+src/Cache/TimestampQueryCacheValidator.php	TimestampQueryCacheValidator	27	ported	crates/php2rust-doctrine-orm/src/cache/configuration.rs
+src/Cache/TimestampRegion.php	TimestampRegion	6	ported	crates/php2rust-doctrine-orm/src/cache/region.rs
 src/Configuration.php	Configuration	408	ported	crates/php2rust-doctrine-orm/src/configuration.rs
 src/Decorator/EntityManagerDecorator.php	EntityManagerDecorator	137	pending	
 src/EntityManager.php	EntityManager	397	ported	crates/php2rust-doctrine-orm/src/entity_manager.rs
@@ -242,7 +242,7 @@ src/Persisters/Collection/OneToManyPersister.php	OneToManyPersister	175	ported	c
 src/Persisters/Entity/AbstractEntityInheritancePersister.php	AbstractEntityInheritancePersister	39	ported	crates/php2rust-doctrine-orm/src/persisters/abstract_entity_inheritance_persister.rs
 src/Persisters/Entity/BasicEntityPersister.php	BasicEntityPersister	1300	ported	crates/php2rust-doctrine-orm/src/persisters/basic_entity_persister.rs
 src/Persisters/Entity/CachedPersisterContext.php	CachedPersisterContext	17	ported	crates/php2rust-doctrine-orm/src/persisters/basic_entity_persister.rs
-src/Persisters/Entity/EntityPersister.php	EntityPersister	85	ported	crates/php2rust-doctrine-orm/src/persisters/basic_entity_persister.rs
+src/Persisters/Entity/EntityPersister.php	EntityPersister	85	ported	crates/php2rust-doctrine-orm/src/persisters/basic_entity_persister.rs crates/php2rust-doctrine-orm/src/persisters/entity_persister.rs
 src/Persisters/Entity/JoinedSubclassPersister.php	JoinedSubclassPersister	421	ported	crates/php2rust-doctrine-orm/src/persisters/joined_subclass_persister.rs
 src/Persisters/Entity/SingleTablePersister.php	SingleTablePersister	109	ported	crates/php2rust-doctrine-orm/src/persisters/single_table_persister.rs
 src/Persisters/Exception/CantUseInOperatorOnCompositeKeys.php	CantUseInOperatorOnCompositeKeys	10	ported	crates/php2rust-doctrine-orm/src/exception.rs

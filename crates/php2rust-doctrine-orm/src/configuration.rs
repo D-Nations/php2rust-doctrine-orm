@@ -89,6 +89,16 @@ pub struct Configuration {
     quote_strategy: Option<Arc<dyn QuoteStrategy>>,
     repository_factory: Option<Arc<dyn RepositoryFactory>>,
     second_level_cache_enabled: bool,
+    #[allow(clippy::struct_field_names, reason = "upstream's property name")]
+    second_level_cache_configuration: Option<Arc<crate::cache::CacheConfiguration>>,
+    /// The configuration `getSecondLevelCacheConfiguration()` creates when
+    /// none is set and the cache is enabled.
+    #[allow(
+        clippy::struct_field_names,
+        reason = "named after the property it backs"
+    )]
+    default_second_level_cache_configuration:
+        std::sync::OnceLock<Arc<crate::cache::CacheConfiguration>>,
     default_query_hints: PhpArray,
     schema_ignore_classes: Vec<String>,
     native_lazy_objects: bool,
@@ -164,6 +174,8 @@ impl Configuration {
             quote_strategy: None,
             repository_factory: None,
             second_level_cache_enabled: false,
+            second_level_cache_configuration: None,
+            default_second_level_cache_configuration: std::sync::OnceLock::new(),
             default_query_hints: PhpArray::new(),
             schema_ignore_classes: Vec::new(),
             // PHP 8.4: ORMSetup enables native lazy objects.
@@ -526,14 +538,36 @@ impl Configuration {
         self.second_level_cache_enabled
     }
 
-    /// `setSecondLevelCacheEnabled()`: the second level cache is not
-    /// ported; enabling it is refused.
-    pub fn set_second_level_cache_enabled(&mut self, flag: bool) -> Result<(), Thrown> {
-        if flag {
-            return Err(crate::exception::not_supported());
+    /// `setSecondLevelCacheEnabled()`.
+    pub fn set_second_level_cache_enabled(&mut self, flag: bool) {
+        self.second_level_cache_enabled = flag;
+    }
+
+    pub fn set_second_level_cache_configuration(
+        &mut self,
+        cache_config: Arc<crate::cache::CacheConfiguration>,
+    ) {
+        self.second_level_cache_configuration = Some(cache_config);
+    }
+
+    /// `getSecondLevelCacheConfiguration()`: a new `CacheConfiguration`
+    /// the first time none is set while the cache is enabled.
+    pub fn get_second_level_cache_configuration(
+        &self,
+    ) -> Option<Arc<crate::cache::CacheConfiguration>> {
+        if let Some(cache_config) = &self.second_level_cache_configuration {
+            return Some(Arc::clone(cache_config));
         }
-        self.second_level_cache_enabled = false;
-        Ok(())
+        if let Some(cache_config) = self.default_second_level_cache_configuration.get() {
+            return Some(Arc::clone(cache_config));
+        }
+        if !self.second_level_cache_enabled {
+            return None;
+        }
+        Some(Arc::clone(
+            self.default_second_level_cache_configuration
+                .get_or_init(|| Arc::new(crate::cache::CacheConfiguration::new())),
+        ))
     }
 
     pub fn get_default_query_hints(&self) -> &PhpArray {
