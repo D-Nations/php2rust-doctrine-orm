@@ -511,3 +511,21 @@ impl EntityManager {
         self.unit_of_work.is_uninitialized_object(value)
     }
 }
+
+/// The DQL builders of the entity manager.
+impl EntityManager {
+    /// Gets an `ExpressionBuilder` used for object-oriented construction of query expressions.
+    ///
+    /// Upstream keeps one `Expr` per entity manager; `Expr` has no state,
+    /// so this is a new one.
+    pub fn get_expression_builder(&self) -> crate::query::Expr {
+        crate::query::Expr::new()
+    }
+
+    /// Create a `QueryBuilder` instance
+    pub fn create_query_builder(self: &Arc<Self>) -> crate::query_builder::QueryBuilder {
+        crate::query_builder::QueryBuilder::new(
+            Arc::clone(self) as Arc<dyn crate::query::context::QueryContext>
+        )
+    }
+}

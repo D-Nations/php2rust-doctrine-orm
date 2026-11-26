@@ -10,6 +10,9 @@
 #[doc = include_str!("../README.md")]
 struct ReadmeExample;
 
+pub use query_builder::QueryBuilder;
+pub use query_type::QueryType;
+
 pub mod collection_object;
 pub mod configuration;
 pub mod deprecations;
@@ -25,6 +28,8 @@ pub mod object;
 pub mod persistent_collection;
 pub mod persisters;
 pub mod query;
+pub mod query_builder;
+pub mod query_type;
 pub mod repository;
 pub mod tools;
 pub mod unit_of_work;
