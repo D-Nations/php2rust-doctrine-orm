@@ -357,7 +357,11 @@ impl EntityManager {
     /// Gets a reference to the entity identified by the given type and
     /// identifier without actually loading it, if the entity is not yet
     /// loaded.
-    pub fn get_reference(&self, entity_name: &str, id: Value) -> Result<Option<Object>, Thrown> {
+    pub async fn get_reference(
+        &self,
+        entity_name: &str,
+        id: Value,
+    ) -> Result<Option<Object>, Thrown> {
         let class = self
             .metadata_factory
             .get_metadata_for(entity_name.trim_start_matches('\\'))?;
@@ -403,8 +407,7 @@ impl EntityManager {
         }
 
         if has_subclasses {
-            // PHP calls find() here; it needs the database.
-            return Err(exception::not_supported());
+            return self.find(entity_name, Value::Array(sorted_id)).await;
         }
 
         let entity = self.get_proxy(&name, &sorted_id)?;

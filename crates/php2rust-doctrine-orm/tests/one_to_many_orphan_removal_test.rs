@@ -49,7 +49,7 @@ const PHONENUMBERS: &str = "SELECT p FROM Doctrine\\Tests\\Models\\CMS\\CmsPhone
 #[tokio::test]
 async fn testOrphanRemoval() {
     let (em, user_id) = set_up_test().await;
-    let user_proxy = em.get_reference(CMS_USER, user_id).unwrap().unwrap();
+    let user_proxy = em.get_reference(CMS_USER, user_id).await.unwrap().unwrap();
 
     em.remove(&user_proxy).await.unwrap();
     em.flush().await.unwrap();

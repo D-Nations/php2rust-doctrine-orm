@@ -10,8 +10,7 @@
 //! are told apart by their address (`spl_object_id()`), and the unit of
 //! work holds the objects it tracks. The second level cache, filters,
 //! the `NOTIFY` change tracking policy's listener and partial objects are
-//! not ported; entities of an inheritance hierarchy have no persister
-//! (`NotSupported`).
+//! not ported.
 //!
 //! Upstream: doctrine/orm src/UnitOfWork.php src/Internal/HydrationCompleteHandler.php src/Internal/UnitOfWork/InsertBatch.php
 //! Upstream: doctrine/orm src/Id/AssignedGenerator.php src/Id/IdentityGenerator.php src/Id/SequenceGenerator.php
@@ -2667,8 +2666,9 @@ impl UnitOfWork {
                             .load_one_to_one_entity(&assoc, &entity, Some(&associated_id))
                             .await?
                     } else {
-                        let normalized_associated_id =
-                            self.normalize_identifier(&target_class, &associated_id)?;
+                        let normalized_associated_id = self
+                            .normalize_identifier(&target_class, &associated_id)
+                            .await?;
                         if fetch_mode != Some(FETCH_EAGER) {
                             // TODO: Is there a faster approach?
                             let proxy =
@@ -3109,11 +3109,6 @@ impl UnitOfWork {
         }
         let em = self.em()?;
         let class = em.get_class_metadata(entity_name)?;
-        if !class.read().is_inheritance_type_none() {
-            // SingleTablePersister and JoinedSubclassPersister are not
-            // ported.
-            return Err(exception::not_supported());
-        }
         let persister = Arc::new(BasicEntityPersister::new(&em, class));
         self.persisters
             .lock()
@@ -3241,7 +3236,7 @@ impl UnitOfWork {
                 .get(&object_id(obj))
                 .cloned()
                 .unwrap_or_default();
-            let identifier = self.normalize_identifier(&class, &id)?;
+            let identifier = self.normalize_identifier(&class, &id).await?;
             let found = self
                 .get_entity_persister(&name)?
                 .load_by_id(&identifier, Some(obj))
@@ -3356,7 +3351,15 @@ impl UnitOfWork {
     /// Given a flat identifier, this method will produce another
     /// identifier, with association identifiers replaced by references to
     /// the associated entities.
-    fn normalize_identifier(
+    fn normalize_identifier<'a>(
+        &'a self,
+        target_class: &'a ClassMetadata,
+        flat_identifier: &'a PhpArray,
+    ) -> Fut<'a, PhpArray> {
+        Box::pin(self.do_normalize_identifier(target_class, flat_identifier))
+    }
+
+    async fn do_normalize_identifier(
         &self,
         target_class: &ClassMetadata,
         flat_identifier: &PhpArray,
@@ -3383,9 +3386,9 @@ impl UnitOfWork {
                 .unwrap_or_default();
             let mut inner = PhpArray::new();
             inner.insert(first.as_str(), value.clone());
-            let inner = self.normalize_identifier(&target_id_class, &inner)?;
+            let inner = self.normalize_identifier(&target_id_class, &inner).await?;
             let target_name = target_id_class.read().get_name().to_owned();
-            let reference = em.get_reference(&target_name, Value::Array(inner))?;
+            let reference = em.get_reference(&target_name, Value::Array(inner)).await?;
             normalized_associated_id
                 .insert(name.as_str(), reference.map_or(Value::Null, Value::Object));
         }
