@@ -1419,7 +1419,7 @@ tests/Tests/ORM/Functional/Ticket/GH10288Test.php	GH10288Test::testEnumDiscrimin
 tests/Tests/ORM/Functional/Ticket/GH10288Test.php	GH10288Test::testEnumDiscriminatorWithEnumType	pending	a custom DBAL type of the test file (the recorder cannot load a DBAL Type subclass)
 tests/Tests/ORM/Functional/Ticket/GH10334Test.php	GH10334Test::testGetChildWithBackedEnumId	ported	crates/php2rust-doctrine-orm/tests/gh10334_test.rs::testGetChildWithBackedEnumId
 tests/Tests/ORM/Functional/Ticket/GH10334Test.php	GH10334Test::testTicket	ported	crates/php2rust-doctrine-orm/tests/gh10334_test.rs::testTicket
-tests/Tests/ORM/Functional/Ticket/GH10336Test.php	GH10336Test::testCanAccessRelationPropertyAfterClear	pending	
+tests/Tests/ORM/Functional/Ticket/GH10336Test.php	GH10336Test::testCanAccessRelationPropertyAfterClear	ported	crates/php2rust-doctrine-orm/tests/gh10336_test.rs::testCanAccessRelationPropertyAfterClear
 tests/Tests/ORM/Functional/Ticket/GH10348Test.php	GH10348Test::testTheORMRemovesReferencedEmployeeBeforeReferencingEmployee	pending	
 tests/Tests/ORM/Functional/Ticket/GH10387Test.php	GH10387Test::testSchemaToolCreatesColumnForFieldInTheMiddleClass	pending	
 tests/Tests/ORM/Functional/Ticket/GH10450Test.php	GH10450Test::testDuplicatePrivateFieldsShallBeRejected	pending	
