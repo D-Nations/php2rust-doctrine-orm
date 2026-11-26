@@ -1,5 +1,13 @@
 # rust file	package	upstream path	reference
 crates/php2rust-doctrine-event-manager/src/event_args.rs	doctrine/event-manager	src/EventArgs.php	dda33921b198841ca8dbad2eaa5d4d34769d18cf
+crates/php2rust-doctrine-event-manager/src/event_dispatcher.rs	doctrine/event-manager	src/EventDispatcher.php	dda33921b198841ca8dbad2eaa5d4d34769d18cf
+crates/php2rust-doctrine-event-manager/src/event_listener_introspector.rs	doctrine/event-manager	src/EventListenerIntrospector.php	dda33921b198841ca8dbad2eaa5d4d34769d18cf
+crates/php2rust-doctrine-event-manager/src/event_listener_registry.rs	doctrine/event-manager	src/EventListenerRegistry.php	dda33921b198841ca8dbad2eaa5d4d34769d18cf
+crates/php2rust-doctrine-event-manager/src/event_manager.rs	doctrine/event-manager	src/EventManager.php	dda33921b198841ca8dbad2eaa5d4d34769d18cf
+crates/php2rust-doctrine-event-manager/src/event_manager_interface.rs	doctrine/event-manager	src/EventManagerInterface.php	dda33921b198841ca8dbad2eaa5d4d34769d18cf
+crates/php2rust-doctrine-event-manager/src/event_subscriber.rs	doctrine/event-manager	src/EventSubscriber.php	dda33921b198841ca8dbad2eaa5d4d34769d18cf
+crates/php2rust-doctrine-event-manager/src/event_subscriber_registry.rs	doctrine/event-manager	src/EventSubscriberRegistry.php	dda33921b198841ca8dbad2eaa5d4d34769d18cf
+crates/php2rust-doctrine-event-manager/tests/event_manager_test.rs	doctrine/event-manager	tests/EventManagerTest.php	dda33921b198841ca8dbad2eaa5d4d34769d18cf
 crates/php2rust-doctrine-lexer/src/abstract_lexer.rs	doctrine/lexer	src/AbstractLexer.php	71d305eaa6480d3d3460c7d053d1da7749fa9cca
 crates/php2rust-doctrine-lexer/src/token.rs	doctrine/lexer	src/Token.php	71d305eaa6480d3d3460c7d053d1da7749fa9cca
 crates/php2rust-doctrine-lexer/tests/abstract_lexer_test.rs	doctrine/lexer	tests/AbstractLexerTest.php	71d305eaa6480d3d3460c7d053d1da7749fa9cca

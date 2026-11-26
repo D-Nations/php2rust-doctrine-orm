@@ -1,0 +1,1 @@
+{"first_dispatch":["x:a","y:a","z:a"],"after_re_adding_x":["y:a","z:a","x:a"],"events_after_removing_y":["a","b"],"has_listeners_b":false,"count_listeners_b":0,"dispatch_b_creates_empty_instance":true,"missing_method":["Error","Call to undefined method Listener::missing()"]}

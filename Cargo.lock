@@ -61,6 +61,7 @@ name = "php2rust-doctrine-event-manager"
 version = "0.1.0"
 dependencies = [
  "php2rust-value",
+ "serde_json",
 ]
 
 [[package]]
