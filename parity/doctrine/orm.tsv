@@ -1711,18 +1711,18 @@ tests/Tests/ORM/Functional/ValueConversionType/OneToOneTest.php	OneToOneTest::te
 tests/Tests/ORM/Functional/ValueConversionType/OneToOneTest.php	OneToOneTest::testThatTheProxyFromOwningToInversedIsLoaded	pending	
 tests/Tests/ORM/Functional/ValueConversionType/OneToOneTest.php	OneToOneTest::testThatTheValueOfIdentifiersAreConvertedBackAfterBeingFetchedFromTheDatabase	pending	
 tests/Tests/ORM/Functional/ValueConversionType/OneToOneTest.php	OneToOneTest::testThatTheValueOfIdentifiersAreConvertedInTheDatabase	pending	
-tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testCRUD	pending	
-tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testDqlOnEmbeddedObjectsField	pending	
-tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testDqlWithNonExistentEmbeddableField	pending	
-tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testEmbeddableWithInheritance	pending	
-tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testInlineEmbeddableEmptyPrefix	pending	
-tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testInlineEmbeddableInMappedSuperClass	pending	
-tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testInlineEmbeddablePrefixFalse	pending	
-tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testInlineEmbeddableWithPrefix	pending	
-tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testLoadDql	pending	
-tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testPartialDqlOnEmbeddedObjectsField	pending	
-tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testPartialDqlWithNonExistentEmbeddableField	pending	
-tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testThrowsExceptionOnInfiniteEmbeddableNesting	pending	
+tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testCRUD	ported	crates/php2rust-doctrine-orm/tests/value_objects_test.rs::testCRUD
+tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testDqlOnEmbeddedObjectsField	ported	crates/php2rust-doctrine-orm/tests/value_objects_test.rs::testDqlOnEmbeddedObjectsField
+tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testDqlWithNonExistentEmbeddableField	ported	crates/php2rust-doctrine-orm/tests/value_objects_test.rs::testDqlWithNonExistentEmbeddableField
+tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testEmbeddableWithInheritance	ported	crates/php2rust-doctrine-orm/tests/value_objects_test.rs::testEmbeddableWithInheritance
+tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testInlineEmbeddableEmptyPrefix	ported	crates/php2rust-doctrine-orm/tests/value_objects_test.rs::testInlineEmbeddableEmptyPrefix
+tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testInlineEmbeddableInMappedSuperClass	ported	crates/php2rust-doctrine-orm/tests/value_objects_test.rs::testInlineEmbeddableInMappedSuperClass
+tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testInlineEmbeddablePrefixFalse	ported	crates/php2rust-doctrine-orm/tests/value_objects_test.rs::testInlineEmbeddablePrefixFalse
+tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testInlineEmbeddableWithPrefix	ported	crates/php2rust-doctrine-orm/tests/value_objects_test.rs::testInlineEmbeddableWithPrefix
+tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testLoadDql	ported	crates/php2rust-doctrine-orm/tests/value_objects_test.rs::testLoadDql
+tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testPartialDqlOnEmbeddedObjectsField	pending	a partial object is not a lazy ghost of its selected fields, so its embeddable is not an uninitialized ghost that loads on access
+tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testPartialDqlWithNonExistentEmbeddableField	ported	crates/php2rust-doctrine-orm/tests/value_objects_test.rs::testPartialDqlWithNonExistentEmbeddableField
+tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testThrowsExceptionOnInfiniteEmbeddableNesting	ported	crates/php2rust-doctrine-orm/tests/value_objects_test.rs::testThrowsExceptionOnInfiniteEmbeddableNesting
 tests/Tests/ORM/Functional/VersionedOneToOneTest.php	VersionedOneToOneTest::testSetVersionOnCreate	pending	
 tests/Tests/ORM/Hydration/AbstractHydratorTest.php	AbstractHydratorTest::testEnumCastsIntegerBackedEnumArrayValues	ported	crates/php2rust-doctrine-orm/tests/abstract_hydrator_test.rs::testEnumCastsIntegerBackedEnumArrayValues
 tests/Tests/ORM/Hydration/AbstractHydratorTest.php	AbstractHydratorTest::testEnumCastsIntegerBackedEnumValues	ported	crates/php2rust-doctrine-orm/tests/abstract_hydrator_test.rs::testEnumCastsIntegerBackedEnumValues
