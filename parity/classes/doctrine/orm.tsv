@@ -111,9 +111,9 @@ src/Internal/Hydration/SingleScalarHydrator.php	SingleScalarHydrator	26	pending
 src/Internal/HydrationCompleteHandler.php	HydrationCompleteHandler	39	pending	
 src/Internal/NoUnknownNamedArguments.php	NoUnknownNamedArguments	34	pending	
 src/Internal/SQLResultCasing.php	SQLResultCasing	21	ported	crates/php2rust-doctrine-orm/src/mapping/quote_strategy.rs
-src/Internal/StronglyConnectedComponents.php	StronglyConnectedComponents	81	pending	
-src/Internal/TopologicalSort.php	TopologicalSort	71	pending	
-src/Internal/TopologicalSort/CycleDetectedException.php	CycleDetectedException	29	pending	
+src/Internal/StronglyConnectedComponents.php	StronglyConnectedComponents	81	ported	crates/php2rust-doctrine-orm/src/internal/strongly_connected_components.rs
+src/Internal/TopologicalSort.php	TopologicalSort	71	ported	crates/php2rust-doctrine-orm/src/internal/topological_sort.rs
+src/Internal/TopologicalSort/CycleDetectedException.php	CycleDetectedException	29	ported	crates/php2rust-doctrine-orm/src/internal/topological_sort.rs
 src/Internal/UnitOfWork/InsertBatch.php	InsertBatch	35	pending	
 src/LazyCriteriaCollection.php	LazyCriteriaCollection	51	pending	
 src/Mapping/AnsiQuoteStrategy.php	AnsiQuoteStrategy	53	ported	crates/php2rust-doctrine-orm/src/mapping/quote_strategy.rs

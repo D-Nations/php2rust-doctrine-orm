@@ -13,6 +13,7 @@ struct ReadmeExample;
 pub mod deprecations;
 pub mod events;
 pub mod id;
+pub mod internal;
 pub mod mapping;
 pub mod object;
 pub mod query;
