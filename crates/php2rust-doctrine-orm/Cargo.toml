@@ -9,6 +9,7 @@ description = "Port of doctrine/orm"
 [dependencies]
 php2rust-doctrine-lexer = { path = "../php2rust-doctrine-lexer" }
 php-value = { workspace = true }
+php2rust-doctrine-dbal = { workspace = true }
 
 [dev-dependencies]
 php-value = { workspace = true, features = ["vectors"] }
