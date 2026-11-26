@@ -195,7 +195,7 @@ fn convert_individual_value(value: &Value, em: &EntityManager) -> Result<Vec<Val
     let Value::Object(object) = value else {
         return Ok(vec![value.clone()]);
     };
-    if object.instance_of("BackedEnum") {
+    if super::identifier_flattener::is_backed_enum(object.as_ref()) {
         return Ok(vec![backed_value(value.clone())]);
     }
     if em.is_transient(object.class())? {

@@ -966,7 +966,7 @@ fn gather_column_options(mapping_options: Option<&PhpArray>, enum_type: Option<&
         mapping_options.insert("enumType", Value::from(enum_type));
     }
     if let Some(Value::Object(default)) = mapping_options.get(&"default".into()).cloned()
-        && default.instance_of("BackedEnum")
+        && crate::utility::is_backed_enum(default.as_ref())
         && let Some(value) = default.property(b"value")
     {
         mapping_options.insert("default", value);
