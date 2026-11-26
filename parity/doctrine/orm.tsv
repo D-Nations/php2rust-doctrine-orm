@@ -2077,12 +2077,12 @@ tests/Tests/ORM/Mapping/ManyToManyOwningSideMappingTest.php	ManyToManyOwningSide
 tests/Tests/ORM/Mapping/ManyToManyOwningSideMappingTest.php	ManyToManyOwningSideMappingTest::testNullableDefaults	ported	crates/php2rust-doctrine-orm/tests/many_to_many_owning_side_mapping_test.rs::testNullableDefaults
 tests/Tests/ORM/Mapping/ManyToOneAssociationMappingTest.php	ManyToOneAssociationMappingTest::testItSurvivesSerialization	ported	crates/php2rust-doctrine-orm/tests/many_to_one_association_mapping_test.rs::testItSurvivesSerialization
 tests/Tests/ORM/Mapping/ManyToOneAssociationMappingTest.php	ManyToOneAssociationMappingTest::testNullableDefaults	ported	crates/php2rust-doctrine-orm/tests/many_to_one_association_mapping_test.rs::testNullableDefaults
-tests/Tests/ORM/Mapping/NamingStrategyTest.php	NamingStrategyTest::testClassToTableName	pending	
-tests/Tests/ORM/Mapping/NamingStrategyTest.php	NamingStrategyTest::testJoinColumnName	pending	
-tests/Tests/ORM/Mapping/NamingStrategyTest.php	NamingStrategyTest::testJoinKeyColumnName	pending	
-tests/Tests/ORM/Mapping/NamingStrategyTest.php	NamingStrategyTest::testJoinTableName	pending	
-tests/Tests/ORM/Mapping/NamingStrategyTest.php	NamingStrategyTest::testPropertyToColumnName	pending	
-tests/Tests/ORM/Mapping/NamingStrategyTest.php	NamingStrategyTest::testReferenceColumnName	pending	
+tests/Tests/ORM/Mapping/NamingStrategyTest.php	NamingStrategyTest::testClassToTableName	ported	crates/php2rust-doctrine-orm/tests/naming_strategy_test.rs::testClassToTableName
+tests/Tests/ORM/Mapping/NamingStrategyTest.php	NamingStrategyTest::testJoinColumnName	ported	crates/php2rust-doctrine-orm/tests/naming_strategy_test.rs::testJoinColumnName
+tests/Tests/ORM/Mapping/NamingStrategyTest.php	NamingStrategyTest::testJoinKeyColumnName	ported	crates/php2rust-doctrine-orm/tests/naming_strategy_test.rs::testJoinKeyColumnName
+tests/Tests/ORM/Mapping/NamingStrategyTest.php	NamingStrategyTest::testJoinTableName	ported	crates/php2rust-doctrine-orm/tests/naming_strategy_test.rs::testJoinTableName
+tests/Tests/ORM/Mapping/NamingStrategyTest.php	NamingStrategyTest::testPropertyToColumnName	ported	crates/php2rust-doctrine-orm/tests/naming_strategy_test.rs::testPropertyToColumnName
+tests/Tests/ORM/Mapping/NamingStrategyTest.php	NamingStrategyTest::testReferenceColumnName	ported	crates/php2rust-doctrine-orm/tests/naming_strategy_test.rs::testReferenceColumnName
 tests/Tests/ORM/Mapping/OneToOneOwningSideMappingTest.php	OneToOneOwningSideMappingTest::testConvertToArray	ported	crates/php2rust-doctrine-orm/tests/one_to_one_owning_side_mapping_test.rs::testConvertToArray
 tests/Tests/ORM/Mapping/OneToOneOwningSideMappingTest.php	OneToOneOwningSideMappingTest::testItSurvivesSerialization	ported	crates/php2rust-doctrine-orm/tests/one_to_one_owning_side_mapping_test.rs::testItSurvivesSerialization
 tests/Tests/ORM/Mapping/OneToOneOwningSideMappingTest.php	OneToOneOwningSideMappingTest::testNullableDefaults	ported	crates/php2rust-doctrine-orm/tests/one_to_one_owning_side_mapping_test.rs::testNullableDefaults
