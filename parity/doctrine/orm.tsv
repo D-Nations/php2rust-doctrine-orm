@@ -1544,8 +1544,8 @@ tests/Tests/ORM/Functional/Ticket/GH7067Test.php	GH7067Test::testSLCWithVersion	
 tests/Tests/ORM/Functional/Ticket/GH7068Test.php	GH7068Test::testLockModeIsRespected	ported	crates/php2rust-doctrine-orm/tests/gh7068_test.rs::testLockModeIsRespected
 tests/Tests/ORM/Functional/Ticket/GH7079Test.php	GH7079Test::testGetTableName	ported	crates/php2rust-doctrine-orm/tests/gh7079_test.rs::testGetTableName
 tests/Tests/ORM/Functional/Ticket/GH7079Test.php	GH7079Test::testJoinTableName	ported	crates/php2rust-doctrine-orm/tests/gh7079_test.rs::testJoinTableName
-tests/Tests/ORM/Functional/Ticket/GH7180Test.php	GH7180Test::testIssue	pending	
-tests/Tests/ORM/Functional/Ticket/GH7180Test.php	GH7180Test::testIssue3NodeCycle	pending	
+tests/Tests/ORM/Functional/Ticket/GH7180Test.php	GH7180Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/gh7180_test.rs::testIssue
+tests/Tests/ORM/Functional/Ticket/GH7180Test.php	GH7180Test::testIssue3NodeCycle	ported	crates/php2rust-doctrine-orm/tests/gh7180_test.rs::testIssue3NodeCycle
 tests/Tests/ORM/Functional/Ticket/GH7259Test.php	GH7259Test::testPersistFileAfterVersion	pending	
 tests/Tests/ORM/Functional/Ticket/GH7259Test.php	GH7259Test::testPersistFileBeforeVersion	pending	
 tests/Tests/ORM/Functional/Ticket/GH7286Test.php	GH7286Test::testAggregateExpressionInFunction	pending	
