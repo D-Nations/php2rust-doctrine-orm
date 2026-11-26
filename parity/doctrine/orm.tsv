@@ -1453,7 +1453,7 @@ tests/Tests/ORM/Functional/Ticket/GH10927Test.php	GH10927Test::testSequenceGener
 tests/Tests/ORM/Functional/Ticket/GH10927Test.php	GH10927Test::testSequenceGeneratorDefinitionForEntityC	n/a: upstream skips it on SQLite (requires the use of postgresql)	
 tests/Tests/ORM/Functional/Ticket/GH10927Test.php	GH10927Test::testSequenceGeneratorDefinitionForInheritedMappedSuperclass	n/a: upstream skips it on SQLite (requires the use of postgresql)	
 tests/Tests/ORM/Functional/Ticket/GH10927Test.php	GH10927Test::testSequenceGeneratorDefinitionForRootMappedSuperclass	n/a: upstream skips it on SQLite (requires the use of postgresql)	
-tests/Tests/ORM/Functional/Ticket/GH11017/GH11017Test.php	GH11017Test::testPostPersistListenerUpdatingObjectFieldWhileOtherInsertPending	pending	the models are separate files of the ticket directory and not recorded yet
+tests/Tests/ORM/Functional/Ticket/GH11017/GH11017Test.php	GH11017Test::testPostPersistListenerUpdatingObjectFieldWhileOtherInsertPending	pending	
 tests/Tests/ORM/Functional/Ticket/GH11037/GH11037Test.php	GH11037Test::testMetadataFieldTypeCoherentWithEntityPropertyType	pending	the models are separate files of the ticket directory and not recorded yet
 tests/Tests/ORM/Functional/Ticket/GH11037/GH11037Test.php	GH11037Test::testMetadataFieldTypeNotCoherentWithEntityPropertyType	pending	the models are separate files of the ticket directory and not recorded yet
 tests/Tests/ORM/Functional/Ticket/GH11058Test.php	GH11058Test::testChildrenInsertedInOrderOfPersistCalls1WhenParentPersistedFirst	ported	crates/php2rust-doctrine-orm/tests/gh11058_test.rs::testChildrenInsertedInOrderOfPersistCalls1WhenParentPersistedFirst
