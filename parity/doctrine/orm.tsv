@@ -1359,8 +1359,8 @@ tests/Tests/ORM/Functional/Ticket/DDC513Test.php	DDC513Test::testIssue	ported	cr
 tests/Tests/ORM/Functional/Ticket/DDC522Test.php	DDC522Test::testJoinColumnWithNullSameNameAssociationField	ported	crates/php2rust-doctrine-orm/tests/ddc522_test.rs::testJoinColumnWithNullSameNameAssociationField
 tests/Tests/ORM/Functional/Ticket/DDC522Test.php	DDC522Test::testJoinColumnWithSameNameAsAssociationField	ported	crates/php2rust-doctrine-orm/tests/ddc522_test.rs::testJoinColumnWithSameNameAsAssociationField
 tests/Tests/ORM/Functional/Ticket/DDC531Test.php	DDC531Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc531_test.rs::testIssue
-tests/Tests/ORM/Functional/Ticket/DDC5684Test.php	DDC5684Test::testAutoIncrementIdWithCustomType	pending	a custom DBAL type of the test file (the recorder cannot load a DBAL Type subclass)
-tests/Tests/ORM/Functional/Ticket/DDC5684Test.php	DDC5684Test::testFetchObjectWithAutoIncrementedCustomType	pending	a custom DBAL type of the test file (the recorder cannot load a DBAL Type subclass)
+tests/Tests/ORM/Functional/Ticket/DDC5684Test.php	DDC5684Test::testAutoIncrementIdWithCustomType	pending	
+tests/Tests/ORM/Functional/Ticket/DDC5684Test.php	DDC5684Test::testFetchObjectWithAutoIncrementedCustomType	pending	
 tests/Tests/ORM/Functional/Ticket/DDC588Test.php	DDC588Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc588_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC599Test.php	DDC599Test::testCascadeRemoveOnChildren	ported	crates/php2rust-doctrine-orm/tests/ddc599_test.rs::testCascadeRemoveOnChildren
 tests/Tests/ORM/Functional/Ticket/DDC599Test.php	DDC599Test::testCascadeRemoveOnInheritanceHierarchy	ported	crates/php2rust-doctrine-orm/tests/ddc599_test.rs::testCascadeRemoveOnInheritanceHierarchy
