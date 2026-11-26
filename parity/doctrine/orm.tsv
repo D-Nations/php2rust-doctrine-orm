@@ -845,8 +845,8 @@ tests/Tests/ORM/Functional/ProxiesLikeEntitiesTest.php	ProxiesLikeEntitiesTest::
 tests/Tests/ORM/Functional/ProxiesLikeEntitiesTest.php	ProxiesLikeEntitiesTest::testFindWithProxyName	pending	
 tests/Tests/ORM/Functional/ProxiesLikeEntitiesTest.php	ProxiesLikeEntitiesTest::testPersistUpdate	pending	
 tests/Tests/ORM/Functional/ProxiesLikeEntitiesTest.php	ProxiesLikeEntitiesTest::testProxyAsDqlParameterPersist	pending	
-tests/Tests/ORM/Functional/QueryBuilderParenthesisTest.php	QueryBuilderParenthesisTest::testParenthesisOnMultiLine	pending	
-tests/Tests/ORM/Functional/QueryBuilderParenthesisTest.php	QueryBuilderParenthesisTest::testParenthesisOnSingleLine	pending	
+tests/Tests/ORM/Functional/QueryBuilderParenthesisTest.php	QueryBuilderParenthesisTest::testParenthesisOnMultiLine	ported	crates/php2rust-doctrine-orm/tests/query_builder_parenthesis_test.rs::testParenthesisOnMultiLine
+tests/Tests/ORM/Functional/QueryBuilderParenthesisTest.php	QueryBuilderParenthesisTest::testParenthesisOnSingleLine	ported	crates/php2rust-doctrine-orm/tests/query_builder_parenthesis_test.rs::testParenthesisOnSingleLine
 tests/Tests/ORM/Functional/QueryCacheTest.php	QueryCacheTest::testQueryCacheDependsOnHints	pending	
 tests/Tests/ORM/Functional/QueryCacheTest.php	QueryCacheTest::testQueryCacheDependsOnHydrationMode	pending	
 tests/Tests/ORM/Functional/QueryCacheTest.php	QueryCacheTest::testQueryCacheDoesNotDependOnFirstResultForDefaultOutputWalker	pending	
@@ -1615,11 +1615,11 @@ tests/Tests/ORM/Functional/Ticket/Issue5989Test.php	Issue5989Test::testSimpleArr
 tests/Tests/ORM/Functional/Ticket/Issue9300Test.php	Issue9300Test::testPersistedCollectionIsPresentInOriginalDataAfterFlush	pending	
 tests/Tests/ORM/Functional/Ticket/Issue9300Test.php	Issue9300Test::testPersistingCollectionAfterFlushWorksAsExpected	pending	
 tests/Tests/ORM/Functional/Ticket/LazyEagerCollectionTest.php	LazyEagerCollectionTest::testRefreshRefreshesBothLazyAndEagerCollections	pending	
-tests/Tests/ORM/Functional/Ticket/SwitchContextWithFilter/ChangeFiltersTest.php	ChangeFiltersTest::testUseChangeFilterParameters	pending	
-tests/Tests/ORM/Functional/Ticket/SwitchContextWithFilter/ChangeFiltersTest.php	ChangeFiltersTest::testUseEnableDisableFilter	pending	
-tests/Tests/ORM/Functional/Ticket/SwitchContextWithFilter/ChangeFiltersTest.php	ChangeFiltersTest::testUseQueryBuilder	pending	
-tests/Tests/ORM/Functional/Ticket/SwitchContextWithFilter/SwitchContextTest.php	SwitchContextTest::testSwitchContext	pending	
-tests/Tests/ORM/Functional/Ticket/SwitchContextWithFilterAndIndexedRelation/ChangeFiltersTest.php	ChangeFiltersTest::testIndexAliasUpdatedWithUpdatedFilter	pending	
+tests/Tests/ORM/Functional/Ticket/SwitchContextWithFilter/ChangeFiltersTest.php	ChangeFiltersTest::testUseChangeFilterParameters	ported	crates/php2rust-doctrine-orm/tests/change_filters_test.rs::testUseChangeFilterParameters
+tests/Tests/ORM/Functional/Ticket/SwitchContextWithFilter/ChangeFiltersTest.php	ChangeFiltersTest::testUseEnableDisableFilter	ported	crates/php2rust-doctrine-orm/tests/change_filters_test.rs::testUseEnableDisableFilter
+tests/Tests/ORM/Functional/Ticket/SwitchContextWithFilter/ChangeFiltersTest.php	ChangeFiltersTest::testUseQueryBuilder	ported	crates/php2rust-doctrine-orm/tests/change_filters_test.rs::testUseQueryBuilder
+tests/Tests/ORM/Functional/Ticket/SwitchContextWithFilter/SwitchContextTest.php	SwitchContextTest::testSwitchContext	pending	PatientInsurance uses single table inheritance, whose persister is not ported
+tests/Tests/ORM/Functional/Ticket/SwitchContextWithFilterAndIndexedRelation/ChangeFiltersTest.php	ChangeFiltersTest::testIndexAliasUpdatedWithUpdatedFilter	ported	crates/php2rust-doctrine-orm/tests/change_filters_indexed_relation_test.rs::testIndexAliasUpdatedWithUpdatedFilter
 tests/Tests/ORM/Functional/Ticket/Ticket2481Test.php	Ticket2481Test::testEmptyInsert	pending	
 tests/Tests/ORM/Functional/Ticket/Ticket4646InstanceOfAbstractTest.php	Ticket4646InstanceOfAbstractTest::testInstanceOf	pending	
 tests/Tests/ORM/Functional/Ticket/Ticket4646InstanceOfMultiLevelTest.php	Ticket4646InstanceOfMultiLevelTest::testInstanceOf	pending	
