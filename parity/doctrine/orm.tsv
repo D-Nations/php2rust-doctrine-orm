@@ -1436,7 +1436,7 @@ tests/Tests/ORM/Functional/Ticket/GH10625Test.php	GH10625Test::testLoadFieldsFro
 tests/Tests/ORM/Functional/Ticket/GH10661/GH10661Test.php	GH10661Test::testMetadataFieldTypeNotCoherentWithEntityPropertyType	ported	crates/php2rust-doctrine-orm/tests/gh10661_test.rs::testMetadataFieldTypeNotCoherentWithEntityPropertyType
 tests/Tests/ORM/Functional/Ticket/GH10661/GH10661Test.php	GH10661Test::testMetadataFieldTypeNotCoherentWithEntityPropertyTypeWithInheritance	ported	crates/php2rust-doctrine-orm/tests/gh10661_test.rs::testMetadataFieldTypeNotCoherentWithEntityPropertyTypeWithInheritance
 tests/Tests/ORM/Functional/Ticket/GH10661/GH10661Test.php	GH10661Test::testPropertyTypeErrorsCanBeSilenced	ported	crates/php2rust-doctrine-orm/tests/gh10661_test.rs::testPropertyTypeErrorsCanBeSilenced
-tests/Tests/ORM/Functional/Ticket/GH10747Test.php	GH10747Test::testOrphanedOneToManyDeletesCollection	pending	
+tests/Tests/ORM/Functional/Ticket/GH10747Test.php	GH10747Test::testOrphanedOneToManyDeletesCollection	ported	crates/php2rust-doctrine-orm/tests/gh10747_test.rs::testOrphanedOneToManyDeletesCollection
 tests/Tests/ORM/Functional/Ticket/GH10752Test.php	GH10752Test::testThrowExceptionWhenRemovingPromotionThatIsInUse	ported	crates/php2rust-doctrine-orm/tests/gh10752_test.rs::testThrowExceptionWhenRemovingPromotionThatIsInUse
 tests/Tests/ORM/Functional/Ticket/GH10752Test.php	GH10752Test::testThrowExceptionWhenRemovingPromotionThatIsInUseAndOrderIsNotInMemory	ported	crates/php2rust-doctrine-orm/tests/gh10752_test.rs::testThrowExceptionWhenRemovingPromotionThatIsInUseAndOrderIsNotInMemory
 tests/Tests/ORM/Functional/Ticket/GH10808Test.php	GH10808Test::testDQLDeferredEagerLoad	ported	crates/php2rust-doctrine-orm/tests/gh10808_test.rs::testDQLDeferredEagerLoad
