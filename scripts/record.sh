@@ -35,5 +35,8 @@ case "${1:-}" in
     collections)
         record doctrine_collections.php \
             crates/php2rust-doctrine-collections/tests/data/doctrine_collections.json ;;
-    *) echo "usage: scripts/record.sh lexer|event-manager|collections" >&2; exit 2 ;;
+    persistence)
+        record persistence.php \
+            crates/php2rust-doctrine-persistence/tests/data/persistence.json ;;
+    *) echo "usage: scripts/record.sh lexer|event-manager|collections|persistence" >&2; exit 2 ;;
 esac
