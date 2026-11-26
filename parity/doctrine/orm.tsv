@@ -1128,8 +1128,8 @@ tests/Tests/ORM/Functional/SecondLevelCacheTest.php	SecondLevelCacheTest::testPu
 tests/Tests/ORM/Functional/SecondLevelCacheTest.php	SecondLevelCacheTest::testRemoveEntities	pending	
 tests/Tests/ORM/Functional/SecondLevelCacheTest.php	SecondLevelCacheTest::testUpdateEntities	pending	
 tests/Tests/ORM/Functional/SequenceGeneratorTest.php	SequenceGeneratorTest::testHighAllocationSizeSequence	pending	
-tests/Tests/ORM/Functional/SingleTableCompositeKeyTest.php	SingleTableCompositeKeyTest::testInsertWithCompositeKey	pending	
-tests/Tests/ORM/Functional/SingleTableCompositeKeyTest.php	SingleTableCompositeKeyTest::testUpdateWithCompositeKey	pending	
+tests/Tests/ORM/Functional/SingleTableCompositeKeyTest.php	SingleTableCompositeKeyTest::testInsertWithCompositeKey	ported	crates/php2rust-doctrine-orm/tests/single_table_composite_key_test.rs::testInsertWithCompositeKey
+tests/Tests/ORM/Functional/SingleTableCompositeKeyTest.php	SingleTableCompositeKeyTest::testUpdateWithCompositeKey	ported	crates/php2rust-doctrine-orm/tests/single_table_composite_key_test.rs::testUpdateWithCompositeKey
 tests/Tests/ORM/Functional/SingleTableInheritanceTest.php	SingleTableInheritanceTest::testChildClassLifecycleRemove	ported	crates/php2rust-doctrine-orm/tests/single_table_inheritance_test.rs::testChildClassLifecycleRemove
 tests/Tests/ORM/Functional/SingleTableInheritanceTest.php	SingleTableInheritanceTest::testChildClassLifecycleUpdate	ported	crates/php2rust-doctrine-orm/tests/single_table_inheritance_test.rs::testChildClassLifecycleUpdate
 tests/Tests/ORM/Functional/SingleTableInheritanceTest.php	SingleTableInheritanceTest::testDeleteByBaseClassCondition	ported	crates/php2rust-doctrine-orm/tests/single_table_inheritance_test.rs::testDeleteByBaseClassCondition
