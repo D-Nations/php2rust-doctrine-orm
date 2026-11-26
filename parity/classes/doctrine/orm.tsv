@@ -460,7 +460,7 @@ src/Tools/Pagination/Window.php	Window	46	ported	crates/php2rust-doctrine-orm/sr
 src/Tools/Pagination/WindowPage.php	WindowPage	76	ported	crates/php2rust-doctrine-orm/src/tools/pagination/window_page.rs
 src/Tools/ResolveTargetEntityListener.php	ResolveTargetEntityListener	75	pending	
 src/Tools/SchemaTool.php	SchemaTool	1118	ported	crates/php2rust-doctrine-orm/src/tools/schema_tool.rs
-src/Tools/SchemaValidator.php	SchemaValidator	345	pending	
+src/Tools/SchemaValidator.php	SchemaValidator	345	ported	crates/php2rust-doctrine-orm/src/tools/schema_validator.rs
 src/Tools/ToolEvents.php	ToolEvents	7	ported	crates/php2rust-doctrine-orm/src/tools/tool_events.rs
 src/Tools/ToolsException.php	ToolsException	16	ported	crates/php2rust-doctrine-orm/src/tools/schema_tool.rs
 src/TransactionRequiredException.php	TransactionRequiredException	11	ported	crates/php2rust-doctrine-orm/src/exception.rs
