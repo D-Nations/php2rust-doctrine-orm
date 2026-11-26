@@ -89,9 +89,14 @@ pub struct Configuration {
     quote_strategy: Option<Arc<dyn QuoteStrategy>>,
     repository_factory: Option<Arc<dyn RepositoryFactory>>,
     second_level_cache_enabled: bool,
+    #[allow(clippy::struct_field_names, reason = "upstream's property name")]
     second_level_cache_configuration: Option<Arc<crate::cache::CacheConfiguration>>,
     /// The configuration `getSecondLevelCacheConfiguration()` creates when
     /// none is set and the cache is enabled.
+    #[allow(
+        clippy::struct_field_names,
+        reason = "named after the property it backs"
+    )]
     default_second_level_cache_configuration:
         std::sync::OnceLock<Arc<crate::cache::CacheConfiguration>>,
     default_query_hints: PhpArray,

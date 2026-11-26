@@ -2,7 +2,10 @@
 //!
 //! Upstream: none
 
+use std::fmt::Write as _;
+
 /// `sha1($data)`.
+#[allow(clippy::many_single_char_names, reason = "the names of FIPS 180-4")]
 pub fn sha1(data: &[u8]) -> String {
     let mut h: [u32; 5] = [
         0x6745_2301,
@@ -54,7 +57,10 @@ pub fn sha1(data: &[u8]) -> String {
         h[3] = h[3].wrapping_add(d);
         h[4] = h[4].wrapping_add(e);
     }
-    h.iter().map(|word| format!("{word:08x}")).collect()
+    h.iter().fold(String::with_capacity(40), |mut hex, word| {
+        let _ = write!(hex, "{word:08x}");
+        hex
+    })
 }
 
 #[cfg(test)]

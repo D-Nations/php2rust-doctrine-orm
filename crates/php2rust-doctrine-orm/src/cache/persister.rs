@@ -404,6 +404,7 @@ impl AbstractEntityPersister {
             .collect()
     }
 
+    #[allow(clippy::too_many_arguments, reason = "load(), as PHP declares it")]
     async fn do_load(
         &self,
         criteria: &PhpArray,

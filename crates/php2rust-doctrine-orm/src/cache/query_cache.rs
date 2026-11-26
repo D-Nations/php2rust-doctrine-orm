@@ -321,7 +321,8 @@ impl DefaultQueryCache {
         Ok(Some(result))
     }
 
-    async fn do_put(
+    #[allow(clippy::too_many_lines, reason = "put(), in its order")]
+    fn do_put(
         &self,
         key: &QueryCacheKey,
         rsm: &ResultSetMapping,
@@ -447,6 +448,7 @@ impl DefaultQueryCache {
         )
     }
 
+    #[allow(clippy::unused_self, reason = "an instance method upstream")]
     fn store_association_cache(
         &self,
         em: &EntityManager,
@@ -508,6 +510,7 @@ impl DefaultQueryCache {
         Ok(Some(info))
     }
 
+    #[allow(clippy::unused_self, reason = "an instance method upstream")]
     fn get_association_value(
         &self,
         em: &EntityManager,
@@ -576,7 +579,7 @@ impl QueryCache for DefaultQueryCache {
         result: &'a PhpArray,
         hints: &'a PhpArray,
     ) -> Fut<'a, bool> {
-        Box::pin(self.do_put(key, rsm, result, hints))
+        Box::pin(std::future::ready(self.do_put(key, rsm, result, hints)))
     }
 
     fn get<'a>(
