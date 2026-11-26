@@ -1522,9 +1522,9 @@ tests/Tests/ORM/Functional/Ticket/GH6499OneToManyRelationshipTest.php	GH6499OneT
 tests/Tests/ORM/Functional/Ticket/GH6499OneToOneRelationshipTest.php	GH6499OneToOneRelationshipTest::testIssue	ported	crates/php2rust-doctrine-orm/tests/gh6499_one_to_one_relationship_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/GH6499Test.php	GH6499Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/gh6499_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/GH6499Test.php	GH6499Test::testIssueReversed	ported	crates/php2rust-doctrine-orm/tests/gh6499_test.rs::testIssueReversed
-tests/Tests/ORM/Functional/Ticket/GH6531Test.php	GH6531Test::testDynamicAttributes	pending	
-tests/Tests/ORM/Functional/Ticket/GH6531Test.php	GH6531Test::testJoinTableWithMetadata	pending	
-tests/Tests/ORM/Functional/Ticket/GH6531Test.php	GH6531Test::testSimpleDerivedIdentity	pending	
+tests/Tests/ORM/Functional/Ticket/GH6531Test.php	GH6531Test::testDynamicAttributes	ported	crates/php2rust-doctrine-orm/tests/gh6531_test.rs::testDynamicAttributes
+tests/Tests/ORM/Functional/Ticket/GH6531Test.php	GH6531Test::testJoinTableWithMetadata	ported	crates/php2rust-doctrine-orm/tests/gh6531_test.rs::testJoinTableWithMetadata
+tests/Tests/ORM/Functional/Ticket/GH6531Test.php	GH6531Test::testSimpleDerivedIdentity	ported	crates/php2rust-doctrine-orm/tests/gh6531_test.rs::testSimpleDerivedIdentity
 tests/Tests/ORM/Functional/Ticket/GH6682Test.php	GH6682Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/GH6699Test.php	GH6699Test::testMixedParametersWithZeroNumber	pending	
 tests/Tests/ORM/Functional/Ticket/GH6699Test.php	GH6699Test::testMixedParametersWithZeroNumberOnQueryBuilder	pending	
