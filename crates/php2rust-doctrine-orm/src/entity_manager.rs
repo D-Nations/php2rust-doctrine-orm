@@ -6,9 +6,8 @@
 //! persisters and the repositories hold it weakly.
 //!
 //! The DBAL is async, so the methods that reach the database are `async`.
-//! Filters, the second level cache,
-//! queries, hydrators other than the simple object hydrator and the
-//! metadata cache are not ported. The platform is the `SQLite` platform,
+//! Filters, the second level cache and the metadata cache are not
+//! ported. The platform is the `SQLite` platform,
 //! the one database the DBAL port drives.
 //!
 //! Upstream: doctrine/orm src/EntityManager.php src/Proxy/ProxyFactory.php
@@ -84,6 +83,27 @@ impl EntityManager {
             platform,
             closed: RwLock::new(false),
         }))
+    }
+
+    /// Creates a new `Query` object.
+    pub fn create_query(self: &Arc<Self>, dql: &str) -> crate::query::Query {
+        let query = crate::query::Query::new(self);
+        if !dql.is_empty() {
+            query.set_dql(dql);
+        }
+        query
+    }
+
+    /// Creates a `NativeQuery` from some native SQL.
+    pub fn create_native_query(
+        self: &Arc<Self>,
+        sql: &str,
+        rsm: crate::query::ResultSetMapping,
+    ) -> Result<crate::native_query::NativeQuery, Thrown> {
+        let query = crate::native_query::NativeQuery::new(self);
+        query.set_sql(sql);
+        query.set_result_set_mapping(rsm)?;
+        Ok(query)
     }
 
     /// Gets the database connection object used by the `EntityManager`.

@@ -4,6 +4,7 @@
 
 pub mod ast;
 pub mod context;
+pub mod dql_query;
 pub mod exec;
 pub mod expr;
 mod lexer;
@@ -19,6 +20,7 @@ mod token_type;
 pub mod tree_walker;
 pub(crate) mod utility;
 
+pub use dql_query::Query;
 pub use expr::Expr;
 pub use lexer::Lexer;
 pub use parameter::{Parameter, ParameterName};

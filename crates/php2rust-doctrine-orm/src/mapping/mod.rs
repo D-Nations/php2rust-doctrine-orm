@@ -63,5 +63,6 @@ pub fn register_orm_classes() {
         }
         register_class(ClassInfo::class("OutOfRangeException").extends("LogicException"));
         crate::query::query_exception::register_classes();
+        crate::abstract_query::register_classes();
     });
 }
