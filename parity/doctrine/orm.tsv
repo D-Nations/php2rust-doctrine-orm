@@ -1476,7 +1476,7 @@ tests/Tests/ORM/Functional/Ticket/GH11500Test.php	GH11500Test::testDeleteOneToMa
 tests/Tests/ORM/Functional/Ticket/GH11501Test.php	GH11501Test::testDeleteOneToManyCollectionWithSingleTableInheritance	ported	crates/php2rust-doctrine-orm/tests/gh11501_test.rs::testDeleteOneToManyCollectionWithSingleTableInheritance
 tests/Tests/ORM/Functional/Ticket/GH11524Test.php	GH11524Test::testPostLoadCalledOnProxy	ported	crates/php2rust-doctrine-orm/tests/gh11524_test.rs::testPostLoadCalledOnProxy
 tests/Tests/ORM/Functional/Ticket/GH11982Test.php	GH11982Test::testSchema	ported	crates/php2rust-doctrine-orm/tests/gh11982_test.rs::testSchema
-tests/Tests/ORM/Functional/Ticket/GH11982Test.php	GH11982Test::testSchemaLegacyDbal	pending	
+tests/Tests/ORM/Functional/Ticket/GH11982Test.php	GH11982Test::testSchemaLegacyDbal	n/a: upstream skips it on doctrine/dbal 4.3 and later	
 tests/Tests/ORM/Functional/Ticket/GH12166/GH12166Test.php	GH12166Test::testProxyWithReadonlyIdIsNotInitializedImmediately	pending	the models are separate files of the ticket directory and not recorded yet
 tests/Tests/ORM/Functional/Ticket/GH12172Test.php	GH12172Test::testInitializeObjectNoOpForCustomNonEntityClass	ported	crates/php2rust-doctrine-orm/tests/gh12172_test.rs::testInitializeObjectNoOpForCustomNonEntityClass
 tests/Tests/ORM/Functional/Ticket/GH12172Test.php	GH12172Test::testInitializeObjectNoOpForNonManagedObjects	ported	crates/php2rust-doctrine-orm/tests/gh12172_test.rs::testInitializeObjectNoOpForNonManagedObjects
