@@ -9,8 +9,8 @@
 //! (`register_filter_class()`), as the configuration names it by class.
 //!
 //! Pending: the `company` model set (joined and single table inheritance
-//! persisters are not ported), the extra-lazy collection operations (not
-//! ported) and the query cache (not ported); see the parity rows.
+//! persisters are not ported) and the query cache (not ported); see the
+//! parity rows.
 //!
 //! Upstream: doctrine/orm tests/Tests/ORM/Functional/SQLFilterTest.php
 
@@ -30,16 +30,19 @@ use std::sync::Arc;
 
 use php_value::{Thrown, Value, php_array};
 use php2rust_doctrine_dbal::types::Types;
+use php2rust_doctrine_orm::collection_object as coll;
 use php2rust_doctrine_orm::configuration::Configuration;
 use php2rust_doctrine_orm::entity_manager::EntityManager;
 use php2rust_doctrine_orm::mapping::ClassMetadataInfo;
+use php2rust_doctrine_orm::mapping::class_metadata::FETCH_EXTRA_LAZY;
+use php2rust_doctrine_orm::persistent_collection::PersistentCollection;
 use php2rust_doctrine_orm::query::context::HYDRATE_OBJECT;
 use php2rust_doctrine_orm::query::{FilterConstraint, SqlFilter, register_filter_class};
 use php2rust_doctrine_persistence::php_reflection::ReflectionClass;
 
 use orm::{
-    CMS_ADDRESS, CMS_GROUP, CMS_MODELS, CMS_USER, add_group, cms_address, cms_article, cms_group,
-    cms_user_with, get, set,
+    CMS_ADDRESS, CMS_ARTICLE, CMS_GROUP, CMS_MODELS, CMS_USER, add_group, cms_address, cms_article,
+    cms_group, cms_user_with, get, set,
 };
 
 const NS: &str = "Doctrine\\Tests\\ORM\\Functional\\";
@@ -47,6 +50,7 @@ const MY_SOFT_DELETE_FILTER: &str = "Doctrine\\Tests\\ORM\\Functional\\MySoftDel
 const MY_LOCALE_FILTER: &str = "Doctrine\\Tests\\ORM\\Functional\\MyLocaleFilter";
 const CMS_COUNTRY_FILTER: &str = "Doctrine\\Tests\\ORM\\Functional\\CMSCountryFilter";
 const CMS_GROUP_PREFIX_FILTER: &str = "Doctrine\\Tests\\ORM\\Functional\\CMSGroupPrefixFilter";
+const CMS_ARTICLE_TOPIC_FILTER: &str = "Doctrine\\Tests\\ORM\\Functional\\CMSArticleTopicFilter";
 const FILTER_EXCEPTION: &str = "Doctrine\\ORM\\Query\\Filter\\FilterException";
 
 // The filters
@@ -138,6 +142,28 @@ impl FilterConstraint for CmsGroupPrefixFilter {
     }
 }
 
+/// `CMSArticleTopicFilter extends SQLFilter`.
+struct CmsArticleTopicFilter;
+
+impl FilterConstraint for CmsArticleTopicFilter {
+    fn add_filter_constraint(
+        &self,
+        filter: &SqlFilter,
+        target_entity: &ClassMetadataInfo,
+        target_table_alias: &str,
+    ) -> Result<String, Thrown> {
+        if target_entity.name != CMS_ARTICLE {
+            return Ok(String::new());
+        }
+
+        // getParam uses connection to quote the value.
+        Ok(format!(
+            "{target_table_alias}.topic = {}",
+            filter.get_parameter("topic")?
+        ))
+    }
+}
+
 fn register_filters() {
     fn register(class: &'static str, constraint: fn() -> Box<dyn FilterConstraint>) {
         register_filter_class(
@@ -149,6 +175,7 @@ fn register_filters() {
     register(MY_LOCALE_FILTER, || Box::new(MyLocaleFilter));
     register(CMS_COUNTRY_FILTER, || Box::new(CmsCountryFilter));
     register(CMS_GROUP_PREFIX_FILTER, || Box::new(CmsGroupPrefixFilter));
+    register(CMS_ARTICLE_TOPIC_FILTER, || Box::new(CmsArticleTopicFilter));
 }
 
 // The test case
@@ -179,6 +206,7 @@ fn configure_filters(em: &EntityManager) {
 struct Fixture {
     user_id: Value,
     user_id2: Value,
+    article_id2: Value,
     group_id: Value,
     group_id2: Value,
 }
@@ -223,9 +251,59 @@ async fn load_fixture_data(em: &Arc<EntityManager>) -> Fixture {
     Fixture {
         user_id: get(&user, "id"),
         user_id2: get(&user2, "id"),
+        article_id2: get(&article2, "id"),
         group_id: get(&group, "id"),
         group_id2: get(&group2, "id"),
     }
+}
+
+/// `loadLazyFixtureData()`.
+async fn load_lazy_fixture_data(em: &Arc<EntityManager>) -> Fixture {
+    {
+        let class = em.get_class_metadata(CMS_USER).unwrap();
+        let mut class = class.write();
+        for field in ["articles", "groups"] {
+            class.association_mappings.get_mut(field).unwrap().fetch = Some(FETCH_EXTRA_LAZY);
+        }
+    }
+    load_fixture_data(em).await
+}
+
+fn use_cms_article_topic_filter(em: &EntityManager) {
+    let conf = em.get_configuration();
+    conf.add_filter("article_topic", &format!("\\{NS}CMSArticleTopicFilter"));
+    em.get_filters()
+        .enable("article_topic")
+        .unwrap()
+        .set_parameter("topic", Value::string("Test1"), Some(Types::STRING))
+        .unwrap();
+}
+
+fn is_initialized(object: &php_value::Object, name: &str) -> bool {
+    PersistentCollection::from_value(&get(object, name))
+        .expect("a persistent collection")
+        .is_initialized()
+}
+
+async fn count_of(object: &php_value::Object, name: &str) -> usize {
+    coll::count(&get(object, name)).await.unwrap()
+}
+
+async fn contains(object: &php_value::Object, name: &str, element: &php_value::Object) -> bool {
+    coll::contains(&get(object, name), &Value::Object(element.clone()))
+        .await
+        .unwrap()
+}
+
+async fn slice_count(object: &php_value::Object, name: &str) -> usize {
+    coll::slice(&get(object, name), 0, Some(10))
+        .await
+        .unwrap()
+        .len()
+}
+
+async fn find(em: &Arc<EntityManager>, class: &str, id: &Value) -> php_value::Object {
+    em.find(class, id.clone()).await.unwrap().unwrap()
 }
 
 fn use_cms_group_prefix_filter(em: &EntityManager) {
@@ -680,6 +758,93 @@ async fn testOneToOneInverseSideWithFilter() {
 
     let user2 = em.find(CMS_USER, f.user_id2).await.unwrap().unwrap();
     assert!(!get(&user2, "address").is_truthy());
+}
+
+#[tokio::test]
+async fn testOneToManyExtraLazyCountWithFilter() {
+    let em = set_up().await;
+    let f = load_lazy_fixture_data(&em).await;
+    let user = find(&em, CMS_USER, &f.user_id).await;
+
+    assert!(!is_initialized(&user, "articles"));
+    assert_eq!(count_of(&user, "articles").await, 2);
+
+    use_cms_article_topic_filter(&em);
+
+    assert_eq!(count_of(&user, "articles").await, 1);
+}
+
+#[tokio::test]
+async fn testOneToManyExtraLazyContainsWithFilter() {
+    let em = set_up().await;
+    let f = load_lazy_fixture_data(&em).await;
+    let user = find(&em, CMS_USER, &f.user_id).await;
+    let filtered_article = find(&em, CMS_ARTICLE, &f.article_id2).await;
+
+    assert!(!is_initialized(&user, "articles"));
+    assert!(contains(&user, "articles", &filtered_article).await);
+
+    use_cms_article_topic_filter(&em);
+
+    assert!(!contains(&user, "articles", &filtered_article).await);
+}
+
+#[tokio::test]
+async fn testOneToManyExtraLazySliceWithFilter() {
+    let em = set_up().await;
+    let f = load_lazy_fixture_data(&em).await;
+    let user = find(&em, CMS_USER, &f.user_id).await;
+
+    assert!(!is_initialized(&user, "articles"));
+    assert_eq!(slice_count(&user, "articles").await, 2);
+
+    use_cms_article_topic_filter(&em);
+
+    assert_eq!(slice_count(&user, "articles").await, 1);
+}
+
+#[tokio::test]
+async fn testManyToManyExtraLazyCountWithFilter() {
+    let em = set_up().await;
+    let f = load_lazy_fixture_data(&em).await;
+
+    let user = find(&em, CMS_USER, &f.user_id2).await;
+
+    assert!(!is_initialized(&user, "groups"));
+    assert_eq!(count_of(&user, "groups").await, 2);
+
+    use_cms_group_prefix_filter(&em);
+
+    assert_eq!(count_of(&user, "groups").await, 1);
+}
+
+#[tokio::test]
+async fn testManyToManyExtraLazyContainsWithFilter() {
+    let em = set_up().await;
+    let f = load_lazy_fixture_data(&em).await;
+    let user = find(&em, CMS_USER, &f.user_id2).await;
+    let filtered_article = find(&em, CMS_GROUP, &f.group_id2).await;
+
+    assert!(!is_initialized(&user, "groups"));
+    assert!(contains(&user, "groups", &filtered_article).await);
+
+    use_cms_group_prefix_filter(&em);
+
+    assert!(!contains(&user, "groups", &filtered_article).await);
+}
+
+#[tokio::test]
+async fn testManyToManyExtraLazySliceWithFilter() {
+    let em = set_up().await;
+    let f = load_lazy_fixture_data(&em).await;
+    let user = find(&em, CMS_USER, &f.user_id2).await;
+
+    assert!(!is_initialized(&user, "groups"));
+    assert_eq!(slice_count(&user, "groups").await, 2);
+
+    use_cms_group_prefix_filter(&em);
+
+    assert_eq!(slice_count(&user, "groups").await, 1);
 }
 
 #[tokio::test]

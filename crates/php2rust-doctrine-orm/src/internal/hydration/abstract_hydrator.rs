@@ -5,9 +5,12 @@
 //! A result is read whole (the DBAL port fetches all rows), so the hydrators
 //! take the rows instead of a statement. The `onClear` listener is not
 //! registered: nothing can clear the entity manager between two rows of
-//! one hydration. Enum fields keep their backing values: the simple
-//! object hydrator checks them with [`build_enum`] and the entities' enum
-//! property accessors build the cases.
+//! one hydration. Enum fields of entities keep their backing values for the
+//! object hydrators: the simple object hydrator checks them with
+//! [`build_enum`] and the entities' enum property accessors build the
+//! cases. Scalars, `NEW` arguments and the fields the array hydrator
+//! gathers are built into cases here, as upstream's `gatherRowData()`
+//! does.
 //!
 //! Upstream: doctrine/orm src/Internal/Hydration/AbstractHydrator.php src/Internal/Hydration/HydrationException.php src/Exception/MultipleSelectorsFoundException.php
 
@@ -252,6 +255,8 @@ pub(crate) struct ColumnInfo {
     /// The discriminator column of the owner and the discriminator values
     /// of the declaring class and its subclasses.
     pub discriminator: Option<(String, Vec<String>)>,
+    /// `$this->rsm->enumMappings[$key] ?? null`.
+    pub enum_type: Option<String>,
 }
 
 /// A row split into the data of each alias, the scalars and the new
@@ -299,6 +304,10 @@ pub(crate) struct Columns<'a> {
     force_dbal_type_conversion: bool,
     cache: HashMap<String, Option<ColumnInfo>>,
     metadata_cache: HashMap<String, Arc<ClassMetadata>>,
+    /// Whether the fields of the entities are built into enum cases (the
+    /// array hydrator; the object hydrators' property accessors build
+    /// them).
+    build_field_enums: bool,
 }
 
 impl<'a> Columns<'a> {
@@ -313,6 +322,22 @@ impl<'a> Columns<'a> {
             force_dbal_type_conversion,
             cache: HashMap::new(),
             metadata_cache: HashMap::new(),
+            build_field_enums: false,
+        }
+    }
+
+    /// Builds the enum fields of the entities into their cases (the array
+    /// hydrator's data).
+    pub fn set_build_field_enums(&mut self, build: bool) {
+        self.build_field_enums = build;
+    }
+
+    /// `if ($value !== null && isset($cacheKeyInfo['enumType']))
+    /// $value = $this->buildEnum($value, $cacheKeyInfo['enumType'])`.
+    fn enum_value(info: &ColumnInfo, value: Value) -> Result<Value, Thrown> {
+        match &info.enum_type {
+            Some(enum_type) if !value.is_null() => build_enum(&value, enum_type),
+            _ => Ok(value),
         }
     }
 
@@ -378,6 +403,7 @@ impl<'a> Columns<'a> {
                 arg_index: None,
                 obj_index: None,
                 discriminator: None,
+                enum_type: rsm.enum_mappings.get(key).cloned(),
             };
             // the current discriminator value must be saved in order to
             // disambiguate fields hydration, should there be field name
@@ -408,6 +434,7 @@ impl<'a> Columns<'a> {
                 arg_index: index("argIndex"),
                 obj_index: index("objIndex"),
                 discriminator: None,
+                enum_type: rsm.enum_mappings.get(key).cloned(),
             }));
         }
 
@@ -425,6 +452,7 @@ impl<'a> Columns<'a> {
                 arg_index: None,
                 obj_index: None,
                 discriminator: None,
+                enum_type: rsm.enum_mappings.get(key).cloned(),
             }));
         }
 
@@ -448,6 +476,7 @@ impl<'a> Columns<'a> {
                 arg_index: None,
                 obj_index: None,
                 discriminator: None,
+                enum_type: rsm.enum_mappings.get(key).cloned(),
             }));
         }
 
@@ -516,7 +545,7 @@ impl<'a> Columns<'a> {
 
             match info.kind {
                 ColumnKind::NewObjectParameter => {
-                    let value = self.convert(info.ty.as_ref(), value)?;
+                    let value = Self::enum_value(&info, self.convert(info.ty.as_ref(), value)?)?;
                     let obj_index = info.obj_index.clone().unwrap_or(Key::Int(0));
                     let arg_index = info.arg_index.clone().unwrap_or(Key::Int(0));
                     if let Some((_, args)) =
@@ -530,7 +559,7 @@ impl<'a> Columns<'a> {
                     }
                 }
                 ColumnKind::Scalar => {
-                    let value = self.convert(info.ty.as_ref(), value)?;
+                    let value = Self::enum_value(&info, self.convert(info.ty.as_ref(), value)?)?;
                     row_data
                         .scalars
                         .get_or_insert_with(PhpArray::new)
@@ -559,7 +588,10 @@ impl<'a> Columns<'a> {
                     if data.get(&info.field_name).is_some_and(|v| !v.is_null()) {
                         continue;
                     }
-                    let converted = self.convert(info.ty.as_ref(), value)?;
+                    let mut converted = self.convert(info.ty.as_ref(), value)?;
+                    if self.build_field_enums || info.kind == ColumnKind::ForcedScalar {
+                        converted = Self::enum_value(&info, converted)?;
+                    }
                     row_data
                         .data_mut(&dql_alias)
                         .insert(info.field_name.clone(), converted);

@@ -585,8 +585,8 @@ pub async fn assert_results_are_the_same(query: &php2rust_doctrine_orm::query::Q
     use php2rust_doctrine_orm::abstract_query::{HYDRATE_ARRAY, HYDRATE_OBJECT};
     for mode in [HYDRATE_OBJECT, HYDRATE_ARRAY] {
         let result = query.get_result(mode).await.unwrap();
-        let iterable = query.to_iterable(None, mode).await.unwrap();
-        let iterable = Value::Array(PhpArray::list(iterable));
+        // iterableToArray(): iterator_to_array($iterable, true)
+        let iterable = Value::Array(query.to_iterable_array(None, mode).await.unwrap());
         assert!(result.identical(&iterable), "{result:?} !== {iterable:?}");
     }
 }

@@ -68,8 +68,11 @@ impl<'a> ArrayHydrator<'a> {
         rsm: &'a ResultSetMapping,
         force_dbal_type_conversion: bool,
     ) -> Self {
+        let mut columns = Columns::new(em, rsm, force_dbal_type_conversion);
+        // The array result holds the enum cases.
+        columns.set_build_field_enums(true);
         Self {
-            columns: Columns::new(em, rsm, force_dbal_type_conversion),
+            columns,
             root_aliases: HashSet::new(),
             is_simple_query: false,
             root_identifier_map: HashMap::new(),

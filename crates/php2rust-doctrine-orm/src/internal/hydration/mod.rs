@@ -383,20 +383,47 @@ pub async fn to_iterable(
     hints: &mut Hints,
     extra: HydrationHints,
 ) -> Result<Vec<Value>, Thrown> {
+    Ok(
+        to_iterable_with_keys(em, hydration_mode, rows, rsm, hints, extra)
+            .await?
+            .into_iter()
+            .map(|(_, value)| value)
+            .collect(),
+    )
+}
+
+/// `toIterable($stmt, $rsm, $hints)` with the generator's keys: the
+/// index-by keys of `yield from $result`, and the generator's own
+/// integer keys (from 0) for the other values.
+pub async fn to_iterable_with_keys(
+    em: &Arc<EntityManager>,
+    hydration_mode: i64,
+    rows: Vec<PhpArray>,
+    rsm: &ResultSetMapping,
+    hints: &mut Hints,
+    extra: HydrationHints,
+) -> Result<Vec<(Key, Value)>, Thrown> {
     use crate::query::context::{
         HYDRATE_ARRAY, HYDRATE_OBJECT, HYDRATE_SCALAR, HYDRATE_SIMPLEOBJECT,
     };
     let index_by = !rsm.index_by_map.is_empty();
-    let mut yielded = Vec::new();
+    let mut yielded: Vec<(Key, Value)> = Vec::new();
+    // The generator's key for a `yield` without a key.
+    let mut auto_key: i64 = 0;
     let mut yield_row = |result: PhpArray| {
+        let mut next_key = || {
+            let key = Key::Int(auto_key);
+            auto_key += 1;
+            key
+        };
         if result.len() == 1 {
             if index_by {
-                yielded.extend(result.values().cloned());
+                yielded.extend(result.iter().map(|(k, v)| (k.clone(), v.clone())));
             } else if let Some((_, last)) = result.last() {
-                yielded.push(last.clone());
+                yielded.push((next_key(), last.clone()));
             }
         } else if matches!(result.values().next(), Some(Value::Object(_))) {
-            yielded.push(Value::Array(result));
+            yielded.push((next_key(), Value::Array(result)));
         } else {
             // array_merge(...$result)
             let mut merged = PhpArray::new();
@@ -412,7 +439,7 @@ pub async fn to_iterable(
                     }
                 }
             }
-            yielded.push(Value::Array(merged));
+            yielded.push((next_key(), Value::Array(merged)));
         }
     };
     match hydration_mode {

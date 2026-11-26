@@ -57,10 +57,20 @@ pub fn flatten_identifier(
 /// `$value instanceof BackedEnum ? $value->value : $value`.
 pub(crate) fn backed_value(value: Value) -> Value {
     if let Value::Object(object) = &value
-        && object.instance_of("BackedEnum")
+        && is_backed_enum(object.as_ref())
         && let Some(v) = object.property(b"value")
     {
         return v;
     }
     value
+}
+
+/// `$object instanceof BackedEnum`: a case of a backed enum
+/// (`php_value::object::EnumCase` with a value), or an object that says
+/// it implements the interface.
+pub(crate) fn is_backed_enum(object: &dyn php_value::PhpObject) -> bool {
+    object
+        .downcast_ref::<php_value::object::EnumCase>()
+        .is_some_and(|case| case.value().is_some())
+        || object.instance_of("BackedEnum")
 }

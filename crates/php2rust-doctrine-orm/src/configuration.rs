@@ -21,6 +21,7 @@ use php2rust_doctrine_persistence::php_reflection;
 use crate::mapping::naming_strategy::{DefaultNamingStrategy, NamingStrategy};
 use crate::mapping::quote_strategy::{DefaultQuoteStrategy, QuoteStrategy};
 use crate::mapping::typed_field_mapper::{DefaultTypedFieldMapper, TypedFieldMapper};
+use crate::query::context::FunctionFactory;
 use crate::repository::{DefaultRepositoryFactory, RepositoryFactory};
 
 /// `Doctrine\ORM\EntityRepository`, the default repository class.
@@ -59,6 +60,11 @@ pub struct Configuration {
     /// the configuration object, so a filter added after the entity
     /// manager was created is seen by it).
     filters: Arc<RwLock<Vec<(String, String)>>>,
+    /// The custom functions given as a callable (`callable(string):
+    /// FunctionNode`) instead of a class name: lowercased name → factory.
+    custom_string_function_callables: Vec<(String, FunctionFactory)>,
+    custom_numeric_function_callables: Vec<(String, FunctionFactory)>,
+    custom_datetime_function_callables: Vec<(String, FunctionFactory)>,
 }
 
 impl fmt::Debug for Configuration {
@@ -86,6 +92,9 @@ impl Configuration {
             custom_string_functions: Vec::new(),
             custom_numeric_functions: Vec::new(),
             custom_datetime_functions: Vec::new(),
+            custom_string_function_callables: Vec::new(),
+            custom_numeric_function_callables: Vec::new(),
+            custom_datetime_function_callables: Vec::new(),
             typed_field_mapper: None,
             default_repository_class_name: None,
             naming_strategy: None,
@@ -168,6 +177,34 @@ impl Configuration {
             .map(|(_, class)| class.clone())
     }
 
+    fn remove_callable(callables: &mut Vec<(String, FunctionFactory)>, name: &str) {
+        let name = name.to_ascii_lowercase();
+        callables.retain(|(known, _)| *known != name);
+    }
+
+    fn add_callable(
+        callables: &mut Vec<(String, FunctionFactory)>,
+        classes: &mut Vec<(String, String)>,
+        name: &str,
+        factory: FunctionFactory,
+    ) {
+        let name = name.to_ascii_lowercase();
+        classes.retain(|(known, _)| *known != name);
+        callables.retain(|(known, _)| *known != name);
+        callables.push((name, factory));
+    }
+
+    fn get_callable(
+        callables: &[(String, FunctionFactory)],
+        name: &str,
+    ) -> Option<FunctionFactory> {
+        let name = name.to_ascii_lowercase();
+        callables
+            .iter()
+            .find(|(known, _)| *known == name)
+            .map(|(_, factory)| Arc::clone(factory))
+    }
+
     fn add_function(list: &mut Vec<(String, String)>, name: &str, class: &str) {
         let name = name.to_ascii_lowercase();
         list.retain(|(known, _)| *known != name);
@@ -199,7 +236,24 @@ impl Configuration {
 
     /// `addCustomStringFunction()`: the name is case-insensitive.
     pub fn add_custom_string_function(&mut self, name: &str, class_name: &str) {
+        Self::remove_callable(&mut self.custom_string_function_callables, name);
         Self::add_function(&mut self.custom_string_functions, name, class_name);
+    }
+
+    /// `addCustomStringFunction()` with a callable (`callable(string):
+    /// FunctionNode`) instead of a class name.
+    pub fn add_custom_string_function_callable(&mut self, name: &str, factory: FunctionFactory) {
+        Self::add_callable(
+            &mut self.custom_string_function_callables,
+            &mut self.custom_string_functions,
+            name,
+            factory,
+        );
+    }
+
+    /// `getCustomStringFunction()` when it gives a callable.
+    pub fn get_custom_string_function_callable(&self, name: &str) -> Option<FunctionFactory> {
+        Self::get_callable(&self.custom_string_function_callables, name)
     }
 
     pub fn get_custom_string_function(&self, name: &str) -> Option<String> {
@@ -213,7 +267,23 @@ impl Configuration {
     }
 
     pub fn add_custom_numeric_function(&mut self, name: &str, class_name: &str) {
+        Self::remove_callable(&mut self.custom_numeric_function_callables, name);
         Self::add_function(&mut self.custom_numeric_functions, name, class_name);
+    }
+
+    /// `addCustomNumericFunction()` with a callable.
+    pub fn add_custom_numeric_function_callable(&mut self, name: &str, factory: FunctionFactory) {
+        Self::add_callable(
+            &mut self.custom_numeric_function_callables,
+            &mut self.custom_numeric_functions,
+            name,
+            factory,
+        );
+    }
+
+    /// `getCustomNumericFunction()` when it gives a callable.
+    pub fn get_custom_numeric_function_callable(&self, name: &str) -> Option<FunctionFactory> {
+        Self::get_callable(&self.custom_numeric_function_callables, name)
     }
 
     pub fn get_custom_numeric_function(&self, name: &str) -> Option<String> {
@@ -227,7 +297,23 @@ impl Configuration {
     }
 
     pub fn add_custom_datetime_function(&mut self, name: &str, class_name: &str) {
+        Self::remove_callable(&mut self.custom_datetime_function_callables, name);
         Self::add_function(&mut self.custom_datetime_functions, name, class_name);
+    }
+
+    /// `addCustomDatetimeFunction()` with a callable.
+    pub fn add_custom_datetime_function_callable(&mut self, name: &str, factory: FunctionFactory) {
+        Self::add_callable(
+            &mut self.custom_datetime_function_callables,
+            &mut self.custom_datetime_functions,
+            name,
+            factory,
+        );
+    }
+
+    /// `getCustomDatetimeFunction()` when it gives a callable.
+    pub fn get_custom_datetime_function_callable(&self, name: &str) -> Option<FunctionFactory> {
+        Self::get_callable(&self.custom_datetime_function_callables, name)
     }
 
     pub fn get_custom_datetime_function(&self, name: &str) -> Option<String> {
