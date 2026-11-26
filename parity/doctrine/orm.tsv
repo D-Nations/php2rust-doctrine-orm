@@ -1512,7 +1512,7 @@ tests/Tests/ORM/Functional/Ticket/GH6123Test.php	GH6123Test::testRemovedEntityCa
 tests/Tests/ORM/Functional/Ticket/GH6141Test.php	GH6141Test::testEnumDiscriminatorsShouldBeConvertedToString	pending	a custom DBAL type of the test file (the recorder cannot load a DBAL Type subclass)
 tests/Tests/ORM/Functional/Ticket/GH6217Test.php	GH6217Test::testLoadingOfSecondLevelCacheOnEagerAssociations	pending	needs the second-level cache
 tests/Tests/ORM/Functional/Ticket/GH6362Test.php	GH6362Test::testInheritanceJoinAlias	ported	crates/php2rust-doctrine-orm/tests/gh6362_test.rs::testInheritanceJoinAlias
-tests/Tests/ORM/Functional/Ticket/GH6394Test.php	GH6394Test::testFetchVersionValueForDifferentIdFieldAndColumn	pending	
+tests/Tests/ORM/Functional/Ticket/GH6394Test.php	GH6394Test::testFetchVersionValueForDifferentIdFieldAndColumn	ported	crates/php2rust-doctrine-orm/tests/gh6394_test.rs::testFetchVersionValueForDifferentIdFieldAndColumn
 tests/Tests/ORM/Functional/Ticket/GH6402Test.php	GH6402Test::testFind	pending	
 tests/Tests/ORM/Functional/Ticket/GH6402Test.php	GH6402Test::testFindWithSubClass	pending	
 tests/Tests/ORM/Functional/Ticket/GH6402Test.php	GH6402Test::testQuery	pending	
