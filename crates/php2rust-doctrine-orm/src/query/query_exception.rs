@@ -201,3 +201,27 @@ pub(crate) fn optimistic_lock_failed() -> Thrown {
         0,
     )
 }
+
+/// Declares the query exception classes in persistence's class registry.
+pub(crate) fn register_classes() {
+    use php2rust_doctrine_persistence::php_reflection::{ClassInfo, register_class};
+
+    register_class(
+        ClassInfo::class(CLASS)
+            .extends("Exception")
+            .implements("Doctrine\\ORM\\Exception\\ORMException"),
+    );
+    register_class(ClassInfo::class(AST_EXCEPTION).extends(CLASS));
+    for class in [NO_MATCHING_PROPERTY, DUPLICATE_FIELD] {
+        register_class(
+            ClassInfo::class(class)
+                .extends("LogicException")
+                .implements("Doctrine\\ORM\\Exception\\ORMException"),
+        );
+    }
+    register_class(
+        ClassInfo::class("Doctrine\\ORM\\OptimisticLockException")
+            .extends("Exception")
+            .implements("Doctrine\\ORM\\Exception\\ORMException"),
+    );
+}

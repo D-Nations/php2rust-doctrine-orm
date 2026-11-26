@@ -1290,12 +1290,12 @@ mod tests {
         assert_eq!(
             classes,
             [
-                format!("{NS}ConcatFunction"),
-                format!("{NS}CountFunction"),
-                format!("{NS}DateSubFunction"),
-                format!("{NS}BitOrFunction"),
-                format!("{NS}UpperFunction"),
-                format!("{NS}CurrentTimeFunction"),
+                class_name!("ConcatFunction"),
+                class_name!("CountFunction"),
+                class_name!("DateSubFunction"),
+                class_name!("BitOrFunction"),
+                class_name!("UpperFunction"),
+                class_name!("CurrentTimeFunction"),
             ]
         );
         assert!(builtin("nope").is_none());

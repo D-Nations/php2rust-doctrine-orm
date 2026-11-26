@@ -19,7 +19,8 @@ use std::rc::Rc;
 use std::sync::Arc;
 
 use php_value::numeric::is_numeric;
-use php_value::{Key, PhpArray, Thrown, Value};
+use php_value::object::EnumCase;
+use php_value::{Key, PhpArray, PhpObject, Thrown, Value};
 use php2rust_doctrine_dbal::{Exception, LockMode, WrapperParameterType};
 
 use crate::deprecations;
@@ -50,6 +51,7 @@ use crate::query::exec::{
 };
 use crate::query::parser_result::{ParserResult, ResultSetMapping};
 use crate::query::query_exception;
+use crate::query::sort_direction::SortDirection;
 use crate::query::utility;
 
 /// `Doctrine\ORM\Query\SqlWalker`.
@@ -1053,20 +1055,20 @@ pub mod base {
 
     use super::{
         Arc, AssociationMapping, ClassMetadata, CoalesceExpression, CollectionMemberExpression,
-        DeleteClause, DeleteStatement, EntityAsDtoArgumentExpression, FETCH_EAGER, FromClause,
-        GeneralCaseExpression, HINT_DISTINCT, HINT_FORCE_PARTIAL_LOAD, HINT_INCLUDE_META_COLUMNS,
-        HINT_INTERNAL_ITERATION, HINT_PARTIAL, HYDRATE_OBJECT, Hint,
+        DeleteClause, DeleteStatement, EntityAsDtoArgumentExpression, EnumCase, FETCH_EAGER,
+        FromClause, GeneralCaseExpression, HINT_DISTINCT, HINT_FORCE_PARTIAL_LOAD,
+        HINT_INCLUDE_META_COLUMNS, HINT_INTERNAL_ITERATION, HINT_PARTIAL, HYDRATE_OBJECT, Hint,
         IdentificationVariableDeclaration, IndexBy, InputParameter, InstanceOfExpression, Join,
         JoinAssociationDeclaration, Key, LikeExpression, Literal, LockMode, NewObjectExpression,
         Node, NullIfExpression, OUTPUT_WALKER_INTERFACE, OrderByClause, OrderByItem,
-        PathExpression, PhpArray, PreparedExecutorFinalizer, QueryContext,
+        PathExpression, PhpArray, PhpObject, PreparedExecutorFinalizer, QueryContext,
         RangeVariableDeclaration, ResultAlias, SQL_WALKER_CLASS, SelectClause, SelectExpression,
         SelectStatement, SelectedClass, SimpleCaseExpression, SimpleSelectExpression,
-        SingleSelectSqlFinalizer, SqlExecutor, SqlFinalizer, SqlWalker, SqlWalkerState, Statement,
-        Subselect, Thrown, UpdateClause, UpdateItem, UpdateStatement, Value, WhereClause,
-        WrapperParameterType, ast, dbal_error, deprecations, dispatch, is_numeric, lock_mode_hint,
-        method_on_null, node_type_error, property_on_null, query_exception, rsm, text, truthy,
-        type_error, utility,
+        SingleSelectSqlFinalizer, SortDirection, SqlExecutor, SqlFinalizer, SqlWalker,
+        SqlWalkerState, Statement, Subselect, Thrown, UpdateClause, UpdateItem, UpdateStatement,
+        Value, WhereClause, WrapperParameterType, ast, dbal_error, deprecations, dispatch,
+        is_numeric, lock_mode_hint, method_on_null, node_type_error, property_on_null,
+        query_exception, rsm, text, truthy, type_error, utility,
     };
 
     /// `getExecutor()`.
@@ -1304,7 +1306,17 @@ pub mod base {
                     continue;
                 }
 
-                let orientation = text(orientation);
+                let orientation = match orientation
+                    .as_object()
+                    .and_then(|o| o.downcast_ref::<EnumCase>())
+                    .filter(|case| case.class() == SortDirection::CLASS)
+                {
+                    Some(case) if case.name() == SortDirection::Ascending.name() => {
+                        "ASC".to_owned()
+                    }
+                    Some(_) => "DESC".to_owned(),
+                    None => text(orientation),
+                };
                 w.walker_state_mut()
                     .ordered_columns_map
                     .insert(ordered_column.clone(), orientation.clone());
