@@ -1321,7 +1321,7 @@ tests/Tests/ORM/Functional/Ticket/DDC3103Test.php	DDC3103Test::testIssue	pending
 tests/Tests/ORM/Functional/Ticket/DDC3123Test.php	DDC3123Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc3123_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC3160Test.php	DDC3160Test::testNoUpdateOnInsert	ported	crates/php2rust-doctrine-orm/tests/ddc3160_test.rs::testNoUpdateOnInsert
 tests/Tests/ORM/Functional/Ticket/DDC3170Test.php	DDC3170Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc3170_test.rs::testIssue
-tests/Tests/ORM/Functional/Ticket/DDC3192Test.php	DDC3192Test::testIssue	pending	a custom DBAL type of the test file (the recorder cannot load a DBAL Type subclass)
+tests/Tests/ORM/Functional/Ticket/DDC3192Test.php	DDC3192Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC3223Test.php	DDC3223Test::testIssueGetId	ported	crates/php2rust-doctrine-orm/tests/ddc3223_test.rs::testIssueGetId
 tests/Tests/ORM/Functional/Ticket/DDC3300Test.php	DDC3300Test::testResolveTargetEntitiesChangesDiscriminatorMapValues	pending	ResolveTargetEntityListener is not ported
 tests/Tests/ORM/Functional/Ticket/DDC3303Test.php	DDC3303Test::testEmbeddedObjectsAreAlsoInherited	pending	
