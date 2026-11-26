@@ -1421,7 +1421,7 @@ tests/Tests/ORM/Functional/Ticket/GH10334Test.php	GH10334Test::testGetChildWithB
 tests/Tests/ORM/Functional/Ticket/GH10334Test.php	GH10334Test::testTicket	ported	crates/php2rust-doctrine-orm/tests/gh10334_test.rs::testTicket
 tests/Tests/ORM/Functional/Ticket/GH10336Test.php	GH10336Test::testCanAccessRelationPropertyAfterClear	ported	crates/php2rust-doctrine-orm/tests/gh10336_test.rs::testCanAccessRelationPropertyAfterClear
 tests/Tests/ORM/Functional/Ticket/GH10348Test.php	GH10348Test::testTheORMRemovesReferencedEmployeeBeforeReferencingEmployee	ported	crates/php2rust-doctrine-orm/tests/gh10348_test.rs::testTheORMRemovesReferencedEmployeeBeforeReferencingEmployee
-tests/Tests/ORM/Functional/Ticket/GH10387Test.php	GH10387Test::testSchemaToolCreatesColumnForFieldInTheMiddleClass	pending	
+tests/Tests/ORM/Functional/Ticket/GH10387Test.php	GH10387Test::testSchemaToolCreatesColumnForFieldInTheMiddleClass	ported	crates/php2rust-doctrine-orm/tests/gh10387_test.rs::testSchemaToolCreatesColumnForFieldInTheMiddleClass
 tests/Tests/ORM/Functional/Ticket/GH10450Test.php	GH10450Test::testDuplicatePrivateFieldsShallBeRejected	pending	
 tests/Tests/ORM/Functional/Ticket/GH10454Test.php	GH10454Test::testProtectedPropertyMustNotBeInheritedAndReconfigured	pending	
 tests/Tests/ORM/Functional/Ticket/GH10462Test.php	GH10462Test::testCharsetAndCollationOptionsOnDiscriminatedColumn	pending	
