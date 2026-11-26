@@ -26,6 +26,7 @@ use php2rust_doctrine_collections::ArrayCollection;
 use php2rust_doctrine_dbal::LockMode;
 use php2rust_doctrine_event_manager::EventDispatcher;
 
+use crate::cache::CachedEntityPersister;
 use crate::collection_object::{ArrayCollectionObject, downcast};
 use crate::entity_manager::EntityManager;
 use crate::event::{
@@ -38,7 +39,7 @@ use crate::internal::{StronglyConnectedComponents, TopologicalSort, object_id};
 use crate::mapping::{AssociationMapping, ClassMetadata};
 use crate::object::EntityObject;
 use crate::persistent_collection::PersistentCollection;
-use crate::persisters::{BasicEntityPersister, CommitPersister};
+use crate::persisters::{BasicEntityPersister, CommitPersister, EntityPersisterInterface};
 use crate::utility::{flatten_identifier, to_text};
 
 /// A future of the unit of work.
@@ -89,6 +90,8 @@ pub struct Hints {
     pub force_dbal_type_conversion: bool,
     /// `Query::HINT_INTERNAL_ITERATION`.
     pub internal_iteration: bool,
+    /// `Query::HINT_CACHE_ENABLED`.
+    pub cache_enabled: bool,
 }
 
 impl Hints {
@@ -265,6 +268,8 @@ pub struct UnitOfWork {
     persisters: Mutex<HashMap<String, Arc<BasicEntityPersister>>>,
     /// The persisters `setEntityPersister()` set, by class name.
     commit_persisters: Mutex<HashMap<String, Arc<dyn CommitPersister>>>,
+    /// The second-level cache's entity persisters, by entity name.
+    cached_persisters: Mutex<HashMap<String, Arc<dyn CachedEntityPersister>>>,
     listeners_invoker: ListenersInvoker,
 }
 
@@ -317,6 +322,7 @@ impl UnitOfWork {
             state: Mutex::new(State::default()),
             persisters: Mutex::new(HashMap::new()),
             commit_persisters: Mutex::new(HashMap::new()),
+            cached_persisters: Mutex::new(HashMap::new()),
             listeners_invoker: ListenersInvoker::new(resolver),
         }
     }
@@ -430,8 +436,11 @@ impl UnitOfWork {
                     .await
                     .map_err(|e| exception::from_dbal(&e))?;
             }
+            self.after_transaction_rolled_back()?;
             return Err(e);
         }
+
+        self.after_transaction_complete()?;
 
         // Take new snapshots from visited collections
         let visited: Vec<(usize, Arc<PersistentCollection>)> = self
@@ -563,7 +572,7 @@ impl UnitOfWork {
             .collect();
         for (oid, (entity, changeset)) in extra {
             self.st().entity_change_sets.insert(oid, changeset);
-            self.get_entity_persister(entity.class())?
+            self.get_commit_persister(entity.class())?
                 .update(&entity)
                 .await?;
         }
@@ -2744,6 +2753,14 @@ impl UnitOfWork {
             }
 
             // Ignore if its a cached collection
+            if hints.cache_enabled
+                && PersistentCollection::from_value(&class.read().get_field_value(&entity, &field)?)
+                    .is_some()
+            {
+                continue;
+            }
+
+            // use the given collection
             if let Some(Value::Object(_)) = data.get(&field_key)
                 && let Some(pc) = data
                     .get(&field_key)
@@ -2783,7 +2800,15 @@ impl UnitOfWork {
                             .map(|a| a.join_columns.len())
                     })
                     .unwrap_or(0);
-                if assoc.is_one_to_many() && mapped_by_join_columns <= 1 && !assoc.is_indexed() {
+                // Loading from the second-level cache does not go through
+                // ObjectHydrator, so deferred batch eager loads are never
+                // flushed there. Load immediately instead (also allows
+                // hitting the collection cache region).
+                if assoc.is_one_to_many()
+                    && mapped_by_join_columns <= 1
+                    && !assoc.is_indexed()
+                    && !hints.cache_enabled
+                {
                     self.schedule_collection_for_batch_loading(&p_coll, &class)?;
                 } else {
                     self.load_collection(&p_coll).await?;
@@ -3132,7 +3157,112 @@ impl UnitOfWork {
         {
             return Ok(persister.clone());
         }
+        if let Some(persister) = self.get_cached_entity_persister(entity_name)? {
+            return Ok(persister);
+        }
         Ok(self.get_entity_persister(entity_name)?)
+    }
+
+    /// The second-level cache's persister of an entity, when the cache is
+    /// enabled and the class is cached (`getEntityPersister()` wraps the
+    /// persister with `CacheFactory::buildCachedEntityPersister()`).
+    pub fn get_cached_entity_persister(
+        &self,
+        entity_name: &str,
+    ) -> Result<Option<Arc<dyn CachedEntityPersister>>, Thrown> {
+        if let Some(persister) = self
+            .cached_persisters
+            .lock()
+            .unwrap_or_else(PoisonError::into_inner)
+            .get(entity_name)
+        {
+            return Ok(Some(persister.clone()));
+        }
+        let em = self.em()?;
+        if !em.get_configuration().is_second_level_cache_enabled() {
+            return Ok(None);
+        }
+        let class = em.get_class_metadata(entity_name)?;
+        if class.read().cache.is_none() {
+            return Ok(None);
+        }
+        let factory = em
+            .get_configuration()
+            .get_second_level_cache_configuration()
+            .and_then(|config| config.get_cache_factory())
+            .ok_or_else(|| {
+                Thrown::new(
+                    "Error",
+                    "Call to a member function buildCachedEntityPersister() on null",
+                    0,
+                )
+            })?;
+        let basic: Arc<dyn EntityPersisterInterface> = self.get_entity_persister(entity_name)?;
+        let persister = factory.build_cached_entity_persister(&em, basic, class)?;
+        self.cached_persisters
+            .lock()
+            .unwrap_or_else(PoisonError::into_inner)
+            .insert(entity_name.to_owned(), persister.clone());
+        Ok(Some(persister))
+    }
+
+    /// `getEntityPersister()`: the second-level cache's persister of a
+    /// cached class, otherwise the entity's persister.
+    pub fn get_entity_persister_interface(
+        &self,
+        entity_name: &str,
+    ) -> Result<Arc<dyn EntityPersisterInterface>, Thrown> {
+        if let Some(persister) = self.get_cached_entity_persister(entity_name)? {
+            return Ok(persister);
+        }
+        Ok(self.get_entity_persister(entity_name)?)
+    }
+
+    /// The cache region of a collection-valued association, when the
+    /// cache is enabled and the association is cached (the region its
+    /// cached collection persister holds).
+    pub fn get_collection_cache_region(
+        &self,
+        association: &AssociationMapping,
+    ) -> Result<Option<Arc<dyn crate::cache::Region>>, Thrown> {
+        let em = self.em()?;
+        if !em.get_configuration().is_second_level_cache_enabled() {
+            return Ok(None);
+        }
+        let Some(cache) = &association.cache else {
+            return Ok(None);
+        };
+        let Some(factory) = em
+            .get_configuration()
+            .get_second_level_cache_configuration()
+            .and_then(|config| config.get_cache_factory())
+        else {
+            return Ok(None);
+        };
+        Ok(Some(factory.get_region(cache)?))
+    }
+
+    fn cached_persisters(&self) -> Vec<Arc<dyn CachedEntityPersister>> {
+        self.cached_persisters
+            .lock()
+            .unwrap_or_else(PoisonError::into_inner)
+            .values()
+            .cloned()
+            .collect()
+    }
+
+    fn after_transaction_complete(&self) -> Result<(), Thrown> {
+        for persister in self.cached_persisters() {
+            persister.after_transaction_complete()?;
+        }
+        Ok(())
+    }
+
+    fn after_transaction_rolled_back(&self) -> Result<(), Thrown> {
+        for persister in self.cached_persisters() {
+            persister.after_transaction_rolled_back()?;
+        }
+        Ok(())
     }
 
     /// Gets the `EntityPersister` for an Entity.

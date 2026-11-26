@@ -114,7 +114,7 @@ impl EntityRepository {
         let persister = self
             .em()?
             .get_unit_of_work()
-            .get_entity_persister(&self.entity_name)?;
+            .get_entity_persister_interface(&self.entity_name)?;
         persister.load_all(criteria, order_by, limit, offset).await
     }
 
@@ -127,9 +127,17 @@ impl EntityRepository {
         let persister = self
             .em()?
             .get_unit_of_work()
-            .get_entity_persister(&self.entity_name)?;
+            .get_entity_persister_interface(&self.entity_name)?;
         persister
-            .load(criteria, None, None, Hints::default(), Some(1), order_by)
+            .load(
+                criteria,
+                None,
+                None,
+                Hints::default(),
+                None,
+                Some(1),
+                order_by,
+            )
             .await
     }
 
@@ -137,7 +145,7 @@ impl EntityRepository {
     pub async fn count(&self, criteria: &PhpArray) -> Result<i64, Thrown> {
         self.em()?
             .get_unit_of_work()
-            .get_entity_persister(&self.entity_name)?
+            .get_entity_persister_interface(&self.entity_name)?
             .count(criteria)
             .await
     }
@@ -282,7 +290,7 @@ impl EntityRepository {
         let persister = self
             .em()?
             .get_unit_of_work()
-            .get_entity_persister(&self.entity_name)?;
+            .get_entity_persister_interface(&self.entity_name)?;
         Ok(LazyCriteriaCollection::new(persister, criteria.clone()))
     }
 

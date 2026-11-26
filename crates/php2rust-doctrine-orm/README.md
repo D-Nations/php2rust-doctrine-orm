@@ -60,6 +60,7 @@ assert_eq!(PhpString::from("O'Neil"), lexer.token().unwrap().value);
 | `QueryBuilder`: the DQL parts (`add()` with its `$append` check and the deprecation `https://github.com/doctrine/orm/pull/12051` for numeric join keys, `getDQLPart(s)()`, `resetDQLPart(s)()`), `select()`/`addSelect()`/`distinct()`, `delete()`/`update()` (the alias check), `from()`/`indexBy()`, the joins (root aliases), `set()`, `where()`/`andWhere()`/`orWhere()`, `groupBy()`, `having()` and its variants, `orderBy()`/`addOrderBy()` (the deprecation `https://github.com/doctrine/orm/issues/11313` for an order that is not a `SortDirection`, `Invalid sort direction`), `addCriteria()`, the root aliases and entities, parameters (`setParameter()` updates a parameter of the same normalized name, `createNamedParameter()`), first and max results (no limit for DELETE and UPDATE), hints, the second-level cache options, `getDQL()` (cached until a part changes), `getQuery()`, `__clone()`; `QueryType`; `EntityManager::createQueryBuilder()`, `getExpressionBuilder()`, `EntityRepository::createQueryBuilder()` | `QueryBuilder.php`, `QueryType.php`, `EntityManager.php`, `EntityRepository.php` | QueryBuilderTest (108 of 109), ExprTest's subquery tests (5), Functional/QueryBuilderParenthesisTest (2, on SQLite) |
 | `QueryExpressionVisitor`: a `Criteria`'s comparisons and composites as `Expr` objects with their parameters (the alias prefix, `_`-joined parameter names made unique by the parameter count, `CONTAINS`/`STARTS_WITH`/`ENDS_WITH` as `LIKE`, `MEMBER OF`, `IS NULL` for a null value), the `RuntimeException` texts | `Query/QueryExpressionVisitor.php` | QueryExpressionVisitorTest (6) |
 | `Tools\Pagination`: `CountWalker` (`HINT_DISTINCT`, the HAVING and two-FROM texts), `CountOutputWalker`, `LimitSubqueryWalker` (the identifier type hint, `HINT_ENABLE_DISTINCT`), `LimitSubqueryOutputWalker` (`SELECT DISTINCT <ids> FROM (...) dctrn_result`, the ORDER BY columns added as hidden selects, the inner ordered query; the `ROW_NUMBER()` SQL for PostgreSQL, SQL Server, Oracle and DB2), `WhereInWalker`, `RootTypeWalker`, `RowNumberOverFunction` (`RowNumberOverFunctionNotEnabled`), the RuntimeException texts; `PaginatorQuery` (`getCountQuery()`, `cloneQuery()`, `appendTreeWalker()`, `unbindUnusedQueryParams()`, `useOutputWalker()`, `getResultForOffset()` with the fetch-join ID subquery + WHERE IN path and the output-walker path, `convertWhereInIdentifiersToDatabaseValues()`); `Paginator` (`count()`, `getIterator()`); `OffsetPaginator` and `PaginatorInterface` (`paginate()`, its InvalidArgumentException text); `Window`, `Page`, `WindowPage` (the LogicException texts); cursor pagination: `Cursor` (`encodeToString()` as URL-safe Base64 JSON, `fromEncodedString()` with strict Base64, JSON depth 2 and the scalar checks, `toArray()`), `CursorItem`, `InvalidCursor` (with its `JsonException` as `getPrevious()`), `CursorWalker` (the ORDER BY directions, reversed for a previous page; the `dctrn_cursor_<n>` condition `(a > ?) OR (a = ? AND (...))` added to the WHERE clause; the ORDER BY items hint; the LogicException text), `OrderDirection`, `CursorOrderByItem`, `CursorPaginator` (the `$limit + 1` rows, the ID subquery + WHERE IN path for a query that produces duplicates, reversed items for a previous cursor, the cursor values from the entity's fields, an association's identifier, converted by the field's type), `CursorPage` (the memoized COUNT, the page flags, the next and previous cursors and their LogicException texts) | `Tools/Pagination/{CountWalker,CountOutputWalker,LimitSubqueryWalker,LimitSubqueryOutputWalker,WhereInWalker,RootTypeWalker,RowNumberOverFunction,Paginator,PaginatorQuery,PaginatorInterface,OffsetPaginator,Page,Window,WindowPage}.php`, `Tools/Pagination/Exception/RowNumberOverFunctionNotEnabled.php`, `Tools/Pagination/{Cursor,CursorItem,CursorOrderByItem,CursorPage,CursorPaginator,CursorWalker,OrderDirection}.php`, `Tools/Pagination/Exception/InvalidCursor.php` | CountWalkerTest (8), WhereInWalkerTest (1), LimitSubqueryWalkerTest (10), RootTypeWalkerTest (1), CountOutputWalkerTest (4 of 5), LimitSubqueryOutputWalkerTest (13 of 27), PaginatorTest (3), OffsetPaginatorTest (3), WindowTest (10 of 11), WindowPageTest (16), Functional/PaginationTest (56 of 57, on SQLite), CursorTest (12 of 13), CursorWalkerTest (14), CursorPaginatorTest (25) |
+| Second-level cache: the cache keys and entries, `DefaultRegion` and `FileLockRegion` over an in-memory PSR-6 pool (`cache::pool::ArrayAdapter`, for symfony/cache's `ArrayAdapter`), `UpdateTimestampCache`, `CacheLogger`, `CacheLoggerChain`, `StatisticsCacheLogger`, `CacheConfiguration`, `RegionsConfiguration`, `TimestampQueryCacheValidator`, `DefaultEntityHydrator`, the cached entity persisters (`ReadOnly`, `NonStrictReadWrite`, `ReadWrite` with region locks) over `EntityPersister` (`persisters::EntityPersisterInterface`); `Configuration::setSecondLevelCacheEnabled()`/`setSecondLevelCacheConfiguration()`/`getSecondLevelCacheConfiguration()`. `DefaultCacheFactory`, `DefaultCache`, `DefaultQueryCache`, `EntityManager::getCache()` and the unit of work's cached persisters are written but their tests are pending | `Cache.php`, `Cache/*.php`, `Cache/Region/*.php`, `Cache/Logging/*.php`, `Cache/Persister/Entity/*.php`, `Persisters/Entity/EntityPersister.php` | CacheKeyTest (8), CacheConfigTest (4), CacheLoggerChainTest (4), StatisticsCacheLoggerTest (4), DefaultRegionTest (8), FileLockRegionTest (10), DefaultEntityHydratorTest (7), ReadOnlyCachedEntityPersisterTest (24), NonStrictReadWriteCachedEntityPersisterTest (28), ReadWriteCachedEntityPersisterTest (32), ConfigurationTest::testSetGetSecondLevelCacheConfig |
 
 `Lexer::new()` returns doctrine/lexer's `PcreError`, which the DQL
 patterns never cause.
@@ -283,8 +284,21 @@ Persistence, not reproduced and so not claimed:
   `&self`; the clones share them, as PHP shares the object). The platform is `SQLitePlatform`. A pessimistic
   lock runs no `SELECT 1 ... FOR UPDATE` query (SQLite has no lock
   clause), and `find()` with a pessimistic lock loads as `NONE` does.
-- The second level cache and the metadata cache are not ported; partial
-  objects are not lazy ghosts of their selected fields.
+- The metadata cache is not ported; partial objects are not lazy ghosts
+  of their selected fields.
+- Second-level cache: the collection persisters are not cached (the
+  cached collection persisters and `DefaultCollectionHydrator` are not
+  ported; a collection load goes to the wrapped entity persister). The
+  pool is in memory only; it keeps a copy of each value, as
+  `ArrayAdapter` keeps serialized values. A lock's `uniqid()` takes a
+  number from a per-process sequence in place of PHP's combined LCG.
+  `FileLockRegion` reads a lock's time from the file's access time. A
+  criteria's orderings enter a cached query's hash as their `ASC`/`DESC`
+  names. `CacheFactory` has no `buildCachedCollectionPersister()` or
+  `buildCollectionHydrator()`; a factory that replaces `getRegion()`
+  builds its persisters with `cache::factory::build_cached_entity_persister()`.
+  The persister tests' `createMock()` mocks record their calls and are
+  checked after the call.
 - A custom hydration mode is only a name in the `Configuration`.
   `getTypedFieldMapper()` is `None` until one is set (the entity manager
   gives the metadata factory the `DefaultTypedFieldMapper` then, as
@@ -294,7 +308,7 @@ Persistence, not reproduced and so not claimed:
   `commit()`/`rollBack()` in a subclass (the DBAL connection is a
   struct) or make a lazy ghost of the entity manager; `testGetProxyFactory`
   is pending (no `ProxyFactory` object). ConfigurationTest's cache tests
-  are pending (the query, hydration, metadata and second level caches).
+  are pending (the query, hydration and metadata caches).
 - The company models' entity listener records each call as the entity
   and the class of the event arguments (EntityListenersTest checks that
   class). PostLoadEventTest's
@@ -364,9 +378,9 @@ Queries and hydration, not reproduced and so not claimed:
 
 - The query keeps no parser result: it parses its DQL each time it needs
   the SQL or executes (the parser result is not `Send`; PHP keeps it and
-  the query cache, which is not ported). There is no result cache,
-  hydration cache or second level cache, so their setters and the
-  cache tests are not ported.
+  the query cache, which is not ported). There is no result cache or
+  hydration cache, so their setters and the cache tests are not ported;
+  a query's second-level cache use is not wired to `DefaultQueryCache`.
 - A result is read whole (the DBAL port fetches all rows): `toIterable()`
   returns the hydrated values in a `Vec` and the `onClear` listener of
   an iteration is not registered. `toIterable()` with the generator keys
@@ -427,7 +441,7 @@ Functional `PersistentCollectionTest` (its models extend persistence's
 protocol, not part of the criteria work); the criteria and extra-lazy
 tests of the Ticket, filter, enum, inheritance and second level cache
 test files (GH7767, GH7836, GH7864, SQLFilterTest,
-the `Cache\Persister` tests); the query and result cache
+the `Cache\Persister\Collection` tests); the query and result cache
 tests of Query QueryTest and `testProcessParameterValueClassMetadata`;
 `Functional\QueryTest::testJoinPartialObjectHydration` (partial objects)
 and `testQueryBuilderWithStringWhereClauseContainingOrAndConditionalPrimary`

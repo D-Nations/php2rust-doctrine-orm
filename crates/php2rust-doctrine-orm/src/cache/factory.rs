@@ -10,25 +10,115 @@ use std::sync::{Arc, Mutex, MutexGuard, PoisonError};
 
 use php_value::{Key, PhpArray, Thrown, Value};
 
-use crate::mapping::class_metadata::CACHE_USAGE_READ_WRITE;
+use crate::entity_manager::EntityManager;
+use crate::mapping::ClassMetadata;
+use crate::mapping::class_metadata::{CACHE_USAGE_NONSTRICT_READ_WRITE, CACHE_USAGE_READ_WRITE};
+use crate::persisters::EntityPersisterInterface;
 use crate::utility::to_text;
 
-use super::exception::logic_exception;
+use super::default_cache::{Cache, DefaultCache};
+use super::exception::{invalid_argument, logic_exception};
+use super::hydrator::{DefaultEntityHydrator, EntityHydrator};
+use super::persister::{AbstractEntityPersister, CacheUsage, CachedEntityPersister};
 use super::pool::CacheItemPool;
+use super::query_cache::{DefaultQueryCache, QueryCache};
 use super::{
-    DEFAULT_TIMESTAMP_REGION_NAME, DefaultRegion, FileLockRegion, Region, RegionsConfiguration,
-    TimestampRegion, UpdateTimestampCache,
+    DEFAULT_QUERY_REGION_NAME, DEFAULT_TIMESTAMP_REGION_NAME, DefaultRegion, FileLockRegion,
+    Region, RegionsConfiguration, TimestampRegion, UpdateTimestampCache,
 };
 
 /// `Doctrine\ORM\Cache\CacheFactory`: contract for building second
 /// level cache regions components.
+///
+/// The collection persisters and hydrators are not built here: the
+/// collection persisters are not cached.
 pub trait CacheFactory: Debug + Send + Sync {
+    /// Build an entity persister for the given entity metadata.
+    fn build_cached_entity_persister(
+        &self,
+        em: &Arc<EntityManager>,
+        persister: Arc<dyn EntityPersisterInterface>,
+        metadata: Arc<ClassMetadata>,
+    ) -> Result<Arc<dyn CachedEntityPersister>, Thrown>;
+
+    /// Build a query cache based on the given region name.
+    fn build_query_cache(
+        &self,
+        em: &Arc<EntityManager>,
+        region_name: Option<&str>,
+    ) -> Result<Arc<dyn QueryCache>, Thrown>;
+
+    /// Build an entity hydrator.
+    fn build_entity_hydrator(
+        &self,
+        em: &Arc<EntityManager>,
+        metadata: &Arc<ClassMetadata>,
+    ) -> Arc<dyn EntityHydrator>;
+
     /// Build a cache region from its configuration (`region` and
     /// `usage`).
     fn get_region(&self, cache: &PhpArray) -> Result<Arc<dyn Region>, Thrown>;
 
     /// Build timestamp cache region.
     fn get_timestamp_region(&self) -> Arc<dyn TimestampRegion>;
+
+    /// Build `\Doctrine\ORM\Cache`.
+    fn create_cache(&self, em: &Arc<EntityManager>) -> Result<Arc<dyn Cache>, Thrown>;
+}
+
+/// `DefaultCacheFactory::buildCachedEntityPersister()` over a factory's
+/// `getRegion()` (a factory that replaces `getRegion()` builds its
+/// persisters with it).
+pub fn build_cached_entity_persister(
+    factory: &dyn CacheFactory,
+    em: &Arc<EntityManager>,
+    persister: Arc<dyn EntityPersisterInterface>,
+    metadata: Arc<ClassMetadata>,
+) -> Result<Arc<dyn CachedEntityPersister>, Thrown> {
+    let cache = metadata.read().cache.clone().unwrap_or_default();
+    let region = factory.get_region(&cache)?;
+    let usage = cache_field(&cache, "usage");
+    let usage_text = to_text(&usage);
+    let strategy = match usage {
+        Value::Int(usage) => CacheUsage::from_usage(usage),
+        _ => None,
+    };
+    let Some(strategy) = strategy else {
+        return Err(invalid_argument(format!(
+            "Unrecognized access strategy type [{usage_text}]"
+        )));
+    };
+    if strategy == CacheUsage::ReadWrite && region.as_concurrent().is_none() {
+        return Err(invalid_argument(format!(
+            "Unable to use access strategy type of [{usage_text}] without a ConcurrentRegion"
+        )));
+    }
+    Ok(Arc::new(AbstractEntityPersister::new(
+        strategy, persister, region, em, metadata,
+    )?))
+}
+
+/// `DefaultCacheFactory::buildQueryCache()` over a factory's
+/// `getRegion()`.
+pub fn build_query_cache(
+    factory: &dyn CacheFactory,
+    em: &Arc<EntityManager>,
+    region_name: Option<&str>,
+) -> Result<Arc<dyn QueryCache>, Thrown> {
+    let mut cache = PhpArray::new();
+    cache.insert(
+        "region",
+        Value::string(
+            region_name
+                .filter(|name| !name.is_empty())
+                .unwrap_or(DEFAULT_QUERY_REGION_NAME),
+        ),
+    );
+    cache.insert("usage", Value::Int(CACHE_USAGE_NONSTRICT_READ_WRITE));
+    Ok(Arc::new(DefaultQueryCache::new(
+        em,
+        factory.get_region(&cache)?,
+    )?))
 }
 
 #[derive(Debug, Default)]
@@ -90,6 +180,35 @@ pub(crate) fn cache_field(cache: &PhpArray, name: &str) -> Value {
 }
 
 impl CacheFactory for DefaultCacheFactory {
+    fn build_cached_entity_persister(
+        &self,
+        em: &Arc<EntityManager>,
+        persister: Arc<dyn EntityPersisterInterface>,
+        metadata: Arc<ClassMetadata>,
+    ) -> Result<Arc<dyn CachedEntityPersister>, Thrown> {
+        build_cached_entity_persister(self, em, persister, metadata)
+    }
+
+    fn build_query_cache(
+        &self,
+        em: &Arc<EntityManager>,
+        region_name: Option<&str>,
+    ) -> Result<Arc<dyn QueryCache>, Thrown> {
+        build_query_cache(self, em, region_name)
+    }
+
+    fn build_entity_hydrator(
+        &self,
+        em: &Arc<EntityManager>,
+        _metadata: &Arc<ClassMetadata>,
+    ) -> Arc<dyn EntityHydrator> {
+        Arc::new(DefaultEntityHydrator::new(em))
+    }
+
+    fn create_cache(&self, em: &Arc<EntityManager>) -> Result<Arc<dyn Cache>, Thrown> {
+        Ok(Arc::new(DefaultCache::new(em)?))
+    }
+
     fn get_region(&self, cache: &PhpArray) -> Result<Arc<dyn Region>, Thrown> {
         let name = to_text(&cache_field(cache, "region"));
         if let Some(region) = self.state().regions.get(&name) {

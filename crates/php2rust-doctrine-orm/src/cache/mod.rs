@@ -3,17 +3,22 @@
 //! Upstream's `symfony/cache` pool is [`pool::ArrayAdapter`], a PSR-6
 //! pool in memory.
 //!
-//! Upstream: doctrine/orm src/Cache.php
+//! Upstream: none
 
 mod cache_entry;
 mod cache_key;
 pub mod configuration;
+mod default_cache;
 pub mod exception;
-mod factory;
+pub mod factory;
+pub mod hydrator;
 mod lock;
 pub mod logging;
+pub mod persister;
 pub mod pool;
+pub mod query_cache;
 pub mod region;
+mod sha1;
 
 pub use cache_entry::{
     ASSOCIATION_CACHE_ENTRY, AssociationCacheEntry, CacheEntry, CollectionCacheEntry,
@@ -25,9 +30,13 @@ pub use cache_key::{
 pub use configuration::{
     CacheConfiguration, QueryCacheValidator, RegionsConfiguration, TimestampQueryCacheValidator,
 };
+pub use default_cache::{Cache, DefaultCache};
 pub use factory::{CacheFactory, DefaultCacheFactory};
+pub use hydrator::{DefaultEntityHydrator, EntityHydrator};
 pub use lock::Lock;
 pub use lock::uniqid;
+pub use persister::{AbstractEntityPersister, CacheUsage, CachedEntityPersister, CachedPersister};
+pub use query_cache::{DefaultQueryCache, QueryCache};
 pub use region::{
     ConcurrentRegion, DefaultRegion, FileLockRegion, Region, TimestampRegion, UpdateTimestampCache,
 };

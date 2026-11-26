@@ -1,7 +1,8 @@
 //! Upstream: doctrine/orm tests/Tests/ORM/Cache/CacheConfigTest.php
 //!
 //! The stubs (`createStub()`) are small implementations of the
-//! interfaces; `assertEquals()` of a stub compares the `Arc`s, and
+//! interfaces (the methods the tests do not call are unreachable);
+//! `assertEquals()` of a stub compares the `Arc`s, and
 //! `assertInstanceOf()` downcasts.
 
 #![allow(non_snake_case)]
@@ -18,10 +19,14 @@ use php_value::{PhpArray, Thrown};
 use php2rust_doctrine_orm::cache::logging::CacheLogger;
 use php2rust_doctrine_orm::cache::region::MultipleEntries;
 use php2rust_doctrine_orm::cache::{
-    CacheConfiguration, CacheEntry, CacheFactory, CacheKey, CollectionCacheEntry,
-    CollectionCacheKey, EntityCacheKey, Lock, QueryCacheEntry, QueryCacheKey, QueryCacheValidator,
-    Region, TimestampQueryCacheValidator, TimestampRegion,
+    Cache, CacheConfiguration, CacheEntry, CacheFactory, CacheKey, CachedEntityPersister,
+    CollectionCacheEntry, CollectionCacheKey, EntityCacheKey, EntityHydrator, Lock, QueryCache,
+    QueryCacheEntry, QueryCacheKey, QueryCacheValidator, Region, TimestampQueryCacheValidator,
+    TimestampRegion,
 };
+use php2rust_doctrine_orm::entity_manager::EntityManager;
+use php2rust_doctrine_orm::mapping::ClassMetadata;
+use php2rust_doctrine_orm::persisters::EntityPersisterInterface;
 
 /// `assertSame()` of two `Arc`s of a trait object.
 fn same<T: ?Sized, U: ?Sized>(a: &Arc<T>, b: &Arc<U>) -> bool {
@@ -87,6 +92,31 @@ impl TimestampRegion for TimestampRegionStub {
 struct FactoryStub;
 
 impl CacheFactory for FactoryStub {
+    fn build_cached_entity_persister(
+        &self,
+        _: &Arc<EntityManager>,
+        _: Arc<dyn EntityPersisterInterface>,
+        _: Arc<ClassMetadata>,
+    ) -> Result<Arc<dyn CachedEntityPersister>, Thrown> {
+        unreachable!("not called by the tests")
+    }
+    fn build_query_cache(
+        &self,
+        _: &Arc<EntityManager>,
+        _: Option<&str>,
+    ) -> Result<Arc<dyn QueryCache>, Thrown> {
+        unreachable!("not called by the tests")
+    }
+    fn build_entity_hydrator(
+        &self,
+        _: &Arc<EntityManager>,
+        _: &Arc<ClassMetadata>,
+    ) -> Arc<dyn EntityHydrator> {
+        unreachable!("not called by the tests")
+    }
+    fn create_cache(&self, _: &Arc<EntityManager>) -> Result<Arc<dyn Cache>, Thrown> {
+        unreachable!("not called by the tests")
+    }
     fn get_region(&self, _: &PhpArray) -> Result<Arc<dyn Region>, Thrown> {
         Ok(Arc::new(TimestampRegionStub))
     }
