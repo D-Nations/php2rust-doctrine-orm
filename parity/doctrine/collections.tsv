@@ -61,31 +61,31 @@ tests/AbstractLazyCollectionTest.php	AbstractLazyCollectionTest::testSearch	pend
 tests/AbstractLazyCollectionTest.php	AbstractLazyCollectionTest::testSlice	pending	
 tests/AbstractLazyCollectionTest.php	AbstractLazyCollectionTest::testSliceInitializes	pending	
 tests/AbstractLazyCollectionTest.php	AbstractLazyCollectionTest::testUnsetInitializes	pending	
-tests/ArrayCollectionTest.php	ArrayCollectionTest::testContains	pending	
-tests/ArrayCollectionTest.php	ArrayCollectionTest::testContainsKey	pending	
-tests/ArrayCollectionTest.php	ArrayCollectionTest::testCount	pending	
-tests/ArrayCollectionTest.php	ArrayCollectionTest::testCurrent	pending	
-tests/ArrayCollectionTest.php	ArrayCollectionTest::testEmpty	pending	
-tests/ArrayCollectionTest.php	ArrayCollectionTest::testExists	pending	
-tests/ArrayCollectionTest.php	ArrayCollectionTest::testFindFirst	pending	
-tests/ArrayCollectionTest.php	ArrayCollectionTest::testFindFirstNotFound	pending	
-tests/ArrayCollectionTest.php	ArrayCollectionTest::testFirst	pending	
-tests/ArrayCollectionTest.php	ArrayCollectionTest::testGet	pending	
-tests/ArrayCollectionTest.php	ArrayCollectionTest::testGetKeys	pending	
-tests/ArrayCollectionTest.php	ArrayCollectionTest::testGetValues	pending	
-tests/ArrayCollectionTest.php	ArrayCollectionTest::testIndexOf	pending	
-tests/ArrayCollectionTest.php	ArrayCollectionTest::testIterator	pending	
-tests/ArrayCollectionTest.php	ArrayCollectionTest::testKey	pending	
-tests/ArrayCollectionTest.php	ArrayCollectionTest::testLast	pending	
-tests/ArrayCollectionTest.php	ArrayCollectionTest::testLegacyMatchingWithSortingPreserveKeys	pending	
-tests/ArrayCollectionTest.php	ArrayCollectionTest::testMatchingWithSlicingPreserveKeys	pending	
-tests/ArrayCollectionTest.php	ArrayCollectionTest::testMatchingWithSortingPreserveKeys	pending	
-tests/ArrayCollectionTest.php	ArrayCollectionTest::testMultiColumnSortAppliesAllSorts	pending	
-tests/ArrayCollectionTest.php	ArrayCollectionTest::testNext	pending	
-tests/ArrayCollectionTest.php	ArrayCollectionTest::testRemove	pending	
-tests/ArrayCollectionTest.php	ArrayCollectionTest::testRemoveElement	pending	
-tests/ArrayCollectionTest.php	ArrayCollectionTest::testToArray	pending	
-tests/ArrayCollectionTest.php	ArrayCollectionTest::testUnserializeEmptyArrayCollection	pending	
+tests/ArrayCollectionTest.php	ArrayCollectionTest::testContains	ported	crates/php2rust-doctrine-collections/tests/array_collection_test.rs::testContains
+tests/ArrayCollectionTest.php	ArrayCollectionTest::testContainsKey	ported	crates/php2rust-doctrine-collections/tests/array_collection_test.rs::testContainsKey
+tests/ArrayCollectionTest.php	ArrayCollectionTest::testCount	ported	crates/php2rust-doctrine-collections/tests/array_collection_test.rs::testCount
+tests/ArrayCollectionTest.php	ArrayCollectionTest::testCurrent	ported	crates/php2rust-doctrine-collections/tests/array_collection_test.rs::testCurrent
+tests/ArrayCollectionTest.php	ArrayCollectionTest::testEmpty	ported	crates/php2rust-doctrine-collections/tests/array_collection_test.rs::testEmpty
+tests/ArrayCollectionTest.php	ArrayCollectionTest::testExists	ported	crates/php2rust-doctrine-collections/tests/array_collection_test.rs::testExists
+tests/ArrayCollectionTest.php	ArrayCollectionTest::testFindFirst	ported	crates/php2rust-doctrine-collections/tests/array_collection_test.rs::testFindFirst
+tests/ArrayCollectionTest.php	ArrayCollectionTest::testFindFirstNotFound	ported	crates/php2rust-doctrine-collections/tests/array_collection_test.rs::testFindFirstNotFound
+tests/ArrayCollectionTest.php	ArrayCollectionTest::testFirst	ported	crates/php2rust-doctrine-collections/tests/array_collection_test.rs::testFirst
+tests/ArrayCollectionTest.php	ArrayCollectionTest::testGet	ported	crates/php2rust-doctrine-collections/tests/array_collection_test.rs::testGet
+tests/ArrayCollectionTest.php	ArrayCollectionTest::testGetKeys	ported	crates/php2rust-doctrine-collections/tests/array_collection_test.rs::testGetKeys
+tests/ArrayCollectionTest.php	ArrayCollectionTest::testGetValues	ported	crates/php2rust-doctrine-collections/tests/array_collection_test.rs::testGetValues
+tests/ArrayCollectionTest.php	ArrayCollectionTest::testIndexOf	ported	crates/php2rust-doctrine-collections/tests/array_collection_test.rs::testIndexOf
+tests/ArrayCollectionTest.php	ArrayCollectionTest::testIterator	ported	crates/php2rust-doctrine-collections/tests/array_collection_test.rs::testIterator
+tests/ArrayCollectionTest.php	ArrayCollectionTest::testKey	ported	crates/php2rust-doctrine-collections/tests/array_collection_test.rs::testKey
+tests/ArrayCollectionTest.php	ArrayCollectionTest::testLast	ported	crates/php2rust-doctrine-collections/tests/array_collection_test.rs::testLast
+tests/ArrayCollectionTest.php	ArrayCollectionTest::testLegacyMatchingWithSortingPreserveKeys	ported	crates/php2rust-doctrine-collections/tests/array_collection_test.rs::testLegacyMatchingWithSortingPreserveKeys
+tests/ArrayCollectionTest.php	ArrayCollectionTest::testMatchingWithSlicingPreserveKeys	ported	crates/php2rust-doctrine-collections/tests/array_collection_test.rs::testMatchingWithSlicingPreserveKeys
+tests/ArrayCollectionTest.php	ArrayCollectionTest::testMatchingWithSortingPreserveKeys	ported	crates/php2rust-doctrine-collections/tests/array_collection_test.rs::testMatchingWithSortingPreserveKeys
+tests/ArrayCollectionTest.php	ArrayCollectionTest::testMultiColumnSortAppliesAllSorts	ported	crates/php2rust-doctrine-collections/tests/array_collection_test.rs::testMultiColumnSortAppliesAllSorts
+tests/ArrayCollectionTest.php	ArrayCollectionTest::testNext	ported	crates/php2rust-doctrine-collections/tests/array_collection_test.rs::testNext
+tests/ArrayCollectionTest.php	ArrayCollectionTest::testRemove	ported	crates/php2rust-doctrine-collections/tests/array_collection_test.rs::testRemove
+tests/ArrayCollectionTest.php	ArrayCollectionTest::testRemoveElement	ported	crates/php2rust-doctrine-collections/tests/array_collection_test.rs::testRemoveElement
+tests/ArrayCollectionTest.php	ArrayCollectionTest::testToArray	ported	crates/php2rust-doctrine-collections/tests/array_collection_test.rs::testToArray
+tests/ArrayCollectionTest.php	ArrayCollectionTest::testUnserializeEmptyArrayCollection	ported	crates/php2rust-doctrine-collections/tests/array_collection_test.rs::testUnserializeEmptyArrayCollection
 tests/ClosureExpressionVisitorTest.php	ClosureExpressionVisitorTest::testArrayComparison	ported	crates/php2rust-doctrine-collections/tests/closure_expression_visitor_test.rs::testArrayComparison
 tests/ClosureExpressionVisitorTest.php	ClosureExpressionVisitorTest::testEmbeddedObjectComparison	ported	crates/php2rust-doctrine-collections/tests/closure_expression_visitor_test.rs::testEmbeddedObjectComparison
 tests/ClosureExpressionVisitorTest.php	ClosureExpressionVisitorTest::testGetEmbeddedObjectFieldValueAccessingRawValue	ported	crates/php2rust-doctrine-collections/tests/closure_expression_visitor_test.rs::testGetEmbeddedObjectFieldValueAccessingRawValue
@@ -120,40 +120,40 @@ tests/ClosureExpressionVisitorTest.php	ClosureExpressionVisitorTest::testWalkOrC
 tests/ClosureExpressionVisitorTest.php	ClosureExpressionVisitorTest::testWalkStartsWithComparison	ported	crates/php2rust-doctrine-collections/tests/closure_expression_visitor_test.rs::testWalkStartsWithComparison
 tests/ClosureExpressionVisitorTest.php	ClosureExpressionVisitorTest::testWalkUnknownCompositeExpressionThrowException	ported	crates/php2rust-doctrine-collections/tests/closure_expression_visitor_test.rs::testWalkUnknownCompositeExpressionThrowException
 tests/ClosureExpressionVisitorTest.php	ClosureExpressionVisitorTest::testWalkUnknownOperatorComparisonThrowException	ported	crates/php2rust-doctrine-collections/tests/closure_expression_visitor_test.rs::testWalkUnknownOperatorComparisonThrowException
-tests/CollectionTest.php	CollectionTest::testArrayAccess	pending	
-tests/CollectionTest.php	CollectionTest::testCanRemoveNullValuesByKey	pending	
-tests/CollectionTest.php	CollectionTest::testCanVerifyExistingKeysWithNullValues	pending	
-tests/CollectionTest.php	CollectionTest::testClear	pending	
-tests/CollectionTest.php	CollectionTest::testContains	pending	
-tests/CollectionTest.php	CollectionTest::testContainsKey	pending	
-tests/CollectionTest.php	CollectionTest::testCount	pending	
-tests/CollectionTest.php	CollectionTest::testExists	pending	
-tests/CollectionTest.php	CollectionTest::testFilter	pending	
-tests/CollectionTest.php	CollectionTest::testFilterByValueAndKey	pending	
-tests/CollectionTest.php	CollectionTest::testFindFirst	pending	
-tests/CollectionTest.php	CollectionTest::testFindFirstNotFound	pending	
-tests/CollectionTest.php	CollectionTest::testFirstAndLast	pending	
-tests/CollectionTest.php	CollectionTest::testForAll	pending	
-tests/CollectionTest.php	CollectionTest::testGet	pending	
-tests/CollectionTest.php	CollectionTest::testGetKeys	pending	
-tests/CollectionTest.php	CollectionTest::testGetValues	pending	
-tests/CollectionTest.php	CollectionTest::testIssetAndUnset	pending	
-tests/CollectionTest.php	CollectionTest::testMap	pending	
-tests/CollectionTest.php	CollectionTest::testMatching	pending	
-tests/CollectionTest.php	CollectionTest::testMatchingAlwaysReturnsCollection	pending	
-tests/CollectionTest.php	CollectionTest::testMatchingCallable	pending	
-tests/CollectionTest.php	CollectionTest::testMatchingOrdering	pending	
-tests/CollectionTest.php	CollectionTest::testMatchingOrderingLegacy	pending	
-tests/CollectionTest.php	CollectionTest::testMatchingOrderingMixedOrderTypes	pending	
-tests/CollectionTest.php	CollectionTest::testMatchingSlice	pending	
-tests/CollectionTest.php	CollectionTest::testPartition	pending	
-tests/CollectionTest.php	CollectionTest::testReduce	pending	
-tests/CollectionTest.php	CollectionTest::testRemove	pending	
-tests/CollectionTest.php	CollectionTest::testRemoveElement	pending	
-tests/CollectionTest.php	CollectionTest::testRemovingNonExistentEntryReturnsNull	pending	
-tests/CollectionTest.php	CollectionTest::testSearch	pending	
-tests/CollectionTest.php	CollectionTest::testSlice	pending	
-tests/CollectionTest.php	CollectionTest::testToString	pending	
+tests/CollectionTest.php	CollectionTest::testArrayAccess	ported	crates/php2rust-doctrine-collections/tests/collection_test.rs::testArrayAccess
+tests/CollectionTest.php	CollectionTest::testCanRemoveNullValuesByKey	ported	crates/php2rust-doctrine-collections/tests/collection_test.rs::testCanRemoveNullValuesByKey
+tests/CollectionTest.php	CollectionTest::testCanVerifyExistingKeysWithNullValues	ported	crates/php2rust-doctrine-collections/tests/collection_test.rs::testCanVerifyExistingKeysWithNullValues
+tests/CollectionTest.php	CollectionTest::testClear	ported	crates/php2rust-doctrine-collections/tests/collection_test.rs::testClear
+tests/CollectionTest.php	CollectionTest::testContains	ported	crates/php2rust-doctrine-collections/tests/collection_test.rs::testContains
+tests/CollectionTest.php	CollectionTest::testContainsKey	ported	crates/php2rust-doctrine-collections/tests/collection_test.rs::testContainsKey
+tests/CollectionTest.php	CollectionTest::testCount	ported	crates/php2rust-doctrine-collections/tests/collection_test.rs::testCount
+tests/CollectionTest.php	CollectionTest::testExists	ported	crates/php2rust-doctrine-collections/tests/collection_test.rs::testExists
+tests/CollectionTest.php	CollectionTest::testFilter	ported	crates/php2rust-doctrine-collections/tests/collection_test.rs::testFilter
+tests/CollectionTest.php	CollectionTest::testFilterByValueAndKey	ported	crates/php2rust-doctrine-collections/tests/collection_test.rs::testFilterByValueAndKey
+tests/CollectionTest.php	CollectionTest::testFindFirst	ported	crates/php2rust-doctrine-collections/tests/collection_test.rs::testFindFirst
+tests/CollectionTest.php	CollectionTest::testFindFirstNotFound	ported	crates/php2rust-doctrine-collections/tests/collection_test.rs::testFindFirstNotFound
+tests/CollectionTest.php	CollectionTest::testFirstAndLast	ported	crates/php2rust-doctrine-collections/tests/collection_test.rs::testFirstAndLast
+tests/CollectionTest.php	CollectionTest::testForAll	ported	crates/php2rust-doctrine-collections/tests/collection_test.rs::testForAll
+tests/CollectionTest.php	CollectionTest::testGet	ported	crates/php2rust-doctrine-collections/tests/collection_test.rs::testGet
+tests/CollectionTest.php	CollectionTest::testGetKeys	ported	crates/php2rust-doctrine-collections/tests/collection_test.rs::testGetKeys
+tests/CollectionTest.php	CollectionTest::testGetValues	ported	crates/php2rust-doctrine-collections/tests/collection_test.rs::testGetValues
+tests/CollectionTest.php	CollectionTest::testIssetAndUnset	ported	crates/php2rust-doctrine-collections/tests/collection_test.rs::testIssetAndUnset
+tests/CollectionTest.php	CollectionTest::testMap	ported	crates/php2rust-doctrine-collections/tests/collection_test.rs::testMap
+tests/CollectionTest.php	CollectionTest::testMatching	ported	crates/php2rust-doctrine-collections/tests/collection_test.rs::testMatching
+tests/CollectionTest.php	CollectionTest::testMatchingAlwaysReturnsCollection	ported	crates/php2rust-doctrine-collections/tests/collection_test.rs::testMatchingAlwaysReturnsCollection
+tests/CollectionTest.php	CollectionTest::testMatchingCallable	ported	crates/php2rust-doctrine-collections/tests/collection_test.rs::testMatchingCallable
+tests/CollectionTest.php	CollectionTest::testMatchingOrdering	ported	crates/php2rust-doctrine-collections/tests/collection_test.rs::testMatchingOrdering
+tests/CollectionTest.php	CollectionTest::testMatchingOrderingLegacy	ported	crates/php2rust-doctrine-collections/tests/collection_test.rs::testMatchingOrderingLegacy
+tests/CollectionTest.php	CollectionTest::testMatchingOrderingMixedOrderTypes	ported	crates/php2rust-doctrine-collections/tests/collection_test.rs::testMatchingOrderingMixedOrderTypes
+tests/CollectionTest.php	CollectionTest::testMatchingSlice	ported	crates/php2rust-doctrine-collections/tests/collection_test.rs::testMatchingSlice
+tests/CollectionTest.php	CollectionTest::testPartition	ported	crates/php2rust-doctrine-collections/tests/collection_test.rs::testPartition
+tests/CollectionTest.php	CollectionTest::testReduce	ported	crates/php2rust-doctrine-collections/tests/collection_test.rs::testReduce
+tests/CollectionTest.php	CollectionTest::testRemove	ported	crates/php2rust-doctrine-collections/tests/collection_test.rs::testRemove
+tests/CollectionTest.php	CollectionTest::testRemoveElement	ported	crates/php2rust-doctrine-collections/tests/collection_test.rs::testRemoveElement
+tests/CollectionTest.php	CollectionTest::testRemovingNonExistentEntryReturnsNull	ported	crates/php2rust-doctrine-collections/tests/collection_test.rs::testRemovingNonExistentEntryReturnsNull
+tests/CollectionTest.php	CollectionTest::testSearch	ported	crates/php2rust-doctrine-collections/tests/collection_test.rs::testSearch
+tests/CollectionTest.php	CollectionTest::testSlice	ported	crates/php2rust-doctrine-collections/tests/collection_test.rs::testSlice
+tests/CollectionTest.php	CollectionTest::testToString	ported	crates/php2rust-doctrine-collections/tests/collection_test.rs::testToString
 tests/CriteriaTest.php	CriteriaTest::testAndWhere	ported	crates/php2rust-doctrine-collections/tests/criteria_test.rs::testAndWhere
 tests/CriteriaTest.php	CriteriaTest::testAndWhereWithoutWhere	ported	crates/php2rust-doctrine-collections/tests/criteria_test.rs::testAndWhereWithoutWhere
 tests/CriteriaTest.php	CriteriaTest::testConstructor	ported	crates/php2rust-doctrine-collections/tests/criteria_test.rs::testConstructor
@@ -168,7 +168,7 @@ tests/CriteriaTest.php	CriteriaTest::testOrWhereWithoutWhere	ported	crates/php2r
 tests/CriteriaTest.php	CriteriaTest::testOrderings	ported	crates/php2rust-doctrine-collections/tests/criteria_test.rs::testOrderings
 tests/CriteriaTest.php	CriteriaTest::testOrderingsWithMixedOrderTypes	ported	crates/php2rust-doctrine-collections/tests/criteria_test.rs::testOrderingsWithMixedOrderTypes
 tests/CriteriaTest.php	CriteriaTest::testWhere	ported	crates/php2rust-doctrine-collections/tests/criteria_test.rs::testWhere
-tests/DerivedCollectionTest.php	DerivedCollectionTest::testDerivedClassCreation	pending	
+tests/DerivedCollectionTest.php	DerivedCollectionTest::testDerivedClassCreation	ported	crates/php2rust-doctrine-collections/tests/derived_collection_test.rs::testDerivedClassCreation
 tests/Expr/ComparisonTest.php	ComparisonTest::testVisit	ported	crates/php2rust-doctrine-collections/tests/expr_comparison_test.rs::testVisit
 tests/Expr/CompositeExpressionTest.php	CompositeExpressionTest::testExceptions	ported	crates/php2rust-doctrine-collections/tests/expr_composite_expression_test.rs::testExceptions
 tests/Expr/CompositeExpressionTest.php	CompositeExpressionTest::testGetExpressionList	ported	crates/php2rust-doctrine-collections/tests/expr_composite_expression_test.rs::testGetExpressionList

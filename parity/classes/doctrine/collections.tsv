@@ -1,7 +1,7 @@
 # doctrine/collections at 7c2f25ed928553a3de389ccb99aa46c0eedb2d4d: upstream file	classes	code lines	status	rust files
 src/AbstractLazyCollection.php	AbstractLazyCollection	225	pending	
-src/ArrayCollection.php	ArrayCollection	264	pending	
-src/Collection.php	Collection	19	pending	
+src/ArrayCollection.php	ArrayCollection	264	ported	crates/php2rust-doctrine-collections/src/array_collection.rs
+src/Collection.php	Collection	19	ported	crates/php2rust-doctrine-collections/src/collection.rs
 src/Criteria.php	Criteria	132	ported	crates/php2rust-doctrine-collections/src/criteria.rs
 src/Expr/ClosureExpressionVisitor.php	ClosureExpressionVisitor	146	ported	crates/php2rust-doctrine-collections/src/expr/closure_expression_visitor.rs
 src/Expr/Comparison.php	Comparison	44	ported	crates/php2rust-doctrine-collections/src/expr/comparison.rs
@@ -11,5 +11,5 @@ src/Expr/ExpressionVisitor.php	ExpressionVisitor	12	ported	crates/php2rust-doctr
 src/Expr/Value.php	Value	18	ported	crates/php2rust-doctrine-collections/src/expr/value.rs
 src/ExpressionBuilder.php	ExpressionBuilder	77	ported	crates/php2rust-doctrine-collections/src/expression_builder.rs
 src/Order.php	Order	7	ported	crates/php2rust-doctrine-collections/src/order.rs
-src/ReadableCollection.php	ReadableCollection	29	pending	
-src/Selectable.php	Selectable	6	pending	
+src/ReadableCollection.php	ReadableCollection	29	ported	crates/php2rust-doctrine-collections/src/readable_collection.rs
+src/Selectable.php	Selectable	6	ported	crates/php2rust-doctrine-collections/src/selectable.rs

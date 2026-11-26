@@ -15,6 +15,9 @@
     reason = "shared test helpers with upstream's names; a panic is a test failure"
 )]
 
+pub mod array_collection_test_case;
+pub mod collection_test_case;
+
 use std::sync::{Arc, Mutex};
 
 use php_value::{Key, PhpArray, PhpObject, Thrown, Value};
