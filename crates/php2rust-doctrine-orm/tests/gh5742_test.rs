@@ -28,12 +28,7 @@ use orm::*;
 use ticket::*;
 
 async fn set_up() -> Arc<EntityManager> {
-    set_up_with_foreign_keys(&[
-        "GH5742Person",
-        "GH5742Toothbrush",
-        "GH5742ToothpasteBrand",
-    ])
-    .await
+    set_up_with_foreign_keys(&["GH5742Person", "GH5742Toothbrush", "GH5742ToothpasteBrand"]).await
 }
 
 /// `new GH5742Person()`.
