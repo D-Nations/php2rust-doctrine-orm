@@ -449,30 +449,30 @@ tests/Tests/ORM/Functional/EntityRepositoryTest.php	EntityRepositoryTest::testMa
 tests/Tests/ORM/Functional/EntityRepositoryTest.php	EntityRepositoryTest::testOptimisticLockUnversionedEntityThrowsException	ported	crates/php2rust-doctrine-orm/tests/entity_repository_test.rs::testOptimisticLockUnversionedEntityThrowsException
 tests/Tests/ORM/Functional/EntityRepositoryTest.php	EntityRepositoryTest::testPessimisticReadLockWithoutTransactionThrowsException	ported	crates/php2rust-doctrine-orm/tests/entity_repository_test.rs::testPessimisticReadLockWithoutTransactionThrowsException
 tests/Tests/ORM/Functional/EntityRepositoryTest.php	EntityRepositoryTest::testPessimisticWriteLockWithoutTransactionThrowsException	ported	crates/php2rust-doctrine-orm/tests/entity_repository_test.rs::testPessimisticWriteLockWithoutTransactionThrowsException
-tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testEnumArrayChangeSets	pending	
-tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testEnumArrayHydration	pending	
-tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testEnumArrayHydrationObjectHydrator	pending	
-tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testEnumArrayInDtoHydration	pending	
-tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testEnumArrayMapping	pending	
-tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testEnumArraySingleEntityChangeSets	pending	
-tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testEnumChangeSetsObjectHydrator	pending	
-tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testEnumChangeSetsSimpleObjectHydrator	pending	
-tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testEnumCollectionMatchingOnManyToMany	pending	
-tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testEnumCollectionMatchingOnOneToMany	pending	
-tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testEnumHydration	pending	
-tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testEnumHydrationArrayHydrator	pending	
-tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testEnumHydrationObjectHydrator	pending	
-tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testEnumInDtoHydration	pending	
-tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testEnumMapping	pending	
-tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testEnumMappingWithEmbeddable	pending	
-tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testEnumSingleEntityChangeSetsObjectHydrator	pending	
-tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testEnumSingleEntityChangeSetsSimpleObjectHydrator	pending	
-tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testEnumWithDefault	pending	
-tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testEnumWithNonMatchingDatabaseValueThrowsException	pending	
-tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testFindByEnum	pending	
-tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testItAllowsReadingAttributes	pending	
-tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testNullableEnumHydration	pending	
-tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testNullableEnumInDtoHydration	pending	
+tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testEnumArrayChangeSets	ported	crates/php2rust-doctrine-orm/tests/enum_test.rs::testEnumArrayChangeSets
+tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testEnumArrayHydration	ported	crates/php2rust-doctrine-orm/tests/enum_test.rs::testEnumArrayHydration
+tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testEnumArrayHydrationObjectHydrator	ported	crates/php2rust-doctrine-orm/tests/enum_test.rs::testEnumArrayHydrationObjectHydrator
+tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testEnumArrayInDtoHydration	ported	crates/php2rust-doctrine-orm/tests/enum_test.rs::testEnumArrayInDtoHydration
+tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testEnumArrayMapping	ported	crates/php2rust-doctrine-orm/tests/enum_test.rs::testEnumArrayMapping
+tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testEnumArraySingleEntityChangeSets	ported	crates/php2rust-doctrine-orm/tests/enum_test.rs::testEnumArraySingleEntityChangeSets
+tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testEnumChangeSetsObjectHydrator	ported	crates/php2rust-doctrine-orm/tests/enum_test.rs::testEnumChangeSetsObjectHydrator
+tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testEnumChangeSetsSimpleObjectHydrator	ported	crates/php2rust-doctrine-orm/tests/enum_test.rs::testEnumChangeSetsSimpleObjectHydrator
+tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testEnumCollectionMatchingOnManyToMany	ported	crates/php2rust-doctrine-orm/tests/enum_test.rs::testEnumCollectionMatchingOnManyToMany
+tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testEnumCollectionMatchingOnOneToMany	ported	crates/php2rust-doctrine-orm/tests/enum_test.rs::testEnumCollectionMatchingOnOneToMany
+tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testEnumHydration	ported	crates/php2rust-doctrine-orm/tests/enum_test.rs::testEnumHydration
+tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testEnumHydrationArrayHydrator	ported	crates/php2rust-doctrine-orm/tests/enum_test.rs::testEnumHydrationArrayHydrator
+tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testEnumHydrationObjectHydrator	ported	crates/php2rust-doctrine-orm/tests/enum_test.rs::testEnumHydrationObjectHydrator
+tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testEnumInDtoHydration	ported	crates/php2rust-doctrine-orm/tests/enum_test.rs::testEnumInDtoHydration
+tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testEnumMapping	ported	crates/php2rust-doctrine-orm/tests/enum_test.rs::testEnumMapping
+tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testEnumMappingWithEmbeddable	ported	crates/php2rust-doctrine-orm/tests/enum_test.rs::testEnumMappingWithEmbeddable
+tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testEnumSingleEntityChangeSetsObjectHydrator	ported	crates/php2rust-doctrine-orm/tests/enum_test.rs::testEnumSingleEntityChangeSetsObjectHydrator
+tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testEnumSingleEntityChangeSetsSimpleObjectHydrator	ported	crates/php2rust-doctrine-orm/tests/enum_test.rs::testEnumSingleEntityChangeSetsSimpleObjectHydrator
+tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testEnumWithDefault	ported	crates/php2rust-doctrine-orm/tests/enum_test.rs::testEnumWithDefault
+tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testEnumWithNonMatchingDatabaseValueThrowsException	ported	crates/php2rust-doctrine-orm/tests/enum_test.rs::testEnumWithNonMatchingDatabaseValueThrowsException
+tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testFindByEnum	ported	crates/php2rust-doctrine-orm/tests/enum_test.rs::testFindByEnum
+tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testItAllowsReadingAttributes	ported	crates/php2rust-doctrine-orm/tests/enum_test.rs::testItAllowsReadingAttributes
+tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testNullableEnumHydration	ported	crates/php2rust-doctrine-orm/tests/enum_test.rs::testNullableEnumHydration
+tests/Tests/ORM/Functional/EnumTest.php	EnumTest::testNullableEnumInDtoHydration	ported	crates/php2rust-doctrine-orm/tests/enum_test.rs::testNullableEnumInDtoHydration
 tests/Tests/ORM/Functional/ExtraLazyCollectionTest.php	ExtraLazyCollectionTest::testContainsKeyIndexByManyToMany	ported	crates/php2rust-doctrine-orm/tests/extra_lazy_collection_test.rs::testContainsKeyIndexByManyToMany
 tests/Tests/ORM/Functional/ExtraLazyCollectionTest.php	ExtraLazyCollectionTest::testContainsKeyIndexByManyToManyNonOwning	ported	crates/php2rust-doctrine-orm/tests/extra_lazy_collection_test.rs::testContainsKeyIndexByManyToManyNonOwning
 tests/Tests/ORM/Functional/ExtraLazyCollectionTest.php	ExtraLazyCollectionTest::testContainsKeyIndexByOneToMany	ported	crates/php2rust-doctrine-orm/tests/extra_lazy_collection_test.rs::testContainsKeyIndexByOneToMany
