@@ -80,7 +80,7 @@ fn testSubqueryClonedCompletely() {
     );
     let clone = walker.get_clone_query().expect("a Query");
 
-    assert!(!std::ptr::eq(&query, clone));
+    assert!(!std::ptr::eq(std::ptr::from_ref(&query), clone));
     assert!(clone.has_hint("dummy-hint"));
     assert!(matches!(
         clone.get_hint("dummy-hint"),
