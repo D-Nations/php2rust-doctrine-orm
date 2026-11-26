@@ -75,6 +75,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "php2rust-doctrine-persistence"
+version = "0.1.0"
+dependencies = [
+ "php2rust-doctrine-collections",
+ "php2rust-doctrine-event-manager",
+ "php2rust-value",
+ "serde_json",
+]
+
+[[package]]
 name = "php2rust-regex"
 version = "0.1.0"
 source = "git+https://github.com/D-Nations/php2rust-compatibility-tools?rev=977342827ba414362c6af60f38dd376f2fbcfd72#977342827ba414362c6af60f38dd376f2fbcfd72"
