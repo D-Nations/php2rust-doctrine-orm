@@ -378,7 +378,7 @@ src/Query/Filter/FilterException.php	FilterException	16	pending
 src/Query/Filter/Parameter.php	Parameter	13	pending	
 src/Query/Filter/SQLFilter.php	SQLFilter	85	pending	
 src/Query/FilterCollection.php	FilterCollection	112	pending	
-src/Query/Lexer.php	Lexer	92	pending	
+src/Query/Lexer.php	Lexer	92	ported	crates/php2rust-doctrine-orm/src/query/lexer.rs
 src/Query/OutputWalker.php	OutputWalker	7	pending	
 src/Query/Parameter.php	Parameter	41	pending	
 src/Query/ParameterTypeInferer.php	ParameterTypeInferer	52	pending	
@@ -391,7 +391,7 @@ src/Query/ResultSetMapping.php	ResultSetMapping	203	pending
 src/Query/ResultSetMappingBuilder.php	ResultSetMappingBuilder	160	pending	
 src/Query/SqlOutputWalker.php	SqlOutputWalker	21	pending	
 src/Query/SqlWalker.php	SqlWalker	1510	pending	
-src/Query/TokenType.php	TokenType	85	pending	
+src/Query/TokenType.php	TokenType	85	ported	crates/php2rust-doctrine-orm/src/query/token_type.rs
 src/Query/TreeWalker.php	TreeWalker	11	pending	
 src/Query/TreeWalkerAdapter.php	TreeWalkerAdapter	51	pending	
 src/Query/TreeWalkerChain.php	TreeWalkerChain	47	pending	

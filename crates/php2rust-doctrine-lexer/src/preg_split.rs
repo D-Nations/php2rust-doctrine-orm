@@ -18,14 +18,19 @@
 //!
 //! Upstream: none
 
+use std::sync::OnceLock;
+
 use php_regex::{Groups, Pcre, PcreError};
 
 /// A compiled split pattern.
 #[derive(Debug, Clone)]
 pub(crate) struct Splitter {
     regex: Pcre,
-    /// The pattern for the retry after an empty match.
-    not_empty: Result<Pcre, PcreError>,
+    body: Vec<u8>,
+    modifiers: Vec<u8>,
+    /// The pattern for the retry after an empty match, compiled when first
+    /// needed.
+    not_empty: OnceLock<Result<Pcre, PcreError>>,
     utf8: bool,
 }
 
@@ -49,27 +54,32 @@ impl Splitter {
         pattern.push(b'/');
         pattern.extend_from_slice(modifiers);
         let regex = Pcre::new(&pattern)?;
-
-        let not_empty = if has_backreference(body) {
-            Err(PcreError::Unsupported(
-                "a backreference in a lexer pattern that matches the empty string".into(),
-            ))
-        } else {
-            let mut pattern = format!("/(?=(?<{REST}>[\\s\\S]*\\z))(?:").into_bytes();
-            pattern.extend_from_slice(body);
-            if modifiers.contains(&b'x') {
-                // End a trailing `#` comment before the group closes.
-                pattern.push(b'\n');
-            }
-            pattern.extend_from_slice(format!(")(?!\\k<{REST}>\\z)/").as_bytes());
-            pattern.extend_from_slice(modifiers);
-            Pcre::new(&pattern)
-        };
         Ok(Self {
             regex,
-            not_empty,
+            body: body.to_vec(),
+            modifiers: modifiers.to_vec(),
+            not_empty: OnceLock::new(),
             utf8: modifiers.contains(&b'u'),
         })
+    }
+
+    /// `(?=(?<r>[\s\S]*\z))(?:BODY)(?!\k<r>\z)`.
+    fn compile_not_empty(&self) -> Result<Pcre, PcreError> {
+        let (body, modifiers) = (&self.body, &self.modifiers);
+        if has_backreference(body) {
+            return Err(PcreError::Unsupported(
+                "a backreference in a lexer pattern that matches the empty string".into(),
+            ));
+        }
+        let mut pattern = format!("/(?=(?<{REST}>[\\s\\S]*\\z))(?:").into_bytes();
+        pattern.extend_from_slice(body);
+        if modifiers.contains(&b'x') {
+            // End a trailing `#` comment before the group closes.
+            pattern.push(b'\n');
+        }
+        pattern.extend_from_slice(format!(")(?!\\k<{REST}>\\z)/").as_bytes());
+        pattern.extend_from_slice(modifiers);
+        Pcre::new(&pattern)
     }
 
     /// The byte ranges of the pieces.
@@ -122,6 +132,7 @@ impl Splitter {
     fn not_empty_at(&self, subject: &[u8], offset: usize) -> Result<Option<Groups>, SplitError> {
         let regex = self
             .not_empty
+            .get_or_init(|| self.compile_not_empty())
             .as_ref()
             .map_err(|error| SplitError::Unsupported(error.clone()))?;
         let Some(mut groups) = regex

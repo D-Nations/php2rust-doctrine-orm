@@ -1,0 +1,17 @@
+[package]
+name = "php2rust-doctrine-inflector"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+publish = false
+description = "Port of doctrine/inflector"
+
+[dependencies]
+php-regex = { workspace = true }
+php-value = { workspace = true }
+
+[dev-dependencies]
+serde_json = "1.0.154"
+
+[lints]
+workspace = true
