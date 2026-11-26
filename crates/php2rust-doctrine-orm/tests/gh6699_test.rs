@@ -37,12 +37,8 @@ async fn assert_parameters(query: &Query) {
     query.execute(None, None).await.unwrap();
 
     assert_eq!(2, query.get_parameters().len());
-    assert!(
-        Value::Int(0).identical(query.get_parameter(0).unwrap().get_value())
-    );
-    assert!(
-        s("bar").identical(query.get_parameter("username").unwrap().get_value())
-    );
+    assert!(Value::Int(0).identical(query.get_parameter(0).unwrap().get_value()));
+    assert!(s("bar").identical(query.get_parameter("username").unwrap().get_value()));
 }
 
 #[tokio::test]
