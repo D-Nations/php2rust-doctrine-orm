@@ -1,13 +1,13 @@
 # doctrine/inflector at 6d6c96277ea252fc1304627204c3d5e6e15faa3b: upstream test	method	status	rust test
 tests/CachedWordInflectorTest.php	CachedWordInflectorTest::testInflect	ported	crates/php2rust-doctrine-inflector/tests/cached_word_inflector_test.rs::testInflect
-tests/InflectorFactoryTest.php	InflectorFactoryTest::testCreateForLanguageThrowsInvalidArgumentExceptionForUnsupportedLanguage	pending	
-tests/InflectorFactoryTest.php	InflectorFactoryTest::testCreateForLanguageWithCustomLanguage	pending	
-tests/InflectorFactoryTest.php	InflectorFactoryTest::testCreateUsesEnglishByDefault	pending	
-tests/InflectorFunctionalTest.php	InflectorFunctionalTest::testCamelize	pending	
-tests/InflectorFunctionalTest.php	InflectorFunctionalTest::testCapitalize	pending	
-tests/InflectorFunctionalTest.php	InflectorFunctionalTest::testCapitalizeWithCustomDelimiters	pending	
-tests/InflectorFunctionalTest.php	InflectorFunctionalTest::testClassify	pending	
-tests/InflectorFunctionalTest.php	InflectorFunctionalTest::testTableize	pending	
+tests/InflectorFactoryTest.php	InflectorFactoryTest::testCreateForLanguageThrowsInvalidArgumentExceptionForUnsupportedLanguage	ported	crates/php2rust-doctrine-inflector/tests/inflector_factory_test.rs::testCreateForLanguageThrowsInvalidArgumentExceptionForUnsupportedLanguage
+tests/InflectorFactoryTest.php	InflectorFactoryTest::testCreateForLanguageWithCustomLanguage	ported	crates/php2rust-doctrine-inflector/tests/inflector_factory_test.rs::testCreateForLanguageWithCustomLanguage
+tests/InflectorFactoryTest.php	InflectorFactoryTest::testCreateUsesEnglishByDefault	ported	crates/php2rust-doctrine-inflector/tests/inflector_factory_test.rs::testCreateUsesEnglishByDefault
+tests/InflectorFunctionalTest.php	InflectorFunctionalTest::testCamelize	ported	crates/php2rust-doctrine-inflector/tests/inflector_functional_test.rs::testCamelize
+tests/InflectorFunctionalTest.php	InflectorFunctionalTest::testCapitalize	ported	crates/php2rust-doctrine-inflector/tests/inflector_functional_test.rs::testCapitalize
+tests/InflectorFunctionalTest.php	InflectorFunctionalTest::testCapitalizeWithCustomDelimiters	ported	crates/php2rust-doctrine-inflector/tests/inflector_functional_test.rs::testCapitalizeWithCustomDelimiters
+tests/InflectorFunctionalTest.php	InflectorFunctionalTest::testClassify	ported	crates/php2rust-doctrine-inflector/tests/inflector_functional_test.rs::testClassify
+tests/InflectorFunctionalTest.php	InflectorFunctionalTest::testTableize	ported	crates/php2rust-doctrine-inflector/tests/inflector_functional_test.rs::testTableize
 tests/InflectorTest.php	InflectorTest::testCamelize	ported	crates/php2rust-doctrine-inflector/tests/inflector_test.rs::testCamelize
 tests/InflectorTest.php	InflectorTest::testCapitalize	ported	crates/php2rust-doctrine-inflector/tests/inflector_test.rs::testCapitalize
 tests/InflectorTest.php	InflectorTest::testClassify	ported	crates/php2rust-doctrine-inflector/tests/inflector_test.rs::testClassify
@@ -18,30 +18,30 @@ tests/InflectorTest.php	InflectorTest::testTableize	ported	crates/php2rust-doctr
 tests/InflectorTest.php	InflectorTest::testUnaccent	ported	crates/php2rust-doctrine-inflector/tests/inflector_test.rs::testUnaccent
 tests/InflectorTest.php	InflectorTest::testUrlize	ported	crates/php2rust-doctrine-inflector/tests/inflector_test.rs::testUrlize
 tests/NoopWordInflectorTest.php	NoopWordInflectorTest::testInflect	ported	crates/php2rust-doctrine-inflector/tests/noop_word_inflector_test.rs::testInflect
-tests/Rules/English/EnglishFunctionalTest.php	EnglishFunctionalTest::testInflectingPlurals	pending	
-tests/Rules/English/EnglishFunctionalTest.php	EnglishFunctionalTest::testInflectingSingulars	pending	
-tests/Rules/English/EnglishFunctionalTest.php	EnglishFunctionalTest::testPluralsWhenPluralizedShouldBeUninflected	pending	
-tests/Rules/English/EnglishFunctionalTest.php	EnglishFunctionalTest::testSingularsWhenSingularizedShouldBeUninflected	pending	
-tests/Rules/Esperanto/EsperantoFunctionalTest.php	EsperantoFunctionalTest::testInflectingPlurals	pending	
-tests/Rules/Esperanto/EsperantoFunctionalTest.php	EsperantoFunctionalTest::testInflectingSingulars	pending	
-tests/Rules/French/FrenchFunctionalTest.php	FrenchFunctionalTest::testInflectingPlurals	pending	
-tests/Rules/French/FrenchFunctionalTest.php	FrenchFunctionalTest::testInflectingSingulars	pending	
-tests/Rules/Italian/ItalianFunctionalTest.php	ItalianFunctionalTest::testInflectingPlurals	pending	
-tests/Rules/Italian/ItalianFunctionalTest.php	ItalianFunctionalTest::testInflectingSingulars	pending	
-tests/Rules/NorwegianBokmal/NorwegianBokmalFunctionalTest.php	NorwegianBokmalFunctionalTest::testInflectingPlurals	pending	
-tests/Rules/NorwegianBokmal/NorwegianBokmalFunctionalTest.php	NorwegianBokmalFunctionalTest::testInflectingSingulars	pending	
+tests/Rules/English/EnglishFunctionalTest.php	EnglishFunctionalTest::testInflectingPlurals	ported	crates/php2rust-doctrine-inflector/tests/rules_english_functional_test.rs::testInflectingPlurals
+tests/Rules/English/EnglishFunctionalTest.php	EnglishFunctionalTest::testInflectingSingulars	ported	crates/php2rust-doctrine-inflector/tests/rules_english_functional_test.rs::testInflectingSingulars
+tests/Rules/English/EnglishFunctionalTest.php	EnglishFunctionalTest::testPluralsWhenPluralizedShouldBeUninflected	ported	crates/php2rust-doctrine-inflector/tests/rules_english_functional_test.rs::testPluralsWhenPluralizedShouldBeUninflected
+tests/Rules/English/EnglishFunctionalTest.php	EnglishFunctionalTest::testSingularsWhenSingularizedShouldBeUninflected	ported	crates/php2rust-doctrine-inflector/tests/rules_english_functional_test.rs::testSingularsWhenSingularizedShouldBeUninflected
+tests/Rules/Esperanto/EsperantoFunctionalTest.php	EsperantoFunctionalTest::testInflectingPlurals	ported	crates/php2rust-doctrine-inflector/tests/rules_esperanto_functional_test.rs::testInflectingPlurals
+tests/Rules/Esperanto/EsperantoFunctionalTest.php	EsperantoFunctionalTest::testInflectingSingulars	ported	crates/php2rust-doctrine-inflector/tests/rules_esperanto_functional_test.rs::testInflectingSingulars
+tests/Rules/French/FrenchFunctionalTest.php	FrenchFunctionalTest::testInflectingPlurals	ported	crates/php2rust-doctrine-inflector/tests/rules_french_functional_test.rs::testInflectingPlurals
+tests/Rules/French/FrenchFunctionalTest.php	FrenchFunctionalTest::testInflectingSingulars	ported	crates/php2rust-doctrine-inflector/tests/rules_french_functional_test.rs::testInflectingSingulars
+tests/Rules/Italian/ItalianFunctionalTest.php	ItalianFunctionalTest::testInflectingPlurals	ported	crates/php2rust-doctrine-inflector/tests/rules_italian_functional_test.rs::testInflectingPlurals
+tests/Rules/Italian/ItalianFunctionalTest.php	ItalianFunctionalTest::testInflectingSingulars	ported	crates/php2rust-doctrine-inflector/tests/rules_italian_functional_test.rs::testInflectingSingulars
+tests/Rules/NorwegianBokmal/NorwegianBokmalFunctionalTest.php	NorwegianBokmalFunctionalTest::testInflectingPlurals	ported	crates/php2rust-doctrine-inflector/tests/rules_norwegian_bokmal_functional_test.rs::testInflectingPlurals
+tests/Rules/NorwegianBokmal/NorwegianBokmalFunctionalTest.php	NorwegianBokmalFunctionalTest::testInflectingSingulars	ported	crates/php2rust-doctrine-inflector/tests/rules_norwegian_bokmal_functional_test.rs::testInflectingSingulars
 tests/Rules/PatternTest.php	PatternTest::testGetPattern	ported	crates/php2rust-doctrine-inflector/tests/rules_pattern_test.rs::testGetPattern
 tests/Rules/PatternTest.php	PatternTest::testGetRegex	ported	crates/php2rust-doctrine-inflector/tests/rules_pattern_test.rs::testGetRegex
 tests/Rules/PatternTest.php	PatternTest::testMatches	ported	crates/php2rust-doctrine-inflector/tests/rules_pattern_test.rs::testMatches
 tests/Rules/PatternTest.php	PatternTest::testPatternWithExplicitRegex	ported	crates/php2rust-doctrine-inflector/tests/rules_pattern_test.rs::testPatternWithExplicitRegex
 tests/Rules/PatternsTest.php	PatternsTest::testMatches	ported	crates/php2rust-doctrine-inflector/tests/rules_patterns_test.rs::testMatches
-tests/Rules/Portuguese/PortugueseFunctionalTest.php	PortugueseFunctionalTest::testInflectingPlurals	pending	
-tests/Rules/Portuguese/PortugueseFunctionalTest.php	PortugueseFunctionalTest::testInflectingSingulars	pending	
+tests/Rules/Portuguese/PortugueseFunctionalTest.php	PortugueseFunctionalTest::testInflectingPlurals	ported	crates/php2rust-doctrine-inflector/tests/rules_portuguese_functional_test.rs::testInflectingPlurals
+tests/Rules/Portuguese/PortugueseFunctionalTest.php	PortugueseFunctionalTest::testInflectingSingulars	ported	crates/php2rust-doctrine-inflector/tests/rules_portuguese_functional_test.rs::testInflectingSingulars
 tests/Rules/RulesetTest.php	RulesetTest::testGetIrregular	ported	crates/php2rust-doctrine-inflector/tests/rules_ruleset_test.rs::testGetIrregular
 tests/Rules/RulesetTest.php	RulesetTest::testGetRegular	ported	crates/php2rust-doctrine-inflector/tests/rules_ruleset_test.rs::testGetRegular
 tests/Rules/RulesetTest.php	RulesetTest::testGetUninflected	ported	crates/php2rust-doctrine-inflector/tests/rules_ruleset_test.rs::testGetUninflected
-tests/Rules/Spanish/SpanishFunctionalTest.php	SpanishFunctionalTest::testInflectingPlurals	pending	
-tests/Rules/Spanish/SpanishFunctionalTest.php	SpanishFunctionalTest::testInflectingSingulars	pending	
+tests/Rules/Spanish/SpanishFunctionalTest.php	SpanishFunctionalTest::testInflectingPlurals	ported	crates/php2rust-doctrine-inflector/tests/rules_spanish_functional_test.rs::testInflectingPlurals
+tests/Rules/Spanish/SpanishFunctionalTest.php	SpanishFunctionalTest::testInflectingSingulars	ported	crates/php2rust-doctrine-inflector/tests/rules_spanish_functional_test.rs::testInflectingSingulars
 tests/Rules/SubstitutionTest.php	SubstitutionTest::testGetFrom	ported	crates/php2rust-doctrine-inflector/tests/rules_substitution_test.rs::testGetFrom
 tests/Rules/SubstitutionTest.php	SubstitutionTest::testGetTo	ported	crates/php2rust-doctrine-inflector/tests/rules_substitution_test.rs::testGetTo
 tests/Rules/SubstitutionsTest.php	SubstitutionsTest::testGetFlippedSubstitutions	ported	crates/php2rust-doctrine-inflector/tests/rules_substitutions_test.rs::testGetFlippedSubstitutions
@@ -50,8 +50,8 @@ tests/Rules/TransformationTest.php	TransformationTest::testGetPattern	ported	cra
 tests/Rules/TransformationTest.php	TransformationTest::testGetReplacement	ported	crates/php2rust-doctrine-inflector/tests/rules_transformation_test.rs::testGetReplacement
 tests/Rules/TransformationTest.php	TransformationTest::testInflect	ported	crates/php2rust-doctrine-inflector/tests/rules_transformation_test.rs::testInflect
 tests/Rules/TransformationsTest.php	TransformationsTest::testInflect	ported	crates/php2rust-doctrine-inflector/tests/rules_transformations_test.rs::testInflect
-tests/Rules/Turkish/TurkishFunctionalTest.php	TurkishFunctionalTest::testInflectingPlurals	pending	
-tests/Rules/Turkish/TurkishFunctionalTest.php	TurkishFunctionalTest::testInflectingSingulars	pending	
+tests/Rules/Turkish/TurkishFunctionalTest.php	TurkishFunctionalTest::testInflectingPlurals	ported	crates/php2rust-doctrine-inflector/tests/rules_turkish_functional_test.rs::testInflectingPlurals
+tests/Rules/Turkish/TurkishFunctionalTest.php	TurkishFunctionalTest::testInflectingSingulars	ported	crates/php2rust-doctrine-inflector/tests/rules_turkish_functional_test.rs::testInflectingSingulars
 tests/Rules/WordTest.php	WordTest::testGetWord	ported	crates/php2rust-doctrine-inflector/tests/rules_word_test.rs::testGetWord
 tests/RulesetInflectorTest.php	RulesetInflectorTest::testInflectIrregularContinuesIfFirstRulesetReturnsOriginalValue	ported	crates/php2rust-doctrine-inflector/tests/ruleset_inflector_test.rs::testInflectIrregularContinuesIfFirstRulesetReturnsOriginalValue
 tests/RulesetInflectorTest.php	RulesetInflectorTest::testInflectIrregularUsesFirstMatch	ported	crates/php2rust-doctrine-inflector/tests/ruleset_inflector_test.rs::testInflectIrregularUsesFirstMatch
