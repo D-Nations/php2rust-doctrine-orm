@@ -1528,11 +1528,11 @@ tests/Tests/ORM/Functional/Ticket/GH6531Test.php	GH6531Test::testSimpleDerivedId
 tests/Tests/ORM/Functional/Ticket/GH6682Test.php	GH6682Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/gh6682_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/GH6699Test.php	GH6699Test::testMixedParametersWithZeroNumber	ported	crates/php2rust-doctrine-orm/tests/gh6699_test.rs::testMixedParametersWithZeroNumber
 tests/Tests/ORM/Functional/Ticket/GH6699Test.php	GH6699Test::testMixedParametersWithZeroNumberOnQueryBuilder	ported	crates/php2rust-doctrine-orm/tests/gh6699_test.rs::testMixedParametersWithZeroNumberOnQueryBuilder
-tests/Tests/ORM/Functional/Ticket/GH6740Test.php	GH6740Test::testCollectionFilteringEqualsOperator	pending	
-tests/Tests/ORM/Functional/Ticket/GH6740Test.php	GH6740Test::testCollectionFilteringGtOperator	pending	
-tests/Tests/ORM/Functional/Ticket/GH6740Test.php	GH6740Test::testCollectionFilteringGteOperator	pending	
-tests/Tests/ORM/Functional/Ticket/GH6740Test.php	GH6740Test::testCollectionFilteringLtOperator	pending	
-tests/Tests/ORM/Functional/Ticket/GH6740Test.php	GH6740Test::testCollectionFilteringLteOperator	pending	
+tests/Tests/ORM/Functional/Ticket/GH6740Test.php	GH6740Test::testCollectionFilteringEqualsOperator	ported	crates/php2rust-doctrine-orm/tests/gh6740_test.rs::testCollectionFilteringEqualsOperator
+tests/Tests/ORM/Functional/Ticket/GH6740Test.php	GH6740Test::testCollectionFilteringGtOperator	ported	crates/php2rust-doctrine-orm/tests/gh6740_test.rs::testCollectionFilteringGtOperator
+tests/Tests/ORM/Functional/Ticket/GH6740Test.php	GH6740Test::testCollectionFilteringGteOperator	ported	crates/php2rust-doctrine-orm/tests/gh6740_test.rs::testCollectionFilteringGteOperator
+tests/Tests/ORM/Functional/Ticket/GH6740Test.php	GH6740Test::testCollectionFilteringLtOperator	ported	crates/php2rust-doctrine-orm/tests/gh6740_test.rs::testCollectionFilteringLtOperator
+tests/Tests/ORM/Functional/Ticket/GH6740Test.php	GH6740Test::testCollectionFilteringLteOperator	ported	crates/php2rust-doctrine-orm/tests/gh6740_test.rs::testCollectionFilteringLteOperator
 tests/Tests/ORM/Functional/Ticket/GH6823Test.php	GH6823Test::testCharsetCollationWhenCreatingForeignRelations	pending	
 tests/Tests/ORM/Functional/Ticket/GH6937Test.php	GH6937Test::testPhoneNumberIsPopulatedWithFind	pending	
 tests/Tests/ORM/Functional/Ticket/GH6937Test.php	GH6937Test::testPhoneNumberIsPopulatedWithQueryBuilder	pending	
