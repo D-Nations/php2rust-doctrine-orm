@@ -32,6 +32,8 @@ use php2rust_doctrine_orm::cache::{
 };
 use php2rust_doctrine_orm::collection_object::ArrayCollectionObject;
 use php2rust_doctrine_orm::entity_manager::EntityManager;
+use php2rust_doctrine_orm::mapping::driver::AttributeDriver;
+use php2rust_doctrine_orm::mapping::driver::attribute_driver::Paths;
 use php2rust_doctrine_orm::mapping::{AssociationMapping, ClassMetadata};
 use php2rust_doctrine_orm::persistent_collection::PersistentCollection;
 use php2rust_doctrine_orm::persisters::collection::CollectionPersister;
@@ -40,6 +42,8 @@ use php2rust_doctrine_orm::persisters::{
 };
 use php2rust_doctrine_orm::query::ResultSetMapping;
 use php2rust_doctrine_orm::unit_of_work::{Fut, Hints};
+use php2rust_doctrine_persistence::mapping::driver::ClassLocator;
+use php2rust_doctrine_persistence::php_reflection::{self, ClassKind};
 
 use crate::orm;
 
@@ -57,8 +61,25 @@ pub struct Slc {
     pub cache_config: Arc<CacheConfiguration>,
 }
 
-/// `enableSecondLevelCache()` and `getTestEntityManager()`: a
-/// `DefaultCacheFactory` over a new `ArrayAdapter`.
+/// The classes of `tests/Tests/Models/Cache`: the recorded classes and
+/// enums of its namespace.
+#[derive(Debug)]
+pub struct CacheModelsLocator;
+
+impl ClassLocator for CacheModelsLocator {
+    fn get_class_names(&self) -> Result<Vec<String>, Thrown> {
+        Ok(php_reflection::declared()
+            .iter()
+            .filter(|class| matches!(class.kind(), ClassKind::Class | ClassKind::Enum))
+            .map(|class| class.name().to_owned())
+            .filter(|name| name.starts_with(NS))
+            .collect())
+    }
+}
+
+/// `enableSecondLevelCache()` and `getTestEntityManager()` (the attribute
+/// driver over `Models/Cache`): a `DefaultCacheFactory` over a new
+/// `ArrayAdapter`.
 pub fn slc_entity_manager() -> Slc {
     let pool = Arc::new(ArrayAdapter::new());
     let cache_config = Arc::new(CacheConfiguration::new());
@@ -69,6 +90,10 @@ pub fn slc_entity_manager() -> Slc {
     cache_config.set_cache_factory(factory.clone());
     let config = Arc::clone(&cache_config);
     let em = orm::entity_manager_with(orm::connection(), move |c| {
+        let locator: Arc<dyn ClassLocator> = Arc::new(CacheModelsLocator);
+        c.set_metadata_driver_impl(Arc::new(
+            AttributeDriver::new(Paths::Locator(locator), true).unwrap(),
+        ));
         c.set_second_level_cache_enabled(true);
         c.set_second_level_cache_configuration(config);
     });

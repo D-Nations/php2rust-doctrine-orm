@@ -32,19 +32,19 @@ tests/Tests/ORM/Cache/DefaultCacheFactoryTest.php	DefaultCacheFactoryTest::testI
 tests/Tests/ORM/Cache/DefaultCacheFactoryTest.php	DefaultCacheFactoryTest::testInheritedEntityCacheRegion	pending	
 tests/Tests/ORM/Cache/DefaultCacheFactoryTest.php	DefaultCacheFactoryTest::testInvalidFileLockRegionDirectoryException	pending	
 tests/Tests/ORM/Cache/DefaultCacheFactoryTest.php	DefaultCacheFactoryTest::testInvalidFileLockRegionDirectoryExceptionWithEmptyString	pending	
-tests/Tests/ORM/Cache/DefaultCacheTest.php	DefaultCacheTest::testContainsCollection	pending	
-tests/Tests/ORM/Cache/DefaultCacheTest.php	DefaultCacheTest::testContainsEntity	pending	
-tests/Tests/ORM/Cache/DefaultCacheTest.php	DefaultCacheTest::testEvictCollection	pending	
-tests/Tests/ORM/Cache/DefaultCacheTest.php	DefaultCacheTest::testEvictCollectionRegion	pending	
-tests/Tests/ORM/Cache/DefaultCacheTest.php	DefaultCacheTest::testEvictCollectionRegions	pending	
-tests/Tests/ORM/Cache/DefaultCacheTest.php	DefaultCacheTest::testEvictEntity	pending	
-tests/Tests/ORM/Cache/DefaultCacheTest.php	DefaultCacheTest::testEvictEntityRegion	pending	
-tests/Tests/ORM/Cache/DefaultCacheTest.php	DefaultCacheTest::testEvictEntityRegions	pending	
-tests/Tests/ORM/Cache/DefaultCacheTest.php	DefaultCacheTest::testGetCollectionCacheRegionAccess	pending	
-tests/Tests/ORM/Cache/DefaultCacheTest.php	DefaultCacheTest::testGetEntityCacheRegionAccess	pending	
-tests/Tests/ORM/Cache/DefaultCacheTest.php	DefaultCacheTest::testImplementsCache	pending	
-tests/Tests/ORM/Cache/DefaultCacheTest.php	DefaultCacheTest::testQueryCache	pending	
-tests/Tests/ORM/Cache/DefaultCacheTest.php	DefaultCacheTest::testToIdentifierArrayShouldLookupForEntityIdentifier	pending	
+tests/Tests/ORM/Cache/DefaultCacheTest.php	DefaultCacheTest::testContainsCollection	ported	crates/php2rust-doctrine-orm/tests/default_cache_test.rs::testContainsCollection
+tests/Tests/ORM/Cache/DefaultCacheTest.php	DefaultCacheTest::testContainsEntity	ported	crates/php2rust-doctrine-orm/tests/default_cache_test.rs::testContainsEntity
+tests/Tests/ORM/Cache/DefaultCacheTest.php	DefaultCacheTest::testEvictCollection	ported	crates/php2rust-doctrine-orm/tests/default_cache_test.rs::testEvictCollection
+tests/Tests/ORM/Cache/DefaultCacheTest.php	DefaultCacheTest::testEvictCollectionRegion	ported	crates/php2rust-doctrine-orm/tests/default_cache_test.rs::testEvictCollectionRegion
+tests/Tests/ORM/Cache/DefaultCacheTest.php	DefaultCacheTest::testEvictCollectionRegions	ported	crates/php2rust-doctrine-orm/tests/default_cache_test.rs::testEvictCollectionRegions
+tests/Tests/ORM/Cache/DefaultCacheTest.php	DefaultCacheTest::testEvictEntity	ported	crates/php2rust-doctrine-orm/tests/default_cache_test.rs::testEvictEntity
+tests/Tests/ORM/Cache/DefaultCacheTest.php	DefaultCacheTest::testEvictEntityRegion	ported	crates/php2rust-doctrine-orm/tests/default_cache_test.rs::testEvictEntityRegion
+tests/Tests/ORM/Cache/DefaultCacheTest.php	DefaultCacheTest::testEvictEntityRegions	ported	crates/php2rust-doctrine-orm/tests/default_cache_test.rs::testEvictEntityRegions
+tests/Tests/ORM/Cache/DefaultCacheTest.php	DefaultCacheTest::testGetCollectionCacheRegionAccess	ported	crates/php2rust-doctrine-orm/tests/default_cache_test.rs::testGetCollectionCacheRegionAccess
+tests/Tests/ORM/Cache/DefaultCacheTest.php	DefaultCacheTest::testGetEntityCacheRegionAccess	ported	crates/php2rust-doctrine-orm/tests/default_cache_test.rs::testGetEntityCacheRegionAccess
+tests/Tests/ORM/Cache/DefaultCacheTest.php	DefaultCacheTest::testImplementsCache	ported	crates/php2rust-doctrine-orm/tests/default_cache_test.rs::testImplementsCache
+tests/Tests/ORM/Cache/DefaultCacheTest.php	DefaultCacheTest::testQueryCache	ported	crates/php2rust-doctrine-orm/tests/default_cache_test.rs::testQueryCache
+tests/Tests/ORM/Cache/DefaultCacheTest.php	DefaultCacheTest::testToIdentifierArrayShouldLookupForEntityIdentifier	ported	crates/php2rust-doctrine-orm/tests/default_cache_test.rs::testToIdentifierArrayShouldLookupForEntityIdentifier
 tests/Tests/ORM/Cache/DefaultCollectionHydratorTest.php	DefaultCollectionHydratorTest::testImplementsCollectionEntryStructure	pending	
 tests/Tests/ORM/Cache/DefaultCollectionHydratorTest.php	DefaultCollectionHydratorTest::testLoadCacheCollection	pending	
 tests/Tests/ORM/Cache/DefaultEntityHydratorTest.php	DefaultEntityHydratorTest::testBuildCacheEntry	ported	crates/php2rust-doctrine-orm/tests/default_entity_hydrator_test.rs::testBuildCacheEntry

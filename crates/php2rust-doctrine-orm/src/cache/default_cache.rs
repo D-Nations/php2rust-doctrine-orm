@@ -177,7 +177,9 @@ impl DefaultCache {
         ))
     }
 
-    fn to_identifier_array(
+    /// `toIdentifierArray()` (private upstream; its test calls it by
+    /// reflection).
+    pub fn to_identifier_array(
         em: &EntityManager,
         metadata: &ClassMetadata,
         identifier: &Value,
