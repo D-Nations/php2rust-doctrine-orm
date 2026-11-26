@@ -55,7 +55,7 @@ assert_eq!(PhpString::from("O'Neil"), lexer.token().unwrap().value);
 | `ResultSetMapping` | `Query/ResultSetMapping.php` | ResultSetMappingTest (3); the persister's mappings; the SQL walker's result mappings |
 | `QueryBuilder`: the DQL parts (`add()` with its `$append` check and the deprecation `https://github.com/doctrine/orm/pull/12051` for numeric join keys, `getDQLPart(s)()`, `resetDQLPart(s)()`), `select()`/`addSelect()`/`distinct()`, `delete()`/`update()` (the alias check), `from()`/`indexBy()`, the joins (root aliases), `set()`, `where()`/`andWhere()`/`orWhere()`, `groupBy()`, `having()` and its variants, `orderBy()`/`addOrderBy()` (the deprecation `https://github.com/doctrine/orm/issues/11313` for an order that is not a `SortDirection`, `Invalid sort direction`), `addCriteria()`, the root aliases and entities, parameters (`setParameter()` updates a parameter of the same normalized name, `createNamedParameter()`), first and max results (no limit for DELETE and UPDATE), hints, the second-level cache options, `getDQL()` (cached until a part changes), `getQuery()`, `__clone()`; `QueryType`; `EntityManager::createQueryBuilder()`, `getExpressionBuilder()`, `EntityRepository::createQueryBuilder()` | `QueryBuilder.php`, `QueryType.php`, `EntityManager.php`, `EntityRepository.php` | QueryBuilderTest (108 of 109), ExprTest's subquery tests (5) |
 | `QueryExpressionVisitor`: a `Criteria`'s comparisons and composites as `Expr` objects with their parameters (the alias prefix, `_`-joined parameter names made unique by the parameter count, `CONTAINS`/`STARTS_WITH`/`ENDS_WITH` as `LIKE`, `MEMBER OF`, `IS NULL` for a null value), the `RuntimeException` texts | `Query/QueryExpressionVisitor.php` | QueryExpressionVisitorTest (6) |
-| `Tools\Pagination`: `CountWalker` (`HINT_DISTINCT`, the HAVING and two-FROM texts), `CountOutputWalker`, `LimitSubqueryWalker` (the identifier type hint, `HINT_ENABLE_DISTINCT`), `LimitSubqueryOutputWalker` (`SELECT DISTINCT <ids> FROM (...) dctrn_result`, the ORDER BY columns added as hidden selects, the inner ordered query; the `ROW_NUMBER()` SQL for PostgreSQL, SQL Server, Oracle and DB2), `WhereInWalker`, `RootTypeWalker`, `RowNumberOverFunction` (`RowNumberOverFunctionNotEnabled`), the RuntimeException texts; `Paginator`'s queries (`getCountQuery()`, `cloneQuery()`, `appendTreeWalker()`, `unbindUnusedQueryParams()`, `useOutputWalker()`) | `Tools/Pagination/{CountWalker,CountOutputWalker,LimitSubqueryWalker,LimitSubqueryOutputWalker,WhereInWalker,RootTypeWalker,RowNumberOverFunction,Paginator,PaginatorQuery}.php`, `Tools/Pagination/Exception/RowNumberOverFunctionNotEnabled.php` | CountWalkerTest (8), WhereInWalkerTest (1), LimitSubqueryWalkerTest (10), RootTypeWalkerTest (1), CountOutputWalkerTest (4 of 5), LimitSubqueryOutputWalkerTest (12 of 27) |
+| `Tools\Pagination`: `CountWalker` (`HINT_DISTINCT`, the HAVING and two-FROM texts), `CountOutputWalker`, `LimitSubqueryWalker` (the identifier type hint, `HINT_ENABLE_DISTINCT`), `LimitSubqueryOutputWalker` (`SELECT DISTINCT <ids> FROM (...) dctrn_result`, the ORDER BY columns added as hidden selects, the inner ordered query; the `ROW_NUMBER()` SQL for PostgreSQL, SQL Server, Oracle and DB2), `WhereInWalker`, `RootTypeWalker`, `RowNumberOverFunction` (`RowNumberOverFunctionNotEnabled`), the RuntimeException texts; `PaginatorQuery` (`getCountQuery()`, `cloneQuery()`, `appendTreeWalker()`, `unbindUnusedQueryParams()`, `useOutputWalker()`, `getResultForOffset()` with the fetch-join ID subquery + WHERE IN path and the output-walker path, `convertWhereInIdentifiersToDatabaseValues()`); `Paginator` (`count()`, `getIterator()`); `OffsetPaginator` and `PaginatorInterface` (`paginate()`, its InvalidArgumentException text); `Window`, `Page`, `WindowPage` (the LogicException texts) | `Tools/Pagination/{CountWalker,CountOutputWalker,LimitSubqueryWalker,LimitSubqueryOutputWalker,WhereInWalker,RootTypeWalker,RowNumberOverFunction,Paginator,PaginatorQuery,PaginatorInterface,OffsetPaginator,Page,Window,WindowPage}.php`, `Tools/Pagination/Exception/RowNumberOverFunctionNotEnabled.php` | CountWalkerTest (8), WhereInWalkerTest (1), LimitSubqueryWalkerTest (10), RootTypeWalkerTest (1), CountOutputWalkerTest (4 of 5), LimitSubqueryOutputWalkerTest (13 of 27), PaginatorTest (3), OffsetPaginatorTest (3), WindowTest (10 of 11), WindowPageTest (16), Functional/PaginationTest (54 of 57, on SQLite) |
 
 `Lexer::new()` returns doctrine/lexer's `PcreError`, which the DQL
 patterns never cause.
@@ -107,21 +107,38 @@ no named arguments).
 
 Pagination, not reproduced and so not claimed:
 
-- The paginator holds a `Query`, but `Paginator::count()` and
-  `getIterator()` are not there yet, nor `getResultForOffset()` and
-  `convertWhereInIdentifiersToDatabaseValues()`. The `PaginatorQuery`
-  methods (private upstream) are public associated functions until then.
-  PaginatorTest (3) and the functional PaginationTest are pending.
-- `LimitSubqueryOutputWalker` borrows the query instead of cloning it:
-  it reads the limit and offset when it is built and walks the inner
-  query through a view with no limit and offset, so its `getQuery()` is
-  the original query (`testSubqueryClonedCompletely` is pending). The
+- PHP's `PaginatorQuery` trait is a `PaginatorQuery` value that
+  `Paginator` and `OffsetPaginator` hold; its methods (private upstream)
+  are public, and `Paginator::paginator_query()` and `get_count_query()`
+  reach them where the tests use reflection. `Query|QueryBuilder` is the
+  `QueryOrBuilder` enum. `PaginatorInterface::paginate()` takes the
+  position as a `&Value` (PHP's `mixed`): `Window` is a `php_value`
+  object, so a non-window position gives upstream's
+  InvalidArgumentException.
+- `LimitSubqueryOutputWalker` keeps an `Rc<Query>` clone (parameters and
+  hints copied, not cacheable, no limit or offset) for `getQuery()`
+  (`get_clone_query()`), but walks the inner query through the borrowed
+  query and a view of it with no limit and offset. The
   ORDER BY column patterns are matched as text with ASCII case folding
   and the `[a-z0-9_]` boundaries of upstream's regex, without regex
   metacharacters in the alias or column. `platformSupportsRowNumber()`
   checks the platform classes; there is no `supportsRowNumberFunction()`.
   `clone $this` copies the walker's state and shares the parser result,
   as PHP does.
+- PaginatorTest and OffsetPaginatorTest replace the mocked connection and
+  hydrator with a recording driver connection
+  (`tests/common/recording_connection.rs`) that gives queued rows and
+  records the bound values; the expected values are those bound after
+  the array parameters are expanded (`[2, 1, 10]`).
+- Functional/PaginationTest does not populate the `CompanyManager` (joined
+  class table inheritance persisters are not ported, so
+  `testJoinedClassTableInheritance` is pending) nor the `User1`s (no
+  `SingleTablePersister`, so
+  `testIterateWithOutputWalkersWithFetchJoinWithComplexOrderByReferencingJoinedWithLimitAndOffsetWithInheritanceType`
+  is pending); `testDifferentResultLengthsDoNotRequireExtraQueryCacheEntries`
+  is pending: there is no query cache. A data provider's rows run in one
+  test. `CustomIdObject`'s `__toString()` is compared through its `id`.
+  The models are recorded lines appended to `tests/data/models.json`.
 - `LimitSubqueryWalker::IDENTIFIER_TYPE`'s hint holds the DBAL type as
   `TypeObject`, a `php_value` object around the `Arc<dyn Type>`.
 - Only `SQLitePlatform` exists: the walker tests on `MySQLPlatform` run on
