@@ -11,6 +11,7 @@ php2rust-doctrine-lexer = { path = "../php2rust-doctrine-lexer" }
 php-value = { workspace = true }
 
 [dev-dependencies]
+php-value = { workspace = true, features = ["vectors"] }
 serde_json = "1.0.154"
 
 [lints]
