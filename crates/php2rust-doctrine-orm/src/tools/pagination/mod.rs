@@ -6,6 +6,10 @@
 
 pub mod count_output_walker;
 pub mod count_walker;
+pub mod cursor;
+pub mod cursor_page;
+pub mod cursor_paginator;
+pub mod cursor_walker;
 pub mod limit_subquery_output_walker;
 pub mod limit_subquery_walker;
 pub mod offset_paginator;
@@ -23,6 +27,10 @@ use crate::query::ast::IdentificationVariableDeclaration;
 
 pub use count_output_walker::CountOutputWalker;
 pub use count_walker::CountWalker;
+pub use cursor::{Cursor, CursorItem, InvalidCursor};
+pub use cursor_page::CursorPage;
+pub use cursor_paginator::CursorPaginator;
+pub use cursor_walker::{CursorOrderByExpression, CursorOrderByItem, CursorWalker, OrderDirection};
 pub use limit_subquery_output_walker::LimitSubqueryOutputWalker;
 pub use limit_subquery_walker::LimitSubqueryWalker;
 pub use offset_paginator::{OffsetPaginator, PaginatorInterface};
