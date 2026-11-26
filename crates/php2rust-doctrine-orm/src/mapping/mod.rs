@@ -21,6 +21,7 @@ pub mod ordered_map;
 pub mod property_accessors;
 pub mod property_value;
 pub mod quote_strategy;
+pub mod reflection_property;
 pub mod typed_field_mapper;
 
 pub use association_mapping::{
@@ -34,6 +35,7 @@ pub use join_column_mapping::{JoinColumnMapping, JoinTableMapping};
 pub use naming_strategy::{DefaultNamingStrategy, NamingStrategy, UnderscoreNamingStrategy};
 pub use property_value::{Sleep, serialize_object};
 pub use quote_strategy::{AnsiQuoteStrategy, DefaultQuoteStrategy, QuoteStrategy};
+pub use reflection_property::{ReflectionEmbeddedProperty, ReflectionReadonlyProperty};
 
 /// Declares the ORM's own classes in persistence's class registry (the
 /// exception classes and the interfaces reflection asks about).
