@@ -30,5 +30,8 @@ record() {
 }
 
 case "${1:-}" in
-    *) echo "usage: scripts/record.sh TARGET (no targets yet)" >&2; exit 2 ;;
+    collections)
+        record doctrine_collections.php \
+            crates/php2rust-doctrine-collections/tests/data/doctrine_collections.json ;;
+    *) echo "usage: scripts/record.sh collections" >&2; exit 2 ;;
 esac
