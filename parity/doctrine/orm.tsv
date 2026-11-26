@@ -1513,10 +1513,10 @@ tests/Tests/ORM/Functional/Ticket/GH6141Test.php	GH6141Test::testEnumDiscriminat
 tests/Tests/ORM/Functional/Ticket/GH6217Test.php	GH6217Test::testLoadingOfSecondLevelCacheOnEagerAssociations	pending	needs the second-level cache
 tests/Tests/ORM/Functional/Ticket/GH6362Test.php	GH6362Test::testInheritanceJoinAlias	ported	crates/php2rust-doctrine-orm/tests/gh6362_test.rs::testInheritanceJoinAlias
 tests/Tests/ORM/Functional/Ticket/GH6394Test.php	GH6394Test::testFetchVersionValueForDifferentIdFieldAndColumn	ported	crates/php2rust-doctrine-orm/tests/gh6394_test.rs::testFetchVersionValueForDifferentIdFieldAndColumn
-tests/Tests/ORM/Functional/Ticket/GH6402Test.php	GH6402Test::testFind	pending	
-tests/Tests/ORM/Functional/Ticket/GH6402Test.php	GH6402Test::testFindWithSubClass	pending	
-tests/Tests/ORM/Functional/Ticket/GH6402Test.php	GH6402Test::testQuery	pending	
-tests/Tests/ORM/Functional/Ticket/GH6402Test.php	GH6402Test::testQueryWithSubClass	pending	
+tests/Tests/ORM/Functional/Ticket/GH6402Test.php	GH6402Test::testFind	ported	crates/php2rust-doctrine-orm/tests/gh6402_test.rs::testFind
+tests/Tests/ORM/Functional/Ticket/GH6402Test.php	GH6402Test::testFindWithSubClass	ported	crates/php2rust-doctrine-orm/tests/gh6402_test.rs::testFindWithSubClass
+tests/Tests/ORM/Functional/Ticket/GH6402Test.php	GH6402Test::testQuery	ported	crates/php2rust-doctrine-orm/tests/gh6402_test.rs::testQuery
+tests/Tests/ORM/Functional/Ticket/GH6402Test.php	GH6402Test::testQueryWithSubClass	ported	crates/php2rust-doctrine-orm/tests/gh6402_test.rs::testQueryWithSubClass
 tests/Tests/ORM/Functional/Ticket/GH6464Test.php	GH6464Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/GH6499OneToManyRelationshipTest.php	GH6499OneToManyRelationshipTest::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/GH6499OneToOneRelationshipTest.php	GH6499OneToOneRelationshipTest::testIssue	pending	
