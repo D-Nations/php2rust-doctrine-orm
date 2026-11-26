@@ -239,24 +239,24 @@ tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetQuoteStrategy
 tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetSecondLevelCacheConfig	pending	the query, hydration and metadata caches and the second level cache configuration are not ported
 tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetTypedFieldMapper	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetTypedFieldMapper
 tests/Tests/ORM/Entity/ConstructorTest.php	ConstructorTest::testFieldInitializationInConstructor	pending	
-tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testAffectedByErrorIfClosedException	pending	
-tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testCreateNativeQuery	pending	
-tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testCreateQuery	pending	
-tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testCreateQueryBuilder	pending	
-tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testCreateQueryBuilderAliasValid	pending	
-tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testCreateQueryDqlIsOptional	pending	
-tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testGetConfiguration	pending	
-tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testGetConnection	pending	
-tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testGetEventManager	pending	
-tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testGetMetadataFactory	pending	
-tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testGetProxyFactory	pending	
-tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testGetUnitOfWork	pending	
-tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testIsOpen	pending	
-tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testItDoesNotAttemptToRollbackIfNoTransactionIsActive	pending	
-tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testItPreservesTheOriginalExceptionOnRollbackFailure	pending	
-tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testLazyGhostEntityManager	pending	
-tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testWrapInTransactionAcceptsReturn	pending	
-tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testWrapInTransactionReThrowsThrowables	pending	
+tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testAffectedByErrorIfClosedException	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testAffectedByErrorIfClosedException
+tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testCreateNativeQuery	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testCreateNativeQuery
+tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testCreateQuery	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testCreateQuery
+tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testCreateQueryBuilder	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testCreateQueryBuilder
+tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testCreateQueryBuilderAliasValid	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testCreateQueryBuilderAliasValid
+tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testCreateQueryDqlIsOptional	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testCreateQueryDqlIsOptional
+tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testGetConfiguration	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testGetConfiguration
+tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testGetConnection	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testGetConnection
+tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testGetEventManager	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testGetEventManager
+tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testGetMetadataFactory	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testGetMetadataFactory
+tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testGetProxyFactory	pending	the proxies are native lazy ghosts: there is no ProxyFactory object
+tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testGetUnitOfWork	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testGetUnitOfWork
+tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testIsOpen	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testIsOpen
+tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testItDoesNotAttemptToRollbackIfNoTransactionIsActive	pending	overrides Connection::commit() and isTransactionActive() in a subclass (the DBAL connection is a struct)
+tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testItPreservesTheOriginalExceptionOnRollbackFailure	pending	overrides Connection::rollBack() in a subclass (the DBAL connection is a struct) and reads the previous exception (Thrown has none)
+tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testLazyGhostEntityManager	pending	a lazy ghost of the entity manager through reflection (ReflectionClass::newLazyGhost) is not ported
+tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testWrapInTransactionAcceptsReturn	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testWrapInTransactionAcceptsReturn
+tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testWrapInTransactionReThrowsThrowables	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testWrapInTransactionReThrowsThrowables
 tests/Tests/ORM/EntityNotFoundExceptionTest.php	EntityNotFoundExceptionTest::testFromClassNameAndIdentifier	pending	
 tests/Tests/ORM/EntityNotFoundExceptionTest.php	EntityNotFoundExceptionTest::testNoIdentifierFound	pending	
 tests/Tests/ORM/EntityRepositoryTest.php	EntityRepositoryTest::testExpr	pending	
