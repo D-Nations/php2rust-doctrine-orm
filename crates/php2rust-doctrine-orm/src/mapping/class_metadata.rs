@@ -2130,3 +2130,36 @@ impl ClassMetadataInfo {
 pub fn sort_direction(direction: SortDirection) -> Value {
     Value::Object(EnumCase::new(SortDirection::CLASS, direction.name(), None).object())
 }
+
+/// `constant('Doctrine\ORM\Mapping\ClassMetadata::' . $name)` for the
+/// integer constants; `None` for an undefined one.
+pub fn constant(name: &str) -> Option<i64> {
+    Some(match name {
+        "INHERITANCE_TYPE_NONE" => INHERITANCE_TYPE_NONE,
+        "INHERITANCE_TYPE_JOINED" => INHERITANCE_TYPE_JOINED,
+        "INHERITANCE_TYPE_SINGLE_TABLE" => INHERITANCE_TYPE_SINGLE_TABLE,
+        "GENERATOR_TYPE_AUTO" => GENERATOR_TYPE_AUTO,
+        "GENERATOR_TYPE_SEQUENCE" => GENERATOR_TYPE_SEQUENCE,
+        "GENERATOR_TYPE_IDENTITY" => GENERATOR_TYPE_IDENTITY,
+        "GENERATOR_TYPE_NONE" => GENERATOR_TYPE_NONE,
+        "GENERATOR_TYPE_CUSTOM" => GENERATOR_TYPE_CUSTOM,
+        "CHANGETRACKING_DEFERRED_IMPLICIT" => CHANGETRACKING_DEFERRED_IMPLICIT,
+        "CHANGETRACKING_DEFERRED_EXPLICIT" => CHANGETRACKING_DEFERRED_EXPLICIT,
+        "FETCH_LAZY" => FETCH_LAZY,
+        "FETCH_EAGER" => FETCH_EAGER,
+        "FETCH_EXTRA_LAZY" => FETCH_EXTRA_LAZY,
+        "TO_ONE" => TO_ONE,
+        "TO_MANY" => TO_MANY,
+        "ONE_TO_ONE" => crate::mapping::association_mapping::ONE_TO_ONE,
+        "MANY_TO_ONE" => crate::mapping::association_mapping::MANY_TO_ONE,
+        "ONE_TO_MANY" => crate::mapping::association_mapping::ONE_TO_MANY,
+        "MANY_TO_MANY" => crate::mapping::association_mapping::MANY_TO_MANY,
+        "CACHE_USAGE_READ_ONLY" => CACHE_USAGE_READ_ONLY,
+        "CACHE_USAGE_NONSTRICT_READ_WRITE" => CACHE_USAGE_NONSTRICT_READ_WRITE,
+        "CACHE_USAGE_READ_WRITE" => CACHE_USAGE_READ_WRITE,
+        "GENERATED_NEVER" => GENERATED_NEVER,
+        "GENERATED_INSERT" => GENERATED_INSERT,
+        "GENERATED_ALWAYS" => GENERATED_ALWAYS,
+        _ => return None,
+    })
+}
