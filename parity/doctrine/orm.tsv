@@ -1505,8 +1505,8 @@ tests/Tests/ORM/Functional/Ticket/GH5804Test.php	GH5804Test::testTextColumnSaveA
 tests/Tests/ORM/Functional/Ticket/GH5887Test.php	GH5887Test::testLazyLoadsForeignEntitiesInOneToOneRelationWhileHavingCustomIdObject	pending	a custom DBAL type of the test file (the recorder cannot load a DBAL Type subclass)
 tests/Tests/ORM/Functional/Ticket/GH5988Test.php	GH5988Test::testDelete	pending	a custom DBAL type of the test file (the recorder cannot load a DBAL Type subclass)
 tests/Tests/ORM/Functional/Ticket/GH5998Test.php	GH5998Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/gh5998_test.rs::testIssue
-tests/Tests/ORM/Functional/Ticket/GH6029Test.php	GH6029Test::testManyToManyAssociation	pending	
-tests/Tests/ORM/Functional/Ticket/GH6029Test.php	GH6029Test::testOneToManyAssociation	pending	
+tests/Tests/ORM/Functional/Ticket/GH6029Test.php	GH6029Test::testManyToManyAssociation	ported	crates/php2rust-doctrine-orm/tests/gh6029_test.rs::testManyToManyAssociation
+tests/Tests/ORM/Functional/Ticket/GH6029Test.php	GH6029Test::testOneToManyAssociation	ported	crates/php2rust-doctrine-orm/tests/gh6029_test.rs::testOneToManyAssociation
 tests/Tests/ORM/Functional/Ticket/GH6123Test.php	GH6123Test::testLoadingRemovedEntityFromDatabaseDoesNotCreateNewManagedEntityInstance	pending	
 tests/Tests/ORM/Functional/Ticket/GH6123Test.php	GH6123Test::testRemovedEntityCanBePersistedAgain	pending	
 tests/Tests/ORM/Functional/Ticket/GH6141Test.php	GH6141Test::testEnumDiscriminatorsShouldBeConvertedToString	pending	a custom DBAL type of the test file (the recorder cannot load a DBAL Type subclass)
