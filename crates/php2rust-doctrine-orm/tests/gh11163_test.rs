@@ -28,7 +28,11 @@ use ticket::*;
 fn bucket(id: i64) -> Object {
     let bucket = new("GH11163Bucket");
     set(&bucket, "id", Value::Int(id));
-    set(&bucket, "items", ArrayCollectionObject::value(PhpArray::new()));
+    set(
+        &bucket,
+        "items",
+        ArrayCollectionObject::value(PhpArray::new()),
+    );
     bucket
 }
 
