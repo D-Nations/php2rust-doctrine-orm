@@ -360,28 +360,28 @@ src/Query/Exec/SingleSelectExecutor.php	SingleSelectExecutor	24	pending
 src/Query/Exec/SingleSelectSqlFinalizer.php	SingleSelectSqlFinalizer	32	pending	
 src/Query/Exec/SingleTableDeleteUpdateExecutor.php	SingleTableDeleteUpdateExecutor	24	pending	
 src/Query/Exec/SqlFinalizer.php	SqlFinalizer	7	pending	
-src/Query/Expr.php	Expr	226	pending	
-src/Query/Expr/Andx.php	Andx	18	pending	
-src/Query/Expr/Base.php	Base	59	pending	
-src/Query/Expr/Comparison.php	Comparison	31	pending	
-src/Query/Expr/Composite.php	Composite	31	pending	
-src/Query/Expr/From.php	From	29	pending	
-src/Query/Expr/Func.php	Func	26	pending	
-src/Query/Expr/GroupBy.php	GroupBy	12	pending	
-src/Query/Expr/Join.php	Join	51	pending	
-src/Query/Expr/Literal.php	Literal	12	pending	
-src/Query/Expr/Math.php	Math	36	pending	
-src/Query/Expr/OrderBy.php	OrderBy	66	pending	
-src/Query/Expr/Orx.php	Orx	18	pending	
-src/Query/Expr/Select.php	Select	14	pending	
+src/Query/Expr.php	Expr	226	ported	crates/php2rust-doctrine-orm/src/query/expr.rs
+src/Query/Expr/Andx.php	Andx	18	ported	crates/php2rust-doctrine-orm/src/query/expr/andx.rs
+src/Query/Expr/Base.php	Base	59	ported	crates/php2rust-doctrine-orm/src/query/expr/base.rs
+src/Query/Expr/Comparison.php	Comparison	31	ported	crates/php2rust-doctrine-orm/src/query/expr/comparison.rs
+src/Query/Expr/Composite.php	Composite	31	ported	crates/php2rust-doctrine-orm/src/query/expr/composite.rs
+src/Query/Expr/From.php	From	29	ported	crates/php2rust-doctrine-orm/src/query/expr/from.rs
+src/Query/Expr/Func.php	Func	26	ported	crates/php2rust-doctrine-orm/src/query/expr/func.rs
+src/Query/Expr/GroupBy.php	GroupBy	12	ported	crates/php2rust-doctrine-orm/src/query/expr/group_by.rs
+src/Query/Expr/Join.php	Join	51	ported	crates/php2rust-doctrine-orm/src/query/expr/join.rs
+src/Query/Expr/Literal.php	Literal	12	ported	crates/php2rust-doctrine-orm/src/query/expr/literal.rs
+src/Query/Expr/Math.php	Math	36	ported	crates/php2rust-doctrine-orm/src/query/expr/math.rs
+src/Query/Expr/OrderBy.php	OrderBy	66	ported	crates/php2rust-doctrine-orm/src/query/expr/order_by.rs
+src/Query/Expr/Orx.php	Orx	18	ported	crates/php2rust-doctrine-orm/src/query/expr/orx.rs
+src/Query/Expr/Select.php	Select	14	ported	crates/php2rust-doctrine-orm/src/query/expr/select.rs
 src/Query/Filter/FilterException.php	FilterException	16	pending	
 src/Query/Filter/Parameter.php	Parameter	13	pending	
 src/Query/Filter/SQLFilter.php	SQLFilter	85	pending	
 src/Query/FilterCollection.php	FilterCollection	112	pending	
 src/Query/Lexer.php	Lexer	92	ported	crates/php2rust-doctrine-orm/src/query/lexer.rs
 src/Query/OutputWalker.php	OutputWalker	7	pending	
-src/Query/Parameter.php	Parameter	41	pending	
-src/Query/ParameterTypeInferer.php	ParameterTypeInferer	52	pending	
+src/Query/Parameter.php	Parameter	41	ported	crates/php2rust-doctrine-orm/src/query/parameter.rs
+src/Query/ParameterTypeInferer.php	ParameterTypeInferer	52	ported	crates/php2rust-doctrine-orm/src/query/parameter_type_inferer.rs
 src/Query/Parser.php	Parser	2140	pending	
 src/Query/ParserResult.php	ParserResult	81	pending	
 src/Query/Printer.php	Printer	26	pending	
