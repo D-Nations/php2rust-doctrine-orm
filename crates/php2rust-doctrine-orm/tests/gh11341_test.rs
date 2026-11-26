@@ -64,8 +64,7 @@ fn matches_discriminator_values(sql: &str, values: &str) -> bool {
         return false;
     };
     let mut chars = head.chars();
-    chars.next_back().is_some_and(|c| c.is_ascii_lowercase())
-        && chars.as_str().ends_with("WHERE ")
+    chars.next_back().is_some_and(|c| c.is_ascii_lowercase()) && chars.as_str().ends_with("WHERE ")
 }
 
 #[tokio::test]
