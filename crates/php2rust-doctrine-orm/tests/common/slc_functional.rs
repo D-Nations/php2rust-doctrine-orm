@@ -15,7 +15,7 @@
 //! Upstream: doctrine/orm tests/Tests/Models/Cache/Person.php tests/Tests/Models/Cache/Address.php
 //! Upstream: doctrine/orm tests/Tests/Models/Cache/Token.php tests/Tests/Models/Cache/Action.php
 //! Upstream: doctrine/orm tests/Tests/Models/Cache/ComplexAction.php tests/Tests/Models/Cache/Login.php
-//! Upstream: doctrine/orm tests/Tests/Models/Cache/Client.php
+//! Upstream: doctrine/orm tests/Tests/Models/Cache/Client.php tests/Tests/Models/Cache/Flight.php
 
 #![allow(dead_code, reason = "each test file uses a subset")]
 #![allow(
@@ -673,4 +673,33 @@ impl Fixture {
         self.em.initialize_object(&target).await.unwrap();
         target
     }
+}
+
+/// `new Flight($leavingFrom, $goingTo)`.
+pub fn flight(leaving_from: &Object, going_to: &Object) -> Object {
+    let flight = orm::new_object(FLIGHT);
+    orm::set_obj(&flight, "leavingFrom", leaving_from);
+    orm::set_obj(&flight, "goingTo", going_to);
+    orm::set(
+        &flight,
+        "departure",
+        DateTime::object(DateTimeImmutable::now(TimeZone::Utc)),
+    );
+    flight
+}
+
+/// `new DateTime('now')`.
+pub fn now() -> Value {
+    DateTime::object(DateTimeImmutable::now(TimeZone::Utc))
+}
+
+/// `new DateTime('tomorrow')`: midnight UTC of the next day.
+pub fn tomorrow() -> Value {
+    let now = DateTimeImmutable::now(TimeZone::Utc).timestamp();
+    let today = now - now.rem_euclid(86_400);
+    DateTime::object(DateTimeImmutable::from_timestamp(
+        today + 86_400,
+        0,
+        TimeZone::Utc,
+    ))
 }
