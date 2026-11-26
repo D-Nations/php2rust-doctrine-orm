@@ -29,6 +29,7 @@ use std::fmt;
 use std::path::PathBuf;
 use std::sync::{Arc, LazyLock, PoisonError, RwLock};
 
+use php_value::object::{GenericObject, StdClass};
 use php_value::{Key, Object, PhpArray, PhpObject, Thrown, Value};
 use php2rust_doctrine_collections::reflection::{RawProperties, register_raw_properties};
 
@@ -199,6 +200,12 @@ impl PropertyInfo {
 /// `StaticPHPDriver` calls.
 pub type LoadMetadataFn = Arc<dyn Fn(&dyn ClassMetadata) -> Result<(), Thrown> + Send + Sync>;
 
+/// Makes a blank instance of a class without running its constructor:
+/// what `ReflectionClass::newInstanceWithoutConstructor()` gives (and,
+/// for an internal final class, what `unserialize()` of an empty payload
+/// gives, or what it throws).
+pub type NewInstanceFn = Arc<dyn Fn() -> Result<Object, Thrown> + Send + Sync>;
+
 /// A declared method.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct MethodInfo {
@@ -246,6 +253,7 @@ impl MethodInfo {
 
 /// A declared class, interface, trait or enum.
 #[derive(Clone)]
+#[allow(clippy::struct_excessive_bools, reason = "the flags PHP keeps on a class entry")]
 pub struct ClassInfo {
     name: String,
     kind: ClassKind,
@@ -257,6 +265,10 @@ pub struct ClassInfo {
     methods: Vec<MethodInfo>,
     cases: Vec<Object>,
     load_metadata: Option<LoadMetadataFn>,
+    is_abstract: bool,
+    is_final: bool,
+    is_internal: bool,
+    new_instance: Option<NewInstanceFn>,
 }
 
 impl fmt::Debug for ClassInfo {
@@ -272,6 +284,10 @@ impl fmt::Debug for ClassInfo {
             .field("methods", &self.methods)
             .field("cases", &self.cases)
             .field("load_metadata", &self.load_metadata.is_some())
+            .field("is_abstract", &self.is_abstract)
+            .field("is_final", &self.is_final)
+            .field("is_internal", &self.is_internal)
+            .field("new_instance", &self.new_instance.is_some())
             .finish()
     }
 }
@@ -290,6 +306,10 @@ impl ClassInfo {
             methods: Vec::new(),
             cases: Vec::new(),
             load_metadata: None,
+            is_abstract: false,
+            is_final: false,
+            is_internal: false,
+            new_instance: None,
         }
     }
 
@@ -372,8 +392,52 @@ impl ClassInfo {
         self
     }
 
+    /// `abstract class Name {}`.
+    #[must_use]
+    pub fn abstract_class(mut self) -> Self {
+        self.is_abstract = true;
+        self
+    }
+
+    /// `final class Name {}`.
+    #[must_use]
+    pub fn final_class(mut self) -> Self {
+        self.is_final = true;
+        self
+    }
+
+    /// A class PHP itself (or an extension) declares
+    /// (`ReflectionClass::isInternal()`).
+    #[must_use]
+    pub fn internal(mut self) -> Self {
+        self.is_internal = true;
+        self
+    }
+
+    /// How to make a blank instance without the constructor (see
+    /// [`NewInstanceFn`]). Without one, a blank instance is a
+    /// `php_value::object::GenericObject` with the public non-static
+    /// default properties (`stdClass` gives a `StdClass`).
+    #[must_use]
+    pub fn new_instance(mut self, new_instance: NewInstanceFn) -> Self {
+        self.new_instance = Some(new_instance);
+        self
+    }
+
     pub fn name(&self) -> &str {
         &self.name
+    }
+
+    pub fn is_abstract(&self) -> bool {
+        self.is_abstract
+    }
+
+    pub fn is_final(&self) -> bool {
+        self.is_final
+    }
+
+    pub fn is_internal(&self) -> bool {
+        self.is_internal
     }
 
     pub fn kind(&self) -> ClassKind {
@@ -434,22 +498,22 @@ static CLASSES: LazyLock<RwLock<ClassTable>> = LazyLock::new(|| {
         order: Vec::new(),
     };
     for info in [
-        ClassInfo::class("stdClass"),
-        ClassInfo::interface("Throwable").implements("Stringable"),
-        ClassInfo::interface("Stringable"),
-        ClassInfo::interface("UnitEnum"),
-        ClassInfo::interface("BackedEnum").implements("UnitEnum"),
-        ClassInfo::class("Exception").implements("Throwable"),
-        ClassInfo::class("Error").implements("Throwable"),
-        ClassInfo::class("TypeError").extends("Error"),
-        ClassInfo::class("ValueError").extends("Error"),
-        ClassInfo::class("AssertionError").extends("Error"),
-        ClassInfo::class("ErrorException").extends("Exception"),
-        ClassInfo::class("LogicException").extends("Exception"),
-        ClassInfo::class("InvalidArgumentException").extends("LogicException"),
-        ClassInfo::class("RuntimeException").extends("Exception"),
-        ClassInfo::class("UnexpectedValueException").extends("RuntimeException"),
-        ClassInfo::class("ReflectionException").extends("Exception"),
+        ClassInfo::class("stdClass").internal(),
+        ClassInfo::interface("Throwable").internal().implements("Stringable"),
+        ClassInfo::interface("Stringable").internal(),
+        ClassInfo::interface("UnitEnum").internal(),
+        ClassInfo::interface("BackedEnum").internal().implements("UnitEnum"),
+        ClassInfo::class("Exception").internal().implements("Throwable"),
+        ClassInfo::class("Error").internal().implements("Throwable"),
+        ClassInfo::class("TypeError").internal().extends("Error"),
+        ClassInfo::class("ValueError").internal().extends("Error"),
+        ClassInfo::class("AssertionError").internal().extends("Error"),
+        ClassInfo::class("ErrorException").internal().extends("Exception"),
+        ClassInfo::class("LogicException").internal().extends("Exception"),
+        ClassInfo::class("InvalidArgumentException").internal().extends("LogicException"),
+        ClassInfo::class("RuntimeException").internal().extends("Exception"),
+        ClassInfo::class("UnexpectedValueException").internal().extends("RuntimeException"),
+        ClassInfo::class("ReflectionException").internal().extends("Exception"),
         ClassInfo::class(format!("{PERSISTENCE}Mapping\\MappingException")).extends("Exception"),
         ClassInfo::interface(format!("{PERSISTENCE}Proxy")),
         ClassInfo::interface(format!("{PERSISTENCE}ObjectManager")),
@@ -502,6 +566,16 @@ pub fn declared() -> Vec<Arc<ClassInfo>> {
         .unwrap_or_else(PoisonError::into_inner)
         .order
         .clone()
+}
+
+/// `trait_exists($name)`.
+pub fn trait_exists(name: &str) -> bool {
+    class_info(name).is_some_and(|c| c.kind == ClassKind::Trait)
+}
+
+/// `enum_exists($name)`.
+pub fn enum_exists(name: &str) -> bool {
+    class_info(name).is_some_and(|c| c.kind == ClassKind::Enum)
 }
 
 /// `class_exists($name)`: a class or an enum (not an interface or trait).
@@ -666,6 +740,90 @@ impl ReflectionClass {
     /// `isEnum()`.
     pub fn is_enum(&self) -> bool {
         self.info.kind == ClassKind::Enum
+    }
+
+    /// `isAbstract()` (an interface is abstract too, as in PHP).
+    pub fn is_abstract(&self) -> bool {
+        self.info.is_abstract || self.info.kind == ClassKind::Interface
+    }
+
+    /// `isFinal()` (an enum is final, as in PHP).
+    pub fn is_final(&self) -> bool {
+        self.info.is_final || self.info.kind == ClassKind::Enum
+    }
+
+    /// `isInternal()`.
+    pub fn is_internal(&self) -> bool {
+        self.info.is_internal
+    }
+
+    /// `newInstanceWithoutConstructor()`: the class's [`NewInstanceFn`],
+    /// or a `GenericObject` with the public non-static defaults; PHP's
+    /// `Error` for an interface, trait, enum or abstract class, and its
+    /// `ReflectionException` for an internal final class.
+    pub fn new_instance_without_constructor(&self) -> Result<Object, Thrown> {
+        let info = &self.info;
+        let kind = match info.kind {
+            ClassKind::Interface => Some("interface"),
+            ClassKind::Trait => Some("trait"),
+            ClassKind::Enum => Some("enum"),
+            ClassKind::Class if info.is_abstract => Some("abstract class"),
+            ClassKind::Class => None,
+        };
+        if let Some(kind) = kind {
+            return Err(Thrown::new(
+                "Error",
+                format!("Cannot instantiate {kind} {}", info.name),
+                0,
+            ));
+        }
+        if info.is_internal && info.is_final {
+            return Err(reflection_exception(format!(
+                "Class {} is an internal class marked as final that cannot be instantiated without invoking its constructor",
+                info.name
+            )));
+        }
+        self.blank_instance()
+    }
+
+    /// A blank instance through the class's [`NewInstanceFn`] (what
+    /// `unserialize()` of an empty payload gives for a class that
+    /// reflection cannot instantiate), or the default `GenericObject`.
+    pub fn blank_instance(&self) -> Result<Object, Thrown> {
+        if let Some(new_instance) = &self.info.new_instance {
+            return new_instance();
+        }
+        if self.info.name.eq_ignore_ascii_case(StdClass::CLASS) {
+            return Ok(Arc::new(StdClass::default()));
+        }
+        let mut properties = PhpArray::new();
+        // PHP lays a parent's properties out before the child's.
+        let mut chain = vec![self.clone()];
+        while let Some(parent) = chain.last().and_then(ReflectionClass::get_parent_class) {
+            if chain.len() > 64 {
+                break;
+            }
+            chain.push(parent);
+        }
+        let mut public: Vec<String> = Vec::new();
+        for c in chain.iter().rev() {
+            for p in &c.info.properties {
+                if p.visibility == Visibility::Public
+                    && !p.is_static
+                    && !public.contains(&p.name)
+                {
+                    public.push(p.name.clone());
+                }
+            }
+        }
+        let defaults = self.get_default_properties();
+        for name in public {
+            let key = Key::from(name.as_str());
+            if let Some(value) = defaults.get(&key) {
+                properties.insert(key, value.clone());
+            }
+        }
+        Ok(Arc::new(GenericObject::new(self.info.name.clone(), properties)))
     }
 
     /// `getParentClass()`: `None` for `false`.
