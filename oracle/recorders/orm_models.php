@@ -295,6 +295,8 @@ namespace {
         'ORM/Functional/QueryTest.php',
         'ORM/Functional/BasicFunctionalTest.php',
         'ORM/Functional/EntityRepositoryTest.php',
+        'ORM/Functional/PaginationTest.php',
+        'Doctrine\\Tests\\DbalTypes\\CustomIdObject',
         'Models/Global/GlobalNamespaceModel.php',
     ];
     $before = array_merge(get_declared_classes(), get_declared_interfaces(), get_declared_traits());
