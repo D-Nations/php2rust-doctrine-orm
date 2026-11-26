@@ -13,6 +13,8 @@
 //! Upstream: doctrine/orm tests/Tests/Models/Cache/Beach.php tests/Tests/Models/Cache/AttractionInfo.php
 //! Upstream: doctrine/orm tests/Tests/Models/Cache/AttractionContactInfo.php tests/Tests/Models/Cache/AttractionLocationInfo.php
 //! Upstream: doctrine/orm tests/Tests/Models/Cache/Person.php tests/Tests/Models/Cache/Address.php
+//! Upstream: doctrine/orm tests/Tests/Models/Cache/Token.php tests/Tests/Models/Cache/Action.php
+//! Upstream: doctrine/orm tests/Tests/Models/Cache/ComplexAction.php
 
 #![allow(dead_code, reason = "each test file uses a subset")]
 #![allow(
@@ -554,4 +556,72 @@ pub async fn count(entity: &Object, field: &str) -> usize {
 /// `$entity->$field` of a to-one association.
 pub fn get_one(entity: &Object, field: &str) -> Object {
     orm::get_object(entity, field).unwrap()
+}
+
+/// `new Token($token, $client)`.
+pub fn token(token: &str, client: Option<&Object>) -> Object {
+    let entity = orm::new_object(TOKEN);
+    orm::set(&entity, "token", Value::string(token));
+    orm::set(
+        &entity,
+        "client",
+        client.map_or(Value::Null, |c| Value::Object(c.clone())),
+    );
+    orm::set(
+        &entity,
+        "logins",
+        ArrayCollectionObject::value(PhpArray::new()),
+    );
+    // new DateTime(date('Y-m-d H:i:s', strtotime('+7 day')))
+    let now = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .map_or(0, |d| i64::try_from(d.as_secs()).unwrap_or(i64::MAX));
+    orm::set(
+        &entity,
+        "expiresAt",
+        DateTime::object(DateTimeImmutable::from_timestamp(
+            now + 7 * 86_400,
+            0,
+            TimeZone::Utc,
+        )),
+    );
+    entity
+}
+
+/// `new Action($name)`.
+pub fn action(name: &str) -> Object {
+    let action = orm::new_object(ACTION);
+    orm::set(&action, "name", Value::string(name));
+    orm::set(
+        &action,
+        "tokens",
+        ArrayCollectionObject::value(PhpArray::new()),
+    );
+    action
+}
+
+/// `new ComplexAction($action1, $action2, $name)`.
+pub fn complex_action(action1: &Object, action2: &Object, name: &str) -> Object {
+    let complex = orm::new_object(COMPLEX_ACTION);
+    orm::set_obj(&complex, "action1", action1);
+    orm::set_obj(&complex, "action2", action2);
+    orm::set(&complex, "name", Value::string(name));
+    orm::set(
+        &complex,
+        "tokens",
+        ArrayCollectionObject::value(PhpArray::new()),
+    );
+    complex
+}
+
+/// `$action->addToken($token)`: `$token->action = $this`.
+pub fn add_token(action: &Object, token: &Object) {
+    slc::add_to(action, "tokens", token);
+    orm::set_obj(token, "action", action);
+}
+
+/// `$complexAction->addToken($token)`: `$token->complexAction = $this`.
+pub fn add_complex_token(complex: &Object, token: &Object) {
+    slc::add_to(complex, "tokens", token);
+    orm::set_obj(token, "complexAction", complex);
 }
