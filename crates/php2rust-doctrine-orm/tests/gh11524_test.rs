@@ -104,7 +104,9 @@ async fn testPostLoadCalledOnProxy() {
 
     assert_eq!(
         s("fake"),
-        get_translation(&em, &obj(&reloaded_relation)).await.unwrap(),
+        get_translation(&em, &obj(&reloaded_relation))
+            .await
+            .unwrap(),
         "The property set by the postLoad listener must get initialized on usage."
     );
 }
