@@ -1575,7 +1575,7 @@ tests/Tests/ORM/Functional/Ticket/GH7836Test.php	GH7836Test::testMatchingKeepsOr
 tests/Tests/ORM/Functional/Ticket/GH7836Test.php	GH7836Test::testMatchingOverrulesCollectionOrdering	ported	crates/php2rust-doctrine-orm/tests/gh7836_test.rs::testMatchingOverrulesCollectionOrdering
 tests/Tests/ORM/Functional/Ticket/GH7836Test.php	GH7836Test::testMatchingRespectsCollectionOrdering	ported	crates/php2rust-doctrine-orm/tests/gh7836_test.rs::testMatchingRespectsCollectionOrdering
 tests/Tests/ORM/Functional/Ticket/GH7864Test.php	GH7864Test::testExtraLazyRemoveElement	ported	crates/php2rust-doctrine-orm/tests/gh7864_test.rs::testExtraLazyRemoveElement
-tests/Tests/ORM/Functional/Ticket/GH7869Test.php	GH7869Test::testDQLDeferredEagerLoad	pending	
+tests/Tests/ORM/Functional/Ticket/GH7869Test.php	GH7869Test::testDQLDeferredEagerLoad	pending	needs EntityManagerDecorator and a mock that counts getClassMetadata() calls
 tests/Tests/ORM/Functional/Ticket/GH7875Test.php	GH7875Test::testUpdateSchemaSql	pending	
 tests/Tests/ORM/Functional/Ticket/GH7875Test.php	GH7875Test::testUpdateSchemaSqlWithSchemaAssetFilter	pending	
 tests/Tests/ORM/Functional/Ticket/GH7941Test.php	GH7941Test::typesShouldBeConvertedForDQLFunctions	pending	
