@@ -280,8 +280,8 @@ Persistence, not reproduced and so not claimed:
   repositories and the collection methods that load (`count()`, `get()`,
   `contains()`, ...) are `async`; PHP's on-the-spot lazy loading is an
   explicit `initialize_object()`. A lazy proxy is an `EntityObject` ghost
-  with its identifier set; `EntityManager::find()` initializes a proxy it
-  finds in the identity map (PHP does on the first property access).
+  with its identifier set; `EntityManager::find()` returns a proxy it
+  finds in the identity map as it is, uninitialized, as PHP does.
 - The entity manager takes the `Configuration` by value: changes after
   `create()` are not seen, except the filters (`addFilter()` takes
   `&self`; the clones share them, as PHP shares the object). The platform is `SQLitePlatform`. A pessimistic
@@ -383,9 +383,6 @@ Persistence, not reproduced and so not claimed:
   GH11341 builds a new database per row). The `assertMatchesRegularExpression()`
   patterns of GH11199, GH11341 and GH6464 are matched by hand (an
   anchored suffix, a substring, or the `\w+` words of GH6464).
-- DDC1163Test asserts that `find()` returns the uninitialized proxy in
-  the identity map; the port's `find()` initializes it (a property read
-  cannot trigger the lazy load), so the test asserts it is initialized.
 - `markLazyObjectAsInitialized()` is `EntityObject::set_lazy(false)`.
 - The listener-driven GH11524Test's `getTranslation()` on a proxy is
   `initialize_object()` and the model method written out in the test.
