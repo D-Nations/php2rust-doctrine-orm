@@ -2,8 +2,8 @@
 //!
 //! Upstream: doctrine/orm tests/Tests/ORM/Mapping/NamingStrategy/CustomPascalNamingStrategy.php tests/Tests/ORM/Mapping/NamingStrategy/JoinColumnClassNamingStrategy.php
 
-
 #![allow(dead_code, reason = "each test uses a part of the helpers")]
+
 use php2rust_doctrine_orm::mapping::{DefaultNamingStrategy, NamingStrategy};
 
 fn short_name(class_name: &str) -> &str {
