@@ -1159,7 +1159,7 @@ tests/Tests/ORM/Functional/Ticket/DDC1040Test.php	DDC1040Test::testReuseNamedEnt
 tests/Tests/ORM/Functional/Ticket/DDC1040Test.php	DDC1040Test::testUseMultiplePositionalParameters	ported	crates/php2rust-doctrine-orm/tests/ddc1040_test.rs::testUseMultiplePositionalParameters
 tests/Tests/ORM/Functional/Ticket/DDC1041Test.php	DDC1041Test::testGrabWrongSubtypeReturnsNull	ported	crates/php2rust-doctrine-orm/tests/ddc1041_test.rs::testGrabWrongSubtypeReturnsNull
 tests/Tests/ORM/Functional/Ticket/DDC1043Test.php	DDC1043Test::testChangeSetPlusWeirdPHPCastingIntCastingRule	ported	crates/php2rust-doctrine-orm/tests/ddc1043_test.rs::testChangeSetPlusWeirdPHPCastingIntCastingRule
-tests/Tests/ORM/Functional/Ticket/DDC1080Test.php	DDC1080Test::testHydration	pending	
+tests/Tests/ORM/Functional/Ticket/DDC1080Test.php	DDC1080Test::testHydration	ported	crates/php2rust-doctrine-orm/tests/ddc1080_test.rs::testHydration
 tests/Tests/ORM/Functional/Ticket/DDC1113Test.php	DDC1113Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc1113_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC1129Test.php	DDC1129Test::testVersionFieldIgnoredInChangesetComputation	ported	crates/php2rust-doctrine-orm/tests/ddc1129_test.rs::testVersionFieldIgnoredInChangesetComputation
 tests/Tests/ORM/Functional/Ticket/DDC1163Test.php	DDC1163Test::testIssue	pending	
