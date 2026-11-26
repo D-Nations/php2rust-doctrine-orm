@@ -47,13 +47,13 @@ tests/Tests/ORM/Cache/DefaultCacheTest.php	DefaultCacheTest::testQueryCache	pend
 tests/Tests/ORM/Cache/DefaultCacheTest.php	DefaultCacheTest::testToIdentifierArrayShouldLookupForEntityIdentifier	pending	
 tests/Tests/ORM/Cache/DefaultCollectionHydratorTest.php	DefaultCollectionHydratorTest::testImplementsCollectionEntryStructure	pending	
 tests/Tests/ORM/Cache/DefaultCollectionHydratorTest.php	DefaultCollectionHydratorTest::testLoadCacheCollection	pending	
-tests/Tests/ORM/Cache/DefaultEntityHydratorTest.php	DefaultEntityHydratorTest::testBuildCacheEntry	pending	
-tests/Tests/ORM/Cache/DefaultEntityHydratorTest.php	DefaultEntityHydratorTest::testBuildCacheEntryAssociation	pending	
-tests/Tests/ORM/Cache/DefaultEntityHydratorTest.php	DefaultEntityHydratorTest::testBuildCacheEntryNonInitializedAssocProxy	pending	
-tests/Tests/ORM/Cache/DefaultEntityHydratorTest.php	DefaultEntityHydratorTest::testCacheEntryWithWrongIdentifierType	pending	
-tests/Tests/ORM/Cache/DefaultEntityHydratorTest.php	DefaultEntityHydratorTest::testCreateEntity	pending	
-tests/Tests/ORM/Cache/DefaultEntityHydratorTest.php	DefaultEntityHydratorTest::testImplementsEntityEntryStructure	pending	
-tests/Tests/ORM/Cache/DefaultEntityHydratorTest.php	DefaultEntityHydratorTest::testLoadProxy	pending	
+tests/Tests/ORM/Cache/DefaultEntityHydratorTest.php	DefaultEntityHydratorTest::testBuildCacheEntry	ported	crates/php2rust-doctrine-orm/tests/default_entity_hydrator_test.rs::testBuildCacheEntry
+tests/Tests/ORM/Cache/DefaultEntityHydratorTest.php	DefaultEntityHydratorTest::testBuildCacheEntryAssociation	ported	crates/php2rust-doctrine-orm/tests/default_entity_hydrator_test.rs::testBuildCacheEntryAssociation
+tests/Tests/ORM/Cache/DefaultEntityHydratorTest.php	DefaultEntityHydratorTest::testBuildCacheEntryNonInitializedAssocProxy	ported	crates/php2rust-doctrine-orm/tests/default_entity_hydrator_test.rs::testBuildCacheEntryNonInitializedAssocProxy
+tests/Tests/ORM/Cache/DefaultEntityHydratorTest.php	DefaultEntityHydratorTest::testCacheEntryWithWrongIdentifierType	ported	crates/php2rust-doctrine-orm/tests/default_entity_hydrator_test.rs::testCacheEntryWithWrongIdentifierType
+tests/Tests/ORM/Cache/DefaultEntityHydratorTest.php	DefaultEntityHydratorTest::testCreateEntity	ported	crates/php2rust-doctrine-orm/tests/default_entity_hydrator_test.rs::testCreateEntity
+tests/Tests/ORM/Cache/DefaultEntityHydratorTest.php	DefaultEntityHydratorTest::testImplementsEntityEntryStructure	ported	crates/php2rust-doctrine-orm/tests/default_entity_hydrator_test.rs::testImplementsEntityEntryStructure
+tests/Tests/ORM/Cache/DefaultEntityHydratorTest.php	DefaultEntityHydratorTest::testLoadProxy	ported	crates/php2rust-doctrine-orm/tests/default_entity_hydrator_test.rs::testLoadProxy
 tests/Tests/ORM/Cache/DefaultQueryCacheTest.php	DefaultQueryCacheTest::testCancelPutResultIfAssociationEntityPutFails	pending	
 tests/Tests/ORM/Cache/DefaultQueryCacheTest.php	DefaultQueryCacheTest::testCancelPutResultIfEntityPutFails	pending	
 tests/Tests/ORM/Cache/DefaultQueryCacheTest.php	DefaultQueryCacheTest::testCancelPutToManyAssociationQueryResult	pending	
