@@ -1274,7 +1274,7 @@ tests/Tests/ORM/Functional/Ticket/DDC2084Test.php	DDC2084Test::testIssue	ported	
 tests/Tests/ORM/Functional/Ticket/DDC2090Test.php	DDC2090Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC2106Test.php	DDC2106Test::testDetachedEntityAsId	ported	crates/php2rust-doctrine-orm/tests/ddc2106_test.rs::testDetachedEntityAsId
 tests/Tests/ORM/Functional/Ticket/DDC211Test.php	DDC211Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc211_test.rs::testIssue
-tests/Tests/ORM/Functional/Ticket/DDC2138Test.php	DDC2138Test::testForeignKeyOnSTIWithMultipleMapping	pending	
+tests/Tests/ORM/Functional/Ticket/DDC2138Test.php	DDC2138Test::testForeignKeyOnSTIWithMultipleMapping	ported	crates/php2rust-doctrine-orm/tests/ddc2138_test.rs::testForeignKeyOnSTIWithMultipleMapping
 tests/Tests/ORM/Functional/Ticket/DDC2175Test.php	DDC2175Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2175_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC2182Test.php	DDC2182Test::testPassColumnOptionsToJoinColumns	pending	
 tests/Tests/ORM/Functional/Ticket/DDC2214Test.php	DDC2214Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2214_test.rs::testIssue
