@@ -650,17 +650,17 @@ impl PersistentCollection {
 
         order_criteria_by_association(&mut criteria, &association);
 
+        // `getEntityPersister()`: the cached persister when the target
+        // entity is cached.
         let persister = em
             .get_unit_of_work()
-            .get_entity_persister(&association.target_entity)?;
+            .get_entity_persister_interface(&association.target_entity)?;
 
         if association.fetch == Some(FETCH_EXTRA_LAZY) {
             return Ok(LazyCriteriaCollection::new(persister, criteria).value());
         }
         let elements = persister.load_criteria(&criteria).await?;
-        Ok(ArrayCollectionObject::value(PhpArray::list(
-            elements.into_iter().map(Value::Object),
-        )))
+        Ok(ArrayCollectionObject::value(PhpArray::list(elements)))
     }
 
     /// `toArray()`.
