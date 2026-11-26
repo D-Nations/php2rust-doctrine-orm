@@ -14,7 +14,8 @@
 //! Upstream: doctrine/orm tests/Tests/Models/Cache/AttractionContactInfo.php tests/Tests/Models/Cache/AttractionLocationInfo.php
 //! Upstream: doctrine/orm tests/Tests/Models/Cache/Person.php tests/Tests/Models/Cache/Address.php
 //! Upstream: doctrine/orm tests/Tests/Models/Cache/Token.php tests/Tests/Models/Cache/Action.php
-//! Upstream: doctrine/orm tests/Tests/Models/Cache/ComplexAction.php
+//! Upstream: doctrine/orm tests/Tests/Models/Cache/ComplexAction.php tests/Tests/Models/Cache/Login.php
+//! Upstream: doctrine/orm tests/Tests/Models/Cache/Client.php
 
 #![allow(dead_code, reason = "each test file uses a subset")]
 #![allow(
@@ -650,4 +651,21 @@ pub fn add_token(action: &Object, token: &Object) {
 pub fn add_complex_token(complex: &Object, token: &Object) {
     slc::add_to(complex, "tokens", token);
     orm::set_obj(token, "complexAction", complex);
+}
+
+/// `new Client($name)`.
+pub fn client(name: &str) -> Object {
+    let client = orm::new_object(CLIENT);
+    orm::set(&client, "name", Value::string(name));
+    client
+}
+
+impl Fixture {
+    /// `$entity->$field` of a to-one association, the lazy object
+    /// initialized (as a getter on it does).
+    pub async fn load_one(&self, entity: &Object, field: &str) -> Object {
+        let target = get_one(entity, field);
+        self.em.initialize_object(&target).await.unwrap();
+        target
+    }
 }
