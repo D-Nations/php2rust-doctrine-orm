@@ -238,6 +238,12 @@ impl QueryState {
                     let elements = collection.unwrap();
                     return Ok(Value::Array(self.process_array_parameter_value(&elements)?));
                 }
+                if let Some(backing) = object
+                    .downcast_ref::<php_value::object::EnumCase>()
+                    .and_then(php_value::object::EnumCase::value)
+                {
+                    return Ok(backing.clone());
+                }
                 // Silence any mapping exceptions. These can occur if the
                 // object in question is not a mapped entity, in which case
                 // we just don't do any preparation on the value.

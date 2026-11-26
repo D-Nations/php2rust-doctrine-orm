@@ -88,7 +88,8 @@ impl EntityManager {
     /// Creates a new `Query` object.
     pub fn create_query(self: &Arc<Self>, dql: &str) -> crate::query::Query {
         let query = crate::query::Query::new(self);
-        if !dql.is_empty() {
+        // `! empty($dql)`: "0" is empty too.
+        if !dql.is_empty() && dql != "0" {
             query.set_dql(dql);
         }
         query
