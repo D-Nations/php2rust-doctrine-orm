@@ -3179,18 +3179,18 @@ tests/Tests/ORM/Tools/SchemaValidatorTest.php	SchemaValidatorTest::testValidMany
 tests/Tests/ORM/Tools/SchemaValidatorTest.php	SchemaValidatorTest::testValidOneToOneAsIdentifierSchema	pending	
 tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testAddToIdentityMapInvalidIdentifiers	ported	crates/php2rust-doctrine-orm/tests/unit_of_work_test.rs::testAddToIdentityMapInvalidIdentifiers
 tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testAddToIdentityMapValidIdentifiers	ported	crates/php2rust-doctrine-orm/tests/unit_of_work_test.rs::testAddToIdentityMapValidIdentifiers
-tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testCascadedIdentityColumnInsert	pending	
+tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testCascadedIdentityColumnInsert	pending	EntityPersisterMock (setEntityPersister() with a persister that records its inserts, updates, deletes and exists() calls): the unit of work holds BasicEntityPersisters
 tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testCommitThrowOptimisticLockExceptionWhenConnectionCommitFails	ported	crates/php2rust-doctrine-orm/tests/unit_of_work_test.rs::testCommitThrowOptimisticLockExceptionWhenConnectionCommitFails
-tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testGetEntityStateOnVersionedEntityWithAssignedIdentifier	pending	
-tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testGetEntityStateWithAssignedIdentity	pending	
-tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testItPreservesTheOriginalExceptionOnRollbackFailure	pending	
+tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testGetEntityStateOnVersionedEntityWithAssignedIdentifier	pending	EntityPersisterMock (setEntityPersister() with a persister that records its inserts, updates, deletes and exists() calls): the unit of work holds BasicEntityPersisters
+tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testGetEntityStateWithAssignedIdentity	pending	EntityPersisterMock (setEntityPersister() with a persister that records its inserts, updates, deletes and exists() calls): the unit of work holds BasicEntityPersisters
+tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testItPreservesTheOriginalExceptionOnRollbackFailure	pending	Thrown has no previous exception; a failing rollback's error replaces the commit's
 tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testItThrowsWhenApplicationProvidedIdsCollide	ported	crates/php2rust-doctrine-orm/tests/unit_of_work_test.rs::testItThrowsWhenApplicationProvidedIdsCollide
 tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testItThrowsWhenLookingUpIdentifierForUnknownEntity	ported	crates/php2rust-doctrine-orm/tests/unit_of_work_test.rs::testItThrowsWhenLookingUpIdentifierForUnknownEntity
-tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testMultipleInsertsAreBatchedInThePersister	pending	
-tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testNewAssociatedEntityPersistenceOfNewEntitiesThroughCascadedAssociationsFirst	pending	
-tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testNewAssociatedEntityPersistenceOfNewEntitiesThroughNonCascadedAssociationsFirst	pending	
-tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testNoUndefinedIndexNoticeOnScheduleForUpdateWithoutChanges	pending	
-tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testPreviousDetectedIllegalNewNonCascadedEntitiesAreCleanedUpOnSubsequentCommits	pending	
+tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testMultipleInsertsAreBatchedInThePersister	pending	EntityPersisterMock (setEntityPersister() with a persister that records its inserts, updates, deletes and exists() calls): the unit of work holds BasicEntityPersisters
+tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testNewAssociatedEntityPersistenceOfNewEntitiesThroughCascadedAssociationsFirst	pending	EntityPersisterMock (setEntityPersister() with a persister that records its inserts, updates, deletes and exists() calls): the unit of work holds BasicEntityPersisters
+tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testNewAssociatedEntityPersistenceOfNewEntitiesThroughNonCascadedAssociationsFirst	pending	EntityPersisterMock (setEntityPersister() with a persister that records its inserts, updates, deletes and exists() calls): the unit of work holds BasicEntityPersisters
+tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testNoUndefinedIndexNoticeOnScheduleForUpdateWithoutChanges	pending	EntityPersisterMock (setEntityPersister() with a persister that records its inserts, updates, deletes and exists() calls): the unit of work holds BasicEntityPersisters
+tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testPreviousDetectedIllegalNewNonCascadedEntitiesAreCleanedUpOnSubsequentCommits	pending	EntityPersisterMock (setEntityPersister() with a persister that records its inserts, updates, deletes and exists() calls): the unit of work holds BasicEntityPersisters
 tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testRegisterRemovedOnNewEntityIsIgnored	ported	crates/php2rust-doctrine-orm/tests/unit_of_work_test.rs::testRegisterRemovedOnNewEntityIsIgnored
 tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testRegisteringAManagedInstanceRequiresANonEmptyIdentifier	ported	crates/php2rust-doctrine-orm/tests/unit_of_work_test.rs::testRegisteringAManagedInstanceRequiresANonEmptyIdentifier
 tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testRejectsChangeSetComputationForObjectsWithInvalidAssociationValue	ported	crates/php2rust-doctrine-orm/tests/unit_of_work_test.rs::testRejectsChangeSetComputationForObjectsWithInvalidAssociationValue
@@ -3198,7 +3198,7 @@ tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testRejectsPersistenceOfObjec
 tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testRemovedAndRePersistedEntitiesAreInTheIdentityMapAndAreNotGarbageCollected	ported	crates/php2rust-doctrine-orm/tests/unit_of_work_test.rs::testRemovedAndRePersistedEntitiesAreInTheIdentityMapAndAreNotGarbageCollected
 tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testRemovedEntityIsRemovedFromManyToManyCollection	ported	crates/php2rust-doctrine-orm/tests/unit_of_work_test.rs::testRemovedEntityIsRemovedFromManyToManyCollection
 tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testRemovedEntityIsRemovedFromOneToManyCollection	ported	crates/php2rust-doctrine-orm/tests/unit_of_work_test.rs::testRemovedEntityIsRemovedFromOneToManyCollection
-tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testSavingSingleEntityWithIdentityColumnForcesInsert	pending	
+tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testSavingSingleEntityWithIdentityColumnForcesInsert	pending	EntityPersisterMock (setEntityPersister() with a persister that records its inserts, updates, deletes and exists() calls): the unit of work holds BasicEntityPersisters
 tests/Tests/ORM/Utility/HierarchyDiscriminatorResolverTest.php	HierarchyDiscriminatorResolverTest::testResolveDiscriminatorsForClass	pending	
 tests/Tests/ORM/Utility/HierarchyDiscriminatorResolverTest.php	HierarchyDiscriminatorResolverTest::testResolveDiscriminatorsForClassWithNoSubclasses	pending	
 tests/Tests/ORM/Utility/IdentifierFlattenerEnumIdTest.php	IdentifierFlattenerEnumIdTest::testFlattenIdentifierWithCompositeEnumId	pending	
