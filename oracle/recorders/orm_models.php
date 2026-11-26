@@ -283,6 +283,18 @@ namespace {
         'ORM/Functional/ManyToManyBidirectionalAssociationTest.php',
         'ORM/Functional/ManyToManyUnidirectionalAssociationTest.php',
         'ORM/Functional/ManyToManySelfReferentialAssociationTest.php',
+        'ORM/Hydration/AbstractHydratorTest.php',
+        'ORM/Hydration/ArrayHydratorTest.php',
+        'ORM/Hydration/ObjectHydratorTest.php',
+        'ORM/Hydration/ResultSetMappingTest.php',
+        'ORM/Hydration/ScalarColumnHydratorTest.php',
+        'ORM/Hydration/ScalarHydratorTest.php',
+        'ORM/Hydration/SimpleObjectHydratorTest.php',
+        'ORM/Hydration/SingleScalarHydratorTest.php',
+        'ORM/Query/QueryTest.php',
+        'ORM/Functional/QueryTest.php',
+        'ORM/Functional/BasicFunctionalTest.php',
+        'ORM/Functional/EntityRepositoryTest.php',
         'Models/Global/GlobalNamespaceModel.php',
     ];
     $before = array_merge(get_declared_classes(), get_declared_interfaces(), get_declared_traits());
