@@ -1590,7 +1590,7 @@ tests/Tests/ORM/Functional/Ticket/GH8443Test.php	GH8443Test::testJoinRootEntityW
 tests/Tests/ORM/Functional/Ticket/GH8499Test.php	GH8499Test::testOptimisticLockWithDateTimeForVersion	ported	crates/php2rust-doctrine-orm/tests/gh8499_test.rs::testOptimisticLockWithDateTimeForVersion
 tests/Tests/ORM/Functional/Ticket/GH8499Test.php	GH8499Test::testOptimisticLockWithDateTimeForVersionThrowsException	ported	crates/php2rust-doctrine-orm/tests/gh8499_test.rs::testOptimisticLockWithDateTimeForVersionThrowsException
 tests/Tests/ORM/Functional/Ticket/GH8499Test.php	GH8499Test::testOptimisticTimestampSetsDefaultValue	ported	crates/php2rust-doctrine-orm/tests/gh8499_test.rs::testOptimisticTimestampSetsDefaultValue
-tests/Tests/ORM/Functional/Ticket/GH8663Test.php	GH8663Test::testDeletedEntity	pending	
+tests/Tests/ORM/Functional/Ticket/GH8663Test.php	GH8663Test::testDeletedEntity	ported	crates/php2rust-doctrine-orm/tests/gh8663_test.rs::testDeletedEntity
 tests/Tests/ORM/Functional/Ticket/GH8914Test.php	GH8914Test::testDiscriminatorMapWithSeveralLevelsIsSupported	pending	
 tests/Tests/ORM/Functional/Ticket/GH9027Test.php	GH9027Test::testUnitOfWorkHandlesNullRelations	pending	
 tests/Tests/ORM/Functional/Ticket/GH9109Test.php	GH9109Test::testIssue	pending	
