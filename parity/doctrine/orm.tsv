@@ -264,18 +264,18 @@ tests/Tests/ORM/Event/OnClassMetadataNotFoundEventArgsTest.php	OnClassMetadataNo
 tests/Tests/ORM/Functional/AbstractFetchEagerTest.php	AbstractFetchEagerTest::testWithAbstractFetchEager	pending	
 tests/Tests/ORM/Functional/AdvancedAssociationTest.php	AdvancedAssociationTest::testIssue	pending	
 tests/Tests/ORM/Functional/AdvancedAssociationTest.php	AdvancedAssociationTest::testManyToMany	pending	
-tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testAggregateWithHavingClause	pending	
-tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testCommentsInDQL	pending	
-tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testDeleteAs	pending	
-tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testGroupByMultipleFields	pending	
-tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testInSubselect	pending	
-tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testIsNullAssociation	pending	
-tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testOrderByGeneralCaseExpression	pending	
-tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testOrderByResultVariableCollectionSize	pending	
-tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testOrderBySimpleCaseExpression	pending	
-tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testSelectSubselect	pending	
-tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testUnnamedScalarResultsAreOneBased	pending	
-tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testUpdateAs	pending	
+tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testAggregateWithHavingClause	ported	crates/php2rust-doctrine-orm/tests/advanced_dql_query_test.rs::testAggregateWithHavingClause
+tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testCommentsInDQL	ported	crates/php2rust-doctrine-orm/tests/advanced_dql_query_test.rs::testCommentsInDQL
+tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testDeleteAs	ported	crates/php2rust-doctrine-orm/tests/advanced_dql_query_test.rs::testDeleteAs
+tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testGroupByMultipleFields	ported	crates/php2rust-doctrine-orm/tests/advanced_dql_query_test.rs::testGroupByMultipleFields
+tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testInSubselect	ported	crates/php2rust-doctrine-orm/tests/advanced_dql_query_test.rs::testInSubselect
+tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testIsNullAssociation	ported	crates/php2rust-doctrine-orm/tests/advanced_dql_query_test.rs::testIsNullAssociation
+tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testOrderByGeneralCaseExpression	ported	crates/php2rust-doctrine-orm/tests/advanced_dql_query_test.rs::testOrderByGeneralCaseExpression
+tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testOrderByResultVariableCollectionSize	ported	crates/php2rust-doctrine-orm/tests/advanced_dql_query_test.rs::testOrderByResultVariableCollectionSize
+tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testOrderBySimpleCaseExpression	ported	crates/php2rust-doctrine-orm/tests/advanced_dql_query_test.rs::testOrderBySimpleCaseExpression
+tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testSelectSubselect	ported	crates/php2rust-doctrine-orm/tests/advanced_dql_query_test.rs::testSelectSubselect
+tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testUnnamedScalarResultsAreOneBased	ported	crates/php2rust-doctrine-orm/tests/advanced_dql_query_test.rs::testUnnamedScalarResultsAreOneBased
+tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testUpdateAs	ported	crates/php2rust-doctrine-orm/tests/advanced_dql_query_test.rs::testUpdateAs
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testAddToCollectionDoesNotInitialize	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testAddToCollectionDoesNotInitialize
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testAddToToManyAssociationWithGetReference	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testAddToToManyAssociationWithGetReference
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testBasicOneToManyInnerJoin	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testBasicOneToManyInnerJoin
@@ -519,18 +519,18 @@ tests/Tests/ORM/Functional/GH11345Test.php	GH11345Test::testUpdateSqlStatementsA
 tests/Tests/ORM/Functional/GH7877Test.php	GH7877Test::testCrossReferenceWithApplicationGeneratedIdMayBeNotNullable	pending	
 tests/Tests/ORM/Functional/GH7877Test.php	GH7877Test::testNullableForeignKeysMakeInsertOrderLessRelevant	pending	
 tests/Tests/ORM/Functional/GH7877Test.php	GH7877Test::testSelfReferenceWithApplicationGeneratedIdMayBeNotNullable	pending	
-tests/Tests/ORM/Functional/GH8011Test.php	GH8011Test::testOrderWithArithmeticExpressionWithLiteralAndResultVariable	pending	
-tests/Tests/ORM/Functional/GH8011Test.php	GH8011Test::testOrderWithArithmeticExpressionWithLiteralAndResultVariable2	pending	
-tests/Tests/ORM/Functional/GH8011Test.php	GH8011Test::testOrderWithArithmeticExpressionWithLiteralAndResultVariableUsingHiddenResultVariable	pending	
-tests/Tests/ORM/Functional/GH8011Test.php	GH8011Test::testOrderWithArithmeticExpressionWithLiteralAndSingleValuedPathExpression	pending	
-tests/Tests/ORM/Functional/GH8011Test.php	GH8011Test::testOrderWithArithmeticExpressionWithLiteralAndSingleValuedPathExpression2	pending	
-tests/Tests/ORM/Functional/GH8011Test.php	GH8011Test::testOrderWithArithmeticExpressionWithResultVariableAndLiteral	pending	
-tests/Tests/ORM/Functional/GH8011Test.php	GH8011Test::testOrderWithArithmeticExpressionWithResultVariableAndLiteral2	pending	
-tests/Tests/ORM/Functional/GH8011Test.php	GH8011Test::testOrderWithArithmeticExpressionWithResultVariableAndSingleValuedPathExpression	pending	
-tests/Tests/ORM/Functional/GH8011Test.php	GH8011Test::testOrderWithArithmeticExpressionWithResultVariableAndSingleValuedPathExpression2	pending	
-tests/Tests/ORM/Functional/GH8011Test.php	GH8011Test::testOrderWithArithmeticExpressionWithSingleValuedPathExpression	pending	
-tests/Tests/ORM/Functional/GH8011Test.php	GH8011Test::testOrderWithArithmeticExpressionWithSingleValuedPathExpressionAndLiteral	pending	
-tests/Tests/ORM/Functional/GH8011Test.php	GH8011Test::testOrderWithArithmeticExpressionWithSingleValuedPathExpressionAndResultVariable	pending	
+tests/Tests/ORM/Functional/GH8011Test.php	GH8011Test::testOrderWithArithmeticExpressionWithLiteralAndResultVariable	ported	crates/php2rust-doctrine-orm/tests/gh8011_test.rs::testOrderWithArithmeticExpressionWithLiteralAndResultVariable
+tests/Tests/ORM/Functional/GH8011Test.php	GH8011Test::testOrderWithArithmeticExpressionWithLiteralAndResultVariable2	ported	crates/php2rust-doctrine-orm/tests/gh8011_test.rs::testOrderWithArithmeticExpressionWithLiteralAndResultVariable2
+tests/Tests/ORM/Functional/GH8011Test.php	GH8011Test::testOrderWithArithmeticExpressionWithLiteralAndResultVariableUsingHiddenResultVariable	ported	crates/php2rust-doctrine-orm/tests/gh8011_test.rs::testOrderWithArithmeticExpressionWithLiteralAndResultVariableUsingHiddenResultVariable
+tests/Tests/ORM/Functional/GH8011Test.php	GH8011Test::testOrderWithArithmeticExpressionWithLiteralAndSingleValuedPathExpression	ported	crates/php2rust-doctrine-orm/tests/gh8011_test.rs::testOrderWithArithmeticExpressionWithLiteralAndSingleValuedPathExpression
+tests/Tests/ORM/Functional/GH8011Test.php	GH8011Test::testOrderWithArithmeticExpressionWithLiteralAndSingleValuedPathExpression2	ported	crates/php2rust-doctrine-orm/tests/gh8011_test.rs::testOrderWithArithmeticExpressionWithLiteralAndSingleValuedPathExpression2
+tests/Tests/ORM/Functional/GH8011Test.php	GH8011Test::testOrderWithArithmeticExpressionWithResultVariableAndLiteral	ported	crates/php2rust-doctrine-orm/tests/gh8011_test.rs::testOrderWithArithmeticExpressionWithResultVariableAndLiteral
+tests/Tests/ORM/Functional/GH8011Test.php	GH8011Test::testOrderWithArithmeticExpressionWithResultVariableAndLiteral2	ported	crates/php2rust-doctrine-orm/tests/gh8011_test.rs::testOrderWithArithmeticExpressionWithResultVariableAndLiteral2
+tests/Tests/ORM/Functional/GH8011Test.php	GH8011Test::testOrderWithArithmeticExpressionWithResultVariableAndSingleValuedPathExpression	ported	crates/php2rust-doctrine-orm/tests/gh8011_test.rs::testOrderWithArithmeticExpressionWithResultVariableAndSingleValuedPathExpression
+tests/Tests/ORM/Functional/GH8011Test.php	GH8011Test::testOrderWithArithmeticExpressionWithResultVariableAndSingleValuedPathExpression2	ported	crates/php2rust-doctrine-orm/tests/gh8011_test.rs::testOrderWithArithmeticExpressionWithResultVariableAndSingleValuedPathExpression2
+tests/Tests/ORM/Functional/GH8011Test.php	GH8011Test::testOrderWithArithmeticExpressionWithSingleValuedPathExpression	ported	crates/php2rust-doctrine-orm/tests/gh8011_test.rs::testOrderWithArithmeticExpressionWithSingleValuedPathExpression
+tests/Tests/ORM/Functional/GH8011Test.php	GH8011Test::testOrderWithArithmeticExpressionWithSingleValuedPathExpressionAndLiteral	ported	crates/php2rust-doctrine-orm/tests/gh8011_test.rs::testOrderWithArithmeticExpressionWithSingleValuedPathExpressionAndLiteral
+tests/Tests/ORM/Functional/GH8011Test.php	GH8011Test::testOrderWithArithmeticExpressionWithSingleValuedPathExpressionAndResultVariable	ported	crates/php2rust-doctrine-orm/tests/gh8011_test.rs::testOrderWithArithmeticExpressionWithSingleValuedPathExpressionAndResultVariable
 tests/Tests/ORM/Functional/HydrationCacheTest.php	HydrationCacheTest::testHydrationCache	pending	
 tests/Tests/ORM/Functional/HydrationCacheTest.php	HydrationCacheTest::testHydrationParametersSerialization	pending	
 tests/Tests/ORM/Functional/IdentityMapTest.php	IdentityMapTest::testBasicIdentityManagement	ported	crates/php2rust-doctrine-orm/tests/identity_map_test.rs::testBasicIdentityManagement
@@ -944,19 +944,19 @@ tests/Tests/ORM/Functional/ReadonlyPropertiesTest.php	ReadonlyPropertiesTest::te
 tests/Tests/ORM/Functional/ReadonlyPropertiesTest.php	ReadonlyPropertiesTest::testEntityWithLazyManyToOne	pending	
 tests/Tests/ORM/Functional/ReadonlyPropertiesTest.php	ReadonlyPropertiesTest::testEntityWithManyToMany	pending	
 tests/Tests/ORM/Functional/ReadonlyPropertiesTest.php	ReadonlyPropertiesTest::testSimpleEntity	pending	
-tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testAccessMetatadaForProxy	pending	
-tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testCloneProxy	pending	
-tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testCloneProxyWithResetId	pending	
-tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testCommonPersistenceProxy	pending	
-tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testDoNotInitializeProxyOnGettingTheIdentifier	pending	
-tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testDoNotInitializeProxyOnGettingTheIdentifierAndReturnTheRightType	pending	
-tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testDoNotInitializeProxyOnGettingTheIdentifierDDC1625	pending	
-tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testInitializeChangeAndFlushProxy	pending	
-tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testInitializeProxy	pending	
-tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testInitializeProxyOnGettingSomethingOtherThanTheIdentifier	pending	
-tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testLazyLoadsFieldValuesFromDatabase	pending	
-tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testReferenceFind	pending	
-tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testWakeupOnProxy	pending	
+tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testAccessMetatadaForProxy	ported	crates/php2rust-doctrine-orm/tests/reference_proxy_test.rs::testAccessMetatadaForProxy
+tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testCloneProxy	ported	crates/php2rust-doctrine-orm/tests/reference_proxy_test.rs::testCloneProxy
+tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testCloneProxyWithResetId	ported	crates/php2rust-doctrine-orm/tests/reference_proxy_test.rs::testCloneProxyWithResetId
+tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testCommonPersistenceProxy	n/a: upstream skips it with native lazy objects (Test only works with proxy generation disabled.)	
+tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testDoNotInitializeProxyOnGettingTheIdentifier	ported	crates/php2rust-doctrine-orm/tests/reference_proxy_test.rs::testDoNotInitializeProxyOnGettingTheIdentifier
+tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testDoNotInitializeProxyOnGettingTheIdentifierAndReturnTheRightType	ported	crates/php2rust-doctrine-orm/tests/reference_proxy_test.rs::testDoNotInitializeProxyOnGettingTheIdentifierAndReturnTheRightType
+tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testDoNotInitializeProxyOnGettingTheIdentifierDDC1625	ported	crates/php2rust-doctrine-orm/tests/reference_proxy_test.rs::testDoNotInitializeProxyOnGettingTheIdentifierDDC1625
+tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testInitializeChangeAndFlushProxy	ported	crates/php2rust-doctrine-orm/tests/reference_proxy_test.rs::testInitializeChangeAndFlushProxy
+tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testInitializeProxy	ported	crates/php2rust-doctrine-orm/tests/reference_proxy_test.rs::testInitializeProxy
+tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testInitializeProxyOnGettingSomethingOtherThanTheIdentifier	ported	crates/php2rust-doctrine-orm/tests/reference_proxy_test.rs::testInitializeProxyOnGettingSomethingOtherThanTheIdentifier
+tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testLazyLoadsFieldValuesFromDatabase	ported	crates/php2rust-doctrine-orm/tests/reference_proxy_test.rs::testLazyLoadsFieldValuesFromDatabase
+tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testReferenceFind	ported	crates/php2rust-doctrine-orm/tests/reference_proxy_test.rs::testReferenceFind
+tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testWakeupOnProxy	ported	crates/php2rust-doctrine-orm/tests/reference_proxy_test.rs::testWakeupOnProxy
 tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testDisableResultCache	pending	
 tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testEnableResultCache	pending	
 tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testEnableResultCacheParams	pending	
@@ -1163,26 +1163,26 @@ tests/Tests/ORM/Functional/Ticket/DDC1080Test.php	DDC1080Test::testHydration	pen
 tests/Tests/ORM/Functional/Ticket/DDC1113Test.php	DDC1113Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1129Test.php	DDC1129Test::testVersionFieldIgnoredInChangesetComputation	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1163Test.php	DDC1163Test::testIssue	pending	
-tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testArrayHydrationWithCompositeKey	pending	
-tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testAssociationOnlyCompositeKey	pending	
-tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testClearManyToManyCollectionOfForeignKeyEntities	pending	
-tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testDqlRemoveCompositeElement	pending	
-tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testFetchDql	pending	
-tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testGetEntityState	pending	
-tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testIndexByOnCompositeKeyField	pending	
-tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testInverseSideAccess	pending	
-tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testLoadInverseManyToManyCollection	pending	
-tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testLoadManyToManyCollectionOfForeignKeyEntities	pending	
-tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testLoadOneToManyCollectionOfForeignKeyEntities	pending	
-tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testLoadOneToManyOfSourceEntityWithAssociationIdentifier	pending	
-tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testMixedCompositeKey	pending	
-tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testMixedCompositeKeyViolateUniqueness	pending	
-tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testOneToOneCascadePersist	pending	
-tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testOneToOneCascadeRemove	pending	
-tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testOneToOneForeignObjectId	pending	
-tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testReferencesToForeignKeyEntities	pending	
-tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testRemoveCompositeElement	pending	
-tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testUpdateAssociationEntity	pending	
+tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testArrayHydrationWithCompositeKey	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testArrayHydrationWithCompositeKey
+tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testAssociationOnlyCompositeKey	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testAssociationOnlyCompositeKey
+tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testClearManyToManyCollectionOfForeignKeyEntities	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testClearManyToManyCollectionOfForeignKeyEntities
+tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testDqlRemoveCompositeElement	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testDqlRemoveCompositeElement
+tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testFetchDql	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testFetchDql
+tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testGetEntityState	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testGetEntityState
+tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testIndexByOnCompositeKeyField	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testIndexByOnCompositeKeyField
+tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testInverseSideAccess	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testInverseSideAccess
+tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testLoadInverseManyToManyCollection	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testLoadInverseManyToManyCollection
+tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testLoadManyToManyCollectionOfForeignKeyEntities	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testLoadManyToManyCollectionOfForeignKeyEntities
+tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testLoadOneToManyCollectionOfForeignKeyEntities	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testLoadOneToManyCollectionOfForeignKeyEntities
+tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testLoadOneToManyOfSourceEntityWithAssociationIdentifier	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testLoadOneToManyOfSourceEntityWithAssociationIdentifier
+tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testMixedCompositeKey	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testMixedCompositeKey
+tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testMixedCompositeKeyViolateUniqueness	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testMixedCompositeKeyViolateUniqueness
+tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testOneToOneCascadePersist	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testOneToOneCascadePersist
+tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testOneToOneCascadeRemove	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testOneToOneCascadeRemove
+tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testOneToOneForeignObjectId	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testOneToOneForeignObjectId
+tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testReferencesToForeignKeyEntities	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testReferencesToForeignKeyEntities
+tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testRemoveCompositeElement	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testRemoveCompositeElement
+tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testUpdateAssociationEntity	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testUpdateAssociationEntity
 tests/Tests/ORM/Functional/Ticket/DDC1181Test.php	DDC1181Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1193Test.php	DDC1193Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1209Test.php	DDC1209Test::testCompositeIdentifierCanHaveCustomType	pending	
@@ -1711,18 +1711,18 @@ tests/Tests/ORM/Functional/ValueConversionType/OneToOneTest.php	OneToOneTest::te
 tests/Tests/ORM/Functional/ValueConversionType/OneToOneTest.php	OneToOneTest::testThatTheProxyFromOwningToInversedIsLoaded	pending	
 tests/Tests/ORM/Functional/ValueConversionType/OneToOneTest.php	OneToOneTest::testThatTheValueOfIdentifiersAreConvertedBackAfterBeingFetchedFromTheDatabase	pending	
 tests/Tests/ORM/Functional/ValueConversionType/OneToOneTest.php	OneToOneTest::testThatTheValueOfIdentifiersAreConvertedInTheDatabase	pending	
-tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testCRUD	pending	
-tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testDqlOnEmbeddedObjectsField	pending	
-tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testDqlWithNonExistentEmbeddableField	pending	
-tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testEmbeddableWithInheritance	pending	
-tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testInlineEmbeddableEmptyPrefix	pending	
-tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testInlineEmbeddableInMappedSuperClass	pending	
-tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testInlineEmbeddablePrefixFalse	pending	
-tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testInlineEmbeddableWithPrefix	pending	
-tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testLoadDql	pending	
-tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testPartialDqlOnEmbeddedObjectsField	pending	
-tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testPartialDqlWithNonExistentEmbeddableField	pending	
-tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testThrowsExceptionOnInfiniteEmbeddableNesting	pending	
+tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testCRUD	ported	crates/php2rust-doctrine-orm/tests/value_objects_test.rs::testCRUD
+tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testDqlOnEmbeddedObjectsField	ported	crates/php2rust-doctrine-orm/tests/value_objects_test.rs::testDqlOnEmbeddedObjectsField
+tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testDqlWithNonExistentEmbeddableField	ported	crates/php2rust-doctrine-orm/tests/value_objects_test.rs::testDqlWithNonExistentEmbeddableField
+tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testEmbeddableWithInheritance	ported	crates/php2rust-doctrine-orm/tests/value_objects_test.rs::testEmbeddableWithInheritance
+tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testInlineEmbeddableEmptyPrefix	ported	crates/php2rust-doctrine-orm/tests/value_objects_test.rs::testInlineEmbeddableEmptyPrefix
+tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testInlineEmbeddableInMappedSuperClass	ported	crates/php2rust-doctrine-orm/tests/value_objects_test.rs::testInlineEmbeddableInMappedSuperClass
+tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testInlineEmbeddablePrefixFalse	ported	crates/php2rust-doctrine-orm/tests/value_objects_test.rs::testInlineEmbeddablePrefixFalse
+tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testInlineEmbeddableWithPrefix	ported	crates/php2rust-doctrine-orm/tests/value_objects_test.rs::testInlineEmbeddableWithPrefix
+tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testLoadDql	ported	crates/php2rust-doctrine-orm/tests/value_objects_test.rs::testLoadDql
+tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testPartialDqlOnEmbeddedObjectsField	pending	a partial object is not a lazy ghost of its selected fields, so its embeddable is not an uninitialized ghost that loads on access
+tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testPartialDqlWithNonExistentEmbeddableField	ported	crates/php2rust-doctrine-orm/tests/value_objects_test.rs::testPartialDqlWithNonExistentEmbeddableField
+tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testThrowsExceptionOnInfiniteEmbeddableNesting	ported	crates/php2rust-doctrine-orm/tests/value_objects_test.rs::testThrowsExceptionOnInfiniteEmbeddableNesting
 tests/Tests/ORM/Functional/VersionedOneToOneTest.php	VersionedOneToOneTest::testSetVersionOnCreate	pending	
 tests/Tests/ORM/Hydration/AbstractHydratorTest.php	AbstractHydratorTest::testEnumCastsIntegerBackedEnumArrayValues	ported	crates/php2rust-doctrine-orm/tests/abstract_hydrator_test.rs::testEnumCastsIntegerBackedEnumArrayValues
 tests/Tests/ORM/Hydration/AbstractHydratorTest.php	AbstractHydratorTest::testEnumCastsIntegerBackedEnumValues	ported	crates/php2rust-doctrine-orm/tests/abstract_hydrator_test.rs::testEnumCastsIntegerBackedEnumValues
@@ -2999,58 +2999,58 @@ tests/Tests/ORM/Tools/Pagination/CountWalkerTest.php	CountWalkerTest::testCountQ
 tests/Tests/ORM/Tools/Pagination/CountWalkerTest.php	CountWalkerTest::testCountQueryRemovesOrderBy	ported	crates/php2rust-doctrine-orm/tests/count_walker_test.rs::testCountQueryRemovesOrderBy
 tests/Tests/ORM/Tools/Pagination/CountWalkerTest.php	CountWalkerTest::testCountQueryWithArbitraryJoin	ported	crates/php2rust-doctrine-orm/tests/count_walker_test.rs::testCountQueryWithArbitraryJoin
 tests/Tests/ORM/Tools/Pagination/CountWalkerTest.php	CountWalkerTest::testCountQueryWithoutDistinctUsesCountStar	ported	crates/php2rust-doctrine-orm/tests/count_walker_test.rs::testCountQueryWithoutDistinctUsesCountStar
-tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testCloneQueryCopiesExistingHints	pending	
-tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testDefaultQueryProducesDuplicatesIsTrue	pending	
-tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testEmptyResultSet	pending	
-tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testGetItemsReturnsEmptyArrayWhenNoResults	pending	
-tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testGetItemsReturnsRawEntities	pending	
-tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testGetItemsWithCursorsReturnsCursorItems	pending	
-tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testGetNextCursorAsStringReturnsStringWhenNextPageExists	pending	
-tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testGetNextCursorAsStringThrowsWhenNoNextPage	pending	
-tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testGetNextCursorThrowsWhenNoNextPage	pending	
-tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testGetNextCursorUnwrapsManyToOneAssociationToIdentifier	pending	
-tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testGetNextCursorWhenMoreResultsExist	pending	
-tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testGetPreviousCursorAsStringReturnsStringWhenPreviousPageExists	pending	
-tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testGetPreviousCursorAsStringThrowsWhenNoPreviousPage	pending	
-tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testGetPreviousCursorThrowsWhenNoPreviousPage	pending	
-tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testGetTotalCountIsCached	pending	
-tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testGetTotalCountReturnsCountQueryResult	pending	
-tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testHasNextPageWhenMoreResultsExist	pending	
-tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testHasNoPagesOnFirstPageWithoutMoreResults	pending	
-tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testIteratorReturnsItems	pending	
-tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testPaginateThrowsInvalidCursorForNonStringNonCursorNonNull	pending	
-tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testPaginateWithCursorInstance	pending	
-tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testPaginateWithEmptyCursorTreatedAsFirstPage	pending	
-tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testPaginateWithPreviousCursorReversesItems	pending	
-tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testPaginatorAcceptsQueryBuilder	pending	
-tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testPaginatorIsReusableAcrossQueriesAndPages	pending	
-tests/Tests/ORM/Tools/Pagination/CursorTest.php	CursorTest::testCursorIsFinal	pending	
-tests/Tests/ORM/Tools/Pagination/CursorTest.php	CursorTest::testEncodeAndDecode	pending	
-tests/Tests/ORM/Tools/Pagination/CursorTest.php	CursorTest::testEncodeAndDecodeWithPreviousCursor	pending	
-tests/Tests/ORM/Tools/Pagination/CursorTest.php	CursorTest::testEncodeProducesUrlSafeString	pending	
-tests/Tests/ORM/Tools/Pagination/CursorTest.php	CursorTest::testFromEncodedStringCastsIsNextToBool	pending	
-tests/Tests/ORM/Tools/Pagination/CursorTest.php	CursorTest::testFromEncodedStringChainsPreviousExceptionForInvalidJson	pending	
-tests/Tests/ORM/Tools/Pagination/CursorTest.php	CursorTest::testFromEncodedStringDefaultsToNextWhenIsNextMissing	pending	
-tests/Tests/ORM/Tools/Pagination/CursorTest.php	CursorTest::testFromEncodedStringThrowsForInvalidBase64	pending	
-tests/Tests/ORM/Tools/Pagination/CursorTest.php	CursorTest::testFromEncodedStringThrowsForInvalidJson	pending	
-tests/Tests/ORM/Tools/Pagination/CursorTest.php	CursorTest::testFromEncodedStringThrowsForNonArrayJson	pending	
-tests/Tests/ORM/Tools/Pagination/CursorTest.php	CursorTest::testFromEncodedStringThrowsForNonScalarParameterValue	pending	
-tests/Tests/ORM/Tools/Pagination/CursorTest.php	CursorTest::testFromEncodedStringThrowsForNonStringInput	pending	
-tests/Tests/ORM/Tools/Pagination/CursorTest.php	CursorTest::testToArray	pending	
-tests/Tests/ORM/Tools/Pagination/CursorWalkerTest.php	CursorWalkerTest::testBasicQueryWithOrderBy	pending	
-tests/Tests/ORM/Tools/Pagination/CursorWalkerTest.php	CursorWalkerTest::testCursorConditionDoesNotOverwriteAParameterOfThePaginatedQuery	pending	
-tests/Tests/ORM/Tools/Pagination/CursorWalkerTest.php	CursorWalkerTest::testCursorConditionMultipleColumnsAsc	pending	
-tests/Tests/ORM/Tools/Pagination/CursorWalkerTest.php	CursorWalkerTest::testCursorConditionMultipleColumnsDesc	pending	
-tests/Tests/ORM/Tools/Pagination/CursorWalkerTest.php	CursorWalkerTest::testCursorConditionSingleColumnAsc	pending	
-tests/Tests/ORM/Tools/Pagination/CursorWalkerTest.php	CursorWalkerTest::testCursorConditionSingleColumnDesc	pending	
-tests/Tests/ORM/Tools/Pagination/CursorWalkerTest.php	CursorWalkerTest::testCursorConditionThreeColumnsDesc	pending	
-tests/Tests/ORM/Tools/Pagination/CursorWalkerTest.php	CursorWalkerTest::testCursorConditionWithExistingWhere	pending	
-tests/Tests/ORM/Tools/Pagination/CursorWalkerTest.php	CursorWalkerTest::testNoExceptionWithToManyJoinWhenQueryProducesDuplicatesIsTrue	pending	
-tests/Tests/ORM/Tools/Pagination/CursorWalkerTest.php	CursorWalkerTest::testNoExceptionWithToOneJoinWhenQueryProducesDuplicatesIsFalse	pending	
-tests/Tests/ORM/Tools/Pagination/CursorWalkerTest.php	CursorWalkerTest::testQueryWithJoinAndOrderByJoinedEntity	pending	
-tests/Tests/ORM/Tools/Pagination/CursorWalkerTest.php	CursorWalkerTest::testQueryWithMultipleOrderByColumnsReversed	pending	
-tests/Tests/ORM/Tools/Pagination/CursorWalkerTest.php	CursorWalkerTest::testQueryWithReversedOrderBy	pending	
-tests/Tests/ORM/Tools/Pagination/CursorWalkerTest.php	CursorWalkerTest::testThrowsExceptionWithoutOrderBy	pending	
+tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testCloneQueryCopiesExistingHints	ported	crates/php2rust-doctrine-orm/tests/cursor_paginator_test.rs::testCloneQueryCopiesExistingHints
+tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testDefaultQueryProducesDuplicatesIsTrue	ported	crates/php2rust-doctrine-orm/tests/cursor_paginator_test.rs::testDefaultQueryProducesDuplicatesIsTrue
+tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testEmptyResultSet	ported	crates/php2rust-doctrine-orm/tests/cursor_paginator_test.rs::testEmptyResultSet
+tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testGetItemsReturnsEmptyArrayWhenNoResults	ported	crates/php2rust-doctrine-orm/tests/cursor_paginator_test.rs::testGetItemsReturnsEmptyArrayWhenNoResults
+tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testGetItemsReturnsRawEntities	ported	crates/php2rust-doctrine-orm/tests/cursor_paginator_test.rs::testGetItemsReturnsRawEntities
+tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testGetItemsWithCursorsReturnsCursorItems	ported	crates/php2rust-doctrine-orm/tests/cursor_paginator_test.rs::testGetItemsWithCursorsReturnsCursorItems
+tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testGetNextCursorAsStringReturnsStringWhenNextPageExists	ported	crates/php2rust-doctrine-orm/tests/cursor_paginator_test.rs::testGetNextCursorAsStringReturnsStringWhenNextPageExists
+tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testGetNextCursorAsStringThrowsWhenNoNextPage	ported	crates/php2rust-doctrine-orm/tests/cursor_paginator_test.rs::testGetNextCursorAsStringThrowsWhenNoNextPage
+tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testGetNextCursorThrowsWhenNoNextPage	ported	crates/php2rust-doctrine-orm/tests/cursor_paginator_test.rs::testGetNextCursorThrowsWhenNoNextPage
+tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testGetNextCursorUnwrapsManyToOneAssociationToIdentifier	ported	crates/php2rust-doctrine-orm/tests/cursor_paginator_test.rs::testGetNextCursorUnwrapsManyToOneAssociationToIdentifier
+tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testGetNextCursorWhenMoreResultsExist	ported	crates/php2rust-doctrine-orm/tests/cursor_paginator_test.rs::testGetNextCursorWhenMoreResultsExist
+tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testGetPreviousCursorAsStringReturnsStringWhenPreviousPageExists	ported	crates/php2rust-doctrine-orm/tests/cursor_paginator_test.rs::testGetPreviousCursorAsStringReturnsStringWhenPreviousPageExists
+tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testGetPreviousCursorAsStringThrowsWhenNoPreviousPage	ported	crates/php2rust-doctrine-orm/tests/cursor_paginator_test.rs::testGetPreviousCursorAsStringThrowsWhenNoPreviousPage
+tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testGetPreviousCursorThrowsWhenNoPreviousPage	ported	crates/php2rust-doctrine-orm/tests/cursor_paginator_test.rs::testGetPreviousCursorThrowsWhenNoPreviousPage
+tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testGetTotalCountIsCached	ported	crates/php2rust-doctrine-orm/tests/cursor_paginator_test.rs::testGetTotalCountIsCached
+tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testGetTotalCountReturnsCountQueryResult	ported	crates/php2rust-doctrine-orm/tests/cursor_paginator_test.rs::testGetTotalCountReturnsCountQueryResult
+tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testHasNextPageWhenMoreResultsExist	ported	crates/php2rust-doctrine-orm/tests/cursor_paginator_test.rs::testHasNextPageWhenMoreResultsExist
+tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testHasNoPagesOnFirstPageWithoutMoreResults	ported	crates/php2rust-doctrine-orm/tests/cursor_paginator_test.rs::testHasNoPagesOnFirstPageWithoutMoreResults
+tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testIteratorReturnsItems	ported	crates/php2rust-doctrine-orm/tests/cursor_paginator_test.rs::testIteratorReturnsItems
+tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testPaginateThrowsInvalidCursorForNonStringNonCursorNonNull	ported	crates/php2rust-doctrine-orm/tests/cursor_paginator_test.rs::testPaginateThrowsInvalidCursorForNonStringNonCursorNonNull
+tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testPaginateWithCursorInstance	ported	crates/php2rust-doctrine-orm/tests/cursor_paginator_test.rs::testPaginateWithCursorInstance
+tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testPaginateWithEmptyCursorTreatedAsFirstPage	ported	crates/php2rust-doctrine-orm/tests/cursor_paginator_test.rs::testPaginateWithEmptyCursorTreatedAsFirstPage
+tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testPaginateWithPreviousCursorReversesItems	ported	crates/php2rust-doctrine-orm/tests/cursor_paginator_test.rs::testPaginateWithPreviousCursorReversesItems
+tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testPaginatorAcceptsQueryBuilder	ported	crates/php2rust-doctrine-orm/tests/cursor_paginator_test.rs::testPaginatorAcceptsQueryBuilder
+tests/Tests/ORM/Tools/Pagination/CursorPaginatorTest.php	CursorPaginatorTest::testPaginatorIsReusableAcrossQueriesAndPages	ported	crates/php2rust-doctrine-orm/tests/cursor_paginator_test.rs::testPaginatorIsReusableAcrossQueriesAndPages
+tests/Tests/ORM/Tools/Pagination/CursorTest.php	CursorTest::testCursorIsFinal	n/a: a Rust struct has no subclasses	
+tests/Tests/ORM/Tools/Pagination/CursorTest.php	CursorTest::testEncodeAndDecode	ported	crates/php2rust-doctrine-orm/tests/cursor_test.rs::testEncodeAndDecode
+tests/Tests/ORM/Tools/Pagination/CursorTest.php	CursorTest::testEncodeAndDecodeWithPreviousCursor	ported	crates/php2rust-doctrine-orm/tests/cursor_test.rs::testEncodeAndDecodeWithPreviousCursor
+tests/Tests/ORM/Tools/Pagination/CursorTest.php	CursorTest::testEncodeProducesUrlSafeString	ported	crates/php2rust-doctrine-orm/tests/cursor_test.rs::testEncodeProducesUrlSafeString
+tests/Tests/ORM/Tools/Pagination/CursorTest.php	CursorTest::testFromEncodedStringCastsIsNextToBool	ported	crates/php2rust-doctrine-orm/tests/cursor_test.rs::testFromEncodedStringCastsIsNextToBool
+tests/Tests/ORM/Tools/Pagination/CursorTest.php	CursorTest::testFromEncodedStringChainsPreviousExceptionForInvalidJson	ported	crates/php2rust-doctrine-orm/tests/cursor_test.rs::testFromEncodedStringChainsPreviousExceptionForInvalidJson
+tests/Tests/ORM/Tools/Pagination/CursorTest.php	CursorTest::testFromEncodedStringDefaultsToNextWhenIsNextMissing	ported	crates/php2rust-doctrine-orm/tests/cursor_test.rs::testFromEncodedStringDefaultsToNextWhenIsNextMissing
+tests/Tests/ORM/Tools/Pagination/CursorTest.php	CursorTest::testFromEncodedStringThrowsForInvalidBase64	ported	crates/php2rust-doctrine-orm/tests/cursor_test.rs::testFromEncodedStringThrowsForInvalidBase64
+tests/Tests/ORM/Tools/Pagination/CursorTest.php	CursorTest::testFromEncodedStringThrowsForInvalidJson	ported	crates/php2rust-doctrine-orm/tests/cursor_test.rs::testFromEncodedStringThrowsForInvalidJson
+tests/Tests/ORM/Tools/Pagination/CursorTest.php	CursorTest::testFromEncodedStringThrowsForNonArrayJson	ported	crates/php2rust-doctrine-orm/tests/cursor_test.rs::testFromEncodedStringThrowsForNonArrayJson
+tests/Tests/ORM/Tools/Pagination/CursorTest.php	CursorTest::testFromEncodedStringThrowsForNonScalarParameterValue	ported	crates/php2rust-doctrine-orm/tests/cursor_test.rs::testFromEncodedStringThrowsForNonScalarParameterValue
+tests/Tests/ORM/Tools/Pagination/CursorTest.php	CursorTest::testFromEncodedStringThrowsForNonStringInput	ported	crates/php2rust-doctrine-orm/tests/cursor_test.rs::testFromEncodedStringThrowsForNonStringInput
+tests/Tests/ORM/Tools/Pagination/CursorTest.php	CursorTest::testToArray	ported	crates/php2rust-doctrine-orm/tests/cursor_test.rs::testToArray
+tests/Tests/ORM/Tools/Pagination/CursorWalkerTest.php	CursorWalkerTest::testBasicQueryWithOrderBy	ported	crates/php2rust-doctrine-orm/tests/cursor_walker_test.rs::testBasicQueryWithOrderBy
+tests/Tests/ORM/Tools/Pagination/CursorWalkerTest.php	CursorWalkerTest::testCursorConditionDoesNotOverwriteAParameterOfThePaginatedQuery	ported	crates/php2rust-doctrine-orm/tests/cursor_walker_test.rs::testCursorConditionDoesNotOverwriteAParameterOfThePaginatedQuery
+tests/Tests/ORM/Tools/Pagination/CursorWalkerTest.php	CursorWalkerTest::testCursorConditionMultipleColumnsAsc	ported	crates/php2rust-doctrine-orm/tests/cursor_walker_test.rs::testCursorConditionMultipleColumnsAsc
+tests/Tests/ORM/Tools/Pagination/CursorWalkerTest.php	CursorWalkerTest::testCursorConditionMultipleColumnsDesc	ported	crates/php2rust-doctrine-orm/tests/cursor_walker_test.rs::testCursorConditionMultipleColumnsDesc
+tests/Tests/ORM/Tools/Pagination/CursorWalkerTest.php	CursorWalkerTest::testCursorConditionSingleColumnAsc	ported	crates/php2rust-doctrine-orm/tests/cursor_walker_test.rs::testCursorConditionSingleColumnAsc
+tests/Tests/ORM/Tools/Pagination/CursorWalkerTest.php	CursorWalkerTest::testCursorConditionSingleColumnDesc	ported	crates/php2rust-doctrine-orm/tests/cursor_walker_test.rs::testCursorConditionSingleColumnDesc
+tests/Tests/ORM/Tools/Pagination/CursorWalkerTest.php	CursorWalkerTest::testCursorConditionThreeColumnsDesc	ported	crates/php2rust-doctrine-orm/tests/cursor_walker_test.rs::testCursorConditionThreeColumnsDesc
+tests/Tests/ORM/Tools/Pagination/CursorWalkerTest.php	CursorWalkerTest::testCursorConditionWithExistingWhere	ported	crates/php2rust-doctrine-orm/tests/cursor_walker_test.rs::testCursorConditionWithExistingWhere
+tests/Tests/ORM/Tools/Pagination/CursorWalkerTest.php	CursorWalkerTest::testNoExceptionWithToManyJoinWhenQueryProducesDuplicatesIsTrue	ported	crates/php2rust-doctrine-orm/tests/cursor_walker_test.rs::testNoExceptionWithToManyJoinWhenQueryProducesDuplicatesIsTrue
+tests/Tests/ORM/Tools/Pagination/CursorWalkerTest.php	CursorWalkerTest::testNoExceptionWithToOneJoinWhenQueryProducesDuplicatesIsFalse	ported	crates/php2rust-doctrine-orm/tests/cursor_walker_test.rs::testNoExceptionWithToOneJoinWhenQueryProducesDuplicatesIsFalse
+tests/Tests/ORM/Tools/Pagination/CursorWalkerTest.php	CursorWalkerTest::testQueryWithJoinAndOrderByJoinedEntity	ported	crates/php2rust-doctrine-orm/tests/cursor_walker_test.rs::testQueryWithJoinAndOrderByJoinedEntity
+tests/Tests/ORM/Tools/Pagination/CursorWalkerTest.php	CursorWalkerTest::testQueryWithMultipleOrderByColumnsReversed	ported	crates/php2rust-doctrine-orm/tests/cursor_walker_test.rs::testQueryWithMultipleOrderByColumnsReversed
+tests/Tests/ORM/Tools/Pagination/CursorWalkerTest.php	CursorWalkerTest::testQueryWithReversedOrderBy	ported	crates/php2rust-doctrine-orm/tests/cursor_walker_test.rs::testQueryWithReversedOrderBy
+tests/Tests/ORM/Tools/Pagination/CursorWalkerTest.php	CursorWalkerTest::testThrowsExceptionWithoutOrderBy	ported	crates/php2rust-doctrine-orm/tests/cursor_walker_test.rs::testThrowsExceptionWithoutOrderBy
 tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testCountQueryMixedResultsWithName	ported	crates/php2rust-doctrine-orm/tests/limit_subquery_output_walker_test.rs::testCountQueryMixedResultsWithName
 tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testCountQueryWithArithmeticOrderByCondition	ported	crates/php2rust-doctrine-orm/tests/limit_subquery_output_walker_test.rs::testCountQueryWithArithmeticOrderByCondition
 tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testCountQueryWithComplexScalarOrderByItemJoinedWithPartial	ported	crates/php2rust-doctrine-orm/tests/limit_subquery_output_walker_test.rs::testCountQueryWithComplexScalarOrderByItemJoinedWithPartial

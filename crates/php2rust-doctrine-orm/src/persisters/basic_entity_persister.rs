@@ -1338,8 +1338,7 @@ impl BasicEntityPersister {
         let index_by = assoc.index_by()?.to_owned();
         let mut result = PhpArray::new();
         for entity in entities {
-            let entity_class = em.get_class_metadata(entity.class())?;
-            let key = entity_class.read().get_field_value(&entity, &index_by)?;
+            let key = crate::internal::hydration::index_by_value(em, &entity, &index_by)?;
             let key = Key::from_value(&key).unwrap_or_else(|| Key::from(to_text(&key).as_str()));
             result.insert(key, Value::Object(entity));
         }
