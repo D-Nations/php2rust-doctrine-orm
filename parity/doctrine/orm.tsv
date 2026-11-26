@@ -1473,7 +1473,7 @@ tests/Tests/ORM/Functional/Ticket/GH11341Test.php	GH11341Test::testInstanceOf	pe
 tests/Tests/ORM/Functional/Ticket/GH11386/GH11386Test.php	GH11386Test::testInitializeClonedProxy	pending	
 tests/Tests/ORM/Functional/Ticket/GH11487Test.php	GH11487Test::testItThrowsASyntaxErrorOnUnfinishedQuery	pending	
 tests/Tests/ORM/Functional/Ticket/GH11500Test.php	GH11500Test::testDeleteOneToManyCollectionWithSingleTableInheritance	ported	crates/php2rust-doctrine-orm/tests/gh11500_test.rs::testDeleteOneToManyCollectionWithSingleTableInheritance
-tests/Tests/ORM/Functional/Ticket/GH11501Test.php	GH11501Test::testDeleteOneToManyCollectionWithSingleTableInheritance	pending	
+tests/Tests/ORM/Functional/Ticket/GH11501Test.php	GH11501Test::testDeleteOneToManyCollectionWithSingleTableInheritance	ported	crates/php2rust-doctrine-orm/tests/gh11501_test.rs::testDeleteOneToManyCollectionWithSingleTableInheritance
 tests/Tests/ORM/Functional/Ticket/GH11524Test.php	GH11524Test::testPostLoadCalledOnProxy	pending	
 tests/Tests/ORM/Functional/Ticket/GH11982Test.php	GH11982Test::testSchema	pending	
 tests/Tests/ORM/Functional/Ticket/GH11982Test.php	GH11982Test::testSchemaLegacyDbal	pending	
