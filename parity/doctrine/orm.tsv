@@ -1242,7 +1242,7 @@ tests/Tests/ORM/Functional/Ticket/DDC1685Test.php	DDC1685Test::testPaginateCount
 tests/Tests/ORM/Functional/Ticket/DDC1685Test.php	DDC1685Test::testPaginateCountNoOutputWalkers	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1685Test.php	DDC1685Test::testPaginateIterate	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1685Test.php	DDC1685Test::testPaginateIterateNoOutputWalkers	pending	
-tests/Tests/ORM/Functional/Ticket/DDC168Test.php	DDC168Test::testJoinedSubclassPersisterRequiresSpecificOrderOfMetadataReflFieldsArray	pending	
+tests/Tests/ORM/Functional/Ticket/DDC168Test.php	DDC168Test::testJoinedSubclassPersisterRequiresSpecificOrderOfMetadataReflFieldsArray	ported	crates/php2rust-doctrine-orm/tests/ddc168_test.rs::testJoinedSubclassPersisterRequiresSpecificOrderOfMetadataReflFieldsArray
 tests/Tests/ORM/Functional/Ticket/DDC1695Test.php	DDC1695Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1707Test.php	DDC1707Test::testPostLoadOnChild	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1719Test.php	DDC1719Test::testCreateRetrieveUpdateDelete	pending	
