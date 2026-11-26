@@ -1548,8 +1548,8 @@ tests/Tests/ORM/Functional/Ticket/GH7180Test.php	GH7180Test::testIssue	ported	cr
 tests/Tests/ORM/Functional/Ticket/GH7180Test.php	GH7180Test::testIssue3NodeCycle	ported	crates/php2rust-doctrine-orm/tests/gh7180_test.rs::testIssue3NodeCycle
 tests/Tests/ORM/Functional/Ticket/GH7259Test.php	GH7259Test::testPersistFileAfterVersion	ported	crates/php2rust-doctrine-orm/tests/gh7259_test.rs::testPersistFileAfterVersion
 tests/Tests/ORM/Functional/Ticket/GH7259Test.php	GH7259Test::testPersistFileBeforeVersion	ported	crates/php2rust-doctrine-orm/tests/gh7259_test.rs::testPersistFileBeforeVersion
-tests/Tests/ORM/Functional/Ticket/GH7286Test.php	GH7286Test::testAggregateExpressionInFunction	pending	
-tests/Tests/ORM/Functional/Ticket/GH7286Test.php	GH7286Test::testAggregateFunctionInCustomFunction	pending	
+tests/Tests/ORM/Functional/Ticket/GH7286Test.php	GH7286Test::testAggregateExpressionInFunction	ported	crates/php2rust-doctrine-orm/tests/gh7286_test.rs::testAggregateExpressionInFunction
+tests/Tests/ORM/Functional/Ticket/GH7286Test.php	GH7286Test::testAggregateFunctionInCustomFunction	ported	crates/php2rust-doctrine-orm/tests/gh7286_test.rs::testAggregateFunctionInCustomFunction
 tests/Tests/ORM/Functional/Ticket/GH7366Test.php	GH7366Test::testOptimisticLockNoExceptionOnFind	pending	
 tests/Tests/ORM/Functional/Ticket/GH7496WithToIterableTest.php	GH7496WithToIterableTest::testNonUniqueObjectHydrationDuringIteration	pending	
 tests/Tests/ORM/Functional/Ticket/GH7505Test.php	GH7505Test::testSimpleArrayTypeHydratedCorrectly	pending	
