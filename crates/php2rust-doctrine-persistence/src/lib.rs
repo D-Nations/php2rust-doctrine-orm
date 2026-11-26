@@ -14,6 +14,28 @@
 //!
 //! Doctrine source copyright (c) Doctrine Project; distributed under MIT.
 //!
+//! ```
+//! use php2rust_doctrine_persistence::mapping::driver::{MappingDriver, MappingDriverChain};
+//! use php2rust_doctrine_persistence::mapping::RuntimeReflectionService;
+//! use php2rust_doctrine_persistence::mapping::ReflectionService;
+//! use php2rust_doctrine_persistence::php_reflection::{ClassInfo, register_class};
+//!
+//! register_class(ClassInfo::class("App\\Entity\\Base"));
+//! register_class(ClassInfo::class("App\\Entity\\User").extends("App\\Entity\\Base"));
+//!
+//! let reflection = RuntimeReflectionService::new();
+//! assert_eq!(
+//!     reflection.get_parent_classes("App\\Entity\\User").unwrap(),
+//!     ["App\\Entity\\Base"]
+//! );
+//! assert_eq!(reflection.get_class_short_name("App\\Entity\\User").unwrap(), "User");
+//!
+//! let chain = MappingDriverChain::new();
+//! assert!(chain.is_transient("App\\Entity\\User").unwrap());
+//! let error = reflection.get_parent_classes("App\\Missing").unwrap_err();
+//! assert_eq!(error.message, "Class 'App\\Missing' does not exist");
+//! ```
+//!
 //! Upstream: none
 
 #![forbid(unsafe_code)]

@@ -5,6 +5,7 @@
 
 mod class_metadata;
 mod class_metadata_factory;
+pub mod driver;
 pub mod mapping_exception;
 mod reflection_service;
 mod runtime_reflection_service;
