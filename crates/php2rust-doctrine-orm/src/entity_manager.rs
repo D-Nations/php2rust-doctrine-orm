@@ -231,9 +231,10 @@ impl EntityManager {
         &self,
         class_name: &str,
         id: Value,
-        lock_mode: LockMode,
+        lock_mode: impl Into<Option<LockMode>>,
         lock_version: Option<Value>,
     ) -> Result<Option<Object>, Thrown> {
+        let lock_mode = Self::lock_mode_or_none(lock_mode.into(), "find");
         let class = self
             .metadata_factory
             .get_metadata_for(class_name.trim_start_matches('\\'))?;
@@ -307,7 +308,7 @@ impl EntityManager {
                 LockMode::PessimisticRead | LockMode::PessimisticWrite => {
                     self.unit_of_work
                         .get_entity_persister(&name)?
-                        .refresh(&sorted_id, &entity)
+                        .refresh(&sorted_id, &entity, Some(lock_mode))
                         .await?;
                 }
                 LockMode::None => {}
@@ -485,8 +486,34 @@ impl EntityManager {
     /// Refreshes the persistent state of an entity from the database,
     /// overriding any local changes that have not yet been persisted.
     pub async fn refresh(&self, object: &Object) -> Result<(), Thrown> {
+        self.refresh_with_lock(object, LockMode::None).await
+    }
+
+    /// `refresh($object, $lockMode)`: refreshes the entity with a lock
+    /// mode; `None` is PHP's deprecated `null`.
+    pub async fn refresh_with_lock(
+        &self,
+        object: &Object,
+        lock_mode: impl Into<Option<LockMode>>,
+    ) -> Result<(), Thrown> {
+        let lock_mode = Self::lock_mode_or_none(lock_mode.into(), "refresh");
+
         self.error_if_closed()?;
-        self.unit_of_work.refresh(object).await
+
+        self.unit_of_work.refresh(object, Some(lock_mode)).await
+    }
+
+    /// `if ($lockMode === null) { Deprecation::trigger(...); $lockMode =
+    /// LockMode::NONE; }` of `find()` and `refresh()`.
+    fn lock_mode_or_none(lock_mode: Option<LockMode>, method: &str) -> LockMode {
+        lock_mode.unwrap_or_else(|| {
+            crate::deprecations::trigger("https://github.com/doctrine/orm/pull/12548", || {
+                format!(
+                    "Passing null as lock mode to Doctrine\\ORM\\EntityManager::{method}() is deprecated and will not be possible in Doctrine ORM 4.0, pass LockMode::NONE instead."
+                )
+            });
+            LockMode::None
+        })
     }
 
     /// Detaches an entity from the `EntityManager`, causing a managed entity

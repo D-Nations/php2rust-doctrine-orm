@@ -24,7 +24,9 @@ use crate::mapping::ClassMetadata;
 use crate::mapping::quote_strategy::get_sql_result_casing;
 use crate::utility::{ParamType, flatten_identifier, get_type_of_column, key_text, to_text};
 
-use super::basic_entity_persister::{BasicEntityPersister, PersisterCriteria, dbal, types_of};
+use super::basic_entity_persister::{
+    BasicEntityPersister, PersisterCriteria, append_filter_sql, dbal, types_of,
+};
 
 impl BasicEntityPersister {
     /// This function finds the `ClassMetadata` instance in an inheritance
@@ -336,7 +338,7 @@ impl BasicEntityPersister {
             join_sql.push_str(&self.get_select_many_to_many_join_sql(em, assoc)?);
         }
 
-        let condition_sql = match criteria {
+        let mut condition_sql = match criteria {
             PersisterCriteria::Criteria(criteria) => {
                 self.get_select_condition_criteria_sql(em, criteria)?
             }
@@ -344,6 +346,15 @@ impl BasicEntityPersister {
                 self.get_select_condition_sql(em, criteria, assoc)?
             }
         };
+
+        let root_name = self.class.read().root_entity_name.clone();
+        let filter_sql = self.generate_filter_condition_sql(
+            em,
+            &em.get_class_metadata(&root_name)?,
+            &self.get_sql_table_alias(&root_name, ""),
+        )?;
+        // If the current class in the root entity, add the filters
+        append_filter_sql(&mut condition_sql, &filter_sql);
 
         let mut order_by = order_by.cloned();
         if let Some(assoc) = assoc
@@ -393,7 +404,7 @@ impl BasicEntityPersister {
         let base_table_alias = self.get_sql_table_alias(&self.class.read().name.clone(), "");
         let join_sql = self.get_join_sql(em, &base_table_alias)?;
 
-        let condition_sql = match criteria {
+        let mut condition_sql = match criteria {
             PersisterCriteria::Criteria(criteria) => {
                 self.get_select_condition_criteria_sql(em, criteria)?
             }
@@ -401,6 +412,14 @@ impl BasicEntityPersister {
                 self.get_select_condition_sql(em, criteria, None)?
             }
         };
+
+        let root_name = self.class.read().root_entity_name.clone();
+        let filter_sql = self.generate_filter_condition_sql(
+            em,
+            &em.get_class_metadata(&root_name)?,
+            &self.get_sql_table_alias(&root_name, ""),
+        )?;
+        append_filter_sql(&mut condition_sql, &filter_sql);
 
         Ok(format!(
             "SELECT COUNT(*) FROM {table_name} {base_table_alias}{join_sql}{}",
