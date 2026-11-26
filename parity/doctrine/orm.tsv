@@ -1369,8 +1369,8 @@ tests/Tests/ORM/Functional/Ticket/DDC618Test.php	DDC618Test::testIndexByHydrateA
 tests/Tests/ORM/Functional/Ticket/DDC618Test.php	DDC618Test::testIndexByHydrateObject	pending	
 tests/Tests/ORM/Functional/Ticket/DDC618Test.php	DDC618Test::testIndexByJoin	pending	
 tests/Tests/ORM/Functional/Ticket/DDC618Test.php	DDC618Test::testIndexByToOneJoinSilentlyIgnored	pending	
-tests/Tests/ORM/Functional/Ticket/DDC6303Test.php	DDC6303Test::testEmptyValuesInJoinedInheritance	pending	
-tests/Tests/ORM/Functional/Ticket/DDC6303Test.php	DDC6303Test::testMixedTypeHydratedCorrectlyInJoinedInheritance	pending	
+tests/Tests/ORM/Functional/Ticket/DDC6303Test.php	DDC6303Test::testEmptyValuesInJoinedInheritance	ported	crates/php2rust-doctrine-orm/tests/ddc6303_test.rs::testEmptyValuesInJoinedInheritance
+tests/Tests/ORM/Functional/Ticket/DDC6303Test.php	DDC6303Test::testMixedTypeHydratedCorrectlyInJoinedInheritance	ported	crates/php2rust-doctrine-orm/tests/ddc6303_test.rs::testMixedTypeHydratedCorrectlyInJoinedInheritance
 tests/Tests/ORM/Functional/Ticket/DDC633Test.php	DDC633Test::testDQLDeferredEagerLoad	pending	
 tests/Tests/ORM/Functional/Ticket/DDC633Test.php	DDC633Test::testOneToOneEager	pending	
 tests/Tests/ORM/Functional/Ticket/DDC6460Test.php	DDC6460Test::testInlineEmbeddable	pending	
