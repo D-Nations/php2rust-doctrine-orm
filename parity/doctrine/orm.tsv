@@ -1311,7 +1311,7 @@ tests/Tests/ORM/Functional/Ticket/DDC2931Test.php	DDC2931Test::testFetchJoinedEn
 tests/Tests/ORM/Functional/Ticket/DDC2931Test.php	DDC2931Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2931_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC2943Test.php	DDC2943Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC2943Test.php	DDC2943Test::testIssueNonFetchJoin	pending	
-tests/Tests/ORM/Functional/Ticket/DDC2984Test.php	DDC2984Test::testIssue	pending	a custom DBAL type of the test file (the recorder cannot load a DBAL Type subclass)
+tests/Tests/ORM/Functional/Ticket/DDC2984Test.php	DDC2984Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC2996Test.php	DDC2996Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2996_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC3033Test.php	DDC3033Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc3033_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC3042Test.php	DDC3042Test::testSQLGenerationDoesNotProvokeAliasCollisions	ported	crates/php2rust-doctrine-orm/tests/ddc3042_test.rs::testSQLGenerationDoesNotProvokeAliasCollisions
