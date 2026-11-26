@@ -1607,7 +1607,7 @@ tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildWri
 tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildWritableColumnUpdate	pending	
 tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testRootColumnsInsert	pending	
 tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testRootColumnsUpdate	pending	
-tests/Tests/ORM/Functional/Ticket/GH9516Test.php	GH9516Test::testEntityCanHaveInverseOneToManyAssociationWithChildMappedSuperclass	pending	
+tests/Tests/ORM/Functional/Ticket/GH9516Test.php	GH9516Test::testEntityCanHaveInverseOneToManyAssociationWithChildMappedSuperclass	ported	crates/php2rust-doctrine-orm/tests/gh9516_test.rs::testEntityCanHaveInverseOneToManyAssociationWithChildMappedSuperclass
 tests/Tests/ORM/Functional/Ticket/GH9538Test.php	GH9538Test::testCanRemoveEntityWithReadonlyId	pending	
 tests/Tests/ORM/Functional/Ticket/GH9579Test.php	GH9579Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/GH9807Test.php	GH9807Test::testHydrateJoinedCollectionWithFirstNullishRow	pending	
