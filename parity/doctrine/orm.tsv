@@ -1540,7 +1540,7 @@ tests/Tests/ORM/Functional/Ticket/GH6937Test.php	GH6937Test::testPhoneNumberIsPo
 tests/Tests/ORM/Functional/Ticket/GH7006Test.php	GH7006Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/gh7006_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/GH7012Test.php	GH7012Test::testUpdateEntityWithIdentifierAssociationWithQuotedJoinColumn	ported	crates/php2rust-doctrine-orm/tests/gh7012_test.rs::testUpdateEntityWithIdentifierAssociationWithQuotedJoinColumn
 tests/Tests/ORM/Functional/Ticket/GH7062Test.php	GH7062Test::testEntityWithAssociationKeyIdentityCanBeUpdated	pending	
-tests/Tests/ORM/Functional/Ticket/GH7067Test.php	GH7067Test::testSLCWithVersion	pending	
+tests/Tests/ORM/Functional/Ticket/GH7067Test.php	GH7067Test::testSLCWithVersion	pending	needs the second-level cache
 tests/Tests/ORM/Functional/Ticket/GH7068Test.php	GH7068Test::testLockModeIsRespected	ported	crates/php2rust-doctrine-orm/tests/gh7068_test.rs::testLockModeIsRespected
 tests/Tests/ORM/Functional/Ticket/GH7079Test.php	GH7079Test::testGetTableName	pending	
 tests/Tests/ORM/Functional/Ticket/GH7079Test.php	GH7079Test::testJoinTableName	pending	
