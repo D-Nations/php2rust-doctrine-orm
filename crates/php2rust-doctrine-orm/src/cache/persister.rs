@@ -645,7 +645,7 @@ impl AbstractEntityPersister {
             )
         })?;
         let owner_id = uow.get_entity_identifier(&owner)?;
-        let key = self.build_collection_cache_key(&em, assoc, &owner_id)?;
+        let key = Self::build_collection_cache_key(&em, assoc, &owner_id)?;
         if let Some(list) = persister.load_collection_cache(collection, &key).await? {
             if let Some(logger) = self.logger() {
                 logger.collection_cache_hit(&persister.get_cache_region().get_name(), &key);
@@ -675,7 +675,6 @@ impl AbstractEntityPersister {
 
     /// `buildCollectionCacheKey()`, with the SQL filters' hash.
     fn build_collection_cache_key(
-        &self,
         em: &EntityManager,
         association: &AssociationMapping,
         owner_id: &PhpArray,

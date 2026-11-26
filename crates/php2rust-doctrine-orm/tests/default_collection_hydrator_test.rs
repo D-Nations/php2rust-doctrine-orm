@@ -1,6 +1,6 @@
 //! Upstream: doctrine/orm tests/Tests/ORM/Cache/DefaultCollectionHydratorTest.php
 //!
-//! The test's entity manager is `slc_entity_manager()` (on SQLite in
+//! The test's entity manager is `slc_entity_manager()` (on `SQLite` in
 //! memory, no schema: the test reads the cache only).
 
 #![allow(non_snake_case)]
