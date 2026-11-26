@@ -83,7 +83,7 @@ async fn testOptimisticLockWithDateTimeForVersion() {
         0,
         TimeZone::Utc,
     );
-    let modified_date = DateTime::object(modified.clone());
+    let modified_date = DateTime::object(modified);
 
     em.get_connection()
         .execute_statement(

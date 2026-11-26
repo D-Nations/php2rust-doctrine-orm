@@ -34,7 +34,7 @@ struct GH5887CustomIdObject {
 }
 
 impl PhpObject for GH5887CustomIdObject {
-    fn class(&self) -> &str {
+    fn class(&self) -> &'static str {
         "Doctrine\\Tests\\ORM\\Functional\\Ticket\\GH5887CustomIdObject"
     }
 

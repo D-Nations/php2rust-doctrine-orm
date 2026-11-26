@@ -73,7 +73,7 @@ struct DDC1998Id {
 }
 
 impl PhpObject for DDC1998Id {
-    fn class(&self) -> &str {
+    fn class(&self) -> &'static str {
         "Doctrine\\Tests\\ORM\\Functional\\Ticket\\DDC1998Id"
     }
 

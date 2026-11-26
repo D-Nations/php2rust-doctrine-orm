@@ -42,7 +42,7 @@ struct GH7286CustomConcat {
 }
 
 impl FunctionNode for GH7286CustomConcat {
-    fn class(&self) -> &str {
+    fn class(&self) -> &'static str {
         "Doctrine\\Tests\\ORM\\Functional\\Ticket\\GH7286CustomConcat"
     }
 

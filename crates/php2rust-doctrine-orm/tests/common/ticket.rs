@@ -121,6 +121,10 @@ pub async fn set_up_with_foreign_keys(shorts: &[&str]) -> Arc<EntityManager> {
 
 /// `Type::addType($name, $class)` (or `overrideType()` when another test
 /// of the binary added it already): the test's DBAL type in the registry.
+#[allow(
+    clippy::needless_pass_by_value,
+    reason = "`Type::addType()` takes the type"
+)]
 pub fn add_type(name: &str, type_: Arc<dyn php2rust_doctrine_dbal::types::Type>) {
     use php2rust_doctrine_dbal::types::{TypeArgument, add_type, has_type, override_type};
     let argument = || TypeArgument::Instance(Arc::clone(&type_));

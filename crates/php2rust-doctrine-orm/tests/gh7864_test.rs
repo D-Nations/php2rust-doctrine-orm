@@ -30,6 +30,7 @@ fn add_tweet(user: &Object, tweet: &Object) {
 }
 
 #[tokio::test]
+#[allow(clippy::similar_names, reason = "upstream's names")]
 async fn testExtraLazyRemoveElement() {
     let em = ticket::set_up(&["GH7864User", "GH7864Tweet"]).await;
     let user = new("GH7864User");

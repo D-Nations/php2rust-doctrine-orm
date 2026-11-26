@@ -4,6 +4,7 @@
 //! Upstream: doctrine/orm tests/Tests/ORM/Functional/Ticket/GH8443Test.php
 
 #![allow(non_snake_case)]
+#![allow(clippy::disallowed_names, reason = "upstream's names")]
 #![allow(
     clippy::unwrap_used,
     clippy::expect_used,

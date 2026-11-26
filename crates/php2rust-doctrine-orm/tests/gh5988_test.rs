@@ -37,7 +37,7 @@ struct CustomIdObject {
 }
 
 impl PhpObject for CustomIdObject {
-    fn class(&self) -> &str {
+    fn class(&self) -> &'static str {
         "Doctrine\\Tests\\DbalTypes\\CustomIdObject"
     }
 
