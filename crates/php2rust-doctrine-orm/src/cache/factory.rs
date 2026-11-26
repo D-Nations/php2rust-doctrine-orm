@@ -11,14 +11,18 @@ use std::sync::{Arc, Mutex, MutexGuard, PoisonError};
 use php_value::{Key, PhpArray, Thrown, Value};
 
 use crate::entity_manager::EntityManager;
-use crate::mapping::ClassMetadata;
 use crate::mapping::class_metadata::{CACHE_USAGE_NONSTRICT_READ_WRITE, CACHE_USAGE_READ_WRITE};
+use crate::mapping::{AssociationMapping, ClassMetadata};
 use crate::persisters::EntityPersisterInterface;
+use crate::persisters::collection::CollectionPersister;
 use crate::utility::to_text;
 
+use super::collection_persister::{AbstractCollectionPersister, CachedCollectionPersister};
 use super::default_cache::{Cache, DefaultCache};
 use super::exception::{invalid_argument, logic_exception};
-use super::hydrator::{DefaultEntityHydrator, EntityHydrator};
+use super::hydrator::{
+    CollectionHydrator, DefaultCollectionHydrator, DefaultEntityHydrator, EntityHydrator,
+};
 use super::persister::{AbstractEntityPersister, CacheUsage, CachedEntityPersister};
 use super::pool::CacheItemPool;
 use super::query_cache::{DefaultQueryCache, QueryCache};
@@ -29,9 +33,6 @@ use super::{
 
 /// `Doctrine\ORM\Cache\CacheFactory`: contract for building second
 /// level cache regions components.
-///
-/// The collection persisters and hydrators are not built here: the
-/// collection persisters are not cached.
 pub trait CacheFactory: Debug + Send + Sync {
     /// Build an entity persister for the given entity metadata.
     fn build_cached_entity_persister(
@@ -41,12 +42,27 @@ pub trait CacheFactory: Debug + Send + Sync {
         metadata: Arc<ClassMetadata>,
     ) -> Result<Arc<dyn CachedEntityPersister>, Thrown>;
 
+    /// Build a collection persister for the given relation mapping.
+    fn build_cached_collection_persister(
+        &self,
+        em: &Arc<EntityManager>,
+        persister: Arc<dyn CollectionPersister>,
+        mapping: &AssociationMapping,
+    ) -> Result<Arc<dyn CachedCollectionPersister>, Thrown>;
+
     /// Build a query cache based on the given region name.
     fn build_query_cache(
         &self,
         em: &Arc<EntityManager>,
         region_name: Option<&str>,
     ) -> Result<Arc<dyn QueryCache>, Thrown>;
+
+    /// Build a collection hydrator.
+    fn build_collection_hydrator(
+        &self,
+        em: &Arc<EntityManager>,
+        mapping: &AssociationMapping,
+    ) -> Arc<dyn CollectionHydrator>;
 
     /// Build an entity hydrator.
     fn build_entity_hydrator(
@@ -95,6 +111,41 @@ pub fn build_cached_entity_persister(
     }
     Ok(Arc::new(AbstractEntityPersister::new(
         strategy, persister, region, em, metadata,
+    )?))
+}
+
+/// `DefaultCacheFactory::buildCachedCollectionPersister()` over a
+/// factory's `getRegion()`.
+pub fn build_cached_collection_persister(
+    factory: &dyn CacheFactory,
+    em: &Arc<EntityManager>,
+    persister: Arc<dyn CollectionPersister>,
+    mapping: &AssociationMapping,
+) -> Result<Arc<dyn CachedCollectionPersister>, Thrown> {
+    let cache = mapping.cache.clone().unwrap_or_default();
+    let usage = cache_field(&cache, "usage");
+    let usage_text = to_text(&usage);
+    let region = factory.get_region(&cache)?;
+    let strategy = match usage {
+        Value::Int(usage) => CacheUsage::from_usage(usage),
+        _ => None,
+    };
+    let Some(strategy) = strategy else {
+        return Err(invalid_argument(format!(
+            "Unrecognized access strategy type [{usage_text}]"
+        )));
+    };
+    if strategy == CacheUsage::ReadWrite && region.as_concurrent().is_none() {
+        return Err(invalid_argument(format!(
+            "Unable to use access strategy type of [{usage_text}] without a ConcurrentRegion"
+        )));
+    }
+    Ok(Arc::new(AbstractCollectionPersister::new(
+        strategy,
+        persister,
+        region,
+        em,
+        mapping.clone(),
     )?))
 }
 
@@ -189,12 +240,29 @@ impl CacheFactory for DefaultCacheFactory {
         build_cached_entity_persister(self, em, persister, metadata)
     }
 
+    fn build_cached_collection_persister(
+        &self,
+        em: &Arc<EntityManager>,
+        persister: Arc<dyn CollectionPersister>,
+        mapping: &AssociationMapping,
+    ) -> Result<Arc<dyn CachedCollectionPersister>, Thrown> {
+        build_cached_collection_persister(self, em, persister, mapping)
+    }
+
     fn build_query_cache(
         &self,
         em: &Arc<EntityManager>,
         region_name: Option<&str>,
     ) -> Result<Arc<dyn QueryCache>, Thrown> {
         build_query_cache(self, em, region_name)
+    }
+
+    fn build_collection_hydrator(
+        &self,
+        em: &Arc<EntityManager>,
+        _mapping: &AssociationMapping,
+    ) -> Arc<dyn CollectionHydrator> {
+        Arc::new(DefaultCollectionHydrator::new(em))
     }
 
     fn build_entity_hydrator(

@@ -19,14 +19,15 @@ use php_value::{PhpArray, Thrown};
 use php2rust_doctrine_orm::cache::logging::CacheLogger;
 use php2rust_doctrine_orm::cache::region::MultipleEntries;
 use php2rust_doctrine_orm::cache::{
-    Cache, CacheConfiguration, CacheEntry, CacheFactory, CacheKey, CachedEntityPersister,
-    CollectionCacheEntry, CollectionCacheKey, EntityCacheKey, EntityHydrator, Lock, QueryCache,
-    QueryCacheEntry, QueryCacheKey, QueryCacheValidator, Region, TimestampQueryCacheValidator,
-    TimestampRegion,
+    Cache, CacheConfiguration, CacheEntry, CacheFactory, CacheKey, CachedCollectionPersister,
+    CachedEntityPersister, CollectionCacheEntry, CollectionCacheKey, CollectionHydrator,
+    EntityCacheKey, EntityHydrator, Lock, QueryCache, QueryCacheEntry, QueryCacheKey,
+    QueryCacheValidator, Region, TimestampQueryCacheValidator, TimestampRegion,
 };
 use php2rust_doctrine_orm::entity_manager::EntityManager;
-use php2rust_doctrine_orm::mapping::ClassMetadata;
+use php2rust_doctrine_orm::mapping::{AssociationMapping, ClassMetadata};
 use php2rust_doctrine_orm::persisters::EntityPersisterInterface;
+use php2rust_doctrine_orm::persisters::collection::CollectionPersister;
 
 /// `assertSame()` of two `Arc`s of a trait object.
 fn same<T: ?Sized, U: ?Sized>(a: &Arc<T>, b: &Arc<U>) -> bool {
@@ -92,6 +93,21 @@ impl TimestampRegion for TimestampRegionStub {
 struct FactoryStub;
 
 impl CacheFactory for FactoryStub {
+    fn build_cached_collection_persister(
+        &self,
+        _: &Arc<EntityManager>,
+        _: Arc<dyn CollectionPersister>,
+        _: &AssociationMapping,
+    ) -> Result<Arc<dyn CachedCollectionPersister>, Thrown> {
+        unreachable!("not called by the tests")
+    }
+    fn build_collection_hydrator(
+        &self,
+        _: &Arc<EntityManager>,
+        _: &AssociationMapping,
+    ) -> Arc<dyn CollectionHydrator> {
+        unreachable!("not called by the tests")
+    }
     fn build_cached_entity_persister(
         &self,
         _: &Arc<EntityManager>,
