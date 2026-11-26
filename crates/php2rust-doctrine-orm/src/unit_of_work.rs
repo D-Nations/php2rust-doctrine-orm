@@ -24,6 +24,7 @@ use std::sync::{Arc, Mutex, MutexGuard, PoisonError, Weak};
 
 use php_value::{Handle, Key, Object, PhpArray, Thrown, Value};
 use php2rust_doctrine_collections::ArrayCollection;
+use php2rust_doctrine_dbal::LockMode;
 use php2rust_doctrine_event_manager::EventDispatcher;
 
 use crate::collection_object::{ArrayCollectionObject, downcast};
@@ -2828,6 +2829,54 @@ impl UnitOfWork {
     /// deletes.
     pub fn get_scheduled_collection_updates(&self) -> Vec<Arc<PersistentCollection>> {
         self.st().collection_updates.values().cloned().collect()
+    }
+
+    /// Acquire a lock on the given entity.
+    ///
+    /// A pessimistic lock runs no query: the `SQLite` platform has no
+    /// lock clause (PHP's `SELECT 1` query reads nothing).
+    pub async fn lock(
+        &self,
+        entity: &Object,
+        lock_mode: LockMode,
+        lock_version: Option<&Value>,
+    ) -> Result<(), Thrown> {
+        if self.get_entity_state_or(entity, STATE_DETACHED) != STATE_MANAGED {
+            return Err(exception::entity_not_managed(entity));
+        }
+        let em = self.em()?;
+        let class = em.get_class_metadata(entity.class())?;
+        match lock_mode {
+            LockMode::Optimistic => {
+                let (versioned, name, version_field) = {
+                    let info = class.read();
+                    (info.is_versioned, info.name.clone(), info.version_field.clone())
+                };
+                if !versioned {
+                    return Err(exception::not_versioned(&name));
+                }
+                let Some(lock_version) = lock_version.filter(|v| !v.is_null()) else {
+                    return Ok(());
+                };
+                self.initialize_object(entity).await?;
+                let entity_version = class
+                    .read()
+                    .get_field_value(entity, &version_field.unwrap_or_default())?;
+                if !php_value::compare::loose_equals(&entity_version, lock_version) {
+                    return Err(exception::lock_failed_version_mismatch(
+                        &crate::utility::to_text(lock_version),
+                        &crate::utility::to_text(&entity_version),
+                    ));
+                }
+            }
+            LockMode::PessimisticRead | LockMode::PessimisticWrite => {
+                if !em.get_connection().is_transaction_active() {
+                    return Err(exception::transaction_required());
+                }
+            }
+            LockMode::None => {}
+        }
+        Ok(())
     }
 
     /// Helper method to initialize a lazy loading proxy or persistent

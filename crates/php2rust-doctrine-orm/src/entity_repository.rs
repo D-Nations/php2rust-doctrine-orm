@@ -81,6 +81,18 @@ impl EntityRepository {
         self.em()?.find(&self.entity_name, id).await
     }
 
+    /// `find($id, $lockMode, $lockVersion)`.
+    pub async fn find_with_lock(
+        &self,
+        id: Value,
+        lock_mode: php2rust_doctrine_dbal::LockMode,
+        lock_version: Option<Value>,
+    ) -> Result<Option<Object>, Thrown> {
+        self.em()?
+            .find_with_lock(&self.entity_name, id, lock_mode, lock_version)
+            .await
+    }
+
     /// Finds all entities in the repository.
     pub async fn find_all(&self) -> Result<Vec<Object>, Thrown> {
         self.find_by(&PhpArray::new(), None, None, None).await

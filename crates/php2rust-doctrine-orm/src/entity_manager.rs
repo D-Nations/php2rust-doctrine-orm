@@ -6,7 +6,7 @@
 //! persisters and the repositories hold it weakly.
 //!
 //! The DBAL is async, so the methods that reach the database are `async`.
-//! Locking (`LockMode` other than `NONE`), filters, the second level cache,
+//! Filters, the second level cache,
 //! queries, hydrators other than the simple object hydrator and the
 //! metadata cache are not ported. The platform is the `SQLite` platform,
 //! the one database the DBAL port drives.
@@ -16,7 +16,7 @@
 use std::sync::{Arc, PoisonError, RwLock};
 
 use php_value::{Key, Object, PhpArray, Thrown, Value};
-use php2rust_doctrine_dbal::Connection;
+use php2rust_doctrine_dbal::{Connection, LockMode};
 use php2rust_doctrine_dbal::platforms::{AbstractPlatform, SQLitePlatform};
 use php2rust_doctrine_event_manager::EventManager;
 use php2rust_doctrine_persistence::mapping::AbstractClassMetadataFactory;
@@ -29,7 +29,7 @@ use crate::mapping::class_metadata_factory::{FactoryConfiguration, SharedPlatfor
 use crate::mapping::{ClassMetadata, ClassMetadataFactory};
 use crate::repository::RepositoryFactory;
 use crate::object::EntityObject;
-use crate::unit_of_work::UnitOfWork;
+use crate::unit_of_work::{Hints, UnitOfWork};
 
 /// `Doctrine\ORM\EntityManager`.
 pub struct EntityManager {
@@ -172,9 +172,25 @@ impl EntityManager {
     /// An uninitialized proxy of the identity map is initialized before it
     /// is returned (PHP initializes it on its first property access).
     pub async fn find(&self, class_name: &str, id: Value) -> Result<Option<Object>, Thrown> {
+        self.find_with_lock(class_name, id, LockMode::None, None).await
+    }
+
+    /// Finds an Entity by its identifier, with a lock mode and the
+    /// version for an optimistic lock.
+    ///
+    /// The `SQLite` platform has no lock clause, so a pessimistic lock
+    /// loads as `LockMode::NONE` does (inside the required transaction).
+    pub async fn find_with_lock(
+        &self,
+        class_name: &str,
+        id: Value,
+        lock_mode: LockMode,
+        lock_version: Option<Value>,
+    ) -> Result<Option<Object>, Thrown> {
         let class = self
             .metadata_factory
             .get_metadata_for(class_name.trim_start_matches('\\'))?;
+        self.check_lock_requirements(lock_mode, &class)?;
         let (identifier, is_composite, name, root) = {
             let info = class.read();
             (
@@ -234,6 +250,18 @@ impl EntityManager {
             if !entity.instance_of(&name) {
                 return Ok(None);
             }
+            match lock_mode {
+                LockMode::Optimistic => {
+                    self.lock(&entity, lock_mode, lock_version.as_ref()).await?;
+                }
+                LockMode::PessimisticRead | LockMode::PessimisticWrite => {
+                    self.unit_of_work
+                        .get_entity_persister(&name)?
+                        .refresh(&sorted_id, &entity)
+                        .await?;
+                }
+                LockMode::None => {}
+            }
             if self
                 .unit_of_work
                 .is_uninitialized_object(&Value::Object(entity.clone()))
@@ -243,10 +271,54 @@ impl EntityManager {
             return Ok(Some(entity)); // Hit!
         }
 
-        self.unit_of_work
-            .get_entity_persister(&name)?
-            .load_by_id(&sorted_id, None)
-            .await
+        let persister = self.unit_of_work.get_entity_persister(&name)?;
+        match lock_mode {
+            LockMode::Optimistic => {
+                let entity = persister
+                    .load(&sorted_id, None, None, Hints::default(), None, None)
+                    .await?;
+                if let Some(entity) = &entity {
+                    self.unit_of_work
+                        .lock(entity, lock_mode, lock_version.as_ref())
+                        .await?;
+                }
+                Ok(entity)
+            }
+            LockMode::PessimisticRead | LockMode::PessimisticWrite => {
+                persister
+                    .load(&sorted_id, None, None, Hints::default(), None, None)
+                    .await
+            }
+            LockMode::None => persister.load_by_id(&sorted_id, None).await,
+        }
+    }
+
+    /// Acquire a lock on the given entity.
+    pub async fn lock(
+        &self,
+        entity: &Object,
+        lock_mode: LockMode,
+        lock_version: Option<&Value>,
+    ) -> Result<(), Thrown> {
+        self.unit_of_work.lock(entity, lock_mode, lock_version).await
+    }
+
+    fn check_lock_requirements(&self, lock_mode: LockMode, class: &ClassMetadata) -> Result<(), Thrown> {
+        match lock_mode {
+            LockMode::Optimistic => {
+                let info = class.read();
+                if !info.is_versioned {
+                    return Err(exception::not_versioned(&info.name));
+                }
+            }
+            LockMode::PessimisticRead | LockMode::PessimisticWrite => {
+                if !self.get_connection().is_transaction_active() {
+                    return Err(exception::transaction_required());
+                }
+            }
+            LockMode::None => {}
+        }
+        Ok(())
     }
 
     /// Gets a reference to the entity identified by the given type and

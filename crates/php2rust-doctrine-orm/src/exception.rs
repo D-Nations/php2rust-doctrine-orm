@@ -399,6 +399,13 @@ pub fn optimistic_lock_failed(entity: &Object) -> Thrown {
     )
 }
 
+pub fn lock_failed_version_mismatch(expected: &str, actual: &str) -> Thrown {
+    new(
+        OPTIMISTIC_LOCK_EXCEPTION,
+        format!("The optimistic lock failed, version {expected} was expected, but is actually {actual}"),
+    )
+}
+
 pub fn optimistic_lock_commit_failed() -> Thrown {
     new(OPTIMISTIC_LOCK_EXCEPTION, "Commit failed".to_owned())
 }
