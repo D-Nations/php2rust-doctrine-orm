@@ -26,12 +26,18 @@ use php2rust_doctrine_dbal::{Connection, Exception, ParameterType, ServerVersion
 #[derive(Debug, Default)]
 pub struct QueryLog {
     queries: Mutex<(bool, Vec<(String, PhpArray)>)>,
+    /// The parameter types bound to each statement, by its position.
+    types: Mutex<Vec<(usize, Key, ParameterType)>>,
 }
 
 impl QueryLog {
     /// `reset()->enable()`.
     pub fn reset_and_enable(&self) {
         *self.queries.lock().unwrap_or_else(PoisonError::into_inner) = (true, Vec::new());
+        self.types
+            .lock()
+            .unwrap_or_else(PoisonError::into_inner)
+            .clear();
     }
 
     /// Records a statement: its position in the log.
@@ -42,6 +48,32 @@ impl QueryLog {
             return Some(queries.1.len() - 1);
         }
         None
+    }
+
+    fn bind_type(&self, position: usize, param: &Key, r#type: ParameterType) {
+        self.types
+            .lock()
+            .unwrap_or_else(PoisonError::into_inner)
+            .push((position, param.clone(), r#type));
+    }
+
+    /// `getLastLoggedQuery()['types']`: the types bound to the last
+    /// statement, in binding order.
+    pub fn last_types(&self) -> Vec<(Key, ParameterType)> {
+        let last = self
+            .queries
+            .lock()
+            .unwrap_or_else(PoisonError::into_inner)
+            .1
+            .len()
+            .checked_sub(1);
+        self.types
+            .lock()
+            .unwrap_or_else(PoisonError::into_inner)
+            .iter()
+            .filter(|(position, _, _)| Some(*position) == last)
+            .map(|(_, key, r#type)| (key.clone(), *r#type))
+            .collect()
     }
 
     fn bind(&self, position: usize, param: &Key, value: &Value) {
@@ -91,6 +123,7 @@ impl Statement for LoggingStatement {
     ) -> Result<(), Exception> {
         if let Some(position) = self.position {
             self.log.bind(position, param, &value);
+            self.log.bind_type(position, param, r#type);
         }
         self.inner.bind_value(param, value, r#type)
     }
