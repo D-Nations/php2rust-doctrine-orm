@@ -1460,8 +1460,8 @@ tests/Tests/ORM/Functional/Ticket/GH11058Test.php	GH11058Test::testChildrenInser
 tests/Tests/ORM/Functional/Ticket/GH11058Test.php	GH11058Test::testChildrenInsertedInOrderOfPersistCalls1WhenParentPersistedLast	ported	crates/php2rust-doctrine-orm/tests/gh11058_test.rs::testChildrenInsertedInOrderOfPersistCalls1WhenParentPersistedLast
 tests/Tests/ORM/Functional/Ticket/GH11058Test.php	GH11058Test::testChildrenInsertedInOrderOfPersistCalls2WhenParentPersistedFirst	ported	crates/php2rust-doctrine-orm/tests/gh11058_test.rs::testChildrenInsertedInOrderOfPersistCalls2WhenParentPersistedFirst
 tests/Tests/ORM/Functional/Ticket/GH11058Test.php	GH11058Test::testChildrenInsertedInOrderOfPersistCalls2WhenParentPersistedLast	ported	crates/php2rust-doctrine-orm/tests/gh11058_test.rs::testChildrenInsertedInOrderOfPersistCalls2WhenParentPersistedLast
-tests/Tests/ORM/Functional/Ticket/GH11072/GH11072Test.php	GH11072Test::testAcceptsAdvancedSubsetOfBuiltinTypesWithoutErrors	pending	
-tests/Tests/ORM/Functional/Ticket/GH11072/GH11072Test.php	GH11072Test::testAcceptsSubsetOfBuiltinTypesWithoutErrors	pending	
+tests/Tests/ORM/Functional/Ticket/GH11072/GH11072Test.php	GH11072Test::testAcceptsAdvancedSubsetOfBuiltinTypesWithoutErrors	ported	crates/php2rust-doctrine-orm/tests/gh11072_test.rs::testAcceptsAdvancedSubsetOfBuiltinTypesWithoutErrors
+tests/Tests/ORM/Functional/Ticket/GH11072/GH11072Test.php	GH11072Test::testAcceptsSubsetOfBuiltinTypesWithoutErrors	ported	crates/php2rust-doctrine-orm/tests/gh11072_test.rs::testAcceptsSubsetOfBuiltinTypesWithoutErrors
 tests/Tests/ORM/Functional/Ticket/GH11112Test.php	GH11112Test::testSimpleQueryHasLimitAndOffsetApplied	pending	needs the query cache
 tests/Tests/ORM/Functional/Ticket/GH11112Test.php	GH11112Test::testSubqueryLimitAndOffsetAreIgnored	pending	needs the query cache
 tests/Tests/ORM/Functional/Ticket/GH11135Test.php	GH11135Test::testOverrideInheritsDeclaringClass	ported	crates/php2rust-doctrine-orm/tests/gh11135_test.rs::testOverrideInheritsDeclaringClass
