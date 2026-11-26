@@ -337,6 +337,15 @@ namespace {
         'ORM/Functional/Ticket/DDC117Test.php',
         'ORM/Functional/ReferenceProxyTest.php',
         'ORM/Functional/ValueObjectsTest.php',
+        'ORM/Functional/ValueConversionType/ManyToManyCompositeIdForeignKeyTest.php',
+        'ORM/Functional/ValueConversionType/ManyToManyCompositeIdTest.php',
+        'ORM/Functional/ValueConversionType/ManyToManyTest.php',
+        'ORM/Functional/ValueConversionType/OneToManyCompositeIdForeignKeyTest.php',
+        'ORM/Functional/ValueConversionType/OneToManyCompositeIdTest.php',
+        'ORM/Functional/ValueConversionType/OneToManyTest.php',
+        'ORM/Functional/ValueConversionType/OneToOneCompositeIdForeignKeyTest.php',
+        'ORM/Functional/ValueConversionType/OneToOneCompositeIdTest.php',
+        'ORM/Functional/ValueConversionType/OneToOneTest.php',
     ];
     $before = array_merge(get_declared_classes(), get_declared_interfaces(), get_declared_traits());
     foreach ($files as $file) {
