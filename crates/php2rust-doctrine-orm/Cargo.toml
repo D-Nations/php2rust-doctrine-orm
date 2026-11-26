@@ -1,0 +1,14 @@
+[package]
+name = "php2rust-doctrine-orm"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+publish = false
+description = "Port of doctrine/orm"
+
+[dependencies]
+php2rust-doctrine-lexer = { path = "../php2rust-doctrine-lexer" }
+php-value = { workspace = true }
+
+[lints]
+workspace = true
