@@ -1542,8 +1542,8 @@ tests/Tests/ORM/Functional/Ticket/GH7012Test.php	GH7012Test::testUpdateEntityWit
 tests/Tests/ORM/Functional/Ticket/GH7062Test.php	GH7062Test::testEntityWithAssociationKeyIdentityCanBeUpdated	ported	crates/php2rust-doctrine-orm/tests/gh7062_test.rs::testEntityWithAssociationKeyIdentityCanBeUpdated
 tests/Tests/ORM/Functional/Ticket/GH7067Test.php	GH7067Test::testSLCWithVersion	pending	needs the second-level cache
 tests/Tests/ORM/Functional/Ticket/GH7068Test.php	GH7068Test::testLockModeIsRespected	ported	crates/php2rust-doctrine-orm/tests/gh7068_test.rs::testLockModeIsRespected
-tests/Tests/ORM/Functional/Ticket/GH7079Test.php	GH7079Test::testGetTableName	pending	
-tests/Tests/ORM/Functional/Ticket/GH7079Test.php	GH7079Test::testJoinTableName	pending	
+tests/Tests/ORM/Functional/Ticket/GH7079Test.php	GH7079Test::testGetTableName	ported	crates/php2rust-doctrine-orm/tests/gh7079_test.rs::testGetTableName
+tests/Tests/ORM/Functional/Ticket/GH7079Test.php	GH7079Test::testJoinTableName	ported	crates/php2rust-doctrine-orm/tests/gh7079_test.rs::testJoinTableName
 tests/Tests/ORM/Functional/Ticket/GH7180Test.php	GH7180Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/GH7180Test.php	GH7180Test::testIssue3NodeCycle	pending	
 tests/Tests/ORM/Functional/Ticket/GH7259Test.php	GH7259Test::testPersistFileAfterVersion	pending	
