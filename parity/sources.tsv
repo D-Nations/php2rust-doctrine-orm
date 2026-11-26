@@ -1,1 +1,3 @@
 # rust file	package	upstream path	reference
+crates/php2rust-doctrine-lexer/src/token.rs	doctrine/lexer	src/Token.php	71d305eaa6480d3d3460c7d053d1da7749fa9cca
+crates/php2rust-doctrine-lexer/tests/token_test.rs	doctrine/lexer	tests/TokenTest.php	71d305eaa6480d3d3460c7d053d1da7749fa9cca

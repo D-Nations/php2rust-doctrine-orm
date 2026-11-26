@@ -17,4 +17,4 @@ tests/AbstractLexerTest.php	AbstractLexerTest::testResetPositionByTokenPosition	
 tests/AbstractLexerTest.php	AbstractLexerTest::testResetPositionPastTheLastToken	pending	
 tests/AbstractLexerTest.php	AbstractLexerTest::testSkipUntil	pending	
 tests/AbstractLexerTest.php	AbstractLexerTest::testUtf8Mismatch	pending	
-tests/TokenTest.php	TokenTest::testIsA	pending	
+tests/TokenTest.php	TokenTest::testIsA	ported	crates/php2rust-doctrine-lexer/tests/token_test.rs::testIsA
