@@ -1157,7 +1157,7 @@ tests/Tests/ORM/Functional/StandardEntityPersisterTest.php	StandardEntityPersist
 tests/Tests/ORM/Functional/StandardEntityPersisterTest.php	StandardEntityPersisterTest::testPersistLazyGhost	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1040Test.php	DDC1040Test::testReuseNamedEntityParameter	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1040Test.php	DDC1040Test::testUseMultiplePositionalParameters	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1041Test.php	DDC1041Test::testGrabWrongSubtypeReturnsNull	pending	
+tests/Tests/ORM/Functional/Ticket/DDC1041Test.php	DDC1041Test::testGrabWrongSubtypeReturnsNull	ported	crates/php2rust-doctrine-orm/tests/ddc1041_test.rs::testGrabWrongSubtypeReturnsNull
 tests/Tests/ORM/Functional/Ticket/DDC1043Test.php	DDC1043Test::testChangeSetPlusWeirdPHPCastingIntCastingRule	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1080Test.php	DDC1080Test::testHydration	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1113Test.php	DDC1113Test::testIssue	pending	
