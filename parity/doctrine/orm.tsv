@@ -45,8 +45,8 @@ tests/Tests/ORM/Cache/DefaultCacheTest.php	DefaultCacheTest::testGetEntityCacheR
 tests/Tests/ORM/Cache/DefaultCacheTest.php	DefaultCacheTest::testImplementsCache	ported	crates/php2rust-doctrine-orm/tests/default_cache_test.rs::testImplementsCache
 tests/Tests/ORM/Cache/DefaultCacheTest.php	DefaultCacheTest::testQueryCache	ported	crates/php2rust-doctrine-orm/tests/default_cache_test.rs::testQueryCache
 tests/Tests/ORM/Cache/DefaultCacheTest.php	DefaultCacheTest::testToIdentifierArrayShouldLookupForEntityIdentifier	ported	crates/php2rust-doctrine-orm/tests/default_cache_test.rs::testToIdentifierArrayShouldLookupForEntityIdentifier
-tests/Tests/ORM/Cache/DefaultCollectionHydratorTest.php	DefaultCollectionHydratorTest::testImplementsCollectionEntryStructure	pending	
-tests/Tests/ORM/Cache/DefaultCollectionHydratorTest.php	DefaultCollectionHydratorTest::testLoadCacheCollection	pending	
+tests/Tests/ORM/Cache/DefaultCollectionHydratorTest.php	DefaultCollectionHydratorTest::testImplementsCollectionEntryStructure	ported	crates/php2rust-doctrine-orm/tests/default_collection_hydrator_test.rs::testImplementsCollectionEntryStructure
+tests/Tests/ORM/Cache/DefaultCollectionHydratorTest.php	DefaultCollectionHydratorTest::testLoadCacheCollection	ported	crates/php2rust-doctrine-orm/tests/default_collection_hydrator_test.rs::testLoadCacheCollection
 tests/Tests/ORM/Cache/DefaultEntityHydratorTest.php	DefaultEntityHydratorTest::testBuildCacheEntry	ported	crates/php2rust-doctrine-orm/tests/default_entity_hydrator_test.rs::testBuildCacheEntry
 tests/Tests/ORM/Cache/DefaultEntityHydratorTest.php	DefaultEntityHydratorTest::testBuildCacheEntryAssociation	ported	crates/php2rust-doctrine-orm/tests/default_entity_hydrator_test.rs::testBuildCacheEntryAssociation
 tests/Tests/ORM/Cache/DefaultEntityHydratorTest.php	DefaultEntityHydratorTest::testBuildCacheEntryNonInitializedAssocProxy	ported	crates/php2rust-doctrine-orm/tests/default_entity_hydrator_test.rs::testBuildCacheEntryNonInitializedAssocProxy
