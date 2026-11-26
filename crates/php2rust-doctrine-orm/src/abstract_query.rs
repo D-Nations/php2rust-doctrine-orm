@@ -355,7 +355,13 @@ impl QueryState {
     }
 
     pub fn has_hint(&self, name: &str) -> bool {
-        isset(self.st().hints.iter().find(|(n, _)| n == name).map(|(_, h)| h))
+        isset(
+            self.st()
+                .hints
+                .iter()
+                .find(|(n, _)| n == name)
+                .map(|(_, h)| h),
+        )
     }
 
     /// Return the key value map of query hints that are currently set.
@@ -575,9 +581,7 @@ macro_rules! abstract_query_methods {
                 self.state().set_parameters_array(parameters);
             }
             match self.do_execute().await? {
-                $crate::abstract_query::Executed::Count(count) => {
-                    Ok(php_value::Value::Int(count))
-                }
+                $crate::abstract_query::Executed::Count(count) => Ok(php_value::Value::Int(count)),
                 $crate::abstract_query::Executed::Rows(rows) => self.state().hydrate(rows).await,
             }
         }

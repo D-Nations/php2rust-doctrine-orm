@@ -20,7 +20,7 @@ use php2rust_doctrine_orm::query::ResultSetMapping;
 use hydration::{entity_manager, hydrate_all, rows};
 use orm::{CMS_USER, at, list, s};
 
-/// Select u.id, u.name from CmsUser u
+/// `Select u.id, u.name from CmsUser u`
 #[tokio::test]
 async fn testNewHydrationSimpleEntityQuery() {
     let em = entity_manager();
@@ -35,7 +35,9 @@ async fn testNewHydrationSimpleEntityQuery() {
         &[("u__id", s("2")), ("u__name", s("jwage"))],
     ]);
 
-    let result = hydrate_all(&em, HYDRATE_SCALAR, result_set, &rsm).await.unwrap();
+    let result = hydrate_all(&em, HYDRATE_SCALAR, result_set, &rsm)
+        .await
+        .unwrap();
 
     assert_eq!(list(&result).len(), 2);
     assert_eq!(at(&at(&result, 0), "u_name"), s("romanb"));
@@ -54,7 +56,9 @@ async fn testHydrateScalarResults() {
 
     let result_set = rows(&[&[("foo1", s("A")), ("bar2", s("B")), ("baz3", s("C"))]]);
 
-    let result = hydrate_all(&em, HYDRATE_SCALAR, result_set, &rsm).await.unwrap();
+    let result = hydrate_all(&em, HYDRATE_SCALAR, result_set, &rsm)
+        .await
+        .unwrap();
     assert_eq!(list(&result).len(), 1);
 }
 
@@ -78,6 +82,8 @@ async fn testSkipUnknownColumns() {
         ("foo", s("bar")), // Unknown!
     ]]);
 
-    let result = hydrate_all(&em, HYDRATE_SCALAR, result_set, &rsm).await.unwrap();
+    let result = hydrate_all(&em, HYDRATE_SCALAR, result_set, &rsm)
+        .await
+        .unwrap();
     assert_eq!(list(&result).len(), 1);
 }

@@ -156,7 +156,12 @@ pub fn call(value: &Value, method: &str, args: &[Value]) -> Value {
             "count" => Value::Int(i64::try_from(pc.unwrap().len()).unwrap()),
             "isInitialized" => Value::Bool(pc.is_initialized()),
             "isDirty" => Value::Bool(pc.is_dirty()),
-            "first" => pc.unwrap().values().next().cloned().unwrap_or(Value::Bool(false)),
+            "first" => pc
+                .unwrap()
+                .values()
+                .next()
+                .cloned()
+                .unwrap_or(Value::Bool(false)),
             "getValues" => list_of(pc.unwrap().values().cloned().collect()),
             "toArray" => Value::Array(pc.unwrap()),
             "getKeys" => list_of(pc.unwrap().keys().map(Key::to_value).collect()),
@@ -176,7 +181,10 @@ pub fn call(value: &Value, method: &str, args: &[Value]) -> Value {
     }
     if let Some(field) = method.strip_prefix("get") {
         let mut chars = field.chars();
-        let first = chars.next().map(|c| c.to_ascii_lowercase()).unwrap_or_default();
+        let first = chars
+            .next()
+            .map(|c| c.to_ascii_lowercase())
+            .unwrap_or_default();
         return prop(value, &format!("{first}{}", chars.as_str()));
     }
     panic!("method {method}() of {value:?}")

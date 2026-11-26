@@ -66,7 +66,8 @@ pub const HINT_REFRESH_ENTITY: &str = "doctrine.refresh.entity";
 /// `Query::HINT_READ_ONLY`.
 pub const HINT_READ_ONLY: &str = "doctrine.readOnly";
 /// `LimitSubqueryWalker::FORCE_DBAL_TYPE_CONVERSION`.
-pub const FORCE_DBAL_TYPE_CONVERSION: &str = "doctrine_paginator.scalar_result.force_dbal_type_conversion";
+pub const FORCE_DBAL_TYPE_CONVERSION: &str =
+    "doctrine_paginator.scalar_result.force_dbal_type_conversion";
 
 /// The query components: `$queryComponents`, keyed by DQL alias.
 pub type QueryComponents = OrderedMap<QueryComponent>;

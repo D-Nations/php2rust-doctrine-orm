@@ -571,8 +571,10 @@ async fn testBasicOneToManyLeftJoin() {
     assert_eq!(get(&u0, "username"), s("gblanco"));
     assert_eq!(get(&u0, "status"), s("developer"));
     let phonenumbers = get(&u0, "phonenumbers");
-    let pc = php2rust_doctrine_orm::persistent_collection::PersistentCollection::from_value(&phonenumbers)
-        .expect("a PersistentCollection");
+    let pc = php2rust_doctrine_orm::persistent_collection::PersistentCollection::from_value(
+        &phonenumbers,
+    )
+    .expect("a PersistentCollection");
     assert!(pc.is_initialized());
     assert_eq!(pc.count().await.unwrap(), 0);
 }

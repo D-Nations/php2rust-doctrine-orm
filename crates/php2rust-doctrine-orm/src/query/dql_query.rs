@@ -15,7 +15,9 @@ use php2rust_doctrine_dbal::{LockMode, ParameterTypes};
 
 use crate::abstract_query::{Executed, QueryState, abstract_query_methods};
 use crate::entity_manager::EntityManager;
-use crate::query::context::{DqlQuery, HINT_INTERNAL_ITERATION, HINT_LOCK_MODE, Hint, QueryContext};
+use crate::query::context::{
+    DqlQuery, HINT_INTERNAL_ITERATION, HINT_LOCK_MODE, Hint, QueryContext,
+};
 use crate::query::exec::{SqlExecutor, SqlStatements};
 use crate::query::{Parameter, ParameterTypeInferer, Parser, query_exception};
 
@@ -185,11 +187,15 @@ impl Query {
         if matches!(
             lock_mode,
             LockMode::PessimisticRead | LockMode::PessimisticWrite
-        ) && !self.get_entity_manager().get_connection().is_transaction_active()
+        ) && !self
+            .get_entity_manager()
+            .get_connection()
+            .is_transaction_active()
         {
             return Err(crate::exception::transaction_required());
         }
-        self.state.set_hint(HINT_LOCK_MODE, Hint::LockMode(lock_mode));
+        self.state
+            .set_hint(HINT_LOCK_MODE, Hint::LockMode(lock_mode));
         Ok(self)
     }
 
@@ -245,10 +251,16 @@ impl Query {
         let param_count = i64::try_from(parameters.len()).unwrap_or(i64::MAX);
         let mapping_count = i64::try_from(param_mappings.len()).unwrap_or(i64::MAX);
         if param_count > mapping_count {
-            return Err(query_exception::too_many_parameters(mapping_count, param_count));
+            return Err(query_exception::too_many_parameters(
+                mapping_count,
+                param_count,
+            ));
         }
         if param_count < mapping_count {
-            return Err(query_exception::too_few_parameters(mapping_count, param_count));
+            return Err(query_exception::too_few_parameters(
+                mapping_count,
+                param_count,
+            ));
         }
 
         let (params, types) = self.process_parameter_mappings(&param_mappings, &parameters)?;
@@ -266,7 +278,8 @@ impl Query {
 
         for parameter in parameters {
             let key = parameter.get_name();
-            let Some(Value::Array(positions)) = param_mappings.get(&Key::from_bytes(key.as_bytes()))
+            let Some(Value::Array(positions)) =
+                param_mappings.get(&Key::from_bytes(key.as_bytes()))
             else {
                 return Err(query_exception::unknown_parameter(key));
             };

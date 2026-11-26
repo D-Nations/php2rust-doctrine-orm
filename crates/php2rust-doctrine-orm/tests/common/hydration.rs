@@ -4,7 +4,10 @@
 //! Upstream: doctrine/orm tests/Tests/ORM/Hydration/HydrationTestCase.php tests/Tests/Mocks/ArrayResultFactory.php
 
 #![allow(dead_code, reason = "each test binary uses a part of the helpers")]
-#![allow(clippy::unwrap_used, reason = "test helpers; a panic is a test failure")]
+#![allow(
+    clippy::unwrap_used,
+    reason = "test helpers; a panic is a test failure"
+)]
 
 use std::sync::Arc;
 

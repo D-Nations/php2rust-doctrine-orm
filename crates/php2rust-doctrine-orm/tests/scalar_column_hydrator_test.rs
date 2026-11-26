@@ -22,7 +22,7 @@ use php2rust_doctrine_orm::query::ResultSetMapping;
 use hydration::{entity_manager, hydrate_all, rows};
 use orm::{CMS_USER, at, list, message, s};
 
-/// Select u.id from CmsUser u
+/// `Select u.id from CmsUser u`
 #[tokio::test]
 async fn testEmptyResultTest() {
     let em = entity_manager();
@@ -36,7 +36,7 @@ async fn testEmptyResultTest() {
     assert!(list(&result).is_empty());
 }
 
-/// Select u.id from CmsUser u
+/// `Select u.id from CmsUser u`
 #[tokio::test]
 async fn testSingleColumnEntityQueryWithoutScalarMap() {
     let em = entity_manager();
@@ -53,7 +53,7 @@ async fn testSingleColumnEntityQueryWithoutScalarMap() {
     orm::assert_loose_eq(&Value::Int(2), &at(&result, 1));
 }
 
-/// Select u.id from CmsUser u
+/// `Select u.id from CmsUser u`
 #[tokio::test]
 async fn testSingleColumnEntityQueryWithScalarMap() {
     let em = entity_manager();
@@ -72,7 +72,7 @@ async fn testSingleColumnEntityQueryWithScalarMap() {
     orm::assert_loose_eq(&Value::Int(2), &at(&result, 1));
 }
 
-/// Select u.id, u.name from CmsUser u
+/// `Select u.id, u.name from CmsUser u`
 #[tokio::test]
 async fn testMultipleColumnEntityQueryThrowsException() {
     let em = entity_manager();

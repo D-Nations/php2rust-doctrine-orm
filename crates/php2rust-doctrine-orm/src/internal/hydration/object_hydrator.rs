@@ -98,7 +98,9 @@ impl<'a> ObjectHydrator<'a> {
             .iter()
             .any(|(a, f)| a == alias && f == field)
         {
-            self.hints.fetched.push((alias.to_owned(), field.to_owned()));
+            self.hints
+                .fetched
+                .push((alias.to_owned(), field.to_owned()));
         }
     }
 
@@ -369,9 +371,9 @@ impl<'a> ObjectHydrator<'a> {
         let mut id = self.id_template.clone(); // initialize the id-memory
         let mut nonempty_components = HashSet::new();
         // Split the row data into chunks of class data.
-        let row_data: RowData = self
-            .columns
-            .gather_row_data(row, &mut id, &mut nonempty_components)?;
+        let row_data: RowData =
+            self.columns
+                .gather_row_data(row, &mut id, &mut nonempty_components)?;
 
         // reset result pointers for each data row
         self.result_pointers.clear();
@@ -414,9 +416,7 @@ impl<'a> ObjectHydrator<'a> {
                 // element belongs.
                 let parent_object = if rsm.is_mixed && self.root_aliases.contains(parent_alias) {
                     match self.result_pointers.get(parent_alias) {
-                        Some(Value::Array(object_class)) => {
-                            object_class.values().next().cloned()
-                        }
+                        Some(Value::Array(object_class)) => object_class.values().next().cloned(),
                         other => other.cloned(),
                     }
                 } else {
@@ -479,9 +479,9 @@ impl<'a> ObjectHydrator<'a> {
                             .and_then(|m| m.get(&parent_id))
                             .and_then(|m| m.get(&own_id))
                             .cloned();
-                        let index_is_valid = index.as_ref().is_some_and(|index| {
-                            coll.with_unwrapped(|c| !c.get(index).is_null())
-                        });
+                        let index_is_valid = index
+                            .as_ref()
+                            .is_some_and(|index| coll.with_unwrapped(|c| !c.get(index).is_null()));
 
                         if index_is_valid {
                             // Update result pointer
@@ -502,25 +502,25 @@ impl<'a> ObjectHydrator<'a> {
                             }
                         } else {
                             let element = Value::Object(self.get_entity(data, dql_alias).await?);
-                            let index_value = if let Some(index_by) = rsm.index_by_map.get(dql_alias)
-                            {
-                                let index_value = value_key(
-                                    &row.get(&Key::from(index_by.as_str()))
-                                        .cloned()
-                                        .unwrap_or(Value::Null),
-                                );
-                                coll.hydrate_set(index_value.clone(), element.clone())?;
-                                index_value
-                            } else {
-                                if !coll.with_unwrapped(|c| c.contains(&element)) {
-                                    coll.hydrate_add(element.clone())?;
-                                }
-                                coll.with_unwrapped(|c| {
-                                    c.last();
-                                    c.key()
-                                })
-                                .unwrap_or(Key::Int(0))
-                            };
+                            let index_value =
+                                if let Some(index_by) = rsm.index_by_map.get(dql_alias) {
+                                    let index_value = value_key(
+                                        &row.get(&Key::from(index_by.as_str()))
+                                            .cloned()
+                                            .unwrap_or(Value::Null),
+                                    );
+                                    coll.hydrate_set(index_value.clone(), element.clone())?;
+                                    index_value
+                                } else {
+                                    if !coll.with_unwrapped(|c| c.contains(&element)) {
+                                        coll.hydrate_add(element.clone())?;
+                                    }
+                                    coll.with_unwrapped(|c| {
+                                        c.last();
+                                        c.key()
+                                    })
+                                    .unwrap_or(Key::Int(0))
+                                };
                             self.identifier_map
                                 .entry(path.clone())
                                 .or_default()
@@ -540,7 +540,10 @@ impl<'a> ObjectHydrator<'a> {
                     } else if let Some(pc) = PersistentCollection::from_value(&refl_field_value) {
                         let key = format!("{oid}{relation_field}");
                         if !pc.is_initialized()
-                            && !self.uninitialized_collections.iter().any(|(k, _)| *k == key)
+                            && !self
+                                .uninitialized_collections
+                                .iter()
+                                .any(|(k, _)| *k == key)
                         {
                             self.uninitialized_collections.push((key, pc));
                         }
@@ -616,8 +619,11 @@ impl<'a> ObjectHydrator<'a> {
                             self.result_pointers
                                 .insert(dql_alias.to_owned(), Value::Object(element));
                         } else {
-                            self.uow()
-                                .set_original_entity_property(oid, &relation_field, Value::Null);
+                            self.uow().set_original_entity_property(
+                                oid,
+                                &relation_field,
+                                Value::Null,
+                            );
                             parent_class.read().set_field_value(
                                 &parent_object,
                                 &relation_field,

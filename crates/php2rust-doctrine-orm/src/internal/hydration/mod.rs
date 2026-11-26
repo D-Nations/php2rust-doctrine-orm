@@ -15,6 +15,8 @@ mod object_hydrator;
 
 use std::sync::Arc;
 
+use abstract_hydrator::Columns;
+pub(crate) use abstract_hydrator::register_classes;
 pub use abstract_hydrator::{
     HYDRATION_EXCEPTION, MULTIPLE_SELECTORS_FOUND, NewObjectConstructor, empty_discriminator_value,
     invalid_discriminator_value, missing_discriminator_column,
@@ -22,8 +24,6 @@ pub use abstract_hydrator::{
     parent_object_of_relation_not_found, partial_object_hydration_disallowed,
     register_new_object_class,
 };
-pub(crate) use abstract_hydrator::register_classes;
-use abstract_hydrator::Columns;
 use array_hydrator::ArrayHydrator;
 use object_hydrator::ObjectHydrator;
 
@@ -226,8 +226,8 @@ pub async fn hydrate(
     extra: HydrationHints,
 ) -> Result<Value, Thrown> {
     use crate::query::context::{
-        HYDRATE_ARRAY, HYDRATE_OBJECT, HYDRATE_SCALAR, HYDRATE_SCALAR_COLUMN,
-        HYDRATE_SIMPLEOBJECT, HYDRATE_SINGLE_SCALAR,
+        HYDRATE_ARRAY, HYDRATE_OBJECT, HYDRATE_SCALAR, HYDRATE_SCALAR_COLUMN, HYDRATE_SIMPLEOBJECT,
+        HYDRATE_SINGLE_SCALAR,
     };
     match hydration_mode {
         HYDRATE_OBJECT => {
@@ -303,7 +303,9 @@ pub async fn to_iterable(
     hints: &mut Hints,
     extra: HydrationHints,
 ) -> Result<Vec<Value>, Thrown> {
-    use crate::query::context::{HYDRATE_ARRAY, HYDRATE_OBJECT, HYDRATE_SCALAR, HYDRATE_SIMPLEOBJECT};
+    use crate::query::context::{
+        HYDRATE_ARRAY, HYDRATE_OBJECT, HYDRATE_SCALAR, HYDRATE_SIMPLEOBJECT,
+    };
     let index_by = !rsm.index_by_map.is_empty();
     let mut yielded = Vec::new();
     let mut yield_row = |result: PhpArray| {

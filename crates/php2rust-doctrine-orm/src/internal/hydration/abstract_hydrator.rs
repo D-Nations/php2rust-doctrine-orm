@@ -277,11 +277,7 @@ impl<'a> Columns<'a> {
             let (is_identifier, type_name, has_parents, discriminator_value, sub_classes) = {
                 let info = class.read();
                 let mapping = info.field_mappings.get(field_name).ok_or_else(|| {
-                    Thrown::new(
-                        "Error",
-                        format!("Undefined array key \"{field_name}\""),
-                        0,
-                    )
+                    Thrown::new("Error", format!("Undefined array key \"{field_name}\""), 0)
                 })?;
                 (
                     info.identifier.contains(field_name),
@@ -398,7 +394,9 @@ impl<'a> Columns<'a> {
             .collect();
         for mapping in rsm.new_object_mappings.values() {
             if let Value::Array(mapping) = mapping
-                && let Some(obj_index) = mapping.get(&Key::from("objIndex")).and_then(Key::from_value)
+                && let Some(obj_index) = mapping
+                    .get(&Key::from("objIndex"))
+                    .and_then(Key::from_value)
                 && !new_object_classes.iter().any(|(k, _)| *k == obj_index)
             {
                 let class_name = mapping
@@ -485,14 +483,20 @@ impl<'a> Columns<'a> {
             let Value::Array(argument) = argument else {
                 continue;
             };
-            let field = |name: &str| argument.get(&Key::from(name)).cloned().unwrap_or(Value::Null);
+            let field = |name: &str| {
+                argument
+                    .get(&Key::from(name))
+                    .cloned()
+                    .unwrap_or(Value::Null)
+            };
             let owner_index = Key::from_value(&field("ownerIndex")).unwrap_or(Key::Int(0));
             let arg_index = Key::from_value(&field("argIndex")).unwrap_or(Key::Int(0));
             let arg_alias = to_text(&field("argAlias"));
             let arg_alias_key = Key::from_bytes(arg_alias.as_bytes());
 
-            let nested_value = if let Some(position) =
-                new_object_args.iter().position(|(k, _)| *k == arg_alias_key)
+            let nested_value = if let Some(position) = new_object_args
+                .iter()
+                .position(|(k, _)| *k == arg_alias_key)
             {
                 let (_, mut args) = new_object_args.remove(position);
                 let class_name = new_object_classes

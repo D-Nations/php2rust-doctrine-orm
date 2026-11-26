@@ -120,7 +120,11 @@ impl<'a> ArrayHydrator<'a> {
 
     /// `hydrateRowData($row, &$result)`.
     #[allow(clippy::too_many_lines, reason = "hydrateRowData(), in its order")]
-    pub fn hydrate_row_data(&mut self, row: &PhpArray, result: &mut PhpArray) -> Result<(), Thrown> {
+    pub fn hydrate_row_data(
+        &mut self,
+        row: &PhpArray,
+        result: &mut PhpArray,
+    ) -> Result<(), Thrown> {
         let rsm = self.columns.rsm;
         // 1) Initialize
         let mut id = self.id_template.clone(); // initialize the id-memory
@@ -173,11 +177,7 @@ impl<'a> ArrayHydrator<'a> {
                     continue;
                 };
 
-                let relation_alias = rsm
-                    .relation_map
-                    .get(dql_alias)
-                    .cloned()
-                    .unwrap_or_default();
+                let relation_alias = rsm.relation_map.get(dql_alias).cloned().unwrap_or_default();
                 let parent_class = self
                     .columns
                     .get_class_metadata(rsm.alias_map.get(parent).map_or("", String::as_str))?;
