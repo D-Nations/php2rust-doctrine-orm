@@ -1519,7 +1519,7 @@ tests/Tests/ORM/Functional/Ticket/GH6402Test.php	GH6402Test::testQuery	ported	cr
 tests/Tests/ORM/Functional/Ticket/GH6402Test.php	GH6402Test::testQueryWithSubClass	ported	crates/php2rust-doctrine-orm/tests/gh6402_test.rs::testQueryWithSubClass
 tests/Tests/ORM/Functional/Ticket/GH6464Test.php	GH6464Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/gh6464_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/GH6499OneToManyRelationshipTest.php	GH6499OneToManyRelationshipTest::testIssue	ported	crates/php2rust-doctrine-orm/tests/gh6499_one_to_many_relationship_test.rs::testIssue
-tests/Tests/ORM/Functional/Ticket/GH6499OneToOneRelationshipTest.php	GH6499OneToOneRelationshipTest::testIssue	pending	
+tests/Tests/ORM/Functional/Ticket/GH6499OneToOneRelationshipTest.php	GH6499OneToOneRelationshipTest::testIssue	ported	crates/php2rust-doctrine-orm/tests/gh6499_one_to_one_relationship_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/GH6499Test.php	GH6499Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/GH6499Test.php	GH6499Test::testIssueReversed	pending	
 tests/Tests/ORM/Functional/Ticket/GH6531Test.php	GH6531Test::testDynamicAttributes	pending	
