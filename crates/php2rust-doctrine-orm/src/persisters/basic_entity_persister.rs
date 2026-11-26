@@ -8,12 +8,11 @@
 //! `UnitOfWork` is committed, as well as for basic querying of entities and
 //! their associations (not DQL).
 //!
-//! The persister does not join the inverse sides of one-to-one
-//! associations and `EAGER` to-one associations into its `SELECT`; the
-//! unit of work loads them when it creates the entity (a second query,
-//! which is what PHP does without the join). Lock modes are not ported.
-//! The SQL filters apply to `getSelectSQL()`, `getCountSQL()` and
-//! `exists()`.
+//! The inverse sides of one-to-one associations and `EAGER` to-one
+//! associations are joined (`LEFT JOIN`) into the `SELECT` (`getSelectColumnsSQL()`)
+//! and hydrated by the object hydrator; without a join the simple object
+//! hydrator is used. The SQL filters apply to `getSelectSQL()`,
+//! `getCountSQL()`, `exists()` and the joins.
 //!
 //! Upstream: doctrine/orm src/Persisters/Entity/BasicEntityPersister.php src/Persisters/Entity/CachedPersisterContext.php
 //! Upstream: doctrine/orm src/Persisters/Entity/EntityPersister.php
@@ -32,7 +31,9 @@ use crate::exception;
 use crate::id::IdGenerator;
 use crate::internal::hydration::{self, CollectionTarget};
 use crate::internal::object_id;
-use crate::mapping::{AssociationMapping, ClassMetadata, JoinColumnMapping, QuoteStrategy};
+use crate::mapping::{
+    AssociationMapping, ClassMetadata, JoinColumnMapping, QuoteStrategy, class_metadata,
+};
 use crate::persistent_collection::PersistentCollection;
 use crate::query::ResultSetMapping;
 use crate::unit_of_work::Hints;
@@ -84,6 +85,8 @@ pub(super) struct PersisterState {
     limits_handling_context: CachedPersisterContext,
     /// Whether the limits handling context is the current one.
     limits: bool,
+    /// The filter hash the select column lists were built with.
+    filter_hash: Option<String>,
 }
 
 impl PersisterState {
@@ -129,6 +132,20 @@ impl std::fmt::Debug for BasicEntityPersister {
 
 /// The parameters and their types.
 pub(super) type Params = (Vec<Value>, Vec<ParamType>);
+
+/// `getJoinSQLForJoinColumns()`: a `LEFT JOIN` if one of the join
+/// columns is nullable, an `INNER JOIN` otherwise.
+fn get_join_sql_for_join_columns(join_columns: &[JoinColumnMapping]) -> &'static str {
+    // if one of the join columns is nullable, return left join
+    if join_columns
+        .iter()
+        .any(|join_column| join_column.nullable != Some(false))
+    {
+        return "LEFT JOIN";
+    }
+
+    "INNER JOIN"
+}
 
 /// `$conditionSql = $conditionSql ? $conditionSql . ' AND ' . $filterSql
 /// : $filterSql` for a filter SQL that is not empty.
@@ -993,7 +1010,9 @@ impl BasicEntityPersister {
             hints.refresh_entity = Some(entity.clone());
         }
         let rsm = self.get_result_set_mapping();
-        let entities = hydration::hydrate_all(&em, rows, &rsm, &mut hints, None).await?;
+        let entities = self
+            .hydrate_entities(&em, rows, &rsm, &mut hints, None, None)
+            .await?;
         Ok(entities.into_iter().next())
     }
 
@@ -1168,7 +1187,10 @@ impl BasicEntityPersister {
             refresh: true,
             ..Hints::default()
         };
-        hydration::hydrate_all(&em, rows, &rsm, &mut hints, None).await?;
+        // `newHydrator(Query::HYDRATE_OBJECT)`: the simple object
+        // hydrator when nothing is joined (the same entity).
+        self.hydrate_entities(&em, rows, &rsm, &mut hints, None, None)
+            .await?;
         Ok(())
     }
 
@@ -1228,7 +1250,8 @@ impl BasicEntityPersister {
             defer_eager_load: true,
             ..Hints::default()
         };
-        hydration::hydrate_all(&em, rows, &rsm, &mut hints, None).await
+        self.hydrate_entities(&em, rows, &rsm, &mut hints, Some(true), None)
+            .await
     }
 
     /// Expands Criteria Parameters by walking the expressions and grabbing
@@ -1299,7 +1322,8 @@ impl BasicEntityPersister {
             defer_eager_load: true,
             ..Hints::default()
         };
-        hydration::hydrate_all(&em, rows, &rsm, &mut hints, None).await
+        self.hydrate_entities(&em, rows, &rsm, &mut hints, Some(true), None)
+            .await
     }
 
     /// Gets (sliced or full) elements of the given collection.
@@ -1329,7 +1353,9 @@ impl BasicEntityPersister {
             defer_eager_load: true,
             ..Hints::default()
         };
-        let entities = hydration::hydrate_all(em, rows, &rsm, &mut hints, None).await?;
+        let entities = self
+            .hydrate_entities(em, rows, &rsm, &mut hints, Some(true), None)
+            .await?;
         if !assoc.is_indexed() {
             return Ok(PhpArray::list(entities.into_iter().map(Value::Object)));
         }
@@ -1362,17 +1388,74 @@ impl BasicEntityPersister {
         } else {
             None
         };
-        hydration::hydrate_all(
+        self.hydrate_entities(
             em,
             rows,
             &rsm,
             &mut hints,
+            Some(true),
             Some(CollectionTarget {
                 collection: coll,
                 index_by,
             }),
         )
         .await
+    }
+
+    /// `$this->em->newHydrator($this->currentPersisterContext->selectJoinSql
+    /// ? Query::HYDRATE_OBJECT : Query::HYDRATE_SIMPLEOBJECT)->hydrateAll()`:
+    /// the object hydrator when associations are joined, with the
+    /// collection and its `indexBy` (`$rsm->addIndexBy('r', ...)`) for a
+    /// collection load. `defer_eager_load` is
+    /// `$hints[UnitOfWork::HINT_DEFEREAGERLOAD]` (`None` when not set).
+    fn hydrate_entities<'a>(
+        &'a self,
+        em: &'a Arc<EntityManager>,
+        rows: Vec<PhpArray>,
+        rsm: &'a ResultSetMapping,
+        hints: &'a mut Hints,
+        defer_eager_load: Option<bool>,
+        collection: Option<CollectionTarget<'a>>,
+    ) -> crate::unit_of_work::Fut<'a, Vec<Object>> {
+        // Boxed: the object hydrator creates entities that load through
+        // the persisters.
+        Box::pin(async move {
+            if self.st().ctx().select_join_sql.is_empty() {
+                return hydration::hydrate_all(em, rows, rsm, hints, collection).await;
+            }
+            let mut rsm = rsm.clone();
+            let collection = match collection {
+                Some(target) => {
+                    if let Some(index_by) = &target.index_by {
+                        rsm.add_index_by("r", index_by);
+                    }
+                    Some(Arc::clone(target.collection))
+                }
+                None => None,
+            };
+            let hydrate = hydration::hydrate(
+                em,
+                crate::query::context::HYDRATE_OBJECT,
+                rows,
+                &rsm,
+                hints,
+                hydration::HydrationHints {
+                    defer_eager_load,
+                    collection,
+                },
+            );
+            let result = hydrate.await?;
+            let Value::Array(result) = result else {
+                return Ok(Vec::new());
+            };
+            Ok(result
+                .values()
+                .filter_map(|value| match value {
+                    Value::Object(object) => Some(object.clone()),
+                    _ => None,
+                })
+                .collect())
+        })
     }
 
     /// Loads a collection of entities of a many-to-many association.
@@ -1697,11 +1780,12 @@ impl BasicEntityPersister {
 
     /// `BasicEntityPersister::getSelectColumnsSQL()` (`parent::` of the
     /// subclasses).
+    #[allow(clippy::too_many_lines, reason = "getSelectColumnsSQL(), in its order")]
     pub(super) fn basic_get_select_columns_sql(
         &self,
         em: &Arc<EntityManager>,
     ) -> Result<String, Thrown> {
-        if let Some(sql) = self.st().ctx().select_column_list_sql.clone() {
+        if let Some(sql) = self.cached_select_column_list_sql(em) {
             return Ok(sql);
         }
         let mut column_list = Vec::new();
@@ -1717,6 +1801,7 @@ impl BasicEntityPersister {
         }
 
         self.st().ctx().select_join_sql = String::new();
+        let mut eager_alias_counter = 0;
 
         let associations: Vec<(String, AssociationMapping)> = self
             .class
@@ -1731,11 +1816,177 @@ impl BasicEntityPersister {
             if !assoc_column_sql.is_empty() {
                 column_list.push(assoc_column_sql);
             }
+
+            let is_assoc_to_one_inverse_side = assoc.is_to_one() && !assoc.is_owning_side();
+            let is_assoc_from_one_eager =
+                assoc.is_to_one() && assoc.fetch == Some(class_metadata::FETCH_EAGER);
+
+            if !(is_assoc_from_one_eager || is_assoc_to_one_inverse_side) {
+                continue;
+            }
+
+            let mut eager_entity = em.get_class_metadata(&assoc.target_entity)?;
+
+            if eager_entity.read().inheritance_type != class_metadata::INHERITANCE_TYPE_NONE {
+                continue; // now this is why you shouldn't use inheritance
+            }
+
+            let assoc_alias = format!("e{eager_alias_counter}");
+            eager_alias_counter += 1;
+            self.st().ctx().rsm.add_joined_entity_result(
+                &assoc.target_entity,
+                &assoc_alias,
+                "r",
+                &assoc_field,
+                false,
+            );
+
+            let eager_fields: Vec<String> =
+                eager_entity.read().field_names.values().cloned().collect();
+            for field in eager_fields {
+                column_list.push(self.get_select_column_sql(
+                    em,
+                    &field,
+                    &eager_entity,
+                    &assoc_alias,
+                )?);
+            }
+
+            let eager_associations: Vec<(String, AssociationMapping)> = eager_entity
+                .read()
+                .association_mappings
+                .iter()
+                .map(|(k, v)| (k.to_owned(), v.clone()))
+                .collect();
+            for (eager_assoc_field, eager_assoc) in eager_associations {
+                let eager_assoc_column_sql = self.get_select_column_association_sql(
+                    em,
+                    &eager_assoc_field,
+                    &eager_assoc,
+                    &eager_entity,
+                    &assoc_alias,
+                )?;
+                if !eager_assoc_column_sql.is_empty() {
+                    column_list.push(eager_assoc_column_sql);
+                }
+            }
+
+            let mut association = assoc.clone();
+            let mut join_condition = Vec::new();
+
+            if assoc.is_indexed() {
+                let index_by = assoc.index_by()?.to_owned();
+                self.st().ctx().rsm.add_index_by(&assoc_alias, &index_by);
+            }
+
+            if !assoc.is_owning_side() {
+                eager_entity = em.get_class_metadata(&assoc.target_entity)?;
+                let mapped_by = assoc.mapped_by.clone().unwrap_or_default();
+                association = eager_entity
+                    .read()
+                    .get_association_mapping(&mapped_by)?
+                    .clone();
+            }
+
+            let platform = em.get_platform();
+            let eager_name = eager_entity.read().name.clone();
+            let join_table_alias = self.get_sql_table_alias(&eager_name, &assoc_alias);
+            let join_table_name = self
+                .quote_strategy
+                .get_table_name(&eager_entity.read(), platform);
+
+            let mut select_join_sql = String::new();
+            if assoc.is_owning_side() {
+                let table_alias =
+                    self.get_sql_table_alias(&association.target_entity, &assoc_alias);
+                select_join_sql.push(' ');
+                select_join_sql.push_str(get_join_sql_for_join_columns(&association.join_columns));
+
+                for join_column in &association.join_columns {
+                    let (source_col, target_col) = {
+                        let info = self.class.read();
+                        (
+                            self.quote_strategy
+                                .get_join_column_name(join_column, &info, platform),
+                            self.quote_strategy.get_referenced_join_column_name(
+                                join_column,
+                                &info,
+                                platform,
+                            ),
+                        )
+                    };
+                    join_condition.push(format!(
+                        "{}.{source_col} = {table_alias}.{target_col}",
+                        self.get_sql_table_alias(&association.source_entity, "")
+                    ));
+                }
+
+                // Add filter SQL
+                let filter_sql =
+                    self.generate_filter_condition_sql(em, &eager_entity, &table_alias)?;
+                if !filter_sql.is_empty() {
+                    join_condition.push(filter_sql);
+                }
+            } else {
+                select_join_sql.push_str(" LEFT JOIN");
+
+                for join_column in &association.join_columns {
+                    let (source_col, target_col) = {
+                        let info = self.class.read();
+                        (
+                            self.quote_strategy
+                                .get_join_column_name(join_column, &info, platform),
+                            self.quote_strategy.get_referenced_join_column_name(
+                                join_column,
+                                &info,
+                                platform,
+                            ),
+                        )
+                    };
+                    join_condition.push(format!(
+                        "{}.{source_col} = {}.{target_col}",
+                        self.get_sql_table_alias(&association.source_entity, &assoc_alias),
+                        self.get_sql_table_alias(&association.target_entity, "")
+                    ));
+                }
+
+                // Add filter SQL
+                let filter_sql =
+                    self.generate_filter_condition_sql(em, &eager_entity, &join_table_alias)?;
+                if !filter_sql.is_empty() {
+                    join_condition.push(filter_sql);
+                }
+            }
+
+            select_join_sql.push(' ');
+            select_join_sql.push_str(&join_table_name);
+            select_join_sql.push(' ');
+            select_join_sql.push_str(&join_table_alias);
+            select_join_sql.push_str(" ON ");
+            select_join_sql.push_str(&join_condition.join(" AND "));
+            self.st().ctx().select_join_sql.push_str(&select_join_sql);
         }
 
         let sql = column_list.join(", ");
         self.st().ctx().select_column_list_sql = Some(sql.clone());
+        self.update_filter_hash(em);
         Ok(sql)
+    }
+
+    /// `selectColumnListSql !== null && isFilterHashUpToDate()`: the
+    /// cached column list.
+    pub(super) fn cached_select_column_list_sql(&self, em: &EntityManager) -> Option<String> {
+        let hash = em.get_filters().get_hash();
+        let mut st = self.st();
+        if st.filter_hash.as_deref() != Some(hash.as_str()) {
+            return None;
+        }
+        st.ctx().select_column_list_sql.clone()
+    }
+
+    /// `updateFilterHash()`.
+    pub(super) fn update_filter_hash(&self, em: &EntityManager) {
+        self.st().filter_hash = Some(em.get_filters().get_hash());
     }
 
     /// Gets the SQL join fragment used when selecting entities from an

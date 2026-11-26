@@ -334,6 +334,7 @@ namespace {
         'ORM/Functional/Ticket/DDC832Test.php',
         'ORM/Functional/Ticket/GH11500Test.php',
         'ORM/Functional/Ticket/GH11501Test.php',
+        'ORM/Tools/SchemaToolTest.php',
         'ORM/Functional/Ticket/DDC117Test.php',
         'ORM/Functional/ReferenceProxyTest.php',
         'ORM/Functional/ValueObjectsTest.php',
@@ -354,6 +355,7 @@ namespace {
         'ORM/Functional/Ticket/DDC1228Test.php',
         'ORM/Functional/Ticket/DDC1238Test.php',
         'Doctrine\\Tests\\Models\\Quote\\NumericEntity',
+        'ORM/Tools/SchemaValidatorTest.php',
     ];
     $before = array_merge(get_declared_classes(), get_declared_interfaces(), get_declared_traits());
     foreach ($files as $file) {
@@ -370,6 +372,13 @@ namespace {
         }
 
         require_once $path;
+    }
+
+    // The model sets of SchemaValidatorTest::modelSetProvider().
+    foreach (['CMS', 'Company', 'ECommerce', 'Forum', 'Navigation', 'Routing'] as $modelSet) {
+        foreach (glob("$root/orm/tests/Tests/Models/$modelSet/*.php") as $modelFile) {
+            require_once $modelFile;
+        }
     }
 
     $isWanted = static function (string $name): bool {

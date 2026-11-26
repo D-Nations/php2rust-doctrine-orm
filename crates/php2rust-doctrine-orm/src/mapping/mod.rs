@@ -14,6 +14,7 @@ pub mod class_metadata;
 pub mod class_metadata_factory;
 pub mod driver;
 pub mod embedded_class_mapping;
+pub mod entity_listener_resolver;
 pub mod field_mapping;
 pub mod join_column_mapping;
 pub mod mapping_exception;

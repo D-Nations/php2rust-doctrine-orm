@@ -27,7 +27,7 @@ impl BasicEntityPersister {
         &self,
         em: &Arc<EntityManager>,
     ) -> Result<String, Thrown> {
-        if let Some(sql) = self.st().ctx().select_column_list_sql.clone() {
+        if let Some(sql) = self.cached_select_column_list_sql(em) {
             return Ok(sql);
         }
         let mut column_list = vec![self.basic_get_select_columns_sql(em)?];
@@ -114,6 +114,7 @@ impl BasicEntityPersister {
 
         let sql = column_list.join(", ");
         self.st().ctx().select_column_list_sql = Some(sql.clone());
+        self.update_filter_hash(em);
         Ok(sql)
     }
 

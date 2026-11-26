@@ -137,7 +137,7 @@ src/Mapping/ClassMetadata.php	ClassMetadata	1426	ported	crates/php2rust-doctrine
 src/Mapping/ClassMetadataFactory.php	ClassMetadataFactory	511	ported	crates/php2rust-doctrine-orm/src/mapping/class_metadata_factory.rs
 src/Mapping/Column.php	Column	25	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
 src/Mapping/CustomIdGenerator.php	CustomIdGenerator	11	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
-src/Mapping/DefaultEntityListenerResolver.php	DefaultEntityListenerResolver	25	ported	crates/php2rust-doctrine-orm/src/event/listeners_invoker.rs
+src/Mapping/DefaultEntityListenerResolver.php	DefaultEntityListenerResolver	25	ported	crates/php2rust-doctrine-orm/src/mapping/entity_listener_resolver.rs
 src/Mapping/DefaultNamingStrategy.php	DefaultNamingStrategy	51	ported	crates/php2rust-doctrine-orm/src/mapping/naming_strategy.rs
 src/Mapping/DefaultQuoteStrategy.php	DefaultQuoteStrategy	111	ported	crates/php2rust-doctrine-orm/src/mapping/quote_strategy.rs
 src/Mapping/DefaultTypedFieldMapper.php	DefaultTypedFieldMapper	73	ported	crates/php2rust-doctrine-orm/src/mapping/typed_field_mapper.rs
@@ -156,7 +156,7 @@ src/Mapping/Embeddable.php	Embeddable	7	ported	crates/php2rust-doctrine-orm/src/
 src/Mapping/Embedded.php	Embedded	12	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
 src/Mapping/EmbeddedClassMapping.php	EmbeddedClassMapping	42	ported	crates/php2rust-doctrine-orm/src/mapping/embedded_class_mapping.rs
 src/Mapping/Entity.php	Entity	13	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
-src/Mapping/EntityListenerResolver.php	EntityListenerResolver	8	pending	
+src/Mapping/EntityListenerResolver.php	EntityListenerResolver	8	ported	crates/php2rust-doctrine-orm/src/mapping/entity_listener_resolver.rs
 src/Mapping/EntityListeners.php	EntityListeners	11	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
 src/Mapping/Exception/InvalidCustomGenerator.php	InvalidCustomGenerator	20	ported	crates/php2rust-doctrine-orm/src/mapping/mapping_exception.rs
 src/Mapping/Exception/UnknownGeneratorType.php	UnknownGeneratorType	11	ported	crates/php2rust-doctrine-orm/src/mapping/mapping_exception.rs
@@ -431,8 +431,8 @@ src/Tools/Console/EntityManagerProvider/UnknownManagerException.php	UnknownManag
 src/Tools/Console/MetadataFilter.php	MetadataFilter	56	pending	
 src/Tools/Debug.php	Debug	104	pending	
 src/Tools/DebugUnitOfWorkListener.php	DebugUnitOfWorkListener	106	pending	
-src/Tools/Event/GenerateSchemaEventArgs.php	GenerateSchemaEventArgs	33	pending	
-src/Tools/Event/GenerateSchemaTableEventArgs.php	GenerateSchemaTableEventArgs	55	pending	
+src/Tools/Event/GenerateSchemaEventArgs.php	GenerateSchemaEventArgs	33	ported	crates/php2rust-doctrine-orm/src/tools/event.rs
+src/Tools/Event/GenerateSchemaTableEventArgs.php	GenerateSchemaTableEventArgs	55	ported	crates/php2rust-doctrine-orm/src/tools/event.rs
 src/Tools/Exception/MissingColumnException.php	MissingColumnException	17	ported	crates/php2rust-doctrine-orm/src/tools/schema_tool.rs
 src/Tools/Exception/NotSupported.php	NotSupported	11	pending	
 src/Tools/Pagination/CountOutputWalker.php	CountOutputWalker	81	ported	crates/php2rust-doctrine-orm/src/tools/pagination/count_output_walker.rs
@@ -460,8 +460,8 @@ src/Tools/Pagination/Window.php	Window	46	ported	crates/php2rust-doctrine-orm/sr
 src/Tools/Pagination/WindowPage.php	WindowPage	76	ported	crates/php2rust-doctrine-orm/src/tools/pagination/window_page.rs
 src/Tools/ResolveTargetEntityListener.php	ResolveTargetEntityListener	75	pending	
 src/Tools/SchemaTool.php	SchemaTool	1118	ported	crates/php2rust-doctrine-orm/src/tools/schema_tool.rs
-src/Tools/SchemaValidator.php	SchemaValidator	345	pending	
-src/Tools/ToolEvents.php	ToolEvents	7	pending	
+src/Tools/SchemaValidator.php	SchemaValidator	345	ported	crates/php2rust-doctrine-orm/src/tools/schema_validator.rs
+src/Tools/ToolEvents.php	ToolEvents	7	ported	crates/php2rust-doctrine-orm/src/tools/tool_events.rs
 src/Tools/ToolsException.php	ToolsException	16	ported	crates/php2rust-doctrine-orm/src/tools/schema_tool.rs
 src/TransactionRequiredException.php	TransactionRequiredException	11	ported	crates/php2rust-doctrine-orm/src/exception.rs
 src/UnexpectedResultException.php	UnexpectedResultException	7	ported	crates/php2rust-doctrine-orm/src/abstract_query.rs
