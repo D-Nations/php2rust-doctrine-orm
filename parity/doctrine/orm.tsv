@@ -1018,8 +1018,8 @@ tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testSingleTableInher
 tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testToOneFilter	pending	
 tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testWhereFilter	pending	
 tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testWhereOrFilter	pending	
-tests/Tests/ORM/Functional/SchemaTool/CompanySchemaTest.php	CompanySchemaTest::testGeneratedSchema	pending	
-tests/Tests/ORM/Functional/SchemaTool/CompanySchemaTest.php	CompanySchemaTest::testSingleTableInheritance	pending	
+tests/Tests/ORM/Functional/SchemaTool/CompanySchemaTest.php	CompanySchemaTest::testGeneratedSchema	ported	crates/php2rust-doctrine-orm/tests/company_schema_test.rs::testGeneratedSchema
+tests/Tests/ORM/Functional/SchemaTool/CompanySchemaTest.php	CompanySchemaTest::testSingleTableInheritance	ported	crates/php2rust-doctrine-orm/tests/company_schema_test.rs::testSingleTableInheritance
 tests/Tests/ORM/Functional/SchemaTool/DBAL483Test.php	DBAL483Test::testDefaultValueIsComparedCorrectly	pending	
 tests/Tests/ORM/Functional/SchemaTool/DDC214Test.php	DDC214Test::testCmsAddressModel	pending	
 tests/Tests/ORM/Functional/SchemaTool/DDC214Test.php	DDC214Test::testCompanyModel	pending	
