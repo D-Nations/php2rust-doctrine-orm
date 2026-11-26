@@ -228,15 +228,15 @@ tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetCustomHydrationM
 tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetAutoGenerateProxyClasses	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetAutoGenerateProxyClasses
 tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetClassMetadataFactoryName	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetClassMetadataFactoryName
 tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetEntityListenerResolver	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetEntityListenerResolver
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetHydrationCache	pending	the query, hydration and metadata caches and the second level cache configuration are not ported
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetMetadataCache	pending	the query, hydration and metadata caches and the second level cache configuration are not ported
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetHydrationCache	pending	the query, hydration and metadata caches are not ported
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetMetadataCache	pending	the query, hydration and metadata caches are not ported
 tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetMetadataDriverImpl	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetMetadataDriverImpl
 tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetNamingStrategy	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetNamingStrategy
 tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetProxyDir	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetProxyDir
 tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetProxyNamespace	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetProxyNamespace
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetQueryCache	pending	the query, hydration and metadata caches and the second level cache configuration are not ported
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetQueryCache	pending	the query, hydration and metadata caches are not ported
 tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetQuoteStrategy	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetQuoteStrategy
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetSecondLevelCacheConfig	pending	the query, hydration and metadata caches and the second level cache configuration are not ported
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetSecondLevelCacheConfig	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetSecondLevelCacheConfig
 tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetTypedFieldMapper	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetTypedFieldMapper
 tests/Tests/ORM/Entity/ConstructorTest.php	ConstructorTest::testFieldInitializationInConstructor	pending	
 tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testAffectedByErrorIfClosedException	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testAffectedByErrorIfClosedException
