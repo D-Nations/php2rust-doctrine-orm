@@ -2358,10 +2358,10 @@ tests/Tests/ORM/Query/ExprTest.php	ExprTest::testAddEmpty	ported	crates/php2rust
 tests/Tests/ORM/Query/ExprTest.php	ExprTest::testAddNull	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testAddNull
 tests/Tests/ORM/Query/ExprTest.php	ExprTest::testAddThrowsException	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testAddThrowsException
 tests/Tests/ORM/Query/ExprTest.php	ExprTest::testAddThrowsExceptionOnInvalidType	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testAddThrowsExceptionOnInvalidType
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testAllExpr	pending	
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testAllExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testAllExpr
 tests/Tests/ORM/Query/ExprTest.php	ExprTest::testAndExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testAndExpr
 tests/Tests/ORM/Query/ExprTest.php	ExprTest::testAndxOrxExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testAndxOrxExpr
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testAnyExpr	pending	
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testAnyExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testAnyExpr
 tests/Tests/ORM/Query/ExprTest.php	ExprTest::testAvgExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testAvgExpr
 tests/Tests/ORM/Query/ExprTest.php	ExprTest::testBetweenExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testBetweenExpr
 tests/Tests/ORM/Query/ExprTest.php	ExprTest::testBooleanLiteral	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testBooleanLiteral
@@ -2371,7 +2371,7 @@ tests/Tests/ORM/Query/ExprTest.php	ExprTest::testCountDistinctExprMulti	ported	c
 tests/Tests/ORM/Query/ExprTest.php	ExprTest::testCountExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testCountExpr
 tests/Tests/ORM/Query/ExprTest.php	ExprTest::testDiffExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testDiffExpr
 tests/Tests/ORM/Query/ExprTest.php	ExprTest::testEqualExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testEqualExpr
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testExistsExpr	pending	
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testExistsExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testExistsExpr
 tests/Tests/ORM/Query/ExprTest.php	ExprTest::testExpressionGetter	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testExpressionGetter
 tests/Tests/ORM/Query/ExprTest.php	ExprTest::testGreaterThanExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testGreaterThanExpr
 tests/Tests/ORM/Query/ExprTest.php	ExprTest::testGreaterThanOrEqualToExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testGreaterThanOrEqualToExpr
@@ -2393,7 +2393,7 @@ tests/Tests/ORM/Query/ExprTest.php	ExprTest::testLowerExpr	ported	crates/php2rus
 tests/Tests/ORM/Query/ExprTest.php	ExprTest::testMaxExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testMaxExpr
 tests/Tests/ORM/Query/ExprTest.php	ExprTest::testMinExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testMinExpr
 tests/Tests/ORM/Query/ExprTest.php	ExprTest::testModExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testModExpr
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testNotExpr	pending	
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testNotExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testNotExpr
 tests/Tests/ORM/Query/ExprTest.php	ExprTest::testNotInExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testNotInExpr
 tests/Tests/ORM/Query/ExprTest.php	ExprTest::testNotInLiteralExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testNotInLiteralExpr
 tests/Tests/ORM/Query/ExprTest.php	ExprTest::testNotLikeExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testNotLikeExpr
@@ -2406,7 +2406,7 @@ tests/Tests/ORM/Query/ExprTest.php	ExprTest::testOrxExpr	ported	crates/php2rust-
 tests/Tests/ORM/Query/ExprTest.php	ExprTest::testProdExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testProdExpr
 tests/Tests/ORM/Query/ExprTest.php	ExprTest::testQuotientExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testQuotientExpr
 tests/Tests/ORM/Query/ExprTest.php	ExprTest::testScopeInArithmeticExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testScopeInArithmeticExpr
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testSomeExpr	pending	
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testSomeExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testSomeExpr
 tests/Tests/ORM/Query/ExprTest.php	ExprTest::testSquareRootExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testSquareRootExpr
 tests/Tests/ORM/Query/ExprTest.php	ExprTest::testStringLiteralExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testStringLiteralExpr
 tests/Tests/ORM/Query/ExprTest.php	ExprTest::testSubstringExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testSubstringExpr
@@ -2564,12 +2564,12 @@ tests/Tests/ORM/Query/ParserTest.php	ParserTest::testAbstractSchemaNameSupportsI
 tests/Tests/ORM/Query/ParserTest.php	ParserTest::testMatch	ported	crates/php2rust-doctrine-orm/tests/parser_test.rs::testMatch
 tests/Tests/ORM/Query/ParserTest.php	ParserTest::testMatchFailure	ported	crates/php2rust-doctrine-orm/tests/parser_test.rs::testMatchFailure
 tests/Tests/ORM/Query/ParserTest.php	ParserTest::testNullLookahead	ported	crates/php2rust-doctrine-orm/tests/parser_test.rs::testNullLookahead
-tests/Tests/ORM/Query/QueryExpressionVisitorTest.php	QueryExpressionVisitorTest::testClearParameters	pending	
-tests/Tests/ORM/Query/QueryExpressionVisitorTest.php	QueryExpressionVisitorTest::testWalkAndCompositeExpression	pending	
-tests/Tests/ORM/Query/QueryExpressionVisitorTest.php	QueryExpressionVisitorTest::testWalkComparison	pending	
-tests/Tests/ORM/Query/QueryExpressionVisitorTest.php	QueryExpressionVisitorTest::testWalkNotCompositeExpression	pending	
-tests/Tests/ORM/Query/QueryExpressionVisitorTest.php	QueryExpressionVisitorTest::testWalkOrCompositeExpression	pending	
-tests/Tests/ORM/Query/QueryExpressionVisitorTest.php	QueryExpressionVisitorTest::testWalkValue	pending	
+tests/Tests/ORM/Query/QueryExpressionVisitorTest.php	QueryExpressionVisitorTest::testClearParameters	ported	crates/php2rust-doctrine-orm/tests/query_expression_visitor_test.rs::testClearParameters
+tests/Tests/ORM/Query/QueryExpressionVisitorTest.php	QueryExpressionVisitorTest::testWalkAndCompositeExpression	ported	crates/php2rust-doctrine-orm/tests/query_expression_visitor_test.rs::testWalkAndCompositeExpression
+tests/Tests/ORM/Query/QueryExpressionVisitorTest.php	QueryExpressionVisitorTest::testWalkComparison	ported	crates/php2rust-doctrine-orm/tests/query_expression_visitor_test.rs::testWalkComparison
+tests/Tests/ORM/Query/QueryExpressionVisitorTest.php	QueryExpressionVisitorTest::testWalkNotCompositeExpression	ported	crates/php2rust-doctrine-orm/tests/query_expression_visitor_test.rs::testWalkNotCompositeExpression
+tests/Tests/ORM/Query/QueryExpressionVisitorTest.php	QueryExpressionVisitorTest::testWalkOrCompositeExpression	ported	crates/php2rust-doctrine-orm/tests/query_expression_visitor_test.rs::testWalkOrCompositeExpression
+tests/Tests/ORM/Query/QueryExpressionVisitorTest.php	QueryExpressionVisitorTest::testWalkValue	ported	crates/php2rust-doctrine-orm/tests/query_expression_visitor_test.rs::testWalkValue
 tests/Tests/ORM/Query/QueryTest.php	QueryTest::testClone	pending	
 tests/Tests/ORM/Query/QueryTest.php	QueryTest::testCollectionParameters	pending	
 tests/Tests/ORM/Query/QueryTest.php	QueryTest::testDefaultQueryHints	pending	
@@ -2817,115 +2817,115 @@ tests/Tests/ORM/Query/UpdateSqlGenerationTest.php	UpdateSqlGenerationTest::testS
 tests/Tests/ORM/Query/UpdateSqlGenerationTest.php	UpdateSqlGenerationTest::testSupportsWhereClauses	ported	crates/php2rust-doctrine-orm/tests/update_sql_generation_test.rs::testSupportsWhereClauses
 tests/Tests/ORM/Query/UpdateSqlGenerationTest.php	UpdateSqlGenerationTest::testSupportsWhereClausesOnTheUpdatedField	ported	crates/php2rust-doctrine-orm/tests/update_sql_generation_test.rs::testSupportsWhereClausesOnTheUpdatedField
 tests/Tests/ORM/Query/UpdateSqlGenerationTest.php	UpdateSqlGenerationTest::testUpdateWithSubselectAsNewValue	ported	crates/php2rust-doctrine-orm/tests/update_sql_generation_test.rs::testUpdateWithSubselectAsNewValue
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAddCriteriaLimit	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAddCriteriaOrder	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAddCriteriaOrderOnJoinAlias	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAddCriteriaUndefinedLimit	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAddCriteriaWhere	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAddCriteriaWhereOnJoinAliasWithDuplicateFields	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAddCriteriaWhereWithDefaultAndJoinAlias	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAddCriteriaWhereWithJoinAlias	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAddCriteriaWhereWithMultipleParametersWithDifferentFields	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAddCriteriaWhereWithMultipleParametersWithSameField	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAddCriteriaWhereWithMultipleParametersWithSubpathsAndDifferentProperties	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAddCriteriaWhereWithMultipleParametersWithSubpathsAndSameProperty	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAddDistinct	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAddFromString	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAddMultipleSameCriteriaWhere	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAddOrderBy	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAddOrderByWithExpression	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAndHaving	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAndWhere	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAndWhereIn	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAndWhereNotIn	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testBCAddJoinWithoutRootAlias	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testComplexAndWhere	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testComplexAndWhereOrWhereNesting	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testComplexInnerJoin	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testComplexInnerJoinWithComparisonCondition	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testComplexInnerJoinWithCompositeCondition	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testComplexInnerJoinWithFuncCondition	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testComplexInnerJoinWithIndexBy	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testComplexWhere	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testCreateNamedParameter	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testCreateNamedParameterCustomPlaceholder	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testDeepClone	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testDeleteSetsType	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testDeleteWithLimitNotSupported	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testDeleteWithoutAlias	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testDistinctUpdatesState	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testEmptyNumericLiteral	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testEmptyStringLiteral	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testGetAllAliasesWithJoins	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testGetAllAliasesWithNoJoins	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testGetEntityManager	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testGetHint	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testGetHints	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testGetParameter	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testGetParameterTypeJuggling	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testGetParameters	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testGetQuery	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testGetRootAlias	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testGetRootAliases	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testGetRootEntities	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testGetSeveralRootAliases	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testGroupBy	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testHasHint	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testHaving	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testInnerJoin	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testJoin	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testLeftJoin	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testLeftJoinWithIndexBy	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testLegacyAddOrderByNull	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testLegacyAddOrderByString	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testLegacyOrderByNull	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testLegacyOrderByString	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testMultipleAndWhere	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testMultipleFrom	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testMultipleFromWithIndexBy	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testMultipleFromWithJoin	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testMultipleFromWithMultipleJoin	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testMultipleHints	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testMultipleIsolatedQueryConstruction	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testMultipleOrWhere	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testMultipleWhere	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testNegation	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testOrHaving	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testOrWhere	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testOrWhereIn	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testOrWhereNotIn	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testOrderBy	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testOrderByWithExpression	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testParametersAreCloned	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testRebuildsFromParts	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testResetAllDQLParts	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testResetDQLPart	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testResetDQLParts	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testSecondLevelCacheQueryBuilderOptions	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testSelectSetsType	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testSelectWithFuncExpression	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testSetParameter	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testSetParameterWithNameZeroDoesNotOverrideAnotherParameter	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testSetParameterWithNameZeroIsNotOverridden	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testSetParameterWithTypeJugglingWorks	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testSetParameters	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testSimpleDelete	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testSimpleSelect	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testSimpleSelectArray	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testSimpleSelectWithFromIndexBy	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testSimpleSelectWithIndexBy	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testSimpleUpdate	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testSingleHint	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testSomeAllAny	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testType	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testUpdateSetsType	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testUpdateWithLimitNotSupported	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testUpdateWithoutAlias	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testWhere	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testWhereAppend	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testWhereInWithObjectLiterals	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testWhereInWithStringLiterals	pending	
-tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testWhereWithUnexpectedNamedArguments	pending	
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAddCriteriaLimit	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testAddCriteriaLimit
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAddCriteriaOrder	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testAddCriteriaOrder
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAddCriteriaOrderOnJoinAlias	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testAddCriteriaOrderOnJoinAlias
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAddCriteriaUndefinedLimit	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testAddCriteriaUndefinedLimit
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAddCriteriaWhere	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testAddCriteriaWhere
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAddCriteriaWhereOnJoinAliasWithDuplicateFields	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testAddCriteriaWhereOnJoinAliasWithDuplicateFields
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAddCriteriaWhereWithDefaultAndJoinAlias	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testAddCriteriaWhereWithDefaultAndJoinAlias
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAddCriteriaWhereWithJoinAlias	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testAddCriteriaWhereWithJoinAlias
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAddCriteriaWhereWithMultipleParametersWithDifferentFields	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testAddCriteriaWhereWithMultipleParametersWithDifferentFields
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAddCriteriaWhereWithMultipleParametersWithSameField	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testAddCriteriaWhereWithMultipleParametersWithSameField
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAddCriteriaWhereWithMultipleParametersWithSubpathsAndDifferentProperties	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testAddCriteriaWhereWithMultipleParametersWithSubpathsAndDifferentProperties
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAddCriteriaWhereWithMultipleParametersWithSubpathsAndSameProperty	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testAddCriteriaWhereWithMultipleParametersWithSubpathsAndSameProperty
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAddDistinct	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testAddDistinct
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAddFromString	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testAddFromString
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAddMultipleSameCriteriaWhere	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testAddMultipleSameCriteriaWhere
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAddOrderBy	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testAddOrderBy
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAddOrderByWithExpression	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testAddOrderByWithExpression
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAndHaving	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testAndHaving
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAndWhere	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testAndWhere
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAndWhereIn	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testAndWhereIn
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testAndWhereNotIn	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testAndWhereNotIn
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testBCAddJoinWithoutRootAlias	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testBCAddJoinWithoutRootAlias
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testComplexAndWhere	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testComplexAndWhere
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testComplexAndWhereOrWhereNesting	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testComplexAndWhereOrWhereNesting
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testComplexInnerJoin	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testComplexInnerJoin
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testComplexInnerJoinWithComparisonCondition	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testComplexInnerJoinWithComparisonCondition
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testComplexInnerJoinWithCompositeCondition	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testComplexInnerJoinWithCompositeCondition
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testComplexInnerJoinWithFuncCondition	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testComplexInnerJoinWithFuncCondition
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testComplexInnerJoinWithIndexBy	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testComplexInnerJoinWithIndexBy
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testComplexWhere	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testComplexWhere
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testCreateNamedParameter	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testCreateNamedParameter
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testCreateNamedParameterCustomPlaceholder	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testCreateNamedParameterCustomPlaceholder
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testDeepClone	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testDeepClone
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testDeleteSetsType	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testDeleteSetsType
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testDeleteWithLimitNotSupported	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testDeleteWithLimitNotSupported
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testDeleteWithoutAlias	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testDeleteWithoutAlias
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testDistinctUpdatesState	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testDistinctUpdatesState
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testEmptyNumericLiteral	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testEmptyNumericLiteral
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testEmptyStringLiteral	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testEmptyStringLiteral
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testGetAllAliasesWithJoins	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testGetAllAliasesWithJoins
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testGetAllAliasesWithNoJoins	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testGetAllAliasesWithNoJoins
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testGetEntityManager	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testGetEntityManager
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testGetHint	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testGetHint
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testGetHints	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testGetHints
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testGetParameter	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testGetParameter
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testGetParameterTypeJuggling	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testGetParameterTypeJuggling
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testGetParameters	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testGetParameters
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testGetQuery	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testGetQuery
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testGetRootAlias	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testGetRootAlias
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testGetRootAliases	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testGetRootAliases
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testGetRootEntities	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testGetRootEntities
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testGetSeveralRootAliases	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testGetSeveralRootAliases
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testGroupBy	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testGroupBy
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testHasHint	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testHasHint
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testHaving	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testHaving
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testInnerJoin	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testInnerJoin
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testJoin	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testJoin
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testLeftJoin	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testLeftJoin
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testLeftJoinWithIndexBy	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testLeftJoinWithIndexBy
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testLegacyAddOrderByNull	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testLegacyAddOrderByNull
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testLegacyAddOrderByString	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testLegacyAddOrderByString
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testLegacyOrderByNull	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testLegacyOrderByNull
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testLegacyOrderByString	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testLegacyOrderByString
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testMultipleAndWhere	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testMultipleAndWhere
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testMultipleFrom	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testMultipleFrom
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testMultipleFromWithIndexBy	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testMultipleFromWithIndexBy
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testMultipleFromWithJoin	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testMultipleFromWithJoin
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testMultipleFromWithMultipleJoin	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testMultipleFromWithMultipleJoin
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testMultipleHints	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testMultipleHints
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testMultipleIsolatedQueryConstruction	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testMultipleIsolatedQueryConstruction
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testMultipleOrWhere	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testMultipleOrWhere
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testMultipleWhere	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testMultipleWhere
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testNegation	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testNegation
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testOrHaving	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testOrHaving
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testOrWhere	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testOrWhere
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testOrWhereIn	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testOrWhereIn
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testOrWhereNotIn	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testOrWhereNotIn
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testOrderBy	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testOrderBy
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testOrderByWithExpression	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testOrderByWithExpression
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testParametersAreCloned	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testParametersAreCloned
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testRebuildsFromParts	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testRebuildsFromParts
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testResetAllDQLParts	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testResetAllDQLParts
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testResetDQLPart	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testResetDQLPart
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testResetDQLParts	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testResetDQLParts
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testSecondLevelCacheQueryBuilderOptions	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testSecondLevelCacheQueryBuilderOptions
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testSelectSetsType	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testSelectSetsType
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testSelectWithFuncExpression	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testSelectWithFuncExpression
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testSetParameter	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testSetParameter
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testSetParameterWithNameZeroDoesNotOverrideAnotherParameter	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testSetParameterWithNameZeroDoesNotOverrideAnotherParameter
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testSetParameterWithNameZeroIsNotOverridden	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testSetParameterWithNameZeroIsNotOverridden
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testSetParameterWithTypeJugglingWorks	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testSetParameterWithTypeJugglingWorks
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testSetParameters	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testSetParameters
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testSimpleDelete	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testSimpleDelete
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testSimpleSelect	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testSimpleSelect
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testSimpleSelectArray	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testSimpleSelectArray
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testSimpleSelectWithFromIndexBy	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testSimpleSelectWithFromIndexBy
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testSimpleSelectWithIndexBy	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testSimpleSelectWithIndexBy
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testSimpleUpdate	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testSimpleUpdate
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testSingleHint	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testSingleHint
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testSomeAllAny	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testSomeAllAny
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testType	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testType
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testUpdateSetsType	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testUpdateSetsType
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testUpdateWithLimitNotSupported	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testUpdateWithLimitNotSupported
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testUpdateWithoutAlias	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testUpdateWithoutAlias
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testWhere	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testWhere
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testWhereAppend	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testWhereAppend
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testWhereInWithObjectLiterals	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testWhereInWithObjectLiterals
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testWhereInWithStringLiterals	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testWhereInWithStringLiterals
+tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testWhereWithUnexpectedNamedArguments	n/a: Rust has no named arguments	
 tests/Tests/ORM/Repository/DefaultRepositoryFactoryTest.php	DefaultRepositoryFactoryTest::testCachesDistinctRepositoriesPerDistinctEntityManager	pending	
 tests/Tests/ORM/Repository/DefaultRepositoryFactoryTest.php	DefaultRepositoryFactoryTest::testCreatedRepositoriesAreCached	pending	
 tests/Tests/ORM/Repository/DefaultRepositoryFactoryTest.php	DefaultRepositoryFactoryTest::testCreatesRepositoryFromCustomClassMetadata	pending	

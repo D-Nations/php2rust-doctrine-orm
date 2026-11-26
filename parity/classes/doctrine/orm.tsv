@@ -386,7 +386,7 @@ src/Query/Parser.php	Parser	2140	ported	crates/php2rust-doctrine-orm/src/query/p
 src/Query/ParserResult.php	ParserResult	81	ported	crates/php2rust-doctrine-orm/src/query/parser_result.rs
 src/Query/Printer.php	Printer	26	pending	
 src/Query/QueryException.php	QueryException	133	ported	crates/php2rust-doctrine-orm/src/query/query_exception.rs
-src/Query/QueryExpressionVisitor.php	QueryExpressionVisitor	124	pending	
+src/Query/QueryExpressionVisitor.php	QueryExpressionVisitor	124	ported	crates/php2rust-doctrine-orm/src/query/query_expression_visitor.rs
 src/Query/ResultSetMapping.php	ResultSetMapping	203	ported	crates/php2rust-doctrine-orm/src/query/result_set_mapping.rs
 src/Query/ResultSetMappingBuilder.php	ResultSetMappingBuilder	160	pending	
 src/Query/SqlOutputWalker.php	SqlOutputWalker	21	ported	crates/php2rust-doctrine-orm/src/query/sql_walker.rs
@@ -395,8 +395,8 @@ src/Query/TokenType.php	TokenType	85	ported	crates/php2rust-doctrine-orm/src/que
 src/Query/TreeWalker.php	TreeWalker	11	ported	crates/php2rust-doctrine-orm/src/query/tree_walker.rs
 src/Query/TreeWalkerAdapter.php	TreeWalkerAdapter	51	ported	crates/php2rust-doctrine-orm/src/query/tree_walker.rs
 src/Query/TreeWalkerChain.php	TreeWalkerChain	47	ported	crates/php2rust-doctrine-orm/src/query/tree_walker.rs
-src/QueryBuilder.php	QueryBuilder	707	pending	
-src/QueryType.php	QueryType	8	pending	
+src/QueryBuilder.php	QueryBuilder	707	ported	crates/php2rust-doctrine-orm/src/query_builder.rs
+src/QueryType.php	QueryType	8	ported	crates/php2rust-doctrine-orm/src/query_type.rs
 src/Repository/DefaultRepositoryFactory.php	DefaultRepositoryFactory	24	ported	crates/php2rust-doctrine-orm/src/repository/mod.rs
 src/Repository/Exception/InvalidFindByCall.php	InvalidFindByCall	16	ported	crates/php2rust-doctrine-orm/src/exception.rs
 src/Repository/Exception/InvalidMagicMethodCall.php	InvalidMagicMethodCall	21	ported	crates/php2rust-doctrine-orm/src/exception.rs

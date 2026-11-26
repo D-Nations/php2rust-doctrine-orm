@@ -50,6 +50,8 @@ assert_eq!(PhpString::from("O'Neil"), lexer.token().unwrap().value);
 | Lifecycle events: `ListenersInvoker` (callbacks, entity listeners, event manager), the event args classes, `PreUpdateEventArgs` | `Event/*.php` | LifecycleCallbackTest |
 | `SchemaTool::createSchema()`/`dropSchema()`/`getSchemaFromMetadata()` for no and single-table inheritance (columns, join columns and tables, indexes, unique constraints, foreign keys) | `Tools/SchemaTool.php` | the functional tests' schemas |
 | `ResultSetMapping` | `Query/ResultSetMapping.php` | the persister's mappings; the SQL walker's result mappings |
+| `QueryBuilder`: the DQL parts (`add()` with its `$append` check and the deprecation `https://github.com/doctrine/orm/pull/12051` for numeric join keys, `getDQLPart(s)()`, `resetDQLPart(s)()`), `select()`/`addSelect()`/`distinct()`, `delete()`/`update()` (the alias check), `from()`/`indexBy()`, the joins (root aliases), `set()`, `where()`/`andWhere()`/`orWhere()`, `groupBy()`, `having()` and its variants, `orderBy()`/`addOrderBy()` (the deprecation `https://github.com/doctrine/orm/issues/11313` for an order that is not a `SortDirection`, `Invalid sort direction`), `addCriteria()`, the root aliases and entities, parameters (`setParameter()` updates a parameter of the same normalized name, `createNamedParameter()`), first and max results (no limit for DELETE and UPDATE), hints, the second-level cache options, `getDQL()` (cached until a part changes), `getQuery()`, `__clone()`; `QueryType`; `EntityManager::createQueryBuilder()`, `getExpressionBuilder()`, `EntityRepository::createQueryBuilder()` | `QueryBuilder.php`, `QueryType.php`, `EntityManager.php`, `EntityRepository.php` | QueryBuilderTest (108 of 109), ExprTest's subquery tests (5) |
+| `QueryExpressionVisitor`: a `Criteria`'s comparisons and composites as `Expr` objects with their parameters (the alias prefix, `_`-joined parameter names made unique by the parameter count, `CONTAINS`/`STARTS_WITH`/`ENDS_WITH` as `LIKE`, `MEMBER OF`, `IS NULL` for a null value), the `RuntimeException` texts | `Query/QueryExpressionVisitor.php` | QueryExpressionVisitorTest (6) |
 
 `Lexer::new()` returns doctrine/lexer's `PcreError`, which the DQL
 patterns never cause.
@@ -72,9 +74,34 @@ Query expressions, not reproduced and so not claimed:
 - `crate::deprecations` (shared by Query and Mapping) counts per thread (PHP has one process-wide
   state); `SortDirection` is symfony/polyfill-php86's enum.
 
-Pending: `ExprTest::testExistsExpr`, `testAllExpr`, `testSomeExpr`,
-`testAnyExpr` and `testNotExpr` build a `QueryBuilder` from the test
-entity manager, which are not ported.
+Query builder, not reproduced and so not claimed:
+
+- The builder holds the entity manager as an `Arc<dyn QueryContext>`.
+  `getQuery()` gives `query::StandInQuery`, a stand-in for `Query`
+  (`Query.php` and `AbstractQuery.php` are ported separately): it keeps
+  the DQL, parameters, limits, hints, hydration mode and second-level
+  cache options and parses for `getSQL()`, but neither executes nor
+  hydrates. `expr()` and `getExpressionBuilder()` give a new `Expr`
+  (it has no state).
+- Parameters are values, not shared objects: `getQuery()` copies them,
+  so a later `setParameter()` on the builder does not change the value
+  in an earlier query (PHP clones the collection, not the parameters).
+  `getParameters()` is a slice, `setParameters()` takes a `Vec`.
+- A `QueryBuilder` is not a `php_value` object (those are `Send +
+  Sync`); where PHP passes a builder to an expression (`exists($qb)`),
+  `QueryBuilder::to_value()` gives a `Stringable` object holding the
+  DQL at the time of the call. `clone` copies expression objects of the
+  DQL parts; any other object in a part keeps its handle.
+- `orderBy($sort)` without `$order` is `order_by(sort, None)`; an
+  explicit `null` is `Some(Order::Null)`. Variadic arguments are `Vec`s;
+  `where()` is `r#where()`. `getType()` (`final protected`) is public so
+  that QueryBuilderTest's subclass test can call it.
+- `QueryExpressionVisitor::walkComparison()` gives `isMemberOf()`'s
+  `TypeError` (strict types) for a `MEMBER_OF` value that is not a
+  string, without ", called in ...".
+
+`QueryBuilderTest::testWhereWithUnexpectedNamedArguments` is n/a (Rust has
+no named arguments).
 
 Mapping, not reproduced and so not claimed:
 
