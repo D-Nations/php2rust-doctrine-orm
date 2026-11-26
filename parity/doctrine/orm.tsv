@@ -1456,10 +1456,10 @@ tests/Tests/ORM/Functional/Ticket/GH10927Test.php	GH10927Test::testSequenceGener
 tests/Tests/ORM/Functional/Ticket/GH11017/GH11017Test.php	GH11017Test::testPostPersistListenerUpdatingObjectFieldWhileOtherInsertPending	pending	the models are separate files of the ticket directory and not recorded yet
 tests/Tests/ORM/Functional/Ticket/GH11037/GH11037Test.php	GH11037Test::testMetadataFieldTypeCoherentWithEntityPropertyType	pending	the models are separate files of the ticket directory and not recorded yet
 tests/Tests/ORM/Functional/Ticket/GH11037/GH11037Test.php	GH11037Test::testMetadataFieldTypeNotCoherentWithEntityPropertyType	pending	the models are separate files of the ticket directory and not recorded yet
-tests/Tests/ORM/Functional/Ticket/GH11058Test.php	GH11058Test::testChildrenInsertedInOrderOfPersistCalls1WhenParentPersistedFirst	pending	
-tests/Tests/ORM/Functional/Ticket/GH11058Test.php	GH11058Test::testChildrenInsertedInOrderOfPersistCalls1WhenParentPersistedLast	pending	
-tests/Tests/ORM/Functional/Ticket/GH11058Test.php	GH11058Test::testChildrenInsertedInOrderOfPersistCalls2WhenParentPersistedFirst	pending	
-tests/Tests/ORM/Functional/Ticket/GH11058Test.php	GH11058Test::testChildrenInsertedInOrderOfPersistCalls2WhenParentPersistedLast	pending	
+tests/Tests/ORM/Functional/Ticket/GH11058Test.php	GH11058Test::testChildrenInsertedInOrderOfPersistCalls1WhenParentPersistedFirst	ported	crates/php2rust-doctrine-orm/tests/gh11058_test.rs::testChildrenInsertedInOrderOfPersistCalls1WhenParentPersistedFirst
+tests/Tests/ORM/Functional/Ticket/GH11058Test.php	GH11058Test::testChildrenInsertedInOrderOfPersistCalls1WhenParentPersistedLast	ported	crates/php2rust-doctrine-orm/tests/gh11058_test.rs::testChildrenInsertedInOrderOfPersistCalls1WhenParentPersistedLast
+tests/Tests/ORM/Functional/Ticket/GH11058Test.php	GH11058Test::testChildrenInsertedInOrderOfPersistCalls2WhenParentPersistedFirst	ported	crates/php2rust-doctrine-orm/tests/gh11058_test.rs::testChildrenInsertedInOrderOfPersistCalls2WhenParentPersistedFirst
+tests/Tests/ORM/Functional/Ticket/GH11058Test.php	GH11058Test::testChildrenInsertedInOrderOfPersistCalls2WhenParentPersistedLast	ported	crates/php2rust-doctrine-orm/tests/gh11058_test.rs::testChildrenInsertedInOrderOfPersistCalls2WhenParentPersistedLast
 tests/Tests/ORM/Functional/Ticket/GH11072/GH11072Test.php	GH11072Test::testAcceptsAdvancedSubsetOfBuiltinTypesWithoutErrors	pending	the models are separate files of the ticket directory and not recorded yet
 tests/Tests/ORM/Functional/Ticket/GH11072/GH11072Test.php	GH11072Test::testAcceptsSubsetOfBuiltinTypesWithoutErrors	pending	the models are separate files of the ticket directory and not recorded yet
 tests/Tests/ORM/Functional/Ticket/GH11112Test.php	GH11112Test::testSimpleQueryHasLimitAndOffsetApplied	pending	
