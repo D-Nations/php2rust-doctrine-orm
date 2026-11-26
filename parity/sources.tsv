@@ -1,10 +1,13 @@
 # rust file	package	upstream path	reference
+crates/php2rust-doctrine-collections/src/criteria.rs	doctrine/collections	src/Criteria.php	7c2f25ed928553a3de389ccb99aa46c0eedb2d4d
 crates/php2rust-doctrine-collections/src/expr/comparison.rs	doctrine/collections	src/Expr/Comparison.php	7c2f25ed928553a3de389ccb99aa46c0eedb2d4d
 crates/php2rust-doctrine-collections/src/expr/composite_expression.rs	doctrine/collections	src/Expr/CompositeExpression.php	7c2f25ed928553a3de389ccb99aa46c0eedb2d4d
 crates/php2rust-doctrine-collections/src/expr/expression_visitor.rs	doctrine/collections	src/Expr/ExpressionVisitor.php	7c2f25ed928553a3de389ccb99aa46c0eedb2d4d
 crates/php2rust-doctrine-collections/src/expr/mod.rs	doctrine/collections	src/Expr/Expression.php	7c2f25ed928553a3de389ccb99aa46c0eedb2d4d
 crates/php2rust-doctrine-collections/src/expr/value.rs	doctrine/collections	src/Expr/Value.php	7c2f25ed928553a3de389ccb99aa46c0eedb2d4d
 crates/php2rust-doctrine-collections/src/expression_builder.rs	doctrine/collections	src/ExpressionBuilder.php	7c2f25ed928553a3de389ccb99aa46c0eedb2d4d
+crates/php2rust-doctrine-collections/src/order.rs	doctrine/collections	src/Order.php	7c2f25ed928553a3de389ccb99aa46c0eedb2d4d
+crates/php2rust-doctrine-collections/tests/criteria_test.rs	doctrine/collections	tests/CriteriaTest.php	7c2f25ed928553a3de389ccb99aa46c0eedb2d4d
 crates/php2rust-doctrine-collections/tests/expr_comparison_test.rs	doctrine/collections	tests/Expr/ComparisonTest.php	7c2f25ed928553a3de389ccb99aa46c0eedb2d4d
 crates/php2rust-doctrine-collections/tests/expr_composite_expression_test.rs	doctrine/collections	tests/Expr/CompositeExpressionTest.php	7c2f25ed928553a3de389ccb99aa46c0eedb2d4d
 crates/php2rust-doctrine-collections/tests/expr_value_test.rs	doctrine/collections	tests/Expr/ValueTest.php	7c2f25ed928553a3de389ccb99aa46c0eedb2d4d

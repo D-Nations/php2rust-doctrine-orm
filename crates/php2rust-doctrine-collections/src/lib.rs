@@ -9,7 +9,14 @@
 
 #![forbid(unsafe_code)]
 
+mod criteria;
+pub mod deprecations;
 pub mod expr;
 mod expression_builder;
+mod order;
+mod sort_direction;
 
+pub use criteria::{Criteria, Direction};
 pub use expression_builder::ExpressionBuilder;
+pub use order::Order;
+pub use sort_direction::SortDirection;

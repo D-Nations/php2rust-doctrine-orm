@@ -154,20 +154,20 @@ tests/CollectionTest.php	CollectionTest::testRemovingNonExistentEntryReturnsNull
 tests/CollectionTest.php	CollectionTest::testSearch	pending	
 tests/CollectionTest.php	CollectionTest::testSlice	pending	
 tests/CollectionTest.php	CollectionTest::testToString	pending	
-tests/CriteriaTest.php	CriteriaTest::testAndWhere	pending	
-tests/CriteriaTest.php	CriteriaTest::testAndWhereWithoutWhere	pending	
-tests/CriteriaTest.php	CriteriaTest::testConstructor	pending	
-tests/CriteriaTest.php	CriteriaTest::testConstructorLegacy	pending	
-tests/CriteriaTest.php	CriteriaTest::testConstructorWithMixedOrderTypes	pending	
-tests/CriteriaTest.php	CriteriaTest::testCreate	pending	
-tests/CriteriaTest.php	CriteriaTest::testCreateLegacy	pending	
-tests/CriteriaTest.php	CriteriaTest::testExpr	pending	
-tests/CriteriaTest.php	CriteriaTest::testGetOrderings	pending	
-tests/CriteriaTest.php	CriteriaTest::testOrWhere	pending	
-tests/CriteriaTest.php	CriteriaTest::testOrWhereWithoutWhere	pending	
-tests/CriteriaTest.php	CriteriaTest::testOrderings	pending	
-tests/CriteriaTest.php	CriteriaTest::testOrderingsWithMixedOrderTypes	pending	
-tests/CriteriaTest.php	CriteriaTest::testWhere	pending	
+tests/CriteriaTest.php	CriteriaTest::testAndWhere	ported	crates/php2rust-doctrine-collections/tests/criteria_test.rs::testAndWhere
+tests/CriteriaTest.php	CriteriaTest::testAndWhereWithoutWhere	ported	crates/php2rust-doctrine-collections/tests/criteria_test.rs::testAndWhereWithoutWhere
+tests/CriteriaTest.php	CriteriaTest::testConstructor	ported	crates/php2rust-doctrine-collections/tests/criteria_test.rs::testConstructor
+tests/CriteriaTest.php	CriteriaTest::testConstructorLegacy	ported	crates/php2rust-doctrine-collections/tests/criteria_test.rs::testConstructorLegacy
+tests/CriteriaTest.php	CriteriaTest::testConstructorWithMixedOrderTypes	ported	crates/php2rust-doctrine-collections/tests/criteria_test.rs::testConstructorWithMixedOrderTypes
+tests/CriteriaTest.php	CriteriaTest::testCreate	ported	crates/php2rust-doctrine-collections/tests/criteria_test.rs::testCreate
+tests/CriteriaTest.php	CriteriaTest::testCreateLegacy	ported	crates/php2rust-doctrine-collections/tests/criteria_test.rs::testCreateLegacy
+tests/CriteriaTest.php	CriteriaTest::testExpr	ported	crates/php2rust-doctrine-collections/tests/criteria_test.rs::testExpr
+tests/CriteriaTest.php	CriteriaTest::testGetOrderings	ported	crates/php2rust-doctrine-collections/tests/criteria_test.rs::testGetOrderings
+tests/CriteriaTest.php	CriteriaTest::testOrWhere	ported	crates/php2rust-doctrine-collections/tests/criteria_test.rs::testOrWhere
+tests/CriteriaTest.php	CriteriaTest::testOrWhereWithoutWhere	ported	crates/php2rust-doctrine-collections/tests/criteria_test.rs::testOrWhereWithoutWhere
+tests/CriteriaTest.php	CriteriaTest::testOrderings	ported	crates/php2rust-doctrine-collections/tests/criteria_test.rs::testOrderings
+tests/CriteriaTest.php	CriteriaTest::testOrderingsWithMixedOrderTypes	ported	crates/php2rust-doctrine-collections/tests/criteria_test.rs::testOrderingsWithMixedOrderTypes
+tests/CriteriaTest.php	CriteriaTest::testWhere	ported	crates/php2rust-doctrine-collections/tests/criteria_test.rs::testWhere
 tests/DerivedCollectionTest.php	DerivedCollectionTest::testDerivedClassCreation	pending	
 tests/Expr/ComparisonTest.php	ComparisonTest::testVisit	ported	crates/php2rust-doctrine-collections/tests/expr_comparison_test.rs::testVisit
 tests/Expr/CompositeExpressionTest.php	CompositeExpressionTest::testExceptions	ported	crates/php2rust-doctrine-collections/tests/expr_composite_expression_test.rs::testExceptions
