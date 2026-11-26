@@ -525,3 +525,33 @@ pub fn address(location: &str) -> Object {
     orm::set(&address, "location", Value::string(location));
     address
 }
+
+/// The entities of a query result.
+pub fn entities(result: &Value) -> Vec<Object> {
+    orm::list(result).iter().map(orm::obj).collect()
+}
+
+/// `assertInstanceOf($class, $object)`.
+#[track_caller]
+pub fn assert_instance_of(class: &str, object: &Object) {
+    assert!(
+        object.class() == class || php_reflection::is_a(object.class(), class),
+        "{} is not a {class}",
+        object.class()
+    );
+}
+
+/// `$entity->$field->get($index)` of a collection property.
+pub async fn get_at(entity: &Object, field: &str, index: usize) -> Object {
+    orm::elements(entity, field).await[index].clone()
+}
+
+/// `count($entity->$field)`.
+pub async fn count(entity: &Object, field: &str) -> usize {
+    orm::count_of(entity, field).await
+}
+
+/// `$entity->$field` of a to-one association.
+pub fn get_one(entity: &Object, field: &str) -> Object {
+    orm::get_object(entity, field).unwrap()
+}
