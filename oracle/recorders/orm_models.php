@@ -322,6 +322,8 @@ namespace {
         'ORM/Functional/SchemaTool/CompanySchemaTest.php',
         'ORM/Functional/JoinedTableCompositeKeyTest.php',
         'ORM/Functional/SingleTableCompositeKeyTest.php',
+        'ORM/Functional/Locking/OptimisticTest.php',
+        'ORM/Functional/QueryDqlFunctionTest.php',
     ];
     $before = array_merge(get_declared_classes(), get_declared_interfaces(), get_declared_traits());
     foreach ($files as $file) {
