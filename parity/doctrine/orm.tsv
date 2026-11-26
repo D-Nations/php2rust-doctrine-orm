@@ -1533,7 +1533,7 @@ tests/Tests/ORM/Functional/Ticket/GH6740Test.php	GH6740Test::testCollectionFilte
 tests/Tests/ORM/Functional/Ticket/GH6740Test.php	GH6740Test::testCollectionFilteringGteOperator	ported	crates/php2rust-doctrine-orm/tests/gh6740_test.rs::testCollectionFilteringGteOperator
 tests/Tests/ORM/Functional/Ticket/GH6740Test.php	GH6740Test::testCollectionFilteringLtOperator	ported	crates/php2rust-doctrine-orm/tests/gh6740_test.rs::testCollectionFilteringLtOperator
 tests/Tests/ORM/Functional/Ticket/GH6740Test.php	GH6740Test::testCollectionFilteringLteOperator	ported	crates/php2rust-doctrine-orm/tests/gh6740_test.rs::testCollectionFilteringLteOperator
-tests/Tests/ORM/Functional/Ticket/GH6823Test.php	GH6823Test::testCharsetCollationWhenCreatingForeignRelations	pending	
+tests/Tests/ORM/Functional/Ticket/GH6823Test.php	GH6823Test::testCharsetCollationWhenCreatingForeignRelations	n/a: upstream skips it on SQLite (This test is useful for all databases, but designed only for mysql.)	
 tests/Tests/ORM/Functional/Ticket/GH6937Test.php	GH6937Test::testPhoneNumberIsPopulatedWithFind	ported	crates/php2rust-doctrine-orm/tests/gh6937_test.rs::testPhoneNumberIsPopulatedWithFind
 tests/Tests/ORM/Functional/Ticket/GH6937Test.php	GH6937Test::testPhoneNumberIsPopulatedWithQueryBuilder	ported	crates/php2rust-doctrine-orm/tests/gh6937_test.rs::testPhoneNumberIsPopulatedWithQueryBuilder
 tests/Tests/ORM/Functional/Ticket/GH6937Test.php	GH6937Test::testPhoneNumberIsPopulatedWithQueryBuilderUsingSimpleObjectHydrator	ported	crates/php2rust-doctrine-orm/tests/gh6937_test.rs::testPhoneNumberIsPopulatedWithQueryBuilderUsingSimpleObjectHydrator
