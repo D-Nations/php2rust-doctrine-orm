@@ -1,0 +1,15 @@
+# doctrine/collections at 7c2f25ed928553a3de389ccb99aa46c0eedb2d4d: upstream file	classes	code lines	status	rust files
+src/AbstractLazyCollection.php	AbstractLazyCollection	225	pending	
+src/ArrayCollection.php	ArrayCollection	264	pending	
+src/Collection.php	Collection	19	pending	
+src/Criteria.php	Criteria	132	pending	
+src/Expr/ClosureExpressionVisitor.php	ClosureExpressionVisitor	146	pending	
+src/Expr/Comparison.php	Comparison	44	pending	
+src/Expr/CompositeExpression.php	CompositeExpression	42	pending	
+src/Expr/Expression.php	Expression	6	pending	
+src/Expr/ExpressionVisitor.php	ExpressionVisitor	12	pending	
+src/Expr/Value.php	Value	18	pending	
+src/ExpressionBuilder.php	ExpressionBuilder	77	pending	
+src/Order.php	Order	7	pending	
+src/ReadableCollection.php	ReadableCollection	29	pending	
+src/Selectable.php	Selectable	6	pending	

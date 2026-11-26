@@ -1,0 +1,4 @@
+# Non-Composer upstream sources (Composer packages: parity/packages.tsv).
+# checkout	repository	tag or commit
+# php-src is not fetched: PHP behaviour comes only from the oracle and
+# PHP's documentation.

@@ -1,0 +1,35 @@
+[workspace]
+members = ["crates/*"]
+resolver = "3"
+
+# PHP behaviour crates from php2rust-compatibility-tools, pinned to a
+# commit. The alias keeps `php_value::` in code. To work on both
+# repositories, override the git source with a local path in an
+# uncommitted .cargo/config.toml (see README.md).
+[workspace.dependencies]
+php-value = { package = "php2rust-value", git = "https://github.com/D-Nations/php2rust-compatibility-tools", rev = "977342827ba414362c6af60f38dd376f2fbcfd72" }
+# Lints for every member (`[lints] workspace = true`), the same rule set as
+# symfony-rs and php2rust-compatibility-tools.
+[workspace.lints.clippy]
+all = { level = "warn", priority = -1 }
+pedantic = { level = "warn", priority = -1 }
+# Pedantic lints that only add noise to a port.
+module_name_repetitions = "allow"
+must_use_candidate = "allow"
+missing_errors_doc = "allow"
+missing_panics_doc = "allow"
+# AGENTS.md rules: no panics on external input, no stubs or debug
+# output left behind. Tests may unwrap (clippy.toml).
+unwrap_used = "warn"
+expect_used = "warn"
+todo = "warn"
+unimplemented = "warn"
+dbg_macro = "deny"
+print_stdout = "warn"
+
+# Keep source locations for normal development without full debug symbols.
+[profile.dev]
+debug = "line-tables-only"
+
+[profile.test]
+debug = "line-tables-only"

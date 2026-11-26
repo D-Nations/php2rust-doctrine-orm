@@ -1,0 +1,6 @@
+# doctrine/instantiator at 23da848e1a2308728fe5fdddabf4be17ff9720c7: upstream file	classes	code lines	status	rust files
+src/Doctrine/Instantiator/Exception/ExceptionInterface.php	ExceptionInterface	6	pending	
+src/Doctrine/Instantiator/Exception/InvalidArgumentException.php	InvalidArgumentException	34	pending	
+src/Doctrine/Instantiator/Exception/UnexpectedValueException.php	UnexpectedValueException	41	pending	
+src/Doctrine/Instantiator/Instantiator.php	Instantiator	124	pending	
+src/Doctrine/Instantiator/InstantiatorInterface.php	InstantiatorInterface	7	pending	

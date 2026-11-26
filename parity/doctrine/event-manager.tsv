@@ -1,0 +1,9 @@
+# doctrine/event-manager at dda33921b198841ca8dbad2eaa5d4d34769d18cf: upstream test	method	status	rust test
+tests/EventManagerTest.php	EventManagerTest::testAddEventListener	pending	
+tests/EventManagerTest.php	EventManagerTest::testAddEventSubscriber	pending	
+tests/EventManagerTest.php	EventManagerTest::testDispatchEvent	pending	
+tests/EventManagerTest.php	EventManagerTest::testEmptyListenersListForUnregisteredEvent	pending	
+tests/EventManagerTest.php	EventManagerTest::testInitialState	pending	
+tests/EventManagerTest.php	EventManagerTest::testNoDispatchingForUnregisteredEvent	pending	
+tests/EventManagerTest.php	EventManagerTest::testRemoveEventListener	pending	
+tests/EventManagerTest.php	EventManagerTest::testRemoveEventSubscriber	pending	
