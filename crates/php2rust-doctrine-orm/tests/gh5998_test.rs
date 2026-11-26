@@ -26,7 +26,7 @@ use php2rust_doctrine_orm::entity_manager::EntityManager;
 use orm::*;
 use ticket::*;
 
-/// Verifies that MappedSuperclasses work within an inheritance hierarchy.
+/// Verifies that `MappedSuperclasses` work within an inheritance hierarchy.
 #[tokio::test]
 async fn testIssue() {
     let em = ticket::set_up(&[
