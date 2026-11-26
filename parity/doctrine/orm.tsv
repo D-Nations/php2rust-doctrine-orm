@@ -1325,7 +1325,7 @@ tests/Tests/ORM/Functional/Ticket/DDC3192Test.php	DDC3192Test::testIssue	pending
 tests/Tests/ORM/Functional/Ticket/DDC3223Test.php	DDC3223Test::testIssueGetId	pending	
 tests/Tests/ORM/Functional/Ticket/DDC3300Test.php	DDC3300Test::testResolveTargetEntitiesChangesDiscriminatorMapValues	pending	
 tests/Tests/ORM/Functional/Ticket/DDC3303Test.php	DDC3303Test::testEmbeddedObjectsAreAlsoInherited	pending	
-tests/Tests/ORM/Functional/Ticket/DDC331Test.php	DDC331Test::testSelectFieldOnRootEntity	pending	
+tests/Tests/ORM/Functional/Ticket/DDC331Test.php	DDC331Test::testSelectFieldOnRootEntity	ported	crates/php2rust-doctrine-orm/tests/ddc331_test.rs::testSelectFieldOnRootEntity
 tests/Tests/ORM/Functional/Ticket/DDC3330Test.php	DDC3330Test::testIssueCollectionOrderWithPaginator	pending	
 tests/Tests/ORM/Functional/Ticket/DDC3346Test.php	DDC3346Test::testFindLimitedWithEagerFetchWillNotHydrateLimitedCollection	pending	
 tests/Tests/ORM/Functional/Ticket/DDC3346Test.php	DDC3346Test::testFindOneWithEagerFetchWillNotHydrateLimitedCollection	pending	
