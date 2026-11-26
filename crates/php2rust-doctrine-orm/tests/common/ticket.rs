@@ -99,20 +99,20 @@ pub async fn insert(em: &EntityManager, table: &str, data: &[(&str, Value)]) {
 }
 
 /// DBAL's `EnableForeignKeys` middleware, which upstream's `TestUtil`
-/// adds on SQLite: `PRAGMA foreign_keys = ON`.
+/// adds on `SQLite`: `PRAGMA foreign_keys = ON`.
 pub async fn enable_foreign_keys(em: &EntityManager) {
     em.get_connection()
         .execute_statement(
             "PRAGMA foreign_keys = ON",
             &PhpArray::new(),
-            &Default::default(),
+            &php2rust_doctrine_dbal::ParameterTypes::new(),
         )
         .await
         .unwrap();
 }
 
 /// `parent::setUp()` and `createSchemaForModels(...)` with the foreign
-/// keys enforced, as upstream's SQLite connection does.
+/// keys enforced, as upstream's `SQLite` connection does.
 pub async fn set_up_with_foreign_keys(shorts: &[&str]) -> Arc<EntityManager> {
     let em = set_up(shorts).await;
     enable_foreign_keys(&em).await;
