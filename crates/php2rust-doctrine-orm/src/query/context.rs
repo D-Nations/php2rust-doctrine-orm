@@ -321,6 +321,16 @@ pub trait DqlQuery {
     fn get_max_results(&self) -> Option<i64> {
         None
     }
+
+    /// `hasHint($name)`: `isset($this->hints[$name])`, so a hint set to
+    /// `null` is not set either. The default reads [`DqlQuery::get_hint`],
+    /// which cannot tell a hint set to `false` from a missing one.
+    fn has_hint(&self, name: &str) -> bool {
+        !matches!(
+            self.get_hint(name),
+            Hint::Value(Value::Bool(false) | Value::Null)
+        )
+    }
 }
 
 /// `$query->getHint(Query::HINT_LOCK_MODE) ?: LockMode::NONE`: `None` for a
