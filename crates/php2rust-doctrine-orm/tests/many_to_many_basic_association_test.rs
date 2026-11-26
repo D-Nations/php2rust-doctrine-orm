@@ -18,6 +18,7 @@ mod query_log;
 use std::sync::Arc;
 
 use php_value::{Object, PhpArray, Value};
+use php2rust_doctrine_collections::{Criteria, SortDirection};
 use php2rust_doctrine_orm::collection_object::{self as coll, ArrayCollectionObject};
 use php2rust_doctrine_orm::entity_manager::EntityManager;
 use php2rust_doctrine_orm::persistent_collection::PersistentCollection;
@@ -451,4 +452,267 @@ async fn testWorkWithDqlHydratedEmptyCollection() {
 
     let new_user = em.find(CMS_USER, get(&user, "id")).await.unwrap().unwrap();
     assert_eq!(1, count_of(&new_user, "groups").await);
+}
+
+/// `Criteria::create(true)` (`Criteria::ASC` is not defined in collections 3).
+fn criteria() -> Criteria {
+    Criteria::create()
+}
+
+/// `$this->_em->find($user::class, $user->id)`.
+async fn find_user(em: &EntityManager, user: &Object) -> Object {
+    em.find(CMS_USER, get(user, "id")).await.unwrap().unwrap()
+}
+
+fn name_of(group: &Value) -> Value {
+    match group {
+        Value::Object(o) => get(o, "name"),
+        other => panic!("an object, got {other:?}"),
+    }
+}
+
+#[tokio::test]
+async fn testMatching() {
+    let em = set_up(&CMS_MODELS).await;
+    let user = add_cms_user_gblanco_with_groups(&em, 2).await;
+    em.clear().unwrap();
+
+    let user = find_user(&em, &user).await;
+
+    let groups = get(&user, "groups");
+    assert!(
+        !persistent(&user, "groups").is_initialized(),
+        "Pre-condition: lazy collection"
+    );
+
+    let mut criteria = criteria();
+    criteria.r#where(Criteria::expr().eq("name", s("Developers_0")));
+    let result = coll::matching(&groups, &criteria).await.unwrap();
+
+    assert_eq!(coll::count(&result).await.unwrap(), 1);
+
+    let first_group = coll::first(&result).await.unwrap();
+    assert_eq!(name_of(&first_group), s("Developers_0"));
+
+    assert!(
+        !persistent(&user, "groups").is_initialized(),
+        "Post-condition: matching does not initialize collection"
+    );
+}
+
+#[tokio::test]
+async fn testMatchingWithLimit() {
+    let em = set_up(&CMS_MODELS).await;
+    let user = add_cms_user_gblanco_with_groups(&em, 2).await;
+    em.clear().unwrap();
+
+    let user = find_user(&em, &user).await;
+
+    let groups = get(&user, "groups");
+    assert!(
+        !persistent(&user, "groups").is_initialized(),
+        "Pre-condition: lazy collection"
+    );
+
+    let mut criteria = criteria();
+    criteria.set_max_results(Some(1));
+    let result = coll::matching(&groups, &criteria).await.unwrap();
+
+    assert_eq!(coll::count(&result).await.unwrap(), 1);
+
+    assert!(
+        !persistent(&user, "groups").is_initialized(),
+        "Post-condition: matching does not initialize collection"
+    );
+}
+
+#[tokio::test]
+async fn testMatchingWithOffset() {
+    let em = set_up(&CMS_MODELS).await;
+    let user = add_cms_user_gblanco_with_groups(&em, 2).await;
+    em.clear().unwrap();
+
+    let user = find_user(&em, &user).await;
+
+    let groups = get(&user, "groups");
+    assert!(
+        !persistent(&user, "groups").is_initialized(),
+        "Pre-condition: lazy collection"
+    );
+
+    let mut criteria = criteria();
+    criteria.set_first_result(1);
+    let result = coll::matching(&groups, &criteria).await.unwrap();
+
+    assert_eq!(coll::count(&result).await.unwrap(), 1);
+
+    let first_group = coll::first(&result).await.unwrap();
+    assert_eq!(name_of(&first_group), s("Developers_1"));
+
+    assert!(
+        !persistent(&user, "groups").is_initialized(),
+        "Post-condition: matching does not initialize collection"
+    );
+}
+
+#[tokio::test]
+async fn testMatchingWithLimitAndOffset() {
+    let em = set_up(&CMS_MODELS).await;
+    let user = add_cms_user_gblanco_with_groups(&em, 5).await;
+    em.clear().unwrap();
+
+    let user = find_user(&em, &user).await;
+
+    let groups = get(&user, "groups");
+    assert!(
+        !persistent(&user, "groups").is_initialized(),
+        "Pre-condition: lazy collection"
+    );
+
+    let mut criteria = criteria();
+    criteria.set_first_result(1).set_max_results(Some(3));
+    let result = coll::matching(&groups, &criteria).await.unwrap();
+
+    assert_eq!(coll::count(&result).await.unwrap(), 3);
+
+    let first_group = coll::first(&result).await.unwrap();
+    assert_eq!(name_of(&first_group), s("Developers_1"));
+
+    // `$result->last()`.
+    let last_group = coll::get_values(&result).await.unwrap().pop().unwrap();
+    assert_eq!(name_of(&last_group), s("Developers_3"));
+
+    assert!(
+        !persistent(&user, "groups").is_initialized(),
+        "Post-condition: matching does not initialize collection"
+    );
+}
+
+#[tokio::test]
+async fn testMatchingWithInCondition() {
+    let em = set_up(&CMS_MODELS).await;
+    let user = add_cms_user_gblanco_with_groups(&em, 2).await;
+    em.clear().unwrap();
+
+    let user = find_user(&em, &user).await;
+
+    let groups = get(&user, "groups");
+    assert!(
+        !persistent(&user, "groups").is_initialized(),
+        "Pre-condition: lazy collection"
+    );
+
+    let mut criteria = criteria();
+    criteria.r#where(Criteria::expr().r#in("name", PhpArray::list([s("Developers_1")])));
+    let result = coll::matching(&groups, &criteria).await.unwrap();
+
+    assert_eq!(coll::count(&result).await.unwrap(), 1);
+    assert_eq!(
+        name_of(&coll::get(&result, 0).await.unwrap()),
+        s("Developers_1")
+    );
+
+    assert!(
+        !persistent(&user, "groups").is_initialized(),
+        "Post-condition: matching does not initialize collection"
+    );
+}
+
+#[tokio::test]
+async fn testMatchingWithNotInCondition() {
+    let em = set_up(&CMS_MODELS).await;
+    let user = add_cms_user_gblanco_with_groups(&em, 2).await;
+    em.clear().unwrap();
+
+    let user = find_user(&em, &user).await;
+
+    let groups = get(&user, "groups");
+    assert!(
+        !persistent(&user, "groups").is_initialized(),
+        "Pre-condition: lazy collection"
+    );
+
+    let mut criteria = criteria();
+    criteria.r#where(Criteria::expr().not_in("name", PhpArray::list([s("Developers_0")])));
+    let result = coll::matching(&groups, &criteria).await.unwrap();
+
+    assert_eq!(coll::count(&result).await.unwrap(), 1);
+    assert_eq!(
+        name_of(&coll::get(&result, 0).await.unwrap()),
+        s("Developers_1")
+    );
+
+    assert!(
+        !persistent(&user, "groups").is_initialized(),
+        "Post-condition: matching does not initialize collection"
+    );
+}
+
+/// `->matching($criteria)->map(fn ($x) => $x->getName())->toArray()`.
+async fn matched_names(collection: &Value, criteria: &Criteria) -> Vec<Value> {
+    let result = coll::matching(collection, criteria).await.unwrap();
+    coll::to_array(&result)
+        .await
+        .unwrap()
+        .values()
+        .map(name_of)
+        .collect()
+}
+
+#[tokio::test]
+async fn testManyToManyOrderByIsNotIgnored() {
+    let em = set_up(&CMS_MODELS).await;
+    let user = add_cms_user_gblanco_with_groups(&em, 1).await;
+
+    let group1 = cms_group("C");
+    let group2 = cms_group("A");
+    let group3 = cms_group("B");
+
+    add_group(&user, &group1);
+    add_group(&user, &group2);
+    add_group(&user, &group3);
+
+    em.persist(&user).unwrap();
+    em.flush().await.unwrap();
+
+    em.clear().unwrap();
+
+    let user = find_user(&em, &user).await;
+
+    let mut criteria = criteria();
+    criteria.order_by([("name", SortDirection::Ascending)]);
+
+    assert_eq!(
+        vec![s("A"), s("B"), s("C"), s("Developers_0")],
+        matched_names(&get(&user, "groups"), &criteria).await
+    );
+}
+
+#[tokio::test]
+async fn testManyToManyOrderByHonorsFieldNameColumnNameAliases() {
+    let em = set_up(&CMS_MODELS).await;
+    let user = cms_user_with("Guilherme", "gblanco", "developer");
+
+    let tag1 = cms_tag("C");
+    let tag2 = cms_tag("A");
+    let tag3 = cms_tag("B");
+
+    add_tag(&user, &tag1);
+    add_tag(&user, &tag2);
+    add_tag(&user, &tag3);
+
+    em.persist(&user).unwrap();
+    em.flush().await.unwrap();
+
+    em.clear().unwrap();
+
+    let user = find_user(&em, &user).await;
+
+    let mut criteria = criteria();
+    criteria.order_by([("name", SortDirection::Ascending)]);
+
+    assert_eq!(
+        vec![s("A"), s("B"), s("C")],
+        matched_names(&get(&user, "tags"), &criteria).await
+    );
 }
