@@ -264,18 +264,18 @@ tests/Tests/ORM/Event/OnClassMetadataNotFoundEventArgsTest.php	OnClassMetadataNo
 tests/Tests/ORM/Functional/AbstractFetchEagerTest.php	AbstractFetchEagerTest::testWithAbstractFetchEager	pending	
 tests/Tests/ORM/Functional/AdvancedAssociationTest.php	AdvancedAssociationTest::testIssue	pending	
 tests/Tests/ORM/Functional/AdvancedAssociationTest.php	AdvancedAssociationTest::testManyToMany	pending	
-tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testAggregateWithHavingClause	pending	
-tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testCommentsInDQL	pending	
-tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testDeleteAs	pending	
-tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testGroupByMultipleFields	pending	
-tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testInSubselect	pending	
-tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testIsNullAssociation	pending	
-tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testOrderByGeneralCaseExpression	pending	
-tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testOrderByResultVariableCollectionSize	pending	
-tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testOrderBySimpleCaseExpression	pending	
-tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testSelectSubselect	pending	
-tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testUnnamedScalarResultsAreOneBased	pending	
-tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testUpdateAs	pending	
+tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testAggregateWithHavingClause	ported	crates/php2rust-doctrine-orm/tests/advanced_dql_query_test.rs::testAggregateWithHavingClause
+tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testCommentsInDQL	ported	crates/php2rust-doctrine-orm/tests/advanced_dql_query_test.rs::testCommentsInDQL
+tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testDeleteAs	ported	crates/php2rust-doctrine-orm/tests/advanced_dql_query_test.rs::testDeleteAs
+tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testGroupByMultipleFields	ported	crates/php2rust-doctrine-orm/tests/advanced_dql_query_test.rs::testGroupByMultipleFields
+tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testInSubselect	ported	crates/php2rust-doctrine-orm/tests/advanced_dql_query_test.rs::testInSubselect
+tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testIsNullAssociation	ported	crates/php2rust-doctrine-orm/tests/advanced_dql_query_test.rs::testIsNullAssociation
+tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testOrderByGeneralCaseExpression	ported	crates/php2rust-doctrine-orm/tests/advanced_dql_query_test.rs::testOrderByGeneralCaseExpression
+tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testOrderByResultVariableCollectionSize	ported	crates/php2rust-doctrine-orm/tests/advanced_dql_query_test.rs::testOrderByResultVariableCollectionSize
+tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testOrderBySimpleCaseExpression	ported	crates/php2rust-doctrine-orm/tests/advanced_dql_query_test.rs::testOrderBySimpleCaseExpression
+tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testSelectSubselect	ported	crates/php2rust-doctrine-orm/tests/advanced_dql_query_test.rs::testSelectSubselect
+tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testUnnamedScalarResultsAreOneBased	ported	crates/php2rust-doctrine-orm/tests/advanced_dql_query_test.rs::testUnnamedScalarResultsAreOneBased
+tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testUpdateAs	ported	crates/php2rust-doctrine-orm/tests/advanced_dql_query_test.rs::testUpdateAs
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testAddToCollectionDoesNotInitialize	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testAddToCollectionDoesNotInitialize
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testAddToToManyAssociationWithGetReference	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testAddToToManyAssociationWithGetReference
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testBasicOneToManyInnerJoin	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testBasicOneToManyInnerJoin
