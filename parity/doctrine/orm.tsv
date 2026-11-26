@@ -1155,13 +1155,13 @@ tests/Tests/ORM/Functional/SingleTableInheritanceTest.php	SingleTableInheritance
 tests/Tests/ORM/Functional/StandardEntityPersisterTest.php	StandardEntityPersisterTest::testAcceptsForeignKeysAsCriteria	pending	
 tests/Tests/ORM/Functional/StandardEntityPersisterTest.php	StandardEntityPersisterTest::testAddPersistRetrieve	pending	
 tests/Tests/ORM/Functional/StandardEntityPersisterTest.php	StandardEntityPersisterTest::testPersistLazyGhost	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1040Test.php	DDC1040Test::testReuseNamedEntityParameter	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1040Test.php	DDC1040Test::testUseMultiplePositionalParameters	pending	
+tests/Tests/ORM/Functional/Ticket/DDC1040Test.php	DDC1040Test::testReuseNamedEntityParameter	ported	crates/php2rust-doctrine-orm/tests/ddc1040_test.rs::testReuseNamedEntityParameter
+tests/Tests/ORM/Functional/Ticket/DDC1040Test.php	DDC1040Test::testUseMultiplePositionalParameters	ported	crates/php2rust-doctrine-orm/tests/ddc1040_test.rs::testUseMultiplePositionalParameters
 tests/Tests/ORM/Functional/Ticket/DDC1041Test.php	DDC1041Test::testGrabWrongSubtypeReturnsNull	ported	crates/php2rust-doctrine-orm/tests/ddc1041_test.rs::testGrabWrongSubtypeReturnsNull
-tests/Tests/ORM/Functional/Ticket/DDC1043Test.php	DDC1043Test::testChangeSetPlusWeirdPHPCastingIntCastingRule	pending	
+tests/Tests/ORM/Functional/Ticket/DDC1043Test.php	DDC1043Test::testChangeSetPlusWeirdPHPCastingIntCastingRule	ported	crates/php2rust-doctrine-orm/tests/ddc1043_test.rs::testChangeSetPlusWeirdPHPCastingIntCastingRule
 tests/Tests/ORM/Functional/Ticket/DDC1080Test.php	DDC1080Test::testHydration	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1113Test.php	DDC1113Test::testIssue	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1129Test.php	DDC1129Test::testVersionFieldIgnoredInChangesetComputation	pending	
+tests/Tests/ORM/Functional/Ticket/DDC1113Test.php	DDC1113Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc1113_test.rs::testIssue
+tests/Tests/ORM/Functional/Ticket/DDC1129Test.php	DDC1129Test::testVersionFieldIgnoredInChangesetComputation	ported	crates/php2rust-doctrine-orm/tests/ddc1129_test.rs::testVersionFieldIgnoredInChangesetComputation
 tests/Tests/ORM/Functional/Ticket/DDC1163Test.php	DDC1163Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testArrayHydrationWithCompositeKey	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testArrayHydrationWithCompositeKey
 tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testAssociationOnlyCompositeKey	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testAssociationOnlyCompositeKey
@@ -1183,53 +1183,53 @@ tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testOneToOneForeign
 tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testReferencesToForeignKeyEntities	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testReferencesToForeignKeyEntities
 tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testRemoveCompositeElement	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testRemoveCompositeElement
 tests/Tests/ORM/Functional/Ticket/DDC117Test.php	DDC117Test::testUpdateAssociationEntity	ported	crates/php2rust-doctrine-orm/tests/ddc117_test.rs::testUpdateAssociationEntity
-tests/Tests/ORM/Functional/Ticket/DDC1181Test.php	DDC1181Test::testIssue	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1193Test.php	DDC1193Test::testIssue	pending	
+tests/Tests/ORM/Functional/Ticket/DDC1181Test.php	DDC1181Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc1181_test.rs::testIssue
+tests/Tests/ORM/Functional/Ticket/DDC1193Test.php	DDC1193Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc1193_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC1209Test.php	DDC1209Test::testCompositeIdentifierCanHaveCustomType	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1209Test.php	DDC1209Test::testIdentifierCanHaveCustomType	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1225Test.php	DDC1225Test::testIssue	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1228Test.php	DDC1228Test::testOneToOnePersist	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1228Test.php	DDC1228Test::testRefresh	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1238Test.php	DDC1238Test::testIssue	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1238Test.php	DDC1238Test::testIssueProxyClear	pending	
+tests/Tests/ORM/Functional/Ticket/DDC1225Test.php	DDC1225Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc1225_test.rs::testIssue
+tests/Tests/ORM/Functional/Ticket/DDC1228Test.php	DDC1228Test::testOneToOnePersist	ported	crates/php2rust-doctrine-orm/tests/ddc1228_test.rs::testOneToOnePersist
+tests/Tests/ORM/Functional/Ticket/DDC1228Test.php	DDC1228Test::testRefresh	ported	crates/php2rust-doctrine-orm/tests/ddc1228_test.rs::testRefresh
+tests/Tests/ORM/Functional/Ticket/DDC1238Test.php	DDC1238Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc1238_test.rs::testIssue
+tests/Tests/ORM/Functional/Ticket/DDC1238Test.php	DDC1238Test::testIssueProxyClear	ported	crates/php2rust-doctrine-orm/tests/ddc1238_test.rs::testIssueProxyClear
 tests/Tests/ORM/Functional/Ticket/DDC1250Test.php	DDC1250Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1300Test.php	DDC1300Test::testIssue	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1301Test.php	DDC1301Test::testCountNotInitializesLegacyCollection	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1301Test.php	DDC1301Test::testCountNotInitializesLegacyCollectionWithForeignIdentifier	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1301Test.php	DDC1301Test::testCountNotInitializesLegacyManyToManyCollection	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1306Test.php	DDC1306Test::testIssue	pending	
+tests/Tests/ORM/Functional/Ticket/DDC1301Test.php	DDC1301Test::testCountNotInitializesLegacyCollection	ported	crates/php2rust-doctrine-orm/tests/ddc1301_test.rs::testCountNotInitializesLegacyCollection
+tests/Tests/ORM/Functional/Ticket/DDC1301Test.php	DDC1301Test::testCountNotInitializesLegacyCollectionWithForeignIdentifier	ported	crates/php2rust-doctrine-orm/tests/ddc1301_test.rs::testCountNotInitializesLegacyCollectionWithForeignIdentifier
+tests/Tests/ORM/Functional/Ticket/DDC1301Test.php	DDC1301Test::testCountNotInitializesLegacyManyToManyCollection	ported	crates/php2rust-doctrine-orm/tests/ddc1301_test.rs::testCountNotInitializesLegacyManyToManyCollection
+tests/Tests/ORM/Functional/Ticket/DDC1306Test.php	DDC1306Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc1306_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC1335Test.php	DDC1335Test::testDql	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1335Test.php	DDC1335Test::testIndexByUnique	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1335Test.php	DDC1335Test::testIndexWithJoin	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1335Test.php	DDC1335Test::testTicket	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1400Test.php	DDC1400Test::testFailingCase	pending	
-tests/Tests/ORM/Functional/Ticket/DDC142Test.php	DDC142Test::testCreateRetrieveUpdateDelete	pending	
+tests/Tests/ORM/Functional/Ticket/DDC142Test.php	DDC142Test::testCreateRetrieveUpdateDelete	ported	crates/php2rust-doctrine-orm/tests/ddc142_test.rs::testCreateRetrieveUpdateDelete
 tests/Tests/ORM/Functional/Ticket/DDC1430Test.php	DDC1430Test::testOrderByAllObjectFields	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1430Test.php	DDC1430Test::testOrderByFields	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1430Test.php	DDC1430Test::testTicket	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1436Test.php	DDC1436Test::testIdentityMap	pending	
 tests/Tests/ORM/Functional/Ticket/DDC144Test.php	DDC144Test::testIssue	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1452Test.php	DDC1452Test::testFetchJoinOneToOneFromInverse	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1452Test.php	DDC1452Test::testIssue	pending	
+tests/Tests/ORM/Functional/Ticket/DDC1452Test.php	DDC1452Test::testFetchJoinOneToOneFromInverse	ported	crates/php2rust-doctrine-orm/tests/ddc1452_test.rs::testFetchJoinOneToOneFromInverse
+tests/Tests/ORM/Functional/Ticket/DDC1452Test.php	DDC1452Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc1452_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC1454Test.php	DDC1454Test::testFailingCase	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1458Test.php	DDC1458Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1461Test.php	DDC1461Test::testChangeDetectionDeferredExplicit	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1514Test.php	DDC1514Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1515Test.php	DDC1515Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1526Test.php	DDC1526Test::testIssue	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1545Test.php	DDC1545Test::testChangeLink	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1545Test.php	DDC1545Test::testChangeLinkWithAssociationLoaded	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1545Test.php	DDC1545Test::testLinkObjects	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1545Test.php	DDC1545Test::testLinkObjectsWithAssociationLoaded	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1545Test.php	DDC1545Test::testUnlinkObjects	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1545Test.php	DDC1545Test::testUnlinkObjectsWithAssociationLoaded	pending	
+tests/Tests/ORM/Functional/Ticket/DDC1545Test.php	DDC1545Test::testChangeLink	ported	crates/php2rust-doctrine-orm/tests/ddc1545_test.rs::testChangeLink
+tests/Tests/ORM/Functional/Ticket/DDC1545Test.php	DDC1545Test::testChangeLinkWithAssociationLoaded	ported	crates/php2rust-doctrine-orm/tests/ddc1545_test.rs::testChangeLinkWithAssociationLoaded
+tests/Tests/ORM/Functional/Ticket/DDC1545Test.php	DDC1545Test::testLinkObjects	ported	crates/php2rust-doctrine-orm/tests/ddc1545_test.rs::testLinkObjects
+tests/Tests/ORM/Functional/Ticket/DDC1545Test.php	DDC1545Test::testLinkObjectsWithAssociationLoaded	ported	crates/php2rust-doctrine-orm/tests/ddc1545_test.rs::testLinkObjectsWithAssociationLoaded
+tests/Tests/ORM/Functional/Ticket/DDC1545Test.php	DDC1545Test::testUnlinkObjects	ported	crates/php2rust-doctrine-orm/tests/ddc1545_test.rs::testUnlinkObjects
+tests/Tests/ORM/Functional/Ticket/DDC1545Test.php	DDC1545Test::testUnlinkObjectsWithAssociationLoaded	ported	crates/php2rust-doctrine-orm/tests/ddc1545_test.rs::testUnlinkObjectsWithAssociationLoaded
 tests/Tests/ORM/Functional/Ticket/DDC1548Test.php	DDC1548Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1595Test.php	DDC1595Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC163Test.php	DDC163Test::testQueryWithOrConditionUsingTwoRelationOnSameEntity	ported	crates/php2rust-doctrine-orm/tests/ddc163_test.rs::testQueryWithOrConditionUsingTwoRelationOnSameEntity
-tests/Tests/ORM/Functional/Ticket/DDC1643Test.php	DDC1643Test::testClonePersistentCollectionAndReuse	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1643Test.php	DDC1643Test::testClonePersistentCollectionAndShare	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1643Test.php	DDC1643Test::testCloneThenDirtyPersistentCollection	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1643Test.php	DDC1643Test::testNotCloneAndPassAroundFlush	pending	
+tests/Tests/ORM/Functional/Ticket/DDC1643Test.php	DDC1643Test::testClonePersistentCollectionAndReuse	ported	crates/php2rust-doctrine-orm/tests/ddc1643_test.rs::testClonePersistentCollectionAndReuse
+tests/Tests/ORM/Functional/Ticket/DDC1643Test.php	DDC1643Test::testClonePersistentCollectionAndShare	ported	crates/php2rust-doctrine-orm/tests/ddc1643_test.rs::testClonePersistentCollectionAndShare
+tests/Tests/ORM/Functional/Ticket/DDC1643Test.php	DDC1643Test::testCloneThenDirtyPersistentCollection	ported	crates/php2rust-doctrine-orm/tests/ddc1643_test.rs::testCloneThenDirtyPersistentCollection
+tests/Tests/ORM/Functional/Ticket/DDC1643Test.php	DDC1643Test::testNotCloneAndPassAroundFlush	ported	crates/php2rust-doctrine-orm/tests/ddc1643_test.rs::testNotCloneAndPassAroundFlush
 tests/Tests/ORM/Functional/Ticket/DDC1654Test.php	DDC1654Test::testManyToManyClearCollectionOrphanRemoval	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1654Test.php	DDC1654Test::testManyToManyClearCollectionReAddOrphanRemoval	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1654Test.php	DDC1654Test::testManyToManyRemoveElementFromCollectionOrphanRemoval	pending	
@@ -1237,7 +1237,7 @@ tests/Tests/ORM/Functional/Ticket/DDC1654Test.php	DDC1654Test::testManyToManyRem
 tests/Tests/ORM/Functional/Ticket/DDC1654Test.php	DDC1654Test::testManyToManyRemoveFromCollectionOrphanRemoval	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1655Test.php	DDC1655Test::testPostLoadInheritanceChild	ported	crates/php2rust-doctrine-orm/tests/ddc1655_test.rs::testPostLoadInheritanceChild
 tests/Tests/ORM/Functional/Ticket/DDC1655Test.php	DDC1655Test::testPostLoadOneToManyInheritance	ported	crates/php2rust-doctrine-orm/tests/ddc1655_test.rs::testPostLoadOneToManyInheritance
-tests/Tests/ORM/Functional/Ticket/DDC1666Test.php	DDC1666Test::testGivenOrphanRemovalOneToOneWhenReplacingThenNoUniqueConstraintError	pending	
+tests/Tests/ORM/Functional/Ticket/DDC1666Test.php	DDC1666Test::testGivenOrphanRemovalOneToOneWhenReplacingThenNoUniqueConstraintError	ported	crates/php2rust-doctrine-orm/tests/ddc1666_test.rs::testGivenOrphanRemovalOneToOneWhenReplacingThenNoUniqueConstraintError
 tests/Tests/ORM/Functional/Ticket/DDC1685Test.php	DDC1685Test::testPaginateCount	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1685Test.php	DDC1685Test::testPaginateCountNoOutputWalkers	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1685Test.php	DDC1685Test::testPaginateIterate	pending	
@@ -1247,19 +1247,19 @@ tests/Tests/ORM/Functional/Ticket/DDC1695Test.php	DDC1695Test::testIssue	pending
 tests/Tests/ORM/Functional/Ticket/DDC1707Test.php	DDC1707Test::testPostLoadOnChild	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1719Test.php	DDC1719Test::testCreateRetrieveUpdateDelete	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1757Test.php	DDC1757Test::testFailingCase	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1778Test.php	DDC1778Test::testClear	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1778Test.php	DDC1778Test::testRemove	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1778Test.php	DDC1778Test::testRemoveElement	pending	
+tests/Tests/ORM/Functional/Ticket/DDC1778Test.php	DDC1778Test::testClear	ported	crates/php2rust-doctrine-orm/tests/ddc1778_test.rs::testClear
+tests/Tests/ORM/Functional/Ticket/DDC1778Test.php	DDC1778Test::testRemove	ported	crates/php2rust-doctrine-orm/tests/ddc1778_test.rs::testRemove
+tests/Tests/ORM/Functional/Ticket/DDC1778Test.php	DDC1778Test::testRemoveElement	ported	crates/php2rust-doctrine-orm/tests/ddc1778_test.rs::testRemoveElement
 tests/Tests/ORM/Functional/Ticket/DDC1787Test.php	DDC1787Test::testIssue	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1843Test.php	DDC1843Test::testCreateRetrieveUpdateDelete	pending	
+tests/Tests/ORM/Functional/Ticket/DDC1843Test.php	DDC1843Test::testCreateRetrieveUpdateDelete	ported	crates/php2rust-doctrine-orm/tests/ddc1843_test.rs::testCreateRetrieveUpdateDelete
 tests/Tests/ORM/Functional/Ticket/DDC1884Test.php	DDC1884Test::testSelectFromInverseSideWithCompositePkAndSolelyIdentifierColumnsUsingFetchJoins	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1884Test.php	DDC1884Test::testSelectFromInverseSideWithCompositePkUsingFetchJoins	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1884Test.php	DDC1884Test::testSelectFromOwningSideUsingFetchJoins	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1885Test.php	DDC1885Test::testClearAll	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1885Test.php	DDC1885Test::testCountExtraLazy	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1885Test.php	DDC1885Test::testCreateRetrieveUpdateDelete	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1885Test.php	DDC1885Test::testRemoveItem	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1918Test.php	DDC1918Test::testLastPageCorrect	pending	
+tests/Tests/ORM/Functional/Ticket/DDC1885Test.php	DDC1885Test::testClearAll	ported	crates/php2rust-doctrine-orm/tests/ddc1885_test.rs::testClearAll
+tests/Tests/ORM/Functional/Ticket/DDC1885Test.php	DDC1885Test::testCountExtraLazy	ported	crates/php2rust-doctrine-orm/tests/ddc1885_test.rs::testCountExtraLazy
+tests/Tests/ORM/Functional/Ticket/DDC1885Test.php	DDC1885Test::testCreateRetrieveUpdateDelete	ported	crates/php2rust-doctrine-orm/tests/ddc1885_test.rs::testCreateRetrieveUpdateDelete
+tests/Tests/ORM/Functional/Ticket/DDC1885Test.php	DDC1885Test::testRemoveItem	ported	crates/php2rust-doctrine-orm/tests/ddc1885_test.rs::testRemoveItem
+tests/Tests/ORM/Functional/Ticket/DDC1918Test.php	DDC1918Test::testLastPageCorrect	ported	crates/php2rust-doctrine-orm/tests/ddc1918_test.rs::testLastPageCorrect
 tests/Tests/ORM/Functional/Ticket/DDC1925Test.php	DDC1925Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC192Test.php	DDC192Test::testSchemaCreation	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1995Test.php	DDC1995Test::testIssue	pending	
@@ -1267,8 +1267,8 @@ tests/Tests/ORM/Functional/Ticket/DDC1995Test.php	DDC1995Test::testQueryCache	pe
 tests/Tests/ORM/Functional/Ticket/DDC1998Test.php	DDC1998Test::testSqlConversionAsIdentifier	pending	
 tests/Tests/ORM/Functional/Ticket/DDC199Test.php	DDC199Test::testPolymorphicLoading	pending	
 tests/Tests/ORM/Functional/Ticket/DDC2012Test.php	DDC2012Test::testIssue	pending	
-tests/Tests/ORM/Functional/Ticket/DDC2074Test.php	DDC2074Test::testSavingClonedPersistentCollection	pending	
-tests/Tests/ORM/Functional/Ticket/DDC2074Test.php	DDC2074Test::testShouldNotScheduleDeletionOnClonedInstances	pending	
+tests/Tests/ORM/Functional/Ticket/DDC2074Test.php	DDC2074Test::testSavingClonedPersistentCollection	ported	crates/php2rust-doctrine-orm/tests/ddc2074_test.rs::testSavingClonedPersistentCollection
+tests/Tests/ORM/Functional/Ticket/DDC2074Test.php	DDC2074Test::testShouldNotScheduleDeletionOnClonedInstances	ported	crates/php2rust-doctrine-orm/tests/ddc2074_test.rs::testShouldNotScheduleDeletionOnClonedInstances
 tests/Tests/ORM/Functional/Ticket/DDC2084Test.php	DDC2084Test::testInvalidIdentifierBindingEntityException	pending	
 tests/Tests/ORM/Functional/Ticket/DDC2084Test.php	DDC2084Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC2090Test.php	DDC2090Test::testIssue	pending	
@@ -1289,19 +1289,19 @@ tests/Tests/ORM/Functional/Ticket/DDC237Test.php	DDC237Test::testUninitializedPr
 tests/Tests/ORM/Functional/Ticket/DDC2387Test.php	DDC2387Test::testCompositeAssociationKeyDetection	pending	
 tests/Tests/ORM/Functional/Ticket/DDC2415Test.php	DDC2415Test::testTicket	pending	
 tests/Tests/ORM/Functional/Ticket/DDC2494Test.php	DDC2494Test::testIssue	pending	
-tests/Tests/ORM/Functional/Ticket/DDC2519Test.php	DDC2519Test::testIssue	pending	
+tests/Tests/ORM/Functional/Ticket/DDC2519Test.php	DDC2519Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2519_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC2575Test.php	DDC2575Test::testHydrationIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC2579Test.php	DDC2579Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC258Test.php	DDC258Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC2602Test.php	DDC2602Test::testPostLoadListenerShouldBeAbleToRunQueries	pending	
-tests/Tests/ORM/Functional/Ticket/DDC2655Test.php	DDC2655Test::testSingleScalarOneOrNullResult	pending	
+tests/Tests/ORM/Functional/Ticket/DDC2655Test.php	DDC2655Test::testSingleScalarOneOrNullResult	ported	crates/php2rust-doctrine-orm/tests/ddc2655_test.rs::testSingleScalarOneOrNullResult
 tests/Tests/ORM/Functional/Ticket/DDC2660Test.php	DDC2660Test::testIssueWithExtraColumn	pending	
 tests/Tests/ORM/Functional/Ticket/DDC2660Test.php	DDC2660Test::testIssueWithoutExtraColumn	pending	
 tests/Tests/ORM/Functional/Ticket/DDC2692Test.php	DDC2692Test::testIsListenerCalledOnlyOnceOnPreFlush	pending	
 tests/Tests/ORM/Functional/Ticket/DDC2759Test.php	DDC2759Test::testCorrectNumberOfAssociationsIsReturned	pending	
 tests/Tests/ORM/Functional/Ticket/DDC2775Test.php	DDC2775Test::testIssueCascadeRemove	pending	
 tests/Tests/ORM/Functional/Ticket/DDC2780Test.php	DDC2780Test::testIssue	pending	
-tests/Tests/ORM/Functional/Ticket/DDC2790Test.php	DDC2790Test::testIssue	pending	
+tests/Tests/ORM/Functional/Ticket/DDC2790Test.php	DDC2790Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2790_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC279Test.php	DDC279Test::testDDC279	pending	
 tests/Tests/ORM/Functional/Ticket/DDC2825Test.php	DDC2825Test::testPersistenceOfEntityWithSchemaMapping	pending	
 tests/Tests/ORM/Functional/Ticket/DDC2862Test.php	DDC2862Test::testIssue	pending	
@@ -1318,8 +1318,8 @@ tests/Tests/ORM/Functional/Ticket/DDC3042Test.php	DDC3042Test::testSQLGeneration
 tests/Tests/ORM/Functional/Ticket/DDC3068Test.php	DDC3068Test::testFindUsingAnArrayOfObjectAsPrimaryKey	pending	
 tests/Tests/ORM/Functional/Ticket/DDC309Test.php	DDC309Test::testTwoToIterableHydrations	pending	
 tests/Tests/ORM/Functional/Ticket/DDC3103Test.php	DDC3103Test::testIssue	pending	
-tests/Tests/ORM/Functional/Ticket/DDC3123Test.php	DDC3123Test::testIssue	pending	
-tests/Tests/ORM/Functional/Ticket/DDC3160Test.php	DDC3160Test::testNoUpdateOnInsert	pending	
+tests/Tests/ORM/Functional/Ticket/DDC3123Test.php	DDC3123Test::testIssue	pending	the postFlush listener reads the private UnitOfWork::$extraUpdates through ReflectionProperty; the port has no accessor for it
+tests/Tests/ORM/Functional/Ticket/DDC3160Test.php	DDC3160Test::testNoUpdateOnInsert	ported	crates/php2rust-doctrine-orm/tests/ddc3160_test.rs::testNoUpdateOnInsert
 tests/Tests/ORM/Functional/Ticket/DDC3170Test.php	DDC3170Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC3192Test.php	DDC3192Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC3223Test.php	DDC3223Test::testIssueGetId	pending	
@@ -1379,23 +1379,23 @@ tests/Tests/ORM/Functional/Ticket/DDC6558Test.php	DDC6558Test::testEmployeeIsPop
 tests/Tests/ORM/Functional/Ticket/DDC656Test.php	DDC656Test::testRecomputeSingleEntityChangeSetPreservesFieldOrder	pending	
 tests/Tests/ORM/Functional/Ticket/DDC6573Test.php	DDC6573Test::testShouldSupportsBasicUsage	pending	
 tests/Tests/ORM/Functional/Ticket/DDC6573Test.php	DDC6573Test::testShouldSupportsMultipleNewOperator	pending	
-tests/Tests/ORM/Functional/Ticket/DDC657Test.php	DDC657Test::testEntitySingleResult	pending	
-tests/Tests/ORM/Functional/Ticket/DDC657Test.php	DDC657Test::testScalarResult	pending	
-tests/Tests/ORM/Functional/Ticket/DDC657Test.php	DDC657Test::testTicketResult	pending	
-tests/Tests/ORM/Functional/Ticket/DDC657Test.php	DDC657Test::testTicketSingleResult	pending	
-tests/Tests/ORM/Functional/Ticket/DDC657Test.php	DDC657Test::testaTicketEntityArrayResult	pending	
+tests/Tests/ORM/Functional/Ticket/DDC657Test.php	DDC657Test::testEntitySingleResult	ported	crates/php2rust-doctrine-orm/tests/ddc657_test.rs::testEntitySingleResult
+tests/Tests/ORM/Functional/Ticket/DDC657Test.php	DDC657Test::testScalarResult	ported	crates/php2rust-doctrine-orm/tests/ddc657_test.rs::testScalarResult
+tests/Tests/ORM/Functional/Ticket/DDC657Test.php	DDC657Test::testTicketResult	pending	formats with 'G', which the runtime's DateTime::format() does not support (prints a literal G)
+tests/Tests/ORM/Functional/Ticket/DDC657Test.php	DDC657Test::testTicketSingleResult	ported	crates/php2rust-doctrine-orm/tests/ddc657_test.rs::testTicketSingleResult
+tests/Tests/ORM/Functional/Ticket/DDC657Test.php	DDC657Test::testaTicketEntityArrayResult	ported	crates/php2rust-doctrine-orm/tests/ddc657_test.rs::testaTicketEntityArrayResult
 tests/Tests/ORM/Functional/Ticket/DDC698Test.php	DDC698Test::testTicket	pending	
 tests/Tests/ORM/Functional/Ticket/DDC69Test.php	DDC69Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC719Test.php	DDC719Test::testIsEmptySqlGeneration	pending	
 tests/Tests/ORM/Functional/Ticket/DDC735Test.php	DDC735Test::testRemoveElementAppliesOrphanRemoval	pending	
-tests/Tests/ORM/Functional/Ticket/DDC736Test.php	DDC736Test::testDqlTreeWalkerReordering	pending	
-tests/Tests/ORM/Functional/Ticket/DDC736Test.php	DDC736Test::testReorderEntityFetchJoinForHydration	pending	
-tests/Tests/ORM/Functional/Ticket/DDC748Test.php	DDC748Test::testRefreshOneToOne	pending	
-tests/Tests/ORM/Functional/Ticket/DDC748Test.php	DDC748Test::testRefreshWithManyToOne	pending	
-tests/Tests/ORM/Functional/Ticket/DDC767Test.php	DDC767Test::testCollectionChangesInsideTransaction	pending	
+tests/Tests/ORM/Functional/Ticket/DDC736Test.php	DDC736Test::testDqlTreeWalkerReordering	ported	crates/php2rust-doctrine-orm/tests/ddc736_test.rs::testDqlTreeWalkerReordering
+tests/Tests/ORM/Functional/Ticket/DDC736Test.php	DDC736Test::testReorderEntityFetchJoinForHydration	ported	crates/php2rust-doctrine-orm/tests/ddc736_test.rs::testReorderEntityFetchJoinForHydration
+tests/Tests/ORM/Functional/Ticket/DDC748Test.php	DDC748Test::testRefreshOneToOne	ported	crates/php2rust-doctrine-orm/tests/ddc748_test.rs::testRefreshOneToOne
+tests/Tests/ORM/Functional/Ticket/DDC748Test.php	DDC748Test::testRefreshWithManyToOne	ported	crates/php2rust-doctrine-orm/tests/ddc748_test.rs::testRefreshWithManyToOne
+tests/Tests/ORM/Functional/Ticket/DDC767Test.php	DDC767Test::testCollectionChangesInsideTransaction	ported	crates/php2rust-doctrine-orm/tests/ddc767_test.rs::testCollectionChangesInsideTransaction
 tests/Tests/ORM/Functional/Ticket/DDC7969Test.php	DDC7969Test::testChildEntityRetrievedFromCache	pending	
 tests/Tests/ORM/Functional/Ticket/DDC809Test.php	DDC809Test::testIssue	pending	
-tests/Tests/ORM/Functional/Ticket/DDC812Test.php	DDC812Test::testFetchJoinInitializesPreviouslyUninitializedCollectionOfManagedEntity	pending	
+tests/Tests/ORM/Functional/Ticket/DDC812Test.php	DDC812Test::testFetchJoinInitializesPreviouslyUninitializedCollectionOfManagedEntity	ported	crates/php2rust-doctrine-orm/tests/ddc812_test.rs::testFetchJoinInitializesPreviouslyUninitializedCollectionOfManagedEntity
 tests/Tests/ORM/Functional/Ticket/DDC832Test.php	DDC832Test::testQuotedTableBasicRemove	ported	crates/php2rust-doctrine-orm/tests/ddc832_test.rs::testQuotedTableBasicRemove
 tests/Tests/ORM/Functional/Ticket/DDC832Test.php	DDC832Test::testQuotedTableBasicUpdate	ported	crates/php2rust-doctrine-orm/tests/ddc832_test.rs::testQuotedTableBasicUpdate
 tests/Tests/ORM/Functional/Ticket/DDC832Test.php	DDC832Test::testQuotedTableJoinedChildRemove	ported	crates/php2rust-doctrine-orm/tests/ddc832_test.rs::testQuotedTableJoinedChildRemove
@@ -1403,12 +1403,12 @@ tests/Tests/ORM/Functional/Ticket/DDC832Test.php	DDC832Test::testQuotedTableJoin
 tests/Tests/ORM/Functional/Ticket/DDC832Test.php	DDC832Test::testQuotedTableJoinedRemove	ported	crates/php2rust-doctrine-orm/tests/ddc832_test.rs::testQuotedTableJoinedRemove
 tests/Tests/ORM/Functional/Ticket/DDC832Test.php	DDC832Test::testQuotedTableJoinedUpdate	ported	crates/php2rust-doctrine-orm/tests/ddc832_test.rs::testQuotedTableJoinedUpdate
 tests/Tests/ORM/Functional/Ticket/DDC837Test.php	DDC837Test::testIssue	pending	
-tests/Tests/ORM/Functional/Ticket/DDC849Test.php	DDC849Test::testClearContains	pending	
-tests/Tests/ORM/Functional/Ticket/DDC849Test.php	DDC849Test::testClearCount	pending	
-tests/Tests/ORM/Functional/Ticket/DDC849Test.php	DDC849Test::testRemoveContains	pending	
+tests/Tests/ORM/Functional/Ticket/DDC849Test.php	DDC849Test::testClearContains	ported	crates/php2rust-doctrine-orm/tests/ddc849_test.rs::testClearContains
+tests/Tests/ORM/Functional/Ticket/DDC849Test.php	DDC849Test::testClearCount	ported	crates/php2rust-doctrine-orm/tests/ddc849_test.rs::testClearCount
+tests/Tests/ORM/Functional/Ticket/DDC849Test.php	DDC849Test::testRemoveContains	ported	crates/php2rust-doctrine-orm/tests/ddc849_test.rs::testRemoveContains
 tests/Tests/ORM/Functional/Ticket/DDC881Test.php	DDC881Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC933Test.php	DDC933Test::testLockCTIClass	pending	
-tests/Tests/ORM/Functional/Ticket/DDC949Test.php	DDC949Test::testBooleanThroughRepository	pending	
+tests/Tests/ORM/Functional/Ticket/DDC949Test.php	DDC949Test::testBooleanThroughRepository	ported	crates/php2rust-doctrine-orm/tests/ddc949_test.rs::testBooleanThroughRepository
 tests/Tests/ORM/Functional/Ticket/DDC960Test.php	DDC960Test::testUpdateRootVersion	pending	
 tests/Tests/ORM/Functional/Ticket/DDC992Test.php	DDC992Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC992Test.php	DDC992Test::testOneToManyChild	pending	
@@ -1646,19 +1646,19 @@ tests/Tests/ORM/Functional/UnitOfWorkLifecycleTest.php	UnitOfWorkLifecycleTest::
 tests/Tests/ORM/Functional/UnitOfWorkLifecycleTest.php	UnitOfWorkLifecycleTest::testScheduleInsertDeleted	pending	
 tests/Tests/ORM/Functional/UnitOfWorkLifecycleTest.php	UnitOfWorkLifecycleTest::testScheduleInsertManaged	pending	
 tests/Tests/ORM/Functional/UnitOfWorkLifecycleTest.php	UnitOfWorkLifecycleTest::testScheduleInsertTwice	pending	
-tests/Tests/ORM/Functional/ValueConversionType/ManyToManyCompositeIdForeignKeyTest.php	ManyToManyCompositeIdForeignKeyTest::testThatEntitiesAreFetchedFromTheDatabase	pending	
-tests/Tests/ORM/Functional/ValueConversionType/ManyToManyCompositeIdForeignKeyTest.php	ManyToManyCompositeIdForeignKeyTest::testThatInversedEntityIsFetchedFromTheDatabaseUsingAuxiliaryEntityAsId	pending	
-tests/Tests/ORM/Functional/ValueConversionType/ManyToManyCompositeIdForeignKeyTest.php	ManyToManyCompositeIdForeignKeyTest::testThatTheCollectionFromInversedToOwningIsLoaded	pending	
-tests/Tests/ORM/Functional/ValueConversionType/ManyToManyCompositeIdForeignKeyTest.php	ManyToManyCompositeIdForeignKeyTest::testThatTheCollectionFromOwningToInversedIsLoaded	pending	
-tests/Tests/ORM/Functional/ValueConversionType/ManyToManyCompositeIdForeignKeyTest.php	ManyToManyCompositeIdForeignKeyTest::testThatTheJoinTableRowsAreRemovedWhenRemovingTheAssociation	pending	
-tests/Tests/ORM/Functional/ValueConversionType/ManyToManyCompositeIdForeignKeyTest.php	ManyToManyCompositeIdForeignKeyTest::testThatTheValueOfIdentifiersAreConvertedBackAfterBeingFetchedFromTheDatabase	pending	
-tests/Tests/ORM/Functional/ValueConversionType/ManyToManyCompositeIdForeignKeyTest.php	ManyToManyCompositeIdForeignKeyTest::testThatTheValueOfIdentifiersAreConvertedInTheDatabase	pending	
-tests/Tests/ORM/Functional/ValueConversionType/ManyToManyCompositeIdTest.php	ManyToManyCompositeIdTest::testThatEntitiesAreFetchedFromTheDatabase	pending	
-tests/Tests/ORM/Functional/ValueConversionType/ManyToManyCompositeIdTest.php	ManyToManyCompositeIdTest::testThatTheCollectionFromInversedToOwningIsLoaded	pending	
-tests/Tests/ORM/Functional/ValueConversionType/ManyToManyCompositeIdTest.php	ManyToManyCompositeIdTest::testThatTheCollectionFromOwningToInversedIsLoaded	pending	
-tests/Tests/ORM/Functional/ValueConversionType/ManyToManyCompositeIdTest.php	ManyToManyCompositeIdTest::testThatTheJoinTableRowsAreRemovedWhenRemovingTheAssociation	pending	
-tests/Tests/ORM/Functional/ValueConversionType/ManyToManyCompositeIdTest.php	ManyToManyCompositeIdTest::testThatTheValueOfIdentifiersAreConvertedBackAfterBeingFetchedFromTheDatabase	pending	
-tests/Tests/ORM/Functional/ValueConversionType/ManyToManyCompositeIdTest.php	ManyToManyCompositeIdTest::testThatTheValueOfIdentifiersAreConvertedInTheDatabase	pending	
+tests/Tests/ORM/Functional/ValueConversionType/ManyToManyCompositeIdForeignKeyTest.php	ManyToManyCompositeIdForeignKeyTest::testThatEntitiesAreFetchedFromTheDatabase	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_many_to_many_composite_id_foreign_key_test.rs::testThatEntitiesAreFetchedFromTheDatabase
+tests/Tests/ORM/Functional/ValueConversionType/ManyToManyCompositeIdForeignKeyTest.php	ManyToManyCompositeIdForeignKeyTest::testThatInversedEntityIsFetchedFromTheDatabaseUsingAuxiliaryEntityAsId	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_many_to_many_composite_id_foreign_key_test.rs::testThatInversedEntityIsFetchedFromTheDatabaseUsingAuxiliaryEntityAsId
+tests/Tests/ORM/Functional/ValueConversionType/ManyToManyCompositeIdForeignKeyTest.php	ManyToManyCompositeIdForeignKeyTest::testThatTheCollectionFromInversedToOwningIsLoaded	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_many_to_many_composite_id_foreign_key_test.rs::testThatTheCollectionFromInversedToOwningIsLoaded
+tests/Tests/ORM/Functional/ValueConversionType/ManyToManyCompositeIdForeignKeyTest.php	ManyToManyCompositeIdForeignKeyTest::testThatTheCollectionFromOwningToInversedIsLoaded	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_many_to_many_composite_id_foreign_key_test.rs::testThatTheCollectionFromOwningToInversedIsLoaded
+tests/Tests/ORM/Functional/ValueConversionType/ManyToManyCompositeIdForeignKeyTest.php	ManyToManyCompositeIdForeignKeyTest::testThatTheJoinTableRowsAreRemovedWhenRemovingTheAssociation	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_many_to_many_composite_id_foreign_key_test.rs::testThatTheJoinTableRowsAreRemovedWhenRemovingTheAssociation
+tests/Tests/ORM/Functional/ValueConversionType/ManyToManyCompositeIdForeignKeyTest.php	ManyToManyCompositeIdForeignKeyTest::testThatTheValueOfIdentifiersAreConvertedBackAfterBeingFetchedFromTheDatabase	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_many_to_many_composite_id_foreign_key_test.rs::testThatTheValueOfIdentifiersAreConvertedBackAfterBeingFetchedFromTheDatabase
+tests/Tests/ORM/Functional/ValueConversionType/ManyToManyCompositeIdForeignKeyTest.php	ManyToManyCompositeIdForeignKeyTest::testThatTheValueOfIdentifiersAreConvertedInTheDatabase	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_many_to_many_composite_id_foreign_key_test.rs::testThatTheValueOfIdentifiersAreConvertedInTheDatabase
+tests/Tests/ORM/Functional/ValueConversionType/ManyToManyCompositeIdTest.php	ManyToManyCompositeIdTest::testThatEntitiesAreFetchedFromTheDatabase	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_many_to_many_composite_id_test.rs::testThatEntitiesAreFetchedFromTheDatabase
+tests/Tests/ORM/Functional/ValueConversionType/ManyToManyCompositeIdTest.php	ManyToManyCompositeIdTest::testThatTheCollectionFromInversedToOwningIsLoaded	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_many_to_many_composite_id_test.rs::testThatTheCollectionFromInversedToOwningIsLoaded
+tests/Tests/ORM/Functional/ValueConversionType/ManyToManyCompositeIdTest.php	ManyToManyCompositeIdTest::testThatTheCollectionFromOwningToInversedIsLoaded	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_many_to_many_composite_id_test.rs::testThatTheCollectionFromOwningToInversedIsLoaded
+tests/Tests/ORM/Functional/ValueConversionType/ManyToManyCompositeIdTest.php	ManyToManyCompositeIdTest::testThatTheJoinTableRowsAreRemovedWhenRemovingTheAssociation	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_many_to_many_composite_id_test.rs::testThatTheJoinTableRowsAreRemovedWhenRemovingTheAssociation
+tests/Tests/ORM/Functional/ValueConversionType/ManyToManyCompositeIdTest.php	ManyToManyCompositeIdTest::testThatTheValueOfIdentifiersAreConvertedBackAfterBeingFetchedFromTheDatabase	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_many_to_many_composite_id_test.rs::testThatTheValueOfIdentifiersAreConvertedBackAfterBeingFetchedFromTheDatabase
+tests/Tests/ORM/Functional/ValueConversionType/ManyToManyCompositeIdTest.php	ManyToManyCompositeIdTest::testThatTheValueOfIdentifiersAreConvertedInTheDatabase	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_many_to_many_composite_id_test.rs::testThatTheValueOfIdentifiersAreConvertedInTheDatabase
 tests/Tests/ORM/Functional/ValueConversionType/ManyToManyCriteriaMatchingTest.php	ManyToManyCriteriaMatchingTest::testCriteriaMatchingOnFieldInManyToManyTarget	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_many_to_many_criteria_matching_test.rs::testCriteriaMatchingOnFieldInManyToManyTarget
 tests/Tests/ORM/Functional/ValueConversionType/ManyToManyExtraLazyTest.php	ManyToManyExtraLazyTest::testThatASliceOfTheExtraLazyCollectionFromInversedToOwningIsLoaded	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_many_to_many_extra_lazy_test.rs::testThatASliceOfTheExtraLazyCollectionFromInversedToOwningIsLoaded
 tests/Tests/ORM/Functional/ValueConversionType/ManyToManyExtraLazyTest.php	ManyToManyExtraLazyTest::testThatASliceOfTheExtraLazyCollectionFromOwningToInversedIsLoaded	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_many_to_many_extra_lazy_test.rs::testThatASliceOfTheExtraLazyCollectionFromOwningToInversedIsLoaded
@@ -1668,49 +1668,49 @@ tests/Tests/ORM/Functional/ValueConversionType/ManyToManyExtraLazyTest.php	ManyT
 tests/Tests/ORM/Functional/ValueConversionType/ManyToManyExtraLazyTest.php	ManyToManyExtraLazyTest::testThatTheExtraLazyCollectionFromOwningToInversedContainsAnEntity	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_many_to_many_extra_lazy_test.rs::testThatTheExtraLazyCollectionFromOwningToInversedContainsAnEntity
 tests/Tests/ORM/Functional/ValueConversionType/ManyToManyExtraLazyTest.php	ManyToManyExtraLazyTest::testThatTheExtraLazyCollectionFromOwningToInversedContainsAnIndexByKey	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_many_to_many_extra_lazy_test.rs::testThatTheExtraLazyCollectionFromOwningToInversedContainsAnIndexByKey
 tests/Tests/ORM/Functional/ValueConversionType/ManyToManyExtraLazyTest.php	ManyToManyExtraLazyTest::testThatTheExtraLazyCollectionFromOwningToInversedIsCounted	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_many_to_many_extra_lazy_test.rs::testThatTheExtraLazyCollectionFromOwningToInversedIsCounted
-tests/Tests/ORM/Functional/ValueConversionType/ManyToManyTest.php	ManyToManyTest::testThatEntitiesAreFetchedFromTheDatabase	pending	
-tests/Tests/ORM/Functional/ValueConversionType/ManyToManyTest.php	ManyToManyTest::testThatTheCollectionFromInversedToOwningIsLoaded	pending	
-tests/Tests/ORM/Functional/ValueConversionType/ManyToManyTest.php	ManyToManyTest::testThatTheCollectionFromOwningToInversedIsLoaded	pending	
-tests/Tests/ORM/Functional/ValueConversionType/ManyToManyTest.php	ManyToManyTest::testThatTheJoinTableRowsAreRemovedWhenRemovingTheAssociation	pending	
-tests/Tests/ORM/Functional/ValueConversionType/ManyToManyTest.php	ManyToManyTest::testThatTheValueOfIdentifiersAreConvertedBackAfterBeingFetchedFromTheDatabase	pending	
-tests/Tests/ORM/Functional/ValueConversionType/ManyToManyTest.php	ManyToManyTest::testThatTheValueOfIdentifiersAreConvertedInTheDatabase	pending	
-tests/Tests/ORM/Functional/ValueConversionType/OneToManyCompositeIdForeignKeyTest.php	OneToManyCompositeIdForeignKeyTest::testThatEntitiesAreFetchedFromTheDatabase	pending	
-tests/Tests/ORM/Functional/ValueConversionType/OneToManyCompositeIdForeignKeyTest.php	OneToManyCompositeIdForeignKeyTest::testThatInversedEntityIsFetchedFromTheDatabaseUsingAuxiliaryEntityAsId	pending	
-tests/Tests/ORM/Functional/ValueConversionType/OneToManyCompositeIdForeignKeyTest.php	OneToManyCompositeIdForeignKeyTest::testThatTheCollectionFromInversedToOwningIsLoaded	pending	
-tests/Tests/ORM/Functional/ValueConversionType/OneToManyCompositeIdForeignKeyTest.php	OneToManyCompositeIdForeignKeyTest::testThatTheProxyFromOwningToInversedIsLoaded	pending	
-tests/Tests/ORM/Functional/ValueConversionType/OneToManyCompositeIdForeignKeyTest.php	OneToManyCompositeIdForeignKeyTest::testThatTheValueOfIdentifiersAreConvertedBackAfterBeingFetchedFromTheDatabase	pending	
-tests/Tests/ORM/Functional/ValueConversionType/OneToManyCompositeIdForeignKeyTest.php	OneToManyCompositeIdForeignKeyTest::testThatTheValueOfIdentifiersAreConvertedInTheDatabase	pending	
-tests/Tests/ORM/Functional/ValueConversionType/OneToManyCompositeIdTest.php	OneToManyCompositeIdTest::testThatEntitiesAreFetchedFromTheDatabase	pending	
-tests/Tests/ORM/Functional/ValueConversionType/OneToManyCompositeIdTest.php	OneToManyCompositeIdTest::testThatTheCollectionFromInversedToOwningIsLoaded	pending	
-tests/Tests/ORM/Functional/ValueConversionType/OneToManyCompositeIdTest.php	OneToManyCompositeIdTest::testThatTheProxyFromOwningToInversedIsLoaded	pending	
-tests/Tests/ORM/Functional/ValueConversionType/OneToManyCompositeIdTest.php	OneToManyCompositeIdTest::testThatTheValueOfIdentifiersAreConvertedBackAfterBeingFetchedFromTheDatabase	pending	
-tests/Tests/ORM/Functional/ValueConversionType/OneToManyCompositeIdTest.php	OneToManyCompositeIdTest::testThatTheValueOfIdentifiersAreConvertedInTheDatabase	pending	
+tests/Tests/ORM/Functional/ValueConversionType/ManyToManyTest.php	ManyToManyTest::testThatEntitiesAreFetchedFromTheDatabase	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_many_to_many_test.rs::testThatEntitiesAreFetchedFromTheDatabase
+tests/Tests/ORM/Functional/ValueConversionType/ManyToManyTest.php	ManyToManyTest::testThatTheCollectionFromInversedToOwningIsLoaded	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_many_to_many_test.rs::testThatTheCollectionFromInversedToOwningIsLoaded
+tests/Tests/ORM/Functional/ValueConversionType/ManyToManyTest.php	ManyToManyTest::testThatTheCollectionFromOwningToInversedIsLoaded	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_many_to_many_test.rs::testThatTheCollectionFromOwningToInversedIsLoaded
+tests/Tests/ORM/Functional/ValueConversionType/ManyToManyTest.php	ManyToManyTest::testThatTheJoinTableRowsAreRemovedWhenRemovingTheAssociation	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_many_to_many_test.rs::testThatTheJoinTableRowsAreRemovedWhenRemovingTheAssociation
+tests/Tests/ORM/Functional/ValueConversionType/ManyToManyTest.php	ManyToManyTest::testThatTheValueOfIdentifiersAreConvertedBackAfterBeingFetchedFromTheDatabase	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_many_to_many_test.rs::testThatTheValueOfIdentifiersAreConvertedBackAfterBeingFetchedFromTheDatabase
+tests/Tests/ORM/Functional/ValueConversionType/ManyToManyTest.php	ManyToManyTest::testThatTheValueOfIdentifiersAreConvertedInTheDatabase	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_many_to_many_test.rs::testThatTheValueOfIdentifiersAreConvertedInTheDatabase
+tests/Tests/ORM/Functional/ValueConversionType/OneToManyCompositeIdForeignKeyTest.php	OneToManyCompositeIdForeignKeyTest::testThatEntitiesAreFetchedFromTheDatabase	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_one_to_many_composite_id_foreign_key_test.rs::testThatEntitiesAreFetchedFromTheDatabase
+tests/Tests/ORM/Functional/ValueConversionType/OneToManyCompositeIdForeignKeyTest.php	OneToManyCompositeIdForeignKeyTest::testThatInversedEntityIsFetchedFromTheDatabaseUsingAuxiliaryEntityAsId	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_one_to_many_composite_id_foreign_key_test.rs::testThatInversedEntityIsFetchedFromTheDatabaseUsingAuxiliaryEntityAsId
+tests/Tests/ORM/Functional/ValueConversionType/OneToManyCompositeIdForeignKeyTest.php	OneToManyCompositeIdForeignKeyTest::testThatTheCollectionFromInversedToOwningIsLoaded	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_one_to_many_composite_id_foreign_key_test.rs::testThatTheCollectionFromInversedToOwningIsLoaded
+tests/Tests/ORM/Functional/ValueConversionType/OneToManyCompositeIdForeignKeyTest.php	OneToManyCompositeIdForeignKeyTest::testThatTheProxyFromOwningToInversedIsLoaded	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_one_to_many_composite_id_foreign_key_test.rs::testThatTheProxyFromOwningToInversedIsLoaded
+tests/Tests/ORM/Functional/ValueConversionType/OneToManyCompositeIdForeignKeyTest.php	OneToManyCompositeIdForeignKeyTest::testThatTheValueOfIdentifiersAreConvertedBackAfterBeingFetchedFromTheDatabase	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_one_to_many_composite_id_foreign_key_test.rs::testThatTheValueOfIdentifiersAreConvertedBackAfterBeingFetchedFromTheDatabase
+tests/Tests/ORM/Functional/ValueConversionType/OneToManyCompositeIdForeignKeyTest.php	OneToManyCompositeIdForeignKeyTest::testThatTheValueOfIdentifiersAreConvertedInTheDatabase	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_one_to_many_composite_id_foreign_key_test.rs::testThatTheValueOfIdentifiersAreConvertedInTheDatabase
+tests/Tests/ORM/Functional/ValueConversionType/OneToManyCompositeIdTest.php	OneToManyCompositeIdTest::testThatEntitiesAreFetchedFromTheDatabase	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_one_to_many_composite_id_test.rs::testThatEntitiesAreFetchedFromTheDatabase
+tests/Tests/ORM/Functional/ValueConversionType/OneToManyCompositeIdTest.php	OneToManyCompositeIdTest::testThatTheCollectionFromInversedToOwningIsLoaded	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_one_to_many_composite_id_test.rs::testThatTheCollectionFromInversedToOwningIsLoaded
+tests/Tests/ORM/Functional/ValueConversionType/OneToManyCompositeIdTest.php	OneToManyCompositeIdTest::testThatTheProxyFromOwningToInversedIsLoaded	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_one_to_many_composite_id_test.rs::testThatTheProxyFromOwningToInversedIsLoaded
+tests/Tests/ORM/Functional/ValueConversionType/OneToManyCompositeIdTest.php	OneToManyCompositeIdTest::testThatTheValueOfIdentifiersAreConvertedBackAfterBeingFetchedFromTheDatabase	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_one_to_many_composite_id_test.rs::testThatTheValueOfIdentifiersAreConvertedBackAfterBeingFetchedFromTheDatabase
+tests/Tests/ORM/Functional/ValueConversionType/OneToManyCompositeIdTest.php	OneToManyCompositeIdTest::testThatTheValueOfIdentifiersAreConvertedInTheDatabase	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_one_to_many_composite_id_test.rs::testThatTheValueOfIdentifiersAreConvertedInTheDatabase
 tests/Tests/ORM/Functional/ValueConversionType/OneToManyCriteriaMatchingTest.php	OneToManyCriteriaMatchingTest::testCriteriaMatchingOnFieldInOneToManyTarget	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_one_to_many_criteria_matching_test.rs::testCriteriaMatchingOnFieldInOneToManyTarget
 tests/Tests/ORM/Functional/ValueConversionType/OneToManyExtraLazyTest.php	OneToManyExtraLazyTest::testThatASliceOfTheExtraLazyCollectionIsLoaded	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_one_to_many_extra_lazy_test.rs::testThatASliceOfTheExtraLazyCollectionIsLoaded
 tests/Tests/ORM/Functional/ValueConversionType/OneToManyExtraLazyTest.php	OneToManyExtraLazyTest::testThatExtraLazyCollectionContainsAnEntity	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_one_to_many_extra_lazy_test.rs::testThatExtraLazyCollectionContainsAnEntity
 tests/Tests/ORM/Functional/ValueConversionType/OneToManyExtraLazyTest.php	OneToManyExtraLazyTest::testThatExtraLazyCollectionContainsAnIndexbyKey	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_one_to_many_extra_lazy_test.rs::testThatExtraLazyCollectionContainsAnIndexbyKey
 tests/Tests/ORM/Functional/ValueConversionType/OneToManyExtraLazyTest.php	OneToManyExtraLazyTest::testThatExtraLazyCollectionIsCounted	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_one_to_many_extra_lazy_test.rs::testThatExtraLazyCollectionIsCounted
-tests/Tests/ORM/Functional/ValueConversionType/OneToManyTest.php	OneToManyTest::testThatEntitiesAreFetchedFromTheDatabase	pending	
-tests/Tests/ORM/Functional/ValueConversionType/OneToManyTest.php	OneToManyTest::testThatTheCollectionFromInversedToOwningIsLoaded	pending	
-tests/Tests/ORM/Functional/ValueConversionType/OneToManyTest.php	OneToManyTest::testThatTheProxyFromOwningToInversedIsLoaded	pending	
-tests/Tests/ORM/Functional/ValueConversionType/OneToManyTest.php	OneToManyTest::testThatTheValueOfIdentifiersAreConvertedBackAfterBeingFetchedFromTheDatabase	pending	
-tests/Tests/ORM/Functional/ValueConversionType/OneToManyTest.php	OneToManyTest::testThatTheValueOfIdentifiersAreConvertedInTheDatabase	pending	
-tests/Tests/ORM/Functional/ValueConversionType/OneToOneCompositeIdForeignKeyTest.php	OneToOneCompositeIdForeignKeyTest::testThatEntitiesAreFetchedFromTheDatabase	pending	
-tests/Tests/ORM/Functional/ValueConversionType/OneToOneCompositeIdForeignKeyTest.php	OneToOneCompositeIdForeignKeyTest::testThatInversedEntityIsFetchedFromTheDatabaseUsingAuxiliaryEntityAsId	pending	
-tests/Tests/ORM/Functional/ValueConversionType/OneToOneCompositeIdForeignKeyTest.php	OneToOneCompositeIdForeignKeyTest::testThatTheEntityFromInversedToOwningIsEagerLoaded	pending	
-tests/Tests/ORM/Functional/ValueConversionType/OneToOneCompositeIdForeignKeyTest.php	OneToOneCompositeIdForeignKeyTest::testThatTheProxyFromOwningToInversedIsLoaded	pending	
-tests/Tests/ORM/Functional/ValueConversionType/OneToOneCompositeIdForeignKeyTest.php	OneToOneCompositeIdForeignKeyTest::testThatTheValueOfIdentifiersAreConvertedBackAfterBeingFetchedFromTheDatabase	pending	
-tests/Tests/ORM/Functional/ValueConversionType/OneToOneCompositeIdForeignKeyTest.php	OneToOneCompositeIdForeignKeyTest::testThatTheValueOfIdentifiersAreConvertedInTheDatabase	pending	
-tests/Tests/ORM/Functional/ValueConversionType/OneToOneCompositeIdTest.php	OneToOneCompositeIdTest::testThatEntitiesAreFetchedFromTheDatabase	pending	
-tests/Tests/ORM/Functional/ValueConversionType/OneToOneCompositeIdTest.php	OneToOneCompositeIdTest::testThatTheEntityFromInversedToOwningIsEagerLoaded	pending	
-tests/Tests/ORM/Functional/ValueConversionType/OneToOneCompositeIdTest.php	OneToOneCompositeIdTest::testThatTheProxyFromOwningToInversedIsLoaded	pending	
-tests/Tests/ORM/Functional/ValueConversionType/OneToOneCompositeIdTest.php	OneToOneCompositeIdTest::testThatTheValueOfIdentifiersAreConvertedBackAfterBeingFetchedFromTheDatabase	pending	
-tests/Tests/ORM/Functional/ValueConversionType/OneToOneCompositeIdTest.php	OneToOneCompositeIdTest::testThatTheValueOfIdentifiersAreConvertedInTheDatabase	pending	
-tests/Tests/ORM/Functional/ValueConversionType/OneToOneTest.php	OneToOneTest::testThatEntitiesAreFetchedFromTheDatabase	pending	
-tests/Tests/ORM/Functional/ValueConversionType/OneToOneTest.php	OneToOneTest::testThatTheEntityFromInversedToOwningIsEagerLoaded	pending	
-tests/Tests/ORM/Functional/ValueConversionType/OneToOneTest.php	OneToOneTest::testThatTheProxyFromOwningToInversedIsLoaded	pending	
-tests/Tests/ORM/Functional/ValueConversionType/OneToOneTest.php	OneToOneTest::testThatTheValueOfIdentifiersAreConvertedBackAfterBeingFetchedFromTheDatabase	pending	
-tests/Tests/ORM/Functional/ValueConversionType/OneToOneTest.php	OneToOneTest::testThatTheValueOfIdentifiersAreConvertedInTheDatabase	pending	
+tests/Tests/ORM/Functional/ValueConversionType/OneToManyTest.php	OneToManyTest::testThatEntitiesAreFetchedFromTheDatabase	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_one_to_many_test.rs::testThatEntitiesAreFetchedFromTheDatabase
+tests/Tests/ORM/Functional/ValueConversionType/OneToManyTest.php	OneToManyTest::testThatTheCollectionFromInversedToOwningIsLoaded	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_one_to_many_test.rs::testThatTheCollectionFromInversedToOwningIsLoaded
+tests/Tests/ORM/Functional/ValueConversionType/OneToManyTest.php	OneToManyTest::testThatTheProxyFromOwningToInversedIsLoaded	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_one_to_many_test.rs::testThatTheProxyFromOwningToInversedIsLoaded
+tests/Tests/ORM/Functional/ValueConversionType/OneToManyTest.php	OneToManyTest::testThatTheValueOfIdentifiersAreConvertedBackAfterBeingFetchedFromTheDatabase	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_one_to_many_test.rs::testThatTheValueOfIdentifiersAreConvertedBackAfterBeingFetchedFromTheDatabase
+tests/Tests/ORM/Functional/ValueConversionType/OneToManyTest.php	OneToManyTest::testThatTheValueOfIdentifiersAreConvertedInTheDatabase	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_one_to_many_test.rs::testThatTheValueOfIdentifiersAreConvertedInTheDatabase
+tests/Tests/ORM/Functional/ValueConversionType/OneToOneCompositeIdForeignKeyTest.php	OneToOneCompositeIdForeignKeyTest::testThatEntitiesAreFetchedFromTheDatabase	pending	the inverse one-to-one has two join columns; PHP loads it through the basic persister's LEFT JOIN of inverse one-to-one, not ported yet (orm-core)
+tests/Tests/ORM/Functional/ValueConversionType/OneToOneCompositeIdForeignKeyTest.php	OneToOneCompositeIdForeignKeyTest::testThatInversedEntityIsFetchedFromTheDatabaseUsingAuxiliaryEntityAsId	pending	the inverse one-to-one has two join columns; PHP loads it through the basic persister's LEFT JOIN of inverse one-to-one, not ported yet (orm-core)
+tests/Tests/ORM/Functional/ValueConversionType/OneToOneCompositeIdForeignKeyTest.php	OneToOneCompositeIdForeignKeyTest::testThatTheEntityFromInversedToOwningIsEagerLoaded	pending	the inverse one-to-one has two join columns; PHP loads it through the basic persister's LEFT JOIN of inverse one-to-one, not ported yet (orm-core)
+tests/Tests/ORM/Functional/ValueConversionType/OneToOneCompositeIdForeignKeyTest.php	OneToOneCompositeIdForeignKeyTest::testThatTheProxyFromOwningToInversedIsLoaded	pending	the inverse one-to-one has two join columns; PHP loads it through the basic persister's LEFT JOIN of inverse one-to-one, not ported yet (orm-core)
+tests/Tests/ORM/Functional/ValueConversionType/OneToOneCompositeIdForeignKeyTest.php	OneToOneCompositeIdForeignKeyTest::testThatTheValueOfIdentifiersAreConvertedBackAfterBeingFetchedFromTheDatabase	pending	the inverse one-to-one has two join columns; PHP loads it through the basic persister's LEFT JOIN of inverse one-to-one, not ported yet (orm-core)
+tests/Tests/ORM/Functional/ValueConversionType/OneToOneCompositeIdForeignKeyTest.php	OneToOneCompositeIdForeignKeyTest::testThatTheValueOfIdentifiersAreConvertedInTheDatabase	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_one_to_one_composite_id_foreign_key_test.rs::testThatTheValueOfIdentifiersAreConvertedInTheDatabase
+tests/Tests/ORM/Functional/ValueConversionType/OneToOneCompositeIdTest.php	OneToOneCompositeIdTest::testThatEntitiesAreFetchedFromTheDatabase	pending	the inverse one-to-one has two join columns; PHP loads it through the basic persister's LEFT JOIN of inverse one-to-one, not ported yet (orm-core)
+tests/Tests/ORM/Functional/ValueConversionType/OneToOneCompositeIdTest.php	OneToOneCompositeIdTest::testThatTheEntityFromInversedToOwningIsEagerLoaded	pending	the inverse one-to-one has two join columns; PHP loads it through the basic persister's LEFT JOIN of inverse one-to-one, not ported yet (orm-core)
+tests/Tests/ORM/Functional/ValueConversionType/OneToOneCompositeIdTest.php	OneToOneCompositeIdTest::testThatTheProxyFromOwningToInversedIsLoaded	pending	the inverse one-to-one has two join columns; PHP loads it through the basic persister's LEFT JOIN of inverse one-to-one, not ported yet (orm-core)
+tests/Tests/ORM/Functional/ValueConversionType/OneToOneCompositeIdTest.php	OneToOneCompositeIdTest::testThatTheValueOfIdentifiersAreConvertedBackAfterBeingFetchedFromTheDatabase	pending	the inverse one-to-one has two join columns; PHP loads it through the basic persister's LEFT JOIN of inverse one-to-one, not ported yet (orm-core)
+tests/Tests/ORM/Functional/ValueConversionType/OneToOneCompositeIdTest.php	OneToOneCompositeIdTest::testThatTheValueOfIdentifiersAreConvertedInTheDatabase	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_one_to_one_composite_id_test.rs::testThatTheValueOfIdentifiersAreConvertedInTheDatabase
+tests/Tests/ORM/Functional/ValueConversionType/OneToOneTest.php	OneToOneTest::testThatEntitiesAreFetchedFromTheDatabase	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_one_to_one_test.rs::testThatEntitiesAreFetchedFromTheDatabase
+tests/Tests/ORM/Functional/ValueConversionType/OneToOneTest.php	OneToOneTest::testThatTheEntityFromInversedToOwningIsEagerLoaded	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_one_to_one_test.rs::testThatTheEntityFromInversedToOwningIsEagerLoaded
+tests/Tests/ORM/Functional/ValueConversionType/OneToOneTest.php	OneToOneTest::testThatTheProxyFromOwningToInversedIsLoaded	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_one_to_one_test.rs::testThatTheProxyFromOwningToInversedIsLoaded
+tests/Tests/ORM/Functional/ValueConversionType/OneToOneTest.php	OneToOneTest::testThatTheValueOfIdentifiersAreConvertedBackAfterBeingFetchedFromTheDatabase	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_one_to_one_test.rs::testThatTheValueOfIdentifiersAreConvertedBackAfterBeingFetchedFromTheDatabase
+tests/Tests/ORM/Functional/ValueConversionType/OneToOneTest.php	OneToOneTest::testThatTheValueOfIdentifiersAreConvertedInTheDatabase	ported	crates/php2rust-doctrine-orm/tests/value_conversion_type_one_to_one_test.rs::testThatTheValueOfIdentifiersAreConvertedInTheDatabase
 tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testCRUD	ported	crates/php2rust-doctrine-orm/tests/value_objects_test.rs::testCRUD
 tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testDqlOnEmbeddedObjectsField	ported	crates/php2rust-doctrine-orm/tests/value_objects_test.rs::testDqlOnEmbeddedObjectsField
 tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testDqlWithNonExistentEmbeddableField	ported	crates/php2rust-doctrine-orm/tests/value_objects_test.rs::testDqlWithNonExistentEmbeddableField
