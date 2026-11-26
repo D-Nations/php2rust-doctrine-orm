@@ -301,6 +301,10 @@ namespace {
         'ORM/LazyCriteriaCollectionTest.php',
         'ORM/PersistentCollectionTest.php',
         'ORM/Functional/NativeQueryTest.php',
+        'ORM/Functional/ValueConversionType/OneToManyExtraLazyTest.php',
+        'ORM/Functional/ValueConversionType/ManyToManyExtraLazyTest.php',
+        'ORM/Functional/ValueConversionType/OneToManyCriteriaMatchingTest.php',
+        'ORM/Functional/ValueConversionType/ManyToManyCriteriaMatchingTest.php',
         'Models/Global/GlobalNamespaceModel.php',
     ];
     $before = array_merge(get_declared_classes(), get_declared_interfaces(), get_declared_traits());
