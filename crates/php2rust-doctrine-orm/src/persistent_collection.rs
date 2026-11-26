@@ -662,6 +662,8 @@ impl PersistentCollection {
         let elements = self.unwrap();
         let initialized = self.is_initialized();
         let association = self.st().association.clone();
+        // `clone` copies the owner, which initialize() loads through.
+        let owner = self.st().owner.clone();
         let copy = Self::new(
             em.as_ref(),
             self.type_class.clone(),
@@ -671,6 +673,7 @@ impl PersistentCollection {
             let mut st = copy.st();
             st.initialized = initialized;
             st.association = association;
+            st.owner = owner;
         }
         copy.initialize().await?;
         {
