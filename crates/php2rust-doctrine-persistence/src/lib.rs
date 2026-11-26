@@ -40,6 +40,10 @@
 
 #![forbid(unsafe_code)]
 
+#[cfg(doctest)]
+#[doc = include_str!("../README.md")]
+struct ReadmeExample;
+
 mod abstract_manager_registry;
 pub mod cache;
 mod connection_registry;

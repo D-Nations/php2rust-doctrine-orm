@@ -1,37 +1,37 @@
 # doctrine/persistence at d8293831c5b99449b2f63eb1e1bbdc202118daa6: upstream file	classes	code lines	status	rust files
-src/AbstractManagerRegistry.php	AbstractManagerRegistry	136	pending	
-src/ConnectionRegistry.php	ConnectionRegistry	9	pending	
-src/Event/LifecycleEventArgs.php	LifecycleEventArgs	20	pending	
-src/Event/LoadClassMetadataEventArgs.php	LoadClassMetadataEventArgs	21	pending	
-src/Event/ManagerEventArgs.php	ManagerEventArgs	15	pending	
-src/Event/OnClearEventArgs.php	OnClearEventArgs	14	pending	
-src/Event/PreUpdateEventArgs.php	PreUpdateEventArgs	47	pending	
-src/ManagerRegistry.php	ManagerRegistry	15	pending	
-src/Mapping/AbstractClassMetadataFactory.php	AbstractClassMetadataFactory	238	pending	
-src/Mapping/ClassMetadata.php	ClassMetadata	22	pending	
-src/Mapping/ClassMetadataFactory.php	ClassMetadataFactory	10	pending	
-src/Mapping/Driver/ClassLocator.php	ClassLocator	6	pending	
-src/Mapping/Driver/ClassNames.php	ClassNames	13	pending	
-src/Mapping/Driver/ColocatedMappingDriver.php	ColocatedMappingDriver	60	pending	
-src/Mapping/Driver/DefaultFileLocator.php	DefaultFileLocator	82	pending	
-src/Mapping/Driver/FileClassLocator.php	FileClassLocator	93	pending	
-src/Mapping/Driver/FileDriver.php	FileDriver	93	pending	
-src/Mapping/Driver/FileLocator.php	FileLocator	10	pending	
-src/Mapping/Driver/MappingDriver.php	MappingDriver	9	pending	
-src/Mapping/Driver/MappingDriverChain.php	MappingDriverChain	77	pending	
+src/AbstractManagerRegistry.php	AbstractManagerRegistry	136	ported	crates/php2rust-doctrine-persistence/src/abstract_manager_registry.rs
+src/ConnectionRegistry.php	ConnectionRegistry	9	ported	crates/php2rust-doctrine-persistence/src/connection_registry.rs
+src/Event/LifecycleEventArgs.php	LifecycleEventArgs	20	ported	crates/php2rust-doctrine-persistence/src/event/lifecycle_event_args.rs
+src/Event/LoadClassMetadataEventArgs.php	LoadClassMetadataEventArgs	21	ported	crates/php2rust-doctrine-persistence/src/event/load_class_metadata_event_args.rs
+src/Event/ManagerEventArgs.php	ManagerEventArgs	15	ported	crates/php2rust-doctrine-persistence/src/event/manager_event_args.rs
+src/Event/OnClearEventArgs.php	OnClearEventArgs	14	ported	crates/php2rust-doctrine-persistence/src/event/on_clear_event_args.rs
+src/Event/PreUpdateEventArgs.php	PreUpdateEventArgs	47	ported	crates/php2rust-doctrine-persistence/src/event/pre_update_event_args.rs
+src/ManagerRegistry.php	ManagerRegistry	15	ported	crates/php2rust-doctrine-persistence/src/manager_registry.rs
+src/Mapping/AbstractClassMetadataFactory.php	AbstractClassMetadataFactory	238	ported	crates/php2rust-doctrine-persistence/src/mapping/abstract_class_metadata_factory.rs
+src/Mapping/ClassMetadata.php	ClassMetadata	22	ported	crates/php2rust-doctrine-persistence/src/mapping/class_metadata.rs
+src/Mapping/ClassMetadataFactory.php	ClassMetadataFactory	10	ported	crates/php2rust-doctrine-persistence/src/mapping/class_metadata_factory.rs
+src/Mapping/Driver/ClassLocator.php	ClassLocator	6	ported	crates/php2rust-doctrine-persistence/src/mapping/driver/class_locator.rs
+src/Mapping/Driver/ClassNames.php	ClassNames	13	ported	crates/php2rust-doctrine-persistence/src/mapping/driver/class_names.rs
+src/Mapping/Driver/ColocatedMappingDriver.php	ColocatedMappingDriver	60	ported	crates/php2rust-doctrine-persistence/src/mapping/driver/colocated_mapping_driver.rs
+src/Mapping/Driver/DefaultFileLocator.php	DefaultFileLocator	82	ported	crates/php2rust-doctrine-persistence/src/mapping/driver/default_file_locator.rs
+src/Mapping/Driver/FileClassLocator.php	FileClassLocator	93	ported	crates/php2rust-doctrine-persistence/src/mapping/driver/file_class_locator.rs
+src/Mapping/Driver/FileDriver.php	FileDriver	93	ported	crates/php2rust-doctrine-persistence/src/mapping/driver/file_driver.rs
+src/Mapping/Driver/FileLocator.php	FileLocator	10	ported	crates/php2rust-doctrine-persistence/src/mapping/driver/file_locator.rs
+src/Mapping/Driver/MappingDriver.php	MappingDriver	9	ported	crates/php2rust-doctrine-persistence/src/mapping/driver/mapping_driver.rs
+src/Mapping/Driver/MappingDriverChain.php	MappingDriverChain	77	ported	crates/php2rust-doctrine-persistence/src/mapping/driver/mapping_driver_chain.rs
 src/Mapping/Driver/PHPDriver.php	PHPDriver	46	pending	
-src/Mapping/Driver/StaticPHPDriver.php	StaticPHPDriver	31	pending	
-src/Mapping/Driver/SymfonyFileLocator.php	SymfonyFileLocator	144	pending	
-src/Mapping/MappingException.php	MappingException	61	pending	
-src/Mapping/ProxyClassNameResolver.php	ProxyClassNameResolver	7	pending	
-src/Mapping/ReflectionService.php	ReflectionService	13	pending	
-src/Mapping/RuntimeReflectionService.php	RuntimeReflectionService	54	pending	
-src/NotifyPropertyChanged.php	NotifyPropertyChanged	6	pending	
-src/ObjectManager.php	ObjectManager	20	pending	
-src/ObjectManagerDecorator.php	ObjectManagerDecorator	60	pending	
-src/ObjectRepository.php	ObjectRepository	16	pending	
-src/PropertyChangedListener.php	PropertyChangedListener	6	pending	
-src/Proxy.php	Proxy	9	pending	
-src/Reflection/EnumReflectionProperty.php	EnumReflectionProperty	53	pending	
-src/Reflection/RuntimeReflectionProperty.php	RuntimeReflectionProperty	35	pending	
-src/Reflection/TypedNoDefaultReflectionProperty.php	TypedNoDefaultReflectionProperty	25	pending	
+src/Mapping/Driver/StaticPHPDriver.php	StaticPHPDriver	31	ported	crates/php2rust-doctrine-persistence/src/mapping/driver/static_php_driver.rs
+src/Mapping/Driver/SymfonyFileLocator.php	SymfonyFileLocator	144	ported	crates/php2rust-doctrine-persistence/src/mapping/driver/symfony_file_locator.rs
+src/Mapping/MappingException.php	MappingException	61	ported	crates/php2rust-doctrine-persistence/src/mapping/mapping_exception.rs
+src/Mapping/ProxyClassNameResolver.php	ProxyClassNameResolver	7	ported	crates/php2rust-doctrine-persistence/src/mapping/proxy_class_name_resolver.rs
+src/Mapping/ReflectionService.php	ReflectionService	13	ported	crates/php2rust-doctrine-persistence/src/mapping/reflection_service.rs
+src/Mapping/RuntimeReflectionService.php	RuntimeReflectionService	54	ported	crates/php2rust-doctrine-persistence/src/mapping/runtime_reflection_service.rs
+src/NotifyPropertyChanged.php	NotifyPropertyChanged	6	ported	crates/php2rust-doctrine-persistence/src/notify_property_changed.rs
+src/ObjectManager.php	ObjectManager	20	ported	crates/php2rust-doctrine-persistence/src/object_manager.rs
+src/ObjectManagerDecorator.php	ObjectManagerDecorator	60	ported	crates/php2rust-doctrine-persistence/src/object_manager_decorator.rs
+src/ObjectRepository.php	ObjectRepository	16	ported	crates/php2rust-doctrine-persistence/src/object_repository.rs
+src/PropertyChangedListener.php	PropertyChangedListener	6	ported	crates/php2rust-doctrine-persistence/src/property_changed_listener.rs
+src/Proxy.php	Proxy	9	ported	crates/php2rust-doctrine-persistence/src/proxy.rs
+src/Reflection/EnumReflectionProperty.php	EnumReflectionProperty	53	ported	crates/php2rust-doctrine-persistence/src/reflection/enum_reflection_property.rs
+src/Reflection/RuntimeReflectionProperty.php	RuntimeReflectionProperty	35	ported	crates/php2rust-doctrine-persistence/src/reflection/runtime_reflection_property.rs
+src/Reflection/TypedNoDefaultReflectionProperty.php	TypedNoDefaultReflectionProperty	25	ported	crates/php2rust-doctrine-persistence/src/reflection/typed_no_default_reflection_property.rs
