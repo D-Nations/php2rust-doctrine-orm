@@ -8,8 +8,7 @@
 //! arrays stay `PhpArray`s, as the drivers build them.
 //!
 //! Not ported: `getMetadataValue()` (a dynamic property read),
-//! `LegacyReflectionFields` (the deprecated `$reflFields`), and
-//! `invokeLifecycleCallbacks()` (calls into the entity's methods).
+//! and `LegacyReflectionFields` (the deprecated `$reflFields`).
 //!
 //! Upstream: doctrine/orm src/Mapping/ClassMetadata.php src/Mapping/GetReflectionClassImplementation.php
 
@@ -1482,6 +1481,21 @@ impl ClassMetadataInfo {
     pub fn set_custom_repository_class(&mut self, repository_class_name: Option<&str>) {
         self.custom_repository_class_name =
             repository_class_name.map(|name| self.fully_qualified_class_name(name));
+    }
+
+    /// `invokeLifecycleCallbacks()`: dispatches a lifecycle event to the
+    /// entity's callbacks (`$entity->$callback()`, without arguments: the
+    /// method gets the empty event arguments).
+    pub fn invoke_lifecycle_callbacks(
+        &self,
+        lifecycle_event: &str,
+        entity: &Object,
+    ) -> Result<(), Thrown> {
+        let args = php2rust_doctrine_event_manager::EmptyEventArgs::get_empty_instance();
+        for callback in self.get_lifecycle_callbacks(lifecycle_event) {
+            crate::object::call_method(entity, &callback, &*args)?;
+        }
+        Ok(())
     }
 
     /// `hasLifecycleCallbacks()`.
