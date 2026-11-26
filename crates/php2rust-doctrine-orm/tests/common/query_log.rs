@@ -134,3 +134,13 @@ pub fn logging_connection() -> (Arc<Connection>, Arc<QueryLog>) {
     };
     (Arc::new(Connection::new(params, Arc::new(driver), None)), log)
 }
+
+/// `setUp()` on a connection whose statements are logged.
+pub async fn set_up_logged(
+    classes: &[&str],
+) -> (Arc<php2rust_doctrine_orm::entity_manager::EntityManager>, Arc<QueryLog>) {
+    let (conn, log) = logging_connection();
+    let em = super::orm::entity_manager(conn, None);
+    super::orm::create_schema(&em, classes).await;
+    (em, log)
+}

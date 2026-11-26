@@ -15,6 +15,7 @@ use php2rust_doctrine_orm::entity_manager::EntityManager;
 use php2rust_doctrine_orm::persistent_collection::PersistentCollection;
 
 use orm::*;
+use query_log::set_up_logged;
 
 fn persistent(user: &Object, name: &str) -> Arc<PersistentCollection> {
     PersistentCollection::from_value(&get(user, name)).expect("a PersistentCollection")
