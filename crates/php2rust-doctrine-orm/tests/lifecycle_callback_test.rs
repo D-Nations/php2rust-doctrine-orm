@@ -216,6 +216,7 @@ async fn testGetReferenceWithPostLoadEventIsDelayedUntilProxyTrigger() {
 
     let reference = em
         .get_reference(&class("LifecycleCallbackTestEntity"), id)
+        .await
         .unwrap()
         .unwrap();
     assert!(

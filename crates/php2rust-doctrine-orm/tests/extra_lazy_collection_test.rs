@@ -1,10 +1,8 @@
 //! ExtraLazyCollectionTest.php at doctrine/orm 00c2fd70da291cca1ec75f4dae5344fe3df588fa.
 //! `setUp()` changes the loaded metadata of `CmsUser` and `CmsGroup`
 //! (fetch mode and `indexBy`) as upstream does; the entity manager of a
-//! test is its own, so `tearDown()` has nothing to undo. The DDC-2504
-//! models (joined inheritance) are left out of the schema and the
-//! fixture: the joined-subclass persister is not ported, and the tests
-//! on them are pending. `foreach ($collection as ...)` is `toArray()`,
+//! test is its own, so `tearDown()` has nothing to undo.
+//! `foreach ($collection as ...)` is `toArray()`,
 //! `assertQueryCount()` counts the statements in the query log.
 //!
 //! Upstream: doctrine/orm tests/Tests/ORM/Functional/ExtraLazyCollectionTest.php
@@ -25,8 +23,8 @@ mod query_log;
 
 use std::sync::Arc;
 
-use php_value::{Key, Object, Value};
-use php2rust_doctrine_orm::collection_object as coll;
+use php_value::{Key, Object, PhpArray, Value};
+use php2rust_doctrine_orm::collection_object::{self as coll, ArrayCollectionObject};
 use php2rust_doctrine_orm::entity_manager::EntityManager;
 use php2rust_doctrine_orm::mapping::class_metadata::FETCH_EXTRA_LAZY;
 use php2rust_doctrine_orm::persistent_collection::PersistentCollection;
@@ -44,6 +42,28 @@ struct Fixture {
     groupname: Value,
     topic: Value,
     phonenumber: Value,
+    ddc2504_other_class_id: Value,
+    ddc2504_child_class_id: Value,
+}
+
+const DDC2504_ROOT_CLASS: &str = "Doctrine\\Tests\\Models\\DDC2504\\DDC2504RootClass";
+const DDC2504_CHILD_CLASS: &str = "Doctrine\\Tests\\Models\\DDC2504\\DDC2504ChildClass";
+const DDC2504_OTHER_CLASS: &str = "Doctrine\\Tests\\Models\\DDC2504\\DDC2504OtherClass";
+
+/// `new DDC2504ChildClass()`.
+fn ddc2504_child_class() -> Object {
+    new_object(DDC2504_CHILD_CLASS)
+}
+
+/// `new DDC2504OtherClass()`.
+fn ddc2504_other_class() -> Object {
+    let other = new_object(DDC2504_OTHER_CLASS);
+    set(
+        &other,
+        "childClasses",
+        ArrayCollectionObject::value(PhpArray::new()),
+    );
+    other
 }
 
 impl Fixture {
@@ -68,6 +88,11 @@ impl Fixture {
 
     async fn group(&self) -> Object {
         self.find(CMS_GROUP, &self.group_id).await
+    }
+
+    async fn other_class(&self) -> Object {
+        self.find(DDC2504_OTHER_CLASS, &self.ddc2504_other_class_id)
+            .await
     }
 }
 
@@ -118,8 +143,10 @@ fn user(username: &str, name: &str) -> Object {
 
 async fn set_up() -> Fixture {
     // useModelSet('tweet'), useModelSet('cms'), useModelSet('ddc2504'):
-    // the cms models (the others are not used here).
-    let (em, log) = query_log::set_up_logged(&CMS_MODELS).await;
+    // the cms and ddc2504 models (the tweet models are not used here).
+    let mut models = CMS_MODELS.to_vec();
+    models.extend([DDC2504_ROOT_CLASS, DDC2504_CHILD_CLASS, DDC2504_OTHER_CLASS]);
+    let (em, log) = query_log::set_up_logged(&models).await;
 
     set_mapping(&em, CMS_USER, "groups", FETCH_EXTRA_LAZY, "name");
     set_mapping(&em, CMS_USER, "articles", FETCH_EXTRA_LAZY, "topic");
@@ -179,6 +206,29 @@ async fn load_fixture(em: Arc<EntityManager>, log: Arc<QueryLog>) -> Fixture {
 
     add_phonenumber(&user1, &phonenumber1);
 
+    // DDC-2504
+    let other_class = ddc2504_other_class();
+    let child_class1 = ddc2504_child_class();
+    let child_class2 = ddc2504_child_class();
+
+    set_obj(&child_class1, "other", &other_class);
+    set_obj(&child_class2, "other", &other_class);
+
+    append(
+        &other_class,
+        "childClasses",
+        Value::Object(child_class1.clone()),
+    );
+    append(
+        &other_class,
+        "childClasses",
+        Value::Object(child_class2.clone()),
+    );
+
+    em.persist(&child_class1).unwrap();
+    em.persist(&child_class2).unwrap();
+    em.persist(&other_class).unwrap();
+
     em.flush().await.unwrap();
     em.clear().unwrap();
 
@@ -192,6 +242,8 @@ async fn load_fixture(em: Arc<EntityManager>, log: Arc<QueryLog>) -> Fixture {
         groupname: get(&group1, "name"),
         topic: get(&article1, "topic"),
         phonenumber: get(&phonenumber1, "phonenumber"),
+        ddc2504_other_class_id: get(&other_class, "id"),
+        ddc2504_child_class_id: get(&child_class1, "id"),
     }
 }
 
@@ -268,6 +320,18 @@ async fn testCountOneToMany() {
     assert!(!is_initialized(&user, "groups"), "Pre-Condition");
 
     assert_eq!(count_of(&user, "articles").await, 2);
+}
+
+#[tokio::test]
+async fn testCountOneToManyJoinedInheritance() {
+    let f = set_up().await;
+    let other_class = f.other_class().await;
+
+    assert!(
+        !is_initialized(&other_class, "childClasses"),
+        "Pre-Condition"
+    );
+    assert_eq!(count_of(&other_class, "childClasses").await, 2);
 }
 
 #[tokio::test]
@@ -516,6 +580,104 @@ async fn testContainsOneToMany() {
 }
 
 #[tokio::test]
+async fn testLazyOneToManyJoinedInheritanceIsLazilyInitialized() {
+    let f = set_up().await;
+    let other_class = f.other_class().await;
+
+    assert!(
+        !is_initialized(&other_class, "childClasses"),
+        "Collection is not initialized."
+    );
+}
+
+#[tokio::test]
+async fn testContainsOnOneToManyJoinedInheritanceWillNotInitializeCollectionWhenMatchingItemIsFound()
+ {
+    let f = set_up().await;
+    let other_class = f.other_class().await;
+
+    // Test One to Many existence retrieved from DB
+    let child_class = f.find(DDC2504_CHILD_CLASS, &f.ddc2504_child_class_id).await;
+    f.reset_log();
+
+    assert!(contains(&other_class, "childClasses", &child_class).await);
+    assert!(
+        !is_initialized(&other_class, "childClasses"),
+        "Collection is not initialized."
+    );
+    f.assert_query_count(1, "Search operation was performed via SQL");
+}
+
+#[tokio::test]
+async fn testContainsOnOneToManyJoinedInheritanceWillNotCauseQueriesWhenNonPersistentItemIsMatched()
+{
+    let f = set_up().await;
+    let other_class = f.other_class().await;
+    f.reset_log();
+
+    assert!(!contains(&other_class, "childClasses", &ddc2504_child_class()).await);
+    f.assert_query_count(
+        0,
+        "Checking for contains of new entity should cause no query to be executed.",
+    );
+}
+
+#[tokio::test]
+async fn testContainsOnOneToManyJoinedInheritanceWillNotInitializeCollectionWithClearStateMatchingItem()
+ {
+    let f = set_up().await;
+    let other_class = f.other_class().await;
+    let child_class = ddc2504_child_class();
+
+    // Test One to Many existence with state clear
+    f.em.persist(&child_class).unwrap();
+    f.em.flush().await.unwrap();
+
+    f.reset_log();
+    assert!(!contains(&other_class, "childClasses", &child_class).await);
+    f.assert_query_count(
+        1,
+        "Checking for contains of persisted entity should cause one query to be executed.",
+    );
+    assert!(
+        !is_initialized(&other_class, "childClasses"),
+        "Post-Condition: Collection is not initialized."
+    );
+}
+
+#[tokio::test]
+async fn testContainsOnOneToManyJoinedInheritanceWillNotInitializeCollectionWithNewStateNotMatchingItem()
+ {
+    let f = set_up().await;
+    let other_class = f.other_class().await;
+    let child_class = ddc2504_child_class();
+
+    f.em.persist(&child_class).unwrap();
+
+    f.reset_log();
+
+    assert!(!contains(&other_class, "childClasses", &child_class).await);
+    f.assert_query_count(
+        0,
+        "Checking for contains of managed entity (but not persisted) should cause no query to be executed.",
+    );
+    assert!(
+        !is_initialized(&other_class, "childClasses"),
+        "Post-Condition: Collection is not initialized."
+    );
+}
+
+#[tokio::test]
+async fn testCountingOnOneToManyJoinedInheritanceWillNotInitializeCollection() {
+    let f = set_up().await;
+    let other_class = f.other_class().await;
+
+    assert_eq!(count_of(&other_class, "childClasses").await, 2);
+
+    assert!(!is_initialized(&other_class, "childClasses"));
+}
+
+#[tokio::test]
 async fn testContainsManyToMany() {
     let f = set_up().await;
     let user = f.user().await;
@@ -750,6 +912,27 @@ async fn testContainsKeyIndexByOneToMany() {
 
     assert!(contains);
     assert!(!is_initialized(&user, "articles"));
+    f.assert_query_count(1, "");
+}
+
+#[tokio::test]
+async fn testContainsKeyIndexByOneToManyJoinedInheritance() {
+    let f = set_up().await;
+    set_index_by(&f.em, DDC2504_OTHER_CLASS, "childClasses", "id");
+
+    let other_class = f.other_class().await;
+
+    f.reset_log();
+
+    let contains = coll::contains_key(
+        &get(&other_class, "childClasses"),
+        key(&f.ddc2504_child_class_id),
+    )
+    .await
+    .unwrap();
+
+    assert!(contains);
+    assert!(!is_initialized(&other_class, "childClasses"));
     f.assert_query_count(1, "");
 }
 
