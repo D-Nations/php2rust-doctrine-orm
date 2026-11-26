@@ -10,4 +10,6 @@
 #![forbid(unsafe_code)]
 
 pub mod expr;
+mod expression_builder;
 
+pub use expression_builder::ExpressionBuilder;

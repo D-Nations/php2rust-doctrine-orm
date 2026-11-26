@@ -176,20 +176,20 @@ tests/Expr/CompositeExpressionTest.php	CompositeExpressionTest::testGetType	port
 tests/Expr/CompositeExpressionTest.php	CompositeExpressionTest::testVisitor	ported	crates/php2rust-doctrine-collections/tests/expr_composite_expression_test.rs::testVisitor
 tests/Expr/ValueTest.php	ValueTest::testGetter	ported	crates/php2rust-doctrine-collections/tests/expr_value_test.rs::testGetter
 tests/Expr/ValueTest.php	ValueTest::testVisitor	ported	crates/php2rust-doctrine-collections/tests/expr_value_test.rs::testVisitor
-tests/ExpressionBuilderTest.php	ExpressionBuilderTest::testAndX	pending	
-tests/ExpressionBuilderTest.php	ExpressionBuilderTest::testContains	pending	
-tests/ExpressionBuilderTest.php	ExpressionBuilderTest::testEndsWith	pending	
-tests/ExpressionBuilderTest.php	ExpressionBuilderTest::testEq	pending	
-tests/ExpressionBuilderTest.php	ExpressionBuilderTest::testGt	pending	
-tests/ExpressionBuilderTest.php	ExpressionBuilderTest::testGte	pending	
-tests/ExpressionBuilderTest.php	ExpressionBuilderTest::testIn	pending	
-tests/ExpressionBuilderTest.php	ExpressionBuilderTest::testInvalidAndXArgument	pending	
-tests/ExpressionBuilderTest.php	ExpressionBuilderTest::testIsNotNull	pending	
-tests/ExpressionBuilderTest.php	ExpressionBuilderTest::testIsNull	pending	
-tests/ExpressionBuilderTest.php	ExpressionBuilderTest::testLt	pending	
-tests/ExpressionBuilderTest.php	ExpressionBuilderTest::testLte	pending	
-tests/ExpressionBuilderTest.php	ExpressionBuilderTest::testMemberOf	pending	
-tests/ExpressionBuilderTest.php	ExpressionBuilderTest::testNeq	pending	
-tests/ExpressionBuilderTest.php	ExpressionBuilderTest::testNotIn	pending	
-tests/ExpressionBuilderTest.php	ExpressionBuilderTest::testOrX	pending	
-tests/ExpressionBuilderTest.php	ExpressionBuilderTest::testStartsWith	pending	
+tests/ExpressionBuilderTest.php	ExpressionBuilderTest::testAndX	ported	crates/php2rust-doctrine-collections/tests/expression_builder_test.rs::testAndX
+tests/ExpressionBuilderTest.php	ExpressionBuilderTest::testContains	ported	crates/php2rust-doctrine-collections/tests/expression_builder_test.rs::testContains
+tests/ExpressionBuilderTest.php	ExpressionBuilderTest::testEndsWith	ported	crates/php2rust-doctrine-collections/tests/expression_builder_test.rs::testEndsWith
+tests/ExpressionBuilderTest.php	ExpressionBuilderTest::testEq	ported	crates/php2rust-doctrine-collections/tests/expression_builder_test.rs::testEq
+tests/ExpressionBuilderTest.php	ExpressionBuilderTest::testGt	ported	crates/php2rust-doctrine-collections/tests/expression_builder_test.rs::testGt
+tests/ExpressionBuilderTest.php	ExpressionBuilderTest::testGte	ported	crates/php2rust-doctrine-collections/tests/expression_builder_test.rs::testGte
+tests/ExpressionBuilderTest.php	ExpressionBuilderTest::testIn	ported	crates/php2rust-doctrine-collections/tests/expression_builder_test.rs::testIn
+tests/ExpressionBuilderTest.php	ExpressionBuilderTest::testInvalidAndXArgument	n/a: a TypeError for a non-Expression argument to andX(); Rust's types rule the call out	
+tests/ExpressionBuilderTest.php	ExpressionBuilderTest::testIsNotNull	ported	crates/php2rust-doctrine-collections/tests/expression_builder_test.rs::testIsNotNull
+tests/ExpressionBuilderTest.php	ExpressionBuilderTest::testIsNull	ported	crates/php2rust-doctrine-collections/tests/expression_builder_test.rs::testIsNull
+tests/ExpressionBuilderTest.php	ExpressionBuilderTest::testLt	ported	crates/php2rust-doctrine-collections/tests/expression_builder_test.rs::testLt
+tests/ExpressionBuilderTest.php	ExpressionBuilderTest::testLte	ported	crates/php2rust-doctrine-collections/tests/expression_builder_test.rs::testLte
+tests/ExpressionBuilderTest.php	ExpressionBuilderTest::testMemberOf	ported	crates/php2rust-doctrine-collections/tests/expression_builder_test.rs::testMemberOf
+tests/ExpressionBuilderTest.php	ExpressionBuilderTest::testNeq	ported	crates/php2rust-doctrine-collections/tests/expression_builder_test.rs::testNeq
+tests/ExpressionBuilderTest.php	ExpressionBuilderTest::testNotIn	ported	crates/php2rust-doctrine-collections/tests/expression_builder_test.rs::testNotIn
+tests/ExpressionBuilderTest.php	ExpressionBuilderTest::testOrX	ported	crates/php2rust-doctrine-collections/tests/expression_builder_test.rs::testOrX
+tests/ExpressionBuilderTest.php	ExpressionBuilderTest::testStartsWith	ported	crates/php2rust-doctrine-collections/tests/expression_builder_test.rs::testStartsWith

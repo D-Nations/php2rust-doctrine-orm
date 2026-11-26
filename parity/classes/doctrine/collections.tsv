@@ -9,7 +9,7 @@ src/Expr/CompositeExpression.php	CompositeExpression	42	ported	crates/php2rust-d
 src/Expr/Expression.php	Expression	6	ported	crates/php2rust-doctrine-collections/src/expr/mod.rs
 src/Expr/ExpressionVisitor.php	ExpressionVisitor	12	ported	crates/php2rust-doctrine-collections/src/expr/expression_visitor.rs
 src/Expr/Value.php	Value	18	ported	crates/php2rust-doctrine-collections/src/expr/value.rs
-src/ExpressionBuilder.php	ExpressionBuilder	77	pending	
+src/ExpressionBuilder.php	ExpressionBuilder	77	ported	crates/php2rust-doctrine-collections/src/expression_builder.rs
 src/Order.php	Order	7	pending	
 src/ReadableCollection.php	ReadableCollection	29	pending	
 src/Selectable.php	Selectable	6	pending	
