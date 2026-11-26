@@ -1264,7 +1264,7 @@ tests/Tests/ORM/Functional/Ticket/DDC1925Test.php	DDC1925Test::testIssue	ported	
 tests/Tests/ORM/Functional/Ticket/DDC192Test.php	DDC192Test::testSchemaCreation	ported	crates/php2rust-doctrine-orm/tests/ddc192_test.rs::testSchemaCreation
 tests/Tests/ORM/Functional/Ticket/DDC1995Test.php	DDC1995Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1995Test.php	DDC1995Test::testQueryCache	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1998Test.php	DDC1998Test::testSqlConversionAsIdentifier	pending	a custom DBAL type of the test file (the recorder cannot load a DBAL Type subclass)
+tests/Tests/ORM/Functional/Ticket/DDC1998Test.php	DDC1998Test::testSqlConversionAsIdentifier	pending	
 tests/Tests/ORM/Functional/Ticket/DDC199Test.php	DDC199Test::testPolymorphicLoading	ported	crates/php2rust-doctrine-orm/tests/ddc199_test.rs::testPolymorphicLoading
 tests/Tests/ORM/Functional/Ticket/DDC2012Test.php	DDC2012Test::testIssue	pending	a custom DBAL type of the test file (the recorder cannot load a DBAL Type subclass)
 tests/Tests/ORM/Functional/Ticket/DDC2074Test.php	DDC2074Test::testSavingClonedPersistentCollection	ported	crates/php2rust-doctrine-orm/tests/ddc2074_test.rs::testSavingClonedPersistentCollection
