@@ -69,3 +69,52 @@ pub fn array(pairs: &[(&str, Value)]) -> Value {
     }
     Value::Array(array)
 }
+
+/// `$enum::$name`, a case of a recorded enum.
+pub fn case(enum_type: &str, name: &str) -> Value {
+    crate::models::register();
+    let class = php2rust_doctrine_persistence::php_reflection::class_info(enum_type)
+        .unwrap_or_else(|| panic!("the enum {enum_type} is declared"));
+    let case = class
+        .cases()
+        .iter()
+        .find(|case| {
+            case.property(b"name")
+                .is_some_and(|n| n == Value::string(name))
+        })
+        .cloned()
+        .unwrap_or_else(|| panic!("the case {enum_type}::{name} is declared"));
+    Value::Object(case)
+}
+
+/// `$this->_em->getConnection()->insert($table, $data)`.
+pub async fn insert(em: &EntityManager, table: &str, data: &[(&str, Value)]) {
+    let Value::Array(data) = array(data) else {
+        unreachable!("array() builds an array")
+    };
+    em.get_connection()
+        .insert(table, &data, &php2rust_doctrine_dbal::ParameterTypes::new())
+        .await
+        .unwrap();
+}
+
+/// DBAL's `EnableForeignKeys` middleware, which upstream's `TestUtil`
+/// adds on `SQLite`: `PRAGMA foreign_keys = ON`.
+pub async fn enable_foreign_keys(em: &EntityManager) {
+    em.get_connection()
+        .execute_statement(
+            "PRAGMA foreign_keys = ON",
+            &PhpArray::new(),
+            &php2rust_doctrine_dbal::ParameterTypes::new(),
+        )
+        .await
+        .unwrap();
+}
+
+/// `parent::setUp()` and `createSchemaForModels(...)` with the foreign
+/// keys enforced, as upstream's `SQLite` connection does.
+pub async fn set_up_with_foreign_keys(shorts: &[&str]) -> Arc<EntityManager> {
+    let em = set_up(shorts).await;
+    enable_foreign_keys(&em).await;
+    em
+}
