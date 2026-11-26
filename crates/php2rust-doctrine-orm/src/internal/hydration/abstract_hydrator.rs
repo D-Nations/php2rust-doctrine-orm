@@ -5,8 +5,9 @@
 //! A result is read whole (the DBAL port fetches all rows), so the hydrators
 //! take the rows instead of a statement. The `onClear` listener is not
 //! registered: nothing can clear the entity manager between two rows of
-//! one hydration. Enum fields keep their backing values (`buildEnum()`
-//! needs PHP's enums).
+//! one hydration. Enum fields keep their backing values: the simple
+//! object hydrator checks them with [`build_enum`] and the entities' enum
+//! property accessors build the cases.
 //!
 //! Upstream: doctrine/orm src/Internal/Hydration/AbstractHydrator.php src/Internal/Hydration/HydrationException.php src/Exception/MultipleSelectorsFoundException.php
 
@@ -147,6 +148,48 @@ fn new_instance_args(class_name: &str, args: Vec<Value>) -> Result<Value, Thrown
             0,
         )),
     }
+}
+
+/// `buildEnum($value, $enumType)`: the case (or the cases of an array)
+/// of a backed enum, `(int)` cast for an int-backed one.
+pub fn build_enum(value: &Value, enum_type: &str) -> Result<Value, Thrown> {
+    let class = php2rust_doctrine_persistence::php_reflection::class_info(enum_type)
+        .filter(|c| c.kind() == php2rust_doctrine_persistence::php_reflection::ClassKind::Enum)
+        .ok_or_else(|| {
+            Thrown::new(
+                "ReflectionException",
+                format!("Class \"{enum_type}\" does not exist"),
+                -1,
+            )
+        })?;
+    let cases = class.cases();
+    let is_int_backed = cases
+        .first()
+        .is_some_and(|case| matches!(case.property(b"value"), Some(Value::Int(_))));
+    let from = |value: &Value| -> Result<Value, Thrown> {
+        let value = if is_int_backed {
+            Value::Int(php_value::ops::to_int(value))
+        } else {
+            value.clone()
+        };
+        match php_value::object::backed_enum_from(class.name(), cases, &value) {
+            Some(Ok(case)) => Ok(Value::Object(case)),
+            Some(Err(error)) => Err(Thrown::new(error.class(), error.message(), 0)),
+            None => Err(Thrown::new(
+                "Error",
+                format!("Call to undefined method {}::from()", class.name()),
+                0,
+            )),
+        }
+    };
+    if let Value::Array(values) = value {
+        let mut cases = PhpArray::new();
+        for (key, value) in values.iter() {
+            cases.insert(key.clone(), from(value)?);
+        }
+        return Ok(Value::Array(cases));
+    }
+    from(value)
 }
 
 /// The kind of a result column (`hydrateColumnInfo()`).

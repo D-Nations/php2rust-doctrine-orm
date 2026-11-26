@@ -5,7 +5,8 @@
 //! the object hydrator does (`hydrateAdd()` / `hydrateSet()`), without
 //! joined entities. The queries hydrate with [`hydrate`] in their
 //! hydration mode. Enum fields' cases are not built from the backing
-//! values (PHP's enums), and custom hydration modes are not ported.
+//! values (the simple object hydrator checks them), and custom hydration
+//! modes are not ported.
 //!
 //! Upstream: doctrine/orm src/Internal/Hydration/SimpleObjectHydrator.php src/Internal/Hydration/ScalarHydrator.php src/Internal/Hydration/SingleScalarHydrator.php src/Internal/Hydration/ScalarColumnHydrator.php
 
@@ -16,6 +17,7 @@ mod object_hydrator;
 use std::sync::Arc;
 
 use abstract_hydrator::Columns;
+pub use abstract_hydrator::build_enum;
 pub(crate) use abstract_hydrator::register_classes;
 pub use abstract_hydrator::{
     HYDRATION_EXCEPTION, MULTIPLE_SELECTORS_FOUND, NewObjectConstructor, empty_discriminator_value,
@@ -28,7 +30,6 @@ use array_hydrator::ArrayHydrator;
 use object_hydrator::ObjectHydrator;
 
 use php_value::{Key, Object, PhpArray, Thrown, Value};
-use php2rust_doctrine_dbal::types;
 
 use crate::entity_manager::EntityManager;
 use crate::persistent_collection::PersistentCollection;
@@ -55,6 +56,10 @@ pub fn hydrate_all<'a>(
     Box::pin(do_hydrate_all(em, rows, rsm, hints, collection))
 }
 
+#[allow(
+    clippy::too_many_lines,
+    reason = "prepare() and hydrateRowData(), in their order"
+)]
 async fn do_hydrate_all(
     em: &Arc<EntityManager>,
     rows: Vec<PhpArray>,
@@ -78,17 +83,72 @@ async fn do_hydrate_all(
         ));
     }
     let class_name = rsm.alias_map.values().next().cloned().unwrap_or_default();
-    let class = em.get_class_metadata(&class_name)?;
+    let dql_alias = rsm.alias_map.keys().next().unwrap_or_default().to_owned();
+    let mut columns = Columns::new(em, rsm, false);
+    let class = columns.get_class_metadata(&class_name)?;
     let uow = em.get_unit_of_work();
     let platform = em.get_platform();
 
     let mut result = Vec::new();
-    for row in rows {
+    for mut row in rows {
         // hydrateRowData()
-        let entity_name = class.read().name.clone();
+        let (mut entity_name, inheritance_type) = {
+            let info = class.read();
+            (info.name.clone(), info.inheritance_type)
+        };
         let mut data = PhpArray::new();
+        let mut discr_column_value = Value::Null;
+
+        // We need to find the correct entity class name if we have
+        // inheritance in resultset
+        if inheritance_type != crate::mapping::class_metadata::INHERITANCE_TYPE_NONE {
+            let (mut discr_column_name, discr_map) = {
+                let info = class.read();
+                (
+                    info.get_discriminator_column()?.name.clone(),
+                    info.discriminator_map.clone(),
+                )
+            };
+
+            // Find mapped discriminator column from the result set.
+            if let Some((column, _)) = rsm
+                .meta_mappings
+                .iter()
+                .find(|(_, field)| **field == discr_column_name)
+                && !column.is_empty()
+                && column != "0"
+            {
+                discr_column_name = column.to_owned();
+            }
+
+            let discr_key = Key::from_bytes(discr_column_name.as_bytes());
+            let discr_value = match row.get(&discr_key) {
+                None | Some(Value::Null) => {
+                    return Err(missing_discriminator_column(
+                        &entity_name,
+                        &discr_column_name,
+                        &dql_alias,
+                    ));
+                }
+                Some(value) => value.clone(),
+            };
+            if matches!(&discr_value, Value::String(s) if s.is_empty()) {
+                return Err(empty_discriminator_value(&dql_alias));
+            }
+            let discr_text = to_text(&discr_value);
+            let Some(sub_class) = discr_map.get(&Key::from_bytes(discr_text.as_bytes())) else {
+                let values: Vec<String> = discr_map.keys().map(key_text).collect();
+                return Err(invalid_discriminator_value(&discr_text, &values));
+            };
+            entity_name = to_text(sub_class);
+            discr_column_value = discr_value;
+            row.remove(&discr_key);
+        }
+
         for (column, value) in row.iter() {
             let column = key_text(column);
+            // An ObjectHydrator should be used instead of
+            // SimpleObjectHydrator
             if rsm.relation_map.contains_key(&column) {
                 return Err(Thrown::new(
                     "Exception",
@@ -96,37 +156,57 @@ async fn do_hydrate_all(
                     0,
                 ));
             }
-            // hydrateColumnInfo()
-            let (field_name, type_name) = if let Some(field_name) = rsm.field_mappings.get(&column)
-            {
-                let declaring = rsm
-                    .declaring_classes
-                    .get(&column)
-                    .cloned()
-                    .unwrap_or_else(|| class_name.clone());
-                let declaring = em.get_class_metadata(&declaring)?;
-                let ty = declaring
-                    .read()
-                    .field_mappings
-                    .get(field_name)
-                    .map(|m| m.r#type.clone());
-                (field_name.clone(), ty)
-            } else if let Some(field_name) = rsm.meta_mappings.get(&column) {
-                (field_name.clone(), rsm.type_mappings.get(&column).cloned())
-            } else {
+
+            let Some(cache_key_info) = columns.hydrate_column_info(&column)? else {
                 continue;
             };
+
+            // If we have inheritance in resultset, make sure the field
+            // belongs to the correct class
+            if let Some((_, discriminator_values)) = &cache_key_info.discriminator
+                && !discriminator_values.contains(&to_text(&discr_column_value))
+            {
+                continue;
+            }
 
             // Check if value is null before conversion (because some
             // types convert null to something else)
             let value_is_null = value.is_null();
+
+            // Convert field to a valid PHP value
             let mut value = value.clone();
-            if let Some(type_name) = type_name {
-                let ty = types::get_type(&type_name)
-                    .map_err(|e| Thrown::new(e.class(), e.message(), 0))?;
+            if let Some(ty) = &cache_key_info.ty {
                 value = ty
                     .convert_to_php_value(&value, platform)
                     .map_err(|e| crate::exception::from_conversion(&e))?;
+            }
+
+            let field_name = key_text(&cache_key_info.field_name);
+            if !value.is_null()
+                && let Some(enum_type) = rsm.enum_mappings.get(&column)
+            {
+                // The entity keeps the backing values: the cases are
+                // only checked here.
+                let failed = match &value {
+                    Value::Array(values) => values
+                        .values()
+                        .find(|v| build_enum(v, enum_type).is_err())
+                        .cloned(),
+                    single => build_enum(single, enum_type).err().map(|_| single.clone()),
+                };
+                if let Some(current_value) = failed
+                    && let Err(error) = build_enum(&current_value, enum_type)
+                {
+                    if error.class != "ValueError" {
+                        return Err(error);
+                    }
+                    return Err(crate::mapping::mapping_exception::invalid_enum_value(
+                        &entity_name,
+                        &field_name,
+                        &to_text(&current_value),
+                        enum_type,
+                    ));
+                }
             }
 
             // Prevent overwrite in case of inherit classes using same
