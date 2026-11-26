@@ -1,9 +1,9 @@
 # doctrine/event-manager at dda33921b198841ca8dbad2eaa5d4d34769d18cf: upstream test	method	status	rust test
-tests/EventManagerTest.php	EventManagerTest::testAddEventListener	pending	
-tests/EventManagerTest.php	EventManagerTest::testAddEventSubscriber	pending	
-tests/EventManagerTest.php	EventManagerTest::testDispatchEvent	pending	
-tests/EventManagerTest.php	EventManagerTest::testEmptyListenersListForUnregisteredEvent	pending	
-tests/EventManagerTest.php	EventManagerTest::testInitialState	pending	
-tests/EventManagerTest.php	EventManagerTest::testNoDispatchingForUnregisteredEvent	pending	
-tests/EventManagerTest.php	EventManagerTest::testRemoveEventListener	pending	
-tests/EventManagerTest.php	EventManagerTest::testRemoveEventSubscriber	pending	
+tests/EventManagerTest.php	EventManagerTest::testAddEventListener	ported	crates/php2rust-doctrine-event-manager/tests/event_manager_test.rs::testAddEventListener
+tests/EventManagerTest.php	EventManagerTest::testAddEventSubscriber	ported	crates/php2rust-doctrine-event-manager/tests/event_manager_test.rs::testAddEventSubscriber
+tests/EventManagerTest.php	EventManagerTest::testDispatchEvent	ported	crates/php2rust-doctrine-event-manager/tests/event_manager_test.rs::testDispatchEvent
+tests/EventManagerTest.php	EventManagerTest::testEmptyListenersListForUnregisteredEvent	ported	crates/php2rust-doctrine-event-manager/tests/event_manager_test.rs::testEmptyListenersListForUnregisteredEvent
+tests/EventManagerTest.php	EventManagerTest::testInitialState	ported	crates/php2rust-doctrine-event-manager/tests/event_manager_test.rs::testInitialState
+tests/EventManagerTest.php	EventManagerTest::testNoDispatchingForUnregisteredEvent	ported	crates/php2rust-doctrine-event-manager/tests/event_manager_test.rs::testNoDispatchingForUnregisteredEvent
+tests/EventManagerTest.php	EventManagerTest::testRemoveEventListener	ported	crates/php2rust-doctrine-event-manager/tests/event_manager_test.rs::testRemoveEventListener
+tests/EventManagerTest.php	EventManagerTest::testRemoveEventSubscriber	ported	crates/php2rust-doctrine-event-manager/tests/event_manager_test.rs::testRemoveEventSubscriber

@@ -1,50 +1,50 @@
 # doctrine/inflector at 6d6c96277ea252fc1304627204c3d5e6e15faa3b: upstream file	classes	code lines	status	rust files
-src/CachedWordInflector.php	CachedWordInflector	15	pending	
-src/GenericLanguageInflectorFactory.php	GenericLanguageInflectorFactory	47	pending	
-src/Inflector.php	Inflector	396	pending	
-src/InflectorFactory.php	InflectorFactory	45	pending	
-src/Language.php	Language	16	pending	
-src/LanguageInflectorFactory.php	LanguageInflectorFactory	9	pending	
-src/NoopWordInflector.php	NoopWordInflector	9	pending	
-src/Rules/English/Inflectible.php	Inflectible	175	pending	
-src/Rules/English/InflectorFactory.php	InflectorFactory	15	pending	
-src/Rules/English/Rules.php	Rules	25	pending	
-src/Rules/English/Uninflected.php	Uninflected	177	pending	
-src/Rules/Esperanto/Inflectible.php	Inflectible	21	pending	
-src/Rules/Esperanto/InflectorFactory.php	InflectorFactory	15	pending	
-src/Rules/Esperanto/Rules.php	Rules	25	pending	
-src/Rules/Esperanto/Uninflected.php	Uninflected	18	pending	
-src/Rules/French/Inflectible.php	Inflectible	34	pending	
-src/Rules/French/InflectorFactory.php	InflectorFactory	15	pending	
-src/Rules/French/Rules.php	Rules	25	pending	
-src/Rules/French/Uninflected.php	Uninflected	20	pending	
-src/Rules/Italian/Inflectible.php	Inflectible	163	pending	
-src/Rules/Italian/InflectorFactory.php	InflectorFactory	15	pending	
-src/Rules/Italian/Rules.php	Rules	25	pending	
-src/Rules/Italian/Uninflected.php	Uninflected	68	pending	
-src/Rules/NorwegianBokmal/Inflectible.php	Inflectible	24	pending	
-src/Rules/NorwegianBokmal/InflectorFactory.php	InflectorFactory	15	pending	
-src/Rules/NorwegianBokmal/Rules.php	Rules	25	pending	
-src/Rules/NorwegianBokmal/Uninflected.php	Uninflected	20	pending	
-src/Rules/Pattern.php	Pattern	29	pending	
-src/Rules/Patterns.php	Patterns	20	pending	
-src/Rules/Portuguese/Inflectible.php	Inflectible	88	pending	
-src/Rules/Portuguese/InflectorFactory.php	InflectorFactory	15	pending	
-src/Rules/Portuguese/Rules.php	Rules	25	pending	
-src/Rules/Portuguese/Uninflected.php	Uninflected	22	pending	
-src/Rules/Ruleset.php	Ruleset	26	pending	
-src/Rules/Spanish/Inflectible.php	Inflectible	37	pending	
-src/Rules/Spanish/InflectorFactory.php	InflectorFactory	15	pending	
-src/Rules/Spanish/Rules.php	Rules	25	pending	
-src/Rules/Spanish/Uninflected.php	Uninflected	20	pending	
-src/Rules/Substitution.php	Substitution	20	pending	
-src/Rules/Substitutions.php	Substitutions	40	pending	
-src/Rules/Transformation.php	Transformation	26	pending	
-src/Rules/Transformations.php	Transformations	20	pending	
-src/Rules/Turkish/Inflectible.php	Inflectible	24	pending	
-src/Rules/Turkish/InflectorFactory.php	InflectorFactory	15	pending	
-src/Rules/Turkish/Rules.php	Rules	25	pending	
-src/Rules/Turkish/Uninflected.php	Uninflected	20	pending	
-src/Rules/Word.php	Word	14	pending	
-src/RulesetInflector.php	RulesetInflector	32	pending	
-src/WordInflector.php	WordInflector	6	pending	
+src/CachedWordInflector.php	CachedWordInflector	15	ported	crates/php2rust-doctrine-inflector/src/cached_word_inflector.rs
+src/GenericLanguageInflectorFactory.php	GenericLanguageInflectorFactory	47	ported	crates/php2rust-doctrine-inflector/src/generic_language_inflector_factory.rs
+src/Inflector.php	Inflector	396	ported	crates/php2rust-doctrine-inflector/src/inflector.rs
+src/InflectorFactory.php	InflectorFactory	45	ported	crates/php2rust-doctrine-inflector/src/inflector_factory.rs
+src/Language.php	Language	16	ported	crates/php2rust-doctrine-inflector/src/language.rs
+src/LanguageInflectorFactory.php	LanguageInflectorFactory	9	ported	crates/php2rust-doctrine-inflector/src/language_inflector_factory.rs
+src/NoopWordInflector.php	NoopWordInflector	9	ported	crates/php2rust-doctrine-inflector/src/noop_word_inflector.rs
+src/Rules/English/Inflectible.php	Inflectible	175	ported	crates/php2rust-doctrine-inflector/src/rules/english/inflectible.rs
+src/Rules/English/InflectorFactory.php	InflectorFactory	15	ported	crates/php2rust-doctrine-inflector/src/rules/english/inflector_factory.rs
+src/Rules/English/Rules.php	Rules	25	ported	crates/php2rust-doctrine-inflector/src/rules/english/rules.rs
+src/Rules/English/Uninflected.php	Uninflected	177	ported	crates/php2rust-doctrine-inflector/src/rules/english/uninflected.rs
+src/Rules/Esperanto/Inflectible.php	Inflectible	21	ported	crates/php2rust-doctrine-inflector/src/rules/esperanto/inflectible.rs
+src/Rules/Esperanto/InflectorFactory.php	InflectorFactory	15	ported	crates/php2rust-doctrine-inflector/src/rules/esperanto/inflector_factory.rs
+src/Rules/Esperanto/Rules.php	Rules	25	ported	crates/php2rust-doctrine-inflector/src/rules/esperanto/rules.rs
+src/Rules/Esperanto/Uninflected.php	Uninflected	18	ported	crates/php2rust-doctrine-inflector/src/rules/esperanto/uninflected.rs
+src/Rules/French/Inflectible.php	Inflectible	34	ported	crates/php2rust-doctrine-inflector/src/rules/french/inflectible.rs
+src/Rules/French/InflectorFactory.php	InflectorFactory	15	ported	crates/php2rust-doctrine-inflector/src/rules/french/inflector_factory.rs
+src/Rules/French/Rules.php	Rules	25	ported	crates/php2rust-doctrine-inflector/src/rules/french/rules.rs
+src/Rules/French/Uninflected.php	Uninflected	20	ported	crates/php2rust-doctrine-inflector/src/rules/french/uninflected.rs
+src/Rules/Italian/Inflectible.php	Inflectible	163	ported	crates/php2rust-doctrine-inflector/src/rules/italian/inflectible.rs
+src/Rules/Italian/InflectorFactory.php	InflectorFactory	15	ported	crates/php2rust-doctrine-inflector/src/rules/italian/inflector_factory.rs
+src/Rules/Italian/Rules.php	Rules	25	ported	crates/php2rust-doctrine-inflector/src/rules/italian/rules.rs
+src/Rules/Italian/Uninflected.php	Uninflected	68	ported	crates/php2rust-doctrine-inflector/src/rules/italian/uninflected.rs
+src/Rules/NorwegianBokmal/Inflectible.php	Inflectible	24	ported	crates/php2rust-doctrine-inflector/src/rules/norwegian_bokmal/inflectible.rs
+src/Rules/NorwegianBokmal/InflectorFactory.php	InflectorFactory	15	ported	crates/php2rust-doctrine-inflector/src/rules/norwegian_bokmal/inflector_factory.rs
+src/Rules/NorwegianBokmal/Rules.php	Rules	25	ported	crates/php2rust-doctrine-inflector/src/rules/norwegian_bokmal/rules.rs
+src/Rules/NorwegianBokmal/Uninflected.php	Uninflected	20	ported	crates/php2rust-doctrine-inflector/src/rules/norwegian_bokmal/uninflected.rs
+src/Rules/Pattern.php	Pattern	29	ported	crates/php2rust-doctrine-inflector/src/rules/pattern.rs
+src/Rules/Patterns.php	Patterns	20	ported	crates/php2rust-doctrine-inflector/src/rules/patterns.rs
+src/Rules/Portuguese/Inflectible.php	Inflectible	88	ported	crates/php2rust-doctrine-inflector/src/rules/portuguese/inflectible.rs
+src/Rules/Portuguese/InflectorFactory.php	InflectorFactory	15	ported	crates/php2rust-doctrine-inflector/src/rules/portuguese/inflector_factory.rs
+src/Rules/Portuguese/Rules.php	Rules	25	ported	crates/php2rust-doctrine-inflector/src/rules/portuguese/rules.rs
+src/Rules/Portuguese/Uninflected.php	Uninflected	22	ported	crates/php2rust-doctrine-inflector/src/rules/portuguese/uninflected.rs
+src/Rules/Ruleset.php	Ruleset	26	ported	crates/php2rust-doctrine-inflector/src/rules/ruleset.rs
+src/Rules/Spanish/Inflectible.php	Inflectible	37	ported	crates/php2rust-doctrine-inflector/src/rules/spanish/inflectible.rs
+src/Rules/Spanish/InflectorFactory.php	InflectorFactory	15	ported	crates/php2rust-doctrine-inflector/src/rules/spanish/inflector_factory.rs
+src/Rules/Spanish/Rules.php	Rules	25	ported	crates/php2rust-doctrine-inflector/src/rules/spanish/rules.rs
+src/Rules/Spanish/Uninflected.php	Uninflected	20	ported	crates/php2rust-doctrine-inflector/src/rules/spanish/uninflected.rs
+src/Rules/Substitution.php	Substitution	20	ported	crates/php2rust-doctrine-inflector/src/rules/substitution.rs
+src/Rules/Substitutions.php	Substitutions	40	ported	crates/php2rust-doctrine-inflector/src/rules/substitutions.rs
+src/Rules/Transformation.php	Transformation	26	ported	crates/php2rust-doctrine-inflector/src/rules/transformation.rs
+src/Rules/Transformations.php	Transformations	20	ported	crates/php2rust-doctrine-inflector/src/rules/transformations.rs
+src/Rules/Turkish/Inflectible.php	Inflectible	24	ported	crates/php2rust-doctrine-inflector/src/rules/turkish/inflectible.rs
+src/Rules/Turkish/InflectorFactory.php	InflectorFactory	15	ported	crates/php2rust-doctrine-inflector/src/rules/turkish/inflector_factory.rs
+src/Rules/Turkish/Rules.php	Rules	25	ported	crates/php2rust-doctrine-inflector/src/rules/turkish/rules.rs
+src/Rules/Turkish/Uninflected.php	Uninflected	20	ported	crates/php2rust-doctrine-inflector/src/rules/turkish/uninflected.rs
+src/Rules/Word.php	Word	14	ported	crates/php2rust-doctrine-inflector/src/rules/word.rs
+src/RulesetInflector.php	RulesetInflector	32	ported	crates/php2rust-doctrine-inflector/src/ruleset_inflector.rs
+src/WordInflector.php	WordInflector	6	ported	crates/php2rust-doctrine-inflector/src/word_inflector.rs

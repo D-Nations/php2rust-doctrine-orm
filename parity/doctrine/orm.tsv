@@ -2353,67 +2353,67 @@ tests/Tests/ORM/Query/DeleteSqlGenerationTest.php	DeleteSqlGenerationTest::testS
 tests/Tests/ORM/Query/DeleteSqlGenerationTest.php	DeleteSqlGenerationTest::testSupportsWhereNotWithAndExpression	pending	
 tests/Tests/ORM/Query/DeleteSqlGenerationTest.php	DeleteSqlGenerationTest::testSupportsWhereNotWithParentheses	pending	
 tests/Tests/ORM/Query/DeleteSqlGenerationTest.php	DeleteSqlGenerationTest::testSupportsWhereOrExpressions	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testAbsExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testAddEmpty	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testAddNull	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testAddThrowsException	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testAddThrowsExceptionOnInvalidType	pending	
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testAbsExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testAbsExpr
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testAddEmpty	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testAddEmpty
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testAddNull	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testAddNull
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testAddThrowsException	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testAddThrowsException
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testAddThrowsExceptionOnInvalidType	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testAddThrowsExceptionOnInvalidType
 tests/Tests/ORM/Query/ExprTest.php	ExprTest::testAllExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testAndExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testAndxOrxExpr	pending	
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testAndExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testAndExpr
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testAndxOrxExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testAndxOrxExpr
 tests/Tests/ORM/Query/ExprTest.php	ExprTest::testAnyExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testAvgExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testBetweenExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testBooleanLiteral	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testConcatExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testCountDistinctExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testCountDistinctExprMulti	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testCountExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testDiffExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testEqualExpr	pending	
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testAvgExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testAvgExpr
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testBetweenExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testBetweenExpr
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testBooleanLiteral	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testBooleanLiteral
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testConcatExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testConcatExpr
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testCountDistinctExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testCountDistinctExpr
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testCountDistinctExprMulti	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testCountDistinctExprMulti
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testCountExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testCountExpr
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testDiffExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testDiffExpr
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testEqualExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testEqualExpr
 tests/Tests/ORM/Query/ExprTest.php	ExprTest::testExistsExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testExpressionGetter	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testGreaterThanExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testGreaterThanOrEqualToExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testInExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testInLiteralExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testIntelligentParenthesisPreventionAndExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testIsInstanceOfExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testIsMemberOfExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testIsNotNullExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testIsNullExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testLegacyOrderByAdd	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testLegacyOrderByConstruct	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testLengthExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testLessThanExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testLessThanOrEqualTo	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testLikeExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testLiteralExprProperlyQuotesStrings	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testLowerExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testMaxExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testMinExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testModExpr	pending	
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testExpressionGetter	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testExpressionGetter
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testGreaterThanExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testGreaterThanExpr
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testGreaterThanOrEqualToExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testGreaterThanOrEqualToExpr
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testInExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testInExpr
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testInLiteralExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testInLiteralExpr
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testIntelligentParenthesisPreventionAndExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testIntelligentParenthesisPreventionAndExpr
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testIsInstanceOfExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testIsInstanceOfExpr
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testIsMemberOfExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testIsMemberOfExpr
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testIsNotNullExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testIsNotNullExpr
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testIsNullExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testIsNullExpr
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testLegacyOrderByAdd	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testLegacyOrderByAdd
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testLegacyOrderByConstruct	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testLegacyOrderByConstruct
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testLengthExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testLengthExpr
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testLessThanExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testLessThanExpr
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testLessThanOrEqualTo	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testLessThanOrEqualTo
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testLikeExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testLikeExpr
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testLiteralExprProperlyQuotesStrings	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testLiteralExprProperlyQuotesStrings
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testLowerExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testLowerExpr
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testMaxExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testMaxExpr
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testMinExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testMinExpr
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testModExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testModExpr
 tests/Tests/ORM/Query/ExprTest.php	ExprTest::testNotExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testNotInExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testNotInLiteralExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testNotLikeExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testNumericLiteralExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testOrExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testOrderByAsc	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testOrderByCountExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testOrderByOrder	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testOrxExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testProdExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testQuotientExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testScopeInArithmeticExpr	pending	
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testNotInExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testNotInExpr
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testNotInLiteralExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testNotInLiteralExpr
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testNotLikeExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testNotLikeExpr
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testNumericLiteralExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testNumericLiteralExpr
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testOrExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testOrExpr
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testOrderByAsc	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testOrderByAsc
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testOrderByCountExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testOrderByCountExpr
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testOrderByOrder	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testOrderByOrder
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testOrxExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testOrxExpr
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testProdExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testProdExpr
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testQuotientExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testQuotientExpr
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testScopeInArithmeticExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testScopeInArithmeticExpr
 tests/Tests/ORM/Query/ExprTest.php	ExprTest::testSomeExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testSquareRootExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testStringLiteralExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testSubstringExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testSubstringExprAcceptsTwoArguments	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testSumExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testTrimExpr	pending	
-tests/Tests/ORM/Query/ExprTest.php	ExprTest::testUpperExpr	pending	
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testSquareRootExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testSquareRootExpr
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testStringLiteralExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testStringLiteralExpr
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testSubstringExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testSubstringExpr
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testSubstringExprAcceptsTwoArguments	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testSubstringExprAcceptsTwoArguments
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testSumExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testSumExpr
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testTrimExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testTrimExpr
+tests/Tests/ORM/Query/ExprTest.php	ExprTest::testUpperExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testUpperExpr
 tests/Tests/ORM/Query/FilterCollectionTest.php	FilterCollectionTest::testEnable	pending	
 tests/Tests/ORM/Query/FilterCollectionTest.php	FilterCollectionTest::testGetFilter	pending	
 tests/Tests/ORM/Query/FilterCollectionTest.php	FilterCollectionTest::testGetFilterInvalidArgument	pending	
@@ -2536,23 +2536,23 @@ tests/Tests/ORM/Query/LanguageRecognitionTest.php	LanguageRecognitionTest::testU
 tests/Tests/ORM/Query/LanguageRecognitionTest.php	LanguageRecognitionTest::testUpdateWorksWithMultipleFields	pending	
 tests/Tests/ORM/Query/LanguageRecognitionTest.php	LanguageRecognitionTest::testUpdateWorksWithOneField	pending	
 tests/Tests/ORM/Query/LanguageRecognitionTest.php	LanguageRecognitionTest::testUsageOfQComponentOutsideSubquery	pending	
-tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesDecimalInteger	pending	
-tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesFloat	pending	
-tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesFloatBig	pending	
-tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesFloatContainingWhitespace	pending	
-tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesFloatWithExponent	pending	
-tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesFloatWithExponent2	pending	
-tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesFloatWithNegativeExponent	pending	
-tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesInputParameter	pending	
-tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesNamedInputParameter	pending	
-tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesNamedInputParameterStartingWithUnderscore	pending	
-tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesStringContainingSingleQuotes	pending	
-tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesStringContainingWhitespace	pending	
-tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesTerminalString	pending	
-tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesTokens	pending	
-tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerTokenizesASimpleQueryCorrectly	pending	
+tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesDecimalInteger	ported	crates/php2rust-doctrine-orm/tests/query_lexer_test.rs::testScannerRecognizesDecimalInteger
+tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesFloat	ported	crates/php2rust-doctrine-orm/tests/query_lexer_test.rs::testScannerRecognizesFloat
+tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesFloatBig	ported	crates/php2rust-doctrine-orm/tests/query_lexer_test.rs::testScannerRecognizesFloatBig
+tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesFloatContainingWhitespace	ported	crates/php2rust-doctrine-orm/tests/query_lexer_test.rs::testScannerRecognizesFloatContainingWhitespace
+tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesFloatWithExponent	ported	crates/php2rust-doctrine-orm/tests/query_lexer_test.rs::testScannerRecognizesFloatWithExponent
+tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesFloatWithExponent2	ported	crates/php2rust-doctrine-orm/tests/query_lexer_test.rs::testScannerRecognizesFloatWithExponent2
+tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesFloatWithNegativeExponent	ported	crates/php2rust-doctrine-orm/tests/query_lexer_test.rs::testScannerRecognizesFloatWithNegativeExponent
+tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesInputParameter	ported	crates/php2rust-doctrine-orm/tests/query_lexer_test.rs::testScannerRecognizesInputParameter
+tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesNamedInputParameter	ported	crates/php2rust-doctrine-orm/tests/query_lexer_test.rs::testScannerRecognizesNamedInputParameter
+tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesNamedInputParameterStartingWithUnderscore	ported	crates/php2rust-doctrine-orm/tests/query_lexer_test.rs::testScannerRecognizesNamedInputParameterStartingWithUnderscore
+tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesStringContainingSingleQuotes	ported	crates/php2rust-doctrine-orm/tests/query_lexer_test.rs::testScannerRecognizesStringContainingSingleQuotes
+tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesStringContainingWhitespace	ported	crates/php2rust-doctrine-orm/tests/query_lexer_test.rs::testScannerRecognizesStringContainingWhitespace
+tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesTerminalString	ported	crates/php2rust-doctrine-orm/tests/query_lexer_test.rs::testScannerRecognizesTerminalString
+tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerRecognizesTokens	ported	crates/php2rust-doctrine-orm/tests/query_lexer_test.rs::testScannerRecognizesTokens
+tests/Tests/ORM/Query/LexerTest.php	LexerTest::testScannerTokenizesASimpleQueryCorrectly	ported	crates/php2rust-doctrine-orm/tests/query_lexer_test.rs::testScannerTokenizesASimpleQueryCorrectly
 tests/Tests/ORM/Query/NativeQueryTest.php	NativeQueryTest::testValuesAreNotBeingResolvedForSpecifiedParameterTypes	pending	
-tests/Tests/ORM/Query/ParameterTypeInfererTest.php	ParameterTypeInfererTest::testParameterTypeInferer	pending	
+tests/Tests/ORM/Query/ParameterTypeInfererTest.php	ParameterTypeInfererTest::testParameterTypeInferer	ported	crates/php2rust-doctrine-orm/tests/parameter_type_inferer_test.rs::testParameterTypeInferer
 tests/Tests/ORM/Query/ParserResultTest.php	ParserResultTest::testGetParameterMappings	pending	
 tests/Tests/ORM/Query/ParserResultTest.php	ParserResultTest::testGetRsm	pending	
 tests/Tests/ORM/Query/ParserResultTest.php	ParserResultTest::testGetSqlParameterPosition	pending	

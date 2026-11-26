@@ -1,9 +1,9 @@
 # doctrine/event-manager at dda33921b198841ca8dbad2eaa5d4d34769d18cf: upstream file	classes	code lines	status	rust files
-src/EventArgs.php	EventArgs	10	pending	
-src/EventDispatcher.php	EventDispatcher	6	pending	
-src/EventListenerIntrospector.php	EventListenerIntrospector	8	pending	
-src/EventListenerRegistry.php	EventListenerRegistry	7	pending	
-src/EventManager.php	EventManager	51	pending	
-src/EventManagerInterface.php	EventManagerInterface	8	pending	
-src/EventSubscriber.php	EventSubscriber	6	pending	
-src/EventSubscriberRegistry.php	EventSubscriberRegistry	7	pending	
+src/EventArgs.php	EventArgs	10	ported	crates/php2rust-doctrine-event-manager/src/event_args.rs
+src/EventDispatcher.php	EventDispatcher	6	ported	crates/php2rust-doctrine-event-manager/src/event_dispatcher.rs
+src/EventListenerIntrospector.php	EventListenerIntrospector	8	ported	crates/php2rust-doctrine-event-manager/src/event_listener_introspector.rs
+src/EventListenerRegistry.php	EventListenerRegistry	7	ported	crates/php2rust-doctrine-event-manager/src/event_listener_registry.rs
+src/EventManager.php	EventManager	51	ported	crates/php2rust-doctrine-event-manager/src/event_manager.rs
+src/EventManagerInterface.php	EventManagerInterface	8	ported	crates/php2rust-doctrine-event-manager/src/event_manager_interface.rs
+src/EventSubscriber.php	EventSubscriber	6	ported	crates/php2rust-doctrine-event-manager/src/event_subscriber.rs
+src/EventSubscriberRegistry.php	EventSubscriberRegistry	7	ported	crates/php2rust-doctrine-event-manager/src/event_subscriber_registry.rs

@@ -7,7 +7,11 @@ publish = false
 description = "Port of doctrine/lexer"
 
 [dependencies]
+php-regex = { workspace = true }
 php-value = { workspace = true }
+
+[dev-dependencies]
+serde_json = "1.0.154"
 
 [lints]
 workspace = true
