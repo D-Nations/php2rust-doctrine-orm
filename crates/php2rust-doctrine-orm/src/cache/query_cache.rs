@@ -510,8 +510,10 @@ impl DefaultQueryCache {
         Ok(Some(info))
     }
 
+    /// `getAssociationValue()` (private upstream; its test calls it by
+    /// reflection).
     #[allow(clippy::unused_self, reason = "an instance method upstream")]
-    fn get_association_value(
+    pub fn get_association_value(
         &self,
         em: &EntityManager,
         rsm: &ResultSetMapping,

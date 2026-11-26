@@ -10,6 +10,7 @@
 //! Upstream: doctrine/orm tests/Tests/Models/Cache/Country.php
 //! Upstream: doctrine/orm tests/Tests/Models/Cache/State.php
 //! Upstream: doctrine/orm tests/Tests/Models/Cache/City.php
+//! Upstream: doctrine/orm tests/Tests/Models/Cache/Restaurant.php
 
 #![allow(dead_code, reason = "each test file uses a subset")]
 #![allow(
@@ -51,6 +52,7 @@ pub const NS: &str = "Doctrine\\Tests\\Models\\Cache\\";
 pub const COUNTRY: &str = "Doctrine\\Tests\\Models\\Cache\\Country";
 pub const STATE: &str = "Doctrine\\Tests\\Models\\Cache\\State";
 pub const CITY: &str = "Doctrine\\Tests\\Models\\Cache\\City";
+pub const RESTAURANT: &str = "Doctrine\\Tests\\Models\\Cache\\Restaurant";
 
 /// The test entity manager with the second level cache, its pool and its
 /// cache factory.
@@ -114,8 +116,18 @@ pub fn country(name: &str) -> Object {
 
 /// `new State($name)`.
 pub fn state(name: &str) -> Object {
+    state_in(name, None)
+}
+
+/// `new State($name, $country)`.
+pub fn state_in(name: &str, country: Option<&Object>) -> Object {
     let state = orm::new_object(STATE);
     orm::set(&state, "name", Value::string(name));
+    orm::set(
+        &state,
+        "country",
+        country.map_or(Value::Null, |c| Value::Object(c.clone())),
+    );
     orm::set(
         &state,
         "cities",
@@ -133,7 +145,55 @@ pub fn city(name: &str, state: Option<&Object>) -> Object {
         "state",
         state.map_or(Value::Null, |s| Value::Object(s.clone())),
     );
+    orm::set(
+        &city,
+        "travels",
+        ArrayCollectionObject::value(PhpArray::new()),
+    );
+    orm::set(
+        &city,
+        "attractions",
+        ArrayCollectionObject::value(PhpArray::new()),
+    );
     city
+}
+
+/// `new Restaurant($name, $city)`.
+pub fn restaurant(name: &str, city: &Object) -> Object {
+    let restaurant = orm::new_object(RESTAURANT);
+    orm::set(&restaurant, "name", Value::string(name));
+    orm::set(&restaurant, "city", Value::Object(city.clone()));
+    orm::set(
+        &restaurant,
+        "infos",
+        ArrayCollectionObject::value(PhpArray::new()),
+    );
+    restaurant
+}
+
+/// `$this->$field[] = $element` on a collection property.
+pub fn add_to(entity: &Object, field: &str, element: &Object) {
+    let collection = orm::get(entity, field);
+    if let Some(collection) = ArrayCollectionObject::from_value(&collection) {
+        collection
+            .lock()
+            .add(Value::Object(element.clone()))
+            .unwrap();
+    } else if let Some(collection) = PersistentCollection::from_value(&collection) {
+        collection.add(Value::Object(element.clone())).unwrap();
+    } else {
+        panic!("{field} is not a collection");
+    }
+}
+
+/// `$state->addCity($city)`.
+pub fn add_city(state: &Object, city: &Object) {
+    add_to(state, "cities", city);
+}
+
+/// `$city->addAttraction($attraction)`.
+pub fn add_attraction(city: &Object, attraction: &Object) {
+    add_to(city, "attractions", attraction);
 }
 
 /// A PHP array of string keys.
