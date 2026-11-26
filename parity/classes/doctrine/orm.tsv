@@ -239,12 +239,12 @@ src/Persisters/Collection/AbstractCollectionPersister.php	AbstractCollectionPers
 src/Persisters/Collection/CollectionPersister.php	CollectionPersister	15	ported	crates/php2rust-doctrine-orm/src/persisters/collection.rs
 src/Persisters/Collection/ManyToManyPersister.php	ManyToManyPersister	522	ported	crates/php2rust-doctrine-orm/src/persisters/collection.rs
 src/Persisters/Collection/OneToManyPersister.php	OneToManyPersister	175	ported	crates/php2rust-doctrine-orm/src/persisters/collection.rs
-src/Persisters/Entity/AbstractEntityInheritancePersister.php	AbstractEntityInheritancePersister	39	pending	
+src/Persisters/Entity/AbstractEntityInheritancePersister.php	AbstractEntityInheritancePersister	39	ported	crates/php2rust-doctrine-orm/src/persisters/abstract_entity_inheritance_persister.rs
 src/Persisters/Entity/BasicEntityPersister.php	BasicEntityPersister	1300	ported	crates/php2rust-doctrine-orm/src/persisters/basic_entity_persister.rs
 src/Persisters/Entity/CachedPersisterContext.php	CachedPersisterContext	17	ported	crates/php2rust-doctrine-orm/src/persisters/basic_entity_persister.rs
 src/Persisters/Entity/EntityPersister.php	EntityPersister	85	ported	crates/php2rust-doctrine-orm/src/persisters/basic_entity_persister.rs
-src/Persisters/Entity/JoinedSubclassPersister.php	JoinedSubclassPersister	421	pending	
-src/Persisters/Entity/SingleTablePersister.php	SingleTablePersister	109	pending	
+src/Persisters/Entity/JoinedSubclassPersister.php	JoinedSubclassPersister	421	ported	crates/php2rust-doctrine-orm/src/persisters/joined_subclass_persister.rs
+src/Persisters/Entity/SingleTablePersister.php	SingleTablePersister	109	ported	crates/php2rust-doctrine-orm/src/persisters/single_table_persister.rs
 src/Persisters/Exception/CantUseInOperatorOnCompositeKeys.php	CantUseInOperatorOnCompositeKeys	10	ported	crates/php2rust-doctrine-orm/src/exception.rs
 src/Persisters/Exception/InvalidOrientation.php	InvalidOrientation	10	ported	crates/php2rust-doctrine-orm/src/exception.rs
 src/Persisters/Exception/UnrecognizedField.php	UnrecognizedField	15	ported	crates/php2rust-doctrine-orm/src/exception.rs
