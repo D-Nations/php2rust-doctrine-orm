@@ -1556,7 +1556,7 @@ tests/Tests/ORM/Functional/Ticket/GH7505Test.php	GH7505Test::testSimpleArrayType
 tests/Tests/ORM/Functional/Ticket/GH7512Test.php	GH7512Test::testFindEntityByAssociationPropertyJoinedChildWithClearMetadata	ported	crates/php2rust-doctrine-orm/tests/gh7512_test.rs::testFindEntityByAssociationPropertyJoinedChildWithClearMetadata
 tests/Tests/ORM/Functional/Ticket/GH7629Test.php	GH7629Test::testClearScheduledForSynchronizationWhenCommitEmpty	ported	crates/php2rust-doctrine-orm/tests/gh7629_test.rs::testClearScheduledForSynchronizationWhenCommitEmpty
 tests/Tests/ORM/Functional/Ticket/GH7629Test.php	GH7629Test::testPersistAfterRemoveSchedulesForSynchronization	ported	crates/php2rust-doctrine-orm/tests/gh7629_test.rs::testPersistAfterRemoveSchedulesForSynchronization
-tests/Tests/ORM/Functional/Ticket/GH7661Test.php	GH7661Test::testIndexByAssociation	pending	
+tests/Tests/ORM/Functional/Ticket/GH7661Test.php	GH7661Test::testIndexByAssociation	ported	crates/php2rust-doctrine-orm/tests/gh7661_test.rs::testIndexByAssociation
 tests/Tests/ORM/Functional/Ticket/GH7684Test.php	GH7684Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/GH7717Test.php	GH7717Test::testManyToManyPersisterIsNullComparison	pending	
 tests/Tests/ORM/Functional/Ticket/GH7735Test.php	GH7735Test::findByReturnsCachedEntity	pending	
