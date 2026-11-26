@@ -328,6 +328,12 @@ namespace {
         'ORM/Functional/SingleTableCompositeKeyTest.php',
         'ORM/Functional/Locking/OptimisticTest.php',
         'ORM/Functional/QueryDqlFunctionTest.php',
+        'ORM/Functional/Ticket/DDC1655Test.php',
+        'ORM/Functional/Ticket/DDC168Test.php',
+        'ORM/Functional/Ticket/DDC6303Test.php',
+        'ORM/Functional/Ticket/DDC832Test.php',
+        'ORM/Functional/Ticket/GH11500Test.php',
+        'ORM/Functional/Ticket/GH11501Test.php',
     ];
     $before = array_merge(get_declared_classes(), get_declared_interfaces(), get_declared_traits());
     foreach ($files as $file) {
