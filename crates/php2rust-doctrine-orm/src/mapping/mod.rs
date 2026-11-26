@@ -10,6 +10,7 @@ use php2rust_doctrine_persistence::php_reflection::{ClassInfo, register_class};
 pub mod association_mapping;
 pub mod attributes;
 pub mod class_metadata;
+pub mod class_metadata_factory;
 pub mod driver;
 pub mod embedded_class_mapping;
 pub mod field_mapping;
@@ -26,12 +27,13 @@ pub use association_mapping::{
     AbstractBase, AssociationClass, AssociationKind, AssociationMapping,
 };
 pub use class_metadata::{ClassMetadata, ClassMetadataInfo};
+pub use class_metadata_factory::{ClassMetadataFactory, FactoryConfiguration};
 pub use embedded_class_mapping::{ColumnPrefix, DiscriminatorColumnMapping, EmbeddedClassMapping};
 pub use field_mapping::{FieldMapping, MappingProperties};
 pub use join_column_mapping::{JoinColumnMapping, JoinTableMapping};
 pub use naming_strategy::{DefaultNamingStrategy, NamingStrategy, UnderscoreNamingStrategy};
-pub use quote_strategy::{AnsiQuoteStrategy, DefaultQuoteStrategy, QuoteStrategy};
 pub use property_value::{Sleep, serialize_object};
+pub use quote_strategy::{AnsiQuoteStrategy, DefaultQuoteStrategy, QuoteStrategy};
 
 /// Declares the ORM's own classes in persistence's class registry (the
 /// exception classes and the interfaces reflection asks about).

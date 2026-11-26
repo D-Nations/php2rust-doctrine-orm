@@ -28,8 +28,7 @@ pub trait QuoteStrategy: Send + Sync + fmt::Debug {
 
     /// Gets the (possibly quoted) primary table name for safe use in an
     /// SQL statement.
-    fn get_table_name(&self, class: &ClassMetadataInfo, platform: &dyn AbstractPlatform)
-    -> String;
+    fn get_table_name(&self, class: &ClassMetadataInfo, platform: &dyn AbstractPlatform) -> String;
 
     /// Gets the (possibly quoted) sequence name for safe use in an SQL
     /// statement.
@@ -151,11 +150,7 @@ impl QuoteStrategy for DefaultQuoteStrategy {
         }
     }
 
-    fn get_table_name(
-        &self,
-        class: &ClassMetadataInfo,
-        platform: &dyn AbstractPlatform,
-    ) -> String {
+    fn get_table_name(&self, class: &ClassMetadataInfo, platform: &dyn AbstractPlatform) -> String {
         let table_name = table_entry(class, "name").unwrap_or_default();
         let quoted = pv::isset(&class.table, "quoted");
         if let Some(schema) = table_entry(class, "schema").filter(|s| !s.is_empty() && s != "0") {
@@ -285,7 +280,11 @@ impl QuoteStrategy for DefaultQuoteStrategy {
         let max = usize::try_from(platform.get_max_identifier_length()).unwrap_or(0);
         let bytes = column_name.as_bytes();
         // substr($s, -$max): the whole string when $max is 0 or longer.
-        let start = if max == 0 { 0 } else { bytes.len().saturating_sub(max) };
+        let start = if max == 0 {
+            0
+        } else {
+            bytes.len().saturating_sub(max)
+        };
         let column_name: String = bytes[start..]
             .iter()
             .filter(|b| b.is_ascii_alphanumeric() || **b == b'_')
