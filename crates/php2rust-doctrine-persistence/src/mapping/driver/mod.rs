@@ -3,7 +3,11 @@
 //!
 //! Upstream: none
 
+mod class_locator;
+mod class_names;
+mod colocated_mapping_driver;
 mod default_file_locator;
+mod file_class_locator;
 mod file_driver;
 mod file_locator;
 pub mod files;
@@ -11,7 +15,11 @@ mod mapping_driver;
 mod mapping_driver_chain;
 mod symfony_file_locator;
 
+pub use class_locator::ClassLocator;
+pub use class_names::ClassNames;
+pub use colocated_mapping_driver::ColocatedMappingDriver;
 pub use default_file_locator::DefaultFileLocator;
+pub use file_class_locator::FileClassLocator;
 pub use file_driver::{FileDriver, FileDriverImpl, FileDriverLocator};
 pub use file_locator::FileLocator;
 pub use mapping_driver::MappingDriver;
