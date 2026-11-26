@@ -1554,8 +1554,8 @@ tests/Tests/ORM/Functional/Ticket/GH7366Test.php	GH7366Test::testOptimisticLockN
 tests/Tests/ORM/Functional/Ticket/GH7496WithToIterableTest.php	GH7496WithToIterableTest::testNonUniqueObjectHydrationDuringIteration	ported	crates/php2rust-doctrine-orm/tests/gh7496_with_to_iterable_test.rs::testNonUniqueObjectHydrationDuringIteration
 tests/Tests/ORM/Functional/Ticket/GH7505Test.php	GH7505Test::testSimpleArrayTypeHydratedCorrectly	ported	crates/php2rust-doctrine-orm/tests/gh7505_test.rs::testSimpleArrayTypeHydratedCorrectly
 tests/Tests/ORM/Functional/Ticket/GH7512Test.php	GH7512Test::testFindEntityByAssociationPropertyJoinedChildWithClearMetadata	ported	crates/php2rust-doctrine-orm/tests/gh7512_test.rs::testFindEntityByAssociationPropertyJoinedChildWithClearMetadata
-tests/Tests/ORM/Functional/Ticket/GH7629Test.php	GH7629Test::testClearScheduledForSynchronizationWhenCommitEmpty	pending	
-tests/Tests/ORM/Functional/Ticket/GH7629Test.php	GH7629Test::testPersistAfterRemoveSchedulesForSynchronization	pending	
+tests/Tests/ORM/Functional/Ticket/GH7629Test.php	GH7629Test::testClearScheduledForSynchronizationWhenCommitEmpty	ported	crates/php2rust-doctrine-orm/tests/gh7629_test.rs::testClearScheduledForSynchronizationWhenCommitEmpty
+tests/Tests/ORM/Functional/Ticket/GH7629Test.php	GH7629Test::testPersistAfterRemoveSchedulesForSynchronization	ported	crates/php2rust-doctrine-orm/tests/gh7629_test.rs::testPersistAfterRemoveSchedulesForSynchronization
 tests/Tests/ORM/Functional/Ticket/GH7661Test.php	GH7661Test::testIndexByAssociation	pending	
 tests/Tests/ORM/Functional/Ticket/GH7684Test.php	GH7684Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/GH7717Test.php	GH7717Test::testManyToManyPersisterIsNullComparison	pending	
