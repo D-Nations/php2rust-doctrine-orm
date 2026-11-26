@@ -1626,17 +1626,17 @@ tests/Tests/ORM/Functional/Ticket/Ticket4646InstanceOfMultiLevelTest.php	Ticket4
 tests/Tests/ORM/Functional/Ticket/Ticket4646InstanceOfParametricTest.php	Ticket4646InstanceOfParametricTest::testInstanceOf	pending	
 tests/Tests/ORM/Functional/Ticket/Ticket4646InstanceOfTest.php	Ticket4646InstanceOfTest::testInstanceOf	pending	
 tests/Tests/ORM/Functional/Ticket/Ticket4646InstanceOfWithMultipleParametersTest.php	Ticket4646InstanceOfWithMultipleParametersTest::testInstanceOf	pending	
-tests/Tests/ORM/Functional/TypeTest.php	TypeTest::testArray	pending	
-tests/Tests/ORM/Functional/TypeTest.php	TypeTest::testBoolean	pending	
-tests/Tests/ORM/Functional/TypeTest.php	TypeTest::testDate	pending	
-tests/Tests/ORM/Functional/TypeTest.php	TypeTest::testDateTime	pending	
-tests/Tests/ORM/Functional/TypeTest.php	TypeTest::testDecimal	pending	
-tests/Tests/ORM/Functional/TypeTest.php	TypeTest::testDqlQueryBindDateTimeInstance	pending	
-tests/Tests/ORM/Functional/TypeTest.php	TypeTest::testDqlQueryBuilderBindDateTimeInstance	pending	
-tests/Tests/ORM/Functional/TypeTest.php	TypeTest::testFindByDateWithString	pending	
-tests/Tests/ORM/Functional/TypeTest.php	TypeTest::testFindByTimeWithString	pending	
-tests/Tests/ORM/Functional/TypeTest.php	TypeTest::testObject	pending	
-tests/Tests/ORM/Functional/TypeTest.php	TypeTest::testTime	pending	
+tests/Tests/ORM/Functional/TypeTest.php	TypeTest::testArray	n/a: skipped upstream on DBAL 4 (no ArrayType)	
+tests/Tests/ORM/Functional/TypeTest.php	TypeTest::testBoolean	ported	crates/php2rust-doctrine-orm/tests/type_test.rs::testBoolean
+tests/Tests/ORM/Functional/TypeTest.php	TypeTest::testDate	ported	crates/php2rust-doctrine-orm/tests/type_test.rs::testDate
+tests/Tests/ORM/Functional/TypeTest.php	TypeTest::testDateTime	ported	crates/php2rust-doctrine-orm/tests/type_test.rs::testDateTime
+tests/Tests/ORM/Functional/TypeTest.php	TypeTest::testDecimal	ported	crates/php2rust-doctrine-orm/tests/type_test.rs::testDecimal
+tests/Tests/ORM/Functional/TypeTest.php	TypeTest::testDqlQueryBindDateTimeInstance	ported	crates/php2rust-doctrine-orm/tests/type_test.rs::testDqlQueryBindDateTimeInstance
+tests/Tests/ORM/Functional/TypeTest.php	TypeTest::testDqlQueryBuilderBindDateTimeInstance	ported	crates/php2rust-doctrine-orm/tests/type_test.rs::testDqlQueryBuilderBindDateTimeInstance
+tests/Tests/ORM/Functional/TypeTest.php	TypeTest::testFindByDateWithString	ported	crates/php2rust-doctrine-orm/tests/type_test.rs::testFindByDateWithString
+tests/Tests/ORM/Functional/TypeTest.php	TypeTest::testFindByTimeWithString	ported	crates/php2rust-doctrine-orm/tests/type_test.rs::testFindByTimeWithString
+tests/Tests/ORM/Functional/TypeTest.php	TypeTest::testObject	n/a: skipped upstream on DBAL 4 (no ObjectType)	
+tests/Tests/ORM/Functional/TypeTest.php	TypeTest::testTime	ported	crates/php2rust-doctrine-orm/tests/type_test.rs::testTime
 tests/Tests/ORM/Functional/TypeValueSqlTest.php	TypeValueSqlTest::testSelectDQL	pending	
 tests/Tests/ORM/Functional/TypeValueSqlTest.php	TypeValueSqlTest::testTypeValueSqlWithAssociations	pending	
 tests/Tests/ORM/Functional/TypeValueSqlTest.php	TypeValueSqlTest::testUpperCaseStringType	pending	
