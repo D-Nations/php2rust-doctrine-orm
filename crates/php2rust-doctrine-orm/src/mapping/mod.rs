@@ -8,16 +8,21 @@ use std::sync::Once;
 use php2rust_doctrine_persistence::php_reflection::{ClassInfo, register_class};
 
 pub mod association_mapping;
+pub mod class_metadata;
 pub mod embedded_class_mapping;
 pub mod field_mapping;
 pub mod join_column_mapping;
 pub mod mapping_exception;
 pub mod naming_strategy;
+pub mod ordered_map;
+pub mod property_accessors;
 pub mod property_value;
+pub mod typed_field_mapper;
 
 pub use association_mapping::{
     AbstractBase, AssociationClass, AssociationKind, AssociationMapping,
 };
+pub use class_metadata::{ClassMetadata, ClassMetadataInfo};
 pub use embedded_class_mapping::{ColumnPrefix, DiscriminatorColumnMapping, EmbeddedClassMapping};
 pub use field_mapping::{FieldMapping, MappingProperties};
 pub use join_column_mapping::{JoinColumnMapping, JoinTableMapping};
