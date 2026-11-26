@@ -13,7 +13,7 @@ use php_value::{Key, PhpArray};
 use crate::mapping::ordered_map::OrderedMap;
 
 /// `Doctrine\ORM\Query\ResultSetMapping`.
-#[derive(Debug, Clone, Default)]
+#[derive(Debug, Clone)]
 pub struct ResultSetMapping {
     /// Whether the result is mixed (contains scalar values together with
     /// field values).
@@ -75,12 +75,41 @@ pub struct ResultSetMapping {
     pub nested_entities: PhpArray,
 }
 
+/// `new ResultSetMapping()`: `$isSelect` is `true`.
+impl Default for ResultSetMapping {
+    fn default() -> Self {
+        Self {
+            is_mixed: false,
+            is_select: true,
+            alias_map: Default::default(),
+            partial_aliases: Default::default(),
+            relation_map: Default::default(),
+            parent_alias_map: Default::default(),
+            field_mappings: Default::default(),
+            column_alias_mappings: Default::default(),
+            scalar_mappings: Default::default(),
+            enum_mappings: Default::default(),
+            type_mappings: Default::default(),
+            entity_mappings: Default::default(),
+            meta_mappings: Default::default(),
+            column_owner_map: Default::default(),
+            discriminator_columns: Default::default(),
+            index_by_map: Default::default(),
+            declaring_classes: Default::default(),
+            is_identifier_column: Default::default(),
+            new_object_mappings: Default::default(),
+            new_object: Default::default(),
+            nested_new_object_arguments: Default::default(),
+            metadata_parameter_mapping: Default::default(),
+            discriminator_parameters: Default::default(),
+            nested_entities: Default::default(),
+        }
+    }
+}
+
 impl ResultSetMapping {
     pub fn new() -> Self {
-        Self {
-            is_select: true,
-            ..Self::default()
-        }
+        Self::default()
     }
 
     /// Adds an entity result to this `ResultSetMapping`.
