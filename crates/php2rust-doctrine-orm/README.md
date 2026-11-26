@@ -193,8 +193,8 @@ Persistence, not reproduced and so not claimed:
   clause), and `find()` with a pessimistic lock loads as `NONE` does.
 - The persister does not join inverse one-to-one or EAGER to-one
   associations into its SELECT; `createEntity()` loads them with a second
-  query. Only the simple object hydrator exists; queries (DQL, query
-  builder, native queries, `matching()`), filters, the second level
+  query. Only the simple object hydrator exists; running queries (DQL,
+  the query builder's, native queries, `matching()`), filters, the second level
   cache, the metadata cache and the entity listener resolver are not
   ported. Joined (class table) inheritance persisters are `NotSupported`.
 - Entity methods (lifecycle callbacks, entity listeners) are bodies
