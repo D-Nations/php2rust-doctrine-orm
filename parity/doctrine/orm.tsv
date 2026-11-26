@@ -1563,8 +1563,8 @@ tests/Tests/ORM/Functional/Ticket/GH7735Test.php	GH7735Test::findByReturnsCached
 tests/Tests/ORM/Functional/Ticket/GH7737Test.php	GH7737Test::memberOfCriteriaShouldBeCompatibleWithQueryBuilder	ported	crates/php2rust-doctrine-orm/tests/gh7737_test.rs::memberOfCriteriaShouldBeCompatibleWithQueryBuilder
 tests/Tests/ORM/Functional/Ticket/GH7761Test.php	GH7761Test::testCollectionClearDoesClearIfPersisted	ported	crates/php2rust-doctrine-orm/tests/gh7761_test.rs::testCollectionClearDoesClearIfPersisted
 tests/Tests/ORM/Functional/Ticket/GH7761Test.php	GH7761Test::testCollectionClearDoesNotClearIfNotPersisted	ported	crates/php2rust-doctrine-orm/tests/gh7761_test.rs::testCollectionClearDoesNotClearIfNotPersisted
-tests/Tests/ORM/Functional/Ticket/GH7767Test.php	GH7767Test::testMatchingOverrulesCollectionOrdering	pending	
-tests/Tests/ORM/Functional/Ticket/GH7767Test.php	GH7767Test::testMatchingRespectsCollectionOrdering	pending	
+tests/Tests/ORM/Functional/Ticket/GH7767Test.php	GH7767Test::testMatchingOverrulesCollectionOrdering	ported	crates/php2rust-doctrine-orm/tests/gh7767_test.rs::testMatchingOverrulesCollectionOrdering
+tests/Tests/ORM/Functional/Ticket/GH7767Test.php	GH7767Test::testMatchingRespectsCollectionOrdering	ported	crates/php2rust-doctrine-orm/tests/gh7767_test.rs::testMatchingRespectsCollectionOrdering
 tests/Tests/ORM/Functional/Ticket/GH7820Test.php	GH7820Test::testPaginatorDoesNotForceCacheToUpdateEntries	pending	
 tests/Tests/ORM/Functional/Ticket/GH7820Test.php	GH7820Test::testPaginatorQueriesWillBeCached	pending	
 tests/Tests/ORM/Functional/Ticket/GH7820Test.php	GH7820Test::testWillFindSongsInPaginator	pending	
