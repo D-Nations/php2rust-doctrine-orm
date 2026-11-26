@@ -886,12 +886,12 @@ tests/Tests/ORM/Functional/QueryIterableTest.php	QueryIterableTest::testAlias	po
 tests/Tests/ORM/Functional/QueryIterableTest.php	QueryIterableTest::testAliasInnerJoin	ported	crates/php2rust-doctrine-orm/tests/query_iterable_test.rs::testAliasInnerJoin
 tests/Tests/ORM/Functional/QueryIterableTest.php	QueryIterableTest::testIndexByQueryWithMultipleResults	ported	crates/php2rust-doctrine-orm/tests/query_iterable_test.rs::testIndexByQueryWithMultipleResults
 tests/Tests/ORM/Functional/QueryIterableTest.php	QueryIterableTest::testIndexByQueryWithOneResult	ported	crates/php2rust-doctrine-orm/tests/query_iterable_test.rs::testIndexByQueryWithOneResult
-tests/Tests/ORM/Functional/QueryParameterTest.php	QueryParameterTest::testArrayParameterTypeInBuilder	pending	
-tests/Tests/ORM/Functional/QueryParameterTest.php	QueryParameterTest::testArrayParameterTypeInQuery	pending	
-tests/Tests/ORM/Functional/QueryParameterTest.php	QueryParameterTest::testDbalTypeStringInBuilder	pending	
-tests/Tests/ORM/Functional/QueryParameterTest.php	QueryParameterTest::testDbalTypeStringInQuery	pending	
-tests/Tests/ORM/Functional/QueryParameterTest.php	QueryParameterTest::testParameterTypeInBuilder	pending	
-tests/Tests/ORM/Functional/QueryParameterTest.php	QueryParameterTest::testParameterTypeInQuery	pending	
+tests/Tests/ORM/Functional/QueryParameterTest.php	QueryParameterTest::testArrayParameterTypeInBuilder	ported	crates/php2rust-doctrine-orm/tests/query_parameter_test.rs::testArrayParameterTypeInBuilder
+tests/Tests/ORM/Functional/QueryParameterTest.php	QueryParameterTest::testArrayParameterTypeInQuery	ported	crates/php2rust-doctrine-orm/tests/query_parameter_test.rs::testArrayParameterTypeInQuery
+tests/Tests/ORM/Functional/QueryParameterTest.php	QueryParameterTest::testDbalTypeStringInBuilder	ported	crates/php2rust-doctrine-orm/tests/query_parameter_test.rs::testDbalTypeStringInBuilder
+tests/Tests/ORM/Functional/QueryParameterTest.php	QueryParameterTest::testDbalTypeStringInQuery	ported	crates/php2rust-doctrine-orm/tests/query_parameter_test.rs::testDbalTypeStringInQuery
+tests/Tests/ORM/Functional/QueryParameterTest.php	QueryParameterTest::testParameterTypeInBuilder	ported	crates/php2rust-doctrine-orm/tests/query_parameter_test.rs::testParameterTypeInBuilder
+tests/Tests/ORM/Functional/QueryParameterTest.php	QueryParameterTest::testParameterTypeInQuery	ported	crates/php2rust-doctrine-orm/tests/query_parameter_test.rs::testParameterTypeInQuery
 tests/Tests/ORM/Functional/QueryTest.php	QueryTest::testDqlWithAutoInferOfParameters	ported	crates/php2rust-doctrine-orm/tests/functional_query_test.rs::testDqlWithAutoInferOfParameters
 tests/Tests/ORM/Functional/QueryTest.php	QueryTest::testEnableFetchEagerMode	ported	crates/php2rust-doctrine-orm/tests/functional_query_test.rs::testEnableFetchEagerMode
 tests/Tests/ORM/Functional/QueryTest.php	QueryTest::testEntityParameters	ported	crates/php2rust-doctrine-orm/tests/functional_query_test.rs::testEntityParameters
