@@ -55,66 +55,66 @@ src/Cache/TimestampCacheEntry.php	TimestampCacheEntry	15	pending
 src/Cache/TimestampCacheKey.php	TimestampCacheKey	9	pending	
 src/Cache/TimestampQueryCacheValidator.php	TimestampQueryCacheValidator	27	pending	
 src/Cache/TimestampRegion.php	TimestampRegion	6	pending	
-src/Configuration.php	Configuration	408	pending	
+src/Configuration.php	Configuration	408	ported	crates/php2rust-doctrine-orm/src/configuration.rs
 src/Decorator/EntityManagerDecorator.php	EntityManagerDecorator	137	pending	
-src/EntityManager.php	EntityManager	397	pending	
+src/EntityManager.php	EntityManager	397	ported	crates/php2rust-doctrine-orm/src/entity_manager.rs
 src/EntityManagerInterface.php	EntityManagerInterface	44	pending	
-src/EntityNotFoundException.php	EntityNotFoundException	26	pending	
-src/EntityRepository.php	EntityRepository	122	pending	
-src/Event/ListenersInvoker.php	ListenersInvoker	59	pending	
+src/EntityNotFoundException.php	EntityNotFoundException	26	ported	crates/php2rust-doctrine-orm/src/exception.rs
+src/EntityRepository.php	EntityRepository	122	ported	crates/php2rust-doctrine-orm/src/entity_repository.rs
+src/Event/ListenersInvoker.php	ListenersInvoker	59	ported	crates/php2rust-doctrine-orm/src/event/listeners_invoker.rs
 src/Event/LoadClassMetadataEventArgs.php	LoadClassMetadataEventArgs	12	pending	
 src/Event/OnClassMetadataNotFoundEventArgs.php	OnClassMetadataNotFoundEventArgs	28	pending	
-src/Event/OnClearEventArgs.php	OnClearEventArgs	7	pending	
-src/Event/OnFlushEventArgs.php	OnFlushEventArgs	7	pending	
-src/Event/PostFlushEventArgs.php	PostFlushEventArgs	7	pending	
-src/Event/PostLoadEventArgs.php	PostLoadEventArgs	7	pending	
-src/Event/PostPersistEventArgs.php	PostPersistEventArgs	7	pending	
-src/Event/PostRemoveEventArgs.php	PostRemoveEventArgs	7	pending	
-src/Event/PostUpdateEventArgs.php	PostUpdateEventArgs	7	pending	
-src/Event/PreFlushEventArgs.php	PreFlushEventArgs	7	pending	
-src/Event/PrePersistEventArgs.php	PrePersistEventArgs	7	pending	
-src/Event/PreRemoveEventArgs.php	PreRemoveEventArgs	7	pending	
-src/Event/PreUpdateEventArgs.php	PreUpdateEventArgs	50	pending	
+src/Event/OnClearEventArgs.php	OnClearEventArgs	7	ported	crates/php2rust-doctrine-orm/src/event/mod.rs
+src/Event/OnFlushEventArgs.php	OnFlushEventArgs	7	ported	crates/php2rust-doctrine-orm/src/event/mod.rs
+src/Event/PostFlushEventArgs.php	PostFlushEventArgs	7	ported	crates/php2rust-doctrine-orm/src/event/mod.rs
+src/Event/PostLoadEventArgs.php	PostLoadEventArgs	7	ported	crates/php2rust-doctrine-orm/src/event/mod.rs
+src/Event/PostPersistEventArgs.php	PostPersistEventArgs	7	ported	crates/php2rust-doctrine-orm/src/event/mod.rs
+src/Event/PostRemoveEventArgs.php	PostRemoveEventArgs	7	ported	crates/php2rust-doctrine-orm/src/event/mod.rs
+src/Event/PostUpdateEventArgs.php	PostUpdateEventArgs	7	ported	crates/php2rust-doctrine-orm/src/event/mod.rs
+src/Event/PreFlushEventArgs.php	PreFlushEventArgs	7	ported	crates/php2rust-doctrine-orm/src/event/mod.rs
+src/Event/PrePersistEventArgs.php	PrePersistEventArgs	7	ported	crates/php2rust-doctrine-orm/src/event/mod.rs
+src/Event/PreRemoveEventArgs.php	PreRemoveEventArgs	7	ported	crates/php2rust-doctrine-orm/src/event/mod.rs
+src/Event/PreUpdateEventArgs.php	PreUpdateEventArgs	50	ported	crates/php2rust-doctrine-orm/src/event/mod.rs
 src/Events.php	Events	21	ported	crates/php2rust-doctrine-orm/src/events.rs
 src/Exception/ConfigurationException.php	ConfigurationException	5	pending	
 src/Exception/DuplicateFieldException.php	DuplicateFieldException	11	pending	
-src/Exception/EntityIdentityCollisionException.php	EntityIdentityCollisionException	33	pending	
-src/Exception/EntityManagerClosed.php	EntityManagerClosed	10	pending	
-src/Exception/EntityMissingAssignedId.php	EntityMissingAssignedId	14	pending	
-src/Exception/InvalidEntityRepository.php	InvalidEntityRepository	13	pending	
+src/Exception/EntityIdentityCollisionException.php	EntityIdentityCollisionException	33	ported	crates/php2rust-doctrine-orm/src/exception.rs
+src/Exception/EntityManagerClosed.php	EntityManagerClosed	10	ported	crates/php2rust-doctrine-orm/src/exception.rs
+src/Exception/EntityMissingAssignedId.php	EntityMissingAssignedId	14	ported	crates/php2rust-doctrine-orm/src/exception.rs
+src/Exception/InvalidEntityRepository.php	InvalidEntityRepository	13	ported	crates/php2rust-doctrine-orm/src/exception.rs
 src/Exception/InvalidHydrationMode.php	InvalidHydrationMode	11	pending	
 src/Exception/ManagerException.php	ManagerException	6	pending	
-src/Exception/MissingIdentifierField.php	MissingIdentifierField	15	pending	
-src/Exception/MissingMappingDriverImplementation.php	MissingMappingDriverImplementation	13	pending	
+src/Exception/MissingIdentifierField.php	MissingIdentifierField	15	ported	crates/php2rust-doctrine-orm/src/exception.rs
+src/Exception/MissingMappingDriverImplementation.php	MissingMappingDriverImplementation	13	ported	crates/php2rust-doctrine-orm/src/exception.rs
 src/Exception/MultipleSelectorsFoundException.php	MultipleSelectorsFoundException	18	pending	
 src/Exception/NoMatchingPropertyException.php	NoMatchingPropertyException	11	pending	
-src/Exception/NotSupported.php	NotSupported	35	pending	
-src/Exception/ORMException.php	ORMException	6	pending	
+src/Exception/NotSupported.php	NotSupported	35	ported	crates/php2rust-doctrine-orm/src/exception.rs
+src/Exception/ORMException.php	ORMException	6	ported	crates/php2rust-doctrine-orm/src/exception.rs
 src/Exception/PersisterException.php	PersisterException	6	pending	
 src/Exception/RepositoryException.php	RepositoryException	5	pending	
 src/Exception/SchemaToolException.php	SchemaToolException	6	pending	
-src/Exception/UnexpectedAssociationValue.php	UnexpectedAssociationValue	21	pending	
-src/Exception/UnrecognizedIdentifierFields.php	UnrecognizedIdentifierFields	16	pending	
+src/Exception/UnexpectedAssociationValue.php	UnexpectedAssociationValue	21	ported	crates/php2rust-doctrine-orm/src/exception.rs
+src/Exception/UnrecognizedIdentifierFields.php	UnrecognizedIdentifierFields	16	ported	crates/php2rust-doctrine-orm/src/exception.rs
 src/Id/AbstractIdGenerator.php	AbstractIdGenerator	11	pending	
-src/Id/AssignedGenerator.php	AssignedGenerator	24	pending	
+src/Id/AssignedGenerator.php	AssignedGenerator	24	ported	crates/php2rust-doctrine-orm/src/unit_of_work.rs
 src/Id/BigIntegerIdentityGenerator.php	BigIntegerIdentityGenerator	14	pending	
-src/Id/IdentityGenerator.php	IdentityGenerator	14	pending	
-src/Id/SequenceGenerator.php	SequenceGenerator	73	pending	
-src/Internal/Hydration/AbstractHydrator.php	AbstractHydrator	359	pending	
+src/Id/IdentityGenerator.php	IdentityGenerator	14	ported	crates/php2rust-doctrine-orm/src/unit_of_work.rs
+src/Id/SequenceGenerator.php	SequenceGenerator	73	ported	crates/php2rust-doctrine-orm/src/unit_of_work.rs
+src/Internal/Hydration/AbstractHydrator.php	AbstractHydrator	359	ported	crates/php2rust-doctrine-orm/src/internal/hydration/mod.rs
 src/Internal/Hydration/ArrayHydrator.php	ArrayHydrator	175	pending	
 src/Internal/Hydration/HydrationException.php	HydrationException	59	pending	
 src/Internal/Hydration/ObjectHydrator.php	ObjectHydrator	388	pending	
 src/Internal/Hydration/ScalarColumnHydrator.php	ScalarColumnHydrator	15	pending	
 src/Internal/Hydration/ScalarHydrator.php	ScalarHydrator	17	pending	
-src/Internal/Hydration/SimpleObjectHydrator.php	SimpleObjectHydrator	134	pending	
+src/Internal/Hydration/SimpleObjectHydrator.php	SimpleObjectHydrator	134	ported	crates/php2rust-doctrine-orm/src/internal/hydration/mod.rs
 src/Internal/Hydration/SingleScalarHydrator.php	SingleScalarHydrator	26	pending	
-src/Internal/HydrationCompleteHandler.php	HydrationCompleteHandler	39	pending	
+src/Internal/HydrationCompleteHandler.php	HydrationCompleteHandler	39	ported	crates/php2rust-doctrine-orm/src/unit_of_work.rs
 src/Internal/NoUnknownNamedArguments.php	NoUnknownNamedArguments	34	pending	
 src/Internal/SQLResultCasing.php	SQLResultCasing	21	ported	crates/php2rust-doctrine-orm/src/mapping/quote_strategy.rs
 src/Internal/StronglyConnectedComponents.php	StronglyConnectedComponents	81	ported	crates/php2rust-doctrine-orm/src/internal/strongly_connected_components.rs
 src/Internal/TopologicalSort.php	TopologicalSort	71	ported	crates/php2rust-doctrine-orm/src/internal/topological_sort.rs
 src/Internal/TopologicalSort/CycleDetectedException.php	CycleDetectedException	29	ported	crates/php2rust-doctrine-orm/src/internal/topological_sort.rs
-src/Internal/UnitOfWork/InsertBatch.php	InsertBatch	35	pending	
+src/Internal/UnitOfWork/InsertBatch.php	InsertBatch	35	ported	crates/php2rust-doctrine-orm/src/unit_of_work.rs
 src/LazyCriteriaCollection.php	LazyCriteriaCollection	51	pending	
 src/Mapping/AnsiQuoteStrategy.php	AnsiQuoteStrategy	53	ported	crates/php2rust-doctrine-orm/src/mapping/quote_strategy.rs
 src/Mapping/ArrayAccessImplementation.php	ArrayAccessImplementation	51	ported	crates/php2rust-doctrine-orm/src/mapping/field_mapping.rs
@@ -137,7 +137,7 @@ src/Mapping/ClassMetadata.php	ClassMetadata	1426	ported	crates/php2rust-doctrine
 src/Mapping/ClassMetadataFactory.php	ClassMetadataFactory	511	ported	crates/php2rust-doctrine-orm/src/mapping/class_metadata_factory.rs
 src/Mapping/Column.php	Column	25	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
 src/Mapping/CustomIdGenerator.php	CustomIdGenerator	11	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
-src/Mapping/DefaultEntityListenerResolver.php	DefaultEntityListenerResolver	25	pending	
+src/Mapping/DefaultEntityListenerResolver.php	DefaultEntityListenerResolver	25	ported	crates/php2rust-doctrine-orm/src/event/listeners_invoker.rs
 src/Mapping/DefaultNamingStrategy.php	DefaultNamingStrategy	51	ported	crates/php2rust-doctrine-orm/src/mapping/naming_strategy.rs
 src/Mapping/DefaultQuoteStrategy.php	DefaultQuoteStrategy	111	ported	crates/php2rust-doctrine-orm/src/mapping/quote_strategy.rs
 src/Mapping/DefaultTypedFieldMapper.php	DefaultTypedFieldMapper	73	ported	crates/php2rust-doctrine-orm/src/mapping/typed_field_mapper.rs
@@ -230,24 +230,24 @@ src/Mapping/Version.php	Version	7	ported	crates/php2rust-doctrine-orm/src/mappin
 src/NativeQuery.php	NativeQuery	52	pending	
 src/NoResultException.php	NoResultException	9	pending	
 src/NonUniqueResultException.php	NonUniqueResultException	10	pending	
-src/ORMInvalidArgumentException.php	ORMInvalidArgumentException	160	pending	
+src/ORMInvalidArgumentException.php	ORMInvalidArgumentException	160	ported	crates/php2rust-doctrine-orm/src/exception.rs
 src/ORMSetup.php	ORMSetup	157	pending	
-src/OptimisticLockException.php	OptimisticLockException	37	pending	
-src/PersistentCollection.php	PersistentCollection	376	pending	
-src/PersistentCollectionImplementation.php	PersistentCollectionImplementation PersistentCollectionImplementation	24	pending	
-src/Persisters/Collection/AbstractCollectionPersister.php	AbstractCollectionPersister	30	pending	
-src/Persisters/Collection/CollectionPersister.php	CollectionPersister	15	pending	
-src/Persisters/Collection/ManyToManyPersister.php	ManyToManyPersister	522	pending	
-src/Persisters/Collection/OneToManyPersister.php	OneToManyPersister	175	pending	
+src/OptimisticLockException.php	OptimisticLockException	37	ported	crates/php2rust-doctrine-orm/src/exception.rs
+src/PersistentCollection.php	PersistentCollection	376	ported	crates/php2rust-doctrine-orm/src/persistent_collection.rs
+src/PersistentCollectionImplementation.php	PersistentCollectionImplementation PersistentCollectionImplementation	24	ported	crates/php2rust-doctrine-orm/src/persistent_collection.rs
+src/Persisters/Collection/AbstractCollectionPersister.php	AbstractCollectionPersister	30	ported	crates/php2rust-doctrine-orm/src/persisters/collection.rs
+src/Persisters/Collection/CollectionPersister.php	CollectionPersister	15	ported	crates/php2rust-doctrine-orm/src/persisters/collection.rs
+src/Persisters/Collection/ManyToManyPersister.php	ManyToManyPersister	522	ported	crates/php2rust-doctrine-orm/src/persisters/collection.rs
+src/Persisters/Collection/OneToManyPersister.php	OneToManyPersister	175	ported	crates/php2rust-doctrine-orm/src/persisters/collection.rs
 src/Persisters/Entity/AbstractEntityInheritancePersister.php	AbstractEntityInheritancePersister	39	pending	
-src/Persisters/Entity/BasicEntityPersister.php	BasicEntityPersister	1300	pending	
-src/Persisters/Entity/CachedPersisterContext.php	CachedPersisterContext	17	pending	
-src/Persisters/Entity/EntityPersister.php	EntityPersister	85	pending	
+src/Persisters/Entity/BasicEntityPersister.php	BasicEntityPersister	1300	ported	crates/php2rust-doctrine-orm/src/persisters/basic_entity_persister.rs
+src/Persisters/Entity/CachedPersisterContext.php	CachedPersisterContext	17	ported	crates/php2rust-doctrine-orm/src/persisters/basic_entity_persister.rs
+src/Persisters/Entity/EntityPersister.php	EntityPersister	85	ported	crates/php2rust-doctrine-orm/src/persisters/basic_entity_persister.rs
 src/Persisters/Entity/JoinedSubclassPersister.php	JoinedSubclassPersister	421	pending	
 src/Persisters/Entity/SingleTablePersister.php	SingleTablePersister	109	pending	
-src/Persisters/Exception/CantUseInOperatorOnCompositeKeys.php	CantUseInOperatorOnCompositeKeys	10	pending	
-src/Persisters/Exception/InvalidOrientation.php	InvalidOrientation	10	pending	
-src/Persisters/Exception/UnrecognizedField.php	UnrecognizedField	15	pending	
+src/Persisters/Exception/CantUseInOperatorOnCompositeKeys.php	CantUseInOperatorOnCompositeKeys	10	ported	crates/php2rust-doctrine-orm/src/exception.rs
+src/Persisters/Exception/InvalidOrientation.php	InvalidOrientation	10	ported	crates/php2rust-doctrine-orm/src/exception.rs
+src/Persisters/Exception/UnrecognizedField.php	UnrecognizedField	15	ported	crates/php2rust-doctrine-orm/src/exception.rs
 src/Persisters/MatchingAssociationFieldRequiresObject.php	MatchingAssociationFieldRequiresObject	16	pending	
 src/Persisters/PersisterException.php	PersisterException	17	pending	
 src/Persisters/SqlExpressionVisitor.php	SqlExpressionVisitor	54	pending	
@@ -258,7 +258,7 @@ src/Proxy/Autoloader.php	Autoloader	63	pending
 src/Proxy/DefaultProxyClassNameResolver.php	DefaultProxyClassNameResolver	39	pending	
 src/Proxy/InternalProxy.php	InternalProxy	7	pending	
 src/Proxy/NotAProxyClass.php	NotAProxyClass	16	pending	
-src/Proxy/ProxyFactory.php	ProxyFactory	399	pending	
+src/Proxy/ProxyFactory.php	ProxyFactory	399	ported	crates/php2rust-doctrine-orm/src/entity_manager.rs
 src/Query.php	Query	367	pending	
 src/Query/AST/ASTException.php	ASTException	11	pending	
 src/Query/AST/AggregateExpression.php	AggregateExpression	16	pending	
@@ -387,7 +387,7 @@ src/Query/ParserResult.php	ParserResult	81	pending
 src/Query/Printer.php	Printer	26	pending	
 src/Query/QueryException.php	QueryException	133	pending	
 src/Query/QueryExpressionVisitor.php	QueryExpressionVisitor	124	pending	
-src/Query/ResultSetMapping.php	ResultSetMapping	203	pending	
+src/Query/ResultSetMapping.php	ResultSetMapping	203	ported	crates/php2rust-doctrine-orm/src/query/result_set_mapping.rs
 src/Query/ResultSetMappingBuilder.php	ResultSetMappingBuilder	160	pending	
 src/Query/SqlOutputWalker.php	SqlOutputWalker	21	pending	
 src/Query/SqlWalker.php	SqlWalker	1510	pending	
@@ -397,10 +397,10 @@ src/Query/TreeWalkerAdapter.php	TreeWalkerAdapter	51	pending
 src/Query/TreeWalkerChain.php	TreeWalkerChain	47	pending	
 src/QueryBuilder.php	QueryBuilder	707	pending	
 src/QueryType.php	QueryType	8	pending	
-src/Repository/DefaultRepositoryFactory.php	DefaultRepositoryFactory	24	pending	
-src/Repository/Exception/InvalidFindByCall.php	InvalidFindByCall	16	pending	
-src/Repository/Exception/InvalidMagicMethodCall.php	InvalidMagicMethodCall	21	pending	
-src/Repository/RepositoryFactory.php	RepositoryFactory	8	pending	
+src/Repository/DefaultRepositoryFactory.php	DefaultRepositoryFactory	24	ported	crates/php2rust-doctrine-orm/src/repository/mod.rs
+src/Repository/Exception/InvalidFindByCall.php	InvalidFindByCall	16	ported	crates/php2rust-doctrine-orm/src/exception.rs
+src/Repository/Exception/InvalidMagicMethodCall.php	InvalidMagicMethodCall	21	ported	crates/php2rust-doctrine-orm/src/exception.rs
+src/Repository/RepositoryFactory.php	RepositoryFactory	8	ported	crates/php2rust-doctrine-orm/src/repository/mod.rs
 src/Tools/AttachEntityListenersListener.php	AttachEntityListenersListener	38	pending	
 src/Tools/Console/ApplicationCompatibility.php	ApplicationCompatibility	15	pending	
 src/Tools/Console/Command/AbstractEntityManagerCommand.php	AbstractEntityManagerCommand	19	pending	
@@ -433,7 +433,7 @@ src/Tools/Debug.php	Debug	104	pending
 src/Tools/DebugUnitOfWorkListener.php	DebugUnitOfWorkListener	106	pending	
 src/Tools/Event/GenerateSchemaEventArgs.php	GenerateSchemaEventArgs	33	pending	
 src/Tools/Event/GenerateSchemaTableEventArgs.php	GenerateSchemaTableEventArgs	55	pending	
-src/Tools/Exception/MissingColumnException.php	MissingColumnException	17	pending	
+src/Tools/Exception/MissingColumnException.php	MissingColumnException	17	ported	crates/php2rust-doctrine-orm/src/tools/schema_tool.rs
 src/Tools/Exception/NotSupported.php	NotSupported	11	pending	
 src/Tools/Pagination/CountOutputWalker.php	CountOutputWalker	81	pending	
 src/Tools/Pagination/CountWalker.php	CountWalker	49	pending	
@@ -459,14 +459,14 @@ src/Tools/Pagination/WhereInWalker.php	WhereInWalker	85	pending
 src/Tools/Pagination/Window.php	Window	46	pending	
 src/Tools/Pagination/WindowPage.php	WindowPage	76	pending	
 src/Tools/ResolveTargetEntityListener.php	ResolveTargetEntityListener	75	pending	
-src/Tools/SchemaTool.php	SchemaTool	1118	pending	
+src/Tools/SchemaTool.php	SchemaTool	1118	ported	crates/php2rust-doctrine-orm/src/tools/schema_tool.rs
 src/Tools/SchemaValidator.php	SchemaValidator	345	pending	
 src/Tools/ToolEvents.php	ToolEvents	7	pending	
-src/Tools/ToolsException.php	ToolsException	16	pending	
-src/TransactionRequiredException.php	TransactionRequiredException	11	pending	
+src/Tools/ToolsException.php	ToolsException	16	ported	crates/php2rust-doctrine-orm/src/tools/schema_tool.rs
+src/TransactionRequiredException.php	TransactionRequiredException	11	ported	crates/php2rust-doctrine-orm/src/exception.rs
 src/UnexpectedResultException.php	UnexpectedResultException	7	pending	
-src/UnitOfWork.php	UnitOfWork	1956	pending	
+src/UnitOfWork.php	UnitOfWork	1956	ported	crates/php2rust-doctrine-orm/src/unit_of_work.rs
 src/Utility/HierarchyDiscriminatorResolver.php	HierarchyDiscriminatorResolver	26	pending	
-src/Utility/IdentifierFlattener.php	IdentifierFlattener	50	pending	
+src/Utility/IdentifierFlattener.php	IdentifierFlattener	50	ported	crates/php2rust-doctrine-orm/src/utility/identifier_flattener.rs
 src/Utility/LockSqlHelper.php	LockSqlHelper	28	pending	
-src/Utility/PersisterHelper.php	PersisterHelper	190	pending	
+src/Utility/PersisterHelper.php	PersisterHelper	190	ported	crates/php2rust-doctrine-orm/src/utility/persister_helper.rs

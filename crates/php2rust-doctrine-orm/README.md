@@ -36,6 +36,15 @@ assert_eq!(PhpString::from("O'Neil"), lexer.token().unwrap().value);
 | The builders (`ClassMetadataBuilder`, `FieldBuilder`, `EmbeddedBuilder`, the association builders, `EntityListenerBuilder`) | `Mapping/Builder/*.php` | ClassMetadataBuilderTest (38), FieldBuilderTest (1) |
 | Naming strategies (`DefaultNamingStrategy`, `UnderscoreNamingStrategy`), quote strategies (`DefaultQuoteStrategy`, `AnsiQuoteStrategy`), typed field mappers (`DefaultTypedFieldMapper`, `ChainTypedFieldMapper`) | `Mapping/*NamingStrategy.php`, `*QuoteStrategy.php`, `*TypedFieldMapper.php`, `Internal/SQLResultCasing.php` | NamingStrategyTest (6), QuoteStrategyTest (8), AnsiQuoteStrategyTest (8), DefaultQuoteStrategyTest (2), TypedFieldMapperTest (1, 12 rows), TypedEnumFieldMapperTest (1) |
 | The property accessors (`RawValue`, `ObjectCast`, `TypedNoDefault`, `Readonly`, `Enum`, `Embeddable`, the factory) and the legacy `ReflectionReadonlyProperty`/`ReflectionEmbeddedProperty` | `Mapping/PropertyAccessors/*.php`, `ReflectionReadonlyProperty.php`, `ReflectionEmbeddedProperty.php` | the PropertyAccessors tests (10), ReflectionReadonlyPropertyTest (3), ReflectionEmbeddedPropertyTest (2, 6 rows each) |
+| `TopologicalSort` and `StronglyConnectedComponents` (commit order, cycle breaking on optional edges, `CycleDetectedException`) | `Internal/TopologicalSort.php`, `Internal/StronglyConnectedComponents.php` | TopologicalSortTest, StronglyConnectedComponentsTest |
+| `EntityManager` (async where it reaches the database): `create()` (`MissingMappingDriverImplementation`), `find()`/`find_with_lock()` (identifier normalization, `invalidCompositeIdentifier`, `MissingIdentifierField`, `UnrecognizedIdentifierFields`, lock requirements: `OptimisticLockException::notVersioned`, `TransactionRequiredException`), `getReference()`, `persist()`, `remove()`, `refresh()`, `detach()`, `contains()`, `clear()`, `close()` (`EntityManagerClosed`), `flush()`, `wrapInTransaction()`, `beginTransaction()`/`commit()`/`rollback()`, `getRepository()`, `lock()`; `Configuration` (`setDefaultRepositoryClassName()`'s `InvalidEntityRepository`) | `EntityManager.php`, `Configuration.php`, `Proxy/ProxyFactory.php` (native lazy ghosts) | BasicFunctionalTest (19), EntityRepositoryTest (35) |
+| `UnitOfWork` (UnitOfWorkTest runs on a stubbed driver connection, as upstream's mocks): change sets (scalars, to-one, collections, `recomputeSingleEntityChangeSet()`), commit order by `TopologicalSort`, identity map (`EntityIdentityCollisionException`), cascades (persist, remove, refresh, detach), orphan removal, collection deletions and updates, entity states, `createEntity()` (lazy to-one proxies, deferred eager loads), the ORMInvalidArgumentException texts (`newEntityFoundThroughRelationship`, `invalidAssociation`, ...) | `UnitOfWork.php`, `ORMInvalidArgumentException.php`, `Exception/*.php`, `EntityNotFoundException.php`, `OptimisticLockException.php` | BasicFunctionalTest, UnitOfWorkTest (12), the OneToMany*/ManyToMany* association tests (24), LifecycleCallbackTest (7) |
+| `PersistentCollection` over collections' `ArrayCollection` (lazy loading, snapshot, insert/delete diffs, dirty flag, orphan scheduling), and an `ArrayCollection` property object | `PersistentCollection.php` | the association tests, ManyToManyBasicAssociationTest (9) |
+| `BasicEntityPersister` (inserts with identity ids, updates with versions, deletes with join table rows, `load()`, `loadAll()`, `loadById()`, `count()`, `exists()`, `refresh()`, the SELECT/INSERT/COUNT SQL, criteria with `IN` and `NULL`, `InvalidOrientation`, `UnrecognizedField`, `InvalidFindByCall`), `OneToManyPersister` and `ManyToManyPersister` (`delete()`, `update()`), `PersisterHelper`, `IdentifierFlattener`, the simple object hydrator | `Persisters/Entity/BasicEntityPersister.php`, `Persisters/Collection/*Persister.php`, `Utility/*.php`, `Internal/Hydration/SimpleObjectHydrator.php` | EntityRepositoryTest, BasicFunctionalTest, ManyToManyBasicAssociationTest (query counts) |
+| `EntityRepository` (`find()`, `findAll()`, `findBy()`, `findOneBy()`, `count()`, `__call()` magic finders with `InvalidMagicMethodCall`), `DefaultRepositoryFactory` | `EntityRepository.php`, `Repository/*.php` | EntityRepositoryTest |
+| Lifecycle events: `ListenersInvoker` (callbacks, entity listeners, event manager), the event args classes, `PreUpdateEventArgs` | `Event/*.php` | LifecycleCallbackTest |
+| `SchemaTool::createSchema()`/`dropSchema()`/`getSchemaFromMetadata()` for no and single-table inheritance (columns, join columns and tables, indexes, unique constraints, foreign keys) | `Tools/SchemaTool.php` | the functional tests' schemas |
+| `ResultSetMapping` | `Query/ResultSetMapping.php` | the persister's mappings |
 
 `Lexer::new()` returns doctrine/lexer's `PcreError`, which the DQL
 patterns never cause.
@@ -68,8 +77,9 @@ Mapping, not reproduced and so not claimed:
   are registered from PHP reflection recorded by
   oracle/recorders/orm_models.php (PHP 8.4.27, the plain
   `php:8.4.27-cli-bookworm` image). There are no recorded ORM vectors beyond the models.
-- There is no entity manager: `ClassMetadataFactory::set_entity_manager()`
-  takes a `FactoryConfiguration` (driver, naming and quote strategies,
+- `ClassMetadataFactory::set_entity_manager()` takes a
+  `FactoryConfiguration` (the entity manager builds it from its
+  `Configuration`) (driver, naming and quote strategies,
   typed field mapper, identity preferences, platform), and the
   `loadClassMetadata` and `onClassMetadataNotFound` listeners are hooks
   on it. Only DBAL's `SQLitePlatform` exists; other platforms are known
@@ -98,3 +108,40 @@ attributes); `RawValuePropertyAccessorTest` (PHP 8.4 property hooks);
 `ClassMetadataFactoryTest::testAcceptsEntityManagerInterfaceInstances`
 and `QuoteStrategyTest::testConfiguration` (the entity manager and its
 `Configuration`).
+
+Persistence, not reproduced and so not claimed:
+
+- The DBAL is async, so the entity manager, unit of work, persisters,
+  repositories and the collection methods that load (`count()`, `get()`,
+  `contains()`, ...) are `async`; PHP's on-the-spot lazy loading is an
+  explicit `initialize_object()`. A lazy proxy is an `EntityObject` ghost
+  with its identifier set; `EntityManager::find()` initializes a proxy it
+  finds in the identity map (PHP does on the first property access).
+- The entity manager takes the `Configuration` by value: changes after
+  `create()` are not seen. The platform is `SQLitePlatform`. A pessimistic
+  lock runs no `SELECT 1 ... FOR UPDATE` query (SQLite has no lock
+  clause), and `find()` with a pessimistic lock loads as `NONE` does.
+- The persister does not join inverse one-to-one or EAGER to-one
+  associations into its SELECT; `createEntity()` loads them with a second
+  query. Only the simple object hydrator exists; queries (DQL, query
+  builder, native queries, `matching()`), filters, the second level
+  cache, the metadata cache and the entity listener resolver are not
+  ported. Joined (class table) inheritance persisters are `NotSupported`.
+- Entity methods (lifecycle callbacks, entity listeners) are bodies
+  registered by class and method name (`object::register_method()`,
+  `register_listener_method()`), what a compiler would emit. A custom
+  repository class is a name: the repository is an `EntityRepository`
+  that reports it. `__call()` magic finders are `EntityRepository::call()`.
+- `wrapInTransaction()` takes an async closure; `getReference()` of a
+  class with subclasses is `NotSupported` (PHP calls `find()`).
+
+Persistence pending: the DQL-based tests (the Parser and SqlWalker are
+ported separately), `EntityRepositoryTest::testDefaultRepositoryClassName`
+(the DDC753 models and changing the configuration after `create()`),
+`ManyToManyBasicAssociationTest::testUnsetManyToMany` and
+`testManyToManyCollectionClearing` (a DQL count), the association tests
+whose fixtures read with DQL, the UnitOfWorkTest tests that read
+`EntityPersisterMock`'s recorded inserts and its mocked id generator
+type, and `UnitOfWorkTest::testItPreservesTheOriginalExceptionOnRollbackFailure`
+(`Thrown` has no previous exception; a failing rollback's error replaces
+the commit's).
