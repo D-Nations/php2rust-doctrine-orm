@@ -2178,8 +2178,8 @@ tests/Tests/ORM/Mapping/Symfony/XmlDriverTest.php	XmlDriverTest::testFindMapping
 tests/Tests/ORM/Mapping/TableMappingTest.php	TableMappingTest::testDeprecationOnIndexesPropertyIsTriggered	ported	crates/php2rust-doctrine-orm/tests/table_mapping_test.rs::testDeprecationOnIndexesPropertyIsTriggered
 tests/Tests/ORM/Mapping/TableMappingTest.php	TableMappingTest::testDeprecationOnUniqueConstraintsPropertyIsTriggered	ported	crates/php2rust-doctrine-orm/tests/table_mapping_test.rs::testDeprecationOnUniqueConstraintsPropertyIsTriggered
 tests/Tests/ORM/Mapping/ToManyAssociationMappingTest.php	ToManyAssociationMappingTest::testItSurvivesSerialization	ported	crates/php2rust-doctrine-orm/tests/to_many_association_mapping_test.rs::testItSurvivesSerialization
-tests/Tests/ORM/Mapping/TypedEnumFieldMapperTest.php	TypedEnumFieldMapperTest::testNotBackedEnumThrows	pending	
-tests/Tests/ORM/Mapping/TypedFieldMapperTest.php	TypedFieldMapperTest::testValidateAndComplete	pending	
+tests/Tests/ORM/Mapping/TypedEnumFieldMapperTest.php	TypedEnumFieldMapperTest::testNotBackedEnumThrows	ported	crates/php2rust-doctrine-orm/tests/typed_enum_field_mapper_test.rs::testNotBackedEnumThrows
+tests/Tests/ORM/Mapping/TypedFieldMapperTest.php	TypedFieldMapperTest::testValidateAndComplete	ported	crates/php2rust-doctrine-orm/tests/typed_field_mapper_test.rs::testValidateAndComplete
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testAssociationOverridesMapping	pending	
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testAssociations	pending	
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testAttributeOverridesMapping	pending	
