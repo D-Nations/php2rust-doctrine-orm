@@ -1501,7 +1501,7 @@ tests/Tests/ORM/Functional/Ticket/GH5562Test.php	GH5562Test::testCacheShouldBeUp
 tests/Tests/ORM/Functional/Ticket/GH5742Test.php	GH5742Test::testManyToManyCollectionUpdateBeforeRemoval	ported	crates/php2rust-doctrine-orm/tests/gh5742_test.rs::testManyToManyCollectionUpdateBeforeRemoval
 tests/Tests/ORM/Functional/Ticket/GH5742Test.php	GH5742Test::testUpdateOneToOneToNewEntityBeforePreviousEntityCanBeRemoved	ported	crates/php2rust-doctrine-orm/tests/gh5742_test.rs::testUpdateOneToOneToNewEntityBeforePreviousEntityCanBeRemoved
 tests/Tests/ORM/Functional/Ticket/GH5762Test.php	GH5762Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/gh5762_test.rs::testIssue
-tests/Tests/ORM/Functional/Ticket/GH5804Test.php	GH5804Test::testTextColumnSaveAndRetrieve2	pending	
+tests/Tests/ORM/Functional/Ticket/GH5804Test.php	GH5804Test::testTextColumnSaveAndRetrieve2	pending	needs a CUSTOM id generator (an AbstractIdGenerator subclass), which the unit of work does not run
 tests/Tests/ORM/Functional/Ticket/GH5887Test.php	GH5887Test::testLazyLoadsForeignEntitiesInOneToOneRelationWhileHavingCustomIdObject	ported	crates/php2rust-doctrine-orm/tests/gh5887_test.rs::testLazyLoadsForeignEntitiesInOneToOneRelationWhileHavingCustomIdObject
 tests/Tests/ORM/Functional/Ticket/GH5988Test.php	GH5988Test::testDelete	ported	crates/php2rust-doctrine-orm/tests/gh5988_test.rs::testDelete
 tests/Tests/ORM/Functional/Ticket/GH5998Test.php	GH5998Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/gh5998_test.rs::testIssue
