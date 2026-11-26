@@ -62,6 +62,16 @@ pub fn register_orm_classes() {
             );
         }
         register_class(ClassInfo::class("OutOfRangeException").extends("LogicException"));
+        // PHP's date classes, which parameter values and mapped fields
+        // hold (`isTransient()` reflects on them).
+        register_class(ClassInfo::interface("DateTimeInterface").internal());
+        for class in ["DateTime", "DateTimeImmutable"] {
+            register_class(
+                ClassInfo::class(class)
+                    .internal()
+                    .implements("DateTimeInterface"),
+            );
+        }
         crate::query::query_exception::register_classes();
         crate::abstract_query::register_classes();
     });

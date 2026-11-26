@@ -93,7 +93,7 @@ pub(crate) fn platform_is_a(platform: &dyn AbstractPlatform, class: &str) -> boo
 }
 
 /// `SQLResultCasing::getSQLResultCasing()`.
-fn get_sql_result_casing(platform: &dyn AbstractPlatform, column: &str) -> String {
+pub(crate) fn get_sql_result_casing(platform: &dyn AbstractPlatform, column: &str) -> String {
     if platform_is_a(platform, DB2_PLATFORM) || platform_is_a(platform, ORACLE_PLATFORM) {
         return column.to_ascii_uppercase();
     }

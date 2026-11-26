@@ -297,6 +297,16 @@ namespace {
         'ORM/Functional/EntityRepositoryTest.php',
         'ORM/Functional/PaginationTest.php',
         'Doctrine\\Tests\\DbalTypes\\CustomIdObject',
+        'ORM/Functional/EntityRepositoryCriteriaTest.php',
+        'ORM/Functional/ExtraLazyCollectionTest.php',
+        'ORM/Functional/PersistentCollectionCriteriaTest.php',
+        'ORM/LazyCriteriaCollectionTest.php',
+        'ORM/PersistentCollectionTest.php',
+        'ORM/Functional/NativeQueryTest.php',
+        'ORM/Functional/ValueConversionType/OneToManyExtraLazyTest.php',
+        'ORM/Functional/ValueConversionType/ManyToManyExtraLazyTest.php',
+        'ORM/Functional/ValueConversionType/OneToManyCriteriaMatchingTest.php',
+        'ORM/Functional/ValueConversionType/ManyToManyCriteriaMatchingTest.php',
         'Models/Global/GlobalNamespaceModel.php',
     ];
     $before = array_merge(get_declared_classes(), get_declared_interfaces(), get_declared_traits());

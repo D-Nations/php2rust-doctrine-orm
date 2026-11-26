@@ -43,16 +43,18 @@ assert_eq!(PhpString::from("O'Neil"), lexer.token().unwrap().value);
 | `ParserResult`, the executors and finalizers (`SqlExecutor` with its kind and SQL statements, `execute()` on the connection with bound parameters, the multi-table executors' temporary tables, `SingleSelectSqlFinalizer`, `PreparedExecutorFinalizer`), the deprecation `https://github.com/doctrine/orm/pull/11188` | `Query/ParserResult.php`, `Query/Exec/*.php` | ParserResultTest (5), Functional QueryTest |
 | `Query` and `AbstractQuery`: `EntityManager::createQuery()`, DQL and state, parameters (`setParameter()` with name normalization, `setParameters()` from parameters or an array, `processParameterValue()` for entities, collections, arrays and backed enums), the parameter count checks, `setFirstResult()`/`setMaxResults()`, hints and default hints, lock modes (`TransactionRequiredException`), `setFetchMode()`, `getSQL()`, `execute()`, `getResult()`, `getArrayResult()`, `getScalarResult()`, `getSingleColumnResult()`, `getSingleResult()`, `getOneOrNullResult()`, `getSingleScalarResult()` (`NoResultException`, `NonUniqueResultException`), `toIterable()`, `free()`, `clone` | `Query.php`, `AbstractQuery.php`, `NoResultException.php`, `NonUniqueResultException.php`, `UnexpectedResultException.php` | Query QueryTest (32 of 39), Functional QueryTest (39 of 41) |
 | The hydrators: `AbstractHydrator` (column information, `gatherRowData()`, `gatherScalarRowData()`, `buildEnum()`, `registerManaged()`), `ObjectHydrator` (fetch joins, collections, index by, `NEW` objects, mixed results, discriminators, proxies, `HydrationException`s), `ArrayHydrator`, `ScalarHydrator`, `SingleScalarHydrator`, `ScalarColumnHydrator`, `SimpleObjectHydrator` (discriminators, joined inheritance fields, enum checks with `MappingException::invalidEnumValue()`) | `Internal/Hydration/*.php`, `Exception/MultipleSelectorsFoundException.php` | ObjectHydratorTest (31), ArrayHydratorTest (19), ScalarHydratorTest (3), SingleScalarHydratorTest (4), ScalarColumnHydratorTest (4), SimpleObjectHydratorTest (6), AbstractHydratorTest (2 of 6), ResultSetMappingTest (3) |
-| `NativeQuery` and `EntityManager::createNativeQuery()` | `NativeQuery.php` | Compiled use; no upstream test of its own |
+| `NativeQuery` and `EntityManager::createNativeQuery()` | `NativeQuery.php` | NativeQueryTest (20), Query NativeQueryTest (1) |
 | `TopologicalSort` and `StronglyConnectedComponents` (commit order, cycle breaking on optional edges, `CycleDetectedException`) | `Internal/TopologicalSort.php`, `Internal/StronglyConnectedComponents.php` | TopologicalSortTest, StronglyConnectedComponentsTest |
 | `EntityManager` (async where it reaches the database): `create()` (`MissingMappingDriverImplementation`), `find()`/`find_with_lock()` (identifier normalization, `invalidCompositeIdentifier`, `MissingIdentifierField`, `UnrecognizedIdentifierFields`, lock requirements: `OptimisticLockException::notVersioned`, `TransactionRequiredException`), `getReference()`, `persist()`, `remove()`, `refresh()`, `detach()`, `contains()`, `clear()`, `close()` (`EntityManagerClosed`), `flush()`, `wrapInTransaction()`, `beginTransaction()`/`commit()`/`rollback()`, `getRepository()`, `lock()`; `Configuration` (`setDefaultRepositoryClassName()`'s `InvalidEntityRepository`) | `EntityManager.php`, `Configuration.php`, `Proxy/ProxyFactory.php` (native lazy ghosts) | BasicFunctionalTest (23), EntityRepositoryTest (35) |
 | `UnitOfWork` (UnitOfWorkTest runs on a stubbed driver connection, as upstream's mocks): change sets (scalars, to-one, collections, `recomputeSingleEntityChangeSet()`), commit order by `TopologicalSort`, identity map (`EntityIdentityCollisionException`), cascades (persist, remove, refresh, detach), orphan removal, collection deletions and updates, entity states, `createEntity()` (lazy to-one proxies, deferred eager loads), the ORMInvalidArgumentException texts (`newEntityFoundThroughRelationship`, `invalidAssociation`, ...) | `UnitOfWork.php`, `ORMInvalidArgumentException.php`, `Exception/*.php`, `EntityNotFoundException.php`, `OptimisticLockException.php` | BasicFunctionalTest, UnitOfWorkTest (12), the OneToMany*/ManyToMany* association tests (37), OneToManyOrphanRemovalTest (5), LifecycleCallbackTest (7) |
-| `PersistentCollection` over collections' `ArrayCollection` (lazy loading, snapshot, insert/delete diffs, dirty flag, orphan scheduling), and an `ArrayCollection` property object | `PersistentCollection.php` | the association tests, ManyToManyBasicAssociationTest (14) |
-| `BasicEntityPersister` (inserts with identity ids, updates with versions, deletes with join table rows, `load()`, `loadAll()`, `loadById()`, `count()`, `exists()`, `refresh()`, the SELECT/INSERT/COUNT SQL, criteria with `IN` and `NULL`, `InvalidOrientation`, `UnrecognizedField`, `InvalidFindByCall`), `OneToManyPersister` and `ManyToManyPersister` (`delete()`, `update()`), `PersisterHelper`, `IdentifierFlattener`, the simple object hydrator | `Persisters/Entity/BasicEntityPersister.php`, `Persisters/Collection/*Persister.php`, `Utility/*.php`, `Internal/Hydration/SimpleObjectHydrator.php` | EntityRepositoryTest, BasicFunctionalTest, ManyToManyBasicAssociationTest (query counts) |
-| `EntityRepository` (`find()`, `findAll()`, `findBy()`, `findOneBy()`, `count()`, `__call()` magic finders with `InvalidMagicMethodCall`), `DefaultRepositoryFactory` | `EntityRepository.php`, `Repository/*.php` | EntityRepositoryTest |
+| `PersistentCollection` over collections' `ArrayCollection` (lazy loading, snapshot, insert/delete diffs, dirty flag, orphan scheduling), and an `ArrayCollection` property object; `EXTRA_LAZY` collections (`count()`, `contains()`, `containsKey()` and `get()` of an `indexBy` collection, `slice()`, `first()` without loading the collection); `matching()` (in memory when initialized or dirty, else the one-to-many criteria on the back reference with the association's ordering, a `LazyCriteriaCollection` when extra lazy, or the many-to-many persister's criteria query) | `PersistentCollection.php` | the association tests, ManyToManyBasicAssociationTest (22), OneToManyBidirectionalAssociationTest (12), ExtraLazyCollectionTest (29), PersistentCollectionCriteriaTest (2), the ValueConversionType extra-lazy and criteria matching tests (14) |
+| `BasicEntityPersister` (inserts with identity ids, updates with versions, deletes with join table rows, `load()`, `loadAll()`, `loadById()`, `count()`, `exists()` (with a `Criteria`), `refresh()`, the SELECT/INSERT/COUNT SQL, criteria with `IN` and `NULL`, `loadCriteria()`, `countCriteria()`, `expandCriteriaParameters()`, the comparison operators of a `Criteria` (`LIKE` for `CONTAINS`/`STARTS_WITH`/`ENDS_WITH`, `IS [NOT] NULL`, `IN`/`NOT IN` and `1=0` for an empty list), `InvalidOrientation`, `UnrecognizedField`, `InvalidFindByCall`, `MatchingAssociationFieldRequiresObject`), `SqlExpressionVisitor`, `SqlValueVisitor`, `OneToManyPersister` and `ManyToManyPersister` (`delete()`, `update()`, the extra-lazy `count()`, `slice()`, `containsKey()`, `contains()`, `get()`, and `loadCriteria()` of a many-to-many collection), `PersisterHelper`, `IdentifierFlattener`, the simple object hydrator | `Persisters/Entity/BasicEntityPersister.php`, `Persisters/SqlExpressionVisitor.php`, `Persisters/SqlValueVisitor.php`, `Persisters/MatchingAssociationFieldRequiresObject.php`, `Persisters/Collection/*Persister.php`, `Utility/*.php`, `Internal/Hydration/SimpleObjectHydrator.php` | EntityRepositoryTest, EntityRepositoryCriteriaTest (6), BasicFunctionalTest, ManyToManyBasicAssociationTest (query counts), ExtraLazyCollectionTest, SqlExpressionVisitorTest (1) |
+| `EntityRepository` (`find()`, `findAll()`, `findBy()`, `findOneBy()`, `count()`, `__call()` magic finders with `InvalidMagicMethodCall`, `matching()`, `createResultSetMappingBuilder()`), `DefaultRepositoryFactory` | `EntityRepository.php`, `Repository/*.php` | EntityRepositoryTest (56) |
+| `LazyCriteriaCollection`: the cached count, `isEmpty()` and `contains()` without loading, `matching()` in memory after one load | `LazyCriteriaCollection.php` | LazyCriteriaCollectionTest (7), EntityRepositoryCriteriaTest |
 | Lifecycle events: `ListenersInvoker` (callbacks, entity listeners, event manager), the event args classes, `PreUpdateEventArgs` | `Event/*.php` | LifecycleCallbackTest |
 | `SchemaTool::createSchema()`/`dropSchema()`/`getSchemaFromMetadata()` for no and single-table inheritance (columns, join columns and tables, indexes, unique constraints, foreign keys) | `Tools/SchemaTool.php` | the functional tests' schemas |
 | `ResultSetMapping` | `Query/ResultSetMapping.php` | ResultSetMappingTest (3); the persister's mappings; the SQL walker's result mappings |
+| `ResultSetMappingBuilder`: root and joined entities from class metadata (the column renaming modes, single table inheritance checks, column conflicts), `generateSelectClause()` with table aliases and custom types' `convertToPHPValueSQL()`, `__toString()` | `Query/ResultSetMappingBuilder.php` | NativeQueryTest, EntityRepositoryTest |
 | `QueryBuilder`: the DQL parts (`add()` with its `$append` check and the deprecation `https://github.com/doctrine/orm/pull/12051` for numeric join keys, `getDQLPart(s)()`, `resetDQLPart(s)()`), `select()`/`addSelect()`/`distinct()`, `delete()`/`update()` (the alias check), `from()`/`indexBy()`, the joins (root aliases), `set()`, `where()`/`andWhere()`/`orWhere()`, `groupBy()`, `having()` and its variants, `orderBy()`/`addOrderBy()` (the deprecation `https://github.com/doctrine/orm/issues/11313` for an order that is not a `SortDirection`, `Invalid sort direction`), `addCriteria()`, the root aliases and entities, parameters (`setParameter()` updates a parameter of the same normalized name, `createNamedParameter()`), first and max results (no limit for DELETE and UPDATE), hints, the second-level cache options, `getDQL()` (cached until a part changes), `getQuery()`, `__clone()`; `QueryType`; `EntityManager::createQueryBuilder()`, `getExpressionBuilder()`, `EntityRepository::createQueryBuilder()` | `QueryBuilder.php`, `QueryType.php`, `EntityManager.php`, `EntityRepository.php` | QueryBuilderTest (108 of 109), ExprTest's subquery tests (5) |
 | `QueryExpressionVisitor`: a `Criteria`'s comparisons and composites as `Expr` objects with their parameters (the alias prefix, `_`-joined parameter names made unique by the parameter count, `CONTAINS`/`STARTS_WITH`/`ENDS_WITH` as `LIKE`, `MEMBER OF`, `IS NULL` for a null value), the `RuntimeException` texts | `Query/QueryExpressionVisitor.php` | QueryExpressionVisitorTest (6) |
 | `Tools\Pagination`: `CountWalker` (`HINT_DISTINCT`, the HAVING and two-FROM texts), `CountOutputWalker`, `LimitSubqueryWalker` (the identifier type hint, `HINT_ENABLE_DISTINCT`), `LimitSubqueryOutputWalker` (`SELECT DISTINCT <ids> FROM (...) dctrn_result`, the ORDER BY columns added as hidden selects, the inner ordered query; the `ROW_NUMBER()` SQL for PostgreSQL, SQL Server, Oracle and DB2), `WhereInWalker`, `RootTypeWalker`, `RowNumberOverFunction` (`RowNumberOverFunctionNotEnabled`), the RuntimeException texts; `PaginatorQuery` (`getCountQuery()`, `cloneQuery()`, `appendTreeWalker()`, `unbindUnusedQueryParams()`, `useOutputWalker()`, `getResultForOffset()` with the fetch-join ID subquery + WHERE IN path and the output-walker path, `convertWhereInIdentifiersToDatabaseValues()`); `Paginator` (`count()`, `getIterator()`); `OffsetPaginator` and `PaginatorInterface` (`paginate()`, its InvalidArgumentException text); `Window`, `Page`, `WindowPage` (the LogicException texts) | `Tools/Pagination/{CountWalker,CountOutputWalker,LimitSubqueryWalker,LimitSubqueryOutputWalker,WhereInWalker,RootTypeWalker,RowNumberOverFunction,Paginator,PaginatorQuery,PaginatorInterface,OffsetPaginator,Page,Window,WindowPage}.php`, `Tools/Pagination/Exception/RowNumberOverFunctionNotEnabled.php` | CountWalkerTest (8), WhereInWalkerTest (1), LimitSubqueryWalkerTest (10), RootTypeWalkerTest (1), CountOutputWalkerTest (4 of 5), LimitSubqueryOutputWalkerTest (13 of 27), PaginatorTest (3), OffsetPaginatorTest (3), WindowTest (10 of 11), WindowPageTest (16), Functional/PaginationTest (54 of 57, on SQLite) |
@@ -236,8 +238,10 @@ Persistence, not reproduced and so not claimed:
   clause), and `find()` with a pessimistic lock loads as `NONE` does.
 - The persister does not join inverse one-to-one or EAGER to-one
   associations into its SELECT; `createEntity()` loads them with a second
-  query. `matching()` (criteria on repositories and collections),
-  filters, the second level cache, the metadata cache and the entity
+  query (ExtraLazyCollectionTest's `testSliceInverseCollection` and
+  `testGetIndexByManyToManyInverseSide` count these queries, and are
+  pending). Filters (so no filter SQL in the criteria and extra-lazy
+  queries), the second level cache, the metadata cache and the entity
   listener resolver are not ported; partial objects are not lazy
   ghosts of their selected fields. Joined (class table) inheritance persisters are `NotSupported`.
 - Entity methods (lifecycle callbacks, entity listeners) are bodies
@@ -269,16 +273,40 @@ Queries and hydration, not reproduced and so not claimed:
   `static`); results are `Value`s.
 - Reading a property of a lazy object does not load it: the tests call
   `initialize_object()` where PHP's property read would.
+- Criteria: `EntityRepository::matching()` clones the `Criteria` (PHP
+  keeps the object). `PersistentCollection::matching()` and
+  `EntityRepository::matching()` give a `Value`: an
+  `ArrayCollectionObject` or a `LazyCriteriaCollection`;
+  `collection_object::matching()`/`slice()` dispatch on the value. The
+  collections that load (`LazyCriteriaCollection`, `PersistentCollection`)
+  are `async`; their `php_count()` and `traverse()` (PHP's `count()` and
+  `foreach`) see only an initialized collection or a cached count, and a
+  synchronous `add()` on a `LazyCriteriaCollection` gives a
+  `LogicException`. The persisters are reached through the
+  `persisters::EntityPersister` trait (`countCriteria()`, `loadCriteria()`,
+  `exists()`, `getSelectConditionStatementSQL()`), which the unit tests
+  mock. `getSelectSQL()`/`getCountSQL()` take a `PersisterCriteria` (an
+  array or a `Criteria`), and `getManyToManyCollection()`/
+  `getOneToManyCollection()` give an array keyed by the `indexBy` field.
+- `ResultSetMappingBuilder` dereferences to its `ResultSetMapping`;
+  `into_result_set_mapping()` hands it to a native query. A
+  `NativeQuery`'s `NEW` objects register their constructor with
+  `register_new_object_class()`, as the DQL ones do.
 
 Persistence and query pending: `EntityRepositoryTest::testDefaultRepositoryClassName`
 (the DDC753 models and changing the configuration after `create()`);
-the `matching()` tests (EntityRepositoryTest `testMatching*`,
-`testIsNullCriteria*`, `testFindByNullValueInMultipleInCriteriaValues`,
-`testFindMultipleByNullValueInMultipleInCriteriaValues`, the
-`ManyToManyBasicAssociationTest` and `OneToManyBidirectionalAssociationTest`
-`testMatching*` and `testManyToManyOrderBy*` tests: criteria are not
-ported); `EntityRepositoryTest::testCreateResultSetMappingBuilder`
-(`ResultSetMappingBuilder` is not ported); the query and result cache
+ExtraLazyCollectionTest's DDC-2504 tests (8: joined inheritance is
+`NotSupported`) and `testSliceInverseCollection` and
+`testGetIndexByManyToManyInverseSide` (the inverse one-to-one join, see
+above); `NativeQueryTest::testFluentInterface` (the result cache);
+Functional `PersistentCollectionTest` (its models extend persistence's
+`PersistentObject`, which is not recorded); the unit
+`PersistentCollectionTest` (13: mocked persisters and iterator
+protocol, not part of the criteria work); the criteria and extra-lazy
+tests of the Ticket, filter, enum, inheritance and second level cache
+test files (GH7767, GH7836, DDC3719, DDC1885, GH7864, SQLFilterTest,
+EnumTest, SingleTableInheritanceTest, ClassTableInheritanceTest,
+the `Cache\Persister` tests); the query and result cache
 tests of Query QueryTest and `testProcessParameterValueClassMetadata`;
 `Functional\QueryTest::testJoinPartialObjectHydration` (partial objects)
 and `testQueryBuilderWithStringWhereClauseContainingOrAndConditionalPrimary`

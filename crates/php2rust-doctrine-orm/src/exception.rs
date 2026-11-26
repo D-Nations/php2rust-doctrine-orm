@@ -15,7 +15,8 @@
 //! Upstream: doctrine/orm src/Persisters/Exception/InvalidOrientation.php src/Persisters/Exception/UnrecognizedField.php
 //! Upstream: doctrine/orm src/Repository/Exception/InvalidFindByCall.php src/OptimisticLockException.php
 //! Upstream: doctrine/orm src/TransactionRequiredException.php
-//! Upstream: doctrine/orm src/Repository/Exception/InvalidMagicMethodCall.php
+//! Upstream: doctrine/orm src/Repository/Exception/InvalidMagicMethodCall.php src/Persisters/MatchingAssociationFieldRequiresObject.php
+//! Upstream: doctrine/orm src/Exception/PersisterException.php
 
 use php_value::{Object, Thrown};
 
@@ -41,6 +42,8 @@ pub const CANT_USE_IN_OPERATOR_ON_COMPOSITE_KEYS: &str =
     "Doctrine\\ORM\\Persisters\\Exception\\CantUseInOperatorOnCompositeKeys";
 pub const INVALID_ORIENTATION: &str = "Doctrine\\ORM\\Persisters\\Exception\\InvalidOrientation";
 pub const UNRECOGNIZED_FIELD: &str = "Doctrine\\ORM\\Persisters\\Exception\\UnrecognizedField";
+pub const MATCHING_ASSOCIATION_FIELD_REQUIRES_OBJECT: &str =
+    "Doctrine\\ORM\\Persisters\\MatchingAssociationFieldRequiresObject";
 pub const INVALID_FIND_BY_CALL: &str = "Doctrine\\ORM\\Repository\\Exception\\InvalidFindByCall";
 pub const OPTIMISTIC_LOCK_EXCEPTION: &str = "Doctrine\\ORM\\OptimisticLockException";
 pub const TRANSACTION_REQUIRED_EXCEPTION: &str = "Doctrine\\ORM\\TransactionRequiredException";
@@ -382,6 +385,17 @@ pub fn unrecognized_field(class_name: &str, field: &str) -> Thrown {
     new(
         UNRECOGNIZED_FIELD,
         format!("Unrecognized field: {class_name}::${field}"),
+    )
+}
+
+// Persisters\MatchingAssociationFieldRequiresObject
+
+pub fn matching_association_field_requires_object(class: &str, association_name: &str) -> Thrown {
+    new(
+        MATCHING_ASSOCIATION_FIELD_REQUIRES_OBJECT,
+        format!(
+            "Cannot match on {class}::{association_name} with a non-object value. Matching objects by id is not compatible with matching on an in-memory collection, which compares objects by reference."
+        ),
     )
 }
 
