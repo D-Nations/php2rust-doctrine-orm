@@ -293,7 +293,7 @@ tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testFlus
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testFlushSingleNewEntityThenRemove	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testFlushSingleNewEntityThenRemove
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testInitializeCollectionWithNewObjectsRetainsNewObjects	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testInitializeCollectionWithNewObjectsRetainsNewObjects
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testItThrowsWhenReferenceUsesIdAssignedByDatabase	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testItThrowsWhenReferenceUsesIdAssignedByDatabase
-tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testManyToOneFetchModeQuery	pending	BasicEntityPersister does not join the inverse one-to-one CmsUser::address into its SELECT, so the eager load issues 3 queries where PHP issues 2
+tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testManyToOneFetchModeQuery	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testManyToOneFetchModeQuery
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testNewAssociatedEntityDuringFlushThrowsException	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testNewAssociatedEntityDuringFlushThrowsException
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testNewAssociatedEntityDuringFlushThrowsException2	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testNewAssociatedEntityDuringFlushThrowsException2
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testNewAssociatedEntityDuringFlushThrowsException3	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testNewAssociatedEntityDuringFlushThrowsException3
@@ -502,14 +502,14 @@ tests/Tests/ORM/Functional/ExtraLazyCollectionTest.php	ExtraLazyCollectionTest::
 tests/Tests/ORM/Functional/ExtraLazyCollectionTest.php	ExtraLazyCollectionTest::testFirstWhenNotInitialized	ported	crates/php2rust-doctrine-orm/tests/extra_lazy_collection_test.rs::testFirstWhenNotInitialized
 tests/Tests/ORM/Functional/ExtraLazyCollectionTest.php	ExtraLazyCollectionTest::testFullSlice	ported	crates/php2rust-doctrine-orm/tests/extra_lazy_collection_test.rs::testFullSlice
 tests/Tests/ORM/Functional/ExtraLazyCollectionTest.php	ExtraLazyCollectionTest::testGetIndexByIdentifier	ported	crates/php2rust-doctrine-orm/tests/extra_lazy_collection_test.rs::testGetIndexByIdentifier
-tests/Tests/ORM/Functional/ExtraLazyCollectionTest.php	ExtraLazyCollectionTest::testGetIndexByManyToManyInverseSide	pending	
+tests/Tests/ORM/Functional/ExtraLazyCollectionTest.php	ExtraLazyCollectionTest::testGetIndexByManyToManyInverseSide	ported	crates/php2rust-doctrine-orm/tests/extra_lazy_collection_test.rs::testGetIndexByManyToManyInverseSide
 tests/Tests/ORM/Functional/ExtraLazyCollectionTest.php	ExtraLazyCollectionTest::testGetIndexByManyToManyOwningSide	ported	crates/php2rust-doctrine-orm/tests/extra_lazy_collection_test.rs::testGetIndexByManyToManyOwningSide
 tests/Tests/ORM/Functional/ExtraLazyCollectionTest.php	ExtraLazyCollectionTest::testGetIndexByOneToMany	ported	crates/php2rust-doctrine-orm/tests/extra_lazy_collection_test.rs::testGetIndexByOneToMany
 tests/Tests/ORM/Functional/ExtraLazyCollectionTest.php	ExtraLazyCollectionTest::testGetNonExistentIndexBy	ported	crates/php2rust-doctrine-orm/tests/extra_lazy_collection_test.rs::testGetNonExistentIndexBy
 tests/Tests/ORM/Functional/ExtraLazyCollectionTest.php	ExtraLazyCollectionTest::testLazyOneToManyJoinedInheritanceIsLazilyInitialized	ported	crates/php2rust-doctrine-orm/tests/extra_lazy_collection_test.rs::testLazyOneToManyJoinedInheritanceIsLazilyInitialized
 tests/Tests/ORM/Functional/ExtraLazyCollectionTest.php	ExtraLazyCollectionTest::testSlice	ported	crates/php2rust-doctrine-orm/tests/extra_lazy_collection_test.rs::testSlice
 tests/Tests/ORM/Functional/ExtraLazyCollectionTest.php	ExtraLazyCollectionTest::testSliceInitializedCollection	ported	crates/php2rust-doctrine-orm/tests/extra_lazy_collection_test.rs::testSliceInitializedCollection
-tests/Tests/ORM/Functional/ExtraLazyCollectionTest.php	ExtraLazyCollectionTest::testSliceInverseCollection	pending	
+tests/Tests/ORM/Functional/ExtraLazyCollectionTest.php	ExtraLazyCollectionTest::testSliceInverseCollection	ported	crates/php2rust-doctrine-orm/tests/extra_lazy_collection_test.rs::testSliceInverseCollection
 tests/Tests/ORM/Functional/ExtraLazyCollectionTest.php	ExtraLazyCollectionTest::testSliceOnDirtyCollection	ported	crates/php2rust-doctrine-orm/tests/extra_lazy_collection_test.rs::testSliceOnDirtyCollection
 tests/Tests/ORM/Functional/ExtraLazyCollectionTest.php	ExtraLazyCollectionTest::testSliceOneToMany	ported	crates/php2rust-doctrine-orm/tests/extra_lazy_collection_test.rs::testSliceOneToMany
 tests/Tests/ORM/Functional/FlushEventTest.php	FlushEventTest::testPersistNewEntitiesOnPreFlush	pending	
