@@ -57,7 +57,11 @@ fn assert_invalid_argument(e: &Thrown, expected: &str) {
 async fn testManyToManyAssociation() {
     let em = set_up().await;
     let user = new("GH6029User");
-    set(&user, "groups", ArrayCollectionObject::value(PhpArray::new()));
+    set(
+        &user,
+        "groups",
+        ArrayCollectionObject::value(PhpArray::new()),
+    );
     coll::add(&get(&user, "groups"), Value::Object(new("GH6029Group2"))).unwrap();
 
     let e = persist_and_flush(&em, &user).await.unwrap_err();
@@ -83,7 +87,11 @@ async fn testOneToManyAssociation() {
         "features",
         ArrayCollectionObject::value(PhpArray::new()),
     );
-    coll::add(&get(&product, "features"), Value::Object(new("GH6029Group2"))).unwrap();
+    coll::add(
+        &get(&product, "features"),
+        Value::Object(new("GH6029Group2")),
+    )
+    .unwrap();
 
     let e = persist_and_flush(&em, &product).await.unwrap_err();
     assert_invalid_argument(
