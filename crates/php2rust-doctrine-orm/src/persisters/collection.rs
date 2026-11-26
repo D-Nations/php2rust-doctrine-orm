@@ -3,8 +3,9 @@
 //! (the rows of the join table), with the extra-lazy operations
 //! (`count()`, `slice()`, `contains()`, `containsKey()`, `get()`) and
 //! `loadCriteria()`. The persister is chosen by the collection's mapping,
-//! so the functions take the collection. Filters are not ported (the
-//! filter SQL is always empty); joined-inheritance targets are refused
+//! so the functions take the collection. The many-to-many operations
+//! join the target table for the enabled SQL filters (`getFilterSql()`);
+//! joined-inheritance targets are refused
 //! (`NotSupported`) where the orphan removal deletes them.
 //!
 //! Upstream: doctrine/orm src/Persisters/Collection/OneToManyPersister.php src/Persisters/Collection/ManyToManyPersister.php
@@ -564,9 +565,14 @@ pub async fn count(
                     .into(),
             );
         }
-        // getFilterSql(): filters are not ported.
+        let (join_target_entity_sql, filter_sql) = get_filter_sql(em, &mapping)?;
+
+        if !filter_sql.is_empty() {
+            conditions.push(filter_sql);
+        }
+
         format!(
-            "SELECT COUNT(*) FROM {join_table_name} t WHERE {}",
+            "SELECT COUNT(*) FROM {join_table_name} t{join_target_entity_sql} WHERE {}",
             conditions.join(" AND ")
         )
     };
@@ -788,8 +794,15 @@ fn get_join_table_restrictions_with_key(
             types.push(get_type_of_column(&column, &target, em)?.as_str().into());
         }
     }
-    // $addFilters: filters are not ported.
-    let _ = filter_mapping;
+    drop((source, target));
+    // getJoinTableRestrictionsWithKey() is always called with $addFilters.
+    let (join_target_entity_sql, filter_sql) = get_filter_sql(em, &filter_mapping)?;
+
+    if !filter_sql.is_empty() {
+        quoted_join_table.push(' ');
+        quoted_join_table.push_str(&join_target_entity_sql);
+        where_clauses.push(filter_sql);
+    }
     Ok((quoted_join_table, where_clauses, params, types))
 }
 
@@ -803,7 +816,8 @@ fn get_join_table_restrictions(
     let platform = em.get_platform();
     let quote_strategy = em.get_configuration().get_quote_strategy();
     let uow = em.get_unit_of_work();
-    let mapping = collection.get_mapping()?;
+    let filter_mapping = collection.get_mapping()?;
+    let mapping = filter_mapping.clone();
     let owner = owner_of(collection)?;
     let (source_class, target_class, source_id, target_id) = if mapping.is_owning_side() {
         (
@@ -868,9 +882,78 @@ fn get_join_table_restrictions(
 
     if add_filters {
         quoted_join_table.push_str(" t");
-        // getFilterSql(): filters are not ported.
+
+        drop((source, target));
+        let (join_target_entity_sql, filter_sql) = get_filter_sql(em, &filter_mapping)?;
+
+        if !filter_sql.is_empty() {
+            quoted_join_table.push(' ');
+            quoted_join_table.push_str(&join_target_entity_sql);
+            where_clauses.push(filter_sql);
+        }
     }
     Ok((quoted_join_table, where_clauses, params, types))
+}
+
+/// `ManyToManyPersister::getFilterSql()`: generates the filter SQL for a
+/// given mapping.
+///
+/// This method is not used for actually grabbing the related entities
+/// but when the extra-lazy collection methods are called on a filtered
+/// association. This is why besides the many to many table we also
+/// have to join in the actual entities table leading to additional
+/// JOIN.
+///
+/// Returns the join SQL and the filter SQL (both empty without filter
+/// conditions).
+pub fn get_filter_sql(
+    em: &Arc<EntityManager>,
+    mapping: &AssociationMapping,
+) -> Result<(String, String), Thrown> {
+    let target_class = em.get_class_metadata(&mapping.target_entity)?;
+    let root_entity_name = target_class.read().root_entity_name.clone();
+    let root_class = em.get_class_metadata(&root_entity_name)?;
+    let filter_sql = generate_filter_condition_sql(em, &root_class.read(), "te")?;
+
+    if filter_sql.is_empty() {
+        return Ok((String::new(), String::new()));
+    }
+
+    // A join is needed if there is filtering on the target entity
+    let platform = em.get_platform();
+    let table_name = em
+        .get_configuration()
+        .get_quote_strategy()
+        .get_table_name(&root_class.read(), platform);
+    let join_sql = format!(
+        " JOIN {table_name} te ON{}",
+        get_on_condition_sql(em, mapping)?.join(" AND ")
+    );
+
+    Ok((join_sql, filter_sql))
+}
+
+/// `ManyToManyPersister::generateFilterConditionSQL()`: generates the
+/// filter SQL for a given entity and table alias.
+fn generate_filter_condition_sql(
+    em: &Arc<EntityManager>,
+    target_entity: &ClassMetadataInfo,
+    target_table_alias: &str,
+) -> Result<String, Thrown> {
+    let mut filter_clauses = Vec::new();
+
+    for (_, filter) in em.get_filters().get_enabled_filters() {
+        let filter_expr = filter.add_filter_constraint(target_entity, target_table_alias)?;
+        if !filter_expr.is_empty() {
+            filter_clauses.push(format!("({filter_expr})"));
+        }
+    }
+
+    Ok(if filter_clauses.is_empty() {
+        String::new()
+    } else {
+        format!("({})", filter_clauses.join(" AND "))
+    })
 }
 
 /// `CollectionPersister::loadCriteria()`: loads association entities
