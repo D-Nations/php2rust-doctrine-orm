@@ -11,8 +11,9 @@
 //! The persister does not join the inverse sides of one-to-one
 //! associations and `EAGER` to-one associations into its `SELECT`; the
 //! unit of work loads them when it creates the entity (a second query,
-//! which is what PHP does without the join). Lock modes and filters are
-//! not ported.
+//! which is what PHP does without the join). Lock modes are not ported.
+//! The SQL filters apply to `getSelectSQL()`, `getCountSQL()` and
+//! `exists()`.
 //!
 //! Upstream: doctrine/orm src/Persisters/Entity/BasicEntityPersister.php src/Persisters/Entity/CachedPersisterContext.php
 //! Upstream: doctrine/orm src/Persisters/Entity/EntityPersister.php
@@ -109,6 +110,20 @@ impl std::fmt::Debug for BasicEntityPersister {
 
 /// The parameters and their types.
 type Params = (Vec<Value>, Vec<ParamType>);
+
+/// `$conditionSql = $conditionSql ? $conditionSql . ' AND ' . $filterSql
+/// : $filterSql` for a filter SQL that is not empty.
+fn append_filter_sql(condition_sql: &mut String, filter_sql: &str) {
+    if filter_sql.is_empty() {
+        return;
+    }
+    if condition_sql.is_empty() || condition_sql == "0" {
+        filter_sql.clone_into(condition_sql);
+    } else {
+        condition_sql.push_str(" AND ");
+        condition_sql.push_str(filter_sql);
+    }
+}
 
 fn types_of(types: Vec<ParamType>) -> ParameterTypes {
     types
@@ -1436,7 +1451,7 @@ impl BasicEntityPersister {
             order_by_sql = self.get_order_by_sql(em, &order_by, &alias)?;
         }
 
-        let condition_sql = match criteria {
+        let mut condition_sql = match criteria {
             PersisterCriteria::Criteria(criteria) => {
                 self.get_select_condition_criteria_sql(em, criteria)?
             }
@@ -1446,6 +1461,8 @@ impl BasicEntityPersister {
         };
         let column_list = self.get_select_columns_sql(em)?;
         let table_alias = self.get_sql_table_alias(&self.class.read().name.clone(), "");
+        let filter_sql = self.generate_filter_condition_sql(em, &self.class, &table_alias)?;
+        append_filter_sql(&mut condition_sql, &filter_sql);
         let table_name = self
             .quote_strategy
             .get_table_name(&self.class.read(), platform);
@@ -1483,7 +1500,7 @@ impl BasicEntityPersister {
             .quote_strategy
             .get_table_name(&self.class.read(), platform);
         let table_alias = self.get_sql_table_alias(&self.class.read().name.clone(), "");
-        let condition_sql = match criteria {
+        let mut condition_sql = match criteria {
             PersisterCriteria::Criteria(criteria) => {
                 self.get_select_condition_criteria_sql(em, criteria)?
             }
@@ -1491,6 +1508,8 @@ impl BasicEntityPersister {
                 self.get_select_condition_sql(em, criteria, None)?
             }
         };
+        let filter_sql = self.generate_filter_condition_sql(em, &self.class, &table_alias)?;
+        append_filter_sql(&mut condition_sql, &filter_sql);
         Ok(format!(
             "SELECT COUNT(*) FROM {table_name} {table_alias}{}",
             if condition_sql.is_empty() {
@@ -2286,12 +2305,43 @@ impl BasicEntityPersister {
             params.extend(criteria_params);
             types.extend(criteria_types);
         }
+        let filter_sql = self.generate_filter_condition_sql(&em, &self.class, &alias)?;
+        if !filter_sql.is_empty() {
+            sql.push_str(" AND ");
+            sql.push_str(&filter_sql);
+        }
         let value = em
             .get_connection()
             .fetch_one(&sql, &PhpArray::list(params), &types_of(types))
             .await
             .map_err(|e| dbal(&e))?;
         Ok(value.is_some_and(|v| v.is_truthy()))
+    }
+
+    /// Generates the filter SQL for a given entity and table alias.
+    pub fn generate_filter_condition_sql(
+        &self,
+        em: &Arc<EntityManager>,
+        target_entity: &Arc<ClassMetadata>,
+        target_table_alias: &str,
+    ) -> Result<String, Thrown> {
+        let mut filter_clauses = Vec::new();
+
+        for (_, filter) in em.get_filters().get_enabled_filters() {
+            let filter_expr =
+                filter.add_filter_constraint(&target_entity.read(), target_table_alias)?;
+            if !filter_expr.is_empty() {
+                filter_clauses.push(format!("({filter_expr})"));
+            }
+        }
+
+        let sql = filter_clauses.join(" AND ");
+        // Wrap again to avoid "X or Y and FilterConditionSQL"
+        Ok(if sql.is_empty() {
+            String::new()
+        } else {
+            format!("({sql})")
+        })
     }
 
     /// Gets an SQL column alias for a column name.

@@ -73,6 +73,7 @@ pub fn register_orm_classes() {
             );
         }
         crate::query::query_exception::register_classes();
+        crate::query::filter::register_classes();
         crate::abstract_query::register_classes();
     });
 }

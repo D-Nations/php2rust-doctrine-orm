@@ -222,7 +222,7 @@ tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testAddGetCustomDatetim
 tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testAddGetCustomHydrationMode	pending	
 tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testAddGetCustomNumericFunction	pending	
 tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testAddGetCustomStringFunction	pending	
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testAddGetFilters	pending	
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testAddGetFilters	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testAddGetFilters
 tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testDisablingNativeLazyObjectsIsDeprecated	pending	
 tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetCustomHydrationModes	pending	
 tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetAutoGenerateProxyClasses	pending	
@@ -533,11 +533,11 @@ tests/Tests/ORM/Functional/GH8011Test.php	GH8011Test::testOrderWithArithmeticExp
 tests/Tests/ORM/Functional/GH8011Test.php	GH8011Test::testOrderWithArithmeticExpressionWithSingleValuedPathExpressionAndResultVariable	pending	
 tests/Tests/ORM/Functional/HydrationCacheTest.php	HydrationCacheTest::testHydrationCache	pending	
 tests/Tests/ORM/Functional/HydrationCacheTest.php	HydrationCacheTest::testHydrationParametersSerialization	pending	
-tests/Tests/ORM/Functional/IdentityMapTest.php	IdentityMapTest::testBasicIdentityManagement	pending	
-tests/Tests/ORM/Functional/IdentityMapTest.php	IdentityMapTest::testCollectionValuedAssociationIdentityMapBehaviorWithRefresh	pending	
-tests/Tests/ORM/Functional/IdentityMapTest.php	IdentityMapTest::testCollectionValuedAssociationIdentityMapBehaviorWithRefreshQuery	pending	
-tests/Tests/ORM/Functional/IdentityMapTest.php	IdentityMapTest::testSingleValuedAssociationIdentityMapBehaviorWithRefresh	pending	
-tests/Tests/ORM/Functional/IdentityMapTest.php	IdentityMapTest::testSingleValuedAssociationIdentityMapBehaviorWithRefreshQuery	pending	
+tests/Tests/ORM/Functional/IdentityMapTest.php	IdentityMapTest::testBasicIdentityManagement	ported	crates/php2rust-doctrine-orm/tests/identity_map_test.rs::testBasicIdentityManagement
+tests/Tests/ORM/Functional/IdentityMapTest.php	IdentityMapTest::testCollectionValuedAssociationIdentityMapBehaviorWithRefresh	ported	crates/php2rust-doctrine-orm/tests/identity_map_test.rs::testCollectionValuedAssociationIdentityMapBehaviorWithRefresh
+tests/Tests/ORM/Functional/IdentityMapTest.php	IdentityMapTest::testCollectionValuedAssociationIdentityMapBehaviorWithRefreshQuery	ported	crates/php2rust-doctrine-orm/tests/identity_map_test.rs::testCollectionValuedAssociationIdentityMapBehaviorWithRefreshQuery
+tests/Tests/ORM/Functional/IdentityMapTest.php	IdentityMapTest::testSingleValuedAssociationIdentityMapBehaviorWithRefresh	ported	crates/php2rust-doctrine-orm/tests/identity_map_test.rs::testSingleValuedAssociationIdentityMapBehaviorWithRefresh
+tests/Tests/ORM/Functional/IdentityMapTest.php	IdentityMapTest::testSingleValuedAssociationIdentityMapBehaviorWithRefreshQuery	ported	crates/php2rust-doctrine-orm/tests/identity_map_test.rs::testSingleValuedAssociationIdentityMapBehaviorWithRefreshQuery
 tests/Tests/ORM/Functional/IndexByAssociationTest.php	IndexByAssociationTest::testDqlOverrideIndexBy	pending	
 tests/Tests/ORM/Functional/IndexByAssociationTest.php	IndexByAssociationTest::testManyToMany	pending	
 tests/Tests/ORM/Functional/IndexByAssociationTest.php	IndexByAssociationTest::testManyToOneDQL	pending	
@@ -656,44 +656,44 @@ tests/Tests/ORM/Functional/NativeQueryTest.php	NativeQueryTest::testMappingAsDto
 tests/Tests/ORM/Functional/NativeQueryTest.php	NativeQueryTest::testNativeQueryWithArrayParameter	ported	crates/php2rust-doctrine-orm/tests/native_query_test.rs::testNativeQueryWithArrayParameter
 tests/Tests/ORM/Functional/NativeQueryTest.php	NativeQueryTest::testRSMBuilderThrowsExceptionOnColumnConflict	ported	crates/php2rust-doctrine-orm/tests/native_query_test.rs::testRSMBuilderThrowsExceptionOnColumnConflict
 tests/Tests/ORM/Functional/NativeQueryTest.php	NativeQueryTest::testUnknownParentAliasThrowsException	ported	crates/php2rust-doctrine-orm/tests/native_query_test.rs::testUnknownParentAliasThrowsException
-tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testClassCantBeInstantiatedException	pending	
-tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testEntityInDtoWithRoot	pending	
-tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testEntityInDtoWithoutRoot	pending	
-tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testExceptionIfFunctionHasNoAlias	pending	
-tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testExceptionIfTwoAliases	pending	
-tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testInvalidClassConstructorException	pending	
-tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testInvalidClassException	pending	
-tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testInvalidClassWithoutConstructorException	pending	
-tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testNamedArguments	pending	
-tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testOnlyObjectInDto	pending	
-tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testOnlyObjectInNamedDto	pending	
-tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testOnlyObjectInNamedDtoWithAlias	pending	
-tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testOnlyObjectInNamedDtoWithSameNameAsTheProperties	pending	
-tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testOnlyObjectInObject	pending	
-tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldAssumeFromEntityNamespaceWhenNotGiven	pending	
-tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldIgnoreAliasesForSingleObject	pending	
-tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportAggregateFunctions	pending	
-tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportArithmeticExpression	pending	
-tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportCaseExpression	pending	
-tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportLiteralExpression	pending	
-tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportMultipleNewOperators	pending	
-tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportMultipleNewOperatorsAndMultipleScalars	pending	
-tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportMultipleNewOperatorsAndMultipleScalarsWithAliases	pending	
-tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportMultipleNewOperatorsAndMultipleScalarsWithAndWithoutAliases	pending	
-tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportMultipleNewOperatorsAndSingleScalar	pending	
-tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportMultipleNewOperatorsAndSingleScalarWithAliases	pending	
-tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportMultipleNewOperatorsAndSingleScalarWithAndWithoutAliases	pending	
-tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportMultipleNewOperatorsWithAliases	pending	
-tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportMultipleNewOperatorsWithAndWithoutAliases	pending	
-tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportNestedNamedArguments	pending	
-tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportNestedNewOperators	pending	
-tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportNestedNewOperatorsAndNamedArguments	pending	
-tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportNestedNewOperatorsWithDtoFirst	pending	
-tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportNestedNewOperatorsWithNestedDtoNotLast	pending	
-tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportNullLiteralExpression	pending	
-tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportSimpleArithmeticExpression	pending	
-tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportsBasicUsage	pending	
-tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testVariadicArgument	pending	
+tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testClassCantBeInstantiatedException	ported	crates/php2rust-doctrine-orm/tests/new_operator_test.rs::testClassCantBeInstantiatedException
+tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testEntityInDtoWithRoot	ported	crates/php2rust-doctrine-orm/tests/new_operator_test.rs::testEntityInDtoWithRoot
+tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testEntityInDtoWithoutRoot	ported	crates/php2rust-doctrine-orm/tests/new_operator_test.rs::testEntityInDtoWithoutRoot
+tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testExceptionIfFunctionHasNoAlias	ported	crates/php2rust-doctrine-orm/tests/new_operator_test.rs::testExceptionIfFunctionHasNoAlias
+tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testExceptionIfTwoAliases	ported	crates/php2rust-doctrine-orm/tests/new_operator_test.rs::testExceptionIfTwoAliases
+tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testInvalidClassConstructorException	ported	crates/php2rust-doctrine-orm/tests/new_operator_test.rs::testInvalidClassConstructorException
+tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testInvalidClassException	ported	crates/php2rust-doctrine-orm/tests/new_operator_test.rs::testInvalidClassException
+tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testInvalidClassWithoutConstructorException	ported	crates/php2rust-doctrine-orm/tests/new_operator_test.rs::testInvalidClassWithoutConstructorException
+tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testNamedArguments	ported	crates/php2rust-doctrine-orm/tests/new_operator_test.rs::testNamedArguments
+tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testOnlyObjectInDto	ported	crates/php2rust-doctrine-orm/tests/new_operator_test.rs::testOnlyObjectInDto
+tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testOnlyObjectInNamedDto	ported	crates/php2rust-doctrine-orm/tests/new_operator_test.rs::testOnlyObjectInNamedDto
+tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testOnlyObjectInNamedDtoWithAlias	ported	crates/php2rust-doctrine-orm/tests/new_operator_test.rs::testOnlyObjectInNamedDtoWithAlias
+tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testOnlyObjectInNamedDtoWithSameNameAsTheProperties	ported	crates/php2rust-doctrine-orm/tests/new_operator_test.rs::testOnlyObjectInNamedDtoWithSameNameAsTheProperties
+tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testOnlyObjectInObject	ported	crates/php2rust-doctrine-orm/tests/new_operator_test.rs::testOnlyObjectInObject
+tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldAssumeFromEntityNamespaceWhenNotGiven	ported	crates/php2rust-doctrine-orm/tests/new_operator_test.rs::testShouldAssumeFromEntityNamespaceWhenNotGiven
+tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldIgnoreAliasesForSingleObject	ported	crates/php2rust-doctrine-orm/tests/new_operator_test.rs::testShouldIgnoreAliasesForSingleObject
+tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportAggregateFunctions	ported	crates/php2rust-doctrine-orm/tests/new_operator_test.rs::testShouldSupportAggregateFunctions
+tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportArithmeticExpression	ported	crates/php2rust-doctrine-orm/tests/new_operator_test.rs::testShouldSupportArithmeticExpression
+tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportCaseExpression	ported	crates/php2rust-doctrine-orm/tests/new_operator_test.rs::testShouldSupportCaseExpression
+tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportLiteralExpression	ported	crates/php2rust-doctrine-orm/tests/new_operator_test.rs::testShouldSupportLiteralExpression
+tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportMultipleNewOperators	ported	crates/php2rust-doctrine-orm/tests/new_operator_test.rs::testShouldSupportMultipleNewOperators
+tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportMultipleNewOperatorsAndMultipleScalars	ported	crates/php2rust-doctrine-orm/tests/new_operator_test.rs::testShouldSupportMultipleNewOperatorsAndMultipleScalars
+tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportMultipleNewOperatorsAndMultipleScalarsWithAliases	ported	crates/php2rust-doctrine-orm/tests/new_operator_test.rs::testShouldSupportMultipleNewOperatorsAndMultipleScalarsWithAliases
+tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportMultipleNewOperatorsAndMultipleScalarsWithAndWithoutAliases	ported	crates/php2rust-doctrine-orm/tests/new_operator_test.rs::testShouldSupportMultipleNewOperatorsAndMultipleScalarsWithAndWithoutAliases
+tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportMultipleNewOperatorsAndSingleScalar	ported	crates/php2rust-doctrine-orm/tests/new_operator_test.rs::testShouldSupportMultipleNewOperatorsAndSingleScalar
+tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportMultipleNewOperatorsAndSingleScalarWithAliases	ported	crates/php2rust-doctrine-orm/tests/new_operator_test.rs::testShouldSupportMultipleNewOperatorsAndSingleScalarWithAliases
+tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportMultipleNewOperatorsAndSingleScalarWithAndWithoutAliases	ported	crates/php2rust-doctrine-orm/tests/new_operator_test.rs::testShouldSupportMultipleNewOperatorsAndSingleScalarWithAndWithoutAliases
+tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportMultipleNewOperatorsWithAliases	ported	crates/php2rust-doctrine-orm/tests/new_operator_test.rs::testShouldSupportMultipleNewOperatorsWithAliases
+tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportMultipleNewOperatorsWithAndWithoutAliases	ported	crates/php2rust-doctrine-orm/tests/new_operator_test.rs::testShouldSupportMultipleNewOperatorsWithAndWithoutAliases
+tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportNestedNamedArguments	ported	crates/php2rust-doctrine-orm/tests/new_operator_test.rs::testShouldSupportNestedNamedArguments
+tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportNestedNewOperators	ported	crates/php2rust-doctrine-orm/tests/new_operator_test.rs::testShouldSupportNestedNewOperators
+tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportNestedNewOperatorsAndNamedArguments	ported	crates/php2rust-doctrine-orm/tests/new_operator_test.rs::testShouldSupportNestedNewOperatorsAndNamedArguments
+tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportNestedNewOperatorsWithDtoFirst	ported	crates/php2rust-doctrine-orm/tests/new_operator_test.rs::testShouldSupportNestedNewOperatorsWithDtoFirst
+tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportNestedNewOperatorsWithNestedDtoNotLast	ported	crates/php2rust-doctrine-orm/tests/new_operator_test.rs::testShouldSupportNestedNewOperatorsWithNestedDtoNotLast
+tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportNullLiteralExpression	ported	crates/php2rust-doctrine-orm/tests/new_operator_test.rs::testShouldSupportNullLiteralExpression
+tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportSimpleArithmeticExpression	ported	crates/php2rust-doctrine-orm/tests/new_operator_test.rs::testShouldSupportSimpleArithmeticExpression
+tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testShouldSupportsBasicUsage	ported	crates/php2rust-doctrine-orm/tests/new_operator_test.rs::testShouldSupportsBasicUsage
+tests/Tests/ORM/Functional/NewOperatorTest.php	NewOperatorTest::testVariadicArgument	ported	crates/php2rust-doctrine-orm/tests/new_operator_test.rs::testVariadicArgument
 tests/Tests/ORM/Functional/OneToManyBidirectionalAssociationTest.php	OneToManyBidirectionalAssociationTest::testDoesNotSaveAnInverseSideSet	ported	crates/php2rust-doctrine-orm/tests/one_to_many_bidirectional_association_test.rs::testDoesNotSaveAnInverseSideSet
 tests/Tests/ORM/Functional/OneToManyBidirectionalAssociationTest.php	OneToManyBidirectionalAssociationTest::testEagerLoadsOneToManyAssociation	ported	crates/php2rust-doctrine-orm/tests/one_to_many_bidirectional_association_test.rs::testEagerLoadsOneToManyAssociation
 tests/Tests/ORM/Functional/OneToManyBidirectionalAssociationTest.php	OneToManyBidirectionalAssociationTest::testJoinFromOwningSide	ported	crates/php2rust-doctrine-orm/tests/one_to_many_bidirectional_association_test.rs::testJoinFromOwningSide
@@ -845,43 +845,43 @@ tests/Tests/ORM/Functional/ProxiesLikeEntitiesTest.php	ProxiesLikeEntitiesTest::
 tests/Tests/ORM/Functional/ProxiesLikeEntitiesTest.php	ProxiesLikeEntitiesTest::testFindWithProxyName	pending	
 tests/Tests/ORM/Functional/ProxiesLikeEntitiesTest.php	ProxiesLikeEntitiesTest::testPersistUpdate	pending	
 tests/Tests/ORM/Functional/ProxiesLikeEntitiesTest.php	ProxiesLikeEntitiesTest::testProxyAsDqlParameterPersist	pending	
-tests/Tests/ORM/Functional/QueryBuilderParenthesisTest.php	QueryBuilderParenthesisTest::testParenthesisOnMultiLine	pending	
-tests/Tests/ORM/Functional/QueryBuilderParenthesisTest.php	QueryBuilderParenthesisTest::testParenthesisOnSingleLine	pending	
+tests/Tests/ORM/Functional/QueryBuilderParenthesisTest.php	QueryBuilderParenthesisTest::testParenthesisOnMultiLine	ported	crates/php2rust-doctrine-orm/tests/query_builder_parenthesis_test.rs::testParenthesisOnMultiLine
+tests/Tests/ORM/Functional/QueryBuilderParenthesisTest.php	QueryBuilderParenthesisTest::testParenthesisOnSingleLine	ported	crates/php2rust-doctrine-orm/tests/query_builder_parenthesis_test.rs::testParenthesisOnSingleLine
 tests/Tests/ORM/Functional/QueryCacheTest.php	QueryCacheTest::testQueryCacheDependsOnHints	pending	
 tests/Tests/ORM/Functional/QueryCacheTest.php	QueryCacheTest::testQueryCacheDependsOnHydrationMode	pending	
 tests/Tests/ORM/Functional/QueryCacheTest.php	QueryCacheTest::testQueryCacheDoesNotDependOnFirstResultForDefaultOutputWalker	pending	
 tests/Tests/ORM/Functional/QueryCacheTest.php	QueryCacheTest::testQueryCacheDoesNotDependOnMaxResultsForDefaultOutputWalker	pending	
 tests/Tests/ORM/Functional/QueryCacheTest.php	QueryCacheTest::testQueryCacheHitDoesNotSaveParserResult	pending	
 tests/Tests/ORM/Functional/QueryCacheTest.php	QueryCacheTest::testQueryCacheNoHitSaveParserResult	pending	
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testAggregateAvg	pending	
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testAggregateCount	pending	
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testAggregateMax	pending	
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testAggregateMin	pending	
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testAggregateSum	pending	
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testBitAndComparison	pending	
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testBitOrComparison	pending	
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testConcatFunction	pending	
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testDateAdd	pending	
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testDateAddWithColumnInterval	pending	
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testDateDiff	pending	
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testDateSub	pending	
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testDateSubWithColumnInterval	pending	
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testFunctionAbs	pending	
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testFunctionConcat	pending	
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testFunctionLength	pending	
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testFunctionLocate	pending	
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testFunctionLower	pending	
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testFunctionMod	pending	
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testFunctionSqrt	pending	
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testFunctionSubstring	pending	
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testFunctionTrim	pending	
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testFunctionUpper	pending	
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testInArithmeticExpression1	pending	
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testInArithmeticExpression2	pending	
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testOperatorAdd	pending	
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testOperatorDiv	pending	
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testOperatorMultiply	pending	
-tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testOperatorSub	pending	
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testAggregateAvg	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testAggregateCount	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testAggregateMax	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testAggregateMin	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testAggregateSum	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testBitAndComparison	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testBitOrComparison	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testConcatFunction	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testDateAdd	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testDateAddWithColumnInterval	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testDateDiff	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testDateSub	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testDateSubWithColumnInterval	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testFunctionAbs	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testFunctionConcat	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testFunctionLength	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testFunctionLocate	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testFunctionLower	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testFunctionMod	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testFunctionSqrt	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testFunctionSubstring	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testFunctionTrim	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testFunctionUpper	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testInArithmeticExpression1	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testInArithmeticExpression2	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testOperatorAdd	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testOperatorDiv	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testOperatorMultiply	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
+tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testOperatorSub	pending	the company model set (CompanyManager) needs the joined inheritance persister and schema, which are not ported
 tests/Tests/ORM/Functional/QueryIterableTest.php	QueryIterableTest::testAlias	pending	
 tests/Tests/ORM/Functional/QueryIterableTest.php	QueryIterableTest::testAliasInnerJoin	pending	
 tests/Tests/ORM/Functional/QueryIterableTest.php	QueryIterableTest::testIndexByQueryWithMultipleResults	pending	
@@ -969,55 +969,55 @@ tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testResultCacheN
 tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testResultCacheWithObjectParameter	pending	
 tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testSetResultCacheId	pending	
 tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testUseResultCacheParams	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testConfigureFilter	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testEntityManagerDisableFilter	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testEntityManagerEnableFilter	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testEntityManagerEnabledFilters	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testEntityManagerGetFilter	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testEntityManagerIsFilterEnabled	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testJoinSubclassPersisterFilterOnlyOnRootTableWhenFetchingRootEntity	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testJoinSubclassPersisterFilterOnlyOnRootTableWhenFetchingSubEntity	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testManyToManyExtraLazyContainsWithFilter	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testManyToManyExtraLazyContainsWithFilterOnCTI	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testManyToManyExtraLazyContainsWithFilterOnSTI	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testManyToManyExtraLazyCountWithFilter	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testManyToManyExtraLazyCountWithFilterOnCTI	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testManyToManyExtraLazyCountWithFilterOnSTI	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testManyToManyExtraLazySliceWithFilter	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testManyToManyExtraLazySliceWithFilterOnCTI	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testManyToManyExtraLazySliceWithFilterOnSTI	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testManyToManyFilter	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testOneToManyExtraLazyContainsWithFilter	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testOneToManyExtraLazyContainsWithFilterOnCTI	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testOneToManyExtraLazyContainsWithFilterOnSTI	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testOneToManyExtraLazyCountWithFilter	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testOneToManyExtraLazyCountWithFilterOnCTI	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testOneToManyExtraLazyCountWithFilterOnSTI	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testOneToManyExtraLazySliceWithFilter	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testOneToManyExtraLazySliceWithFilterOnCTI	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testOneToManyExtraLazySliceWithFilterOnSTI	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testOneToOneInverseSideWithFilter	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testQueryCacheDependsOnFilters	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testQueryGenerationDependsOnFilters	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testRepositoryFind	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testRepositoryFindAll	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testRepositoryFindBy	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testRepositoryFindByX	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testRepositoryFindOneBy	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testRepositoryFindOneByX	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testRetrieveListAsSingleThrowsException	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testRetrieveSingleAsListThrowsException	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testSQLFilterAddConstraint	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testSQLFilterGetConnection	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testSQLFilterGetSetParameter	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testSQLFilterSetArrayParameterInfersType	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testSQLFilterSetParameterInfersType	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testSQLFilterToString	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testSingleTableInheritanceFilterOnlyOnRootTableWhenFetchingRootEntity	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testSingleTableInheritanceFilterOnlyOnRootTableWhenFetchingSubEntity	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testToOneFilter	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testWhereFilter	pending	
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testWhereOrFilter	pending	
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testConfigureFilter	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testConfigureFilter
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testEntityManagerDisableFilter	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testEntityManagerDisableFilter
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testEntityManagerEnableFilter	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testEntityManagerEnableFilter
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testEntityManagerEnabledFilters	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testEntityManagerEnabledFilters
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testEntityManagerGetFilter	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testEntityManagerGetFilter
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testEntityManagerIsFilterEnabled	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testEntityManagerIsFilterEnabled
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testJoinSubclassPersisterFilterOnlyOnRootTableWhenFetchingRootEntity	pending	the company model set needs the joined and single table inheritance persisters, which are not ported
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testJoinSubclassPersisterFilterOnlyOnRootTableWhenFetchingSubEntity	pending	the company model set needs the joined and single table inheritance persisters, which are not ported
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testManyToManyExtraLazyContainsWithFilter	pending	the extra-lazy collection operations (count(), contains(), slice()) are not ported
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testManyToManyExtraLazyContainsWithFilterOnCTI	pending	the company model set needs the joined and single table inheritance persisters, which are not ported
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testManyToManyExtraLazyContainsWithFilterOnSTI	pending	the company model set needs the joined and single table inheritance persisters, which are not ported
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testManyToManyExtraLazyCountWithFilter	pending	the extra-lazy collection operations (count(), contains(), slice()) are not ported
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testManyToManyExtraLazyCountWithFilterOnCTI	pending	the company model set needs the joined and single table inheritance persisters, which are not ported
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testManyToManyExtraLazyCountWithFilterOnSTI	pending	the company model set needs the joined and single table inheritance persisters, which are not ported
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testManyToManyExtraLazySliceWithFilter	pending	the extra-lazy collection operations (count(), contains(), slice()) are not ported
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testManyToManyExtraLazySliceWithFilterOnCTI	pending	the company model set needs the joined and single table inheritance persisters, which are not ported
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testManyToManyExtraLazySliceWithFilterOnSTI	pending	the company model set needs the joined and single table inheritance persisters, which are not ported
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testManyToManyFilter	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testManyToManyFilter
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testOneToManyExtraLazyContainsWithFilter	pending	the extra-lazy collection operations (count(), contains(), slice()) are not ported
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testOneToManyExtraLazyContainsWithFilterOnCTI	pending	the company model set needs the joined and single table inheritance persisters, which are not ported
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testOneToManyExtraLazyContainsWithFilterOnSTI	pending	the company model set needs the joined and single table inheritance persisters, which are not ported
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testOneToManyExtraLazyCountWithFilter	pending	the extra-lazy collection operations (count(), contains(), slice()) are not ported
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testOneToManyExtraLazyCountWithFilterOnCTI	pending	the company model set needs the joined and single table inheritance persisters, which are not ported
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testOneToManyExtraLazyCountWithFilterOnSTI	pending	the company model set needs the joined and single table inheritance persisters, which are not ported
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testOneToManyExtraLazySliceWithFilter	pending	the extra-lazy collection operations (count(), contains(), slice()) are not ported
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testOneToManyExtraLazySliceWithFilterOnCTI	pending	the company model set needs the joined and single table inheritance persisters, which are not ported
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testOneToManyExtraLazySliceWithFilterOnSTI	pending	the company model set needs the joined and single table inheritance persisters, which are not ported
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testOneToOneInverseSideWithFilter	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testOneToOneInverseSideWithFilter
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testQueryCacheDependsOnFilters	pending	the port has no query cache
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testQueryGenerationDependsOnFilters	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testQueryGenerationDependsOnFilters
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testRepositoryFind	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testRepositoryFind
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testRepositoryFindAll	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testRepositoryFindAll
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testRepositoryFindBy	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testRepositoryFindBy
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testRepositoryFindByX	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testRepositoryFindByX
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testRepositoryFindOneBy	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testRepositoryFindOneBy
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testRepositoryFindOneByX	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testRepositoryFindOneByX
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testRetrieveListAsSingleThrowsException	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testRetrieveListAsSingleThrowsException
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testRetrieveSingleAsListThrowsException	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testRetrieveSingleAsListThrowsException
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testSQLFilterAddConstraint	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testSQLFilterAddConstraint
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testSQLFilterGetConnection	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testSQLFilterGetConnection
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testSQLFilterGetSetParameter	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testSQLFilterGetSetParameter
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testSQLFilterSetArrayParameterInfersType	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testSQLFilterSetArrayParameterInfersType
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testSQLFilterSetParameterInfersType	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testSQLFilterSetParameterInfersType
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testSQLFilterToString	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testSQLFilterToString
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testSingleTableInheritanceFilterOnlyOnRootTableWhenFetchingRootEntity	pending	the company model set needs the joined and single table inheritance persisters, which are not ported
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testSingleTableInheritanceFilterOnlyOnRootTableWhenFetchingSubEntity	pending	the company model set needs the joined and single table inheritance persisters, which are not ported
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testToOneFilter	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testToOneFilter
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testWhereFilter	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testWhereFilter
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testWhereOrFilter	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testWhereOrFilter
 tests/Tests/ORM/Functional/SchemaTool/CompanySchemaTest.php	CompanySchemaTest::testGeneratedSchema	pending	
 tests/Tests/ORM/Functional/SchemaTool/CompanySchemaTest.php	CompanySchemaTest::testSingleTableInheritance	pending	
 tests/Tests/ORM/Functional/SchemaTool/DBAL483Test.php	DBAL483Test::testDefaultValueIsComparedCorrectly	pending	
@@ -1615,11 +1615,11 @@ tests/Tests/ORM/Functional/Ticket/Issue5989Test.php	Issue5989Test::testSimpleArr
 tests/Tests/ORM/Functional/Ticket/Issue9300Test.php	Issue9300Test::testPersistedCollectionIsPresentInOriginalDataAfterFlush	pending	
 tests/Tests/ORM/Functional/Ticket/Issue9300Test.php	Issue9300Test::testPersistingCollectionAfterFlushWorksAsExpected	pending	
 tests/Tests/ORM/Functional/Ticket/LazyEagerCollectionTest.php	LazyEagerCollectionTest::testRefreshRefreshesBothLazyAndEagerCollections	pending	
-tests/Tests/ORM/Functional/Ticket/SwitchContextWithFilter/ChangeFiltersTest.php	ChangeFiltersTest::testUseChangeFilterParameters	pending	
-tests/Tests/ORM/Functional/Ticket/SwitchContextWithFilter/ChangeFiltersTest.php	ChangeFiltersTest::testUseEnableDisableFilter	pending	
-tests/Tests/ORM/Functional/Ticket/SwitchContextWithFilter/ChangeFiltersTest.php	ChangeFiltersTest::testUseQueryBuilder	pending	
-tests/Tests/ORM/Functional/Ticket/SwitchContextWithFilter/SwitchContextTest.php	SwitchContextTest::testSwitchContext	pending	
-tests/Tests/ORM/Functional/Ticket/SwitchContextWithFilterAndIndexedRelation/ChangeFiltersTest.php	ChangeFiltersTest::testIndexAliasUpdatedWithUpdatedFilter	pending	
+tests/Tests/ORM/Functional/Ticket/SwitchContextWithFilter/ChangeFiltersTest.php	ChangeFiltersTest::testUseChangeFilterParameters	ported	crates/php2rust-doctrine-orm/tests/change_filters_test.rs::testUseChangeFilterParameters
+tests/Tests/ORM/Functional/Ticket/SwitchContextWithFilter/ChangeFiltersTest.php	ChangeFiltersTest::testUseEnableDisableFilter	ported	crates/php2rust-doctrine-orm/tests/change_filters_test.rs::testUseEnableDisableFilter
+tests/Tests/ORM/Functional/Ticket/SwitchContextWithFilter/ChangeFiltersTest.php	ChangeFiltersTest::testUseQueryBuilder	ported	crates/php2rust-doctrine-orm/tests/change_filters_test.rs::testUseQueryBuilder
+tests/Tests/ORM/Functional/Ticket/SwitchContextWithFilter/SwitchContextTest.php	SwitchContextTest::testSwitchContext	pending	PatientInsurance uses single table inheritance, whose persister is not ported
+tests/Tests/ORM/Functional/Ticket/SwitchContextWithFilterAndIndexedRelation/ChangeFiltersTest.php	ChangeFiltersTest::testIndexAliasUpdatedWithUpdatedFilter	ported	crates/php2rust-doctrine-orm/tests/change_filters_indexed_relation_test.rs::testIndexAliasUpdatedWithUpdatedFilter
 tests/Tests/ORM/Functional/Ticket/Ticket2481Test.php	Ticket2481Test::testEmptyInsert	pending	
 tests/Tests/ORM/Functional/Ticket/Ticket4646InstanceOfAbstractTest.php	Ticket4646InstanceOfAbstractTest::testInstanceOf	pending	
 tests/Tests/ORM/Functional/Ticket/Ticket4646InstanceOfMultiLevelTest.php	Ticket4646InstanceOfMultiLevelTest::testInstanceOf	pending	
@@ -2414,15 +2414,15 @@ tests/Tests/ORM/Query/ExprTest.php	ExprTest::testSubstringExprAcceptsTwoArgument
 tests/Tests/ORM/Query/ExprTest.php	ExprTest::testSumExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testSumExpr
 tests/Tests/ORM/Query/ExprTest.php	ExprTest::testTrimExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testTrimExpr
 tests/Tests/ORM/Query/ExprTest.php	ExprTest::testUpperExpr	ported	crates/php2rust-doctrine-orm/tests/expr_test.rs::testUpperExpr
-tests/Tests/ORM/Query/FilterCollectionTest.php	FilterCollectionTest::testEnable	pending	
-tests/Tests/ORM/Query/FilterCollectionTest.php	FilterCollectionTest::testGetFilter	pending	
-tests/Tests/ORM/Query/FilterCollectionTest.php	FilterCollectionTest::testGetFilterInvalidArgument	pending	
-tests/Tests/ORM/Query/FilterCollectionTest.php	FilterCollectionTest::testHasFilter	pending	
-tests/Tests/ORM/Query/FilterCollectionTest.php	FilterCollectionTest::testHashing	pending	
-tests/Tests/ORM/Query/FilterCollectionTest.php	FilterCollectionTest::testIsEnabled	pending	
-tests/Tests/ORM/Query/FilterCollectionTest.php	FilterCollectionTest::testIsSuspended	pending	
-tests/Tests/ORM/Query/FilterCollectionTest.php	FilterCollectionTest::testRestoreFailure	pending	
-tests/Tests/ORM/Query/FilterCollectionTest.php	FilterCollectionTest::testSuspend	pending	
+tests/Tests/ORM/Query/FilterCollectionTest.php	FilterCollectionTest::testEnable	ported	crates/php2rust-doctrine-orm/tests/filter_collection_test.rs::testEnable
+tests/Tests/ORM/Query/FilterCollectionTest.php	FilterCollectionTest::testGetFilter	ported	crates/php2rust-doctrine-orm/tests/filter_collection_test.rs::testGetFilter
+tests/Tests/ORM/Query/FilterCollectionTest.php	FilterCollectionTest::testGetFilterInvalidArgument	ported	crates/php2rust-doctrine-orm/tests/filter_collection_test.rs::testGetFilterInvalidArgument
+tests/Tests/ORM/Query/FilterCollectionTest.php	FilterCollectionTest::testHasFilter	ported	crates/php2rust-doctrine-orm/tests/filter_collection_test.rs::testHasFilter
+tests/Tests/ORM/Query/FilterCollectionTest.php	FilterCollectionTest::testHashing	ported	crates/php2rust-doctrine-orm/tests/filter_collection_test.rs::testHashing
+tests/Tests/ORM/Query/FilterCollectionTest.php	FilterCollectionTest::testIsEnabled	ported	crates/php2rust-doctrine-orm/tests/filter_collection_test.rs::testIsEnabled
+tests/Tests/ORM/Query/FilterCollectionTest.php	FilterCollectionTest::testIsSuspended	ported	crates/php2rust-doctrine-orm/tests/filter_collection_test.rs::testIsSuspended
+tests/Tests/ORM/Query/FilterCollectionTest.php	FilterCollectionTest::testRestoreFailure	ported	crates/php2rust-doctrine-orm/tests/filter_collection_test.rs::testRestoreFailure
+tests/Tests/ORM/Query/FilterCollectionTest.php	FilterCollectionTest::testSuspend	ported	crates/php2rust-doctrine-orm/tests/filter_collection_test.rs::testSuspend
 tests/Tests/ORM/Query/LanguageRecognitionTest.php	LanguageRecognitionTest::testAggregateFunctionInHavingClause	ported	crates/php2rust-doctrine-orm/tests/language_recognition_test.rs::testAggregateFunctionInHavingClause
 tests/Tests/ORM/Query/LanguageRecognitionTest.php	LanguageRecognitionTest::testAggregateFunctionInSelect	ported	crates/php2rust-doctrine-orm/tests/language_recognition_test.rs::testAggregateFunctionInSelect
 tests/Tests/ORM/Query/LanguageRecognitionTest.php	LanguageRecognitionTest::testAggregateFunctionWithDistinctInSelect	ported	crates/php2rust-doctrine-orm/tests/language_recognition_test.rs::testAggregateFunctionWithDistinctInSelect
