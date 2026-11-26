@@ -59,17 +59,17 @@ tests/Mapping/DriverChainTest.php	DriverChainTest::testDelegateToMatchingNamespa
 tests/Mapping/DriverChainTest.php	DriverChainTest::testGatherAllClassNames	ported	crates/php2rust-doctrine-persistence/tests/driver_chain_test.rs::testGatherAllClassNames
 tests/Mapping/DriverChainTest.php	DriverChainTest::testIsTransient	ported	crates/php2rust-doctrine-persistence/tests/driver_chain_test.rs::testIsTransient
 tests/Mapping/DriverChainTest.php	DriverChainTest::testLoadMetadataShouldThrowMappingExceptionWhenNoDelegatorWasFound	ported	crates/php2rust-doctrine-persistence/tests/driver_chain_test.rs::testLoadMetadataShouldThrowMappingExceptionWhenNoDelegatorWasFound
-tests/Mapping/FileDriverTest.php	FileDriverTest::testGetAllClassNamesBothSources	pending	
-tests/Mapping/FileDriverTest.php	FileDriverTest::testGetAllClassNamesBothSourcesNoDupes	pending	
-tests/Mapping/FileDriverTest.php	FileDriverTest::testGetAllClassNamesFromMappingFile	pending	
-tests/Mapping/FileDriverTest.php	FileDriverTest::testGetAllClassNamesGlobalBasename	pending	
-tests/Mapping/FileDriverTest.php	FileDriverTest::testGetElementFromFile	pending	
-tests/Mapping/FileDriverTest.php	FileDriverTest::testGetElementFromGlobalFile	pending	
-tests/Mapping/FileDriverTest.php	FileDriverTest::testGetElementUpdatesClassCache	pending	
-tests/Mapping/FileDriverTest.php	FileDriverTest::testGlobalBasename	pending	
-tests/Mapping/FileDriverTest.php	FileDriverTest::testIsNotTransient	pending	
-tests/Mapping/FileDriverTest.php	FileDriverTest::testIsTransient	pending	
-tests/Mapping/FileDriverTest.php	FileDriverTest::testNonLocatorFallback	pending	
+tests/Mapping/FileDriverTest.php	FileDriverTest::testGetAllClassNamesBothSources	ported	crates/php2rust-doctrine-persistence/tests/file_driver_test.rs::testGetAllClassNamesBothSources
+tests/Mapping/FileDriverTest.php	FileDriverTest::testGetAllClassNamesBothSourcesNoDupes	ported	crates/php2rust-doctrine-persistence/tests/file_driver_test.rs::testGetAllClassNamesBothSourcesNoDupes
+tests/Mapping/FileDriverTest.php	FileDriverTest::testGetAllClassNamesFromMappingFile	ported	crates/php2rust-doctrine-persistence/tests/file_driver_test.rs::testGetAllClassNamesFromMappingFile
+tests/Mapping/FileDriverTest.php	FileDriverTest::testGetAllClassNamesGlobalBasename	ported	crates/php2rust-doctrine-persistence/tests/file_driver_test.rs::testGetAllClassNamesGlobalBasename
+tests/Mapping/FileDriverTest.php	FileDriverTest::testGetElementFromFile	ported	crates/php2rust-doctrine-persistence/tests/file_driver_test.rs::testGetElementFromFile
+tests/Mapping/FileDriverTest.php	FileDriverTest::testGetElementFromGlobalFile	ported	crates/php2rust-doctrine-persistence/tests/file_driver_test.rs::testGetElementFromGlobalFile
+tests/Mapping/FileDriverTest.php	FileDriverTest::testGetElementUpdatesClassCache	ported	crates/php2rust-doctrine-persistence/tests/file_driver_test.rs::testGetElementUpdatesClassCache
+tests/Mapping/FileDriverTest.php	FileDriverTest::testGlobalBasename	ported	crates/php2rust-doctrine-persistence/tests/file_driver_test.rs::testGlobalBasename
+tests/Mapping/FileDriverTest.php	FileDriverTest::testIsNotTransient	ported	crates/php2rust-doctrine-persistence/tests/file_driver_test.rs::testIsNotTransient
+tests/Mapping/FileDriverTest.php	FileDriverTest::testIsTransient	ported	crates/php2rust-doctrine-persistence/tests/file_driver_test.rs::testIsTransient
+tests/Mapping/FileDriverTest.php	FileDriverTest::testNonLocatorFallback	ported	crates/php2rust-doctrine-persistence/tests/file_driver_test.rs::testNonLocatorFallback
 tests/Mapping/PHPDriverTest.php	PHPDriverTest::testLoadMetadata	pending	
 tests/Mapping/PHPDriverTest.php	PHPDriverTest::testLoadMetadataClosureNotBoundToClass	pending	
 tests/Mapping/PHPDriverTest.php	PHPDriverTest::testLoadMetadataClosureNotBoundToObject	pending	
