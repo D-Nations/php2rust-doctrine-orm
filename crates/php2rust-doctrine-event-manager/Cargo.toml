@@ -1,0 +1,13 @@
+[package]
+name = "php2rust-doctrine-event-manager"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+publish = false
+description = "Port of doctrine/event-manager"
+
+[dependencies]
+php-value = { workspace = true }
+
+[lints]
+workspace = true

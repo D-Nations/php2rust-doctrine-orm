@@ -1,5 +1,5 @@
 # doctrine/event-manager at dda33921b198841ca8dbad2eaa5d4d34769d18cf: upstream file	classes	code lines	status	rust files
-src/EventArgs.php	EventArgs	10	pending	
+src/EventArgs.php	EventArgs	10	ported	crates/php2rust-doctrine-event-manager/src/event_args.rs
 src/EventDispatcher.php	EventDispatcher	6	pending	
 src/EventListenerIntrospector.php	EventListenerIntrospector	8	pending	
 src/EventListenerRegistry.php	EventListenerRegistry	7	pending	

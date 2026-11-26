@@ -1,4 +1,5 @@
 # rust file	package	upstream path	reference
+crates/php2rust-doctrine-event-manager/src/event_args.rs	doctrine/event-manager	src/EventArgs.php	dda33921b198841ca8dbad2eaa5d4d34769d18cf
 crates/php2rust-doctrine-lexer/src/abstract_lexer.rs	doctrine/lexer	src/AbstractLexer.php	71d305eaa6480d3d3460c7d053d1da7749fa9cca
 crates/php2rust-doctrine-lexer/src/token.rs	doctrine/lexer	src/Token.php	71d305eaa6480d3d3460c7d053d1da7749fa9cca
 crates/php2rust-doctrine-lexer/tests/abstract_lexer_test.rs	doctrine/lexer	tests/AbstractLexerTest.php	71d305eaa6480d3d3460c7d053d1da7749fa9cca
