@@ -1271,7 +1271,7 @@ tests/Tests/ORM/Functional/Ticket/DDC2074Test.php	DDC2074Test::testSavingClonedP
 tests/Tests/ORM/Functional/Ticket/DDC2074Test.php	DDC2074Test::testShouldNotScheduleDeletionOnClonedInstances	ported	crates/php2rust-doctrine-orm/tests/ddc2074_test.rs::testShouldNotScheduleDeletionOnClonedInstances
 tests/Tests/ORM/Functional/Ticket/DDC2084Test.php	DDC2084Test::testInvalidIdentifierBindingEntityException	ported	crates/php2rust-doctrine-orm/tests/ddc2084_test.rs::testInvalidIdentifierBindingEntityException
 tests/Tests/ORM/Functional/Ticket/DDC2084Test.php	DDC2084Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2084_test.rs::testIssue
-tests/Tests/ORM/Functional/Ticket/DDC2090Test.php	DDC2090Test::testIssue	pending	
+tests/Tests/ORM/Functional/Ticket/DDC2090Test.php	DDC2090Test::testIssue	pending	needs the query cache (useQueryCache())
 tests/Tests/ORM/Functional/Ticket/DDC2106Test.php	DDC2106Test::testDetachedEntityAsId	ported	crates/php2rust-doctrine-orm/tests/ddc2106_test.rs::testDetachedEntityAsId
 tests/Tests/ORM/Functional/Ticket/DDC211Test.php	DDC211Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc211_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC2138Test.php	DDC2138Test::testForeignKeyOnSTIWithMultipleMapping	ported	crates/php2rust-doctrine-orm/tests/ddc2138_test.rs::testForeignKeyOnSTIWithMultipleMapping
