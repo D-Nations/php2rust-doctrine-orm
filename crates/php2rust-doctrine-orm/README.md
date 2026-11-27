@@ -192,6 +192,13 @@ Mapping, not reproduced and so not claimed:
   type) cannot fail: the Rust types rule those values out.
 - PHPUnit's `#[Depends]` chains rebuild the metadata in each test.
 
+- `DatabaseDriver::new()` is async and lists the schema manager's tables
+  when the driver is made (`listTables()` is async; the mapping driver's
+  methods are not). The driver reverse engineers them on first use, as
+  upstream does, so a table without a primary key still throws then;
+  `setTables()` replaces them. `getAllClassNames()` and
+  `loadMetadataForClass()` see the database as it was when the driver
+  was made.
 - `XmlDriver` reads the mapping files with php2rust-dom, as SimpleXML
   reads them (child elements and attributes without a namespace prefix;
   an element's own text). XSD validation runs only when php2rust-dom can
