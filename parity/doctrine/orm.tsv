@@ -2228,7 +2228,7 @@ tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testIdent
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testIdentifierRequiredShouldMentionParentClasses	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testIdentifierRequiredShouldMentionParentClasses
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testIdentifierWithAssociationKey	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testIdentifierWithAssociationKey
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testInsertableColumn	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testInsertableColumn
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testInvalidEntityOrMappedSuperClassShouldMentionParentClasses	pending	
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testInvalidEntityOrMappedSuperClassShouldMentionParentClasses	pending	needs XSD validation: php2rust-dom refuses doctrine-mapping.xsd (xs:complexContent, xs:token), so the XML driver does not validate
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testInverseOneToManyAssociation	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testInverseOneToManyAssociation
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testInversedByOverrideMapping	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testInversedByOverrideMapping
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testItMentionsFilenameAndEntityNameOnInvalidMapping	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testItMentionsFilenameAndEntityNameOnInvalidMapping
@@ -2241,7 +2241,7 @@ tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testManyT
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testMappedSuperclassWithRepository	pending	
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testNamingStrategy	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testNamingStrategy
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testOneToManyDefaultOrderByAsc	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testOneToManyDefaultOrderByAsc
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testOrderByWithInvalidDirection	pending	
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testOrderByWithInvalidDirection	pending	needs XSD validation: php2rust-dom refuses doctrine-mapping.xsd (xs:complexContent, xs:token), so the XML driver does not validate
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testOrderByWithStringValues	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testOrderByWithStringValues
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testOwningOneToOneAssociation	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testOwningOneToOneAssociation
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testReservedWordInTableColumn	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testReservedWordInTableColumn
@@ -2250,12 +2250,12 @@ tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testSchem
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testSecondLevelCacheMapping	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testSecondLevelCacheMapping
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testStringFieldMappings	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testStringFieldMappings
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testUpdatableColumn	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testUpdatableColumn
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testValidateIncorrectXmlSchema	pending	
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testValidateIncorrectXmlSchema	pending	needs XSD validation: php2rust-dom refuses doctrine-mapping.xsd (xs:complexContent, xs:token), so the XML driver does not validate
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testValidateXmlSchema	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testValidateXmlSchema
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testVersionedField	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testVersionedField
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testXmlCustomForeignKeyNames	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testXmlCustomForeignKeyNames
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testXmlValidationDisabled	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testXmlValidationDisabled
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testXmlValidationEnabled	pending	
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testXmlValidationEnabled	pending	needs XSD validation: php2rust-dom refuses doctrine-mapping.xsd (xs:complexContent, xs:token), so the XML driver does not validate
 tests/Tests/ORM/ORMInvalidArgumentExceptionTest.php	ORMInvalidArgumentExceptionTest::testNewEntitiesFoundThroughRelationships	pending	
 tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testAttributeConfig	pending	
 tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testAttributeConfiguration	pending	
