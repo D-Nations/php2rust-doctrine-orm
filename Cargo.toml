@@ -7,7 +7,7 @@ resolver = "3"
 # repositories, override the git source with a local path in an
 # uncommitted .cargo/config.toml (see README.md).
 # The old D-Nations URL stays (GitHub redirects it to
-# php2rust/compatibility-tools-rs) until the DBAL and symfony-console revs
+# php2rust/compatibility-tools) until the DBAL and symfony-console revs
 # below use the new URL too: Cargo treats two URLs as two packages, and
 # php_value types would then not match.
 [workspace.dependencies]
