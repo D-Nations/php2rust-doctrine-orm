@@ -76,3 +76,16 @@ pub fn run(application: &mut Application, name: &str, items: &[(&str, Value)]) -
     let mut tester = CommandTester::new(command.clone());
     execute(&mut tester, command_input(&command, items), undecorated()).1
 }
+
+/// Finds `name` and runs it with `items` after `command` and no
+/// execute options, returning the display.
+pub fn run_default(application: &mut Application, name: &str, items: &[(&str, Value)]) -> String {
+    let command = application.find(name).unwrap();
+    let mut tester = CommandTester::new(command.clone());
+    execute(
+        &mut tester,
+        command_input(&command, items),
+        ExecuteOptions::default(),
+    )
+    .1
+}
