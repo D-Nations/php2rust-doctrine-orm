@@ -12,6 +12,7 @@
 
 mod abstract_hydrator;
 mod array_hydrator;
+mod custom_hydrator;
 mod object_hydrator;
 
 use std::sync::Arc;
@@ -27,6 +28,11 @@ pub use abstract_hydrator::{
     register_new_object_class, register_new_object_class_with_arguments,
 };
 use array_hydrator::ArrayHydrator;
+pub(crate) use custom_hydrator::new_hydrator_of_class;
+pub use custom_hydrator::{
+    AbstractHydrator, HydrationContext, HydratorConstructor, ToIterable,
+    hydrate_all as hydrate_all_with, register_hydrator_class, to_iterable as to_iterable_with,
+};
 use object_hydrator::ObjectHydrator;
 
 use php_value::{Key, Object, PhpArray, Thrown, Value};

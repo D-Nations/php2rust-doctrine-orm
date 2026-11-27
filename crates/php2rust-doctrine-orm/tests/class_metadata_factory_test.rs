@@ -1,6 +1,7 @@
-//! Port of `ClassMetadataFactoryTest`. The entity manager is not ported:
-//! `createEntityManager()` is a `FactoryConfiguration` with the driver,
-//! and the event listeners are its hooks. PHPUnit's platform stub is
+//! Port of `ClassMetadataFactoryTest`. `createEntityManager()` is a
+//! `FactoryConfiguration` with the driver, and the event listeners are its
+//! hooks; `testAcceptsEntityManagerInterfaceInstances` gives the factory
+//! an entity manager. PHPUnit's platform stub is
 //! `TestPlatform` (tests/common/platform.rs); `new PostgreSQLPlatform()`
 //! is DBAL's.
 //!
@@ -14,6 +15,8 @@
 
 #[path = "common/models.rs"]
 mod models;
+#[path = "common/orm.rs"]
+mod orm;
 #[path = "common/platform.rs"]
 mod platform;
 
@@ -586,4 +589,19 @@ fn testInvalidSubClassCase() {
         "Entity class 'Doctrine\\Tests\\ORM\\Mapping\\cube' used in the discriminator map of class 'Doctrine\\Tests\\ORM\\Mapping\\Shape' does not exist.",
         text(&error)
     );
+}
+
+#[test]
+fn testAcceptsEntityManagerInterfaceInstances() {
+    let class_metadata_factory = ClassMetadataFactory::new();
+
+    let entity_manager = orm::entity_manager(orm::connection(), None);
+    class_metadata_factory.set_entity_manager_instance(&entity_manager);
+
+    // not really the cleanest way to check it, but we won't add a getter to the CMF just for the sake of testing.
+    // (the port's getter stands for the reflection of the private `em` property)
+    assert!(Arc::ptr_eq(
+        &entity_manager,
+        &class_metadata_factory.get_entity_manager().unwrap()
+    ));
 }

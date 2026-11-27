@@ -13,7 +13,7 @@
 
 use std::collections::HashSet;
 use std::fmt::{self, Write as _};
-use std::sync::{Arc, Mutex, PoisonError, RwLock};
+use std::sync::{Arc, Mutex, PoisonError, RwLock, Weak};
 
 use php_value::{PhpArray, Thrown, Value};
 use php2rust_doctrine_dbal::platforms::{AbstractPlatform, SQLitePlatform};
@@ -94,6 +94,27 @@ impl FactoryConfiguration {
             on_class_metadata_not_found: Vec::new(),
         }
     }
+
+    /// The parts of an entity manager's `Configuration` the factory reads,
+    /// with the metadata driver and the platform.
+    pub fn from_configuration(
+        config: &crate::configuration::Configuration,
+        metadata_driver: Arc<dyn MappingDriver>,
+        platform: SharedPlatform,
+    ) -> Self {
+        let mut factory_config = Self::new(metadata_driver);
+        factory_config.naming_strategy = config.get_naming_strategy();
+        // `new ClassMetadata(..., $typedFieldMapper)`: null is the default
+        // mapper.
+        factory_config.typed_field_mapper = config
+            .get_typed_field_mapper()
+            .unwrap_or_else(|| Arc::new(DefaultTypedFieldMapper::default()));
+        factory_config.quote_strategy = config.get_quote_strategy();
+        factory_config.identity_generation_preferences =
+            config.get_identity_generation_preferences().to_vec();
+        factory_config.platform = platform;
+        factory_config
+    }
 }
 
 /// `Doctrine\ORM\Mapping\ClassMetadataFactory`.
@@ -102,6 +123,9 @@ pub struct ClassMetadataFactory {
     configuration: RwLock<Option<FactoryConfiguration>>,
     driver: RwLock<Option<Arc<dyn MappingDriver>>>,
     embeddables_active_nesting: Mutex<HashSet<String>>,
+    /// `$em`: the entity manager given to `setEntityManager()`, held
+    /// weakly (the entity manager holds the factory).
+    em: RwLock<Weak<crate::entity_manager::EntityManager>>,
 }
 
 impl fmt::Debug for ClassMetadataFactory {
@@ -135,7 +159,39 @@ impl ClassMetadataFactory {
             configuration: RwLock::new(None),
             driver: RwLock::new(None),
             embeddables_active_nesting: Mutex::new(HashSet::new()),
+            em: RwLock::new(Weak::new()),
         }
+    }
+
+    /// `setEntityManager($em)` with an entity manager: the factory keeps
+    /// it and reads the parts of its configuration it needs (a missing
+    /// metadata driver leaves the configuration unset).
+    pub fn set_entity_manager_instance(&self, em: &Arc<crate::entity_manager::EntityManager>) {
+        if let Some(driver) = em.get_configuration().get_metadata_driver_impl().cloned() {
+            self.set_entity_manager(FactoryConfiguration::from_configuration(
+                em.get_configuration(),
+                driver,
+                em.shared_platform(),
+            ));
+        }
+        self.set_entity_manager_reference(em);
+    }
+
+    /// Keeps `em` as the factory's `$em`.
+    pub(crate) fn set_entity_manager_reference(
+        &self,
+        em: &Arc<crate::entity_manager::EntityManager>,
+    ) {
+        *self.em.write().unwrap_or_else(PoisonError::into_inner) = Arc::downgrade(em);
+    }
+
+    /// The factory's `$em` (upstream's tests read the private property
+    /// through reflection).
+    pub fn get_entity_manager(&self) -> Option<Arc<crate::entity_manager::EntityManager>> {
+        self.em
+            .read()
+            .unwrap_or_else(PoisonError::into_inner)
+            .upgrade()
     }
 
     /// `setEntityManager()`.

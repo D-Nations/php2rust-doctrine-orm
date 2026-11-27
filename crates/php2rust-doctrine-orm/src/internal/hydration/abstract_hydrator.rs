@@ -31,7 +31,7 @@ pub const HYDRATION_EXCEPTION: &str = "Doctrine\\ORM\\Internal\\Hydration\\Hydra
 pub const MULTIPLE_SELECTORS_FOUND: &str =
     "Doctrine\\ORM\\Exception\\MultipleSelectorsFoundException";
 
-fn hydration_exception(message: String) -> Thrown {
+pub(crate) fn hydration_exception(message: String) -> Thrown {
     Thrown::new(HYDRATION_EXCEPTION, message, 0)
 }
 

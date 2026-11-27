@@ -72,17 +72,8 @@ impl EntityManager {
         crate::proxy::check_lazy_objects(&config)?;
         let platform: SharedPlatform = Arc::new(SQLitePlatform::new());
         let metadata_factory = Arc::new(ClassMetadataFactory::new());
-        let mut factory_config = FactoryConfiguration::new(driver);
-        factory_config.naming_strategy = config.get_naming_strategy();
-        // `new ClassMetadata(..., $typedFieldMapper)`: null is the default
-        // mapper.
-        factory_config.typed_field_mapper = config.get_typed_field_mapper().unwrap_or_else(|| {
-            Arc::new(crate::mapping::typed_field_mapper::DefaultTypedFieldMapper::default())
-        });
-        factory_config.quote_strategy = config.get_quote_strategy();
-        factory_config.identity_generation_preferences =
-            config.get_identity_generation_preferences().to_vec();
-        factory_config.platform = platform.clone();
+        let factory_config =
+            FactoryConfiguration::from_configuration(&config, driver, platform.clone());
         metadata_factory.set_entity_manager(factory_config);
         let repository_factory = config.get_repository_factory();
         let entity_listener_resolver = config.get_entity_listener_resolver();
@@ -99,6 +90,7 @@ impl EntityManager {
             filters_used: std::sync::atomic::AtomicBool::new(false),
             cache: std::sync::OnceLock::new(),
         });
+        em.metadata_factory.set_entity_manager_reference(&em);
         if em.config.is_second_level_cache_enabled() {
             let cache_factory = em
                 .config
@@ -173,6 +165,32 @@ impl EntityManager {
     }
 
     /// Gets the metadata factory used to gather the metadata of classes.
+    /// Create a new instance for the given hydration mode: the hydrator of
+    /// a custom hydration mode (the built-in modes hydrate through the
+    /// queries).
+    pub fn new_hydrator(
+        self: &Arc<Self>,
+        hydration_mode: &str,
+    ) -> Result<Box<dyn crate::internal::hydration::AbstractHydrator>, Thrown> {
+        self.create_custom_hydrator(hydration_mode)
+    }
+
+    fn create_custom_hydrator(
+        self: &Arc<Self>,
+        hydration_mode: &str,
+    ) -> Result<Box<dyn crate::internal::hydration::AbstractHydrator>, Thrown> {
+        if let Some(class) = self.config.get_custom_hydration_mode(hydration_mode) {
+            return crate::internal::hydration::new_hydrator_of_class(class, self);
+        }
+
+        Err(exception::invalid_hydration_mode(hydration_mode))
+    }
+
+    /// The platform as the metadata factory keeps it.
+    pub(crate) fn shared_platform(&self) -> SharedPlatform {
+        self.platform.clone()
+    }
+
     pub fn get_metadata_factory(&self) -> &Arc<ClassMetadataFactory> {
         &self.metadata_factory
     }

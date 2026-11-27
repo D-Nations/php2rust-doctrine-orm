@@ -20,6 +20,7 @@ pub struct TestPlatform {
     quote_format: Option<String>,
     max_identifier_length: Option<i64>,
     supports_sequences: Option<bool>,
+    sequence_next_val_sql: Option<String>,
     inner: SQLitePlatform,
 }
 
@@ -30,6 +31,7 @@ impl TestPlatform {
             quote_format: None,
             max_identifier_length: None,
             supports_sequences: None,
+            sequence_next_val_sql: None,
             inner: SQLitePlatform::new(),
         }
     }
@@ -44,6 +46,13 @@ impl TestPlatform {
     #[must_use]
     pub fn supporting_sequences(mut self, supports: bool) -> Self {
         self.supports_sequences = Some(supports);
+        self
+    }
+
+    /// `$platform->method('getSequenceNextValSQL')->willReturn($sql)`.
+    #[must_use]
+    pub fn sequence_next_val_sql(mut self, sql: &str) -> Self {
+        self.sequence_next_val_sql = Some(sql.to_owned());
         self
     }
 
@@ -69,6 +78,13 @@ impl AbstractPlatform for TestPlatform {
     fn supports_sequences(&self) -> bool {
         self.supports_sequences
             .unwrap_or_else(|| self.inner.supports_sequences())
+    }
+
+    fn get_sequence_next_val_sql(&self, sequence: &str) -> Result<String, Exception> {
+        match &self.sequence_next_val_sql {
+            Some(sql) => Ok(sql.clone()),
+            None => self.inner.get_sequence_next_val_sql(sequence),
+        }
     }
 
     fn get_max_identifier_length(&self) -> i64 {
