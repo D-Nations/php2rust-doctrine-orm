@@ -37,7 +37,7 @@ const DDC753_DEFAULT_REPOSITORY: &str = "Doctrine\\Tests\\Models\\DDC753\\DDC753
 /// `buildClassMetadata()`.
 fn build_class_metadata(class_name: &str) -> ClassMetadataInfo {
     let mut metadata = ClassMetadataInfo::new(class_name, None, None);
-    metadata.name = class_name.to_owned();
+    class_name.clone_into(&mut metadata.name);
 
     metadata.custom_repository_class_name = None;
 
