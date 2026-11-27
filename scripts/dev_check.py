@@ -219,7 +219,10 @@ def main() -> int:
                 *fmt_commands(json.loads(capture(
                     "cargo", "metadata", "--locked", "--no-deps", "--format-version", "1"))),
                 ("cargo", "clippy", "--locked", "--workspace", "--all-targets", "--", "-D", "warnings"),
-                ("cargo", "test", "--locked", "--workspace", "--no-fail-fast"),
+                # The optional features (the ORM's `console`) build and run too.
+                ("cargo", "clippy", "--locked", "--workspace", "--all-targets", "--all-features",
+                 "--", "-D", "warnings"),
+                ("cargo", "test", "--locked", "--workspace", "--all-features", "--no-fail-fast"),
             ])
         commands.extend([
             (bash, "scripts/sources.sh", "--check"),
