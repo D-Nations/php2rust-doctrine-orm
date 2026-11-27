@@ -1393,7 +1393,7 @@ tests/Tests/ORM/Functional/Ticket/DDC736Test.php	DDC736Test::testReorderEntityFe
 tests/Tests/ORM/Functional/Ticket/DDC748Test.php	DDC748Test::testRefreshOneToOne	ported	crates/php2rust-doctrine-orm/tests/ddc748_test.rs::testRefreshOneToOne
 tests/Tests/ORM/Functional/Ticket/DDC748Test.php	DDC748Test::testRefreshWithManyToOne	ported	crates/php2rust-doctrine-orm/tests/ddc748_test.rs::testRefreshWithManyToOne
 tests/Tests/ORM/Functional/Ticket/DDC767Test.php	DDC767Test::testCollectionChangesInsideTransaction	ported	crates/php2rust-doctrine-orm/tests/ddc767_test.rs::testCollectionChangesInsideTransaction
-tests/Tests/ORM/Functional/Ticket/DDC7969Test.php	DDC7969Test::testChildEntityRetrievedFromCache	pending	
+tests/Tests/ORM/Functional/Ticket/DDC7969Test.php	DDC7969Test::testChildEntityRetrievedFromCache	pending	needs the second-level cache
 tests/Tests/ORM/Functional/Ticket/DDC809Test.php	DDC809Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc809_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC812Test.php	DDC812Test::testFetchJoinInitializesPreviouslyUninitializedCollectionOfManagedEntity	ported	crates/php2rust-doctrine-orm/tests/ddc812_test.rs::testFetchJoinInitializesPreviouslyUninitializedCollectionOfManagedEntity
 tests/Tests/ORM/Functional/Ticket/DDC832Test.php	DDC832Test::testQuotedTableBasicRemove	ported	crates/php2rust-doctrine-orm/tests/ddc832_test.rs::testQuotedTableBasicRemove
