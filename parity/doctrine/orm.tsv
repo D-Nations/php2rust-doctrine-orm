@@ -262,8 +262,8 @@ tests/Tests/ORM/EntityNotFoundExceptionTest.php	EntityNotFoundExceptionTest::tes
 tests/Tests/ORM/EntityRepositoryTest.php	EntityRepositoryTest::testExpr	pending	
 tests/Tests/ORM/Event/OnClassMetadataNotFoundEventArgsTest.php	OnClassMetadataNotFoundEventArgsTest::testEventArgsMutability	pending	
 tests/Tests/ORM/Functional/AbstractFetchEagerTest.php	AbstractFetchEagerTest::testWithAbstractFetchEager	ported	crates/php2rust-doctrine-orm/tests/abstract_fetch_eager_test.rs::testWithAbstractFetchEager
-tests/Tests/ORM/Functional/AdvancedAssociationTest.php	AdvancedAssociationTest::testIssue	pending	
-tests/Tests/ORM/Functional/AdvancedAssociationTest.php	AdvancedAssociationTest::testManyToMany	pending	
+tests/Tests/ORM/Functional/AdvancedAssociationTest.php	AdvancedAssociationTest::testIssue	ported	crates/php2rust-doctrine-orm/tests/advanced_association_test.rs::testIssue
+tests/Tests/ORM/Functional/AdvancedAssociationTest.php	AdvancedAssociationTest::testManyToMany	ported	crates/php2rust-doctrine-orm/tests/advanced_association_test.rs::testManyToMany
 tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testAggregateWithHavingClause	ported	crates/php2rust-doctrine-orm/tests/advanced_dql_query_test.rs::testAggregateWithHavingClause
 tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testCommentsInDQL	ported	crates/php2rust-doctrine-orm/tests/advanced_dql_query_test.rs::testCommentsInDQL
 tests/Tests/ORM/Functional/AdvancedDqlQueryTest.php	AdvancedDqlQueryTest::testDeleteAs	ported	crates/php2rust-doctrine-orm/tests/advanced_dql_query_test.rs::testDeleteAs
@@ -514,8 +514,8 @@ tests/Tests/ORM/Functional/ExtraLazyCollectionTest.php	ExtraLazyCollectionTest::
 tests/Tests/ORM/Functional/ExtraLazyCollectionTest.php	ExtraLazyCollectionTest::testSliceOneToMany	ported	crates/php2rust-doctrine-orm/tests/extra_lazy_collection_test.rs::testSliceOneToMany
 tests/Tests/ORM/Functional/FlushEventTest.php	FlushEventTest::testPersistNewEntitiesOnPreFlush	pending	its onFlush listener calls UnitOfWork::computeChangeSet(); a listener's call is synchronous and computeChangeSet() is async
 tests/Tests/ORM/Functional/FlushEventTest.php	FlushEventTest::testPreAndOnFlushCalledAlways	ported	crates/php2rust-doctrine-orm/tests/flush_event_test.rs::testPreAndOnFlushCalledAlways
-tests/Tests/ORM/Functional/GH11345Test.php	GH11345Test::testUpdateSqlStatementsAreIssuedInAlphabeticOrderByEntityClass	pending	
-tests/Tests/ORM/Functional/GH11345Test.php	GH11345Test::testUpdateSqlStatementsAreIssuedInAlphabeticOrderByEntityIdForSameClassName	pending	
+tests/Tests/ORM/Functional/GH11345Test.php	GH11345Test::testUpdateSqlStatementsAreIssuedInAlphabeticOrderByEntityClass	ported	crates/php2rust-doctrine-orm/tests/gh11345_test.rs::testUpdateSqlStatementsAreIssuedInAlphabeticOrderByEntityClass
+tests/Tests/ORM/Functional/GH11345Test.php	GH11345Test::testUpdateSqlStatementsAreIssuedInAlphabeticOrderByEntityIdForSameClassName	ported	crates/php2rust-doctrine-orm/tests/gh11345_test.rs::testUpdateSqlStatementsAreIssuedInAlphabeticOrderByEntityIdForSameClassName
 tests/Tests/ORM/Functional/GH7877Test.php	GH7877Test::testCrossReferenceWithApplicationGeneratedIdMayBeNotNullable	ported	crates/php2rust-doctrine-orm/tests/gh7877_test.rs::testCrossReferenceWithApplicationGeneratedIdMayBeNotNullable
 tests/Tests/ORM/Functional/GH7877Test.php	GH7877Test::testNullableForeignKeysMakeInsertOrderLessRelevant	ported	crates/php2rust-doctrine-orm/tests/gh7877_test.rs::testNullableForeignKeysMakeInsertOrderLessRelevant
 tests/Tests/ORM/Functional/GH7877Test.php	GH7877Test::testSelfReferenceWithApplicationGeneratedIdMayBeNotNullable	ported	crates/php2rust-doctrine-orm/tests/gh7877_test.rs::testSelfReferenceWithApplicationGeneratedIdMayBeNotNullable
@@ -817,8 +817,8 @@ tests/Tests/ORM/Functional/ParserResultSerializationTest.php	ParserResultSeriali
 tests/Tests/ORM/Functional/ParserResultSerializationTest.php	ParserResultSerializationTest::testSerializeParserResultForQueryWithSqlWalker	pending	
 tests/Tests/ORM/Functional/ParserResultSerializationTest.php	ParserResultSerializationTest::testSymfony44ProvidedData	pending	
 tests/Tests/ORM/Functional/ParserResultSerializationTest.php	ParserResultSerializationTest::testUnserializeSingleSelectResult	pending	
-tests/Tests/ORM/Functional/PartialObjectsTest.php	PartialObjectsTest::testPartialObjectLazyInitDoesNotOverwriteChangedProperty	pending	
-tests/Tests/ORM/Functional/PartialObjectsTest.php	PartialObjectsTest::testPartialObjectProxyLoadedChangeset	pending	
+tests/Tests/ORM/Functional/PartialObjectsTest.php	PartialObjectsTest::testPartialObjectLazyInitDoesNotOverwriteChangedProperty	pending	needs PARTIAL objects as lazy ghosts that load the rest on first access; the UnitOfWork's partial objects are not ported
+tests/Tests/ORM/Functional/PartialObjectsTest.php	PartialObjectsTest::testPartialObjectProxyLoadedChangeset	pending	needs PARTIAL objects as lazy ghosts that load the rest on first access; the UnitOfWork's partial objects are not ported
 tests/Tests/ORM/Functional/PersistentCollectionCriteriaTest.php	PersistentCollectionCriteriaTest::testCanCountWithoutLoadingPersistentCollection	ported	crates/php2rust-doctrine-orm/tests/persistent_collection_criteria_test.rs::testCanCountWithoutLoadingPersistentCollection
 tests/Tests/ORM/Functional/PersistentCollectionCriteriaTest.php	PersistentCollectionCriteriaTest::testCanHandleComplexTypesOnAssociation	ported	crates/php2rust-doctrine-orm/tests/persistent_collection_criteria_test.rs::testCanHandleComplexTypesOnAssociation
 tests/Tests/ORM/Functional/PersistentCollectionTest.php	PersistentCollectionTest::testExtraLazyIsEmptyDoesNotInitializeCollection	n/a: upstream marks it skipped: This test requires doctrine/persistence 2 (doctrine/orm requires ^3.3.1 || ^4)	
