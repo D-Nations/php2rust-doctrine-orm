@@ -1,12 +1,14 @@
-//! `Doctrine\ORM\Tools`: the schema tool, the schema validator and the
-//! paginator.
+//! `Doctrine\ORM\Tools`: the schema tool, the schema validator, the
+//! paginator and the metadata listeners.
 //!
 //! Upstream: none
 
 pub mod event;
 pub mod pagination;
+pub mod resolve_target_entity_listener;
 pub mod schema_tool;
 pub mod schema_validator;
 pub mod tool_events;
 
+pub use resolve_target_entity_listener::ResolveTargetEntityListener;
 pub use schema_tool::SchemaTool;
