@@ -1135,6 +1135,7 @@ crates/php2rust-doctrine-orm/tests/reference_proxy_test.rs	doctrine/orm	tests/Te
 crates/php2rust-doctrine-orm/tests/reference_proxy_test.rs	doctrine/orm	tests/Tests/Models/ECommerce/ECommerceProduct2.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/reflection_embedded_property_test.rs	doctrine/orm	tests/Tests/ORM/Mapping/ReflectionEmbeddedPropertyTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/reflection_readonly_property_test.rs	doctrine/orm	tests/Tests/ORM/Mapping/ReflectionReadonlyPropertyTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/tests/resolve_target_entity_listener_test.rs	doctrine/orm	tests/Tests/ORM/Tools/ResolveTargetEntityListenerTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/result_set_mapping_test.rs	doctrine/orm	tests/Tests/ORM/Hydration/ResultSetMappingTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/root_type_walker_test.rs	doctrine/orm	tests/Tests/ORM/Tools/Pagination/RootTypeWalkerTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/root_type_walker_test.rs	doctrine/orm	tests/Tests/DbalTypes/Rot13Type.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa

@@ -194,6 +194,15 @@ Mapping, not reproduced and so not claimed:
   type) cannot fail: the Rust types rule those values out.
 - PHPUnit's `#[Depends]` chains rebuild the metadata in each test.
 
+- `ResolveTargetEntityListener` and `AttachEntityListenersListener`
+  listen through the metadata factory's hooks (its configuration's
+  `loadClassMetadata` and `onClassMetadataNotFound` listeners), not the
+  entity manager's event manager: `addEventSubscriber()` is
+  `ResolveTargetEntityListener::subscribe(&em)`, which adds both hooks to
+  the entity manager's factory (`ClassMetadataFactory::add_*_hook()`).
+  `ResolveTargetEntityListenerTest::testDoesResolveTargetEntitiesInDQLAlsoWithInterfaces`
+  is pending: it passes upstream only through the metadata cache that
+  `OrmTestCase` shares between tests.
 - `ORMSetup` without a cache gives an `ArrayAdapter`: the port has no
   `APCu`, Memcached or Redis adapter, so the cache namespace seed is not
   used (the two `APCu` tests are `n/a`). Persistence's `MappingDriver`
