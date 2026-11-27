@@ -85,6 +85,10 @@ impl driver::Connection for LastInsertIdMockConnection {
     fn get_server_version(&self) -> BoxFuture<'_, Result<String, Exception>> {
         self.wrapped.get_server_version()
     }
+
+    fn get_native_connection(&self) -> driver::NativeConnection {
+        self.wrapped.get_native_connection()
+    }
 }
 
 /// `LastInsertIdMockDriver`: the wrapped driver, connecting through
