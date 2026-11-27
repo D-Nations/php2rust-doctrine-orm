@@ -1327,9 +1327,9 @@ tests/Tests/ORM/Functional/Ticket/DDC3300Test.php	DDC3300Test::testResolveTarget
 tests/Tests/ORM/Functional/Ticket/DDC3303Test.php	DDC3303Test::testEmbeddedObjectsAreAlsoInherited	ported	crates/php2rust-doctrine-orm/tests/ddc3303_test.rs::testEmbeddedObjectsAreAlsoInherited
 tests/Tests/ORM/Functional/Ticket/DDC331Test.php	DDC331Test::testSelectFieldOnRootEntity	ported	crates/php2rust-doctrine-orm/tests/ddc331_test.rs::testSelectFieldOnRootEntity
 tests/Tests/ORM/Functional/Ticket/DDC3330Test.php	DDC3330Test::testIssueCollectionOrderWithPaginator	ported	crates/php2rust-doctrine-orm/tests/ddc3330_test.rs::testIssueCollectionOrderWithPaginator
-tests/Tests/ORM/Functional/Ticket/DDC3346Test.php	DDC3346Test::testFindLimitedWithEagerFetchWillNotHydrateLimitedCollection	pending	
-tests/Tests/ORM/Functional/Ticket/DDC3346Test.php	DDC3346Test::testFindOneWithEagerFetchWillNotHydrateLimitedCollection	pending	
-tests/Tests/ORM/Functional/Ticket/DDC3346Test.php	DDC3346Test::testFindWithEagerFetchAndOffsetWillNotHydrateLimitedCollection	pending	
+tests/Tests/ORM/Functional/Ticket/DDC3346Test.php	DDC3346Test::testFindLimitedWithEagerFetchWillNotHydrateLimitedCollection	ported	crates/php2rust-doctrine-orm/tests/ddc3346_test.rs::testFindLimitedWithEagerFetchWillNotHydrateLimitedCollection
+tests/Tests/ORM/Functional/Ticket/DDC3346Test.php	DDC3346Test::testFindOneWithEagerFetchWillNotHydrateLimitedCollection	ported	crates/php2rust-doctrine-orm/tests/ddc3346_test.rs::testFindOneWithEagerFetchWillNotHydrateLimitedCollection
+tests/Tests/ORM/Functional/Ticket/DDC3346Test.php	DDC3346Test::testFindWithEagerFetchAndOffsetWillNotHydrateLimitedCollection	ported	crates/php2rust-doctrine-orm/tests/ddc3346_test.rs::testFindWithEagerFetchAndOffsetWillNotHydrateLimitedCollection
 tests/Tests/ORM/Functional/Ticket/DDC345Test.php	DDC345Test::testTwoIterateHydrations	ported	crates/php2rust-doctrine-orm/tests/ddc345_test.rs::testTwoIterateHydrations
 tests/Tests/ORM/Functional/Ticket/DDC353Test.php	DDC353Test::testFailingCase	ported	crates/php2rust-doctrine-orm/tests/ddc353_test.rs::testFailingCase
 tests/Tests/ORM/Functional/Ticket/DDC353Test.php	DDC353Test::testWorkingCase	ported	crates/php2rust-doctrine-orm/tests/ddc353_test.rs::testWorkingCase
