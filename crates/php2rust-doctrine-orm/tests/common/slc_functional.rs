@@ -15,7 +15,7 @@
 //! Upstream: doctrine/orm tests/Tests/Models/Cache/Person.php tests/Tests/Models/Cache/Address.php
 //! Upstream: doctrine/orm tests/Tests/Models/Cache/Token.php tests/Tests/Models/Cache/Action.php
 //! Upstream: doctrine/orm tests/Tests/Models/Cache/ComplexAction.php tests/Tests/Models/Cache/Login.php
-//! Upstream: doctrine/orm tests/Tests/Models/Cache/Client.php
+//! Upstream: doctrine/orm tests/Tests/Models/Cache/Client.php tests/Tests/Models/Cache/Flight.php
 
 #![allow(dead_code, reason = "each test file uses a subset")]
 #![allow(
@@ -114,6 +114,8 @@ pub struct Fixture {
     pub logger: Arc<StatisticsCacheLogger>,
     pub log: Arc<QueryLog>,
     pub pool: Arc<ArrayAdapter>,
+    /// `$this->secondLevelCacheFactory`.
+    pub factory: Arc<DefaultCacheFactory>,
     pub people: Vec<Object>,
     pub addresses: Vec<Object>,
     pub countries: Vec<Object>,
@@ -142,7 +144,7 @@ pub async fn set_up_with(classes: &[&str]) -> Fixture {
     ));
     let logger = Arc::new(StatisticsCacheLogger::new());
     cache_config.set_cache_logger(logger.clone());
-    cache_config.set_cache_factory(factory);
+    cache_config.set_cache_factory(factory.clone());
     let (conn, log) = logging_connection();
     let em = orm::entity_manager_with(conn, move |c| {
         let locator: Arc<dyn ClassLocator> = Arc::new(FunctionalModelsLocator);
@@ -153,6 +155,8 @@ pub async fn set_up_with(classes: &[&str]) -> Fixture {
         c.set_second_level_cache_configuration(cache_config);
     });
     orm::create_schema(&em, classes).await;
+    // $this->getQueryLog()->enable()
+    log.reset_and_enable();
     let cache = em.get_cache().unwrap();
     Fixture {
         em,
@@ -160,6 +164,7 @@ pub async fn set_up_with(classes: &[&str]) -> Fixture {
         logger,
         log,
         pool,
+        factory,
         people: Vec::new(),
         addresses: Vec::new(),
         countries: Vec::new(),
@@ -668,4 +673,33 @@ impl Fixture {
         self.em.initialize_object(&target).await.unwrap();
         target
     }
+}
+
+/// `new Flight($leavingFrom, $goingTo)`.
+pub fn flight(leaving_from: &Object, going_to: &Object) -> Object {
+    let flight = orm::new_object(FLIGHT);
+    orm::set_obj(&flight, "leavingFrom", leaving_from);
+    orm::set_obj(&flight, "goingTo", going_to);
+    orm::set(
+        &flight,
+        "departure",
+        DateTime::object(DateTimeImmutable::now(TimeZone::Utc)),
+    );
+    flight
+}
+
+/// `new DateTime('now')`.
+pub fn now() -> Value {
+    DateTime::object(DateTimeImmutable::now(TimeZone::Utc))
+}
+
+/// `new DateTime('tomorrow')`: midnight UTC of the next day.
+pub fn tomorrow() -> Value {
+    let now = DateTimeImmutable::now(TimeZone::Utc).timestamp();
+    let today = now - now.rem_euclid(86_400);
+    DateTime::object(DateTimeImmutable::from_timestamp(
+        today + 86_400,
+        0,
+        TimeZone::Utc,
+    ))
 }

@@ -97,6 +97,9 @@ struct Inner {
     parameters: Vec<Parameter>,
     hints: Vec<(String, Hint)>,
     hydration_mode: i64,
+    /// Bumped by `setHint()` and `setHydrationMode()`, which make a DQL
+    /// query dirty (`Query::setHint()`, `Query::setHydrationMode()`).
+    changes: u64,
     result_set_mapping: Option<ResultSetMapping>,
     // The second-level cache options.
     cacheable: bool,
@@ -160,6 +163,7 @@ impl QueryState {
                 parameters: Vec::new(),
                 hints: default_hints(&self.em),
                 hydration_mode: st.hydration_mode,
+                changes: 0,
                 result_set_mapping: st.result_set_mapping.clone(),
                 cacheable: st.cacheable,
                 lifetime: st.lifetime,
@@ -347,7 +351,15 @@ impl QueryState {
     /// Defines the processing mode to be used during hydration /
     /// result set transformation.
     pub fn set_hydration_mode(&self, hydration_mode: i64) {
-        self.st().hydration_mode = hydration_mode;
+        let mut st = self.st();
+        st.hydration_mode = hydration_mode;
+        st.changes += 1;
+    }
+
+    /// How many times a hint or the hydration mode was set: a DQL query
+    /// is dirty when this changed since it was parsed.
+    pub fn changes(&self) -> u64 {
+        self.st().changes
     }
 
     /// Gets the hydration mode currently used by the query.
@@ -359,6 +371,7 @@ impl QueryState {
     /// silently ignored.
     pub fn set_hint(&self, name: &str, value: Hint) {
         let mut st = self.st();
+        st.changes += 1;
         match st.hints.iter_mut().find(|(n, _)| n == name) {
             Some((_, hint)) => *hint = value,
             None => st.hints.push((name.to_owned(), value)),

@@ -31,6 +31,7 @@ pub mod native_query;
 pub mod object;
 pub mod persistent_collection;
 pub mod persisters;
+pub mod proxy;
 pub mod query;
 pub mod query_builder;
 pub mod query_type;

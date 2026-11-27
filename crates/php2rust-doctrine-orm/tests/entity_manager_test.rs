@@ -5,8 +5,7 @@
 //! data provider rows run in one test each; `new stdClass()` is a generic
 //! object. A closure that throws a `TypeError` returns it.
 //!
-//! Pending: `testGetProxyFactory` (the proxies are native lazy ghosts: no
-//! `ProxyFactory` object), `testLazyGhostEntityManager` (a lazy ghost of
+//! Pending: `testLazyGhostEntityManager` (a lazy ghost of
 //! the entity manager through reflection), and the two tests that
 //! override `Connection::rollBack()`/`commit()` in a subclass (the DBAL
 //! connection is a struct; `Thrown` has no previous exception).
@@ -56,6 +55,12 @@ fn testGetMetadataFactory() {
     let entity_manager = set_up();
     let _: &Arc<php2rust_doctrine_orm::mapping::ClassMetadataFactory> =
         entity_manager.get_metadata_factory();
+}
+
+#[test]
+fn testGetProxyFactory() {
+    let entity_manager = set_up();
+    let _: php2rust_doctrine_orm::proxy::ProxyFactory = entity_manager.get_proxy_factory();
 }
 
 #[test]

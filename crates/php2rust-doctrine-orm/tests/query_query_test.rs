@@ -2,8 +2,10 @@
 //!
 //! The test entity manager is one on an empty `SQLite` database with the
 //! schema of the models (upstream's mocked connection returns no rows).
-//! The query and result caches are not ported, so their tests are not;
-//! `testFluentQueryInterface` chains the setters that are.
+//! The result cache is not ported (DBAL's `QueryCacheProfile`), so its
+//! tests are not; `testFluentQueryInterface` chains the setters that are.
+//! The query cache's `createMock(CacheItemPoolInterface::class)` counts
+//! its `getItem()` calls over an `ArrayAdapter`.
 
 #![allow(non_snake_case)]
 #![allow(
@@ -22,6 +24,7 @@ use std::sync::Arc;
 use php_value::datetime::{DateTime, DateTimeImmutable, TimeZone};
 use php_value::{PhpArray, Thrown, Value};
 use php2rust_doctrine_dbal::{ArrayParameterType, LockMode, ParameterType, WrapperParameterType};
+use php2rust_doctrine_orm::cache::pool::{ArrayAdapter, CacheItem, CacheItemPool};
 use php2rust_doctrine_orm::collection_object::ArrayCollectionObject;
 use php2rust_doctrine_orm::entity_manager::EntityManager;
 use php2rust_doctrine_orm::query::context::{HINT_LOCK_MODE, HYDRATE_OBJECT, Hint};
@@ -635,4 +638,75 @@ async fn testGetParameterColonNormalize() {
     assert_eq!(1, query.get_parameters().len());
     assert!(s("Benjamin").identical(query.get_parameter(":name").unwrap().get_value()));
     assert!(s("Benjamin").identical(query.get_parameter("name").unwrap().get_value()));
+}
+
+/// `createMock(CacheItemPoolInterface::class)` whose `getItem()` is
+/// counted.
+#[derive(Debug, Default)]
+struct CacheMock {
+    inner: ArrayAdapter,
+    get_item_calls: std::sync::atomic::AtomicUsize,
+}
+
+impl CacheItemPool for CacheMock {
+    fn get_item(&self, key: &str) -> Result<CacheItem, Thrown> {
+        self.get_item_calls
+            .fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+        self.inner.get_item(key)
+    }
+
+    fn get_items(&self, keys: &[String]) -> Result<Vec<CacheItem>, Thrown> {
+        self.inner.get_items(keys)
+    }
+
+    fn has_item(&self, key: &str) -> Result<bool, Thrown> {
+        self.inner.has_item(key)
+    }
+
+    fn clear(&self, prefix: &str) -> bool {
+        self.inner.clear(prefix)
+    }
+
+    fn delete_item(&self, key: &str) -> Result<bool, Thrown> {
+        self.inner.delete_item(key)
+    }
+
+    fn save(&self, item: CacheItem) -> bool {
+        self.inner.save(item)
+    }
+}
+
+impl CacheMock {
+    /// `expects(self::atLeastOnce())->method('getItem')`.
+    fn assert_get_item_at_least_once(&self) {
+        assert!(
+            self.get_item_calls
+                .load(std::sync::atomic::Ordering::Relaxed)
+                >= 1
+        );
+    }
+}
+
+#[tokio::test]
+async fn testGetQueryCacheDriverWithDefaults() {
+    let em = entity_manager().await;
+    let cache = Arc::new(CacheMock::default());
+
+    em.get_configuration().set_query_cache(cache.clone());
+    em.create_query(&format!("select u from {CMS_USER} u"))
+        .get_sql()
+        .unwrap();
+    cache.assert_get_item_at_least_once();
+}
+
+#[tokio::test]
+async fn testGetQueryCacheDriverWithCacheExplicitlySet() {
+    let em = entity_manager().await;
+    let cache = Arc::new(CacheMock::default());
+
+    em.create_query(&format!("select u from {CMS_USER} u"))
+        .set_query_cache(Some(cache.clone()))
+        .get_sql()
+        .unwrap();
+    cache.assert_get_item_at_least_once();
 }

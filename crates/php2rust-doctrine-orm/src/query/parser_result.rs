@@ -4,6 +4,8 @@
 //!
 //! Upstream: doctrine/orm src/Query/ParserResult.php
 
+use std::sync::Arc;
+
 use php_value::{Key, PhpArray, Thrown, Value};
 
 use crate::deprecations;
@@ -21,10 +23,12 @@ fn array(value: Option<&Value>) -> PhpArray {
     }
 }
 
-/// `ParserResult`.
+/// `ParserResult`. A clone shares the finalizer (PHP's query cache
+/// keeps a copy of the whole result).
+#[derive(Clone)]
 pub struct ParserResult {
     sql_executor: Option<SqlExecutor>,
-    sql_finalizer: Option<Box<dyn SqlFinalizer>>,
+    sql_finalizer: Option<Arc<dyn SqlFinalizer>>,
     result_set_mapping: ResultSetMapping,
     /// The mappings of DQL parameter names/positions to SQL parameter
     /// positions.
@@ -93,7 +97,7 @@ impl ParserResult {
     }
 
     pub fn set_sql_finalizer(&mut self, finalizer: Box<dyn SqlFinalizer>) {
-        self.sql_finalizer = Some(finalizer);
+        self.sql_finalizer = Some(Arc::from(finalizer));
     }
 
     /// The SQL finalizer, if one is set.
