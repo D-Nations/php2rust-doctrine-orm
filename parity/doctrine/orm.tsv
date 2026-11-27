@@ -1412,7 +1412,7 @@ tests/Tests/ORM/Functional/Ticket/DDC949Test.php	DDC949Test::testBooleanThroughR
 tests/Tests/ORM/Functional/Ticket/DDC960Test.php	DDC960Test::testUpdateRootVersion	ported	crates/php2rust-doctrine-orm/tests/ddc960_test.rs::testUpdateRootVersion
 tests/Tests/ORM/Functional/Ticket/DDC992Test.php	DDC992Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc992_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC992Test.php	DDC992Test::testOneToManyChild	ported	crates/php2rust-doctrine-orm/tests/ddc992_test.rs::testOneToManyChild
-tests/Tests/ORM/Functional/Ticket/EagerSecondLevelCacheCollectionTest.php	EagerSecondLevelCacheCollectionTest::testEagerCollectionIsNotDuplicatedAfterSecondLevelCacheHit	pending	
+tests/Tests/ORM/Functional/Ticket/EagerSecondLevelCacheCollectionTest.php	EagerSecondLevelCacheCollectionTest::testEagerCollectionIsNotDuplicatedAfterSecondLevelCacheHit	pending	needs the second-level cache
 tests/Tests/ORM/Functional/Ticket/GH10049/GH10049Test.php	GH10049Test::testInheritedReadOnlyPropertyValueCanBeSet	ported	crates/php2rust-doctrine-orm/tests/gh10049_test.rs::testInheritedReadOnlyPropertyValueCanBeSet
 tests/Tests/ORM/Functional/Ticket/GH10132Test.php	GH10132Test::testQueryBackedEnumInCompositeKeyJoin	ported	crates/php2rust-doctrine-orm/tests/gh10132_test.rs::testQueryBackedEnumInCompositeKeyJoin
 tests/Tests/ORM/Functional/Ticket/GH10288Test.php	GH10288Test::testEnumDiscriminatorWithCustomEnumType	ported	crates/php2rust-doctrine-orm/tests/gh10288_test.rs::testEnumDiscriminatorWithCustomEnumType
