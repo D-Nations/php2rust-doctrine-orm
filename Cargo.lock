@@ -663,7 +663,7 @@ dependencies = [
 [[package]]
 name = "php2rust-doctrine-dbal"
 version = "0.1.0"
-source = "git+https://github.com/D-Nations/php2rust-doctrine-dbal?rev=90e3bf1c668d5036e98d3bbb624f59c2a520d4f7#90e3bf1c668d5036e98d3bbb624f59c2a520d4f7"
+source = "git+https://github.com/D-Nations/php2rust-doctrine-dbal?rev=af5d5924c5d2b2c8ad37d64ccf169f8401d10060#af5d5924c5d2b2c8ad37d64ccf169f8401d10060"
 dependencies = [
  "php2rust-regex",
  "php2rust-value",

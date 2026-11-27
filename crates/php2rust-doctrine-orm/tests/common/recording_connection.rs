@@ -139,6 +139,11 @@ impl DriverConnection for RecordingConnection {
     fn get_server_version(&self) -> BoxFuture<'_, Result<String, Exception>> {
         Box::pin(async { Ok("3.0.0".to_owned()) })
     }
+
+    /// A stub's native connection: an object of no class.
+    fn get_native_connection(&self) -> php2rust_doctrine_dbal::driver::NativeConnection {
+        std::sync::Arc::new(())
+    }
 }
 
 impl Statement for RecordingStatement {

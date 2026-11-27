@@ -243,6 +243,10 @@ impl DriverConnection for LoggingConnection {
     fn get_server_version(&self) -> BoxFuture<'_, Result<String, Exception>> {
         self.inner.get_server_version()
     }
+
+    fn get_native_connection(&self) -> php2rust_doctrine_dbal::driver::NativeConnection {
+        self.inner.get_native_connection()
+    }
 }
 
 /// An in-memory `SQLite` connection whose statements go to the log.
