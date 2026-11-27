@@ -810,3 +810,35 @@ async fn testGenerateSelectClauseWithCustomTypeUsingAddFieldResult() {
         &select_clause,
     );
 }
+
+#[tokio::test]
+async fn testFluentInterface() {
+    let em = set_up().await;
+    let parameters = vec![
+        php2rust_doctrine_orm::query::Parameter::new(1, s("foo"), None),
+        php2rust_doctrine_orm::query::Parameter::new(2, s("bar"), None),
+    ];
+
+    let rsm = ResultSetMapping::new();
+
+    let q = em
+        .create_native_query(
+            "SELECT id, name, status, phonenumber FROM cms_users INNER JOIN cms_phonenumbers ON id = user_id WHERE username = ?",
+            rsm.clone(),
+        )
+        .unwrap();
+    let q2 = q
+        .set_sql("foo")
+        .set_result_set_mapping(rsm)
+        .unwrap()
+        .expire_result_cache(true)
+        .set_hint(
+            "foo",
+            php2rust_doctrine_orm::query::context::Hint::Value(s("bar")),
+        )
+        .set_parameter(1, s("foo"), None)
+        .set_parameters(parameters)
+        .set_result_cache_lifetime(Some(3500));
+
+    assert!(std::ptr::eq(q2, &raw const q));
+}

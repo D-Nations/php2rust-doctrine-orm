@@ -253,7 +253,9 @@ impl Query {
 
         if !expire_query_cache
             && cache_item.is_hit()
-            && let Some(PoolValue::ParserResult(cached)) = cache_item.get()
+            && let Some(cached) = cache_item
+                .get()
+                .and_then(PoolValue::downcast_ref::<CachedParserResult>)
         {
             // Cache hit.
             let parser_result = cached.0.clone();
@@ -264,9 +266,8 @@ impl Query {
         // Cache miss.
         let parser_result = self.parse_dql()?;
 
-        let mut cache_item = cache_item.set(PoolValue::ParserResult(CachedParserResult(
-            parser_result.clone(),
-        )));
+        let mut cache_item =
+            cache_item.set(PoolValue::object(CachedParserResult(parser_result.clone())));
         if let Some(ttl) = query_cache_ttl {
             cache_item = cache_item.expires_after(ttl);
         }
@@ -535,10 +536,65 @@ impl Query {
 
     /// `_doExecute()`.
     async fn do_execute(&self) -> Result<Executed, Thrown> {
-        let (executor, params, types) = self.prepare_execution()?;
+        let (mut executor, params, types) = self.prepare_execution()?;
+
+        match self.state.get_query_cache_profile() {
+            Some(profile) => executor.set_query_cache_profile(profile),
+            None => executor.remove_query_cache_profile(),
+        }
+
+        self.evict_result_set_cache(
+            &executor,
+            &params,
+            &types,
+            self.get_entity_manager().get_connection().get_params(),
+        )?;
+
         executor
             .execute(self.get_entity_manager().get_connection(), &params, &types)
             .await
+    }
+
+    /// `evictResultSetCache()`: with `expireResultCache()`, deletes the
+    /// cached result of each statement.
+    fn evict_result_set_cache(
+        &self,
+        executor: &SqlExecutor,
+        sql_params: &PhpArray,
+        types: &ParameterTypes,
+        connection_params: &PhpArray,
+    ) -> Result<(), Thrown> {
+        let Some(query_cache_profile) = self.state.get_query_cache_profile() else {
+            return Ok(());
+        };
+        if !self.state.get_expire_result_cache() {
+            return Ok(());
+        }
+
+        let Some(cache) = query_cache_profile.get_result_cache() else {
+            return Ok(());
+        };
+
+        let statements = match executor.get_sql_statements() {
+            SqlStatements::One(sql) => vec![sql.clone()],
+            SqlStatements::Many(sql) => sql.clone(),
+        };
+
+        for statement in statements {
+            let (cache_key, _) = query_cache_profile.generate_cache_keys(
+                &statement,
+                sql_params,
+                types,
+                connection_params,
+            );
+            cache.delete_item(&cache_key)?;
+        }
+        Ok(())
+    }
+
+    /// The SQL of the hydration cache key (`getSQL()`, one statement).
+    fn hydration_cache_sql(&self) -> Result<String, Thrown> {
+        self.get_single_sql()
     }
 
     /// The executor and the SQL parameters of an execution.
