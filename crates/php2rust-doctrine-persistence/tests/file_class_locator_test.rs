@@ -123,3 +123,36 @@ fn testCreateFromDirectoryIterator() {
 
     assert_eq!(names(&[ENTITY, ENTITY_FIXTURE, FOO, TEST_CLASS]), classes);
 }
+
+/// `Finder::create()->in($dir)->name('*.php')->notName('Test*')`: the
+/// finder's files are walked here, recursively, with its filters.
+#[test]
+fn testCreateFromSymfonyFinder() {
+    fn find(dir: &std::path::Path, out: &mut Vec<PathBuf>) {
+        for entry in std::fs::read_dir(dir).unwrap() {
+            let path = entry.unwrap().path();
+            if path.is_dir() {
+                find(&path, out);
+                continue;
+            }
+            let name = path.file_name().unwrap().to_string_lossy().into_owned();
+            if std::path::Path::new(&name)
+                .extension()
+                .is_some_and(|ext| ext == "php")
+                && !name.starts_with("Test")
+            {
+                out.push(path);
+            }
+        }
+    }
+
+    let dir = colocated();
+    let mut finder = Vec::new();
+    find(std::path::Path::new(&dir), &mut finder);
+
+    let locator = FileClassLocator::new(finder);
+
+    let classes = sorted(locator.get_class_names().unwrap());
+
+    assert_eq!(names(&[ENTITY, ENTITY_FIXTURE]), classes);
+}

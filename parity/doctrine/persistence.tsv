@@ -49,10 +49,10 @@ tests/Mapping/Driver/FileClassLocatorTest.php	FileClassLocatorTest::testCreateFr
 tests/Mapping/Driver/FileClassLocatorTest.php	FileClassLocatorTest::testCreateFromDirectoryWithExtension	ported	crates/php2rust-doctrine-persistence/tests/file_class_locator_test.rs::testCreateFromDirectoryWithExtension
 tests/Mapping/Driver/FileClassLocatorTest.php	FileClassLocatorTest::testCreateFromDirectoryWithNonExistentDirectory	ported	crates/php2rust-doctrine-persistence/tests/file_class_locator_test.rs::testCreateFromDirectoryWithNonExistentDirectory
 tests/Mapping/Driver/FileClassLocatorTest.php	FileClassLocatorTest::testCreateFromEmptyDirectory	ported	crates/php2rust-doctrine-persistence/tests/file_class_locator_test.rs::testCreateFromEmptyDirectory
-tests/Mapping/Driver/FileClassLocatorTest.php	FileClassLocatorTest::testCreateFromSymfonyFinder	pending	
+tests/Mapping/Driver/FileClassLocatorTest.php	FileClassLocatorTest::testCreateFromSymfonyFinder	ported	crates/php2rust-doctrine-persistence/tests/file_class_locator_test.rs::testCreateFromSymfonyFinder
 tests/Mapping/Driver/FileClassLocatorTest.php	FileClassLocatorTest::testGetClassNames	ported	crates/php2rust-doctrine-persistence/tests/file_class_locator_test.rs::testGetClassNames
 tests/Mapping/Driver/FileClassLocatorTest.php	FileClassLocatorTest::testGetClassNamesWithEmptyIterator	ported	crates/php2rust-doctrine-persistence/tests/file_class_locator_test.rs::testGetClassNamesWithEmptyIterator
-tests/Mapping/Driver/FileClassLocatorTest.php	FileClassLocatorTest::testWithPharFiles	pending	
+tests/Mapping/Driver/FileClassLocatorTest.php	FileClassLocatorTest::testWithPharFiles	pending	needs PHP's Phar archives and the phar:// stream wrapper
 tests/Mapping/DriverChainTest.php	DriverChainTest::testDefaultDriver	ported	crates/php2rust-doctrine-persistence/tests/driver_chain_test.rs::testDefaultDriver
 tests/Mapping/DriverChainTest.php	DriverChainTest::testDefaultDriverGetAllClassNames	ported	crates/php2rust-doctrine-persistence/tests/driver_chain_test.rs::testDefaultDriverGetAllClassNames
 tests/Mapping/DriverChainTest.php	DriverChainTest::testDelegateToMatchingNamespaceDriver	ported	crates/php2rust-doctrine-persistence/tests/driver_chain_test.rs::testDelegateToMatchingNamespaceDriver
@@ -70,10 +70,10 @@ tests/Mapping/FileDriverTest.php	FileDriverTest::testGlobalBasename	ported	crate
 tests/Mapping/FileDriverTest.php	FileDriverTest::testIsNotTransient	ported	crates/php2rust-doctrine-persistence/tests/file_driver_test.rs::testIsNotTransient
 tests/Mapping/FileDriverTest.php	FileDriverTest::testIsTransient	ported	crates/php2rust-doctrine-persistence/tests/file_driver_test.rs::testIsTransient
 tests/Mapping/FileDriverTest.php	FileDriverTest::testNonLocatorFallback	ported	crates/php2rust-doctrine-persistence/tests/file_driver_test.rs::testNonLocatorFallback
-tests/Mapping/PHPDriverTest.php	PHPDriverTest::testLoadMetadata	pending	
-tests/Mapping/PHPDriverTest.php	PHPDriverTest::testLoadMetadataClosureNotBoundToClass	pending	
-tests/Mapping/PHPDriverTest.php	PHPDriverTest::testLoadMetadataClosureNotBoundToObject	pending	
-tests/Mapping/PHPDriverTest.php	PHPDriverTest::testLoadMetadataWithClosure	pending	
+tests/Mapping/PHPDriverTest.php	PHPDriverTest::testLoadMetadata	pending	PHPDriver includes PHP mapping files with $metadata in scope; the port runs no PHP files
+tests/Mapping/PHPDriverTest.php	PHPDriverTest::testLoadMetadataClosureNotBoundToClass	pending	PHPDriver includes PHP mapping files (a closure the file returns, bound by Closure::bind()); the port runs no PHP files
+tests/Mapping/PHPDriverTest.php	PHPDriverTest::testLoadMetadataClosureNotBoundToObject	pending	PHPDriver includes PHP mapping files (a closure the file returns, bound by Closure::bind()); the port runs no PHP files
+tests/Mapping/PHPDriverTest.php	PHPDriverTest::testLoadMetadataWithClosure	pending	PHPDriver includes PHP mapping files (a closure the file returns); the port runs no PHP files
 tests/Mapping/RuntimeReflectionServiceTest.php	RuntimeReflectionServiceTest::testClassNamespaceName	ported	crates/php2rust-doctrine-persistence/tests/runtime_reflection_service_test.rs::testClassNamespaceName
 tests/Mapping/RuntimeReflectionServiceTest.php	RuntimeReflectionServiceTest::testGetAccessibleProperty	ported	crates/php2rust-doctrine-persistence/tests/runtime_reflection_service_test.rs::testGetAccessibleProperty
 tests/Mapping/RuntimeReflectionServiceTest.php	RuntimeReflectionServiceTest::testGetMethods	ported	crates/php2rust-doctrine-persistence/tests/runtime_reflection_service_test.rs::testGetMethods
@@ -90,7 +90,7 @@ tests/Mapping/RuntimeReflectionServiceTest.php	RuntimeReflectionServiceTest::tes
 tests/Mapping/StaticPHPDriverTest.php	StaticPHPDriverTest::testGetAllClassNames	ported	crates/php2rust-doctrine-persistence/tests/static_php_driver_test.rs::testGetAllClassNames
 tests/Mapping/StaticPHPDriverTest.php	StaticPHPDriverTest::testGetAllClassesNamesWithClassLocator	ported	crates/php2rust-doctrine-persistence/tests/static_php_driver_test.rs::testGetAllClassesNamesWithClassLocator
 tests/Mapping/StaticPHPDriverTest.php	StaticPHPDriverTest::testLoadMetadata	ported	crates/php2rust-doctrine-persistence/tests/static_php_driver_test.rs::testLoadMetadata
-tests/Mapping/StaticPHPDriverTest.php	StaticPHPDriverTest::testPublicApi	pending	
+tests/Mapping/StaticPHPDriverTest.php	StaticPHPDriverTest::testPublicApi	pending	asserts the PHP class's public method names by ReflectionClass::getMethods(); the Rust StaticPHPDriver's API is a Rust type's (new(), with the MappingDriver trait's methods)
 tests/Mapping/SymfonyFileLocatorTest.php	SymfonyFileLocatorTest::testFileExists	ported	crates/php2rust-doctrine-persistence/tests/symfony_file_locator_test.rs::testFileExists
 tests/Mapping/SymfonyFileLocatorTest.php	SymfonyFileLocatorTest::testFindMappingFile	ported	crates/php2rust-doctrine-persistence/tests/symfony_file_locator_test.rs::testFindMappingFile
 tests/Mapping/SymfonyFileLocatorTest.php	SymfonyFileLocatorTest::testFindMappingFileLeastSpecificNamespaceFirst	ported	crates/php2rust-doctrine-persistence/tests/symfony_file_locator_test.rs::testFindMappingFileLeastSpecificNamespaceFirst

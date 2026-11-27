@@ -1506,3 +1506,24 @@ fn testSetIdentifierWithoutPositionsDefaultsToZero() {
     assert_eq!(cm.identifier, ["username", "name"]);
     assert_eq!(positions(&cm), [("username", 0), ("name", 0)]);
 }
+
+#[test]
+fn testClassNameMappingDiscriminatorValue() {
+    models::register();
+    let driver = php2rust_doctrine_orm::mapping::driver::xml_driver::XmlDriver::create(
+        format!("{}/tests/data/Mapping/xml", env!("CARGO_MANIFEST_DIR")).as_str(),
+        php2rust_doctrine_orm::mapping::driver::xml_driver::DEFAULT_FILE_EXTENSION,
+        true,
+    );
+    let xml_element = driver
+        .get_element("Doctrine\\Tests\\Models\\Customer\\CustomerType")
+        .unwrap();
+    assert_eq!(
+        Some("Doctrine\\Tests\\Models\\Customer\\InternalCustomer"),
+        xml_element
+            .child("discriminator-map")
+            .unwrap()
+            .children_named("discriminator-mapping")[0]
+            .attr("value")
+    );
+}

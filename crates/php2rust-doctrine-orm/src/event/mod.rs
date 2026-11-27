@@ -14,6 +14,7 @@
 //! Upstream: doctrine/orm src/Event/PostRemoveEventArgs.php src/Event/PostUpdateEventArgs.php src/Event/PostLoadEventArgs.php
 //! Upstream: doctrine/orm src/Event/PreUpdateEventArgs.php src/Event/PreFlushEventArgs.php src/Event/OnFlushEventArgs.php
 //! Upstream: doctrine/orm src/Event/PostFlushEventArgs.php src/Event/OnClearEventArgs.php
+//! Upstream: doctrine/orm src/Event/OnClassMetadataNotFoundEventArgs.php
 
 mod listeners_invoker;
 
@@ -205,6 +206,61 @@ impl ManagerEventArgs {
 }
 
 impl EventArgs for ManagerEventArgs {}
+
+/// `OnClassMetadataNotFoundEventArgs`: the class whose metadata was not
+/// found, and the metadata a listener may give for it. The factory's
+/// `onClassMetadataNotFound` listeners are
+/// [`crate::mapping::class_metadata_factory::ClassMetadataNotFoundHook`]s,
+/// which return the metadata.
+pub struct OnClassMetadataNotFoundEventArgs {
+    class_name: String,
+    object_manager: Arc<EntityManager>,
+    found_metadata: std::sync::Mutex<Option<Arc<crate::mapping::ClassMetadata>>>,
+}
+
+impl std::fmt::Debug for OnClassMetadataNotFoundEventArgs {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("OnClassMetadataNotFoundEventArgs")
+            .field("class_name", &self.class_name)
+            .finish_non_exhaustive()
+    }
+}
+
+impl OnClassMetadataNotFoundEventArgs {
+    pub fn new(class_name: impl Into<String>, object_manager: Arc<EntityManager>) -> Self {
+        Self {
+            class_name: class_name.into(),
+            object_manager,
+            found_metadata: std::sync::Mutex::new(None),
+        }
+    }
+
+    pub fn set_found_metadata(&self, class_metadata: Option<Arc<crate::mapping::ClassMetadata>>) {
+        *self
+            .found_metadata
+            .lock()
+            .unwrap_or_else(std::sync::PoisonError::into_inner) = class_metadata;
+    }
+
+    pub fn get_found_metadata(&self) -> Option<Arc<crate::mapping::ClassMetadata>> {
+        self.found_metadata
+            .lock()
+            .unwrap_or_else(std::sync::PoisonError::into_inner)
+            .clone()
+    }
+
+    /// Retrieve class name for which a failed metadata fetch attempt was
+    /// executed.
+    pub fn get_class_name(&self) -> &str {
+        &self.class_name
+    }
+
+    pub fn get_object_manager(&self) -> &Arc<EntityManager> {
+        &self.object_manager
+    }
+}
+
+impl EventArgs for OnClassMetadataNotFoundEventArgs {}
 
 /// What a listener threw, as a `Thrown`.
 pub fn listener_error(e: php2rust_doctrine_event_manager::ListenerError) -> Thrown {
