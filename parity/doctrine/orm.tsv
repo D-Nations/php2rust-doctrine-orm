@@ -2266,14 +2266,14 @@ tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testConfigureCacheCustomInstance	
 tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testConfigureProxyDir	pending	
 tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testDisablingXmlValidationIsPossible	pending	
 tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testXMLConfiguration	pending	
-tests/Tests/ORM/Performance/SecondLevelCacheTest.php	SecondLevelCacheTest::testFindAllEntityWithCache	pending	
-tests/Tests/ORM/Performance/SecondLevelCacheTest.php	SecondLevelCacheTest::testFindAllEntityWithoutCache	pending	
-tests/Tests/ORM/Performance/SecondLevelCacheTest.php	SecondLevelCacheTest::testFindEntityOneToManyWithCache	pending	
-tests/Tests/ORM/Performance/SecondLevelCacheTest.php	SecondLevelCacheTest::testFindEntityOneToManyWithoutCache	pending	
-tests/Tests/ORM/Performance/SecondLevelCacheTest.php	SecondLevelCacheTest::testFindEntityWithCache	pending	
-tests/Tests/ORM/Performance/SecondLevelCacheTest.php	SecondLevelCacheTest::testFindEntityWithoutCache	pending	
-tests/Tests/ORM/Performance/SecondLevelCacheTest.php	SecondLevelCacheTest::testQueryEntityWithCache	pending	
-tests/Tests/ORM/Performance/SecondLevelCacheTest.php	SecondLevelCacheTest::testQueryEntityWithoutCache	pending	
+tests/Tests/ORM/Performance/SecondLevelCacheTest.php	SecondLevelCacheTest::testFindAllEntityWithCache	ported	crates/php2rust-doctrine-orm/tests/performance_second_level_cache_test.rs::testFindAllEntityWithCache
+tests/Tests/ORM/Performance/SecondLevelCacheTest.php	SecondLevelCacheTest::testFindAllEntityWithoutCache	ported	crates/php2rust-doctrine-orm/tests/performance_second_level_cache_test.rs::testFindAllEntityWithoutCache
+tests/Tests/ORM/Performance/SecondLevelCacheTest.php	SecondLevelCacheTest::testFindEntityOneToManyWithCache	ported	crates/php2rust-doctrine-orm/tests/performance_second_level_cache_test.rs::testFindEntityOneToManyWithCache
+tests/Tests/ORM/Performance/SecondLevelCacheTest.php	SecondLevelCacheTest::testFindEntityOneToManyWithoutCache	ported	crates/php2rust-doctrine-orm/tests/performance_second_level_cache_test.rs::testFindEntityOneToManyWithoutCache
+tests/Tests/ORM/Performance/SecondLevelCacheTest.php	SecondLevelCacheTest::testFindEntityWithCache	ported	crates/php2rust-doctrine-orm/tests/performance_second_level_cache_test.rs::testFindEntityWithCache
+tests/Tests/ORM/Performance/SecondLevelCacheTest.php	SecondLevelCacheTest::testFindEntityWithoutCache	ported	crates/php2rust-doctrine-orm/tests/performance_second_level_cache_test.rs::testFindEntityWithoutCache
+tests/Tests/ORM/Performance/SecondLevelCacheTest.php	SecondLevelCacheTest::testQueryEntityWithCache	ported	crates/php2rust-doctrine-orm/tests/performance_second_level_cache_test.rs::testQueryEntityWithCache
+tests/Tests/ORM/Performance/SecondLevelCacheTest.php	SecondLevelCacheTest::testQueryEntityWithoutCache	ported	crates/php2rust-doctrine-orm/tests/performance_second_level_cache_test.rs::testQueryEntityWithoutCache
 tests/Tests/ORM/PersistentCollectionTest.php	PersistentCollectionTest::testCanBePutInLazyLoadingMode	pending	
 tests/Tests/ORM/PersistentCollectionTest.php	PersistentCollectionTest::testClearWillAlsoClearKeys	pending	
 tests/Tests/ORM/PersistentCollectionTest.php	PersistentCollectionTest::testClearWillAlsoResetKeyPositions	pending	
