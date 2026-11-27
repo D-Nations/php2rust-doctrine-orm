@@ -1576,8 +1576,8 @@ tests/Tests/ORM/Functional/Ticket/GH7836Test.php	GH7836Test::testMatchingOverrul
 tests/Tests/ORM/Functional/Ticket/GH7836Test.php	GH7836Test::testMatchingRespectsCollectionOrdering	ported	crates/php2rust-doctrine-orm/tests/gh7836_test.rs::testMatchingRespectsCollectionOrdering
 tests/Tests/ORM/Functional/Ticket/GH7864Test.php	GH7864Test::testExtraLazyRemoveElement	ported	crates/php2rust-doctrine-orm/tests/gh7864_test.rs::testExtraLazyRemoveElement
 tests/Tests/ORM/Functional/Ticket/GH7869Test.php	GH7869Test::testDQLDeferredEagerLoad	pending	needs EntityManagerDecorator and a mock that counts getClassMetadata() calls
-tests/Tests/ORM/Functional/Ticket/GH7875Test.php	GH7875Test::testUpdateSchemaSql	pending	needs SchemaTool::getUpdateSchemaSql(), which is not ported
-tests/Tests/ORM/Functional/Ticket/GH7875Test.php	GH7875Test::testUpdateSchemaSqlWithSchemaAssetFilter	pending	needs SchemaTool::getUpdateSchemaSql(), which is not ported
+tests/Tests/ORM/Functional/Ticket/GH7875Test.php	GH7875Test::testUpdateSchemaSql	ported	crates/php2rust-doctrine-orm/tests/gh7875_test.rs::testUpdateSchemaSql
+tests/Tests/ORM/Functional/Ticket/GH7875Test.php	GH7875Test::testUpdateSchemaSqlWithSchemaAssetFilter	ported	crates/php2rust-doctrine-orm/tests/gh7875_test.rs::testUpdateSchemaSqlWithSchemaAssetFilter
 tests/Tests/ORM/Functional/Ticket/GH7941Test.php	GH7941Test::typesShouldBeConvertedForDQLFunctions	pending	the DBAL port does not register SQLite's user-defined SQRT() function
 tests/Tests/ORM/Functional/Ticket/GH8055Test.php	GH8055Test::testNumericDescriminatorColumn	ported	crates/php2rust-doctrine-orm/tests/gh8055_test.rs::testNumericDescriminatorColumn
 tests/Tests/ORM/Functional/Ticket/GH8061Test.php	GH8061Test::testConvertToPHPValueSQLForNewObjectExpression	ported	crates/php2rust-doctrine-orm/tests/gh8061_test.rs::testConvertToPHPValueSQLForNewObjectExpression
