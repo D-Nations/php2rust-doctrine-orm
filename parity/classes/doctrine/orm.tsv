@@ -402,13 +402,13 @@ src/Repository/Exception/InvalidFindByCall.php	InvalidFindByCall	16	ported	crate
 src/Repository/Exception/InvalidMagicMethodCall.php	InvalidMagicMethodCall	21	ported	crates/php2rust-doctrine-orm/src/exception.rs
 src/Repository/RepositoryFactory.php	RepositoryFactory	8	ported	crates/php2rust-doctrine-orm/src/repository/mod.rs
 src/Tools/AttachEntityListenersListener.php	AttachEntityListenersListener	38	ported	crates/php2rust-doctrine-orm/src/tools/attach_entity_listeners_listener.rs
-src/Tools/Console/ApplicationCompatibility.php	ApplicationCompatibility	15	pending	
-src/Tools/Console/Command/AbstractEntityManagerCommand.php	AbstractEntityManagerCommand	19	pending	
-src/Tools/Console/Command/ClearCache/CollectionRegionCommand.php	CollectionRegionCommand	96	pending	
-src/Tools/Console/Command/ClearCache/EntityRegionCommand.php	EntityRegionCommand	87	pending	
+src/Tools/Console/ApplicationCompatibility.php	ApplicationCompatibility	15	ported	crates/php2rust-doctrine-orm/tests/common/console.rs
+src/Tools/Console/Command/AbstractEntityManagerCommand.php	AbstractEntityManagerCommand	19	ported	crates/php2rust-doctrine-orm/src/tools/console/command/abstract_entity_manager_command.rs
+src/Tools/Console/Command/ClearCache/CollectionRegionCommand.php	CollectionRegionCommand	96	ported	crates/php2rust-doctrine-orm/src/tools/console/command/clear_cache/collection_region_command.rs
+src/Tools/Console/Command/ClearCache/EntityRegionCommand.php	EntityRegionCommand	87	ported	crates/php2rust-doctrine-orm/src/tools/console/command/clear_cache/entity_region_command.rs
 src/Tools/Console/Command/ClearCache/MetadataCommand.php	MetadataCommand	35	pending	
 src/Tools/Console/Command/ClearCache/QueryCommand.php	QueryCommand	36	pending	
-src/Tools/Console/Command/ClearCache/QueryRegionCommand.php	QueryRegionCommand	80	pending	
+src/Tools/Console/Command/ClearCache/QueryRegionCommand.php	QueryRegionCommand	80	ported	crates/php2rust-doctrine-orm/src/tools/console/command/clear_cache/query_region_command.rs
 src/Tools/Console/Command/ClearCache/ResultCommand.php	ResultCommand	48	pending	
 src/Tools/Console/Command/Debug/AbstractCommand.php	AbstractCommand	23	pending	
 src/Tools/Console/Command/Debug/DebugEntityListenersDoctrineCommand.php	DebugEntityListenersDoctrineCommand	119	pending	
@@ -424,10 +424,10 @@ src/Tools/Console/Command/SchemaTool/DropCommand.php	DropCommand	87	pending
 src/Tools/Console/Command/SchemaTool/UpdateCommand.php	UpdateCommand	115	pending	
 src/Tools/Console/Command/ValidateSchemaCommand.php	ValidateSchemaCommand	67	pending	
 src/Tools/Console/ConsoleRunner.php	ConsoleRunner	60	pending	
-src/Tools/Console/EntityManagerProvider.php	EntityManagerProvider	8	pending	
+src/Tools/Console/EntityManagerProvider.php	EntityManagerProvider	8	ported	crates/php2rust-doctrine-orm/src/tools/console/entity_manager_provider.rs
 src/Tools/Console/EntityManagerProvider/ConnectionFromManagerProvider.php	ConnectionFromManagerProvider	19	pending	
-src/Tools/Console/EntityManagerProvider/SingleManagerProvider.php	SingleManagerProvider	23	pending	
-src/Tools/Console/EntityManagerProvider/UnknownManagerException.php	UnknownManagerException	16	pending	
+src/Tools/Console/EntityManagerProvider/SingleManagerProvider.php	SingleManagerProvider	23	ported	crates/php2rust-doctrine-orm/src/tools/console/entity_manager_provider.rs
+src/Tools/Console/EntityManagerProvider/UnknownManagerException.php	UnknownManagerException	16	ported	crates/php2rust-doctrine-orm/src/tools/console/entity_manager_provider.rs
 src/Tools/Console/MetadataFilter.php	MetadataFilter	56	ported	crates/php2rust-doctrine-orm/src/tools/console/metadata_filter.rs
 src/Tools/Debug.php	Debug	104	pending	
 src/Tools/DebugUnitOfWorkListener.php	DebugUnitOfWorkListener	106	pending	
