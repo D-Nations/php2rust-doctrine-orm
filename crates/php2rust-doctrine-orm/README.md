@@ -206,8 +206,14 @@ Mapping, not reproduced and so not claimed:
   `load_driver()` of the test binary; `assertEquals()` on a name map
   compares it without its key order.
 
-Mapping pending: the Symfony XmlDriverTest, StaticPHPMappingDriverTest
-(the models' static `loadMetadata()` methods are PHP code) and
+- StaticPHPMappingDriverTest: the models' static `loadMetadata()` methods
+  are PHP code, so the test writes each one as a Rust fn making the same
+  calls on the metadata, and `models::register_with_load_metadata()`
+  declares it on the recorded class (a class without one inherits its
+  parent's, as PHP's static methods do). `testMappedSuperclassWithRepository`
+  is pending, as for the attribute driver.
+
+Mapping pending: the Symfony XmlDriverTest and
 `ClassMetadataTest::testClassNameMappingDiscriminatorValue`
 (the static PHP driver); `RawValuePropertyAccessorTest` (PHP 8.4 property hooks);
 `AttributeDriverTest::testMappedSuperclassWithRepository`,
