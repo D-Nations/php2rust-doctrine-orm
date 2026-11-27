@@ -2180,81 +2180,81 @@ tests/Tests/ORM/Mapping/TableMappingTest.php	TableMappingTest::testDeprecationOn
 tests/Tests/ORM/Mapping/ToManyAssociationMappingTest.php	ToManyAssociationMappingTest::testItSurvivesSerialization	ported	crates/php2rust-doctrine-orm/tests/to_many_association_mapping_test.rs::testItSurvivesSerialization
 tests/Tests/ORM/Mapping/TypedEnumFieldMapperTest.php	TypedEnumFieldMapperTest::testNotBackedEnumThrows	ported	crates/php2rust-doctrine-orm/tests/typed_enum_field_mapper_test.rs::testNotBackedEnumThrows
 tests/Tests/ORM/Mapping/TypedFieldMapperTest.php	TypedFieldMapperTest::testValidateAndComplete	ported	crates/php2rust-doctrine-orm/tests/typed_field_mapper_test.rs::testValidateAndComplete
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testAssociationOverridesMapping	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testAssociations	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testAttributeOverridesMapping	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testBooleanValuesForOptionIsSetCorrectly	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testClassNameInFieldOrId	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testClassTableInheritanceDiscriminatorMap	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testColumnDefinition	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testCompositeIdPositionOrdering	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testCustomFieldTypeFromReflection	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testCustomNamingStrategyIsRespected	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testDefaultFieldType	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testDisablingXmlValidationIsPossible	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testDiscriminatorColumnDefaultLength	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testDiscriminatorColumnDefaultName	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testDiscriminatorColumnDefaultType	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testDiscriminatorColumnDefaults	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testDiscriminatorColumnDefinition	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testDiscriminatorColumnEnumTypeDefinition	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEmbeddableMapping	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEmbeddableSubclassDoesNotRequireInheritanceTypeDeclaration	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEmbeddedMapping	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEmbeddedMappingsWithFalseUseColumnPrefix	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEmbeddedMappingsWithUseColumnPrefix	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityCustomGenerator	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityIncorrectIndexes	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityIncorrectUniqueContraint	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityIndexFlagsAndPartialIndexes	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityIndexes	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityListeners	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityListenersNamingConvention	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityListenersOverride	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityOptions	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntitySequence	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityTableNameAndInheritance	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityUniqueConstraints	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEnumType	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testFailingSecondLevelCacheAssociation	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testFetchOverrideMapping	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testFieldMappings	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testFieldMappingsColumnNames	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testFieldOptions	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testFieldTypeFromReflection	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testIdFieldOptions	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testIdentifier	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testIdentifierColumnDefinition	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testIdentifierRequiredShouldMentionParentClasses	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testIdentifierWithAssociationKey	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testInsertableColumn	pending	
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testAssociationOverridesMapping	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testAssociationOverridesMapping
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testAssociations	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testAssociations
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testAttributeOverridesMapping	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testAttributeOverridesMapping
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testBooleanValuesForOptionIsSetCorrectly	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testBooleanValuesForOptionIsSetCorrectly
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testClassNameInFieldOrId	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testClassNameInFieldOrId
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testClassTableInheritanceDiscriminatorMap	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testClassTableInheritanceDiscriminatorMap
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testColumnDefinition	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testColumnDefinition
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testCompositeIdPositionOrdering	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testCompositeIdPositionOrdering
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testCustomFieldTypeFromReflection	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testCustomFieldTypeFromReflection
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testCustomNamingStrategyIsRespected	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testCustomNamingStrategyIsRespected
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testDefaultFieldType	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testDefaultFieldType
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testDisablingXmlValidationIsPossible	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testDisablingXmlValidationIsPossible
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testDiscriminatorColumnDefaultLength	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testDiscriminatorColumnDefaultLength
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testDiscriminatorColumnDefaultName	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testDiscriminatorColumnDefaultName
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testDiscriminatorColumnDefaultType	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testDiscriminatorColumnDefaultType
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testDiscriminatorColumnDefaults	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testDiscriminatorColumnDefaults
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testDiscriminatorColumnDefinition	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testDiscriminatorColumnDefinition
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testDiscriminatorColumnEnumTypeDefinition	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testDiscriminatorColumnEnumTypeDefinition
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEmbeddableMapping	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testEmbeddableMapping
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEmbeddableSubclassDoesNotRequireInheritanceTypeDeclaration	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testEmbeddableSubclassDoesNotRequireInheritanceTypeDeclaration
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEmbeddedMapping	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testEmbeddedMapping
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEmbeddedMappingsWithFalseUseColumnPrefix	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testEmbeddedMappingsWithFalseUseColumnPrefix
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEmbeddedMappingsWithUseColumnPrefix	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testEmbeddedMappingsWithUseColumnPrefix
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityCustomGenerator	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testEntityCustomGenerator
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityIncorrectIndexes	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testEntityIncorrectIndexes
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityIncorrectUniqueContraint	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testEntityIncorrectUniqueContraint
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityIndexFlagsAndPartialIndexes	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testEntityIndexFlagsAndPartialIndexes
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityIndexes	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testEntityIndexes
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityListeners	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testEntityListeners
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityListenersNamingConvention	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testEntityListenersNamingConvention
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityListenersOverride	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testEntityListenersOverride
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityOptions	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testEntityOptions
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntitySequence	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testEntitySequence
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityTableNameAndInheritance	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testEntityTableNameAndInheritance
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityUniqueConstraints	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testEntityUniqueConstraints
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEnumType	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testEnumType
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testFailingSecondLevelCacheAssociation	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testFailingSecondLevelCacheAssociation
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testFetchOverrideMapping	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testFetchOverrideMapping
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testFieldMappings	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testFieldMappings
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testFieldMappingsColumnNames	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testFieldMappingsColumnNames
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testFieldOptions	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testFieldOptions
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testFieldTypeFromReflection	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testFieldTypeFromReflection
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testIdFieldOptions	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testIdFieldOptions
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testIdentifier	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testIdentifier
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testIdentifierColumnDefinition	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testIdentifierColumnDefinition
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testIdentifierRequiredShouldMentionParentClasses	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testIdentifierRequiredShouldMentionParentClasses
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testIdentifierWithAssociationKey	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testIdentifierWithAssociationKey
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testInsertableColumn	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testInsertableColumn
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testInvalidEntityOrMappedSuperClassShouldMentionParentClasses	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testInverseOneToManyAssociation	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testInversedByOverrideMapping	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testItMentionsFilenameAndEntityNameOnInvalidMapping	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testJoinColumnOnDelete	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testJoinColumnUniqueAndNullable	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testLifecycleCallbacks	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testLifecycleCallbacksSupportMultipleMethodNames	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testManyToManyAssociationWithCascadeAll	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testManyToManyDefaultOrderByAsc	pending	
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testInverseOneToManyAssociation	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testInverseOneToManyAssociation
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testInversedByOverrideMapping	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testInversedByOverrideMapping
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testItMentionsFilenameAndEntityNameOnInvalidMapping	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testItMentionsFilenameAndEntityNameOnInvalidMapping
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testJoinColumnOnDelete	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testJoinColumnOnDelete
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testJoinColumnUniqueAndNullable	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testJoinColumnUniqueAndNullable
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testLifecycleCallbacks	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testLifecycleCallbacks
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testLifecycleCallbacksSupportMultipleMethodNames	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testLifecycleCallbacksSupportMultipleMethodNames
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testManyToManyAssociationWithCascadeAll	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testManyToManyAssociationWithCascadeAll
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testManyToManyDefaultOrderByAsc	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testManyToManyDefaultOrderByAsc
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testMappedSuperclassWithRepository	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testNamingStrategy	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testOneToManyDefaultOrderByAsc	pending	
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testNamingStrategy	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testNamingStrategy
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testOneToManyDefaultOrderByAsc	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testOneToManyDefaultOrderByAsc
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testOrderByWithInvalidDirection	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testOrderByWithStringValues	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testOwningOneToOneAssociation	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testReservedWordInTableColumn	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testSchemaDefinitionViaExplicitTableSchemaAttributeProperty	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testSchemaDefinitionViaSchemaDefinedInTableNameInTableAttributeProperty	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testSecondLevelCacheMapping	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testStringFieldMappings	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testUpdatableColumn	pending	
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testOrderByWithStringValues	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testOrderByWithStringValues
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testOwningOneToOneAssociation	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testOwningOneToOneAssociation
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testReservedWordInTableColumn	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testReservedWordInTableColumn
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testSchemaDefinitionViaExplicitTableSchemaAttributeProperty	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testSchemaDefinitionViaExplicitTableSchemaAttributeProperty
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testSchemaDefinitionViaSchemaDefinedInTableNameInTableAttributeProperty	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testSchemaDefinitionViaSchemaDefinedInTableNameInTableAttributeProperty
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testSecondLevelCacheMapping	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testSecondLevelCacheMapping
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testStringFieldMappings	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testStringFieldMappings
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testUpdatableColumn	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testUpdatableColumn
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testValidateIncorrectXmlSchema	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testValidateXmlSchema	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testVersionedField	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testXmlCustomForeignKeyNames	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testXmlValidationDisabled	pending	
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testValidateXmlSchema	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testValidateXmlSchema
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testVersionedField	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testVersionedField
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testXmlCustomForeignKeyNames	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testXmlCustomForeignKeyNames
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testXmlValidationDisabled	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testXmlValidationDisabled
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testXmlValidationEnabled	pending	
 tests/Tests/ORM/ORMInvalidArgumentExceptionTest.php	ORMInvalidArgumentExceptionTest::testNewEntitiesFoundThroughRelationships	pending	
 tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testAttributeConfig	pending	
