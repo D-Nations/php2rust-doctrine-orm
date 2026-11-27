@@ -1286,7 +1286,7 @@ tests/Tests/ORM/Functional/Ticket/DDC2346Test.php	DDC2346Test::testIssue	ported	
 tests/Tests/ORM/Functional/Ticket/DDC2350Test.php	DDC2350Test::testEagerCollectionsAreOnlyRetrievedOnce	ported	crates/php2rust-doctrine-orm/tests/ddc2350_test.rs::testEagerCollectionsAreOnlyRetrievedOnce
 tests/Tests/ORM/Functional/Ticket/DDC2359Test.php	DDC2359Test::testIssue	pending	PHPUnit mocks of the metadata factory and driver
 tests/Tests/ORM/Functional/Ticket/DDC237Test.php	DDC237Test::testUninitializedProxyIsInitializedOnFetchJoin	ported	crates/php2rust-doctrine-orm/tests/ddc237_test.rs::testUninitializedProxyIsInitializedOnFetchJoin
-tests/Tests/ORM/Functional/Ticket/DDC2387Test.php	DDC2387Test::testCompositeAssociationKeyDetection	pending	DatabaseDriver (schema to metadata) is not ported
+tests/Tests/ORM/Functional/Ticket/DDC2387Test.php	DDC2387Test::testCompositeAssociationKeyDetection	ported	crates/php2rust-doctrine-orm/tests/ddc2387_test.rs::testCompositeAssociationKeyDetection
 tests/Tests/ORM/Functional/Ticket/DDC2415Test.php	DDC2415Test::testTicket	pending	needs the static PHP driver (loadMetadata()) and a CUSTOM id generator (an AbstractIdGenerator subclass)
 tests/Tests/ORM/Functional/Ticket/DDC2494Test.php	DDC2494Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2494_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC2519Test.php	DDC2519Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2519_test.rs::testIssue
