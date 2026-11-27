@@ -1304,8 +1304,8 @@ tests/Tests/ORM/Functional/Ticket/DDC2780Test.php	DDC2780Test::testIssue	ported	
 tests/Tests/ORM/Functional/Ticket/DDC2790Test.php	DDC2790Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2790_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC279Test.php	DDC279Test::testDDC279	ported	crates/php2rust-doctrine-orm/tests/ddc279_test.rs::testDDC279
 tests/Tests/ORM/Functional/Ticket/DDC2825Test.php	DDC2825Test::testPersistenceOfEntityWithSchemaMapping	n/a	
-tests/Tests/ORM/Functional/Ticket/DDC2862Test.php	DDC2862Test::testIssue	pending	
-tests/Tests/ORM/Functional/Ticket/DDC2862Test.php	DDC2862Test::testIssueReopened	pending	
+tests/Tests/ORM/Functional/Ticket/DDC2862Test.php	DDC2862Test::testIssue	pending	needs the second-level cache
+tests/Tests/ORM/Functional/Ticket/DDC2862Test.php	DDC2862Test::testIssueReopened	pending	needs the second-level cache
 tests/Tests/ORM/Functional/Ticket/DDC2895Test.php	DDC2895Test::testPostLoadOneToManyInheritance	ported	crates/php2rust-doctrine-orm/tests/ddc2895_test.rs::testPostLoadOneToManyInheritance
 tests/Tests/ORM/Functional/Ticket/DDC2931Test.php	DDC2931Test::testFetchJoinedEntitiesCanBeRefreshed	ported	crates/php2rust-doctrine-orm/tests/ddc2931_test.rs::testFetchJoinedEntitiesCanBeRefreshed
 tests/Tests/ORM/Functional/Ticket/DDC2931Test.php	DDC2931Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2931_test.rs::testIssue
