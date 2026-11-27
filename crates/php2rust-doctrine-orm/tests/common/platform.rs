@@ -1,7 +1,7 @@
-//! A test platform standing in for PHPUnit's `createStub(AbstractPlatform::class)`
-//! and for the DBAL platforms the port does not have: it reports a class
-//! name of the test's choice, can quote identifiers its own way, and
-//! delegates the rest to `SQLitePlatform`.
+//! A test platform standing in for PHPUnit's `createStub(AbstractPlatform::class)`:
+//! it reports a class name of the test's choice, can quote identifiers its
+//! own way and answer `supportsSequences()`, and delegates the rest to
+//! `SQLitePlatform`.
 //!
 //! Upstream: none
 
@@ -11,15 +11,15 @@ use php_value::{PhpArray, PhpString};
 use php2rust_doctrine_dbal::Exception;
 use php2rust_doctrine_dbal::platforms::{AbstractPlatform, SQLitePlatform};
 
-pub const POSTGRESQL: &str = "Doctrine\\DBAL\\Platforms\\PostgreSQLPlatform";
-pub const ORACLE: &str = "Doctrine\\DBAL\\Platforms\\OraclePlatform";
-pub const MYSQL: &str = "Doctrine\\DBAL\\Platforms\\MySQLPlatform";
+/// The class of a `createStub(AbstractPlatform::class)`.
+pub const ABSTRACT_PLATFORM: &str = "Doctrine\\DBAL\\Platforms\\AbstractPlatform";
 
 pub struct TestPlatform {
     class: String,
     /// `quoteSingleIdentifier()`'s format, `%s` for the identifier.
     quote_format: Option<String>,
     max_identifier_length: Option<i64>,
+    supports_sequences: Option<bool>,
     inner: SQLitePlatform,
 }
 
@@ -29,6 +29,7 @@ impl TestPlatform {
             class: class.to_owned(),
             quote_format: None,
             max_identifier_length: None,
+            supports_sequences: None,
             inner: SQLitePlatform::new(),
         }
     }
@@ -36,6 +37,13 @@ impl TestPlatform {
     #[must_use]
     pub fn quoting(mut self, format: &str) -> Self {
         self.quote_format = Some(format.to_owned());
+        self
+    }
+
+    /// `$platform->method('supportsSequences')->willReturn($supports)`.
+    #[must_use]
+    pub fn supporting_sequences(mut self, supports: bool) -> Self {
+        self.supports_sequences = Some(supports);
         self
     }
 
@@ -56,6 +64,11 @@ impl AbstractPlatform for TestPlatform {
             Some(format) => format.replace("%s", str),
             None => self.inner.quote_single_identifier(str),
         }
+    }
+
+    fn supports_sequences(&self) -> bool {
+        self.supports_sequences
+            .unwrap_or_else(|| self.inner.supports_sequences())
     }
 
     fn get_max_identifier_length(&self) -> i64 {

@@ -1,7 +1,8 @@
 //! Port of `ClassMetadataFactoryTest`. The entity manager is not ported:
 //! `createEntityManager()` is a `FactoryConfiguration` with the driver,
-//! and the event listeners are its hooks. PHPUnit's platform stubs are
-//! `TestPlatform` (tests/common/platform.rs).
+//! and the event listeners are its hooks. PHPUnit's platform stub is
+//! `TestPlatform` (tests/common/platform.rs); `new PostgreSQLPlatform()`
+//! is DBAL's.
 //!
 //! Upstream: doctrine/orm tests/Tests/ORM/Mapping/ClassMetadataFactoryTest.php
 
@@ -20,6 +21,7 @@ use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
 
 use php_value::{Thrown, Value, php_array};
+use php2rust_doctrine_dbal::platforms::{AbstractPlatform, PostgreSQLPlatform};
 use php2rust_doctrine_orm::id::IdGenerator;
 use php2rust_doctrine_orm::mapping::class_metadata::{self as cm, ClassMetadata};
 use php2rust_doctrine_orm::mapping::driver::AttributeDriver;
@@ -190,7 +192,7 @@ fn create_test_factory() -> ClassMetadataFactoryTestSubject {
 
 /// `setUpCmfForPlatform()`.
 fn set_up_cmf_for_platform(
-    platform: TestPlatform,
+    platform: impl AbstractPlatform + Send + Sync + 'static,
     preferences: Vec<(String, i64)>,
 ) -> ClassMetadataFactoryTestSubject {
     let cmf = ClassMetadataFactoryTestSubject::new();
@@ -249,7 +251,8 @@ fn testGetMetadataForSingleClass() {
     let cmf = ClassMetadataFactory::new();
     let mut configuration = create_entity_manager(Arc::new(MetadataDriverMock));
     // A platform that supports sequences.
-    configuration.platform = Arc::new(TestPlatform::new(platform::POSTGRESQL));
+    configuration.platform =
+        Arc::new(TestPlatform::new(platform::ABSTRACT_PLATFORM).supporting_sequences(true));
     cmf.set_entity_manager(configuration);
     let name = cm1.read().name.clone();
     cmf.set_metadata_for(&name, Arc::clone(&cm1));
@@ -305,7 +308,7 @@ fn testGetMetadataForReturnsLoadedCustomIdGenerator() {
 fn testPostgresSwitchesToIdentityColumnsWhenDbal4IsUsed() {
     let cm = create_valid_class_metadata();
     cm.write().set_id_generator_type(cm::GENERATOR_TYPE_AUTO);
-    let cmf = set_up_cmf_for_platform(TestPlatform::new(platform::POSTGRESQL), Vec::new());
+    let cmf = set_up_cmf_for_platform(PostgreSQLPlatform::new(), Vec::new());
     let name = cm.read().name.clone();
     cmf.set_metadata_for_class(&name, cm);
 

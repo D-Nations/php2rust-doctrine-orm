@@ -87,9 +87,90 @@ const DB2_PLATFORM: &str = "Doctrine\\DBAL\\Platforms\\DB2Platform";
 const ORACLE_PLATFORM: &str = "Doctrine\\DBAL\\Platforms\\OraclePlatform";
 const POSTGRESQL_PLATFORM: &str = "Doctrine\\DBAL\\Platforms\\PostgreSQLPlatform";
 
+/// DBAL's platform classes and their parents (doctrine/dbal
+/// `src/Platforms/*Platform.php`), which `php_reflection` does not know.
+const DBAL_PLATFORM_PARENTS: &[(&str, &str)] = &[
+    (
+        "Doctrine\\DBAL\\Platforms\\AbstractMySQLPlatform",
+        "Doctrine\\DBAL\\Platforms\\AbstractPlatform",
+    ),
+    (
+        "Doctrine\\DBAL\\Platforms\\DB2Platform",
+        "Doctrine\\DBAL\\Platforms\\AbstractPlatform",
+    ),
+    (
+        "Doctrine\\DBAL\\Platforms\\MariaDBPlatform",
+        "Doctrine\\DBAL\\Platforms\\AbstractMySQLPlatform",
+    ),
+    (
+        "Doctrine\\DBAL\\Platforms\\MariaDB1052Platform",
+        "Doctrine\\DBAL\\Platforms\\MariaDBPlatform",
+    ),
+    (
+        "Doctrine\\DBAL\\Platforms\\MariaDB1060Platform",
+        "Doctrine\\DBAL\\Platforms\\MariaDB1052Platform",
+    ),
+    (
+        "Doctrine\\DBAL\\Platforms\\MariaDB1010Platform",
+        "Doctrine\\DBAL\\Platforms\\MariaDB1060Platform",
+    ),
+    (
+        "Doctrine\\DBAL\\Platforms\\MariaDB110700Platform",
+        "Doctrine\\DBAL\\Platforms\\MariaDB1010Platform",
+    ),
+    (
+        "Doctrine\\DBAL\\Platforms\\MariaDB120300Platform",
+        "Doctrine\\DBAL\\Platforms\\MariaDB110700Platform",
+    ),
+    (
+        "Doctrine\\DBAL\\Platforms\\MySQLPlatform",
+        "Doctrine\\DBAL\\Platforms\\AbstractMySQLPlatform",
+    ),
+    (
+        "Doctrine\\DBAL\\Platforms\\MySQL80Platform",
+        "Doctrine\\DBAL\\Platforms\\MySQLPlatform",
+    ),
+    (
+        "Doctrine\\DBAL\\Platforms\\MySQL84Platform",
+        "Doctrine\\DBAL\\Platforms\\MySQL80Platform",
+    ),
+    (
+        "Doctrine\\DBAL\\Platforms\\OraclePlatform",
+        "Doctrine\\DBAL\\Platforms\\AbstractPlatform",
+    ),
+    (
+        "Doctrine\\DBAL\\Platforms\\PostgreSQLPlatform",
+        "Doctrine\\DBAL\\Platforms\\AbstractPlatform",
+    ),
+    (
+        "Doctrine\\DBAL\\Platforms\\PostgreSQL120Platform",
+        "Doctrine\\DBAL\\Platforms\\PostgreSQLPlatform",
+    ),
+    (
+        "Doctrine\\DBAL\\Platforms\\SQLServerPlatform",
+        "Doctrine\\DBAL\\Platforms\\AbstractPlatform",
+    ),
+    (
+        "Doctrine\\DBAL\\Platforms\\SQLitePlatform",
+        "Doctrine\\DBAL\\Platforms\\AbstractPlatform",
+    ),
+];
+
 /// `$platform instanceof $class`.
 pub(crate) fn platform_is_a(platform: &dyn AbstractPlatform, class: &str) -> bool {
-    platform.class().eq_ignore_ascii_case(class) || php_reflection::is_a(platform.class(), class)
+    let mut current = platform.class();
+    loop {
+        if current.eq_ignore_ascii_case(class) || php_reflection::is_a(current, class) {
+            return true;
+        }
+        match DBAL_PLATFORM_PARENTS
+            .iter()
+            .find(|(child, _)| child.eq_ignore_ascii_case(current))
+        {
+            Some((_, parent)) => current = parent,
+            None => return false,
+        }
+    }
 }
 
 /// `SQLResultCasing::getSQLResultCasing()`.

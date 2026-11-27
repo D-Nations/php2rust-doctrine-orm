@@ -3571,7 +3571,8 @@ pub mod base {
             ast::LITERAL_STRING => em.quote(&value),
             ast::LITERAL_BOOLEAN => Ok(text(
                 &em.get_database_platform()
-                    .convert_booleans(&Value::Bool(value.to_lowercase() == "true")),
+                    .convert_booleans(&Value::Bool(value.to_lowercase() == "true"))
+                    .map_err(dbal_error)?,
             )),
             ast::LITERAL_NUMERIC => Ok(value),
             ast::LITERAL_NULL => Ok("NULL".to_owned()),
