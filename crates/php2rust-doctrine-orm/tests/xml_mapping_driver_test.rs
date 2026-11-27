@@ -623,3 +623,8 @@ fn testXmlCustomForeignKeyNames() {
         join_table.unwrap().inverse_foreign_key_name.as_deref()
     );
 }
+
+#[test]
+fn testMappedSuperclassWithRepository() {
+    mapping_driver_test_case::testMappedSuperclassWithRepository();
+}

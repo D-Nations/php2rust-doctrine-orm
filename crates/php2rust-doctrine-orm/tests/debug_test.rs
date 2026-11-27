@@ -21,6 +21,7 @@
     reason = "test helpers; a panic is a test failure"
 )]
 
+use std::fmt::Write;
 use std::sync::Arc;
 
 use php_value::date_create::date_create;
@@ -248,12 +249,9 @@ fn print_r(value: &Value, indent: usize) -> String {
     let pad = " ".repeat(indent);
     let mut out = format!("{head}\n{pad}(\n");
     for (name, v) in entries {
-        out.push_str(&format!(
-            "{pad}    [{name}] => {}\n",
-            print_r(&v, indent + 8)
-        ));
+        let _ = writeln!(out, "{pad}    [{name}] => {}", print_r(&v, indent + 8));
     }
-    out.push_str(&format!("{pad})\n"));
+    let _ = writeln!(out, "{pad})");
     if indent == 0 {
         out.push('\n');
     }

@@ -76,7 +76,7 @@ fn metadata(
     {
         let mut info = class_metadata.write();
         info.sub_classes = sub_classes;
-        info.name = name.to_owned();
+        name.clone_into(&mut info.name);
         info.discriminator_value = Value::string(discriminator);
     }
     Arc::new(class_metadata)
