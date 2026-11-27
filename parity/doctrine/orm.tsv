@@ -1373,8 +1373,8 @@ tests/Tests/ORM/Functional/Ticket/DDC6303Test.php	DDC6303Test::testEmptyValuesIn
 tests/Tests/ORM/Functional/Ticket/DDC6303Test.php	DDC6303Test::testMixedTypeHydratedCorrectlyInJoinedInheritance	ported	crates/php2rust-doctrine-orm/tests/ddc6303_test.rs::testMixedTypeHydratedCorrectlyInJoinedInheritance
 tests/Tests/ORM/Functional/Ticket/DDC633Test.php	DDC633Test::testDQLDeferredEagerLoad	ported	crates/php2rust-doctrine-orm/tests/ddc633_test.rs::testDQLDeferredEagerLoad
 tests/Tests/ORM/Functional/Ticket/DDC633Test.php	DDC633Test::testOneToOneEager	ported	crates/php2rust-doctrine-orm/tests/ddc633_test.rs::testOneToOneEager
-tests/Tests/ORM/Functional/Ticket/DDC6460Test.php	DDC6460Test::testInlineEmbeddable	pending	
-tests/Tests/ORM/Functional/Ticket/DDC6460Test.php	DDC6460Test::testInlineEmbeddableProxyInitialization	pending	
+tests/Tests/ORM/Functional/Ticket/DDC6460Test.php	DDC6460Test::testInlineEmbeddable	ported	crates/php2rust-doctrine-orm/tests/ddc6460_test.rs::testInlineEmbeddable
+tests/Tests/ORM/Functional/Ticket/DDC6460Test.php	DDC6460Test::testInlineEmbeddableProxyInitialization	ported	crates/php2rust-doctrine-orm/tests/ddc6460_test.rs::testInlineEmbeddableProxyInitialization
 tests/Tests/ORM/Functional/Ticket/DDC6558Test.php	DDC6558Test::testEmployeeIsPopulated	ported	crates/php2rust-doctrine-orm/tests/ddc6558_test.rs::testEmployeeIsPopulated
 tests/Tests/ORM/Functional/Ticket/DDC656Test.php	DDC656Test::testRecomputeSingleEntityChangeSetPreservesFieldOrder	ported	crates/php2rust-doctrine-orm/tests/ddc656_test.rs::testRecomputeSingleEntityChangeSetPreservesFieldOrder
 tests/Tests/ORM/Functional/Ticket/DDC6573Test.php	DDC6573Test::testShouldSupportsBasicUsage	ported	crates/php2rust-doctrine-orm/tests/ddc6573_test.rs::testShouldSupportsBasicUsage
