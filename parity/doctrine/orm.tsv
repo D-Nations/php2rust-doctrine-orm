@@ -1425,7 +1425,7 @@ tests/Tests/ORM/Functional/Ticket/GH10387Test.php	GH10387Test::testSchemaToolCre
 tests/Tests/ORM/Functional/Ticket/GH10450Test.php	GH10450Test::testDuplicatePrivateFieldsShallBeRejected	ported	crates/php2rust-doctrine-orm/tests/gh10450_test.rs::testDuplicatePrivateFieldsShallBeRejected
 tests/Tests/ORM/Functional/Ticket/GH10454Test.php	GH10454Test::testProtectedPropertyMustNotBeInheritedAndReconfigured	ported	crates/php2rust-doctrine-orm/tests/gh10454_test.rs::testProtectedPropertyMustNotBeInheritedAndReconfigured
 tests/Tests/ORM/Functional/Ticket/GH10462Test.php	GH10462Test::testCharsetAndCollationOptionsOnDiscriminatedColumn	n/a: upstream skips it on SQLite (This test is useful for all databases, but designed only for mysql.)	
-tests/Tests/ORM/Functional/Ticket/GH10473Test.php	GH10473Test::testMappedSuperclassAssociationsCanBeResolvedToEntities	pending	ResolveTargetEntityListener is not ported
+tests/Tests/ORM/Functional/Ticket/GH10473Test.php	GH10473Test::testMappedSuperclassAssociationsCanBeResolvedToEntities	ported	crates/php2rust-doctrine-orm/tests/gh10473_test.rs::testMappedSuperclassAssociationsCanBeResolvedToEntities
 tests/Tests/ORM/Functional/Ticket/GH10531Test.php	GH10531Test::testDeletes	ported	crates/php2rust-doctrine-orm/tests/gh10531_test.rs::testDeletes
 tests/Tests/ORM/Functional/Ticket/GH10531Test.php	GH10531Test::testInserts	ported	crates/php2rust-doctrine-orm/tests/gh10531_test.rs::testInserts
 tests/Tests/ORM/Functional/Ticket/GH10532Test.php	GH10532Test::testDeletes	ported	crates/php2rust-doctrine-orm/tests/gh10532_test.rs::testDeletes
