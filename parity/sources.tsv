@@ -241,15 +241,18 @@ crates/php2rust-doctrine-orm/src/exception.rs	doctrine/orm	src/Repository/Except
 crates/php2rust-doctrine-orm/src/exception.rs	doctrine/orm	src/Persisters/MatchingAssociationFieldRequiresObject.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/exception.rs	doctrine/orm	src/Exception/PersisterException.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/id.rs	doctrine/orm	src/Id/AssignedGenerator.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/src/id.rs	doctrine/orm	src/Id/SequenceGenerator.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/internal/hydration/abstract_hydrator.rs	doctrine/orm	src/Internal/Hydration/AbstractHydrator.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/internal/hydration/abstract_hydrator.rs	doctrine/orm	src/Internal/Hydration/HydrationException.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/internal/hydration/abstract_hydrator.rs	doctrine/orm	src/Exception/MultipleSelectorsFoundException.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/internal/hydration/array_hydrator.rs	doctrine/orm	src/Internal/Hydration/ArrayHydrator.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/src/internal/hydration/custom_hydrator.rs	doctrine/orm	src/Internal/Hydration/AbstractHydrator.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/internal/hydration/mod.rs	doctrine/orm	src/Internal/Hydration/SimpleObjectHydrator.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/internal/hydration/mod.rs	doctrine/orm	src/Internal/Hydration/ScalarHydrator.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/internal/hydration/mod.rs	doctrine/orm	src/Internal/Hydration/SingleScalarHydrator.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/internal/hydration/mod.rs	doctrine/orm	src/Internal/Hydration/ScalarColumnHydrator.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/internal/hydration/object_hydrator.rs	doctrine/orm	src/Internal/Hydration/ObjectHydrator.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/src/internal/hydration_complete_handler.rs	doctrine/orm	src/Internal/HydrationCompleteHandler.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/internal/strongly_connected_components.rs	doctrine/orm	src/Internal/StronglyConnectedComponents.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/internal/topological_sort.rs	doctrine/orm	src/Internal/TopologicalSort.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/internal/topological_sort.rs	doctrine/orm	src/Internal/TopologicalSort/CycleDetectedException.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
@@ -751,6 +754,7 @@ crates/php2rust-doctrine-orm/tests/cursor_test.rs	doctrine/orm	tests/Tests/ORM/T
 crates/php2rust-doctrine-orm/tests/cursor_walker_test.rs	doctrine/orm	tests/Tests/ORM/Tools/Pagination/CursorWalkerTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/custom_foreign_key_name_test.rs	doctrine/orm	tests/Tests/ORM/Functional/CustomForeignKeyNameTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/custom_functions_test.rs	doctrine/orm	tests/Tests/ORM/Functional/CustomFunctionsTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/tests/custom_hydrator_test.rs	doctrine/orm	tests/Tests/ORM/Hydration/CustomHydratorTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/custom_id_object_type_test.rs	doctrine/orm	tests/Tests/ORM/Functional/CustomIdObjectTypeTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/custom_tree_walkers_join_test.rs	doctrine/orm	tests/Tests/ORM/Query/CustomTreeWalkersJoinTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/custom_tree_walkers_test.rs	doctrine/orm	tests/Tests/ORM/Query/CustomTreeWalkersTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
@@ -1121,6 +1125,7 @@ crates/php2rust-doctrine-orm/tests/gh9579_test.rs	doctrine/orm	tests/Tests/ORM/F
 crates/php2rust-doctrine-orm/tests/gh9807_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/GH9807Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/hierarchy_discriminator_resolver_test.rs	doctrine/orm	tests/Tests/ORM/Utility/HierarchyDiscriminatorResolverTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/hydration_cache_test.rs	doctrine/orm	tests/Tests/ORM/Functional/HydrationCacheTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/tests/hydration_complete_handler_test.rs	doctrine/orm	tests/Tests/ORM/Internal/HydrationCompleteHandlerTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/identifier_flattener_enum_id_test.rs	doctrine/orm	tests/Tests/ORM/Utility/IdentifierFlattenerEnumIdTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/identifier_flattener_test.rs	doctrine/orm	tests/Tests/ORM/Utility/IdentifierFlattenerTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/identity_map_test.rs	doctrine/orm	tests/Tests/ORM/Functional/IdentityMapTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
@@ -1265,6 +1270,7 @@ crates/php2rust-doctrine-orm/tests/second_level_cache_repository_test.rs	doctrin
 crates/php2rust-doctrine-orm/tests/second_level_cache_single_table_inheritance_test.rs	doctrine/orm	tests/Tests/ORM/Functional/SecondLevelCacheSingleTableInheritanceTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/second_level_cache_test.rs	doctrine/orm	tests/Tests/ORM/Functional/SecondLevelCacheTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/select_sql_generation_test.rs	doctrine/orm	tests/Tests/ORM/Query/SelectSqlGenerationTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/tests/sequence_generator_test.rs	doctrine/orm	tests/Tests/ORM/Id/SequenceGeneratorTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/simple_object_hydrator_test.rs	doctrine/orm	tests/Tests/ORM/Hydration/SimpleObjectHydratorTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/simple_object_hydrator_test.rs	doctrine/orm	tests/Tests/DbalTypes/GH8565EmployeePayloadType.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/simple_object_hydrator_test.rs	doctrine/orm	tests/Tests/DbalTypes/GH8565ManagerPayloadType.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa

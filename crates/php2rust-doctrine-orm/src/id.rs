@@ -3,9 +3,11 @@
 //! which this port does not have yet: here they are the generator's class
 //! and its settings, as `ClassMetadataFactory` configures them.
 //!
-//! `AssignedGenerator` generates through the unit of work.
+//! `AssignedGenerator` generates through the unit of work;
+//! `SequenceGenerator` allocates its values from the connection. Its
+//! `Serializable` methods are not ported.
 //!
-//! Upstream: doctrine/orm src/Id/AssignedGenerator.php
+//! Upstream: doctrine/orm src/Id/AssignedGenerator.php src/Id/SequenceGenerator.php
 
 /// `Doctrine\ORM\Id\AbstractIdGenerator` and its subclasses.
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -60,5 +62,77 @@ impl AssignedGenerator {
         entity: &php_value::Object,
     ) -> Result<php_value::PhpArray, php_value::Thrown> {
         em.get_unit_of_work().generate_assigned_id(em, entity)
+    }
+}
+
+/// Represents an ID generator that uses a database sequence.
+#[derive(Debug)]
+pub struct SequenceGenerator {
+    sequence_name: String,
+    allocation_size: i64,
+    /// `$nextValue` and `$maxValue`.
+    values: std::sync::Mutex<(i64, Option<i64>)>,
+}
+
+impl SequenceGenerator {
+    /// Initializes a new sequence generator.
+    pub fn new(sequence_name: impl Into<String>, allocation_size: i64) -> Self {
+        Self {
+            sequence_name: sequence_name.into(),
+            allocation_size,
+            values: std::sync::Mutex::new((0, None)),
+        }
+    }
+
+    fn values(&self) -> std::sync::MutexGuard<'_, (i64, Option<i64>)> {
+        self.values
+            .lock()
+            .unwrap_or_else(std::sync::PoisonError::into_inner)
+    }
+
+    /// `generateId($em, $entity)`.
+    pub async fn generate_id(
+        &self,
+        em: &crate::entity_manager::EntityManager,
+        _entity: Option<&php_value::Object>,
+    ) -> Result<i64, php_value::Thrown> {
+        let (next_value, max_value) = *self.values();
+        if max_value.is_none_or(|max_value| next_value == max_value) {
+            // Allocate new values
+            let connection = em.get_connection();
+            let sql = connection
+                .get_database_platform()
+                .await
+                .map_err(|e| crate::exception::from_dbal(&e))?
+                .get_sequence_next_val_sql(&self.sequence_name)
+                .map_err(|e| crate::exception::from_dbal(&e))?;
+
+            let fetched = connection
+                .fetch_one(
+                    &sql,
+                    &php_value::PhpArray::new(),
+                    &php2rust_doctrine_dbal::ParameterTypes::new(),
+                )
+                .await
+                .map_err(|e| crate::exception::from_dbal(&e))?
+                .unwrap_or(php_value::Value::Bool(false));
+            let next_value = php_value::ops::to_int(&fetched);
+            *self.values() = (next_value, Some(next_value + self.allocation_size));
+        }
+
+        let mut values = self.values();
+        let id = values.0;
+        values.0 += 1;
+        Ok(id)
+    }
+
+    /// Gets the maximum value of the currently allocated bag of values.
+    pub fn get_current_max_value(&self) -> Option<i64> {
+        self.values().1
+    }
+
+    /// Gets the next value that will be returned by `generate()`.
+    pub fn get_next_value(&self) -> i64 {
+        self.values().0
     }
 }

@@ -99,8 +99,8 @@ src/Id/AbstractIdGenerator.php	AbstractIdGenerator	11	pending
 src/Id/AssignedGenerator.php	AssignedGenerator	24	ported	crates/php2rust-doctrine-orm/src/id.rs crates/php2rust-doctrine-orm/src/unit_of_work.rs
 src/Id/BigIntegerIdentityGenerator.php	BigIntegerIdentityGenerator	14	pending	
 src/Id/IdentityGenerator.php	IdentityGenerator	14	ported	crates/php2rust-doctrine-orm/src/unit_of_work.rs
-src/Id/SequenceGenerator.php	SequenceGenerator	73	ported	crates/php2rust-doctrine-orm/src/unit_of_work.rs
-src/Internal/Hydration/AbstractHydrator.php	AbstractHydrator	359	ported	crates/php2rust-doctrine-orm/src/internal/hydration/abstract_hydrator.rs
+src/Id/SequenceGenerator.php	SequenceGenerator	73	ported	crates/php2rust-doctrine-orm/src/id.rs crates/php2rust-doctrine-orm/src/unit_of_work.rs
+src/Internal/Hydration/AbstractHydrator.php	AbstractHydrator	359	ported	crates/php2rust-doctrine-orm/src/internal/hydration/abstract_hydrator.rs crates/php2rust-doctrine-orm/src/internal/hydration/custom_hydrator.rs
 src/Internal/Hydration/ArrayHydrator.php	ArrayHydrator	175	ported	crates/php2rust-doctrine-orm/src/internal/hydration/array_hydrator.rs
 src/Internal/Hydration/HydrationException.php	HydrationException	59	ported	crates/php2rust-doctrine-orm/src/internal/hydration/abstract_hydrator.rs
 src/Internal/Hydration/ObjectHydrator.php	ObjectHydrator	388	ported	crates/php2rust-doctrine-orm/src/internal/hydration/object_hydrator.rs
@@ -108,7 +108,7 @@ src/Internal/Hydration/ScalarColumnHydrator.php	ScalarColumnHydrator	15	ported	c
 src/Internal/Hydration/ScalarHydrator.php	ScalarHydrator	17	ported	crates/php2rust-doctrine-orm/src/internal/hydration/mod.rs
 src/Internal/Hydration/SimpleObjectHydrator.php	SimpleObjectHydrator	134	ported	crates/php2rust-doctrine-orm/src/internal/hydration/mod.rs
 src/Internal/Hydration/SingleScalarHydrator.php	SingleScalarHydrator	26	ported	crates/php2rust-doctrine-orm/src/internal/hydration/mod.rs
-src/Internal/HydrationCompleteHandler.php	HydrationCompleteHandler	39	ported	crates/php2rust-doctrine-orm/src/unit_of_work.rs
+src/Internal/HydrationCompleteHandler.php	HydrationCompleteHandler	39	ported	crates/php2rust-doctrine-orm/src/internal/hydration_complete_handler.rs crates/php2rust-doctrine-orm/src/unit_of_work.rs
 src/Internal/NoUnknownNamedArguments.php	NoUnknownNamedArguments	34	pending	
 src/Internal/SQLResultCasing.php	SQLResultCasing	21	ported	crates/php2rust-doctrine-orm/src/mapping/quote_strategy.rs
 src/Internal/StronglyConnectedComponents.php	StronglyConnectedComponents	81	ported	crates/php2rust-doctrine-orm/src/internal/strongly_connected_components.rs
