@@ -2171,10 +2171,10 @@ tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTes
 tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testUpdatableColumn	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testUpdatableColumn
 tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testVersionedField	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testVersionedField
 tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testinvalidEntityOrMappedSuperClassShouldMentionParentClasses	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testinvalidEntityOrMappedSuperClassShouldMentionParentClasses
-tests/Tests/ORM/Mapping/Symfony/XmlDriverTest.php	XmlDriverTest::testFindMappingFile	pending	
-tests/Tests/ORM/Mapping/Symfony/XmlDriverTest.php	XmlDriverTest::testFindMappingFileInSubnamespace	pending	
-tests/Tests/ORM/Mapping/Symfony/XmlDriverTest.php	XmlDriverTest::testFindMappingFileNamespacedFoundFileNotFound	pending	
-tests/Tests/ORM/Mapping/Symfony/XmlDriverTest.php	XmlDriverTest::testFindMappingNamespaceNotFound	pending	
+tests/Tests/ORM/Mapping/Symfony/XmlDriverTest.php	XmlDriverTest::testFindMappingFile	ported	crates/php2rust-doctrine-orm/tests/symfony_xml_driver_test.rs::testFindMappingFile
+tests/Tests/ORM/Mapping/Symfony/XmlDriverTest.php	XmlDriverTest::testFindMappingFileInSubnamespace	ported	crates/php2rust-doctrine-orm/tests/symfony_xml_driver_test.rs::testFindMappingFileInSubnamespace
+tests/Tests/ORM/Mapping/Symfony/XmlDriverTest.php	XmlDriverTest::testFindMappingFileNamespacedFoundFileNotFound	ported	crates/php2rust-doctrine-orm/tests/symfony_xml_driver_test.rs::testFindMappingFileNamespacedFoundFileNotFound
+tests/Tests/ORM/Mapping/Symfony/XmlDriverTest.php	XmlDriverTest::testFindMappingNamespaceNotFound	ported	crates/php2rust-doctrine-orm/tests/symfony_xml_driver_test.rs::testFindMappingNamespaceNotFound
 tests/Tests/ORM/Mapping/TableMappingTest.php	TableMappingTest::testDeprecationOnIndexesPropertyIsTriggered	ported	crates/php2rust-doctrine-orm/tests/table_mapping_test.rs::testDeprecationOnIndexesPropertyIsTriggered
 tests/Tests/ORM/Mapping/TableMappingTest.php	TableMappingTest::testDeprecationOnUniqueConstraintsPropertyIsTriggered	ported	crates/php2rust-doctrine-orm/tests/table_mapping_test.rs::testDeprecationOnUniqueConstraintsPropertyIsTriggered
 tests/Tests/ORM/Mapping/ToManyAssociationMappingTest.php	ToManyAssociationMappingTest::testItSurvivesSerialization	ported	crates/php2rust-doctrine-orm/tests/to_many_association_mapping_test.rs::testItSurvivesSerialization
