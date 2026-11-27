@@ -2934,58 +2934,58 @@ tests/Tests/ORM/Tools/AttachEntityListenersListenerTest.php	AttachEntityListener
 tests/Tests/ORM/Tools/AttachEntityListenersListenerTest.php	AttachEntityListenersListenerTest::testAttachToExistingEntityListeners	ported	crates/php2rust-doctrine-orm/tests/attach_entity_listeners_listener_test.rs::testAttachToExistingEntityListeners
 tests/Tests/ORM/Tools/AttachEntityListenersListenerTest.php	AttachEntityListenersListenerTest::testAttachWithoutSpecifyingAnEventName	ported	crates/php2rust-doctrine-orm/tests/attach_entity_listeners_listener_test.rs::testAttachWithoutSpecifyingAnEventName
 tests/Tests/ORM/Tools/AttachEntityListenersListenerTest.php	AttachEntityListenersListenerTest::testDuplicateEntityListenerException	ported	crates/php2rust-doctrine-orm/tests/attach_entity_listeners_listener_test.rs::testDuplicateEntityListenerException
-tests/Tests/ORM/Tools/Console/Command/ClearCacheCollectionRegionCommandTest.php	ClearCacheCollectionRegionCommandTest::testClearAllRegion	pending	
-tests/Tests/ORM/Tools/Console/Command/ClearCacheCollectionRegionCommandTest.php	ClearCacheCollectionRegionCommandTest::testClearByOwnerEntityClassName	pending	
-tests/Tests/ORM/Tools/Console/Command/ClearCacheCollectionRegionCommandTest.php	ClearCacheCollectionRegionCommandTest::testClearCacheEntryName	pending	
-tests/Tests/ORM/Tools/Console/Command/ClearCacheCollectionRegionCommandTest.php	ClearCacheCollectionRegionCommandTest::testFlushRegionName	pending	
-tests/Tests/ORM/Tools/Console/Command/ClearCacheEntityRegionCommandTest.php	ClearCacheEntityRegionCommandTest::testClearAllRegion	pending	
-tests/Tests/ORM/Tools/Console/Command/ClearCacheEntityRegionCommandTest.php	ClearCacheEntityRegionCommandTest::testClearByEntityClassName	pending	
-tests/Tests/ORM/Tools/Console/Command/ClearCacheEntityRegionCommandTest.php	ClearCacheEntityRegionCommandTest::testClearCacheEntryName	pending	
-tests/Tests/ORM/Tools/Console/Command/ClearCacheEntityRegionCommandTest.php	ClearCacheEntityRegionCommandTest::testFlushRegionName	pending	
-tests/Tests/ORM/Tools/Console/Command/ClearCacheQueryRegionCommandTest.php	ClearCacheQueryRegionCommandTest::testClearAllRegion	pending	
-tests/Tests/ORM/Tools/Console/Command/ClearCacheQueryRegionCommandTest.php	ClearCacheQueryRegionCommandTest::testClearByRegionName	pending	
-tests/Tests/ORM/Tools/Console/Command/ClearCacheQueryRegionCommandTest.php	ClearCacheQueryRegionCommandTest::testClearDefaultRegionName	pending	
-tests/Tests/ORM/Tools/Console/Command/ClearCacheQueryRegionCommandTest.php	ClearCacheQueryRegionCommandTest::testFlushRegionName	pending	
-tests/Tests/ORM/Tools/Console/Command/Debug/DebugEntityListenersDoctrineCommandTest.php	DebugEntityListenersDoctrineCommandTest::testComplete	pending	
-tests/Tests/ORM/Tools/Console/Command/Debug/DebugEntityListenersDoctrineCommandTest.php	DebugEntityListenersDoctrineCommandTest::testExecute	pending	
-tests/Tests/ORM/Tools/Console/Command/Debug/DebugEntityListenersDoctrineCommandTest.php	DebugEntityListenersDoctrineCommandTest::testExecuteWithEvent	pending	
-tests/Tests/ORM/Tools/Console/Command/Debug/DebugEntityListenersDoctrineCommandTest.php	DebugEntityListenersDoctrineCommandTest::testExecuteWithMissingEvent	pending	
-tests/Tests/ORM/Tools/Console/Command/Debug/DebugEventManagerDoctrineCommandTest.php	DebugEventManagerDoctrineCommandTest::testComplete	pending	
-tests/Tests/ORM/Tools/Console/Command/Debug/DebugEventManagerDoctrineCommandTest.php	DebugEventManagerDoctrineCommandTest::testExecute	pending	
-tests/Tests/ORM/Tools/Console/Command/Debug/DebugEventManagerDoctrineCommandTest.php	DebugEventManagerDoctrineCommandTest::testExecuteWithEvent	pending	
-tests/Tests/ORM/Tools/Console/Command/Debug/DebugEventManagerDoctrineCommandTest.php	DebugEventManagerDoctrineCommandTest::testExecuteWithMissingEvent	pending	
-tests/Tests/ORM/Tools/Console/Command/InfoCommandTest.php	InfoCommandTest::testEmptyEntityClassNames	pending	
-tests/Tests/ORM/Tools/Console/Command/InfoCommandTest.php	InfoCommandTest::testInvalidEntityClassMetadata	pending	
-tests/Tests/ORM/Tools/Console/Command/InfoCommandTest.php	InfoCommandTest::testListAllClasses	pending	
-tests/Tests/ORM/Tools/Console/Command/MappingDescribeCommandTest.php	MappingDescribeCommandTest::testComplete	pending	
-tests/Tests/ORM/Tools/Console/Command/MappingDescribeCommandTest.php	MappingDescribeCommandTest::testShowEntityWithEntityListeners	pending	
-tests/Tests/ORM/Tools/Console/Command/MappingDescribeCommandTest.php	MappingDescribeCommandTest::testShowSpecificFuzzyAmbiguous	pending	
-tests/Tests/ORM/Tools/Console/Command/MappingDescribeCommandTest.php	MappingDescribeCommandTest::testShowSpecificFuzzySingle	pending	
-tests/Tests/ORM/Tools/Console/Command/MappingDescribeCommandTest.php	MappingDescribeCommandTest::testShowSpecificFuzzySingleJson	pending	
-tests/Tests/ORM/Tools/Console/Command/MappingDescribeCommandTest.php	MappingDescribeCommandTest::testShowSpecificNotFound	pending	
-tests/Tests/ORM/Tools/Console/Command/RunDqlCommandTest.php	RunDqlCommandTest::testCommandName	pending	
-tests/Tests/ORM/Tools/Console/Command/RunDqlCommandTest.php	RunDqlCommandTest::testWillRunQuery	pending	
-tests/Tests/ORM/Tools/Console/Command/RunDqlCommandTest.php	RunDqlCommandTest::testWillShowQuery	pending	
-tests/Tests/ORM/Tools/Console/Command/SchemaTool/CreateCommandTest.php	CreateCommandTest::testItPrintsTheSql	pending	
-tests/Tests/ORM/Tools/Console/Command/SchemaTool/DropCommandTest.php	DropCommandTest::testItPrintsTheSql	pending	
-tests/Tests/ORM/Tools/Console/Command/ValidateSchemaCommandTest.php	ValidateSchemaCommandTest::testNotInSync	pending	
-tests/Tests/ORM/Tools/Console/Command/ValidateSchemaCommandTest.php	ValidateSchemaCommandTest::testNotInSyncVerbose	pending	
-tests/Tests/ORM/Tools/Console/ConsoleRunnerTest.php	ConsoleRunnerTest::testCreateApplicationShouldAppendGivenCommands	pending	
-tests/Tests/ORM/Tools/Console/ConsoleRunnerTest.php	ConsoleRunnerTest::testCreateApplicationShouldReturnAnApplicationWithTheCorrectCommands	pending	
+tests/Tests/ORM/Tools/Console/Command/ClearCacheCollectionRegionCommandTest.php	ClearCacheCollectionRegionCommandTest::testClearAllRegion	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/ClearCacheCollectionRegionCommandTest.php	ClearCacheCollectionRegionCommandTest::testClearByOwnerEntityClassName	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/ClearCacheCollectionRegionCommandTest.php	ClearCacheCollectionRegionCommandTest::testClearCacheEntryName	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/ClearCacheCollectionRegionCommandTest.php	ClearCacheCollectionRegionCommandTest::testFlushRegionName	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/ClearCacheEntityRegionCommandTest.php	ClearCacheEntityRegionCommandTest::testClearAllRegion	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/ClearCacheEntityRegionCommandTest.php	ClearCacheEntityRegionCommandTest::testClearByEntityClassName	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/ClearCacheEntityRegionCommandTest.php	ClearCacheEntityRegionCommandTest::testClearCacheEntryName	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/ClearCacheEntityRegionCommandTest.php	ClearCacheEntityRegionCommandTest::testFlushRegionName	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/ClearCacheQueryRegionCommandTest.php	ClearCacheQueryRegionCommandTest::testClearAllRegion	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/ClearCacheQueryRegionCommandTest.php	ClearCacheQueryRegionCommandTest::testClearByRegionName	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/ClearCacheQueryRegionCommandTest.php	ClearCacheQueryRegionCommandTest::testClearDefaultRegionName	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/ClearCacheQueryRegionCommandTest.php	ClearCacheQueryRegionCommandTest::testFlushRegionName	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/Debug/DebugEntityListenersDoctrineCommandTest.php	DebugEntityListenersDoctrineCommandTest::testComplete	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/Debug/DebugEntityListenersDoctrineCommandTest.php	DebugEntityListenersDoctrineCommandTest::testExecute	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/Debug/DebugEntityListenersDoctrineCommandTest.php	DebugEntityListenersDoctrineCommandTest::testExecuteWithEvent	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/Debug/DebugEntityListenersDoctrineCommandTest.php	DebugEntityListenersDoctrineCommandTest::testExecuteWithMissingEvent	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/Debug/DebugEventManagerDoctrineCommandTest.php	DebugEventManagerDoctrineCommandTest::testComplete	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/Debug/DebugEventManagerDoctrineCommandTest.php	DebugEventManagerDoctrineCommandTest::testExecute	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/Debug/DebugEventManagerDoctrineCommandTest.php	DebugEventManagerDoctrineCommandTest::testExecuteWithEvent	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/Debug/DebugEventManagerDoctrineCommandTest.php	DebugEventManagerDoctrineCommandTest::testExecuteWithMissingEvent	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/InfoCommandTest.php	InfoCommandTest::testEmptyEntityClassNames	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/InfoCommandTest.php	InfoCommandTest::testInvalidEntityClassMetadata	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/InfoCommandTest.php	InfoCommandTest::testListAllClasses	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/MappingDescribeCommandTest.php	MappingDescribeCommandTest::testComplete	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/MappingDescribeCommandTest.php	MappingDescribeCommandTest::testShowEntityWithEntityListeners	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/MappingDescribeCommandTest.php	MappingDescribeCommandTest::testShowSpecificFuzzyAmbiguous	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/MappingDescribeCommandTest.php	MappingDescribeCommandTest::testShowSpecificFuzzySingle	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/MappingDescribeCommandTest.php	MappingDescribeCommandTest::testShowSpecificFuzzySingleJson	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/MappingDescribeCommandTest.php	MappingDescribeCommandTest::testShowSpecificNotFound	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/RunDqlCommandTest.php	RunDqlCommandTest::testCommandName	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/RunDqlCommandTest.php	RunDqlCommandTest::testWillRunQuery	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/RunDqlCommandTest.php	RunDqlCommandTest::testWillShowQuery	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/SchemaTool/CreateCommandTest.php	CreateCommandTest::testItPrintsTheSql	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/SchemaTool/DropCommandTest.php	DropCommandTest::testItPrintsTheSql	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/ValidateSchemaCommandTest.php	ValidateSchemaCommandTest::testNotInSync	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/ValidateSchemaCommandTest.php	ValidateSchemaCommandTest::testNotInSyncVerbose	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/ConsoleRunnerTest.php	ConsoleRunnerTest::testCreateApplicationShouldAppendGivenCommands	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/ConsoleRunnerTest.php	ConsoleRunnerTest::testCreateApplicationShouldReturnAnApplicationWithTheCorrectCommands	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
 tests/Tests/ORM/Tools/Console/MetadataFilterTest.php	MetadataFilterTest::testFilterWithArray	pending	
 tests/Tests/ORM/Tools/Console/MetadataFilterTest.php	MetadataFilterTest::testFilterWithEmptyArray	pending	
 tests/Tests/ORM/Tools/Console/MetadataFilterTest.php	MetadataFilterTest::testFilterWithRegex	pending	
 tests/Tests/ORM/Tools/Console/MetadataFilterTest.php	MetadataFilterTest::testFilterWithString	pending	
 tests/Tests/ORM/Tools/Console/MetadataFilterTest.php	MetadataFilterTest::testFilterWithString2	pending	
-tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testCollectionsAreCastIntoArrays	pending	
-tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportArray	pending	
-tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportArrayTraversable	pending	
-tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportDateTime	pending	
-tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportDateTimeImmutable	pending	
-tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportDateTimeZone	pending	
-tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportObject	pending	
-tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportObjectWithReference	pending	
-tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportParentAttributes	pending	
+tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testCollectionsAreCastIntoArrays	pending	needs PHP's print_r(), DateTime/ArrayObject and (array) casts of objects with mangled property names
+tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportArray	pending	needs PHP's print_r(), DateTime/ArrayObject and (array) casts of objects with mangled property names
+tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportArrayTraversable	pending	needs PHP's print_r(), DateTime/ArrayObject and (array) casts of objects with mangled property names
+tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportDateTime	pending	needs PHP's print_r(), DateTime/ArrayObject and (array) casts of objects with mangled property names
+tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportDateTimeImmutable	pending	needs PHP's print_r(), DateTime/ArrayObject and (array) casts of objects with mangled property names
+tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportDateTimeZone	pending	needs PHP's print_r(), DateTime/ArrayObject and (array) casts of objects with mangled property names
+tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportObject	pending	needs PHP's print_r(), DateTime/ArrayObject and (array) casts of objects with mangled property names
+tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportObjectWithReference	pending	needs PHP's print_r(), DateTime/ArrayObject and (array) casts of objects with mangled property names
+tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportParentAttributes	pending	needs PHP's print_r(), DateTime/ArrayObject and (array) casts of objects with mangled property names
 tests/Tests/ORM/Tools/Pagination/CountOutputWalkerTest.php	CountOutputWalkerTest::testCountQuery	ported	crates/php2rust-doctrine-orm/tests/count_output_walker_test.rs::testCountQuery
 tests/Tests/ORM/Tools/Pagination/CountOutputWalkerTest.php	CountOutputWalkerTest::testCountQueryGroupBy	ported	crates/php2rust-doctrine-orm/tests/count_output_walker_test.rs::testCountQueryGroupBy
 tests/Tests/ORM/Tools/Pagination/CountOutputWalkerTest.php	CountOutputWalkerTest::testCountQueryHaving	ported	crates/php2rust-doctrine-orm/tests/count_output_walker_test.rs::testCountQueryHaving
