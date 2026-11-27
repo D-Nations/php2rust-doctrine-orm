@@ -21,7 +21,7 @@ use php_value::{PhpArray, Thrown, Value};
 use php2rust_doctrine_dbal::ParameterTypes;
 use php2rust_doctrine_dbal::platforms::AbstractPlatform;
 use php2rust_doctrine_dbal::schema::{
-    AbstractSchemaManager as _, ComparatorConfig, Index, IndexType, SQLiteSchemaManager, Schema,
+    AbstractSchemaManager as _, ComparatorConfig, Index, IndexType, Schema, SchemaManager,
     Sequence, Table,
 };
 use php2rust_doctrine_event_manager::EventDispatcher;
@@ -199,9 +199,10 @@ impl SchemaTool {
         let schema_manager = conn.create_schema_manager().await.map_err(|e| dbal(&e))?;
         let from_schema = Self::create_schema_for_comparison(&schema_manager, &to_schema).await?;
 
-        let comparator = schema_manager.create_comparator_with(
-            ComparatorConfig::default().with_report_modified_indexes(false),
-        );
+        let comparator = schema_manager
+            .create_comparator_with(ComparatorConfig::default().with_report_modified_indexes(false))
+            .await
+            .map_err(|e| dbal(&e))?;
         let schema_diff = comparator
             .compare_schemas(&from_schema, &to_schema)
             .map_err(|e| dbal(&e))?;
@@ -220,7 +221,7 @@ impl SchemaTool {
     /// missing one is skipped), as upstream's whitelisting filter keeps
     /// them.
     async fn create_schema_for_comparison(
-        schema_manager: &SQLiteSchemaManager<'_>,
+        schema_manager: &SchemaManager<'_>,
         to_schema: &Schema,
     ) -> Result<Schema, Thrown> {
         let introspected = schema_manager
