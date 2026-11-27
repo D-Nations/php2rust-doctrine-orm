@@ -12,7 +12,7 @@ resolver = "3"
 php-value = { package = "php2rust-value", git = "https://github.com/php2rust/compatibility-tools", rev = "4585a15ed0263257317cdf818ebcad7ed7542db8" }
 php-regex = { package = "php2rust-regex", git = "https://github.com/php2rust/compatibility-tools", rev = "4585a15ed0263257317cdf818ebcad7ed7542db8" }
 php2rust-dom = { git = "https://github.com/php2rust/compatibility-tools", rev = "4585a15ed0263257317cdf818ebcad7ed7542db8" }
-php2rust-doctrine-dbal = { package = "php2rust-doctrine-dbal", git = "https://github.com/php2rust/doctrine-dbal-rs", rev = "739ac04ac7c77304208050fe0bb35a4e34b5c81b" }
+php2rust-doctrine-dbal = { package = "php2rust-doctrine-dbal", git = "https://github.com/php2rust/doctrine-dbal-rs", rev = "3df6f57683968592a6d5ebde34e9ceaedc660801" }
 # symfony/console, for the ORM console commands (Tools/Console), from
 # php2rust/symfony-console-rs (not from symfony-rs).
 symfony-console = { package = "php2rust-symfony-console", git = "https://github.com/php2rust/symfony-console-rs", rev = "8a0e6960e5fcc28f822ae9fd8131c5b8e5703085" }
