@@ -257,8 +257,8 @@ tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testItPreservesTheOrigi
 tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testLazyGhostEntityManager	pending	a lazy ghost of the entity manager through reflection (ReflectionClass::newLazyGhost) is not ported
 tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testWrapInTransactionAcceptsReturn	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testWrapInTransactionAcceptsReturn
 tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testWrapInTransactionReThrowsThrowables	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testWrapInTransactionReThrowsThrowables
-tests/Tests/ORM/EntityNotFoundExceptionTest.php	EntityNotFoundExceptionTest::testFromClassNameAndIdentifier	pending	
-tests/Tests/ORM/EntityNotFoundExceptionTest.php	EntityNotFoundExceptionTest::testNoIdentifierFound	pending	
+tests/Tests/ORM/EntityNotFoundExceptionTest.php	EntityNotFoundExceptionTest::testFromClassNameAndIdentifier	ported	crates/php2rust-doctrine-orm/tests/entity_not_found_exception_test.rs::testFromClassNameAndIdentifier
+tests/Tests/ORM/EntityNotFoundExceptionTest.php	EntityNotFoundExceptionTest::testNoIdentifierFound	ported	crates/php2rust-doctrine-orm/tests/entity_not_found_exception_test.rs::testNoIdentifierFound
 tests/Tests/ORM/EntityRepositoryTest.php	EntityRepositoryTest::testExpr	pending	
 tests/Tests/ORM/Event/OnClassMetadataNotFoundEventArgsTest.php	OnClassMetadataNotFoundEventArgsTest::testEventArgsMutability	pending	
 tests/Tests/ORM/Functional/AbstractFetchEagerTest.php	AbstractFetchEagerTest::testWithAbstractFetchEager	pending	
