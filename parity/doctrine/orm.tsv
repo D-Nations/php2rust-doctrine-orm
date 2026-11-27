@@ -1021,16 +1021,16 @@ tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testWhereOrFilter	po
 tests/Tests/ORM/Functional/SchemaTool/CompanySchemaTest.php	CompanySchemaTest::testGeneratedSchema	ported	crates/php2rust-doctrine-orm/tests/company_schema_test.rs::testGeneratedSchema
 tests/Tests/ORM/Functional/SchemaTool/CompanySchemaTest.php	CompanySchemaTest::testSingleTableInheritance	ported	crates/php2rust-doctrine-orm/tests/company_schema_test.rs::testSingleTableInheritance
 tests/Tests/ORM/Functional/SchemaTool/DBAL483Test.php	DBAL483Test::testDefaultValueIsComparedCorrectly	ported	crates/php2rust-doctrine-orm/tests/dbal483_test.rs::testDefaultValueIsComparedCorrectly
-tests/Tests/ORM/Functional/SchemaTool/DDC214Test.php	DDC214Test::testCmsAddressModel	n/a	
-tests/Tests/ORM/Functional/SchemaTool/DDC214Test.php	DDC214Test::testCompanyModel	n/a	
-tests/Tests/ORM/Functional/SchemaTool/MySqlSchemaToolTest.php	MySqlSchemaToolTest::testFulltextIndexSurvivesCreateIntrospectAndUpdateWithColumnUnique	n/a	
-tests/Tests/ORM/Functional/SchemaTool/MySqlSchemaToolTest.php	MySqlSchemaToolTest::testFulltextIndexSurvivesCreateIntrospectAndUpdateWithUniqueConstraint	n/a	
-tests/Tests/ORM/Functional/SchemaTool/MySqlSchemaToolTest.php	MySqlSchemaToolTest::testGetCreateSchemaSql	n/a	
-tests/Tests/ORM/Functional/SchemaTool/MySqlSchemaToolTest.php	MySqlSchemaToolTest::testGetCreateSchemaSql2	n/a	
-tests/Tests/ORM/Functional/SchemaTool/MySqlSchemaToolTest.php	MySqlSchemaToolTest::testGetCreateSchemaSql3	n/a	
-tests/Tests/ORM/Functional/SchemaTool/MySqlSchemaToolTest.php	MySqlSchemaToolTest::testGetCreateSchemaSql4	n/a	
-tests/Tests/ORM/Functional/SchemaTool/PostgreSqlSchemaToolTest.php	PostgreSqlSchemaToolTest::testSetDeferrableForeignKey	n/a	
-tests/Tests/ORM/Functional/SchemaTool/PostgreSqlSchemaToolTest.php	PostgreSqlSchemaToolTest::testUpdateSchemaWithPostgreSQLSchema	n/a	
+tests/Tests/ORM/Functional/SchemaTool/DDC214Test.php	DDC214Test::testCmsAddressModel	n/a: skipped upstream on SQLite (no ALTER TABLE)	
+tests/Tests/ORM/Functional/SchemaTool/DDC214Test.php	DDC214Test::testCompanyModel	n/a: skipped upstream on SQLite (no ALTER TABLE)	
+tests/Tests/ORM/Functional/SchemaTool/MySqlSchemaToolTest.php	MySqlSchemaToolTest::testFulltextIndexSurvivesCreateIntrospectAndUpdateWithColumnUnique	n/a: MySQL only, skipped upstream on SQLite	
+tests/Tests/ORM/Functional/SchemaTool/MySqlSchemaToolTest.php	MySqlSchemaToolTest::testFulltextIndexSurvivesCreateIntrospectAndUpdateWithUniqueConstraint	n/a: MySQL only, skipped upstream on SQLite	
+tests/Tests/ORM/Functional/SchemaTool/MySqlSchemaToolTest.php	MySqlSchemaToolTest::testGetCreateSchemaSql	n/a: MySQL only, skipped upstream on SQLite	
+tests/Tests/ORM/Functional/SchemaTool/MySqlSchemaToolTest.php	MySqlSchemaToolTest::testGetCreateSchemaSql2	n/a: MySQL only, skipped upstream on SQLite	
+tests/Tests/ORM/Functional/SchemaTool/MySqlSchemaToolTest.php	MySqlSchemaToolTest::testGetCreateSchemaSql3	n/a: MySQL only, skipped upstream on SQLite	
+tests/Tests/ORM/Functional/SchemaTool/MySqlSchemaToolTest.php	MySqlSchemaToolTest::testGetCreateSchemaSql4	n/a: MySQL only, skipped upstream on SQLite	
+tests/Tests/ORM/Functional/SchemaTool/PostgreSqlSchemaToolTest.php	PostgreSqlSchemaToolTest::testSetDeferrableForeignKey	n/a: PostgreSQL only	
+tests/Tests/ORM/Functional/SchemaTool/PostgreSqlSchemaToolTest.php	PostgreSqlSchemaToolTest::testUpdateSchemaWithPostgreSQLSchema	n/a: PostgreSQL only	
 tests/Tests/ORM/Functional/SchemaValidatorTest.php	SchemaValidatorTest::testValidateModelSets	ported	crates/php2rust-doctrine-orm/tests/functional_schema_validator_test.rs::testValidateModelSets
 tests/Tests/ORM/Functional/SecondLevelCacheCompositePrimaryKeyTest.php	SecondLevelCacheCompositePrimaryKeyTest::testPutAndLoadCompositPrimaryKeyEntities	pending	not ported yet: the second-level cache functional tests continue in the next batch
 tests/Tests/ORM/Functional/SecondLevelCacheCompositePrimaryKeyTest.php	SecondLevelCacheCompositePrimaryKeyTest::testRemoveCompositPrimaryKeyEntities	pending	not ported yet: the second-level cache functional tests continue in the next batch
@@ -1276,7 +1276,7 @@ tests/Tests/ORM/Functional/Ticket/DDC2106Test.php	DDC2106Test::testDetachedEntit
 tests/Tests/ORM/Functional/Ticket/DDC211Test.php	DDC211Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc211_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC2138Test.php	DDC2138Test::testForeignKeyOnSTIWithMultipleMapping	ported	crates/php2rust-doctrine-orm/tests/ddc2138_test.rs::testForeignKeyOnSTIWithMultipleMapping
 tests/Tests/ORM/Functional/Ticket/DDC2175Test.php	DDC2175Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2175_test.rs::testIssue
-tests/Tests/ORM/Functional/Ticket/DDC2182Test.php	DDC2182Test::testPassColumnOptionsToJoinColumns	n/a	
+tests/Tests/ORM/Functional/Ticket/DDC2182Test.php	DDC2182Test::testPassColumnOptionsToJoinColumns	n/a: MySQL only, skipped upstream on SQLite	
 tests/Tests/ORM/Functional/Ticket/DDC2214Test.php	DDC2214Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2214_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC2224Test.php	DDC2224Test::testCacheMissWhenTypeChanges	pending	needs the query cache (setQueryCache())
 tests/Tests/ORM/Functional/Ticket/DDC2224Test.php	DDC2224Test::testIssue	pending	needs the query cache (setQueryCache())
@@ -1303,7 +1303,7 @@ tests/Tests/ORM/Functional/Ticket/DDC2775Test.php	DDC2775Test::testIssueCascadeR
 tests/Tests/ORM/Functional/Ticket/DDC2780Test.php	DDC2780Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2780_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC2790Test.php	DDC2790Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2790_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC279Test.php	DDC279Test::testDDC279	ported	crates/php2rust-doctrine-orm/tests/ddc279_test.rs::testDDC279
-tests/Tests/ORM/Functional/Ticket/DDC2825Test.php	DDC2825Test::testPersistenceOfEntityWithSchemaMapping	n/a	
+tests/Tests/ORM/Functional/Ticket/DDC2825Test.php	DDC2825Test::testPersistenceOfEntityWithSchemaMapping	n/a: skipped upstream: SQLite does not support schemas	
 tests/Tests/ORM/Functional/Ticket/DDC2862Test.php	DDC2862Test::testIssue	pending	needs the second-level cache
 tests/Tests/ORM/Functional/Ticket/DDC2862Test.php	DDC2862Test::testIssueReopened	pending	needs the second-level cache
 tests/Tests/ORM/Functional/Ticket/DDC2895Test.php	DDC2895Test::testPostLoadOneToManyInheritance	ported	crates/php2rust-doctrine-orm/tests/ddc2895_test.rs::testPostLoadOneToManyInheritance
@@ -1317,7 +1317,7 @@ tests/Tests/ORM/Functional/Ticket/DDC3033Test.php	DDC3033Test::testIssue	ported	
 tests/Tests/ORM/Functional/Ticket/DDC3042Test.php	DDC3042Test::testSQLGenerationDoesNotProvokeAliasCollisions	ported	crates/php2rust-doctrine-orm/tests/ddc3042_test.rs::testSQLGenerationDoesNotProvokeAliasCollisions
 tests/Tests/ORM/Functional/Ticket/DDC3068Test.php	DDC3068Test::testFindUsingAnArrayOfObjectAsPrimaryKey	ported	crates/php2rust-doctrine-orm/tests/ddc3068_test.rs::testFindUsingAnArrayOfObjectAsPrimaryKey
 tests/Tests/ORM/Functional/Ticket/DDC309Test.php	DDC309Test::testTwoToIterableHydrations	ported	crates/php2rust-doctrine-orm/tests/ddc309_test.rs::testTwoToIterableHydrations
-tests/Tests/ORM/Functional/Ticket/DDC3103Test.php	DDC3103Test::testIssue	n/a	
+tests/Tests/ORM/Functional/Ticket/DDC3103Test.php	DDC3103Test::testIssue	n/a: skipped upstream: doctrine/persistence 4 has no StaticReflectionService	
 tests/Tests/ORM/Functional/Ticket/DDC3123Test.php	DDC3123Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc3123_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC3160Test.php	DDC3160Test::testNoUpdateOnInsert	ported	crates/php2rust-doctrine-orm/tests/ddc3160_test.rs::testNoUpdateOnInsert
 tests/Tests/ORM/Functional/Ticket/DDC3170Test.php	DDC3170Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc3170_test.rs::testIssue
@@ -1407,7 +1407,7 @@ tests/Tests/ORM/Functional/Ticket/DDC849Test.php	DDC849Test::testClearContains	p
 tests/Tests/ORM/Functional/Ticket/DDC849Test.php	DDC849Test::testClearCount	ported	crates/php2rust-doctrine-orm/tests/ddc849_test.rs::testClearCount
 tests/Tests/ORM/Functional/Ticket/DDC849Test.php	DDC849Test::testRemoveContains	ported	crates/php2rust-doctrine-orm/tests/ddc849_test.rs::testRemoveContains
 tests/Tests/ORM/Functional/Ticket/DDC881Test.php	DDC881Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc881_test.rs::testIssue
-tests/Tests/ORM/Functional/Ticket/DDC933Test.php	DDC933Test::testLockCTIClass	n/a	
+tests/Tests/ORM/Functional/Ticket/DDC933Test.php	DDC933Test::testLockCTIClass	n/a: skipped upstream on SQLite	
 tests/Tests/ORM/Functional/Ticket/DDC949Test.php	DDC949Test::testBooleanThroughRepository	ported	crates/php2rust-doctrine-orm/tests/ddc949_test.rs::testBooleanThroughRepository
 tests/Tests/ORM/Functional/Ticket/DDC960Test.php	DDC960Test::testUpdateRootVersion	ported	crates/php2rust-doctrine-orm/tests/ddc960_test.rs::testUpdateRootVersion
 tests/Tests/ORM/Functional/Ticket/DDC992Test.php	DDC992Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc992_test.rs::testIssue
