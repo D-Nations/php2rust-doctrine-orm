@@ -480,6 +480,12 @@ impl EntityManager {
         Ok(Some(entity))
     }
 
+    /// Gets the proxy factory used by the `EntityManager` to create entity
+    /// proxies.
+    pub fn get_proxy_factory(self: &Arc<Self>) -> crate::proxy::ProxyFactory {
+        crate::proxy::ProxyFactory::new(self)
+    }
+
     /// `ProxyFactory::getProxy()`: an uninitialized lazy ghost of the class
     /// with its identifier set.
     pub fn get_proxy(&self, class_name: &str, identifier: &PhpArray) -> Result<Object, Thrown> {
