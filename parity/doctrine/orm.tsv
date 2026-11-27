@@ -1278,8 +1278,8 @@ tests/Tests/ORM/Functional/Ticket/DDC2138Test.php	DDC2138Test::testForeignKeyOnS
 tests/Tests/ORM/Functional/Ticket/DDC2175Test.php	DDC2175Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2175_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC2182Test.php	DDC2182Test::testPassColumnOptionsToJoinColumns	n/a	
 tests/Tests/ORM/Functional/Ticket/DDC2214Test.php	DDC2214Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2214_test.rs::testIssue
-tests/Tests/ORM/Functional/Ticket/DDC2224Test.php	DDC2224Test::testCacheMissWhenTypeChanges	pending	
-tests/Tests/ORM/Functional/Ticket/DDC2224Test.php	DDC2224Test::testIssue	pending	
+tests/Tests/ORM/Functional/Ticket/DDC2224Test.php	DDC2224Test::testCacheMissWhenTypeChanges	pending	needs the query cache (setQueryCache())
+tests/Tests/ORM/Functional/Ticket/DDC2224Test.php	DDC2224Test::testIssue	pending	needs the query cache (setQueryCache())
 tests/Tests/ORM/Functional/Ticket/DDC2252Test.php	DDC2252Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2252_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC2306Test.php	DDC2306Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2306_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC2346Test.php	DDC2346Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2346_test.rs::testIssue
