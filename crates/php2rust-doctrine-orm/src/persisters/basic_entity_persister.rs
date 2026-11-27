@@ -1811,7 +1811,7 @@ impl BasicEntityPersister {
     /// `BasicEntityPersister` the resulting SQL fragment is generated only
     /// once and cached in {@link selectColumnListSql}. Subclasses may or
     /// may not do the same.
-    pub(super) fn get_select_columns_sql(&self, em: &Arc<EntityManager>) -> Result<String, Thrown> {
+    pub fn get_select_columns_sql(&self, em: &Arc<EntityManager>) -> Result<String, Thrown> {
         match self.kind {
             PersisterKind::SingleTable => return self.single_table_get_select_columns_sql(em),
             PersisterKind::JoinedSubclass => return self.joined_get_select_columns_sql(em),
@@ -2502,7 +2502,7 @@ impl BasicEntityPersister {
 
     /// Gets the conditional SQL fragment used in the WHERE clause when
     /// selecting entities in this persister.
-    pub(super) fn get_select_condition_sql(
+    pub fn get_select_condition_sql(
         &self,
         em: &Arc<EntityManager>,
         criteria: &PhpArray,

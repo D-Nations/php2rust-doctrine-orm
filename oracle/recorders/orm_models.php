@@ -301,6 +301,7 @@ namespace {
         'ORM/Functional/EntityRepositoryTest.php',
         'ORM/Functional/PaginationTest.php',
         'Doctrine\\Tests\\DbalTypes\\CustomIdObject',
+        'Doctrine\\Tests\\Models\\Generic\\NonAlphaColumnsEntity',
         'ORM/Functional/EntityRepositoryCriteriaTest.php',
         'ORM/Functional/ExtraLazyCollectionTest.php',
         'ORM/Functional/PersistentCollectionCriteriaTest.php',
