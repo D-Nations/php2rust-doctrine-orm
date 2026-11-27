@@ -360,17 +360,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "getrandom"
-version = "0.4.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "300e883d756b2e4ec94e02791f39b04b522276138852cfc41d9fb7e904106099"
-dependencies = [
- "cfg-if",
- "libc",
- "r-efi",
-]
-
-[[package]]
 name = "hashbrown"
 version = "0.16.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -719,11 +708,9 @@ dependencies = [
  "php2rust-doctrine-lexer",
  "php2rust-doctrine-persistence",
  "php2rust-dom",
- "php2rust-regex",
  "php2rust-value",
  "serde_json",
  "sha1",
- "symfony-console",
  "tokio",
 ]
 
@@ -796,12 +783,6 @@ checksum = "1fbf4db142a473a8d80c26bbf18454ed458bf8d26c8219c331daecfdbd079001"
 dependencies = [
  "proc-macro2",
 ]
-
-[[package]]
-name = "r-efi"
-version = "6.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f8dcc9c7d52a811697d2151c701e0d08956f92b0e24136cf4cf27b57a6a0d9bf"
 
 [[package]]
 name = "redox_syscall"
@@ -1059,34 +1040,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6ce2be8dc25455e1f91df71bfa12ad37d7af1092ae736f3a6cd0e37bc7810596"
 
 [[package]]
-name = "symfony-console"
-version = "0.1.0"
-source = "git+https://github.com/D-Nations/symfony-rs?rev=b7f108e65ffc5e644421f9a5fbffbc724c57e469#b7f108e65ffc5e644421f9a5fbffbc724c57e469"
-dependencies = [
- "fancy-regex",
- "php2rust-value",
- "symfony-deprecation-contracts",
- "symfony-string",
-]
-
-[[package]]
-name = "symfony-deprecation-contracts"
-version = "0.1.0"
-source = "git+https://github.com/D-Nations/symfony-rs?rev=b7f108e65ffc5e644421f9a5fbffbc724c57e469#b7f108e65ffc5e644421f9a5fbffbc724c57e469"
-
-[[package]]
-name = "symfony-string"
-version = "0.1.0"
-source = "git+https://github.com/D-Nations/symfony-rs?rev=b7f108e65ffc5e644421f9a5fbffbc724c57e469#b7f108e65ffc5e644421f9a5fbffbc724c57e469"
-dependencies = [
- "getrandom",
- "php2rust-regex",
- "php2rust-value",
- "unicode-normalization",
- "unicode-segmentation",
-]
-
-[[package]]
 name = "syn"
 version = "2.0.119"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1148,12 +1101,6 @@ dependencies = [
  "displaydoc",
  "zerovec",
 ]
-
-[[package]]
-name = "tinyvec"
-version = "1.13.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fd3ca314f692efd6c868f8408f53fe444634a845f96c028b97d35f6a1f79f0ee"
 
 [[package]]
 name = "tokio"
@@ -1235,21 +1182,6 @@ name = "unicode-ident"
 version = "1.0.27"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a2c754d6c33795a1c324727428e5a7dedb5b06195f9890bdbcba760d3e246563"
-
-[[package]]
-name = "unicode-normalization"
-version = "0.1.26"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "75cd3fb03d5288b3ba9a1ee103ac7e9cbb59f0b03d64f8ddfcc04dd42758a85d"
-dependencies = [
- "tinyvec",
-]
-
-[[package]]
-name = "unicode-segmentation"
-version = "1.13.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c6f5d3c3b1bf09027a88a6bc961fc00497d651009560b5463668dc81b0fa87a8"
 
 [[package]]
 name = "url"

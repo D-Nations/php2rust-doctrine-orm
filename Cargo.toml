@@ -11,9 +11,6 @@ php-value = { package = "php2rust-value", git = "https://github.com/D-Nations/ph
 php-regex = { package = "php2rust-regex", git = "https://github.com/D-Nations/php2rust-compatibility-tools", rev = "977342827ba414362c6af60f38dd376f2fbcfd72" }
 php2rust-dom = { git = "https://github.com/D-Nations/php2rust-compatibility-tools", rev = "977342827ba414362c6af60f38dd376f2fbcfd72" }
 php2rust-doctrine-dbal = { package = "php2rust-doctrine-dbal", git = "https://github.com/D-Nations/php2rust-doctrine-dbal", rev = "dfd232be0f2b4d5990089431dc0e7510ef8da4fc" }
-# symfony/console, for the ORM console commands (Tools/Console). The rev is
-# the last symfony-rs main commit on the same php2rust-value rev as above.
-symfony-console = { git = "https://github.com/D-Nations/symfony-rs", rev = "b7f108e65ffc5e644421f9a5fbffbc724c57e469" }
 # Lints for every member (`[lints] workspace = true`), the same rule set as
 # symfony-rs and php2rust-compatibility-tools.
 [workspace.lints.clippy]
