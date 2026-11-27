@@ -343,12 +343,6 @@ impl EntityManager {
                 }
                 LockMode::None => {}
             }
-            if self
-                .unit_of_work
-                .is_uninitialized_object(&Value::Object(entity.clone()))
-            {
-                self.unit_of_work.initialize_object(&entity).await?;
-            }
             return Ok(Some(entity)); // Hit!
         }
 

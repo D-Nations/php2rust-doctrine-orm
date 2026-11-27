@@ -1262,11 +1262,11 @@ tests/Tests/ORM/Functional/Ticket/DDC1885Test.php	DDC1885Test::testRemoveItem	po
 tests/Tests/ORM/Functional/Ticket/DDC1918Test.php	DDC1918Test::testLastPageCorrect	ported	crates/php2rust-doctrine-orm/tests/ddc1918_test.rs::testLastPageCorrect
 tests/Tests/ORM/Functional/Ticket/DDC1925Test.php	DDC1925Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc1925_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC192Test.php	DDC192Test::testSchemaCreation	ported	crates/php2rust-doctrine-orm/tests/ddc192_test.rs::testSchemaCreation
-tests/Tests/ORM/Functional/Ticket/DDC1995Test.php	DDC1995Test::testIssue	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1995Test.php	DDC1995Test::testQueryCache	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1998Test.php	DDC1998Test::testSqlConversionAsIdentifier	pending	
+tests/Tests/ORM/Functional/Ticket/DDC1995Test.php	DDC1995Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc1995_test.rs::testIssue
+tests/Tests/ORM/Functional/Ticket/DDC1995Test.php	DDC1995Test::testQueryCache	pending	needs the query cache (useQueryCache())
+tests/Tests/ORM/Functional/Ticket/DDC1998Test.php	DDC1998Test::testSqlConversionAsIdentifier	ported	crates/php2rust-doctrine-orm/tests/ddc1998_test.rs::testSqlConversionAsIdentifier
 tests/Tests/ORM/Functional/Ticket/DDC199Test.php	DDC199Test::testPolymorphicLoading	ported	crates/php2rust-doctrine-orm/tests/ddc199_test.rs::testPolymorphicLoading
-tests/Tests/ORM/Functional/Ticket/DDC2012Test.php	DDC2012Test::testIssue	pending	
+tests/Tests/ORM/Functional/Ticket/DDC2012Test.php	DDC2012Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2012_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC2074Test.php	DDC2074Test::testSavingClonedPersistentCollection	ported	crates/php2rust-doctrine-orm/tests/ddc2074_test.rs::testSavingClonedPersistentCollection
 tests/Tests/ORM/Functional/Ticket/DDC2074Test.php	DDC2074Test::testShouldNotScheduleDeletionOnClonedInstances	ported	crates/php2rust-doctrine-orm/tests/ddc2074_test.rs::testShouldNotScheduleDeletionOnClonedInstances
 tests/Tests/ORM/Functional/Ticket/DDC2084Test.php	DDC2084Test::testInvalidIdentifierBindingEntityException	ported	crates/php2rust-doctrine-orm/tests/ddc2084_test.rs::testInvalidIdentifierBindingEntityException
@@ -1288,10 +1288,10 @@ tests/Tests/ORM/Functional/Ticket/DDC2359Test.php	DDC2359Test::testIssue	pending
 tests/Tests/ORM/Functional/Ticket/DDC237Test.php	DDC237Test::testUninitializedProxyIsInitializedOnFetchJoin	ported	crates/php2rust-doctrine-orm/tests/ddc237_test.rs::testUninitializedProxyIsInitializedOnFetchJoin
 tests/Tests/ORM/Functional/Ticket/DDC2387Test.php	DDC2387Test::testCompositeAssociationKeyDetection	pending	DatabaseDriver (schema to metadata) is not ported
 tests/Tests/ORM/Functional/Ticket/DDC2415Test.php	DDC2415Test::testTicket	pending	
-tests/Tests/ORM/Functional/Ticket/DDC2494Test.php	DDC2494Test::testIssue	pending	
+tests/Tests/ORM/Functional/Ticket/DDC2494Test.php	DDC2494Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2494_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC2519Test.php	DDC2519Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2519_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC2575Test.php	DDC2575Test::testHydrationIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2575_test.rs::testHydrationIssue
-tests/Tests/ORM/Functional/Ticket/DDC2579Test.php	DDC2579Test::testIssue	pending	
+tests/Tests/ORM/Functional/Ticket/DDC2579Test.php	DDC2579Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2579_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC258Test.php	DDC258Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc258_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC2602Test.php	DDC2602Test::testPostLoadListenerShouldBeAbleToRunQueries	pending	its postLoad listener runs a DQL query; a listener's call is synchronous and the query is async
 tests/Tests/ORM/Functional/Ticket/DDC2655Test.php	DDC2655Test::testSingleScalarOneOrNullResult	ported	crates/php2rust-doctrine-orm/tests/ddc2655_test.rs::testSingleScalarOneOrNullResult
@@ -1311,7 +1311,7 @@ tests/Tests/ORM/Functional/Ticket/DDC2931Test.php	DDC2931Test::testFetchJoinedEn
 tests/Tests/ORM/Functional/Ticket/DDC2931Test.php	DDC2931Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2931_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC2943Test.php	DDC2943Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC2943Test.php	DDC2943Test::testIssueNonFetchJoin	pending	
-tests/Tests/ORM/Functional/Ticket/DDC2984Test.php	DDC2984Test::testIssue	pending	
+tests/Tests/ORM/Functional/Ticket/DDC2984Test.php	DDC2984Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2984_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC2996Test.php	DDC2996Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2996_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC3033Test.php	DDC3033Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc3033_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC3042Test.php	DDC3042Test::testSQLGenerationDoesNotProvokeAliasCollisions	ported	crates/php2rust-doctrine-orm/tests/ddc3042_test.rs::testSQLGenerationDoesNotProvokeAliasCollisions
@@ -1321,7 +1321,7 @@ tests/Tests/ORM/Functional/Ticket/DDC3103Test.php	DDC3103Test::testIssue	pending
 tests/Tests/ORM/Functional/Ticket/DDC3123Test.php	DDC3123Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc3123_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC3160Test.php	DDC3160Test::testNoUpdateOnInsert	ported	crates/php2rust-doctrine-orm/tests/ddc3160_test.rs::testNoUpdateOnInsert
 tests/Tests/ORM/Functional/Ticket/DDC3170Test.php	DDC3170Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc3170_test.rs::testIssue
-tests/Tests/ORM/Functional/Ticket/DDC3192Test.php	DDC3192Test::testIssue	pending	
+tests/Tests/ORM/Functional/Ticket/DDC3192Test.php	DDC3192Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc3192_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC3223Test.php	DDC3223Test::testIssueGetId	ported	crates/php2rust-doctrine-orm/tests/ddc3223_test.rs::testIssueGetId
 tests/Tests/ORM/Functional/Ticket/DDC3300Test.php	DDC3300Test::testResolveTargetEntitiesChangesDiscriminatorMapValues	pending	ResolveTargetEntityListener is not ported
 tests/Tests/ORM/Functional/Ticket/DDC3303Test.php	DDC3303Test::testEmbeddedObjectsAreAlsoInherited	pending	
@@ -1342,7 +1342,7 @@ tests/Tests/ORM/Functional/Ticket/DDC3644Test.php	DDC3644Test::testIssueWithJoin
 tests/Tests/ORM/Functional/Ticket/DDC3644Test.php	DDC3644Test::testIssueWithRegularEntity	ported	crates/php2rust-doctrine-orm/tests/ddc3644_test.rs::testIssueWithRegularEntity
 tests/Tests/ORM/Functional/Ticket/DDC3719Test.php	DDC3719Test::testCriteriaOnNotOwningSide	ported	crates/php2rust-doctrine-orm/tests/ddc3719_test.rs::testCriteriaOnNotOwningSide
 tests/Tests/ORM/Functional/Ticket/DDC371Test.php	DDC371Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc371_test.rs::testIssue
-tests/Tests/ORM/Functional/Ticket/DDC3785Test.php	DDC3785Test::testOwningValueObjectIdIsCorrectlyTransformedWhenRemovingOrphanedChildEntities	pending	
+tests/Tests/ORM/Functional/Ticket/DDC3785Test.php	DDC3785Test::testOwningValueObjectIdIsCorrectlyTransformedWhenRemovingOrphanedChildEntities	ported	crates/php2rust-doctrine-orm/tests/ddc3785_test.rs::testOwningValueObjectIdIsCorrectlyTransformedWhenRemovingOrphanedChildEntities
 tests/Tests/ORM/Functional/Ticket/DDC381Test.php	DDC381Test::testCallUnserializedProxyMethods	pending	serialize()/unserialize() of a proxy is not ported
 tests/Tests/ORM/Functional/Ticket/DDC3967Test.php	DDC3967Test::testIdentifierCachedWithProperType	pending	
 tests/Tests/ORM/Functional/Ticket/DDC4003Test.php	DDC4003Test::testReadsThroughRepositorySameDataThatItWroteInCache	pending	
@@ -1359,8 +1359,8 @@ tests/Tests/ORM/Functional/Ticket/DDC513Test.php	DDC513Test::testIssue	ported	cr
 tests/Tests/ORM/Functional/Ticket/DDC522Test.php	DDC522Test::testJoinColumnWithNullSameNameAssociationField	ported	crates/php2rust-doctrine-orm/tests/ddc522_test.rs::testJoinColumnWithNullSameNameAssociationField
 tests/Tests/ORM/Functional/Ticket/DDC522Test.php	DDC522Test::testJoinColumnWithSameNameAsAssociationField	ported	crates/php2rust-doctrine-orm/tests/ddc522_test.rs::testJoinColumnWithSameNameAsAssociationField
 tests/Tests/ORM/Functional/Ticket/DDC531Test.php	DDC531Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc531_test.rs::testIssue
-tests/Tests/ORM/Functional/Ticket/DDC5684Test.php	DDC5684Test::testAutoIncrementIdWithCustomType	pending	
-tests/Tests/ORM/Functional/Ticket/DDC5684Test.php	DDC5684Test::testFetchObjectWithAutoIncrementedCustomType	pending	
+tests/Tests/ORM/Functional/Ticket/DDC5684Test.php	DDC5684Test::testAutoIncrementIdWithCustomType	ported	crates/php2rust-doctrine-orm/tests/ddc5684_test.rs::testAutoIncrementIdWithCustomType
+tests/Tests/ORM/Functional/Ticket/DDC5684Test.php	DDC5684Test::testFetchObjectWithAutoIncrementedCustomType	ported	crates/php2rust-doctrine-orm/tests/ddc5684_test.rs::testFetchObjectWithAutoIncrementedCustomType
 tests/Tests/ORM/Functional/Ticket/DDC588Test.php	DDC588Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc588_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC599Test.php	DDC599Test::testCascadeRemoveOnChildren	ported	crates/php2rust-doctrine-orm/tests/ddc599_test.rs::testCascadeRemoveOnChildren
 tests/Tests/ORM/Functional/Ticket/DDC599Test.php	DDC599Test::testCascadeRemoveOnInheritanceHierarchy	ported	crates/php2rust-doctrine-orm/tests/ddc599_test.rs::testCascadeRemoveOnInheritanceHierarchy
@@ -1413,10 +1413,10 @@ tests/Tests/ORM/Functional/Ticket/DDC960Test.php	DDC960Test::testUpdateRootVersi
 tests/Tests/ORM/Functional/Ticket/DDC992Test.php	DDC992Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc992_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC992Test.php	DDC992Test::testOneToManyChild	ported	crates/php2rust-doctrine-orm/tests/ddc992_test.rs::testOneToManyChild
 tests/Tests/ORM/Functional/Ticket/EagerSecondLevelCacheCollectionTest.php	EagerSecondLevelCacheCollectionTest::testEagerCollectionIsNotDuplicatedAfterSecondLevelCacheHit	pending	
-tests/Tests/ORM/Functional/Ticket/GH10049/GH10049Test.php	GH10049Test::testInheritedReadOnlyPropertyValueCanBeSet	pending	
+tests/Tests/ORM/Functional/Ticket/GH10049/GH10049Test.php	GH10049Test::testInheritedReadOnlyPropertyValueCanBeSet	ported	crates/php2rust-doctrine-orm/tests/gh10049_test.rs::testInheritedReadOnlyPropertyValueCanBeSet
 tests/Tests/ORM/Functional/Ticket/GH10132Test.php	GH10132Test::testQueryBackedEnumInCompositeKeyJoin	ported	crates/php2rust-doctrine-orm/tests/gh10132_test.rs::testQueryBackedEnumInCompositeKeyJoin
-tests/Tests/ORM/Functional/Ticket/GH10288Test.php	GH10288Test::testEnumDiscriminatorWithCustomEnumType	pending	
-tests/Tests/ORM/Functional/Ticket/GH10288Test.php	GH10288Test::testEnumDiscriminatorWithEnumType	pending	
+tests/Tests/ORM/Functional/Ticket/GH10288Test.php	GH10288Test::testEnumDiscriminatorWithCustomEnumType	ported	crates/php2rust-doctrine-orm/tests/gh10288_test.rs::testEnumDiscriminatorWithCustomEnumType
+tests/Tests/ORM/Functional/Ticket/GH10288Test.php	GH10288Test::testEnumDiscriminatorWithEnumType	ported	crates/php2rust-doctrine-orm/tests/gh10288_test.rs::testEnumDiscriminatorWithEnumType
 tests/Tests/ORM/Functional/Ticket/GH10334Test.php	GH10334Test::testGetChildWithBackedEnumId	ported	crates/php2rust-doctrine-orm/tests/gh10334_test.rs::testGetChildWithBackedEnumId
 tests/Tests/ORM/Functional/Ticket/GH10334Test.php	GH10334Test::testTicket	ported	crates/php2rust-doctrine-orm/tests/gh10334_test.rs::testTicket
 tests/Tests/ORM/Functional/Ticket/GH10336Test.php	GH10336Test::testCanAccessRelationPropertyAfterClear	ported	crates/php2rust-doctrine-orm/tests/gh10336_test.rs::testCanAccessRelationPropertyAfterClear
@@ -1433,10 +1433,10 @@ tests/Tests/ORM/Functional/Ticket/GH10532Test.php	GH10532Test::testInserts	porte
 tests/Tests/ORM/Functional/Ticket/GH10566Test.php	GH10566Test::testInsertion	ported	crates/php2rust-doctrine-orm/tests/gh10566_test.rs::testInsertion
 tests/Tests/ORM/Functional/Ticket/GH10566Test.php	GH10566Test::testRemoval	ported	crates/php2rust-doctrine-orm/tests/gh10566_test.rs::testRemoval
 tests/Tests/ORM/Functional/Ticket/GH10625Test.php	GH10625Test::testLoadFieldsFromAllClassesInHierarchy	ported	crates/php2rust-doctrine-orm/tests/gh10625_test.rs::testLoadFieldsFromAllClassesInHierarchy
-tests/Tests/ORM/Functional/Ticket/GH10661/GH10661Test.php	GH10661Test::testMetadataFieldTypeNotCoherentWithEntityPropertyType	pending	
-tests/Tests/ORM/Functional/Ticket/GH10661/GH10661Test.php	GH10661Test::testMetadataFieldTypeNotCoherentWithEntityPropertyTypeWithInheritance	pending	
-tests/Tests/ORM/Functional/Ticket/GH10661/GH10661Test.php	GH10661Test::testPropertyTypeErrorsCanBeSilenced	pending	
-tests/Tests/ORM/Functional/Ticket/GH10747Test.php	GH10747Test::testOrphanedOneToManyDeletesCollection	pending	
+tests/Tests/ORM/Functional/Ticket/GH10661/GH10661Test.php	GH10661Test::testMetadataFieldTypeNotCoherentWithEntityPropertyType	ported	crates/php2rust-doctrine-orm/tests/gh10661_test.rs::testMetadataFieldTypeNotCoherentWithEntityPropertyType
+tests/Tests/ORM/Functional/Ticket/GH10661/GH10661Test.php	GH10661Test::testMetadataFieldTypeNotCoherentWithEntityPropertyTypeWithInheritance	ported	crates/php2rust-doctrine-orm/tests/gh10661_test.rs::testMetadataFieldTypeNotCoherentWithEntityPropertyTypeWithInheritance
+tests/Tests/ORM/Functional/Ticket/GH10661/GH10661Test.php	GH10661Test::testPropertyTypeErrorsCanBeSilenced	ported	crates/php2rust-doctrine-orm/tests/gh10661_test.rs::testPropertyTypeErrorsCanBeSilenced
+tests/Tests/ORM/Functional/Ticket/GH10747Test.php	GH10747Test::testOrphanedOneToManyDeletesCollection	ported	crates/php2rust-doctrine-orm/tests/gh10747_test.rs::testOrphanedOneToManyDeletesCollection
 tests/Tests/ORM/Functional/Ticket/GH10752Test.php	GH10752Test::testThrowExceptionWhenRemovingPromotionThatIsInUse	ported	crates/php2rust-doctrine-orm/tests/gh10752_test.rs::testThrowExceptionWhenRemovingPromotionThatIsInUse
 tests/Tests/ORM/Functional/Ticket/GH10752Test.php	GH10752Test::testThrowExceptionWhenRemovingPromotionThatIsInUseAndOrderIsNotInMemory	ported	crates/php2rust-doctrine-orm/tests/gh10752_test.rs::testThrowExceptionWhenRemovingPromotionThatIsInUseAndOrderIsNotInMemory
 tests/Tests/ORM/Functional/Ticket/GH10808Test.php	GH10808Test::testDQLDeferredEagerLoad	ported	crates/php2rust-doctrine-orm/tests/gh10808_test.rs::testDQLDeferredEagerLoad
@@ -1453,31 +1453,31 @@ tests/Tests/ORM/Functional/Ticket/GH10927Test.php	GH10927Test::testSequenceGener
 tests/Tests/ORM/Functional/Ticket/GH10927Test.php	GH10927Test::testSequenceGeneratorDefinitionForEntityC	n/a: upstream skips it on SQLite (requires the use of postgresql)	
 tests/Tests/ORM/Functional/Ticket/GH10927Test.php	GH10927Test::testSequenceGeneratorDefinitionForInheritedMappedSuperclass	n/a: upstream skips it on SQLite (requires the use of postgresql)	
 tests/Tests/ORM/Functional/Ticket/GH10927Test.php	GH10927Test::testSequenceGeneratorDefinitionForRootMappedSuperclass	n/a: upstream skips it on SQLite (requires the use of postgresql)	
-tests/Tests/ORM/Functional/Ticket/GH11017/GH11017Test.php	GH11017Test::testPostPersistListenerUpdatingObjectFieldWhileOtherInsertPending	pending	
-tests/Tests/ORM/Functional/Ticket/GH11037/GH11037Test.php	GH11037Test::testMetadataFieldTypeCoherentWithEntityPropertyType	pending	
-tests/Tests/ORM/Functional/Ticket/GH11037/GH11037Test.php	GH11037Test::testMetadataFieldTypeNotCoherentWithEntityPropertyType	pending	
+tests/Tests/ORM/Functional/Ticket/GH11017/GH11017Test.php	GH11017Test::testPostPersistListenerUpdatingObjectFieldWhileOtherInsertPending	ported	crates/php2rust-doctrine-orm/tests/gh11017_test.rs::testPostPersistListenerUpdatingObjectFieldWhileOtherInsertPending
+tests/Tests/ORM/Functional/Ticket/GH11037/GH11037Test.php	GH11037Test::testMetadataFieldTypeCoherentWithEntityPropertyType	ported	crates/php2rust-doctrine-orm/tests/gh11037_test.rs::testMetadataFieldTypeCoherentWithEntityPropertyType
+tests/Tests/ORM/Functional/Ticket/GH11037/GH11037Test.php	GH11037Test::testMetadataFieldTypeNotCoherentWithEntityPropertyType	ported	crates/php2rust-doctrine-orm/tests/gh11037_test.rs::testMetadataFieldTypeNotCoherentWithEntityPropertyType
 tests/Tests/ORM/Functional/Ticket/GH11058Test.php	GH11058Test::testChildrenInsertedInOrderOfPersistCalls1WhenParentPersistedFirst	ported	crates/php2rust-doctrine-orm/tests/gh11058_test.rs::testChildrenInsertedInOrderOfPersistCalls1WhenParentPersistedFirst
 tests/Tests/ORM/Functional/Ticket/GH11058Test.php	GH11058Test::testChildrenInsertedInOrderOfPersistCalls1WhenParentPersistedLast	ported	crates/php2rust-doctrine-orm/tests/gh11058_test.rs::testChildrenInsertedInOrderOfPersistCalls1WhenParentPersistedLast
 tests/Tests/ORM/Functional/Ticket/GH11058Test.php	GH11058Test::testChildrenInsertedInOrderOfPersistCalls2WhenParentPersistedFirst	ported	crates/php2rust-doctrine-orm/tests/gh11058_test.rs::testChildrenInsertedInOrderOfPersistCalls2WhenParentPersistedFirst
 tests/Tests/ORM/Functional/Ticket/GH11058Test.php	GH11058Test::testChildrenInsertedInOrderOfPersistCalls2WhenParentPersistedLast	ported	crates/php2rust-doctrine-orm/tests/gh11058_test.rs::testChildrenInsertedInOrderOfPersistCalls2WhenParentPersistedLast
-tests/Tests/ORM/Functional/Ticket/GH11072/GH11072Test.php	GH11072Test::testAcceptsAdvancedSubsetOfBuiltinTypesWithoutErrors	pending	
-tests/Tests/ORM/Functional/Ticket/GH11072/GH11072Test.php	GH11072Test::testAcceptsSubsetOfBuiltinTypesWithoutErrors	pending	
+tests/Tests/ORM/Functional/Ticket/GH11072/GH11072Test.php	GH11072Test::testAcceptsAdvancedSubsetOfBuiltinTypesWithoutErrors	ported	crates/php2rust-doctrine-orm/tests/gh11072_test.rs::testAcceptsAdvancedSubsetOfBuiltinTypesWithoutErrors
+tests/Tests/ORM/Functional/Ticket/GH11072/GH11072Test.php	GH11072Test::testAcceptsSubsetOfBuiltinTypesWithoutErrors	ported	crates/php2rust-doctrine-orm/tests/gh11072_test.rs::testAcceptsSubsetOfBuiltinTypesWithoutErrors
 tests/Tests/ORM/Functional/Ticket/GH11112Test.php	GH11112Test::testSimpleQueryHasLimitAndOffsetApplied	pending	needs the query cache
 tests/Tests/ORM/Functional/Ticket/GH11112Test.php	GH11112Test::testSubqueryLimitAndOffsetAreIgnored	pending	needs the query cache
 tests/Tests/ORM/Functional/Ticket/GH11135Test.php	GH11135Test::testOverrideInheritsDeclaringClass	ported	crates/php2rust-doctrine-orm/tests/gh11135_test.rs::testOverrideInheritsDeclaringClass
-tests/Tests/ORM/Functional/Ticket/GH11149/GH11149Test.php	GH11149Test::testFetchEagerModeWithIndexBy	pending	
+tests/Tests/ORM/Functional/Ticket/GH11149/GH11149Test.php	GH11149Test::testFetchEagerModeWithIndexBy	ported	crates/php2rust-doctrine-orm/tests/gh11149_test.rs::testFetchEagerModeWithIndexBy
 tests/Tests/ORM/Functional/Ticket/GH11163Test.php	GH11163Test::testFetchEagerModeWithOrderBy	ported	crates/php2rust-doctrine-orm/tests/gh11163_test.rs::testFetchEagerModeWithOrderBy
 tests/Tests/ORM/Functional/Ticket/GH11199Test.php	GH11199Test::testGH11199	ported	crates/php2rust-doctrine-orm/tests/gh11199_test.rs::testGH11199
 tests/Tests/ORM/Functional/Ticket/GH11341Test.php	GH11341Test::testDiscriminatorValue	ported	crates/php2rust-doctrine-orm/tests/gh11341_test.rs::testDiscriminatorValue
 tests/Tests/ORM/Functional/Ticket/GH11341Test.php	GH11341Test::testInstanceOf	ported	crates/php2rust-doctrine-orm/tests/gh11341_test.rs::testInstanceOf
-tests/Tests/ORM/Functional/Ticket/GH11386/GH11386Test.php	GH11386Test::testInitializeClonedProxy	pending	
+tests/Tests/ORM/Functional/Ticket/GH11386/GH11386Test.php	GH11386Test::testInitializeClonedProxy	ported	crates/php2rust-doctrine-orm/tests/gh11386_test.rs::testInitializeClonedProxy
 tests/Tests/ORM/Functional/Ticket/GH11487Test.php	GH11487Test::testItThrowsASyntaxErrorOnUnfinishedQuery	ported	crates/php2rust-doctrine-orm/tests/gh11487_test.rs::testItThrowsASyntaxErrorOnUnfinishedQuery
 tests/Tests/ORM/Functional/Ticket/GH11500Test.php	GH11500Test::testDeleteOneToManyCollectionWithSingleTableInheritance	ported	crates/php2rust-doctrine-orm/tests/gh11500_test.rs::testDeleteOneToManyCollectionWithSingleTableInheritance
 tests/Tests/ORM/Functional/Ticket/GH11501Test.php	GH11501Test::testDeleteOneToManyCollectionWithSingleTableInheritance	ported	crates/php2rust-doctrine-orm/tests/gh11501_test.rs::testDeleteOneToManyCollectionWithSingleTableInheritance
 tests/Tests/ORM/Functional/Ticket/GH11524Test.php	GH11524Test::testPostLoadCalledOnProxy	ported	crates/php2rust-doctrine-orm/tests/gh11524_test.rs::testPostLoadCalledOnProxy
 tests/Tests/ORM/Functional/Ticket/GH11982Test.php	GH11982Test::testSchema	ported	crates/php2rust-doctrine-orm/tests/gh11982_test.rs::testSchema
 tests/Tests/ORM/Functional/Ticket/GH11982Test.php	GH11982Test::testSchemaLegacyDbal	n/a: upstream skips it on doctrine/dbal 4.3 and later	
-tests/Tests/ORM/Functional/Ticket/GH12166/GH12166Test.php	GH12166Test::testProxyWithReadonlyIdIsNotInitializedImmediately	pending	
+tests/Tests/ORM/Functional/Ticket/GH12166/GH12166Test.php	GH12166Test::testProxyWithReadonlyIdIsNotInitializedImmediately	ported	crates/php2rust-doctrine-orm/tests/gh12166_test.rs::testProxyWithReadonlyIdIsNotInitializedImmediately
 tests/Tests/ORM/Functional/Ticket/GH12172Test.php	GH12172Test::testInitializeObjectNoOpForCustomNonEntityClass	ported	crates/php2rust-doctrine-orm/tests/gh12172_test.rs::testInitializeObjectNoOpForCustomNonEntityClass
 tests/Tests/ORM/Functional/Ticket/GH12172Test.php	GH12172Test::testInitializeObjectNoOpForNonManagedObjects	ported	crates/php2rust-doctrine-orm/tests/gh12172_test.rs::testInitializeObjectNoOpForNonManagedObjects
 tests/Tests/ORM/Functional/Ticket/GH12172Test.php	GH12172Test::testInitializeObjectNoOpForNonManagedObjectsWithMappingDriverChain	ported	crates/php2rust-doctrine-orm/tests/gh12172_test.rs::testInitializeObjectNoOpForNonManagedObjectsWithMappingDriverChain
@@ -1487,7 +1487,7 @@ tests/Tests/ORM/Functional/Ticket/GH12172Test.php	GH12172Test::testIsUninitializ
 tests/Tests/ORM/Functional/Ticket/GH12172Test.php	GH12172Test::testIsUninitializedObjectNoExceptionForNonManagedObjectsWithMappingDriverChain	ported	crates/php2rust-doctrine-orm/tests/gh12172_test.rs::testIsUninitializedObjectNoExceptionForNonManagedObjectsWithMappingDriverChain
 tests/Tests/ORM/Functional/Ticket/GH12174Test.php	GH12174Test::testMappedSuperclassNameCanBeUsedToResolveTargetEntityClass	pending	ResolveTargetEntityListener is not ported
 tests/Tests/ORM/Functional/Ticket/GH12183Test.php	GH12183Test::testPaginatorCountWithTreeWalkerAfterQueryHasBeenExecuted	ported	crates/php2rust-doctrine-orm/tests/gh12183_test.rs::testPaginatorCountWithTreeWalkerAfterQueryHasBeenExecuted
-tests/Tests/ORM/Functional/Ticket/GH12225/GH12225Test.php	GH12225Test::testHydrateWithIndexByFilterAndInheritanceMapping	pending	
+tests/Tests/ORM/Functional/Ticket/GH12225/GH12225Test.php	GH12225Test::testHydrateWithIndexByFilterAndInheritanceMapping	ported	crates/php2rust-doctrine-orm/tests/gh12225_test.rs::testHydrateWithIndexByFilterAndInheritanceMapping
 tests/Tests/ORM/Functional/Ticket/GH12254Test.php	GH12254Test::testFindByEmptyArrayShouldReturnEmptyArray	ported	crates/php2rust-doctrine-orm/tests/gh12254_test.rs::testFindByEmptyArrayShouldReturnEmptyArray
 tests/Tests/ORM/Functional/Ticket/GH12254Test.php	GH12254Test::testFindByInNullableField	ported	crates/php2rust-doctrine-orm/tests/gh12254_test.rs::testFindByInNullableField
 tests/Tests/ORM/Functional/Ticket/GH12403Test.php	GH12403Test::testAssociationTargetCanSilentlyCompleteNativeLazyInitialization	pending	UnitOfWork's partial-load tracking of native lazy objects (partialObjectLoadedFields, reconcileStalePartialLoadTracking) is not ported, and a lazy ghost does not complete itself when its last property is assigned
@@ -1495,21 +1495,21 @@ tests/Tests/ORM/Functional/Ticket/GH12403Test.php	GH12403Test::testChangeIsPersi
 tests/Tests/ORM/Functional/Ticket/GH12438Test.php	GH12438Test::testFetchAll	ported	crates/php2rust-doctrine-orm/tests/gh12438_test.rs::testFetchAll
 tests/Tests/ORM/Functional/Ticket/GH12438Test.php	GH12438Test::testFetchWithJoinCondition	ported	crates/php2rust-doctrine-orm/tests/gh12438_test.rs::testFetchWithJoinCondition
 tests/Tests/ORM/Functional/Ticket/GH12438Test.php	GH12438Test::testFetchWithJoinConditionWithoutAssociation	ported	crates/php2rust-doctrine-orm/tests/gh12438_test.rs::testFetchWithJoinConditionWithoutAssociation
-tests/Tests/ORM/Functional/Ticket/GH12505/GH12505Test.php	GH12505Test::testHydrateManyToManyIndexedByInheritedIdAfterFilterChange	pending	
+tests/Tests/ORM/Functional/Ticket/GH12505/GH12505Test.php	GH12505Test::testHydrateManyToManyIndexedByInheritedIdAfterFilterChange	ported	crates/php2rust-doctrine-orm/tests/gh12505_test.rs::testHydrateManyToManyIndexedByInheritedIdAfterFilterChange
 tests/Tests/ORM/Functional/Ticket/GH2947Test.php	GH2947Test::testIssue	pending	needs the result cache
 tests/Tests/ORM/Functional/Ticket/GH5562Test.php	GH5562Test::testCacheShouldBeUpdatedWhenAssociationChanges	pending	needs the second-level cache
 tests/Tests/ORM/Functional/Ticket/GH5742Test.php	GH5742Test::testManyToManyCollectionUpdateBeforeRemoval	ported	crates/php2rust-doctrine-orm/tests/gh5742_test.rs::testManyToManyCollectionUpdateBeforeRemoval
 tests/Tests/ORM/Functional/Ticket/GH5742Test.php	GH5742Test::testUpdateOneToOneToNewEntityBeforePreviousEntityCanBeRemoved	ported	crates/php2rust-doctrine-orm/tests/gh5742_test.rs::testUpdateOneToOneToNewEntityBeforePreviousEntityCanBeRemoved
 tests/Tests/ORM/Functional/Ticket/GH5762Test.php	GH5762Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/gh5762_test.rs::testIssue
-tests/Tests/ORM/Functional/Ticket/GH5804Test.php	GH5804Test::testTextColumnSaveAndRetrieve2	pending	
-tests/Tests/ORM/Functional/Ticket/GH5887Test.php	GH5887Test::testLazyLoadsForeignEntitiesInOneToOneRelationWhileHavingCustomIdObject	pending	
-tests/Tests/ORM/Functional/Ticket/GH5988Test.php	GH5988Test::testDelete	pending	
+tests/Tests/ORM/Functional/Ticket/GH5804Test.php	GH5804Test::testTextColumnSaveAndRetrieve2	pending	needs a CUSTOM id generator (an AbstractIdGenerator subclass), which the unit of work does not run
+tests/Tests/ORM/Functional/Ticket/GH5887Test.php	GH5887Test::testLazyLoadsForeignEntitiesInOneToOneRelationWhileHavingCustomIdObject	ported	crates/php2rust-doctrine-orm/tests/gh5887_test.rs::testLazyLoadsForeignEntitiesInOneToOneRelationWhileHavingCustomIdObject
+tests/Tests/ORM/Functional/Ticket/GH5988Test.php	GH5988Test::testDelete	ported	crates/php2rust-doctrine-orm/tests/gh5988_test.rs::testDelete
 tests/Tests/ORM/Functional/Ticket/GH5998Test.php	GH5998Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/gh5998_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/GH6029Test.php	GH6029Test::testManyToManyAssociation	ported	crates/php2rust-doctrine-orm/tests/gh6029_test.rs::testManyToManyAssociation
 tests/Tests/ORM/Functional/Ticket/GH6029Test.php	GH6029Test::testOneToManyAssociation	ported	crates/php2rust-doctrine-orm/tests/gh6029_test.rs::testOneToManyAssociation
 tests/Tests/ORM/Functional/Ticket/GH6123Test.php	GH6123Test::testLoadingRemovedEntityFromDatabaseDoesNotCreateNewManagedEntityInstance	ported	crates/php2rust-doctrine-orm/tests/gh6123_test.rs::testLoadingRemovedEntityFromDatabaseDoesNotCreateNewManagedEntityInstance
 tests/Tests/ORM/Functional/Ticket/GH6123Test.php	GH6123Test::testRemovedEntityCanBePersistedAgain	ported	crates/php2rust-doctrine-orm/tests/gh6123_test.rs::testRemovedEntityCanBePersistedAgain
-tests/Tests/ORM/Functional/Ticket/GH6141Test.php	GH6141Test::testEnumDiscriminatorsShouldBeConvertedToString	pending	
+tests/Tests/ORM/Functional/Ticket/GH6141Test.php	GH6141Test::testEnumDiscriminatorsShouldBeConvertedToString	ported	crates/php2rust-doctrine-orm/tests/gh6141_test.rs::testEnumDiscriminatorsShouldBeConvertedToString
 tests/Tests/ORM/Functional/Ticket/GH6217Test.php	GH6217Test::testLoadingOfSecondLevelCacheOnEagerAssociations	pending	needs the second-level cache
 tests/Tests/ORM/Functional/Ticket/GH6362Test.php	GH6362Test::testInheritanceJoinAlias	ported	crates/php2rust-doctrine-orm/tests/gh6362_test.rs::testInheritanceJoinAlias
 tests/Tests/ORM/Functional/Ticket/GH6394Test.php	GH6394Test::testFetchVersionValueForDifferentIdFieldAndColumn	ported	crates/php2rust-doctrine-orm/tests/gh6394_test.rs::testFetchVersionValueForDifferentIdFieldAndColumn
@@ -1539,93 +1539,93 @@ tests/Tests/ORM/Functional/Ticket/GH6937Test.php	GH6937Test::testPhoneNumberIsPo
 tests/Tests/ORM/Functional/Ticket/GH6937Test.php	GH6937Test::testPhoneNumberIsPopulatedWithQueryBuilderUsingSimpleObjectHydrator	ported	crates/php2rust-doctrine-orm/tests/gh6937_test.rs::testPhoneNumberIsPopulatedWithQueryBuilderUsingSimpleObjectHydrator
 tests/Tests/ORM/Functional/Ticket/GH7006Test.php	GH7006Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/gh7006_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/GH7012Test.php	GH7012Test::testUpdateEntityWithIdentifierAssociationWithQuotedJoinColumn	ported	crates/php2rust-doctrine-orm/tests/gh7012_test.rs::testUpdateEntityWithIdentifierAssociationWithQuotedJoinColumn
-tests/Tests/ORM/Functional/Ticket/GH7062Test.php	GH7062Test::testEntityWithAssociationKeyIdentityCanBeUpdated	pending	
+tests/Tests/ORM/Functional/Ticket/GH7062Test.php	GH7062Test::testEntityWithAssociationKeyIdentityCanBeUpdated	ported	crates/php2rust-doctrine-orm/tests/gh7062_test.rs::testEntityWithAssociationKeyIdentityCanBeUpdated
 tests/Tests/ORM/Functional/Ticket/GH7067Test.php	GH7067Test::testSLCWithVersion	pending	needs the second-level cache
 tests/Tests/ORM/Functional/Ticket/GH7068Test.php	GH7068Test::testLockModeIsRespected	ported	crates/php2rust-doctrine-orm/tests/gh7068_test.rs::testLockModeIsRespected
-tests/Tests/ORM/Functional/Ticket/GH7079Test.php	GH7079Test::testGetTableName	pending	
-tests/Tests/ORM/Functional/Ticket/GH7079Test.php	GH7079Test::testJoinTableName	pending	
-tests/Tests/ORM/Functional/Ticket/GH7180Test.php	GH7180Test::testIssue	pending	
-tests/Tests/ORM/Functional/Ticket/GH7180Test.php	GH7180Test::testIssue3NodeCycle	pending	
-tests/Tests/ORM/Functional/Ticket/GH7259Test.php	GH7259Test::testPersistFileAfterVersion	pending	
-tests/Tests/ORM/Functional/Ticket/GH7259Test.php	GH7259Test::testPersistFileBeforeVersion	pending	
-tests/Tests/ORM/Functional/Ticket/GH7286Test.php	GH7286Test::testAggregateExpressionInFunction	pending	
-tests/Tests/ORM/Functional/Ticket/GH7286Test.php	GH7286Test::testAggregateFunctionInCustomFunction	pending	
-tests/Tests/ORM/Functional/Ticket/GH7366Test.php	GH7366Test::testOptimisticLockNoExceptionOnFind	pending	
-tests/Tests/ORM/Functional/Ticket/GH7496WithToIterableTest.php	GH7496WithToIterableTest::testNonUniqueObjectHydrationDuringIteration	pending	
-tests/Tests/ORM/Functional/Ticket/GH7505Test.php	GH7505Test::testSimpleArrayTypeHydratedCorrectly	pending	
-tests/Tests/ORM/Functional/Ticket/GH7512Test.php	GH7512Test::testFindEntityByAssociationPropertyJoinedChildWithClearMetadata	pending	
-tests/Tests/ORM/Functional/Ticket/GH7629Test.php	GH7629Test::testClearScheduledForSynchronizationWhenCommitEmpty	pending	
-tests/Tests/ORM/Functional/Ticket/GH7629Test.php	GH7629Test::testPersistAfterRemoveSchedulesForSynchronization	pending	
-tests/Tests/ORM/Functional/Ticket/GH7661Test.php	GH7661Test::testIndexByAssociation	pending	
-tests/Tests/ORM/Functional/Ticket/GH7684Test.php	GH7684Test::testIssue	pending	
-tests/Tests/ORM/Functional/Ticket/GH7717Test.php	GH7717Test::testManyToManyPersisterIsNullComparison	pending	
-tests/Tests/ORM/Functional/Ticket/GH7735Test.php	GH7735Test::findByReturnsCachedEntity	pending	
-tests/Tests/ORM/Functional/Ticket/GH7737Test.php	GH7737Test::memberOfCriteriaShouldBeCompatibleWithQueryBuilder	pending	
-tests/Tests/ORM/Functional/Ticket/GH7761Test.php	GH7761Test::testCollectionClearDoesClearIfPersisted	pending	
-tests/Tests/ORM/Functional/Ticket/GH7761Test.php	GH7761Test::testCollectionClearDoesNotClearIfNotPersisted	pending	
-tests/Tests/ORM/Functional/Ticket/GH7767Test.php	GH7767Test::testMatchingOverrulesCollectionOrdering	pending	
-tests/Tests/ORM/Functional/Ticket/GH7767Test.php	GH7767Test::testMatchingRespectsCollectionOrdering	pending	
-tests/Tests/ORM/Functional/Ticket/GH7820Test.php	GH7820Test::testPaginatorDoesNotForceCacheToUpdateEntries	pending	
-tests/Tests/ORM/Functional/Ticket/GH7820Test.php	GH7820Test::testPaginatorQueriesWillBeCached	pending	
-tests/Tests/ORM/Functional/Ticket/GH7820Test.php	GH7820Test::testWillFindSongsInPaginator	pending	
-tests/Tests/ORM/Functional/Ticket/GH7820Test.php	GH7820Test::testWillFindSongsInPaginatorEvenWithCachedQueryParsing	pending	
-tests/Tests/ORM/Functional/Ticket/GH7829Test.php	GH7829Test::testPaginatorWithLimitSubquery	pending	
-tests/Tests/ORM/Functional/Ticket/GH7829Test.php	GH7829Test::testPaginatorWithLimitSubquerySkipped	pending	
-tests/Tests/ORM/Functional/Ticket/GH7836Test.php	GH7836Test::testMatchingKeepsOrderOfCriteriaOrderingKeys	pending	
-tests/Tests/ORM/Functional/Ticket/GH7836Test.php	GH7836Test::testMatchingOverrulesCollectionOrdering	pending	
-tests/Tests/ORM/Functional/Ticket/GH7836Test.php	GH7836Test::testMatchingRespectsCollectionOrdering	pending	
-tests/Tests/ORM/Functional/Ticket/GH7864Test.php	GH7864Test::testExtraLazyRemoveElement	pending	
-tests/Tests/ORM/Functional/Ticket/GH7869Test.php	GH7869Test::testDQLDeferredEagerLoad	pending	
-tests/Tests/ORM/Functional/Ticket/GH7875Test.php	GH7875Test::testUpdateSchemaSql	pending	
-tests/Tests/ORM/Functional/Ticket/GH7875Test.php	GH7875Test::testUpdateSchemaSqlWithSchemaAssetFilter	pending	
-tests/Tests/ORM/Functional/Ticket/GH7941Test.php	GH7941Test::typesShouldBeConvertedForDQLFunctions	pending	
-tests/Tests/ORM/Functional/Ticket/GH8055Test.php	GH8055Test::testNumericDescriminatorColumn	pending	
-tests/Tests/ORM/Functional/Ticket/GH8061Test.php	GH8061Test::testConvertToPHPValueSQLForNewObjectExpression	pending	
-tests/Tests/ORM/Functional/Ticket/GH8127Test.php	GH8127Test::testLoadFieldsFromAllClassesInHierarchy	pending	
-tests/Tests/ORM/Functional/Ticket/GH8217Test.php	GH8217Test::testNoQueriesAfterSecondFlush	pending	
-tests/Tests/ORM/Functional/Ticket/GH8415Test.php	GH8415Test::testAssociationIsBasedOnBaseClass	pending	
-tests/Tests/ORM/Functional/Ticket/GH8415ToManyAssociationTest.php	GH8415ToManyAssociationTest::testToManyAssociationOnBaseClassAllowedWhenThereAreMappedSuperclassesAsChildren	pending	
-tests/Tests/ORM/Functional/Ticket/GH8443Test.php	GH8443Test::testJoinRootEntityWithForcePartialLoad	pending	
-tests/Tests/ORM/Functional/Ticket/GH8443Test.php	GH8443Test::testJoinRootEntityWithOnlyOneEntityInHierarchy	pending	
-tests/Tests/ORM/Functional/Ticket/GH8499Test.php	GH8499Test::testOptimisticLockWithDateTimeForVersion	pending	
-tests/Tests/ORM/Functional/Ticket/GH8499Test.php	GH8499Test::testOptimisticLockWithDateTimeForVersionThrowsException	pending	
-tests/Tests/ORM/Functional/Ticket/GH8499Test.php	GH8499Test::testOptimisticTimestampSetsDefaultValue	pending	
-tests/Tests/ORM/Functional/Ticket/GH8663Test.php	GH8663Test::testDeletedEntity	pending	
-tests/Tests/ORM/Functional/Ticket/GH8914Test.php	GH8914Test::testDiscriminatorMapWithSeveralLevelsIsSupported	pending	
-tests/Tests/ORM/Functional/Ticket/GH9027Test.php	GH9027Test::testUnitOfWorkHandlesNullRelations	pending	
-tests/Tests/ORM/Functional/Ticket/GH9109Test.php	GH9109Test::testIssue	pending	
-tests/Tests/ORM/Functional/Ticket/GH9192Test.php	GH9192Test::testIssue	pending	
-tests/Tests/ORM/Functional/Ticket/GH9230Test.php	GH9230Test::testIssue	pending	
-tests/Tests/ORM/Functional/Ticket/GH9335Test.php	GH9335Test::testFlattenIdentifierWithObjectId	pending	
-tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildNonInsertableColumnInsert	pending	
-tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildNonInsertableColumnUpdate	pending	
-tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildNonUpdatableColumnInsert	pending	
-tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildNonUpdatableColumnUpdate	pending	
-tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildNonWritableColumnInsert	pending	
-tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildNonWritableColumnUpdate	pending	
-tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildWritableColumnInsert	pending	
-tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildWritableColumnUpdate	pending	
-tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testRootColumnsInsert	pending	
-tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testRootColumnsUpdate	pending	
-tests/Tests/ORM/Functional/Ticket/GH9516Test.php	GH9516Test::testEntityCanHaveInverseOneToManyAssociationWithChildMappedSuperclass	pending	
-tests/Tests/ORM/Functional/Ticket/GH9538Test.php	GH9538Test::testCanRemoveEntityWithReadonlyId	pending	
-tests/Tests/ORM/Functional/Ticket/GH9579Test.php	GH9579Test::testIssue	pending	
-tests/Tests/ORM/Functional/Ticket/GH9807Test.php	GH9807Test::testHydrateJoinedCollectionWithFirstNullishRow	pending	
-tests/Tests/ORM/Functional/Ticket/Issue5989Test.php	Issue5989Test::testSimpleArrayTypeHydratedCorrectlyInJoinedInheritance	pending	
-tests/Tests/ORM/Functional/Ticket/Issue9300Test.php	Issue9300Test::testPersistedCollectionIsPresentInOriginalDataAfterFlush	pending	
-tests/Tests/ORM/Functional/Ticket/Issue9300Test.php	Issue9300Test::testPersistingCollectionAfterFlushWorksAsExpected	pending	
-tests/Tests/ORM/Functional/Ticket/LazyEagerCollectionTest.php	LazyEagerCollectionTest::testRefreshRefreshesBothLazyAndEagerCollections	pending	
+tests/Tests/ORM/Functional/Ticket/GH7079Test.php	GH7079Test::testGetTableName	ported	crates/php2rust-doctrine-orm/tests/gh7079_test.rs::testGetTableName
+tests/Tests/ORM/Functional/Ticket/GH7079Test.php	GH7079Test::testJoinTableName	ported	crates/php2rust-doctrine-orm/tests/gh7079_test.rs::testJoinTableName
+tests/Tests/ORM/Functional/Ticket/GH7180Test.php	GH7180Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/gh7180_test.rs::testIssue
+tests/Tests/ORM/Functional/Ticket/GH7180Test.php	GH7180Test::testIssue3NodeCycle	ported	crates/php2rust-doctrine-orm/tests/gh7180_test.rs::testIssue3NodeCycle
+tests/Tests/ORM/Functional/Ticket/GH7259Test.php	GH7259Test::testPersistFileAfterVersion	ported	crates/php2rust-doctrine-orm/tests/gh7259_test.rs::testPersistFileAfterVersion
+tests/Tests/ORM/Functional/Ticket/GH7259Test.php	GH7259Test::testPersistFileBeforeVersion	ported	crates/php2rust-doctrine-orm/tests/gh7259_test.rs::testPersistFileBeforeVersion
+tests/Tests/ORM/Functional/Ticket/GH7286Test.php	GH7286Test::testAggregateExpressionInFunction	ported	crates/php2rust-doctrine-orm/tests/gh7286_test.rs::testAggregateExpressionInFunction
+tests/Tests/ORM/Functional/Ticket/GH7286Test.php	GH7286Test::testAggregateFunctionInCustomFunction	ported	crates/php2rust-doctrine-orm/tests/gh7286_test.rs::testAggregateFunctionInCustomFunction
+tests/Tests/ORM/Functional/Ticket/GH7366Test.php	GH7366Test::testOptimisticLockNoExceptionOnFind	ported	crates/php2rust-doctrine-orm/tests/gh7366_test.rs::testOptimisticLockNoExceptionOnFind
+tests/Tests/ORM/Functional/Ticket/GH7496WithToIterableTest.php	GH7496WithToIterableTest::testNonUniqueObjectHydrationDuringIteration	ported	crates/php2rust-doctrine-orm/tests/gh7496_with_to_iterable_test.rs::testNonUniqueObjectHydrationDuringIteration
+tests/Tests/ORM/Functional/Ticket/GH7505Test.php	GH7505Test::testSimpleArrayTypeHydratedCorrectly	ported	crates/php2rust-doctrine-orm/tests/gh7505_test.rs::testSimpleArrayTypeHydratedCorrectly
+tests/Tests/ORM/Functional/Ticket/GH7512Test.php	GH7512Test::testFindEntityByAssociationPropertyJoinedChildWithClearMetadata	ported	crates/php2rust-doctrine-orm/tests/gh7512_test.rs::testFindEntityByAssociationPropertyJoinedChildWithClearMetadata
+tests/Tests/ORM/Functional/Ticket/GH7629Test.php	GH7629Test::testClearScheduledForSynchronizationWhenCommitEmpty	ported	crates/php2rust-doctrine-orm/tests/gh7629_test.rs::testClearScheduledForSynchronizationWhenCommitEmpty
+tests/Tests/ORM/Functional/Ticket/GH7629Test.php	GH7629Test::testPersistAfterRemoveSchedulesForSynchronization	ported	crates/php2rust-doctrine-orm/tests/gh7629_test.rs::testPersistAfterRemoveSchedulesForSynchronization
+tests/Tests/ORM/Functional/Ticket/GH7661Test.php	GH7661Test::testIndexByAssociation	ported	crates/php2rust-doctrine-orm/tests/gh7661_test.rs::testIndexByAssociation
+tests/Tests/ORM/Functional/Ticket/GH7684Test.php	GH7684Test::testIssue	pending	needs the DatabaseDriver (reverse engineering), which is not ported
+tests/Tests/ORM/Functional/Ticket/GH7717Test.php	GH7717Test::testManyToManyPersisterIsNullComparison	ported	crates/php2rust-doctrine-orm/tests/gh7717_test.rs::testManyToManyPersisterIsNullComparison
+tests/Tests/ORM/Functional/Ticket/GH7735Test.php	GH7735Test::findByReturnsCachedEntity	pending	needs the second-level cache
+tests/Tests/ORM/Functional/Ticket/GH7737Test.php	GH7737Test::memberOfCriteriaShouldBeCompatibleWithQueryBuilder	ported	crates/php2rust-doctrine-orm/tests/gh7737_test.rs::memberOfCriteriaShouldBeCompatibleWithQueryBuilder
+tests/Tests/ORM/Functional/Ticket/GH7761Test.php	GH7761Test::testCollectionClearDoesClearIfPersisted	ported	crates/php2rust-doctrine-orm/tests/gh7761_test.rs::testCollectionClearDoesClearIfPersisted
+tests/Tests/ORM/Functional/Ticket/GH7761Test.php	GH7761Test::testCollectionClearDoesNotClearIfNotPersisted	ported	crates/php2rust-doctrine-orm/tests/gh7761_test.rs::testCollectionClearDoesNotClearIfNotPersisted
+tests/Tests/ORM/Functional/Ticket/GH7767Test.php	GH7767Test::testMatchingOverrulesCollectionOrdering	ported	crates/php2rust-doctrine-orm/tests/gh7767_test.rs::testMatchingOverrulesCollectionOrdering
+tests/Tests/ORM/Functional/Ticket/GH7767Test.php	GH7767Test::testMatchingRespectsCollectionOrdering	ported	crates/php2rust-doctrine-orm/tests/gh7767_test.rs::testMatchingRespectsCollectionOrdering
+tests/Tests/ORM/Functional/Ticket/GH7820Test.php	GH7820Test::testPaginatorDoesNotForceCacheToUpdateEntries	pending	needs the query cache
+tests/Tests/ORM/Functional/Ticket/GH7820Test.php	GH7820Test::testPaginatorQueriesWillBeCached	pending	needs the query cache
+tests/Tests/ORM/Functional/Ticket/GH7820Test.php	GH7820Test::testWillFindSongsInPaginator	ported	crates/php2rust-doctrine-orm/tests/gh7820_test.rs::testWillFindSongsInPaginator
+tests/Tests/ORM/Functional/Ticket/GH7820Test.php	GH7820Test::testWillFindSongsInPaginatorEvenWithCachedQueryParsing	pending	needs the query cache
+tests/Tests/ORM/Functional/Ticket/GH7829Test.php	GH7829Test::testPaginatorWithLimitSubquery	ported	crates/php2rust-doctrine-orm/tests/gh7829_test.rs::testPaginatorWithLimitSubquery
+tests/Tests/ORM/Functional/Ticket/GH7829Test.php	GH7829Test::testPaginatorWithLimitSubquerySkipped	ported	crates/php2rust-doctrine-orm/tests/gh7829_test.rs::testPaginatorWithLimitSubquerySkipped
+tests/Tests/ORM/Functional/Ticket/GH7836Test.php	GH7836Test::testMatchingKeepsOrderOfCriteriaOrderingKeys	ported	crates/php2rust-doctrine-orm/tests/gh7836_test.rs::testMatchingKeepsOrderOfCriteriaOrderingKeys
+tests/Tests/ORM/Functional/Ticket/GH7836Test.php	GH7836Test::testMatchingOverrulesCollectionOrdering	ported	crates/php2rust-doctrine-orm/tests/gh7836_test.rs::testMatchingOverrulesCollectionOrdering
+tests/Tests/ORM/Functional/Ticket/GH7836Test.php	GH7836Test::testMatchingRespectsCollectionOrdering	ported	crates/php2rust-doctrine-orm/tests/gh7836_test.rs::testMatchingRespectsCollectionOrdering
+tests/Tests/ORM/Functional/Ticket/GH7864Test.php	GH7864Test::testExtraLazyRemoveElement	ported	crates/php2rust-doctrine-orm/tests/gh7864_test.rs::testExtraLazyRemoveElement
+tests/Tests/ORM/Functional/Ticket/GH7869Test.php	GH7869Test::testDQLDeferredEagerLoad	pending	needs EntityManagerDecorator and a mock that counts getClassMetadata() calls
+tests/Tests/ORM/Functional/Ticket/GH7875Test.php	GH7875Test::testUpdateSchemaSql	pending	needs SchemaTool::getUpdateSchemaSql(), which is not ported
+tests/Tests/ORM/Functional/Ticket/GH7875Test.php	GH7875Test::testUpdateSchemaSqlWithSchemaAssetFilter	pending	needs SchemaTool::getUpdateSchemaSql(), which is not ported
+tests/Tests/ORM/Functional/Ticket/GH7941Test.php	GH7941Test::typesShouldBeConvertedForDQLFunctions	pending	the DBAL port does not register SQLite's user-defined SQRT() function
+tests/Tests/ORM/Functional/Ticket/GH8055Test.php	GH8055Test::testNumericDescriminatorColumn	ported	crates/php2rust-doctrine-orm/tests/gh8055_test.rs::testNumericDescriminatorColumn
+tests/Tests/ORM/Functional/Ticket/GH8061Test.php	GH8061Test::testConvertToPHPValueSQLForNewObjectExpression	ported	crates/php2rust-doctrine-orm/tests/gh8061_test.rs::testConvertToPHPValueSQLForNewObjectExpression
+tests/Tests/ORM/Functional/Ticket/GH8127Test.php	GH8127Test::testLoadFieldsFromAllClassesInHierarchy	ported	crates/php2rust-doctrine-orm/tests/gh8127_test.rs::testLoadFieldsFromAllClassesInHierarchy
+tests/Tests/ORM/Functional/Ticket/GH8217Test.php	GH8217Test::testNoQueriesAfterSecondFlush	ported	crates/php2rust-doctrine-orm/tests/gh8217_test.rs::testNoQueriesAfterSecondFlush
+tests/Tests/ORM/Functional/Ticket/GH8415Test.php	GH8415Test::testAssociationIsBasedOnBaseClass	ported	crates/php2rust-doctrine-orm/tests/gh8415_test.rs::testAssociationIsBasedOnBaseClass
+tests/Tests/ORM/Functional/Ticket/GH8415ToManyAssociationTest.php	GH8415ToManyAssociationTest::testToManyAssociationOnBaseClassAllowedWhenThereAreMappedSuperclassesAsChildren	ported	crates/php2rust-doctrine-orm/tests/gh8415_to_many_association_test.rs::testToManyAssociationOnBaseClassAllowedWhenThereAreMappedSuperclassesAsChildren
+tests/Tests/ORM/Functional/Ticket/GH8443Test.php	GH8443Test::testJoinRootEntityWithForcePartialLoad	ported	crates/php2rust-doctrine-orm/tests/gh8443_test.rs::testJoinRootEntityWithForcePartialLoad
+tests/Tests/ORM/Functional/Ticket/GH8443Test.php	GH8443Test::testJoinRootEntityWithOnlyOneEntityInHierarchy	ported	crates/php2rust-doctrine-orm/tests/gh8443_test.rs::testJoinRootEntityWithOnlyOneEntityInHierarchy
+tests/Tests/ORM/Functional/Ticket/GH8499Test.php	GH8499Test::testOptimisticLockWithDateTimeForVersion	ported	crates/php2rust-doctrine-orm/tests/gh8499_test.rs::testOptimisticLockWithDateTimeForVersion
+tests/Tests/ORM/Functional/Ticket/GH8499Test.php	GH8499Test::testOptimisticLockWithDateTimeForVersionThrowsException	ported	crates/php2rust-doctrine-orm/tests/gh8499_test.rs::testOptimisticLockWithDateTimeForVersionThrowsException
+tests/Tests/ORM/Functional/Ticket/GH8499Test.php	GH8499Test::testOptimisticTimestampSetsDefaultValue	ported	crates/php2rust-doctrine-orm/tests/gh8499_test.rs::testOptimisticTimestampSetsDefaultValue
+tests/Tests/ORM/Functional/Ticket/GH8663Test.php	GH8663Test::testDeletedEntity	ported	crates/php2rust-doctrine-orm/tests/gh8663_test.rs::testDeletedEntity
+tests/Tests/ORM/Functional/Ticket/GH8914Test.php	GH8914Test::testDiscriminatorMapWithSeveralLevelsIsSupported	ported	crates/php2rust-doctrine-orm/tests/gh8914_test.rs::testDiscriminatorMapWithSeveralLevelsIsSupported
+tests/Tests/ORM/Functional/Ticket/GH9027Test.php	GH9027Test::testUnitOfWorkHandlesNullRelations	ported	crates/php2rust-doctrine-orm/tests/gh9027_test.rs::testUnitOfWorkHandlesNullRelations
+tests/Tests/ORM/Functional/Ticket/GH9109Test.php	GH9109Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/gh9109_test.rs::testIssue
+tests/Tests/ORM/Functional/Ticket/GH9192Test.php	GH9192Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/gh9192_test.rs::testIssue
+tests/Tests/ORM/Functional/Ticket/GH9230Test.php	GH9230Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/gh9230_test.rs::testIssue
+tests/Tests/ORM/Functional/Ticket/GH9335Test.php	GH9335Test::testFlattenIdentifierWithObjectId	ported	crates/php2rust-doctrine-orm/tests/gh9335_test.rs::testFlattenIdentifierWithObjectId
+tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildNonInsertableColumnInsert	ported	crates/php2rust-doctrine-orm/tests/gh9467_test.rs::testChildNonInsertableColumnInsert
+tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildNonInsertableColumnUpdate	ported	crates/php2rust-doctrine-orm/tests/gh9467_test.rs::testChildNonInsertableColumnUpdate
+tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildNonUpdatableColumnInsert	ported	crates/php2rust-doctrine-orm/tests/gh9467_test.rs::testChildNonUpdatableColumnInsert
+tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildNonUpdatableColumnUpdate	ported	crates/php2rust-doctrine-orm/tests/gh9467_test.rs::testChildNonUpdatableColumnUpdate
+tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildNonWritableColumnInsert	ported	crates/php2rust-doctrine-orm/tests/gh9467_test.rs::testChildNonWritableColumnInsert
+tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildNonWritableColumnUpdate	ported	crates/php2rust-doctrine-orm/tests/gh9467_test.rs::testChildNonWritableColumnUpdate
+tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildWritableColumnInsert	ported	crates/php2rust-doctrine-orm/tests/gh9467_test.rs::testChildWritableColumnInsert
+tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testChildWritableColumnUpdate	ported	crates/php2rust-doctrine-orm/tests/gh9467_test.rs::testChildWritableColumnUpdate
+tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testRootColumnsInsert	ported	crates/php2rust-doctrine-orm/tests/gh9467_test.rs::testRootColumnsInsert
+tests/Tests/ORM/Functional/Ticket/GH9467/GH9467Test.php	GH9467Test::testRootColumnsUpdate	ported	crates/php2rust-doctrine-orm/tests/gh9467_test.rs::testRootColumnsUpdate
+tests/Tests/ORM/Functional/Ticket/GH9516Test.php	GH9516Test::testEntityCanHaveInverseOneToManyAssociationWithChildMappedSuperclass	ported	crates/php2rust-doctrine-orm/tests/gh9516_test.rs::testEntityCanHaveInverseOneToManyAssociationWithChildMappedSuperclass
+tests/Tests/ORM/Functional/Ticket/GH9538Test.php	GH9538Test::testCanRemoveEntityWithReadonlyId	ported	crates/php2rust-doctrine-orm/tests/gh9538_test.rs::testCanRemoveEntityWithReadonlyId
+tests/Tests/ORM/Functional/Ticket/GH9579Test.php	GH9579Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/gh9579_test.rs::testIssue
+tests/Tests/ORM/Functional/Ticket/GH9807Test.php	GH9807Test::testHydrateJoinedCollectionWithFirstNullishRow	ported	crates/php2rust-doctrine-orm/tests/gh9807_test.rs::testHydrateJoinedCollectionWithFirstNullishRow
+tests/Tests/ORM/Functional/Ticket/Issue5989Test.php	Issue5989Test::testSimpleArrayTypeHydratedCorrectlyInJoinedInheritance	ported	crates/php2rust-doctrine-orm/tests/issue5989_test.rs::testSimpleArrayTypeHydratedCorrectlyInJoinedInheritance
+tests/Tests/ORM/Functional/Ticket/Issue9300Test.php	Issue9300Test::testPersistedCollectionIsPresentInOriginalDataAfterFlush	ported	crates/php2rust-doctrine-orm/tests/issue9300_test.rs::testPersistedCollectionIsPresentInOriginalDataAfterFlush
+tests/Tests/ORM/Functional/Ticket/Issue9300Test.php	Issue9300Test::testPersistingCollectionAfterFlushWorksAsExpected	ported	crates/php2rust-doctrine-orm/tests/issue9300_test.rs::testPersistingCollectionAfterFlushWorksAsExpected
+tests/Tests/ORM/Functional/Ticket/LazyEagerCollectionTest.php	LazyEagerCollectionTest::testRefreshRefreshesBothLazyAndEagerCollections	ported	crates/php2rust-doctrine-orm/tests/lazy_eager_collection_test.rs::testRefreshRefreshesBothLazyAndEagerCollections
 tests/Tests/ORM/Functional/Ticket/SwitchContextWithFilter/ChangeFiltersTest.php	ChangeFiltersTest::testUseChangeFilterParameters	ported	crates/php2rust-doctrine-orm/tests/change_filters_test.rs::testUseChangeFilterParameters
 tests/Tests/ORM/Functional/Ticket/SwitchContextWithFilter/ChangeFiltersTest.php	ChangeFiltersTest::testUseEnableDisableFilter	ported	crates/php2rust-doctrine-orm/tests/change_filters_test.rs::testUseEnableDisableFilter
 tests/Tests/ORM/Functional/Ticket/SwitchContextWithFilter/ChangeFiltersTest.php	ChangeFiltersTest::testUseQueryBuilder	ported	crates/php2rust-doctrine-orm/tests/change_filters_test.rs::testUseQueryBuilder
-tests/Tests/ORM/Functional/Ticket/SwitchContextWithFilter/SwitchContextTest.php	SwitchContextTest::testSwitchContext	pending	PatientInsurance uses single table inheritance, whose persister is not ported
+tests/Tests/ORM/Functional/Ticket/SwitchContextWithFilter/SwitchContextTest.php	SwitchContextTest::testSwitchContext	ported	crates/php2rust-doctrine-orm/tests/switch_context_test.rs::testSwitchContext
 tests/Tests/ORM/Functional/Ticket/SwitchContextWithFilterAndIndexedRelation/ChangeFiltersTest.php	ChangeFiltersTest::testIndexAliasUpdatedWithUpdatedFilter	ported	crates/php2rust-doctrine-orm/tests/change_filters_indexed_relation_test.rs::testIndexAliasUpdatedWithUpdatedFilter
-tests/Tests/ORM/Functional/Ticket/Ticket2481Test.php	Ticket2481Test::testEmptyInsert	pending	
-tests/Tests/ORM/Functional/Ticket/Ticket4646InstanceOfAbstractTest.php	Ticket4646InstanceOfAbstractTest::testInstanceOf	pending	
-tests/Tests/ORM/Functional/Ticket/Ticket4646InstanceOfMultiLevelTest.php	Ticket4646InstanceOfMultiLevelTest::testInstanceOf	pending	
-tests/Tests/ORM/Functional/Ticket/Ticket4646InstanceOfParametricTest.php	Ticket4646InstanceOfParametricTest::testInstanceOf	pending	
-tests/Tests/ORM/Functional/Ticket/Ticket4646InstanceOfTest.php	Ticket4646InstanceOfTest::testInstanceOf	pending	
-tests/Tests/ORM/Functional/Ticket/Ticket4646InstanceOfWithMultipleParametersTest.php	Ticket4646InstanceOfWithMultipleParametersTest::testInstanceOf	pending	
+tests/Tests/ORM/Functional/Ticket/Ticket2481Test.php	Ticket2481Test::testEmptyInsert	ported	crates/php2rust-doctrine-orm/tests/ticket2481_test.rs::testEmptyInsert
+tests/Tests/ORM/Functional/Ticket/Ticket4646InstanceOfAbstractTest.php	Ticket4646InstanceOfAbstractTest::testInstanceOf	ported	crates/php2rust-doctrine-orm/tests/ticket4646_instance_of_abstract_test.rs::testInstanceOf
+tests/Tests/ORM/Functional/Ticket/Ticket4646InstanceOfMultiLevelTest.php	Ticket4646InstanceOfMultiLevelTest::testInstanceOf	ported	crates/php2rust-doctrine-orm/tests/ticket4646_instance_of_multi_level_test.rs::testInstanceOf
+tests/Tests/ORM/Functional/Ticket/Ticket4646InstanceOfParametricTest.php	Ticket4646InstanceOfParametricTest::testInstanceOf	ported	crates/php2rust-doctrine-orm/tests/ticket4646_instance_of_parametric_test.rs::testInstanceOf
+tests/Tests/ORM/Functional/Ticket/Ticket4646InstanceOfTest.php	Ticket4646InstanceOfTest::testInstanceOf	ported	crates/php2rust-doctrine-orm/tests/ticket4646_instance_of_test.rs::testInstanceOf
+tests/Tests/ORM/Functional/Ticket/Ticket4646InstanceOfWithMultipleParametersTest.php	Ticket4646InstanceOfWithMultipleParametersTest::testInstanceOf	ported	crates/php2rust-doctrine-orm/tests/ticket4646_instance_of_with_multiple_parameters_test.rs::testInstanceOf
 tests/Tests/ORM/Functional/TypeTest.php	TypeTest::testArray	n/a: skipped upstream on DBAL 4 (no ArrayType)	
 tests/Tests/ORM/Functional/TypeTest.php	TypeTest::testBoolean	ported	crates/php2rust-doctrine-orm/tests/type_test.rs::testBoolean
 tests/Tests/ORM/Functional/TypeTest.php	TypeTest::testDate	ported	crates/php2rust-doctrine-orm/tests/type_test.rs::testDate
