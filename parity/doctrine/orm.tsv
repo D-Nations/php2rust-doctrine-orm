@@ -1252,9 +1252,9 @@ tests/Tests/ORM/Functional/Ticket/DDC1778Test.php	DDC1778Test::testRemove	ported
 tests/Tests/ORM/Functional/Ticket/DDC1778Test.php	DDC1778Test::testRemoveElement	ported	crates/php2rust-doctrine-orm/tests/ddc1778_test.rs::testRemoveElement
 tests/Tests/ORM/Functional/Ticket/DDC1787Test.php	DDC1787Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc1787_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC1843Test.php	DDC1843Test::testCreateRetrieveUpdateDelete	ported	crates/php2rust-doctrine-orm/tests/ddc1843_test.rs::testCreateRetrieveUpdateDelete
-tests/Tests/ORM/Functional/Ticket/DDC1884Test.php	DDC1884Test::testSelectFromInverseSideWithCompositePkAndSolelyIdentifierColumnsUsingFetchJoins	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1884Test.php	DDC1884Test::testSelectFromInverseSideWithCompositePkUsingFetchJoins	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1884Test.php	DDC1884Test::testSelectFromOwningSideUsingFetchJoins	pending	
+tests/Tests/ORM/Functional/Ticket/DDC1884Test.php	DDC1884Test::testSelectFromInverseSideWithCompositePkAndSolelyIdentifierColumnsUsingFetchJoins	ported	crates/php2rust-doctrine-orm/tests/ddc1884_test.rs::testSelectFromInverseSideWithCompositePkAndSolelyIdentifierColumnsUsingFetchJoins
+tests/Tests/ORM/Functional/Ticket/DDC1884Test.php	DDC1884Test::testSelectFromInverseSideWithCompositePkUsingFetchJoins	ported	crates/php2rust-doctrine-orm/tests/ddc1884_test.rs::testSelectFromInverseSideWithCompositePkUsingFetchJoins
+tests/Tests/ORM/Functional/Ticket/DDC1884Test.php	DDC1884Test::testSelectFromOwningSideUsingFetchJoins	ported	crates/php2rust-doctrine-orm/tests/ddc1884_test.rs::testSelectFromOwningSideUsingFetchJoins
 tests/Tests/ORM/Functional/Ticket/DDC1885Test.php	DDC1885Test::testClearAll	ported	crates/php2rust-doctrine-orm/tests/ddc1885_test.rs::testClearAll
 tests/Tests/ORM/Functional/Ticket/DDC1885Test.php	DDC1885Test::testCountExtraLazy	ported	crates/php2rust-doctrine-orm/tests/ddc1885_test.rs::testCountExtraLazy
 tests/Tests/ORM/Functional/Ticket/DDC1885Test.php	DDC1885Test::testCreateRetrieveUpdateDelete	ported	crates/php2rust-doctrine-orm/tests/ddc1885_test.rs::testCreateRetrieveUpdateDelete
