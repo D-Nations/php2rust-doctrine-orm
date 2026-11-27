@@ -2,8 +2,8 @@
 //! the test entity manager (`tests/common/dql.rs`). Parameters whose
 //! value is an entity or a `ClassMetadata` are set to `null`: the SQL
 //! does not depend on the value. The tests on the `MySQLPlatform`,
-//! `PostgreSQLPlatform` and `OraclePlatform` are pending: the DBAL port
-//! has only `SQLitePlatform`.
+//! `PostgreSQLPlatform` and `OraclePlatform` create the entity manager
+//! with DBAL's platform, as upstream does.
 //!
 //! Upstream: doctrine/orm tests/Tests/ORM/Query/SelectSqlGenerationTest.php
 
@@ -23,6 +23,9 @@ use std::sync::Arc;
 
 use php_value::{PhpArray, Thrown, Value};
 use php2rust_doctrine_dbal::LockMode;
+use php2rust_doctrine_dbal::platforms::{
+    AbstractPlatform, MySQLPlatform, OraclePlatform, PostgreSQLPlatform,
+};
 use php2rust_doctrine_orm::query::ast::Node;
 use php2rust_doctrine_orm::query::ast::functions::FunctionNode;
 use php2rust_doctrine_orm::query::context::{
@@ -136,6 +139,40 @@ fn assert_sql_generation_with(
         query.hint(name, value.clone());
     }
     assert_eq!(sql_to_be_confirmed, query.get_single_sql().unwrap());
+}
+
+/// `createTestEntityManagerWithPlatform($platform)`.
+fn with_platform(platform: impl AbstractPlatform + 'static) -> TestEntityManager {
+    TestEntityManager::with_platform(Box::new(platform))
+}
+
+fn mysql() -> TestEntityManager {
+    with_platform(MySQLPlatform::new())
+}
+
+fn postgresql() -> TestEntityManager {
+    with_platform(PostgreSQLPlatform::new())
+}
+
+fn oracle() -> TestEntityManager {
+    with_platform(OraclePlatform::new())
+}
+
+/// `assertSqlGeneration()` on `$this->entityManager`.
+fn assert_sql_generation_on(
+    entity_manager: &TestEntityManager,
+    dql_to_be_tested: &str,
+    sql_to_be_confirmed: &str,
+    query_hints: &[(&str, Hint)],
+) {
+    assert_sql_generation_with(
+        entity_manager,
+        dql_to_be_tested,
+        sql_to_be_confirmed,
+        query_hints,
+        &[],
+        HYDRATE_OBJECT,
+    );
 }
 
 fn assert_invalid_sql_generation(dql_to_be_tested: &str, expected_exception: &str) {
@@ -1894,4 +1931,170 @@ fn testHavingRegressionUsingVariableWithMathOperatorsExpression() {
             ),
         );
     }
+}
+
+// The tests on DBAL's other platforms.
+
+#[test]
+fn testBooleanLiteralInWhereOnPostgres() {
+    let entity_manager = postgresql();
+    assert_sql_generation_on(
+        &entity_manager,
+        r"SELECT b FROM Doctrine\Tests\Models\Generic\BooleanModel b WHERE b.booleanField = true",
+        "SELECT b0_.id AS id_0, b0_.booleanField AS booleanfield_1 FROM boolean_model b0_ WHERE b0_.booleanField = true",
+        &[],
+    );
+
+    assert_sql_generation_on(
+        &entity_manager,
+        r"SELECT b FROM Doctrine\Tests\Models\Generic\BooleanModel b WHERE b.booleanField = false",
+        "SELECT b0_.id AS id_0, b0_.booleanField AS booleanfield_1 FROM boolean_model b0_ WHERE b0_.booleanField = false",
+        &[],
+    );
+}
+
+#[test]
+fn testCaseThenFunction() {
+    let entity_manager = postgresql();
+
+    assert_sql_generation_on(
+        &entity_manager,
+        r"SELECT CASE WHEN LENGTH(u.name) <> 0 THEN CONCAT(u.id, u.name) ELSE u.id END AS name  FROM Doctrine\Tests\Models\CMS\CmsUser u",
+        "SELECT CASE WHEN LENGTH(c0_.name) <> 0 THEN c0_.id || c0_.name ELSE c0_.id END AS sclr_0 FROM cms_users c0_",
+        &[],
+    );
+
+    assert_sql_generation_on(
+        &entity_manager,
+        r"SELECT CASE WHEN LENGTH(u.name) <> LENGTH(TRIM(u.name)) THEN TRIM(u.name) ELSE u.name END AS name  FROM Doctrine\Tests\Models\CMS\CmsUser u",
+        "SELECT CASE WHEN LENGTH(c0_.name) <> LENGTH(TRIM(c0_.name)) THEN TRIM(c0_.name) ELSE c0_.name END AS sclr_0 FROM cms_users c0_",
+        &[],
+    );
+
+    assert_sql_generation_on(
+        &entity_manager,
+        r"SELECT CASE WHEN LENGTH(u.name) > :value THEN SUBSTRING(u.name, 0, :value) ELSE TRIM(u.name) END AS name  FROM Doctrine\Tests\Models\CMS\CmsUser u",
+        "SELECT CASE WHEN LENGTH(c0_.name) > ? THEN SUBSTRING(c0_.name FROM 0 FOR ?) ELSE TRIM(c0_.name) END AS sclr_0 FROM cms_users c0_",
+        &[],
+    );
+}
+
+#[test]
+fn testPessimisticReadLockQueryHintMySql() {
+    assert_sql_generation_on(
+        &mysql(),
+        r"SELECT u FROM Doctrine\Tests\Models\CMS\CmsUser u WHERE u.username = 'gblanco'",
+        "SELECT c0_.id AS id_0, c0_.status AS status_1, c0_.username AS username_2, c0_.name AS name_3, c0_.email_id AS email_id_4 FROM cms_users c0_ WHERE c0_.username = 'gblanco' LOCK IN SHARE MODE",
+        &[(HINT_LOCK_MODE, Hint::LockMode(LockMode::PessimisticRead))],
+    );
+}
+
+#[test]
+fn testPessimisticReadLockQueryHintOracle() {
+    assert_sql_generation_on(
+        &oracle(),
+        r"SELECT u FROM Doctrine\Tests\Models\CMS\CmsUser u WHERE u.username = 'gblanco'",
+        "SELECT c0_.id AS ID_0, c0_.status AS STATUS_1, c0_.username AS USERNAME_2, c0_.name AS NAME_3, c0_.email_id AS EMAIL_ID_4 FROM cms_users c0_ WHERE c0_.username = 'gblanco' FOR UPDATE",
+        &[(HINT_LOCK_MODE, Hint::LockMode(LockMode::PessimisticRead))],
+    );
+}
+
+#[test]
+fn testPessimisticReadLockQueryHintPostgreSql() {
+    assert_sql_generation_on(
+        &postgresql(),
+        r"SELECT u FROM Doctrine\Tests\Models\CMS\CmsUser u WHERE u.username = 'gblanco'",
+        "SELECT c0_.id AS id_0, c0_.status AS status_1, c0_.username AS username_2, c0_.name AS name_3, c0_.email_id AS email_id_4 FROM cms_users c0_ WHERE c0_.username = 'gblanco' FOR SHARE",
+        &[(HINT_LOCK_MODE, Hint::LockMode(LockMode::PessimisticRead))],
+    );
+}
+
+#[test]
+fn testSupportsAggregateCountFunctionWithSimpleArithmetic() {
+    assert_sql_generation_on(
+        &mysql(),
+        r"SELECT COUNT(CONCAT(u.id, u.name)) FROM Doctrine\Tests\Models\CMS\CmsUser u GROUP BY u.id",
+        "SELECT COUNT(CONCAT(c0_.id, c0_.name)) AS sclr_0 FROM cms_users c0_ GROUP BY c0_.id",
+        &[],
+    );
+}
+
+#[test]
+fn testSupportsConcatFunctionForMysqlAndPostgresql() {
+    let entity_manager = mysql();
+
+    assert_sql_generation_on(
+        &entity_manager,
+        r"SELECT u.id FROM Doctrine\Tests\Models\CMS\CmsUser u WHERE CONCAT(u.name, 's') = ?1",
+        "SELECT c0_.id AS id_0 FROM cms_users c0_ WHERE CONCAT(c0_.name, 's') = ?",
+        &[],
+    );
+    assert_sql_generation_on(
+        &entity_manager,
+        r"SELECT CONCAT(u.id, u.name) FROM Doctrine\Tests\Models\CMS\CmsUser u WHERE u.id = ?1",
+        "SELECT CONCAT(c0_.id, c0_.name) AS sclr_0 FROM cms_users c0_ WHERE c0_.id = ?",
+        &[],
+    );
+
+    let entity_manager = postgresql();
+    assert_sql_generation_on(
+        &entity_manager,
+        r"SELECT u.id FROM Doctrine\Tests\Models\CMS\CmsUser u WHERE CONCAT(u.name, 's') = ?1",
+        "SELECT c0_.id AS id_0 FROM cms_users c0_ WHERE c0_.name || 's' = ?",
+        &[],
+    );
+    assert_sql_generation_on(
+        &entity_manager,
+        r"SELECT CONCAT(u.id, u.name) FROM Doctrine\Tests\Models\CMS\CmsUser u WHERE u.id = ?1",
+        "SELECT c0_.id || c0_.name AS sclr_0 FROM cms_users c0_ WHERE c0_.id = ?",
+        &[],
+    );
+}
+
+#[test]
+fn testSupportsMoreThanTwoParametersInConcatFunction() {
+    let entity_manager = mysql();
+
+    assert_sql_generation_on(
+        &entity_manager,
+        r"SELECT u.id FROM Doctrine\Tests\Models\CMS\CmsUser u WHERE CONCAT(u.name, u.status, 's') = ?1",
+        "SELECT c0_.id AS id_0 FROM cms_users c0_ WHERE CONCAT(c0_.name, c0_.status, 's') = ?",
+        &[],
+    );
+    assert_sql_generation_on(
+        &entity_manager,
+        r"SELECT CONCAT(u.id, u.name, u.status) FROM Doctrine\Tests\Models\CMS\CmsUser u WHERE u.id = ?1",
+        "SELECT CONCAT(c0_.id, c0_.name, c0_.status) AS sclr_0 FROM cms_users c0_ WHERE c0_.id = ?",
+        &[],
+    );
+}
+
+#[test]
+fn testSupportsNotInExpressionForModFunction() {
+    assert_sql_generation_on(
+        &mysql(),
+        r"SELECT u.name FROM Doctrine\Tests\Models\CMS\CmsUser u WHERE MOD(u.id, 5) NOT IN(1,3,4)",
+        "SELECT c0_.name AS name_0 FROM cms_users c0_ WHERE MOD(c0_.id, 5) NOT IN (1, 3, 4)",
+        &[],
+    );
+}
+
+#[test]
+fn testSupportsTrimFunction() {
+    assert_sql_generation_on(
+        &mysql(),
+        r"SELECT u.name FROM Doctrine\Tests\Models\CMS\CmsUser u WHERE TRIM(TRAILING ' ' FROM u.name) = 'someone'",
+        "SELECT c0_.name AS name_0 FROM cms_users c0_ WHERE TRIM(TRAILING ' ' FROM c0_.name) = 'someone'",
+        &[],
+    );
+}
+
+#[test]
+fn testSupportsTrimLeadingZeroString() {
+    assert_sql_generation_on(
+        &mysql(),
+        r"SELECT u.name FROM Doctrine\Tests\Models\CMS\CmsUser u WHERE TRIM(TRAILING '0' FROM u.name) != ''",
+        "SELECT c0_.name AS name_0 FROM cms_users c0_ WHERE TRIM(TRAILING '0' FROM c0_.name) <> ''",
+        &[],
+    );
 }
