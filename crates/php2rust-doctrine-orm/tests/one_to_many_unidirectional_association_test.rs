@@ -25,8 +25,12 @@ fn class(name: &str) -> String {
     format!("{ROUTING}{name}")
 }
 
-#[tokio::test]
-async fn testLegsAreUniqueToRoutes() {
+/// `setUp()`: the schema and the locations Berlin, Bonn, Brasilia and
+/// Atlanta.
+async fn set_up_locations() -> (
+    std::sync::Arc<php2rust_doctrine_orm::entity_manager::EntityManager>,
+    Vec<php_value::Object>,
+) {
     let models = [
         class("RoutingLeg"),
         class("RoutingLocation"),
@@ -44,7 +48,12 @@ async fn testLegsAreUniqueToRoutes() {
         locations.push(location);
     }
     em.flush().await.unwrap();
+    (em, locations)
+}
 
+/// A `RoutingLeg` from Berlin to Bonn, departing now, arriving in five
+/// hours.
+fn berlin_bonn_leg(locations: &[php_value::Object]) -> php_value::Object {
     let leg = new_object(&class("RoutingLeg"));
     set_obj(&leg, "fromLocation", &locations[0]);
     set_obj(&leg, "toLocation", &locations[1]);
@@ -59,6 +68,52 @@ async fn testLegsAreUniqueToRoutes() {
             TimeZone::Utc,
         )),
     );
+    leg
+}
+
+#[tokio::test]
+async fn testPersistOwningInverseCascade() {
+    let (em, locations) = set_up_locations().await;
+    let leg = berlin_bonn_leg(&locations);
+
+    let route = new_object(&class("RoutingRoute"));
+    set(
+        &route,
+        "legs",
+        ArrayCollectionObject::value(PhpArray::new()),
+    );
+    append(&route, "legs", Value::Object(leg));
+
+    em.persist(&route).unwrap();
+    em.flush().await.unwrap();
+    em.clear().unwrap();
+
+    let routes = obj(&em
+        .create_query(
+            "SELECT r, l, f, t FROM Doctrine\\Tests\\Models\\Routing\\RoutingRoute r \
+             JOIN r.legs l JOIN l.fromLocation f JOIN l.toLocation t",
+        )
+        .get_single_result(None)
+        .await
+        .unwrap());
+
+    let legs = elements(&routes, "legs").await;
+    assert_eq!(legs.len(), 1);
+    assert_loose_eq(
+        &s("Berlin"),
+        &get(&get_object(&legs[0], "fromLocation").unwrap(), "name"),
+    );
+    assert_loose_eq(
+        &s("Bonn"),
+        &get(&get_object(&legs[0], "toLocation").unwrap(), "name"),
+    );
+}
+
+#[tokio::test]
+async fn testLegsAreUniqueToRoutes() {
+    let (em, locations) = set_up_locations().await;
+
+    let leg = berlin_bonn_leg(&locations);
 
     let route_a = new_object(&class("RoutingRoute"));
     set(

@@ -188,6 +188,12 @@ impl EntityRepository {
         &self.class
     }
 
+    /// `expr()`: the entity manager's expression builder (protected
+    /// upstream, for subclasses).
+    pub fn expr(&self) -> Result<crate::query::Expr, Thrown> {
+        Ok(self.em()?.get_expression_builder())
+    }
+
     /// Resolves a magic method call to the proper existent method at
     /// `EntityRepository`.
     async fn resolve_magic_call(

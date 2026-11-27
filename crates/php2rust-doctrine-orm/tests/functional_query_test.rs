@@ -1,9 +1,9 @@
 //! Upstream: doctrine/orm tests/Tests/ORM/Functional/QueryTest.php
 //!
 //! `toIterable()` reads the result whole, so the iterations see every
-//! entity of the result hydrated. The query builder test is the query
-//! builder's; the partial objects test needs partial objects (lazy ghosts
-//! of the selected fields), which the unit of work does not port.
+//! entity of the result hydrated. The partial objects test needs partial
+//! objects (lazy ghosts of the selected fields), which the unit of work
+//! does not port.
 
 #![allow(non_snake_case)]
 #![allow(
@@ -880,6 +880,25 @@ async fn testDqlWithAutoInferOfParameters() {
     let users = query.execute(None, None).await.unwrap();
 
     assert_eq!(list(&users).len(), 2);
+}
+
+#[tokio::test]
+async fn testQueryBuilderWithStringWhereClauseContainingOrAndConditionalPrimary() {
+    let em = set_up(&CMS_MODELS).await;
+    let mut qb = em.create_query_builder();
+    qb.select(vec![s("u")])
+        .unwrap()
+        .from(CMS_USER, "u", None)
+        .unwrap()
+        .inner_join("u.articles", "a", None, None, None)
+        .unwrap()
+        .r#where(vec![s("(u.id = 0) OR (u.id IS NULL)")])
+        .unwrap();
+
+    let query = qb.get_query().unwrap();
+    let users = query.execute(None, None).await.unwrap();
+
+    assert_eq!(list(&users).len(), 0);
 }
 
 #[tokio::test]

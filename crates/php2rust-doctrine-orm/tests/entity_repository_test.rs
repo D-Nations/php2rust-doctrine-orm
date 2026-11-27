@@ -1271,3 +1271,48 @@ async fn testFindMultipleByNullValueInMultipleInCriteriaValues() {
         assert!(same(user, &user1) || same(user, &user2));
     }
 }
+
+/// The configuration is the entity manager's own here, which cannot change
+/// after it is created: the default repository class is set on the one an
+/// entity manager is created with. `isDefaultRepository()` and
+/// `isCustomRepository()` (which return `true`) are PHP methods of the
+/// repository classes: the repository's class is what is compared.
+#[tokio::test]
+async fn testDefaultRepositoryClassName() {
+    const ENTITY_REPOSITORY: &str = "Doctrine\\ORM\\EntityRepository";
+    const DDC753: &str = "Doctrine\\Tests\\Models\\DDC753\\";
+    let default_repository = format!("{DDC753}DDC753DefaultRepository");
+
+    let em = orm::entity_manager(orm::connection(), None);
+    assert_eq!(
+        em.get_configuration().get_default_repository_class_name(),
+        ENTITY_REPOSITORY
+    );
+    let em = entity_manager_with(orm::connection(), |config| {
+        config
+            .set_default_repository_class_name(&default_repository)
+            .unwrap();
+    });
+    assert_eq!(
+        em.get_configuration().get_default_repository_class_name(),
+        default_repository
+    );
+
+    let repos = em
+        .get_repository(&format!("{DDC753}DDC753EntityWithDefaultCustomRepository"))
+        .unwrap();
+    assert_eq!(repos.get_repository_class(), default_repository);
+
+    let repos = em
+        .get_repository(&format!("{DDC753}DDC753EntityWithCustomRepository"))
+        .unwrap();
+    assert_eq!(
+        repos.get_repository_class(),
+        format!("{DDC753}DDC753CustomRepository")
+    );
+
+    assert_eq!(
+        em.get_configuration().get_default_repository_class_name(),
+        default_repository
+    );
+}
