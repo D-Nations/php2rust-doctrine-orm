@@ -663,7 +663,7 @@ dependencies = [
 [[package]]
 name = "php2rust-doctrine-dbal"
 version = "0.1.0"
-source = "git+https://github.com/php2rust/doctrine-dbal-rs?rev=af5d5924c5d2b2c8ad37d64ccf169f8401d10060#af5d5924c5d2b2c8ad37d64ccf169f8401d10060"
+source = "git+https://github.com/php2rust/doctrine-dbal-rs?rev=739ac04ac7c77304208050fe0bb35a4e34b5c81b#739ac04ac7c77304208050fe0bb35a4e34b5c81b"
 dependencies = [
  "php2rust-regex",
  "php2rust-value",
@@ -720,10 +720,10 @@ dependencies = [
  "php2rust-doctrine-persistence",
  "php2rust-dom",
  "php2rust-regex",
+ "php2rust-symfony-console",
  "php2rust-value",
  "serde_json",
  "sha1",
- "symfony-console",
  "tokio",
 ]
 
@@ -740,20 +740,48 @@ dependencies = [
 [[package]]
 name = "php2rust-dom"
 version = "0.1.0"
-source = "git+https://github.com/D-Nations/php2rust-compatibility-tools?rev=977342827ba414362c6af60f38dd376f2fbcfd72#977342827ba414362c6af60f38dd376f2fbcfd72"
+source = "git+https://github.com/php2rust/compatibility-tools?rev=4585a15ed0263257317cdf818ebcad7ed7542db8#4585a15ed0263257317cdf818ebcad7ed7542db8"
 
 [[package]]
 name = "php2rust-regex"
 version = "0.1.0"
-source = "git+https://github.com/D-Nations/php2rust-compatibility-tools?rev=977342827ba414362c6af60f38dd376f2fbcfd72#977342827ba414362c6af60f38dd376f2fbcfd72"
+source = "git+https://github.com/php2rust/compatibility-tools?rev=4585a15ed0263257317cdf818ebcad7ed7542db8#4585a15ed0263257317cdf818ebcad7ed7542db8"
 dependencies = [
  "fancy-regex",
 ]
 
 [[package]]
+name = "php2rust-symfony-console"
+version = "0.1.0"
+source = "git+https://github.com/php2rust/symfony-console-rs?rev=8a0e6960e5fcc28f822ae9fd8131c5b8e5703085#8a0e6960e5fcc28f822ae9fd8131c5b8e5703085"
+dependencies = [
+ "fancy-regex",
+ "php2rust-symfony-deprecation-contracts",
+ "php2rust-symfony-string",
+ "php2rust-value",
+]
+
+[[package]]
+name = "php2rust-symfony-deprecation-contracts"
+version = "0.1.0"
+source = "git+https://github.com/php2rust/symfony-deprecation-contracts-rs?rev=2089fa1b805329c4e5f0794d51521b5df0a4528c#2089fa1b805329c4e5f0794d51521b5df0a4528c"
+
+[[package]]
+name = "php2rust-symfony-string"
+version = "0.1.0"
+source = "git+https://github.com/php2rust/symfony-console-rs?rev=8a0e6960e5fcc28f822ae9fd8131c5b8e5703085#8a0e6960e5fcc28f822ae9fd8131c5b8e5703085"
+dependencies = [
+ "getrandom",
+ "php2rust-regex",
+ "php2rust-value",
+ "unicode-normalization",
+ "unicode-segmentation",
+]
+
+[[package]]
 name = "php2rust-value"
 version = "0.1.0"
-source = "git+https://github.com/D-Nations/php2rust-compatibility-tools?rev=977342827ba414362c6af60f38dd376f2fbcfd72#977342827ba414362c6af60f38dd376f2fbcfd72"
+source = "git+https://github.com/php2rust/compatibility-tools?rev=4585a15ed0263257317cdf818ebcad7ed7542db8#4585a15ed0263257317cdf818ebcad7ed7542db8"
 dependencies = [
  "serde_json",
 ]
@@ -1057,34 +1085,6 @@ name = "stable_deref_trait"
 version = "1.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6ce2be8dc25455e1f91df71bfa12ad37d7af1092ae736f3a6cd0e37bc7810596"
-
-[[package]]
-name = "symfony-console"
-version = "0.1.0"
-source = "git+https://github.com/php2rust/symfony-rs?rev=b7f108e65ffc5e644421f9a5fbffbc724c57e469#b7f108e65ffc5e644421f9a5fbffbc724c57e469"
-dependencies = [
- "fancy-regex",
- "php2rust-value",
- "symfony-deprecation-contracts",
- "symfony-string",
-]
-
-[[package]]
-name = "symfony-deprecation-contracts"
-version = "0.1.0"
-source = "git+https://github.com/php2rust/symfony-rs?rev=b7f108e65ffc5e644421f9a5fbffbc724c57e469#b7f108e65ffc5e644421f9a5fbffbc724c57e469"
-
-[[package]]
-name = "symfony-string"
-version = "0.1.0"
-source = "git+https://github.com/php2rust/symfony-rs?rev=b7f108e65ffc5e644421f9a5fbffbc724c57e469#b7f108e65ffc5e644421f9a5fbffbc724c57e469"
-dependencies = [
- "getrandom",
- "php2rust-regex",
- "php2rust-value",
- "unicode-normalization",
- "unicode-segmentation",
-]
 
 [[package]]
 name = "syn"
