@@ -3,10 +3,12 @@
 //! Upstream: none
 
 pub mod hydration;
+mod hydration_complete_handler;
 mod strongly_connected_components;
 mod topological_sort;
 pub mod unit_of_work;
 
+pub use hydration_complete_handler::{HydrationCompleteHandler, PostLoadListenersInvoker};
 pub use strongly_connected_components::StronglyConnectedComponents;
 pub use topological_sort::{CycleDetectedException, TopologicalSort};
 

@@ -36,7 +36,10 @@ use crate::events;
 use crate::exception;
 use crate::id::IdGenerator;
 use crate::internal::unit_of_work::InsertBatch;
-use crate::internal::{StronglyConnectedComponents, TopologicalSort, object_id};
+use crate::internal::{
+    HydrationCompleteHandler, PostLoadListenersInvoker, StronglyConnectedComponents,
+    TopologicalSort, object_id,
+};
 use crate::mapping::{AssociationMapping, ClassMetadata};
 use crate::object::EntityObject;
 use crate::persistent_collection::PersistentCollection;
@@ -267,8 +270,41 @@ struct State {
             Ordered<String, Arc<PersistentCollection>>,
         ),
     >,
-    /// The deferred postLoad invocations (`HydrationCompleteHandler`).
-    deferred_post_load_invocations: Vec<(Arc<ClassMetadata>, i32, Object)>,
+    /// The `HydrationCompleteHandler` and its deferred postLoad
+    /// invocations.
+    hydration_complete_handler: HydrationCompleteHandler<Arc<ClassMetadata>>,
+}
+
+/// The unit of work's `ListenersInvoker` with the entity manager's
+/// event manager, as the `HydrationCompleteHandler` calls it.
+struct UowListenersInvoker<'a> {
+    listeners_invoker: &'a ListenersInvoker,
+    event_manager: php2rust_doctrine_event_manager::EventManager,
+}
+
+impl PostLoadListenersInvoker<Arc<ClassMetadata>> for UowListenersInvoker<'_> {
+    fn get_subscribed_systems(&self, class: &Arc<ClassMetadata>, event_name: &str) -> i32 {
+        ListenersInvoker::get_subscribed_systems(&class.read(), &self.event_manager, event_name)
+    }
+
+    fn invoke(
+        &self,
+        class: &Arc<ClassMetadata>,
+        event_name: &str,
+        entity: &Object,
+        event: &LifecycleEventArgs,
+        invoke: i32,
+    ) -> Result<(), Thrown> {
+        let info = class.read();
+        self.listeners_invoker.invoke(
+            &info,
+            &self.event_manager,
+            event_name,
+            entity,
+            event,
+            invoke,
+        )
+    }
 }
 
 /// `Doctrine\ORM\UnitOfWork`.
@@ -635,6 +671,29 @@ impl UnitOfWork {
         entity: &'a Object,
     ) -> Fut<'a, ()> {
         Box::pin(async move { self.do_compute_change_set(class, entity).await })
+    }
+
+    /// [`Self::compute_change_set`] from a listener's body, which is a
+    /// synchronous call (an `onFlush` listener computing the change set of
+    /// an entity it persisted): the change set is computed at once, as in
+    /// PHP. Not PHP: when the computation would have to wait on the
+    /// database (to initialize a collection), it stops and fails with a
+    /// `LogicException`.
+    pub fn compute_change_set_now(
+        &self,
+        class: &Arc<ClassMetadata>,
+        entity: &Object,
+    ) -> Result<(), Thrown> {
+        let mut future = self.compute_change_set(class, entity);
+        let mut context = std::task::Context::from_waker(std::task::Waker::noop());
+        match future.as_mut().poll(&mut context) {
+            std::task::Poll::Ready(result) => result,
+            std::task::Poll::Pending => Err(Thrown::new(
+                "LogicException",
+                "computeChangeSet() has to wait on the database, which a listener's synchronous call cannot do",
+                0,
+            )),
+        }
     }
 
     #[allow(clippy::too_many_lines, reason = "computeChangeSet(), in its order")]
@@ -2406,9 +2465,9 @@ impl UnitOfWork {
     pub fn clear(&self) -> Result<(), Thrown> {
         {
             let mut st = self.st();
-            let deferred = std::mem::take(&mut st.deferred_post_load_invocations);
+            let handler = std::mem::take(&mut st.hydration_complete_handler);
             *st = State::default();
-            st.deferred_post_load_invocations = deferred;
+            st.hydration_complete_handler = handler;
         }
         let em = self.em()?;
         self.dispatch(&em, events::ON_CLEAR, event::ON_CLEAR_EVENT_ARGS)
@@ -2840,31 +2899,25 @@ impl UnitOfWork {
     /// `HydrationCompleteHandler::deferPostLoadInvoking()`.
     fn defer_post_load_invoking(&self, class: &Arc<ClassMetadata>, entity: &Object) {
         let Ok(em) = self.em() else { return };
-        let invoke = self.subscribed(&em, class, events::POST_LOAD);
-        if invoke == ListenersInvoker::INVOKE_NONE {
-            return;
-        }
+        let invoker = UowListenersInvoker {
+            listeners_invoker: &self.listeners_invoker,
+            event_manager: em.get_event_manager(),
+        };
         self.st()
-            .deferred_post_load_invocations
-            .push((class.clone(), invoke, entity.clone()));
+            .hydration_complete_handler
+            .defer_post_load_invoking(&invoker, class.clone(), entity.clone());
     }
 
     /// INTERNAL: To be called by the hydrators when hydration is complete
     /// (`HydrationCompleteHandler::hydrationComplete()`).
     pub fn hydration_complete(&self) -> Result<(), Thrown> {
-        let to_invoke = std::mem::take(&mut self.st().deferred_post_load_invocations);
+        let mut handler = std::mem::take(&mut self.st().hydration_complete_handler);
         let em = self.em()?;
-        for (class, invoke, entity) in to_invoke {
-            self.invoke_lifecycle(
-                &em,
-                &class,
-                events::POST_LOAD,
-                event::POST_LOAD_EVENT_ARGS,
-                &entity,
-                invoke,
-            )?;
-        }
-        Ok(())
+        let invoker = UowListenersInvoker {
+            listeners_invoker: &self.listeners_invoker,
+            event_manager: em.get_event_manager(),
+        };
+        handler.hydration_complete(&invoker, &em)
     }
 
     /// Triggers the deferred eager loads.
