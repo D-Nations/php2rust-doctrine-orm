@@ -354,12 +354,12 @@ tests/Tests/ORM/Functional/CustomFunctionsTest.php	CustomFunctionsTest::testCust
 tests/Tests/ORM/Functional/CustomIdObjectTypeTest.php	CustomIdObjectTypeTest::testFetchJoinCustomIdObject	pending	
 tests/Tests/ORM/Functional/CustomIdObjectTypeTest.php	CustomIdObjectTypeTest::testFetchJoinWhereCustomIdObject	pending	
 tests/Tests/ORM/Functional/CustomIdObjectTypeTest.php	CustomIdObjectTypeTest::testFindByCustomIdObject	pending	
-tests/Tests/ORM/Functional/DatabaseDriverTest.php	DatabaseDriverTest::testDetectManyToManyTables	pending	
-tests/Tests/ORM/Functional/DatabaseDriverTest.php	DatabaseDriverTest::testIgnoreManyToManyTableWithoutFurtherForeignKeyDetails	pending	
-tests/Tests/ORM/Functional/DatabaseDriverTest.php	DatabaseDriverTest::testIssue2059	pending	
-tests/Tests/ORM/Functional/DatabaseDriverTest.php	DatabaseDriverTest::testLoadMetadataFromDatabase	pending	
-tests/Tests/ORM/Functional/DatabaseDriverTest.php	DatabaseDriverTest::testLoadMetadataFromDatabaseDetail	pending	
-tests/Tests/ORM/Functional/DatabaseDriverTest.php	DatabaseDriverTest::testLoadMetadataWithForeignKeyFromDatabase	pending	
+tests/Tests/ORM/Functional/DatabaseDriverTest.php	DatabaseDriverTest::testDetectManyToManyTables	ported	crates/php2rust-doctrine-orm/tests/database_driver_test.rs::testDetectManyToManyTables
+tests/Tests/ORM/Functional/DatabaseDriverTest.php	DatabaseDriverTest::testIgnoreManyToManyTableWithoutFurtherForeignKeyDetails	ported	crates/php2rust-doctrine-orm/tests/database_driver_test.rs::testIgnoreManyToManyTableWithoutFurtherForeignKeyDetails
+tests/Tests/ORM/Functional/DatabaseDriverTest.php	DatabaseDriverTest::testIssue2059	ported	crates/php2rust-doctrine-orm/tests/database_driver_test.rs::testIssue2059
+tests/Tests/ORM/Functional/DatabaseDriverTest.php	DatabaseDriverTest::testLoadMetadataFromDatabase	ported	crates/php2rust-doctrine-orm/tests/database_driver_test.rs::testLoadMetadataFromDatabase
+tests/Tests/ORM/Functional/DatabaseDriverTest.php	DatabaseDriverTest::testLoadMetadataFromDatabaseDetail	ported	crates/php2rust-doctrine-orm/tests/database_driver_test.rs::testLoadMetadataFromDatabaseDetail
+tests/Tests/ORM/Functional/DatabaseDriverTest.php	DatabaseDriverTest::testLoadMetadataWithForeignKeyFromDatabase	ported	crates/php2rust-doctrine-orm/tests/database_driver_test.rs::testLoadMetadataWithForeignKeyFromDatabase
 tests/Tests/ORM/Functional/DefaultTimeExpressionTest.php	DefaultTimeExpressionTest::testNoDeprecationsAreTrownWhenTheyCannotBeAddressed	pending	
 tests/Tests/ORM/Functional/DefaultTimeExpressionTest.php	DefaultTimeExpressionTest::testUsingDefaultExpressionInstancesCausesNoDeprecation	pending	
 tests/Tests/ORM/Functional/DefaultTimeExpressionTest.php	DefaultTimeExpressionTest::testUsingTimeRelatedDefaultExpressionCausesAnOrmDeprecationAndNoDbalDeprecation	pending	
