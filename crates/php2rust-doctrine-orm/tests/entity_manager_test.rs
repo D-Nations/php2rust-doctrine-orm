@@ -5,10 +5,16 @@
 //! data provider rows run in one test each; `new stdClass()` is a generic
 //! object. A closure that throws a `TypeError` returns it.
 //!
-//! Pending: `testLazyGhostEntityManager` (a lazy ghost of
-//! the entity manager through reflection), and the two tests that
-//! override `Connection::rollBack()`/`commit()` in a subclass (the DBAL
-//! connection is a struct; `Thrown` has no previous exception).
+//! `testItDoesNotAttemptToRollbackIfNoTransactionIsActive`'s connection
+//! subclass is a driver connection stub (`tests/common/stub_connection.rs`)
+//! whose commit fails: DBAL's `commit()` then ends the transaction, so
+//! `isTransactionActive()` is false, and a rollback would fail with the
+//! `Assert::fail()` message, which would replace the commit's.
+//!
+//! Pending: `testLazyGhostEntityManager` (a lazy ghost of the entity
+//! manager through reflection) and
+//! `testItPreservesTheOriginalExceptionOnRollbackFailure` (`Thrown` has
+//! no previous exception).
 
 #![allow(non_snake_case)]
 #![allow(
@@ -21,6 +27,8 @@
 mod models;
 #[path = "common/orm.rs"]
 mod orm;
+#[path = "common/stub_connection.rs"]
+mod stub_connection;
 
 use std::sync::Arc;
 
@@ -204,4 +212,24 @@ async fn testWrapInTransactionReThrowsThrowables() {
     let e = result.expect_err("TypeError expected to be thrown");
     assert_eq!("TypeError", e.class);
     assert!(!entity_manager.is_open());
+}
+
+#[tokio::test]
+async fn testItDoesNotAttemptToRollbackIfNoTransactionIsActive() {
+    let entity_manager = orm::entity_manager(
+        stub_connection::stub_connection(stub_connection::Failures {
+            commit: Some("Commit exception that happens after doing the actual commit"),
+            roll_back: Some("Should not attempt to rollback if no transaction is active"),
+        }),
+        None,
+    );
+
+    let e = entity_manager
+        .wrap_in_transaction(|_em| async move { Ok(()) })
+        .await
+        .unwrap_err();
+    assert!(
+        String::from_utf8_lossy(e.message.as_bytes()).contains("Commit exception"),
+        "{e:?}"
+    );
 }

@@ -68,6 +68,8 @@ impl EntityManager {
         let Some(driver) = config.get_metadata_driver_impl().cloned() else {
             return Err(exception::missing_mapping_driver_implementation());
         };
+        // `$this->proxyFactory = new ProxyFactory($this, ...)`.
+        crate::proxy::check_lazy_objects(&config)?;
         let platform: SharedPlatform = Arc::new(SQLitePlatform::new());
         let metadata_factory = Arc::new(ClassMetadataFactory::new());
         let mut factory_config = FactoryConfiguration::new(driver);

@@ -252,8 +252,8 @@ tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testGetMetadataFactory	
 tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testGetProxyFactory	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testGetProxyFactory
 tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testGetUnitOfWork	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testGetUnitOfWork
 tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testIsOpen	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testIsOpen
-tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testItDoesNotAttemptToRollbackIfNoTransactionIsActive	pending	overrides Connection::commit() and isTransactionActive() in a subclass (the DBAL connection is a struct)
-tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testItPreservesTheOriginalExceptionOnRollbackFailure	pending	overrides Connection::rollBack() in a subclass (the DBAL connection is a struct) and reads the previous exception (Thrown has none)
+tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testItDoesNotAttemptToRollbackIfNoTransactionIsActive	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testItDoesNotAttemptToRollbackIfNoTransactionIsActive
+tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testItPreservesTheOriginalExceptionOnRollbackFailure	pending	asserts the previous exception of the rollback failure (getPrevious()), which Thrown does not keep
 tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testLazyGhostEntityManager	pending	a lazy ghost of the entity manager through reflection (ReflectionClass::newLazyGhost) is not ported
 tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testWrapInTransactionAcceptsReturn	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testWrapInTransactionAcceptsReturn
 tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testWrapInTransactionReThrowsThrowables	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testWrapInTransactionReThrowsThrowables
@@ -351,20 +351,20 @@ tests/Tests/ORM/Functional/CustomForeignKeyNameTest.php	CustomForeignKeyNameTest
 tests/Tests/ORM/Functional/CustomForeignKeyNameTest.php	CustomForeignKeyNameTest::testPartialCompositeFKNamesIsValid	ported	crates/php2rust-doctrine-orm/tests/custom_foreign_key_name_test.rs::testPartialCompositeFKNamesIsValid
 tests/Tests/ORM/Functional/CustomFunctionsTest.php	CustomFunctionsTest::testCustomFunctionDefinedWithCallback	ported	crates/php2rust-doctrine-orm/tests/custom_functions_test.rs::testCustomFunctionDefinedWithCallback
 tests/Tests/ORM/Functional/CustomFunctionsTest.php	CustomFunctionsTest::testCustomFunctionOverride	ported	crates/php2rust-doctrine-orm/tests/custom_functions_test.rs::testCustomFunctionOverride
-tests/Tests/ORM/Functional/CustomIdObjectTypeTest.php	CustomIdObjectTypeTest::testFetchJoinCustomIdObject	pending	
-tests/Tests/ORM/Functional/CustomIdObjectTypeTest.php	CustomIdObjectTypeTest::testFetchJoinWhereCustomIdObject	pending	
-tests/Tests/ORM/Functional/CustomIdObjectTypeTest.php	CustomIdObjectTypeTest::testFindByCustomIdObject	pending	
+tests/Tests/ORM/Functional/CustomIdObjectTypeTest.php	CustomIdObjectTypeTest::testFetchJoinCustomIdObject	ported	crates/php2rust-doctrine-orm/tests/custom_id_object_type_test.rs::testFetchJoinCustomIdObject
+tests/Tests/ORM/Functional/CustomIdObjectTypeTest.php	CustomIdObjectTypeTest::testFetchJoinWhereCustomIdObject	ported	crates/php2rust-doctrine-orm/tests/custom_id_object_type_test.rs::testFetchJoinWhereCustomIdObject
+tests/Tests/ORM/Functional/CustomIdObjectTypeTest.php	CustomIdObjectTypeTest::testFindByCustomIdObject	ported	crates/php2rust-doctrine-orm/tests/custom_id_object_type_test.rs::testFindByCustomIdObject
 tests/Tests/ORM/Functional/DatabaseDriverTest.php	DatabaseDriverTest::testDetectManyToManyTables	ported	crates/php2rust-doctrine-orm/tests/database_driver_test.rs::testDetectManyToManyTables
 tests/Tests/ORM/Functional/DatabaseDriverTest.php	DatabaseDriverTest::testIgnoreManyToManyTableWithoutFurtherForeignKeyDetails	ported	crates/php2rust-doctrine-orm/tests/database_driver_test.rs::testIgnoreManyToManyTableWithoutFurtherForeignKeyDetails
 tests/Tests/ORM/Functional/DatabaseDriverTest.php	DatabaseDriverTest::testIssue2059	ported	crates/php2rust-doctrine-orm/tests/database_driver_test.rs::testIssue2059
 tests/Tests/ORM/Functional/DatabaseDriverTest.php	DatabaseDriverTest::testLoadMetadataFromDatabase	ported	crates/php2rust-doctrine-orm/tests/database_driver_test.rs::testLoadMetadataFromDatabase
 tests/Tests/ORM/Functional/DatabaseDriverTest.php	DatabaseDriverTest::testLoadMetadataFromDatabaseDetail	ported	crates/php2rust-doctrine-orm/tests/database_driver_test.rs::testLoadMetadataFromDatabaseDetail
 tests/Tests/ORM/Functional/DatabaseDriverTest.php	DatabaseDriverTest::testLoadMetadataWithForeignKeyFromDatabase	ported	crates/php2rust-doctrine-orm/tests/database_driver_test.rs::testLoadMetadataWithForeignKeyFromDatabase
-tests/Tests/ORM/Functional/DefaultTimeExpressionTest.php	DefaultTimeExpressionTest::testNoDeprecationsAreTrownWhenTheyCannotBeAddressed	pending	
-tests/Tests/ORM/Functional/DefaultTimeExpressionTest.php	DefaultTimeExpressionTest::testUsingDefaultExpressionInstancesCausesNoDeprecation	pending	
-tests/Tests/ORM/Functional/DefaultTimeExpressionTest.php	DefaultTimeExpressionTest::testUsingTimeRelatedDefaultExpressionCausesAnOrmDeprecationAndNoDbalDeprecation	pending	
-tests/Tests/ORM/Functional/DefaultTimeExpressionXmlTest.php	DefaultTimeExpressionXmlTest::testUsingDefaultExpressionInstancesCausesNoDeprecationXmlDriver	pending	
-tests/Tests/ORM/Functional/DefaultTimeExpressionXmlTest.php	DefaultTimeExpressionXmlTest::testUsingTimeRelatedDefaultExpressionCausesAnOrmDeprecationAndNoDbalDeprecation	pending	
+tests/Tests/ORM/Functional/DefaultTimeExpressionTest.php	DefaultTimeExpressionTest::testNoDeprecationsAreTrownWhenTheyCannotBeAddressed	n/a: upstream skips it when DBAL has Schema\DefaultExpression (it requires DBAL 4.3 or lower)	
+tests/Tests/ORM/Functional/DefaultTimeExpressionTest.php	DefaultTimeExpressionTest::testUsingDefaultExpressionInstancesCausesNoDeprecation	ported	crates/php2rust-doctrine-orm/tests/default_time_expression_test.rs::testUsingDefaultExpressionInstancesCausesNoDeprecation
+tests/Tests/ORM/Functional/DefaultTimeExpressionTest.php	DefaultTimeExpressionTest::testUsingTimeRelatedDefaultExpressionCausesAnOrmDeprecationAndNoDbalDeprecation	ported	crates/php2rust-doctrine-orm/tests/default_time_expression_test.rs::testUsingTimeRelatedDefaultExpressionCausesAnOrmDeprecationAndNoDbalDeprecation
+tests/Tests/ORM/Functional/DefaultTimeExpressionXmlTest.php	DefaultTimeExpressionXmlTest::testUsingDefaultExpressionInstancesCausesNoDeprecationXmlDriver	ported	crates/php2rust-doctrine-orm/tests/default_time_expression_test.rs::testUsingDefaultExpressionInstancesCausesNoDeprecationXmlDriver
+tests/Tests/ORM/Functional/DefaultTimeExpressionXmlTest.php	DefaultTimeExpressionXmlTest::testUsingTimeRelatedDefaultExpressionCausesAnOrmDeprecationAndNoDbalDeprecation	ported	crates/php2rust-doctrine-orm/tests/default_time_expression_test.rs::testUsingTimeRelatedDefaultExpressionCausesAnOrmDeprecationAndNoDbalDeprecationXml
 tests/Tests/ORM/Functional/DefaultValuesTest.php	DefaultValuesTest::testSimpleDetachMerge	ported	crates/php2rust-doctrine-orm/tests/default_values_test.rs::testSimpleDetachMerge
 tests/Tests/ORM/Functional/DetachedEntityTest.php	DetachedEntityTest::testDetachManagedUnpersistedEntity	ported	crates/php2rust-doctrine-orm/tests/detached_entity_test.rs::testDetachManagedUnpersistedEntity
 tests/Tests/ORM/Functional/DetachedEntityTest.php	DetachedEntityTest::testDetachedEntityThrowsExceptionOnFlush	ported	crates/php2rust-doctrine-orm/tests/detached_entity_test.rs::testDetachedEntityThrowsExceptionOnFlush
@@ -1496,7 +1496,7 @@ tests/Tests/ORM/Functional/Ticket/GH12438Test.php	GH12438Test::testFetchAll	port
 tests/Tests/ORM/Functional/Ticket/GH12438Test.php	GH12438Test::testFetchWithJoinCondition	ported	crates/php2rust-doctrine-orm/tests/gh12438_test.rs::testFetchWithJoinCondition
 tests/Tests/ORM/Functional/Ticket/GH12438Test.php	GH12438Test::testFetchWithJoinConditionWithoutAssociation	ported	crates/php2rust-doctrine-orm/tests/gh12438_test.rs::testFetchWithJoinConditionWithoutAssociation
 tests/Tests/ORM/Functional/Ticket/GH12505/GH12505Test.php	GH12505Test::testHydrateManyToManyIndexedByInheritedIdAfterFilterChange	ported	crates/php2rust-doctrine-orm/tests/gh12505_test.rs::testHydrateManyToManyIndexedByInheritedIdAfterFilterChange
-tests/Tests/ORM/Functional/Ticket/GH2947Test.php	GH2947Test::testIssue	pending	needs the result cache
+tests/Tests/ORM/Functional/Ticket/GH2947Test.php	GH2947Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/gh2947_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/GH5562Test.php	GH5562Test::testCacheShouldBeUpdatedWhenAssociationChanges	ported	crates/php2rust-doctrine-orm/tests/gh5562_test.rs::testCacheShouldBeUpdatedWhenAssociationChanges
 tests/Tests/ORM/Functional/Ticket/GH5742Test.php	GH5742Test::testManyToManyCollectionUpdateBeforeRemoval	ported	crates/php2rust-doctrine-orm/tests/gh5742_test.rs::testManyToManyCollectionUpdateBeforeRemoval
 tests/Tests/ORM/Functional/Ticket/GH5742Test.php	GH5742Test::testUpdateOneToOneToNewEntityBeforePreviousEntityCanBeRemoved	ported	crates/php2rust-doctrine-orm/tests/gh5742_test.rs::testUpdateOneToOneToNewEntityBeforePreviousEntityCanBeRemoved
@@ -1801,8 +1801,8 @@ tests/Tests/ORM/Hydration/SingleScalarHydratorTest.php	SingleScalarHydratorTest:
 tests/Tests/ORM/Hydration/SingleScalarHydratorTest.php	SingleScalarHydratorTest::testHydrateSingleScalarFromFieldMappingWithValidResultSet	ported	crates/php2rust-doctrine-orm/tests/single_scalar_hydrator_test.rs::testHydrateSingleScalarFromFieldMappingWithValidResultSet
 tests/Tests/ORM/Hydration/SingleScalarHydratorTest.php	SingleScalarHydratorTest::testHydrateSingleScalarFromScalarMappingWithInvalidResultSet	ported	crates/php2rust-doctrine-orm/tests/single_scalar_hydrator_test.rs::testHydrateSingleScalarFromScalarMappingWithInvalidResultSet
 tests/Tests/ORM/Hydration/SingleScalarHydratorTest.php	SingleScalarHydratorTest::testHydrateSingleScalarFromScalarMappingWithValidResultSet	ported	crates/php2rust-doctrine-orm/tests/single_scalar_hydrator_test.rs::testHydrateSingleScalarFromScalarMappingWithValidResultSet
-tests/Tests/ORM/Id/AssignedGeneratorTest.php	AssignedGeneratorTest::testCorrectIdGeneration	pending	
-tests/Tests/ORM/Id/AssignedGeneratorTest.php	AssignedGeneratorTest::testThrowsExceptionIfIdNotAssigned	pending	
+tests/Tests/ORM/Id/AssignedGeneratorTest.php	AssignedGeneratorTest::testCorrectIdGeneration	ported	crates/php2rust-doctrine-orm/tests/assigned_generator_test.rs::testCorrectIdGeneration
+tests/Tests/ORM/Id/AssignedGeneratorTest.php	AssignedGeneratorTest::testThrowsExceptionIfIdNotAssigned	ported	crates/php2rust-doctrine-orm/tests/assigned_generator_test.rs::testThrowsExceptionIfIdNotAssigned
 tests/Tests/ORM/Id/SequenceGeneratorTest.php	SequenceGeneratorTest::testGeneration	pending	
 tests/Tests/ORM/Internal/HydrationCompleteHandlerTest.php	HydrationCompleteHandlerTest::testDefersMultiplePostLoadOfEntity	pending	
 tests/Tests/ORM/Internal/HydrationCompleteHandlerTest.php	HydrationCompleteHandlerTest::testDefersPostLoadOfEntity	pending	
@@ -1901,7 +1901,7 @@ tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testLifecyc
 tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testLifecycleCallbacksSupportMultipleMethodNames	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testLifecycleCallbacksSupportMultipleMethodNames
 tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testManyToManyAssociationWithCascadeAll	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testManyToManyAssociationWithCascadeAll
 tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testManyToManyAssociationWithNestedJoinColumns	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testManyToManyAssociationWithNestedJoinColumns
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testMappedSuperclassWithRepository	pending	needs DDC869PaymentRepository, a custom repository class with PHP methods (isTrue())
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testMappedSuperclassWithRepository	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testMappedSuperclassWithRepository
 tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testNamingStrategy	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testNamingStrategy
 tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testOrderByWithInvalidDirection	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testOrderByWithInvalidDirection
 tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testOrderByWithStringValues	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testOrderByWithStringValues
@@ -2238,7 +2238,7 @@ tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testLifec
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testLifecycleCallbacksSupportMultipleMethodNames	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testLifecycleCallbacksSupportMultipleMethodNames
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testManyToManyAssociationWithCascadeAll	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testManyToManyAssociationWithCascadeAll
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testManyToManyDefaultOrderByAsc	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testManyToManyDefaultOrderByAsc
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testMappedSuperclassWithRepository	pending	
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testMappedSuperclassWithRepository	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testMappedSuperclassWithRepository
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testNamingStrategy	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testNamingStrategy
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testOneToManyDefaultOrderByAsc	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testOneToManyDefaultOrderByAsc
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testOrderByWithInvalidDirection	pending	needs XSD validation: php2rust-dom refuses doctrine-mapping.xsd (xs:complexContent, xs:token), so the XML driver does not validate
@@ -2312,8 +2312,8 @@ tests/Tests/ORM/Proxy/ProxyFactoryTest.php	ProxyFactoryTest::testFailedProxyLoad
 tests/Tests/ORM/Proxy/ProxyFactoryTest.php	ProxyFactoryTest::testProxyClonesParentFields	n/a: upstream marks it skipped: This test is not relevant when native lazy objects are enabled	
 tests/Tests/ORM/Proxy/ProxyFactoryTest.php	ProxyFactoryTest::testProxyFactoryAcceptsNullProxyArgsWhenNativeLazyObjectsAreEnabled	ported	crates/php2rust-doctrine-orm/tests/proxy_factory_test.rs::testProxyFactoryAcceptsNullProxyArgsWhenNativeLazyObjectsAreEnabled
 tests/Tests/ORM/Proxy/ProxyFactoryTest.php	ProxyFactoryTest::testProxyFactoryDoesNotTriggerDeprecationWhenNativeLazyObjectsAreDisabled	n/a: upstream skips it on PHP 8.4 (RequiresPhp < 8.4.0)	
-tests/Tests/ORM/Proxy/ProxyFactoryTest.php	ProxyFactoryTest::testProxyFactoryThrowsIfLazyGhostsAreUnavailable	pending	the port only has native lazy objects: enableNativeLazyObjects(false) is refused, so there is no ProxyFactory without them
-tests/Tests/ORM/Proxy/ProxyFactoryTest.php	ProxyFactoryTest::testProxyFactoryTriggersDeprecationWhenNativeLazyObjectsAreDisabled	pending	the port only has native lazy objects: enableNativeLazyObjects(false) is refused, so there is no ProxyFactory without them
+tests/Tests/ORM/Proxy/ProxyFactoryTest.php	ProxyFactoryTest::testProxyFactoryThrowsIfLazyGhostsAreUnavailable	ported	crates/php2rust-doctrine-orm/tests/proxy_factory_test.rs::testProxyFactoryThrowsIfLazyGhostsAreUnavailable
+tests/Tests/ORM/Proxy/ProxyFactoryTest.php	ProxyFactoryTest::testProxyFactoryTriggersDeprecationWhenNativeLazyObjectsAreDisabled	n/a: upstream skips it without ProxyHelper::generateLazyGhost(), which symfony/var-exporter 8 (the version installed on PHP 8.4) removed	
 tests/Tests/ORM/Proxy/ProxyFactoryTest.php	ProxyFactoryTest::testReferenceProxyDelegatesLoadingToThePersister	ported	crates/php2rust-doctrine-orm/tests/proxy_factory_test.rs::testReferenceProxyDelegatesLoadingToThePersister
 tests/Tests/ORM/Proxy/ProxyFactoryTest.php	ProxyFactoryTest::testSkipAbstractClassesOnGeneration	ported	crates/php2rust-doctrine-orm/tests/proxy_factory_test.rs::testSkipAbstractClassesOnGeneration
 tests/Tests/ORM/Proxy/ProxyFactoryTest.php	ProxyFactoryTest::testSkipEmbeddableClassesOnGeneration	ported	crates/php2rust-doctrine-orm/tests/proxy_factory_test.rs::testSkipEmbeddableClassesOnGeneration
@@ -2977,15 +2977,15 @@ tests/Tests/ORM/Tools/Console/MetadataFilterTest.php	MetadataFilterTest::testFil
 tests/Tests/ORM/Tools/Console/MetadataFilterTest.php	MetadataFilterTest::testFilterWithRegex	ported	crates/php2rust-doctrine-orm/tests/metadata_filter_test.rs::testFilterWithRegex
 tests/Tests/ORM/Tools/Console/MetadataFilterTest.php	MetadataFilterTest::testFilterWithString	ported	crates/php2rust-doctrine-orm/tests/metadata_filter_test.rs::testFilterWithString
 tests/Tests/ORM/Tools/Console/MetadataFilterTest.php	MetadataFilterTest::testFilterWithString2	ported	crates/php2rust-doctrine-orm/tests/metadata_filter_test.rs::testFilterWithString2
-tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testCollectionsAreCastIntoArrays	pending	needs PHP's print_r(), DateTime/ArrayObject and (array) casts of objects with mangled property names
-tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportArray	pending	needs PHP's print_r(), DateTime/ArrayObject and (array) casts of objects with mangled property names
-tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportArrayTraversable	pending	needs PHP's print_r(), DateTime/ArrayObject and (array) casts of objects with mangled property names
-tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportDateTime	pending	needs PHP's print_r(), DateTime/ArrayObject and (array) casts of objects with mangled property names
-tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportDateTimeImmutable	pending	needs PHP's print_r(), DateTime/ArrayObject and (array) casts of objects with mangled property names
-tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportDateTimeZone	pending	needs PHP's print_r(), DateTime/ArrayObject and (array) casts of objects with mangled property names
-tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportObject	pending	needs PHP's print_r(), DateTime/ArrayObject and (array) casts of objects with mangled property names
-tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportObjectWithReference	pending	needs PHP's print_r(), DateTime/ArrayObject and (array) casts of objects with mangled property names
-tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportParentAttributes	pending	needs PHP's print_r(), DateTime/ArrayObject and (array) casts of objects with mangled property names
+tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testCollectionsAreCastIntoArrays	ported	crates/php2rust-doctrine-orm/tests/debug_test.rs::testCollectionsAreCastIntoArrays
+tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportArray	ported	crates/php2rust-doctrine-orm/tests/debug_test.rs::testExportArray
+tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportArrayTraversable	ported	crates/php2rust-doctrine-orm/tests/debug_test.rs::testExportArrayTraversable
+tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportDateTime	ported	crates/php2rust-doctrine-orm/tests/debug_test.rs::testExportDateTime
+tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportDateTimeImmutable	ported	crates/php2rust-doctrine-orm/tests/debug_test.rs::testExportDateTimeImmutable
+tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportDateTimeZone	ported	crates/php2rust-doctrine-orm/tests/debug_test.rs::testExportDateTimeZone
+tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportObject	ported	crates/php2rust-doctrine-orm/tests/debug_test.rs::testExportObject
+tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportObjectWithReference	ported	crates/php2rust-doctrine-orm/tests/debug_test.rs::testExportObjectWithReference
+tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportParentAttributes	ported	crates/php2rust-doctrine-orm/tests/debug_test.rs::testExportParentAttributes
 tests/Tests/ORM/Tools/Pagination/CountOutputWalkerTest.php	CountOutputWalkerTest::testCountQuery	ported	crates/php2rust-doctrine-orm/tests/count_output_walker_test.rs::testCountQuery
 tests/Tests/ORM/Tools/Pagination/CountOutputWalkerTest.php	CountOutputWalkerTest::testCountQueryGroupBy	ported	crates/php2rust-doctrine-orm/tests/count_output_walker_test.rs::testCountQueryGroupBy
 tests/Tests/ORM/Tools/Pagination/CountOutputWalkerTest.php	CountOutputWalkerTest::testCountQueryHaving	ported	crates/php2rust-doctrine-orm/tests/count_output_walker_test.rs::testCountQueryHaving
@@ -3199,11 +3199,11 @@ tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testRemovedAndRePersistedEnti
 tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testRemovedEntityIsRemovedFromManyToManyCollection	ported	crates/php2rust-doctrine-orm/tests/unit_of_work_test.rs::testRemovedEntityIsRemovedFromManyToManyCollection
 tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testRemovedEntityIsRemovedFromOneToManyCollection	ported	crates/php2rust-doctrine-orm/tests/unit_of_work_test.rs::testRemovedEntityIsRemovedFromOneToManyCollection
 tests/Tests/ORM/UnitOfWorkTest.php	UnitOfWorkTest::testSavingSingleEntityWithIdentityColumnForcesInsert	ported	crates/php2rust-doctrine-orm/tests/unit_of_work_test.rs::testSavingSingleEntityWithIdentityColumnForcesInsert
-tests/Tests/ORM/Utility/HierarchyDiscriminatorResolverTest.php	HierarchyDiscriminatorResolverTest::testResolveDiscriminatorsForClass	pending	
-tests/Tests/ORM/Utility/HierarchyDiscriminatorResolverTest.php	HierarchyDiscriminatorResolverTest::testResolveDiscriminatorsForClassWithNoSubclasses	pending	
-tests/Tests/ORM/Utility/IdentifierFlattenerEnumIdTest.php	IdentifierFlattenerEnumIdTest::testFlattenIdentifierWithCompositeEnumId	pending	
-tests/Tests/ORM/Utility/IdentifierFlattenerEnumIdTest.php	IdentifierFlattenerEnumIdTest::testFlattenIdentifierWithEnumId	pending	
-tests/Tests/ORM/Utility/IdentifierFlattenerTest.php	IdentifierFlattenerTest::testFlattenIdentifierWithMutlipleIds	pending	
-tests/Tests/ORM/Utility/IdentifierFlattenerTest.php	IdentifierFlattenerTest::testFlattenIdentifierWithOneToOneId	pending	
-tests/Tests/Proxy/AutoloaderTest.php	AutoloaderTest::testAutoload	pending	
-tests/Tests/Proxy/AutoloaderTest.php	AutoloaderTest::testResolveFile	pending	
+tests/Tests/ORM/Utility/HierarchyDiscriminatorResolverTest.php	HierarchyDiscriminatorResolverTest::testResolveDiscriminatorsForClass	ported	crates/php2rust-doctrine-orm/tests/hierarchy_discriminator_resolver_test.rs::testResolveDiscriminatorsForClass
+tests/Tests/ORM/Utility/HierarchyDiscriminatorResolverTest.php	HierarchyDiscriminatorResolverTest::testResolveDiscriminatorsForClassWithNoSubclasses	ported	crates/php2rust-doctrine-orm/tests/hierarchy_discriminator_resolver_test.rs::testResolveDiscriminatorsForClassWithNoSubclasses
+tests/Tests/ORM/Utility/IdentifierFlattenerEnumIdTest.php	IdentifierFlattenerEnumIdTest::testFlattenIdentifierWithCompositeEnumId	ported	crates/php2rust-doctrine-orm/tests/identifier_flattener_enum_id_test.rs::testFlattenIdentifierWithCompositeEnumId
+tests/Tests/ORM/Utility/IdentifierFlattenerEnumIdTest.php	IdentifierFlattenerEnumIdTest::testFlattenIdentifierWithEnumId	ported	crates/php2rust-doctrine-orm/tests/identifier_flattener_enum_id_test.rs::testFlattenIdentifierWithEnumId
+tests/Tests/ORM/Utility/IdentifierFlattenerTest.php	IdentifierFlattenerTest::testFlattenIdentifierWithMutlipleIds	ported	crates/php2rust-doctrine-orm/tests/identifier_flattener_test.rs::testFlattenIdentifierWithMutlipleIds
+tests/Tests/ORM/Utility/IdentifierFlattenerTest.php	IdentifierFlattenerTest::testFlattenIdentifierWithOneToOneId	ported	crates/php2rust-doctrine-orm/tests/identifier_flattener_test.rs::testFlattenIdentifierWithOneToOneId
+tests/Tests/Proxy/AutoloaderTest.php	AutoloaderTest::testAutoload	pending	Autoloader::register() (spl_autoload_register() and require of a generated PHP file) is not ported: the port loads no PHP class
+tests/Tests/Proxy/AutoloaderTest.php	AutoloaderTest::testResolveFile	ported	crates/php2rust-doctrine-orm/tests/autoloader_test.rs::testResolveFile

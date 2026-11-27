@@ -1134,7 +1134,7 @@ impl UnitOfWork {
 
     /// `AssignedGenerator::generateId()`: the identifier values the entity
     /// was given.
-    fn generate_assigned_id(
+    pub(crate) fn generate_assigned_id(
         &self,
         em: &EntityManager,
         entity: &Object,

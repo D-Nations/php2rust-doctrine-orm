@@ -739,6 +739,63 @@ impl SchemaTool {
         Ok(())
     }
 
+    /// A time-related `default` given as the platform's SQL (deprecated)
+    /// becomes the DBAL default expression.
+    fn convert_time_related_default(&self, column_type: &str, options: &mut PhpArray) {
+        use php2rust_doctrine_dbal::schema::{
+            CurrentDate, CurrentTime, CurrentTimestamp, DefaultExpressionObject,
+        };
+
+        let Some(default) = options.get(&"default".into()).cloned() else {
+            return;
+        };
+        if default.is_null() {
+            return;
+        }
+        let platform = self.platform();
+        let is = |sql: String| default.identical(&Value::from(sql.as_str()));
+
+        if [
+            "datetime",
+            "datetime_immutable",
+            "datetimetz",
+            "datetimetz_immutable",
+        ]
+        .contains(&column_type)
+            && is(platform.get_current_timestamp_sql())
+        {
+            let sql = platform.get_current_timestamp_sql();
+            crate::deprecations::trigger("https://github.com/doctrine/orm/issues/12252", || {
+                format!(
+                    "Using \"{sql}\" as a default value for datetime fields is deprecated and\nwill not be supported in Doctrine ORM 4.0.\nPass a `Doctrine\\DBAL\\Schema\\DefaultExpression\\CurrentTimestamp` instance instead."
+                )
+            });
+            options.insert("default", DefaultExpressionObject::value(CurrentTimestamp));
+        }
+
+        if ["time", "time_immutable"].contains(&column_type) && is(platform.get_current_time_sql())
+        {
+            let sql = platform.get_current_time_sql();
+            crate::deprecations::trigger("https://github.com/doctrine/orm/issues/12252", || {
+                format!(
+                    "Using \"{sql}\" as a default value for time fields is deprecated and\nwill not be supported in Doctrine ORM 4.0.\nPass a `Doctrine\\DBAL\\Schema\\DefaultExpression\\CurrentTime` instance instead."
+                )
+            });
+            options.insert("default", DefaultExpressionObject::value(CurrentTime));
+        }
+
+        if ["date", "date_immutable"].contains(&column_type) && is(platform.get_current_date_sql())
+        {
+            let sql = platform.get_current_date_sql();
+            crate::deprecations::trigger("https://github.com/doctrine/orm/issues/12252", || {
+                format!(
+                    "Using \"{sql}\" as a default value for date fields is deprecated and\nwill not be supported in Doctrine ORM 4.0.\nPass a `Doctrine\\DBAL\\Schema\\DefaultExpression\\CurrentDate` instance instead."
+                )
+            });
+            options.insert("default", DefaultExpressionObject::value(CurrentDate));
+        }
+    }
+
     /// Creates a column definition as required by the DBAL from an ORM
     /// field mapping definition.
     fn gather_column(
@@ -792,6 +849,8 @@ impl SchemaTool {
             gather_column_options(mapping.options.as_ref(), mapping.enum_type.as_deref());
         gathered.union(&options);
         let mut options = gathered;
+
+        self.convert_time_related_default(&column_type, &mut options);
 
         if class.is_id_generator_identity()
             && class.get_identifier_field_names() == [mapping.field_name.clone()]

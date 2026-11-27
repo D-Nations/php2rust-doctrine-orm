@@ -133,7 +133,7 @@ pub(crate) fn get_type_of_field(
 /// `HierarchyDiscriminatorResolver::resolveDiscriminatorsForClass()`:
 /// the discriminator values of the class and its subclasses, as the keys
 /// of an array (the values are `null`).
-pub(crate) fn resolve_discriminators_for_class(
+pub fn resolve_discriminators_for_class(
     root_class_metadata: &ClassMetadata,
     entity_manager: &dyn QueryContext,
 ) -> Result<PhpArray, Thrown> {

@@ -110,6 +110,23 @@ pub fn entity_manager_with(
     EntityManager::create(conn, config, None).unwrap()
 }
 
+/// `EntityManager::create()` with a configuration the caller changes
+/// first: its error, if any.
+pub fn entity_manager_try_with(
+    conn: Arc<Connection>,
+    configure: impl FnOnce(&mut Configuration),
+) -> Result<Arc<EntityManager>, php_value::Thrown> {
+    models::register();
+    register_methods();
+    let mut config = Configuration::new();
+    config.set_metadata_driver_impl(Arc::new(
+        AttributeDriver::new(Vec::<String>::new(), true).unwrap(),
+    ));
+    config.enable_native_lazy_objects(true).unwrap();
+    configure(&mut config);
+    EntityManager::create(conn, config, None)
+}
+
 /// `setUp()` with `useModelSet()` for the classes: a new database with
 /// their schema.
 pub async fn set_up(classes: &[&str]) -> Arc<EntityManager> {

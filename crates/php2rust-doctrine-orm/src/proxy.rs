@@ -1,8 +1,11 @@
 //! `Doctrine\ORM\Proxy\ProxyFactory`: the port only has native lazy
 //! objects (PHP 8.4), so a proxy is a lazy ghost of the entity
 //! (`EntityManager::get_proxy()`) and no proxy class is generated.
+//! `Autoloader::resolveFile()` is ported; `Autoloader::register()`
+//! (`spl_autoload_register()` of a callback that `require`s the proxy
+//! file) is not, as no PHP class is loaded.
 //!
-//! Upstream: doctrine/orm src/Proxy/ProxyFactory.php
+//! Upstream: doctrine/orm src/Proxy/ProxyFactory.php src/Proxy/Autoloader.php src/Proxy/NotAProxyClass.php
 
 use std::sync::{Arc, Weak};
 
@@ -25,6 +28,23 @@ pub struct ProxyFactory {
     proxy_dir: String,
     proxy_ns: String,
     auto_generate: i64,
+}
+
+/// The checks of `new ProxyFactory()` for a configuration without
+/// native lazy objects: the port has no `LazyGhost` proxies, as
+/// `ProxyHelper::generateLazyGhost()` is missing with
+/// symfony/var-exporter 8 (the version PHP 8.4 installs).
+pub(crate) fn check_lazy_objects(
+    config: &crate::configuration::Configuration,
+) -> Result<(), Thrown> {
+    if !config.is_native_lazy_objects_enabled() {
+        crate::deprecations::trigger(PROXY_DEPRECATION, || {
+            "Not enabling native lazy objects is deprecated and will be impossible in Doctrine ORM 4.0.".to_owned()
+        });
+
+        return Err(crate::exception::lazy_ghost_unavailable());
+    }
+    Ok(())
 }
 
 impl ProxyFactory {
@@ -101,5 +121,49 @@ impl ProxyFactory {
         _proxy_dir: Option<&str>,
     ) -> usize {
         0
+    }
+}
+
+/// `Doctrine\ORM\Proxy\NotAProxyClass`.
+pub const NOT_A_PROXY_CLASS: &str = "Doctrine\\ORM\\Proxy\\NotAProxyClass";
+
+/// `Doctrine\ORM\Proxy\Autoloader`.
+#[derive(Debug, Clone, Copy)]
+pub struct Autoloader;
+
+impl Autoloader {
+    /// Resolves proxy class name to a filename based on the following
+    /// pattern.
+    ///
+    /// 1. Remove Proxy namespace from class name.
+    /// 2. Remove namespace separators from remaining class name.
+    /// 3. Return PHP filename from proxy-dir with the result from 2.
+    pub fn resolve_file(
+        proxy_dir: &str,
+        proxy_namespace: &str,
+        class_name: &str,
+    ) -> Result<String, Thrown> {
+        crate::deprecations::trigger(PROXY_DEPRECATION, || {
+            "Class \"Doctrine\\ORM\\Proxy\\Autoloader\" is deprecated. Use native lazy objects instead.".to_owned()
+        });
+
+        let Some(class_name_relative_to_proxy_namespace) = class_name.strip_prefix(proxy_namespace)
+        else {
+            return Err(Thrown::new(
+                NOT_A_PROXY_CLASS,
+                format!(
+                    "The class \"{class_name}\" is not part of the proxy namespace \"{proxy_namespace}\""
+                ),
+                0,
+            ));
+        };
+
+        // remove namespace separators from remaining class name
+        let file_name = class_name_relative_to_proxy_namespace.replace('\\', "");
+
+        Ok(format!(
+            "{proxy_dir}{}{file_name}.php",
+            std::path::MAIN_SEPARATOR
+        ))
     }
 }

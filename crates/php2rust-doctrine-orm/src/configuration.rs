@@ -662,17 +662,18 @@ impl Configuration {
         self.native_lazy_objects
     }
 
-    /// `enableNativeLazyObjects()`: this port only has native lazy
-    /// objects (PHP 8.4); disabling them triggers PHP's deprecation, then
-    /// is refused.
+    /// `enableNativeLazyObjects()`: disabling them triggers PHP 8.4's
+    /// deprecation. The port has no `LazyGhost` proxies (as with
+    /// symfony/var-exporter 8, which removed them), so a proxy factory,
+    /// and so an entity manager, refuses a configuration without native
+    /// lazy objects.
     pub fn enable_native_lazy_objects(&mut self, native_lazy_objects: bool) -> Result<(), Thrown> {
         if !native_lazy_objects {
             crate::deprecations::trigger(PROXY_DEPRECATION, || {
                 "Disabling native lazy objects is deprecated and will be impossible in Doctrine ORM 4.0.".to_owned()
             });
-            return Err(crate::exception::not_supported());
         }
-        self.native_lazy_objects = true;
+        self.native_lazy_objects = native_lazy_objects;
         Ok(())
     }
 

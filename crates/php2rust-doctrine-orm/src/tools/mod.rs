@@ -1,10 +1,11 @@
 //! `Doctrine\ORM\Tools`: the schema tool, the schema validator, the
-//! paginator and the metadata listeners.
+//! paginator, the metadata listeners and `Debug::export()`.
 //!
 //! Upstream: none
 
 pub mod attach_entity_listeners_listener;
 pub mod console;
+pub mod debug;
 pub mod event;
 pub mod pagination;
 pub mod resolve_target_entity_listener;

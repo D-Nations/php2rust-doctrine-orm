@@ -1,6 +1,6 @@
-//! Port of `BasicEntityPersisterCompositeTypeParametersTest`. The entity
-//! manager is a `SQLite` one (`tests/common/orm.rs`) in place of
-//! `EntityManagerMock`; the types are compared by their names.
+//! Port of tests/Tests/ORM/Persisters/BasicEntityPersisterCompositeTypeParametersTest.php.
+//! `getTestEntityManager()` (`EntityManagerMock`) is an entity manager on
+//! an in-memory `SQLite` database; the persister takes it with each call.
 //!
 //! Upstream: doctrine/orm tests/Tests/ORM/Persisters/BasicEntityPersisterCompositeTypeParametersTest.php
 
@@ -18,87 +18,96 @@ mod orm;
 
 use std::sync::Arc;
 
-use php_value::{Object, PhpArray, Value};
+use php_value::{Object, Value, php_array};
 use php2rust_doctrine_collections::Criteria;
 use php2rust_doctrine_dbal::WrapperParameterType;
 use php2rust_doctrine_orm::entity_manager::EntityManager;
 use php2rust_doctrine_orm::persisters::BasicEntityPersister;
 
-use orm::{new_object, s, set};
+use orm::{new_object, s, set, set_obj};
 
-const NS: &str = "Doctrine\\Tests\\Models\\GeoNames\\";
+const COUNTRY: &str = "Doctrine\\Tests\\Models\\GeoNames\\Country";
+const ADMIN1: &str = "Doctrine\\Tests\\Models\\GeoNames\\Admin1";
+const ADMIN1_ALTERNATE_NAME: &str = "Doctrine\\Tests\\Models\\GeoNames\\Admin1AlternateName";
 
-fn class(short: &str) -> String {
-    format!("{NS}{short}")
+struct Test {
+    persister: BasicEntityPersister,
+    entity_manager: Arc<EntityManager>,
 }
 
-fn set_up() -> (Arc<EntityManager>, BasicEntityPersister) {
-    let em = orm::entity_manager(orm::connection(), None);
+fn set_up() -> Test {
+    let entity_manager = orm::entity_manager(orm::connection(), None);
 
-    em.get_class_metadata(&class("Country")).unwrap();
-    em.get_class_metadata(&class("Admin1")).unwrap();
-    em.get_class_metadata(&class("Admin1AlternateName"))
+    entity_manager.get_class_metadata(COUNTRY).unwrap();
+    entity_manager.get_class_metadata(ADMIN1).unwrap();
+    entity_manager
+        .get_class_metadata(ADMIN1_ALTERNATE_NAME)
         .unwrap();
 
     let persister = BasicEntityPersister::new(
-        &em,
-        em.get_class_metadata(&class("Admin1AlternateName"))
+        &entity_manager,
+        entity_manager
+            .get_class_metadata(ADMIN1_ALTERNATE_NAME)
             .unwrap(),
     );
-    (em, persister)
+    Test {
+        persister,
+        entity_manager,
+    }
 }
 
-/// `new Admin1(10, 'Rome', new Country('IT', 'Italy'))`.
-fn rome() -> Object {
-    let country = new_object(&class("Country"));
+/// `new Country('IT', 'Italy')` and `new Admin1(10, 'Rome', $country)`.
+fn admin1() -> Object {
+    let country = new_object(COUNTRY);
     set(&country, "id", s("IT"));
     set(&country, "name", s("Italy"));
-    let admin1 = new_object(&class("Admin1"));
+    let admin1 = new_object(ADMIN1);
     set(&admin1, "id", Value::Int(10));
     set(&admin1, "name", s("Rome"));
-    set(&admin1, "country", Value::Object(country));
+    set_obj(&admin1, "country", &country);
     admin1
+}
+
+fn expected_types() -> Vec<WrapperParameterType> {
+    vec![
+        WrapperParameterType::Name("integer".into()),
+        WrapperParameterType::Name("string".into()),
+    ]
 }
 
 #[test]
 fn testExpandParametersWillExpandCompositeEntityKeys() {
-    let (em, persister) = set_up();
-    let admin1 = rome();
+    let t = set_up();
+    let admin1 = admin1();
 
-    let mut criteria = PhpArray::new();
-    criteria.insert("admin1", Value::Object(admin1));
-    let (values, types) = persister.expand_parameters(&em, &criteria).unwrap();
+    let (values, types) = t
+        .persister
+        .expand_parameters(
+            &t.entity_manager,
+            &php_array!["admin1" => Value::Object(admin1)],
+        )
+        .unwrap();
 
-    assert_eq!(
-        vec![
-            WrapperParameterType::from("integer"),
-            WrapperParameterType::from("string")
-        ],
-        types
-    );
-    assert_eq!(vec![Value::Int(10), s("IT")], values);
+    assert_eq!(types, expected_types());
+    assert_eq!(values, vec![Value::Int(10), s("IT")]);
 }
 
 #[test]
 fn testExpandCriteriaParametersWillExpandCompositeEntityKeys() {
-    let (em, persister) = set_up();
-    let admin1 = rome();
+    let t = set_up();
+    let admin1 = admin1();
 
+    // `Criteria::ASC` is not defined (doctrine/collections 3).
     let mut criteria = Criteria::create();
     criteria
         .and_where(Criteria::expr().eq("admin1", Value::Object(admin1)))
         .unwrap();
 
-    let (values, types) = persister
-        .expand_criteria_parameters(&em, &criteria)
+    let (values, types) = t
+        .persister
+        .expand_criteria_parameters(&t.entity_manager, &criteria)
         .unwrap();
 
-    assert_eq!(
-        vec![
-            WrapperParameterType::from("integer"),
-            WrapperParameterType::from("string")
-        ],
-        types
-    );
-    assert_eq!(vec![Value::Int(10), s("IT")], values);
+    assert_eq!(types, expected_types());
+    assert_eq!(values, vec![Value::Int(10), s("IT")]);
 }
