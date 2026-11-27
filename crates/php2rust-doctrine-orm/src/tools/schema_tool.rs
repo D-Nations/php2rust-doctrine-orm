@@ -139,6 +139,32 @@ impl SchemaTool {
         Ok(())
     }
 
+    /// `dropDatabase()`: drops all elements in the database of the
+    /// current connection.
+    pub async fn drop_database(&self) -> Result<(), Thrown> {
+        let drop_schema_sql = self.get_drop_database_sql().await?;
+        let conn = self.em.get_connection();
+        for sql in drop_schema_sql {
+            conn.execute_statement(&sql, &PhpArray::new(), &ParameterTypes::new())
+                .await
+                .map_err(|e| dbal(&e))?;
+        }
+        Ok(())
+    }
+
+    /// `getDropDatabaseSQL()`: the SQL needed to drop the database schema
+    /// for the connection's database.
+    pub async fn get_drop_database_sql(&self) -> Result<Vec<String>, Thrown> {
+        let conn = self.em.get_connection();
+        let schema_manager = conn.create_schema_manager().await.map_err(|e| dbal(&e))?;
+        schema_manager
+            .introspect_schema()
+            .await
+            .map_err(|e| dbal(&e))?
+            .to_drop_sql(self.platform())
+            .map_err(|e| dbal(&e))
+    }
+
     /// Gets SQL to drop the tables defined by the passed classes.
     pub fn get_drop_schema_sql(
         &self,

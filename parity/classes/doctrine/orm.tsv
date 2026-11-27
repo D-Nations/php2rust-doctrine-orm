@@ -406,23 +406,23 @@ src/Tools/Console/ApplicationCompatibility.php	ApplicationCompatibility	15	porte
 src/Tools/Console/Command/AbstractEntityManagerCommand.php	AbstractEntityManagerCommand	19	ported	crates/php2rust-doctrine-orm/src/tools/console/command/abstract_entity_manager_command.rs
 src/Tools/Console/Command/ClearCache/CollectionRegionCommand.php	CollectionRegionCommand	96	ported	crates/php2rust-doctrine-orm/src/tools/console/command/clear_cache/collection_region_command.rs
 src/Tools/Console/Command/ClearCache/EntityRegionCommand.php	EntityRegionCommand	87	ported	crates/php2rust-doctrine-orm/src/tools/console/command/clear_cache/entity_region_command.rs
-src/Tools/Console/Command/ClearCache/MetadataCommand.php	MetadataCommand	35	pending	
-src/Tools/Console/Command/ClearCache/QueryCommand.php	QueryCommand	36	pending	
+src/Tools/Console/Command/ClearCache/MetadataCommand.php	MetadataCommand	35	ported	crates/php2rust-doctrine-orm/src/tools/console/command/clear_cache/metadata_command.rs
+src/Tools/Console/Command/ClearCache/QueryCommand.php	QueryCommand	36	ported	crates/php2rust-doctrine-orm/src/tools/console/command/clear_cache/query_command.rs
 src/Tools/Console/Command/ClearCache/QueryRegionCommand.php	QueryRegionCommand	80	ported	crates/php2rust-doctrine-orm/src/tools/console/command/clear_cache/query_region_command.rs
-src/Tools/Console/Command/ClearCache/ResultCommand.php	ResultCommand	48	pending	
+src/Tools/Console/Command/ClearCache/ResultCommand.php	ResultCommand	48	ported	crates/php2rust-doctrine-orm/src/tools/console/command/clear_cache/result_command.rs
 src/Tools/Console/Command/Debug/AbstractCommand.php	AbstractCommand	23	pending	
 src/Tools/Console/Command/Debug/DebugEntityListenersDoctrineCommand.php	DebugEntityListenersDoctrineCommand	119	pending	
 src/Tools/Console/Command/Debug/DebugEventManagerDoctrineCommand.php	DebugEventManagerDoctrineCommand	87	pending	
-src/Tools/Console/Command/GenerateProxiesCommand.php	GenerateProxiesCommand	86	pending	
+src/Tools/Console/Command/GenerateProxiesCommand.php	GenerateProxiesCommand	86	ported	crates/php2rust-doctrine-orm/src/tools/console/command/generate_proxies_command.rs
 src/Tools/Console/Command/InfoCommand.php	InfoCommand	59	ported	crates/php2rust-doctrine-orm/src/tools/console/command/info_command.rs
 src/Tools/Console/Command/MappingDescribeCommand.php	MappingDescribeCommand	289	ported	crates/php2rust-doctrine-orm/src/tools/console/command/mapping_describe_command.rs
 src/Tools/Console/Command/MappingDescribeCommandFormat.php	MappingDescribeCommandFormat	7	ported	crates/php2rust-doctrine-orm/src/tools/console/command/mapping_describe_command.rs
 src/Tools/Console/Command/RunDqlCommand.php	RunDqlCommand	90	pending	
-src/Tools/Console/Command/SchemaTool/AbstractCommand.php	AbstractCommand	22	pending	
-src/Tools/Console/Command/SchemaTool/CreateCommand.php	CreateCommand	51	pending	
-src/Tools/Console/Command/SchemaTool/DropCommand.php	DropCommand	87	pending	
-src/Tools/Console/Command/SchemaTool/UpdateCommand.php	UpdateCommand	115	pending	
-src/Tools/Console/Command/ValidateSchemaCommand.php	ValidateSchemaCommand	67	pending	
+src/Tools/Console/Command/SchemaTool/AbstractCommand.php	AbstractCommand	22	ported	crates/php2rust-doctrine-orm/src/tools/console/command/schema_tool/abstract_command.rs
+src/Tools/Console/Command/SchemaTool/CreateCommand.php	CreateCommand	51	ported	crates/php2rust-doctrine-orm/src/tools/console/command/schema_tool/create_command.rs
+src/Tools/Console/Command/SchemaTool/DropCommand.php	DropCommand	87	ported	crates/php2rust-doctrine-orm/src/tools/console/command/schema_tool/drop_command.rs
+src/Tools/Console/Command/SchemaTool/UpdateCommand.php	UpdateCommand	115	ported	crates/php2rust-doctrine-orm/src/tools/console/command/schema_tool/update_command.rs
+src/Tools/Console/Command/ValidateSchemaCommand.php	ValidateSchemaCommand	67	ported	crates/php2rust-doctrine-orm/src/tools/console/command/validate_schema_command.rs
 src/Tools/Console/ConsoleRunner.php	ConsoleRunner	60	pending	
 src/Tools/Console/EntityManagerProvider.php	EntityManagerProvider	8	ported	crates/php2rust-doctrine-orm/src/tools/console/entity_manager_provider.rs
 src/Tools/Console/EntityManagerProvider/ConnectionFromManagerProvider.php	ConnectionFromManagerProvider	19	pending	
