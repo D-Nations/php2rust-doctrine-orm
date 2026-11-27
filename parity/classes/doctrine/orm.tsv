@@ -258,7 +258,7 @@ src/Proxy/Autoloader.php	Autoloader	63	pending
 src/Proxy/DefaultProxyClassNameResolver.php	DefaultProxyClassNameResolver	39	pending	
 src/Proxy/InternalProxy.php	InternalProxy	7	pending	
 src/Proxy/NotAProxyClass.php	NotAProxyClass	16	pending	
-src/Proxy/ProxyFactory.php	ProxyFactory	399	ported	crates/php2rust-doctrine-orm/src/entity_manager.rs
+src/Proxy/ProxyFactory.php	ProxyFactory	399	ported	crates/php2rust-doctrine-orm/src/entity_manager.rs crates/php2rust-doctrine-orm/src/proxy.rs
 src/Query.php	Query	367	ported	crates/php2rust-doctrine-orm/src/query/dql_query.rs
 src/Query/AST/ASTException.php	ASTException	11	ported	crates/php2rust-doctrine-orm/src/query/query_exception.rs
 src/Query/AST/AggregateExpression.php	AggregateExpression	16	ported	crates/php2rust-doctrine-orm/src/query/ast.rs

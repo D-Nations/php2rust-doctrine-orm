@@ -587,9 +587,25 @@ impl PersistentCollection {
         Ok(self.st().collection.last())
     }
 
-    /// `key()`: the key at the collection's internal pointer.
-    pub fn key(&self) -> Option<Key> {
-        self.st().collection.key()
+    /// `key()`: the key at the collection's internal pointer
+    /// (`AbstractLazyCollection::key()` initializes the collection).
+    pub async fn key(self: &Arc<Self>) -> Result<Option<Key>, Thrown> {
+        self.initialize().await?;
+        Ok(self.st().collection.key())
+    }
+
+    /// `current()`: the element at the collection's internal pointer
+    /// (`AbstractLazyCollection::current()` initializes the collection).
+    pub async fn current(self: &Arc<Self>) -> Result<Value, Thrown> {
+        self.initialize().await?;
+        Ok(self.st().collection.current())
+    }
+
+    /// `next()`: moves the internal pointer to the next element and returns
+    /// it (`AbstractLazyCollection::next()` initializes the collection).
+    pub async fn next(self: &Arc<Self>) -> Result<Value, Thrown> {
+        self.initialize().await?;
+        Ok(self.st().collection.next())
     }
 
     /// `slice($offset, $length)`.
@@ -650,17 +666,17 @@ impl PersistentCollection {
 
         order_criteria_by_association(&mut criteria, &association);
 
+        // `getEntityPersister()`: the cached persister when the target
+        // entity is cached.
         let persister = em
             .get_unit_of_work()
-            .get_entity_persister(&association.target_entity)?;
+            .get_entity_persister_interface(&association.target_entity)?;
 
         if association.fetch == Some(FETCH_EXTRA_LAZY) {
             return Ok(LazyCriteriaCollection::new(persister, criteria).value());
         }
         let elements = persister.load_criteria(&criteria).await?;
-        Ok(ArrayCollectionObject::value(PhpArray::list(
-            elements.into_iter().map(Value::Object),
-        )))
+        Ok(ArrayCollectionObject::value(PhpArray::list(elements)))
     }
 
     /// `toArray()`.
@@ -709,6 +725,21 @@ impl PersistentCollection {
         }
         copy.changed();
         Ok(copy)
+    }
+
+    /// `unserialize(serialize($collection))`: a new collection with the
+    /// properties that `__sleep()` keeps (`collection`, `initialized`),
+    /// woken up by `__wakeup()`, so with no entity manager, owner or
+    /// association.
+    pub fn serialized_copy(&self) -> Arc<Self> {
+        let (elements, initialized) = {
+            let st = self.st();
+            (st.collection.to_array(), st.initialized)
+        };
+        let copy = Self::new(None, None, ArrayCollection::new(elements));
+        copy.set_initialized(initialized);
+        copy.wakeup();
+        copy
     }
 
     /// `__wakeup()`: an unserialized collection has no entity manager.

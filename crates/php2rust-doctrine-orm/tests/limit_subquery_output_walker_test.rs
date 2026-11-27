@@ -8,7 +8,7 @@
 //! `testSubqueryClonedCompletely` runs on a `Query` of the functional test
 //! entity manager (`tests/common/orm.rs`); the walker's `getQuery()` is
 //! `get_clone_query()`. `testParsingQueryWithDifferentLimitOffsetValuesTakesOnlyOneCacheEntry`
-//! is pending: the port has no query cache.
+//! runs on one too, as its query cache is the `Query`'s.
 //!
 //! Upstream: doctrine/orm tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php
 
@@ -28,8 +28,10 @@ mod orm;
 
 use std::cell::RefCell;
 use std::rc::Rc;
+use std::sync::Arc;
 
 use php_value::Value;
+use php2rust_doctrine_orm::cache::pool::ArrayAdapter;
 use php2rust_doctrine_orm::query::ParserResult;
 use php2rust_doctrine_orm::query::context::{HINT_CUSTOM_OUTPUT_WALKER, HYDRATE_ARRAY, Hint};
 use php2rust_doctrine_orm::query::context::{QueryComponents, QueryContext};
@@ -91,6 +93,37 @@ fn testSubqueryClonedCompletely() {
     let param = clone.get_parameter("dummy-param").expect("a Parameter");
     assert!(param.get_value().identical(&Value::Int(123)));
     assert!(!clone.is_cacheable());
+}
+
+#[test]
+fn testParsingQueryWithDifferentLimitOffsetValuesTakesOnlyOneCacheEntry() {
+    let em = orm::entity_manager(orm::connection(), None);
+    let query_cache = Arc::new(ArrayAdapter::new());
+    em.get_configuration().set_query_cache(query_cache.clone());
+
+    let query = em.create_query(
+        r"SELECT p, c, a FROM Doctrine\Tests\ORM\Tools\Pagination\MyBlogPost p JOIN p.category c JOIN p.author a",
+    );
+    query.set_hint(
+        HINT_CUSTOM_OUTPUT_WALKER,
+        Hint::OutputWalker(LimitSubqueryOutputWalker::CLASS),
+    );
+    query.set_first_result(10);
+    query.set_max_results(Some(20));
+
+    assert_eq!(
+        "SELECT DISTINCT id_0 FROM (SELECT m0_.id AS id_0, m0_.title AS title_1, c1_.id AS id_2, a2_.id AS id_3, a2_.name AS name_4, m0_.author_id AS author_id_5, m0_.category_id AS category_id_6 FROM MyBlogPost m0_ INNER JOIN Category c1_ ON m0_.category_id = c1_.id INNER JOIN Author a2_ ON m0_.author_id = a2_.id) dctrn_result LIMIT 20 OFFSET 10",
+        query.get_single_sql().unwrap(),
+    );
+
+    query.set_first_result(30).set_max_results(Some(40));
+
+    assert_eq!(
+        "SELECT DISTINCT id_0 FROM (SELECT m0_.id AS id_0, m0_.title AS title_1, c1_.id AS id_2, a2_.id AS id_3, a2_.name AS name_4, m0_.author_id AS author_id_5, m0_.category_id AS category_id_6 FROM MyBlogPost m0_ INNER JOIN Category c1_ ON m0_.category_id = c1_.id INNER JOIN Author a2_ ON m0_.author_id = a2_.id) dctrn_result LIMIT 40 OFFSET 30",
+        query.get_single_sql().unwrap(),
+    );
+
+    assert_eq!(1, query_cache.get_values().len());
 }
 
 #[test]

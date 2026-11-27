@@ -3494,12 +3494,13 @@ impl UnitOfWork {
             let em = self.em()?;
             let class = em.get_class_metadata(obj.class())?;
             let name = class.read().name.clone();
-            let id = self
-                .st()
-                .entity_identifiers
-                .get(&object_id(obj))
-                .cloned()
-                .unwrap_or_default();
+            let registered = self.st().entity_identifiers.get(&object_id(obj)).cloned();
+            // A proxy of `ProxyFactory::getProxy()` that is not managed
+            // loads by the identifier it was made with (set on it).
+            let id = match registered {
+                Some(id) => id,
+                None => class.read().get_identifier_values(obj)?,
+            };
             let identifier = self.normalize_identifier(&class, &id).await?;
             // The proxy factory's persister: the cached one when the
             // entity is cached.

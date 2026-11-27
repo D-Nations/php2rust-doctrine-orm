@@ -95,6 +95,27 @@ impl QueryLog {
             .unwrap_or_default()
     }
 
+    /// The statements recorded since `reset_and_enable()`, with their
+    /// bound values and types, in binding order.
+    pub fn entries(&self) -> Vec<(String, PhpArray, Vec<ParameterType>)> {
+        let types = self.types.lock().unwrap_or_else(PoisonError::into_inner);
+        self.queries
+            .lock()
+            .unwrap_or_else(PoisonError::into_inner)
+            .1
+            .iter()
+            .enumerate()
+            .map(|(position, (sql, params))| {
+                let bound = types
+                    .iter()
+                    .filter(|(at, _, _)| *at == position)
+                    .map(|(_, _, r#type)| *r#type)
+                    .collect();
+                (sql.clone(), params.clone(), bound)
+            })
+            .collect()
+    }
+
     /// The statements recorded since `reset_and_enable()`.
     pub fn queries(&self) -> Vec<String> {
         self.queries

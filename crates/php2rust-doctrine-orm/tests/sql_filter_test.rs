@@ -8,8 +8,6 @@
 //! Each filter class registers its constructor
 //! (`register_filter_class()`), as the configuration names it by class.
 //!
-//! Pending: the query cache (not ported); see the parity rows.
-//!
 //! Upstream: doctrine/orm tests/Tests/ORM/Functional/SQLFilterTest.php
 
 #![allow(non_snake_case)]
@@ -30,6 +28,7 @@ use std::sync::Arc;
 
 use php_value::{Thrown, Value, php_array};
 use php2rust_doctrine_dbal::types::Types;
+use php2rust_doctrine_orm::cache::pool::ArrayAdapter;
 use php2rust_doctrine_orm::collection_object as coll;
 use php2rust_doctrine_orm::configuration::Configuration;
 use php2rust_doctrine_orm::entity_manager::EntityManager;
@@ -616,6 +615,29 @@ async fn testSQLFilterToString() {
         filter.to_php_string()
     );
     assert_eq!(filter.to_php_string(), filter2.to_php_string());
+}
+
+#[tokio::test]
+async fn testQueryCacheDependsOnFilters() {
+    let em = set_up().await;
+    let query = em.create_query("select ux from Doctrine\\Tests\\Models\\CMS\\CmsUser ux");
+
+    let cache = Arc::new(ArrayAdapter::new());
+    query.set_query_cache(Some(cache.clone()));
+
+    query.get_object_result().await.unwrap();
+    assert_eq!(1, cache.get_values().len());
+
+    let conf = em.get_configuration();
+    conf.add_filter("locale", MY_LOCALE_FILTER);
+    em.get_filters().enable("locale").unwrap();
+
+    query.get_object_result().await.unwrap();
+    assert_eq!(2, cache.get_values().len());
+
+    // Another time doesn't add another cache entry
+    query.get_object_result().await.unwrap();
+    assert_eq!(2, cache.get_values().len());
 }
 
 #[tokio::test]

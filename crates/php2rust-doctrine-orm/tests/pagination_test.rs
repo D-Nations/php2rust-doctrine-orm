@@ -1,8 +1,9 @@
 //! Functional/PaginationTest.php at doctrine/orm 00c2fd70da291cca1ec75f4dae5344fe3df588fa,
 //! on `SQLite` (`tests/common/orm.rs`). A data provider's rows run in one
 //! test, labelled.
-//! `testDifferentResultLengthsDoNotRequireExtraQueryCacheEntries` is pending:
-//! the port has no query cache. `ReflectionMethod($paginator,
+//! `testDifferentResultLengthsDoNotRequireExtraQueryCacheEntries` sets the
+//! query cache that `OrmFunctionalTestCase` configures (`self::$queryCache`)
+//! on its entity manager. `ReflectionMethod($paginator,
 //! 'getCountQuery')` is `OffsetPaginator::get_count_query()`.
 //!
 //! Upstream: doctrine/orm tests/Tests/ORM/Functional/PaginationTest.php
@@ -33,6 +34,7 @@ use php_value::{Object, PhpArray, PhpString, Thrown, Value};
 use php2rust_doctrine_dbal::Exception;
 use php2rust_doctrine_dbal::platforms::AbstractPlatform;
 use php2rust_doctrine_dbal::types::{ConversionError, Type, TypeArgument, add_type, has_type};
+use php2rust_doctrine_orm::cache::pool::ArrayAdapter;
 use php2rust_doctrine_orm::entity_manager::EntityManager;
 use php2rust_doctrine_orm::query::ast::{
     ComparisonExpression, ConditionalPrimary, DeleteStatement, LITERAL_STRING, Literal, Node,
@@ -1339,3 +1341,39 @@ impl<'a> TreeWalker<'a> for CustomPaginationTestTreeWalker<'a> {
     reason = "the CmsGroup and CmsArticle names of the model set"
 )]
 const _CMS: [&str; 2] = [CMS_GROUP, CMS_ARTICLE];
+
+#[tokio::test]
+async fn testDifferentResultLengthsDoNotRequireExtraQueryCacheEntries() {
+    let em = set_up().await;
+    let query_cache = Arc::new(ArrayAdapter::new());
+    em.get_configuration().set_query_cache(query_cache.clone());
+
+    let dql =
+        "SELECT u FROM Doctrine\\Tests\\Models\\CMS\\CmsUser u WHERE u.id >= :id ORDER BY u.id";
+    let query = em.create_query(dql);
+
+    let window = window(0, 10);
+
+    query.set_parameter("id", 1, None);
+    let initial_result = paginate(OffsetPaginator::new(true, None), &query, window)
+        .await
+        .unwrap()
+        .get_items()
+        .to_vec(); // exercise the paginator
+    assert_eq!(9, initial_result.len());
+
+    let initial_query_count = query_cache.get_values().len();
+
+    query.set_parameter("id", get(&orm::obj(&initial_result[1]), "id"), None); // skip the first result element
+    assert_eq!(
+        8,
+        paginate(OffsetPaginator::new(true, None), &query, window)
+            .await
+            .unwrap()
+            .count()
+    ); // exercise the paginator again, with a smaller result set
+
+    let new_count = query_cache.get_values().len();
+
+    assert_eq!(initial_query_count, new_count);
+}

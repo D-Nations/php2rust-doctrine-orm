@@ -2,7 +2,8 @@
 //! An executor holds the SQL statements the walker generated (and, for the
 //! multi-table executors, the temporary table statements and parameter
 //! lists). `execute()` runs them on a connection; a SELECT's rows are
-//! fetched whole. The query cache profile is not ported.
+//! fetched whole. The query cache profile (DBAL's result cache) is not
+//! ported.
 //!
 //! Upstream: doctrine/orm src/Query/Exec/AbstractSqlExecutor.php src/Query/Exec/FinalizedSelectExecutor.php src/Query/Exec/MultiTableDeleteExecutor.php src/Query/Exec/MultiTableUpdateExecutor.php src/Query/Exec/PreparedExecutorFinalizer.php src/Query/Exec/SingleSelectExecutor.php src/Query/Exec/SingleSelectSqlFinalizer.php src/Query/Exec/SingleTableDeleteUpdateExecutor.php src/Query/Exec/SqlFinalizer.php
 
@@ -534,7 +535,7 @@ impl TempTable {
 
 /// `Doctrine\ORM\Query\Exec\SqlFinalizer`: creates the executor once the
 /// query's first/max results and lock mode are known.
-pub trait SqlFinalizer: fmt::Debug {
+pub trait SqlFinalizer: fmt::Debug + Send + Sync {
     /// The finalizer's class.
     fn class(&self) -> &str;
 

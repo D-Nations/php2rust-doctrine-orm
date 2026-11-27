@@ -4,10 +4,12 @@
 //! The entity manager takes the configuration by value and shares it
 //! (PHP shares the object, and changes after the entity manager was
 //! created are seen by it; here they are not, except the filters, which
-//! the clones share). Caches, custom
-//! hydration modes, the entity listener resolver and the second level
-//! cache are not ported; the custom DQL functions are class names, as
-//! upstream keeps them.
+//! the clones share, and the query, result, hydration and metadata
+//! caches, which they share too). Only the query cache is read (by
+//! `Query`); the result and hydration caches need DBAL's
+//! `QueryCacheProfile`, which is not ported, and the metadata factory
+//! does not cache. The custom DQL functions are class names, as upstream
+//! keeps them.
 //!
 //! Upstream: doctrine/orm src/Configuration.php
 
@@ -18,6 +20,7 @@ use php_value::{PhpArray, Thrown};
 use php2rust_doctrine_persistence::mapping::driver::MappingDriver;
 use php2rust_doctrine_persistence::php_reflection;
 
+use crate::cache::pool::CacheItemPool;
 use crate::mapping::entity_listener_resolver::{
     DefaultEntityListenerResolver, EntityListenerResolver,
 };
@@ -109,6 +112,9 @@ pub struct Configuration {
     /// the configuration object, so a filter added after the entity
     /// manager was created is seen by it).
     filters: Arc<RwLock<Vec<(String, String)>>>,
+    /// The query, result, hydration and metadata cache pools, shared by
+    /// the clones (set on PHP's shared configuration object).
+    caches: Arc<RwLock<Caches>>,
     /// `getEntityListenerResolver()`: the resolver, shared by the clones
     /// (`??= new DefaultEntityListenerResolver()` on the shared object).
     entity_listener_resolver: Arc<dyn EntityListenerResolver>,
@@ -117,6 +123,15 @@ pub struct Configuration {
     custom_string_function_callables: Vec<(String, FunctionFactory)>,
     custom_numeric_function_callables: Vec<(String, FunctionFactory)>,
     custom_datetime_function_callables: Vec<(String, FunctionFactory)>,
+}
+
+/// The cache pools of a configuration.
+#[derive(Default)]
+struct Caches {
+    query: Option<Arc<dyn CacheItemPool>>,
+    result: Option<Arc<dyn CacheItemPool>>,
+    hydration: Option<Arc<dyn CacheItemPool>>,
+    metadata: Option<Arc<dyn CacheItemPool>>,
 }
 
 impl fmt::Debug for Configuration {
@@ -184,6 +199,7 @@ impl Configuration {
             eager_fetch_batch_size: None,
             default_string_type_schema_length: None,
             filters: Arc::default(),
+            caches: Arc::default(),
             entity_listener_resolver: Arc::new(DefaultEntityListenerResolver::new()),
         }
     }
@@ -371,6 +387,54 @@ impl Configuration {
             Some(entry) => class_name.clone_into(&mut entry.1),
             None => filters.push((name.to_owned(), class_name.to_owned())),
         }
+    }
+
+    fn caches(&self) -> std::sync::RwLockReadGuard<'_, Caches> {
+        self.caches.read().unwrap_or_else(PoisonError::into_inner)
+    }
+
+    fn caches_mut(&self) -> std::sync::RwLockWriteGuard<'_, Caches> {
+        self.caches.write().unwrap_or_else(PoisonError::into_inner)
+    }
+
+    /// Gets the cache driver implementation that is used for query result
+    /// caching.
+    pub fn get_result_cache(&self) -> Option<Arc<dyn CacheItemPool>> {
+        self.caches().result.clone()
+    }
+
+    /// Sets the cache driver implementation that is used for query result
+    /// caching.
+    pub fn set_result_cache(&self, cache: Arc<dyn CacheItemPool>) {
+        self.caches_mut().result = Some(cache);
+    }
+
+    /// Gets the cache driver implementation that is used for the query
+    /// cache (SQL cache).
+    pub fn get_query_cache(&self) -> Option<Arc<dyn CacheItemPool>> {
+        self.caches().query.clone()
+    }
+
+    /// Sets the cache driver implementation that is used for the query
+    /// cache (SQL cache).
+    pub fn set_query_cache(&self, cache: Arc<dyn CacheItemPool>) {
+        self.caches_mut().query = Some(cache);
+    }
+
+    pub fn get_hydration_cache(&self) -> Option<Arc<dyn CacheItemPool>> {
+        self.caches().hydration.clone()
+    }
+
+    pub fn set_hydration_cache(&self, cache: Arc<dyn CacheItemPool>) {
+        self.caches_mut().hydration = Some(cache);
+    }
+
+    pub fn get_metadata_cache(&self) -> Option<Arc<dyn CacheItemPool>> {
+        self.caches().metadata.clone()
+    }
+
+    pub fn set_metadata_cache(&self, cache: Arc<dyn CacheItemPool>) {
+        self.caches_mut().metadata = Some(cache);
     }
 
     /// Gets the class name for a given filter name (`None` when it is not
