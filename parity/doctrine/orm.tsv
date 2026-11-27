@@ -2257,15 +2257,15 @@ tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testXmlCu
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testXmlValidationDisabled	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testXmlValidationDisabled
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testXmlValidationEnabled	pending	needs XSD validation: php2rust-dom refuses doctrine-mapping.xsd (xs:complexContent, xs:token), so the XML driver does not validate
 tests/Tests/ORM/ORMInvalidArgumentExceptionTest.php	ORMInvalidArgumentExceptionTest::testNewEntitiesFoundThroughRelationships	pending	
-tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testAttributeConfig	pending	
-tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testAttributeConfiguration	pending	
-tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testCacheNamespaceShouldBeGeneratedForApcu	pending	
-tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testCacheNamespaceShouldBeGeneratedForApcuWhenUsingLegacyConstructor	pending	
-tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testConfigureCache	pending	
-tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testConfigureCacheCustomInstance	pending	
-tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testConfigureProxyDir	pending	
-tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testDisablingXmlValidationIsPossible	pending	
-tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testXMLConfiguration	pending	
+tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testAttributeConfig	ported	crates/php2rust-doctrine-orm/tests/orm_setup_test.rs::testAttributeConfig
+tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testAttributeConfiguration	ported	crates/php2rust-doctrine-orm/tests/orm_setup_test.rs::testAttributeConfiguration
+tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testCacheNamespaceShouldBeGeneratedForApcu	n/a: requires the apcu extension (skipped upstream without it); the port has no APCu adapter	
+tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testCacheNamespaceShouldBeGeneratedForApcuWhenUsingLegacyConstructor	n/a: requires the apcu extension (skipped upstream without it); the port has no APCu adapter	
+tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testConfigureCache	ported	crates/php2rust-doctrine-orm/tests/orm_setup_test.rs::testConfigureCache
+tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testConfigureCacheCustomInstance	ported	crates/php2rust-doctrine-orm/tests/orm_setup_test.rs::testConfigureCacheCustomInstance
+tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testConfigureProxyDir	ported	crates/php2rust-doctrine-orm/tests/orm_setup_test.rs::testConfigureProxyDir
+tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testDisablingXmlValidationIsPossible	ported	crates/php2rust-doctrine-orm/tests/orm_setup_test.rs::testDisablingXmlValidationIsPossible
+tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testXMLConfiguration	ported	crates/php2rust-doctrine-orm/tests/orm_setup_test.rs::testXMLConfiguration
 tests/Tests/ORM/Performance/SecondLevelCacheTest.php	SecondLevelCacheTest::testFindAllEntityWithCache	ported	crates/php2rust-doctrine-orm/tests/performance_second_level_cache_test.rs::testFindAllEntityWithCache
 tests/Tests/ORM/Performance/SecondLevelCacheTest.php	SecondLevelCacheTest::testFindAllEntityWithoutCache	ported	crates/php2rust-doctrine-orm/tests/performance_second_level_cache_test.rs::testFindAllEntityWithoutCache
 tests/Tests/ORM/Performance/SecondLevelCacheTest.php	SecondLevelCacheTest::testFindEntityOneToManyWithCache	ported	crates/php2rust-doctrine-orm/tests/performance_second_level_cache_test.rs::testFindEntityOneToManyWithCache

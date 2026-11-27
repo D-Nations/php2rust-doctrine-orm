@@ -194,6 +194,13 @@ Mapping, not reproduced and so not claimed:
   type) cannot fail: the Rust types rule those values out.
 - PHPUnit's `#[Depends]` chains rebuild the metadata in each test.
 
+- `ORMSetup` without a cache gives an `ArrayAdapter`: the port has no
+  `APCu`, Memcached or Redis adapter, so the cache namespace seed is not
+  used (the two `APCu` tests are `n/a`). Persistence's `MappingDriver`
+  has `Any` as a supertrait, so `assertInstanceOf()` of a driver is
+  `downcast_ref()`.
+- `InsertBatch::batch_by_entity_type()` takes the entity manager's
+  `getClassMetadata()` as a function; the `UnitOfWork` calls it.
 - `DatabaseDriver::new()` is async and lists the schema manager's tables
   when the driver is made (`listTables()` is async; the mapping driver's
   methods are not). The driver reverse engineers them on first use, as

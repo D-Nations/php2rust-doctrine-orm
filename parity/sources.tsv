@@ -364,6 +364,7 @@ crates/php2rust-doctrine-orm/src/mapping/typed_field_mapper.rs	doctrine/orm	src/
 crates/php2rust-doctrine-orm/src/mapping/typed_field_mapper.rs	doctrine/orm	src/Mapping/DefaultTypedFieldMapper.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/mapping/typed_field_mapper.rs	doctrine/orm	src/Mapping/ChainTypedFieldMapper.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/native_query.rs	doctrine/orm	src/NativeQuery.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/src/orm_setup.rs	doctrine/orm	src/ORMSetup.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/persistent_collection.rs	doctrine/orm	src/PersistentCollection.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/persistent_collection.rs	doctrine/orm	src/PersistentCollectionImplementation.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/persisters/abstract_entity_inheritance_persister.rs	doctrine/orm	src/Persisters/Entity/AbstractEntityInheritancePersister.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
@@ -1091,6 +1092,7 @@ crates/php2rust-doctrine-orm/tests/one_to_one_single_table_inheritance_test.rs	d
 crates/php2rust-doctrine-orm/tests/one_to_one_unidirectional_association_test.rs	doctrine/orm	tests/Tests/ORM/Functional/OneToOneUnidirectionalAssociationTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/optimistic_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Locking/OptimisticTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/ordered_joined_table_inheritance_collection_test.rs	doctrine/orm	tests/Tests/ORM/Functional/OrderedJoinedTableInheritanceCollectionTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/tests/orm_setup_test.rs	doctrine/orm	tests/Tests/ORM/ORMSetupTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/owning_side_mapping_test.rs	doctrine/orm	tests/Tests/ORM/Mapping/OwningSideMappingTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/pagination_test.rs	doctrine/orm	tests/Tests/ORM/Functional/PaginationTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/pagination_test.rs	doctrine/orm	tests/Tests/DbalTypes/CustomIdObjectType.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
