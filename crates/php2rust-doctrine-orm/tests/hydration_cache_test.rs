@@ -41,13 +41,9 @@ fn assert_query_count(log: &QueryLog, expected: usize, message: &str) {
     assert_eq!(log.queries().len(), expected, "{message}");
 }
 
-fn profile(key: Option<&str>, cache: &Arc<ArrayAdapter>) -> Option<QueryCacheProfile> {
+fn profile(key: Option<&str>, cache: &Arc<ArrayAdapter>) -> QueryCacheProfile {
     let pool: Arc<dyn CacheItemPool> = cache.clone();
-    Some(QueryCacheProfile::new(
-        0,
-        key.map(str::to_owned),
-        Some(pool),
-    ))
+    QueryCacheProfile::new(0, key.map(str::to_owned), Some(pool))
 }
 
 #[tokio::test]
@@ -58,14 +54,14 @@ async fn testHydrationCache() {
     let dql = "SELECT u FROM Doctrine\\Tests\\Models\\Cms\\CmsUser u";
 
     em.create_query(dql)
-        .set_hydration_cache_profile(profile(None, &cache))
+        .set_hydration_cache_profile(Some(profile(None, &cache)))
         .get_object_result()
         .await
         .unwrap();
 
     log.reset_and_enable();
     em.create_query(dql)
-        .set_hydration_cache_profile(profile(None, &cache))
+        .set_hydration_cache_profile(Some(profile(None, &cache)))
         .get_object_result()
         .await
         .unwrap();
@@ -73,7 +69,7 @@ async fn testHydrationCache() {
     assert_query_count(&log, 0, "Should not execute query. Its cached!");
 
     em.create_query(dql)
-        .set_hydration_cache_profile(profile(None, &cache))
+        .set_hydration_cache_profile(Some(profile(None, &cache)))
         .get_array_result()
         .await
         .unwrap();
@@ -81,7 +77,7 @@ async fn testHydrationCache() {
     assert_query_count(&log, 1, "Hydration is part of cache key.");
 
     em.create_query(dql)
-        .set_hydration_cache_profile(profile(None, &cache))
+        .set_hydration_cache_profile(Some(profile(None, &cache)))
         .get_array_result()
         .await
         .unwrap();
@@ -89,7 +85,7 @@ async fn testHydrationCache() {
     assert_query_count(&log, 1, "Hydration now cached");
 
     em.create_query(dql)
-        .set_hydration_cache_profile(profile(Some("cachekey"), &cache))
+        .set_hydration_cache_profile(Some(profile(Some("cachekey"), &cache)))
         .get_array_result()
         .await
         .unwrap();
@@ -97,7 +93,7 @@ async fn testHydrationCache() {
     assert!(cache.has_item("cachekey").unwrap(), "Explicit cache key");
 
     em.create_query(dql)
-        .set_hydration_cache_profile(profile(Some("cachekey"), &cache))
+        .set_hydration_cache_profile(Some(profile(Some("cachekey"), &cache)))
         .get_array_result()
         .await
         .unwrap();
@@ -113,7 +109,7 @@ async fn testHydrationParametersSerialization() {
     let query = em.create_query(dql);
     query
         .set_parameter(1, Value::Int(1), None)
-        .set_hydration_cache_profile(profile(None, &cache));
+        .set_hydration_cache_profile(Some(profile(None, &cache)));
 
     query.get_object_result().await.unwrap();
 
