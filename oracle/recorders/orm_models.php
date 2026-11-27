@@ -302,6 +302,7 @@ namespace {
         'ORM/Functional/PaginationTest.php',
         'Doctrine\\Tests\\DbalTypes\\CustomIdObject',
         'Doctrine\\Tests\\Models\\Generic\\NonAlphaColumnsEntity',
+        'ORM/Functional/SchemaTool/DBAL483Test.php',
         'ORM/Functional/EntityRepositoryCriteriaTest.php',
         'ORM/Functional/ExtraLazyCollectionTest.php',
         'ORM/Functional/PersistentCollectionCriteriaTest.php',

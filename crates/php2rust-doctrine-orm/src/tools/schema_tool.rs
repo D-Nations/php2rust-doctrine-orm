@@ -117,6 +117,55 @@ impl SchemaTool {
         schema.to_sql(self.platform()).map_err(|e| dbal(&e))
     }
 
+    /// Updates the database schema of the given classes by comparing the
+    /// `ClassMetadata` instances to the current database schema that is
+    /// inspected.
+    pub async fn update_schema(&self, classes: &[Arc<ClassMetadata>]) -> Result<(), Thrown> {
+        let conn = self.em.get_connection();
+        for sql in self.get_update_schema_sql(classes).await? {
+            conn.execute_statement(&sql, &PhpArray::new(), &ParameterTypes::new())
+                .await
+                .map_err(|e| dbal(&e))?;
+        }
+        Ok(())
+    }
+
+    /// Gets the sequence of SQL statements that need to be performed in
+    /// order to bring the given class mappings in-synch with the relational
+    /// schema.
+    ///
+    /// The current schema is the introspected one: the connection's schema
+    /// assets filter is not widened to the tables of the classes (see the
+    /// README).
+    pub async fn get_update_schema_sql(
+        &self,
+        classes: &[Arc<ClassMetadata>],
+    ) -> Result<Vec<String>, Thrown> {
+        use php2rust_doctrine_dbal::schema::AbstractSchemaManager as _;
+
+        let to_schema = self.get_schema_from_metadata(classes)?;
+        let schema_manager = self
+            .em
+            .get_connection()
+            .create_schema_manager()
+            .await
+            .map_err(|e| dbal(&e))?;
+        let from_schema = schema_manager
+            .introspect_schema()
+            .await
+            .map_err(|e| dbal(&e))?;
+        let comparator = schema_manager.create_comparator_with(
+            php2rust_doctrine_dbal::schema::ComparatorConfig::default()
+                .with_report_modified_indexes(false),
+        );
+        let schema_diff = comparator
+            .compare_schemas(&from_schema, &to_schema)
+            .map_err(|e| dbal(&e))?;
+        self.platform()
+            .get_alter_schema_sql(&schema_diff)
+            .map_err(|e| dbal(&e))
+    }
+
     /// Drops the database schema for the given classes.
     ///
     /// In any way when an exception is thrown it is suppressed since drop

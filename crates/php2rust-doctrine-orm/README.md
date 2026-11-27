@@ -54,7 +54,7 @@ assert_eq!(PhpString::from("O'Neil"), lexer.token().unwrap().value);
 | `EntityRepository` (`find()`, `findAll()`, `findBy()`, `findOneBy()`, `count()`, `__call()` magic finders with `InvalidMagicMethodCall`, `matching()`, `createResultSetMappingBuilder()`), `DefaultRepositoryFactory` | `EntityRepository.php`, `Repository/*.php` | EntityRepositoryTest (56) |
 | `LazyCriteriaCollection`: the cached count, `isEmpty()` and `contains()` without loading, `matching()` in memory after one load | `LazyCriteriaCollection.php` | LazyCriteriaCollectionTest (7), EntityRepositoryCriteriaTest |
 | Lifecycle events: `ListenersInvoker` (callbacks, entity listeners, event manager), the event args classes, `PreUpdateEventArgs`; `DefaultEntityListenerResolver` (`Configuration::setEntityListenerResolver()`, the instances outlive `UnitOfWork::clear()`) | `Event/*.php`, `Mapping/EntityListenerResolver.php`, `Mapping/DefaultEntityListenerResolver.php` | LifecycleCallbackTest, EntityListenersTest (10), PostLoadEventTest (9 of 10), EntityListenerResolverTest (4) |
-| `SchemaTool::createSchema()`/`dropSchema()`/`getSchemaFromMetadata()` for no, single table and joined (class table) inheritance (columns, join columns and tables, indexes, unique constraints replacing the indexes they fulfill but fulltext and spatial ones, foreign keys, the child tables' primary keys and `ON DELETE CASCADE` foreign keys to the root table); the `ToolEvents` (`postGenerateSchemaTable`, `postGenerateSchema`) and their event args (`setSchema()`, `setClassTable()`) | `Tools/SchemaTool.php`, `Tools/ToolEvents.php`, `Tools/Event/*.php` | the functional tests' schemas, CompanySchemaTest (2), Tools/SchemaToolTest (33) |
+| `SchemaTool::createSchema()`/`dropSchema()`/`getSchemaFromMetadata()`/`updateSchema()`/`getUpdateSchemaSql()` for no, single table and joined (class table) inheritance (columns, join columns and tables, indexes, unique constraints replacing the indexes they fulfill but fulltext and spatial ones, foreign keys, the child tables' primary keys and `ON DELETE CASCADE` foreign keys to the root table); the `ToolEvents` (`postGenerateSchemaTable`, `postGenerateSchema`) and their event args (`setSchema()`, `setClassTable()`) | `Tools/SchemaTool.php`, `Tools/ToolEvents.php`, `Tools/Event/*.php` | the functional tests' schemas, CompanySchemaTest (2), Tools/SchemaToolTest (33), SchemaTool/DBAL483Test (1) |
 | `SchemaValidator::validateMapping()`/`validateClass()`: the association checks (unknown targets, mapped superclasses, mappedBy/inversedBy consistency, join columns against the identifiers, ordering fields, discriminator maps) and the property type checks against the built-in DBAL types and enums | `Tools/SchemaValidator.php` | Tools/SchemaValidatorTest (17) |
 | `ResultSetMapping` | `Query/ResultSetMapping.php` | ResultSetMappingTest (3); the persister's mappings; the SQL walker's result mappings |
 | `ResultSetMappingBuilder`: root and joined entities from class metadata (the column renaming modes, single table inheritance checks, column conflicts), `generateSelectClause()` with table aliases and custom types' `convertToPHPValueSQL()`, `__toString()` | `Query/ResultSetMappingBuilder.php` | NativeQueryTest, EntityRepositoryTest |
@@ -363,6 +363,12 @@ Persistence, not reproduced and so not claimed:
   `testEventRaisedCorrectTimesWhenOtherEntityLoadedInEventHandler` is
   pending: its listener loads a lazy proxy inside `postLoad()`, and a
   listener's call is synchronous while the load is async.
+- `getUpdateSchemaSql()` compares with the introspected schema: the
+  connection's schema assets filter is not widened to the tables and
+  sequences of the classes, as upstream's `createSchemaForComparison()`
+  does for a filter that is set (the DBAL port's configuration has no
+  unset filter, and the connection's configuration is not changed through
+  the entity manager).
 - SchemaToolTest's schemas are read through DBAL's editor API where
   upstream reads it when it exists. A `postGenerateSchemaTable` listener
   reaches the schema and the table through closures (`with_schema()`,
