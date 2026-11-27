@@ -277,6 +277,8 @@ namespace {
         'ORM/Mapping/TypedEnumFieldMapperTest.php',
         'ORM/UnitOfWorkTest.php',
         'ORM/Functional/LifecycleCallbackTest.php',
+        'ORM/Functional/OneToOneEagerLoadingTest.php',
+        'ORM/Functional/ReadOnlyTest.php',
         'ORM/Functional/OneToManyBidirectionalAssociationTest.php',
         'ORM/Functional/OneToManyUnidirectionalAssociationTest.php',
         'ORM/Functional/OneToManySelfReferentialAssociationTest.php',
