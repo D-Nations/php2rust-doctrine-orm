@@ -1020,7 +1020,7 @@ tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testWhereFilter	port
 tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testWhereOrFilter	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testWhereOrFilter
 tests/Tests/ORM/Functional/SchemaTool/CompanySchemaTest.php	CompanySchemaTest::testGeneratedSchema	ported	crates/php2rust-doctrine-orm/tests/company_schema_test.rs::testGeneratedSchema
 tests/Tests/ORM/Functional/SchemaTool/CompanySchemaTest.php	CompanySchemaTest::testSingleTableInheritance	ported	crates/php2rust-doctrine-orm/tests/company_schema_test.rs::testSingleTableInheritance
-tests/Tests/ORM/Functional/SchemaTool/DBAL483Test.php	DBAL483Test::testDefaultValueIsComparedCorrectly	pending	
+tests/Tests/ORM/Functional/SchemaTool/DBAL483Test.php	DBAL483Test::testDefaultValueIsComparedCorrectly	ported	crates/php2rust-doctrine-orm/tests/dbal483_test.rs::testDefaultValueIsComparedCorrectly
 tests/Tests/ORM/Functional/SchemaTool/DDC214Test.php	DDC214Test::testCmsAddressModel	pending	
 tests/Tests/ORM/Functional/SchemaTool/DDC214Test.php	DDC214Test::testCompanyModel	pending	
 tests/Tests/ORM/Functional/SchemaTool/MySqlSchemaToolTest.php	MySqlSchemaToolTest::testFulltextIndexSurvivesCreateIntrospectAndUpdateWithColumnUnique	pending	
