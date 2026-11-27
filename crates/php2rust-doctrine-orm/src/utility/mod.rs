@@ -1,5 +1,6 @@
-//! `Doctrine\ORM\Utility`: the persister helpers and the identifier
-//! flattener, and small conversions between PHP values and Rust text.
+//! `Doctrine\ORM\Utility`: the persister helpers, the identifier
+//! flattener, the hierarchy discriminator resolver (in `query::utility`),
+//! and small conversions between PHP values and Rust text.
 //!
 //! Upstream: none
 
@@ -8,6 +9,11 @@ mod persister_helper;
 
 pub(crate) use identifier_flattener::backed_value as identifier_flattener_backed;
 pub use identifier_flattener::flatten_identifier;
+
+/// `Doctrine\ORM\Utility\HierarchyDiscriminatorResolver`.
+pub mod hierarchy_discriminator_resolver {
+    pub use crate::query::utility::resolve_discriminators_for_class;
+}
 pub(crate) use identifier_flattener::is_backed_enum;
 pub use persister_helper::{
     ParamType, convert_to_parameter_value, get_type_of_column, get_type_of_field,

@@ -9,6 +9,12 @@
 //! initializes the proxy first, as PHP 8.4 does for a lazy object (see
 //! `ReferenceProxyTest`). `AbstractClass` is not a recorded class: its
 //! `ClassMetadata` has no reflection.
+//!
+//! `testProxyFactoryThrowsIfLazyGhostsAreUnavailable`: the port has no
+//! `LazyGhost` proxies, as PHP 8.4 with symfony/var-exporter 8 (no
+//! `ProxyHelper::generateLazyGhost()`); the entity manager's own
+//! `new ProxyFactory($this)` is the one that throws, as the mock's
+//! configuration cannot change after `create()`.
 
 #![allow(non_snake_case)]
 #![allow(
@@ -174,4 +180,21 @@ async fn testProxyFactoryAcceptsNullProxyArgsWhenNativeLazyObjectsAreEnabled() {
         .unwrap();
 
     assert_uninitialized_lazy_object(&t.em, &proxy);
+}
+
+#[test]
+fn testProxyFactoryThrowsIfLazyGhostsAreUnavailable() {
+    let e = orm::entity_manager_try_with(orm::connection(), |configuration| {
+        let _ = configuration.enable_native_lazy_objects(false);
+    })
+    .unwrap_err();
+
+    assert_eq!(
+        e.class,
+        php2rust_doctrine_orm::exception::ORM_INVALID_ARGUMENT_EXCEPTION
+    );
+    assert_eq!(
+        String::from_utf8_lossy(e.message.as_bytes()),
+        "Symfony LazyGhost is not available. Please install the \"symfony/var-exporter\" package version 6.4 or 7 to use this feature or enable PHP 8.4 native lazy objects."
+    );
 }

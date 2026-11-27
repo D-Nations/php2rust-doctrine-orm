@@ -700,6 +700,13 @@ namespace {
         'ORM/Functional/EagerFetchCollectionTest.php',
         'ORM/Tools/ResolveTargetEntityListenerTest.php',
         'ORM/Tools/AttachEntityListenersListenerTest.php',
+        'ORM/Utility/IdentifierFlattenerTest.php',
+        'ORM/Utility/IdentifierFlattenerEnumIdTest.php',
+        'ORM/Id/AssignedGeneratorTest.php',
+        'ORM/Persisters/BasicEntityPersisterCompositeTypeParametersTest.php',
+        'ORM/Functional/DefaultTimeExpressionTest.php',
+        'ORM/Functional/DefaultTimeExpressionXmlTest.php',
+        'ORM/Functional/CustomIdObjectTypeTest.php',
     ];
     $before = array_merge(get_declared_classes(), get_declared_interfaces(), get_declared_traits());
     foreach ($files as $file) {
