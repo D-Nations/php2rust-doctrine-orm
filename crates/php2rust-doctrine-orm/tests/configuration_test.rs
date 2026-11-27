@@ -5,8 +5,6 @@
 //! interface is the type. `#[IgnoreDeprecations]` tests ignore the proxy
 //! deprecations. `enableNativeLazyObjects(false)` triggers the
 //! deprecation, then is refused (the port only has native lazy objects).
-//!
-//! Pending: the query, hydration and metadata caches (not ported).
 
 #![allow(non_snake_case)]
 #![allow(
@@ -19,6 +17,7 @@ use std::sync::Arc;
 
 use php_value::{Object, Thrown};
 use php2rust_doctrine_orm::cache::CacheConfiguration;
+use php2rust_doctrine_orm::cache::pool::{ArrayAdapter, CacheItemPool};
 use php2rust_doctrine_orm::configuration::{Configuration, proxy_factory};
 use php2rust_doctrine_orm::deprecations;
 use php2rust_doctrine_orm::mapping::driver::attribute_driver::AttributeDriver;
@@ -100,6 +99,39 @@ fn testSetGetMetadataDriverImpl() {
         &metadata_driver,
         configuration.get_metadata_driver_impl().unwrap()
     ));
+}
+
+#[test]
+fn testSetGetQueryCache() {
+    let configuration = set_up();
+    assert!(configuration.get_query_cache().is_none()); // defaults
+    let query_cache: Arc<dyn CacheItemPool> = Arc::new(ArrayAdapter::new());
+    configuration.set_query_cache(query_cache.clone());
+    assert!(same(
+        &query_cache,
+        &configuration.get_query_cache().unwrap()
+    ));
+}
+
+#[test]
+fn testSetGetHydrationCache() {
+    let configuration = set_up();
+    assert!(configuration.get_hydration_cache().is_none()); // defaults
+    let hydration_cache: Arc<dyn CacheItemPool> = Arc::new(ArrayAdapter::new());
+    configuration.set_hydration_cache(hydration_cache.clone());
+    assert!(same(
+        &hydration_cache,
+        &configuration.get_hydration_cache().unwrap()
+    ));
+}
+
+#[test]
+fn testSetGetMetadataCache() {
+    let configuration = set_up();
+    assert!(configuration.get_metadata_cache().is_none());
+    let cache: Arc<dyn CacheItemPool> = Arc::new(ArrayAdapter::new());
+    configuration.set_metadata_cache(cache.clone());
+    assert!(same(&cache, &configuration.get_metadata_cache().unwrap()));
 }
 
 #[test]

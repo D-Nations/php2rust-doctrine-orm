@@ -1,31 +1,49 @@
 //! `Doctrine\ORM\Query`: a DQL query.
 //!
-//! The query is parsed each time its SQL is needed (PHP keeps the parser
-//! result of a clean query, and caches it in the query cache, which is
-//! not ported): the parser result and its walkers are not `Send`, so they
-//! never live across an `await`. The query keeps PHP's result set mapping
-//! once a parse or `setResultSetMapping()` set it.
+//! The query keeps the parser result of a clean query and caches it in
+//! the query cache, as PHP does; the walkers are not `Send`, so they
+//! never live across an `await`, and the parser result is shared once
+//! parsed. The query keeps PHP's result set mapping once a parse or
+//! `setResultSetMapping()` set it. The query cache id hashes the hints'
+//! debug form where PHP hashes `serialize($this->hints)`: the same hints
+//! give the same id.
 //!
 //! Upstream: doctrine/orm src/Query.php
 
+use std::cell::RefCell;
+use std::rc::Rc;
 use std::sync::{Arc, Mutex, MutexGuard, PoisonError};
 
 use php_value::{Key, PhpArray, Thrown, Value};
-use php2rust_doctrine_dbal::{LockMode, ParameterTypes};
+use php2rust_doctrine_dbal::{LockMode, ParameterTypes, WrapperParameterType};
 
 use crate::abstract_query::{Executed, QueryState, abstract_query_methods};
+use crate::cache::pool::{CacheItemPool, CachedParserResult, PoolValue};
 use crate::entity_manager::EntityManager;
 use crate::query::context::{
-    DqlQuery, HINT_INTERNAL_ITERATION, HINT_LOCK_MODE, Hint, QueryContext,
+    DqlQuery, HINT_INTERNAL_ITERATION, HINT_LOCK_MODE, Hint, OutputWalkerClass, QueryComponents,
+    QueryContext,
 };
 use crate::query::exec::{SqlExecutor, SqlStatements};
-use crate::query::{Parameter, ParameterTypeInferer, Parser, query_exception};
+use crate::query::{Parameter, ParameterTypeInferer, Parser, ParserResult, query_exception};
 
 pub use crate::query::context::{
     HINT_CACHE_ENABLED, HINT_CACHE_EVICT, HINT_CUSTOM_OUTPUT_WALKER, HINT_CUSTOM_TREE_WALKERS,
     HINT_FORCE_PARTIAL_LOAD, HINT_INCLUDE_META_COLUMNS, HINT_READ_ONLY, HINT_REFRESH,
     HINT_REFRESH_ENTITY,
 };
+
+/// `md5($data)`.
+fn md5_hex(data: &[u8]) -> String {
+    use md5::Digest as _;
+    use std::fmt::Write as _;
+    md5::Md5::digest(data)
+        .iter()
+        .fold(String::with_capacity(32), |mut hex, byte| {
+            let _ = write!(hex, "{byte:02x}");
+            hex
+        })
+}
 
 /// `Query::STATE_CLEAN`.
 pub const STATE_CLEAN: i64 = 1;
@@ -37,6 +55,39 @@ struct DqlState {
     first_result: i64,
     max_results: Option<i64>,
     state: i64,
+    /// `$parserResult`.
+    parser_result: Option<Arc<ParserResult>>,
+    /// `$parsedTypes`: the parameter types of the last parse.
+    parsed_types: Vec<(String, WrapperParameterType)>,
+    /// The hint and hydration mode changes at the last parse
+    /// (`QueryState::changes()`).
+    parsed_changes: u64,
+    /// The cache driver used for caching queries.
+    query_cache: Option<Arc<dyn CacheItemPool>>,
+    /// Whether or not expire the query cache.
+    expire_query_cache: bool,
+    /// The query cache lifetime.
+    query_cache_ttl: Option<i64>,
+    /// Whether to use a query cache, if available. Defaults to TRUE.
+    use_query_cache: bool,
+}
+
+impl DqlState {
+    fn new(dql: Option<String>, first_result: i64, max_results: Option<i64>, state: i64) -> Self {
+        Self {
+            dql,
+            first_result,
+            max_results,
+            state,
+            parser_result: None,
+            parsed_types: Vec::new(),
+            parsed_changes: 0,
+            query_cache: None,
+            expire_query_cache: false,
+            query_cache_ttl: None,
+            use_query_cache: true,
+        }
+    }
 }
 
 /// A `Query` object represents a DQL query.
@@ -58,12 +109,7 @@ impl Query {
     pub fn new(em: &Arc<EntityManager>) -> Self {
         Self {
             state: QueryState::new(em),
-            dql: Mutex::new(DqlState {
-                dql: None,
-                first_result: 0,
-                max_results: None,
-                state: STATE_CLEAN,
-            }),
+            dql: Mutex::new(DqlState::new(None, 0, None, STATE_CLEAN)),
         }
     }
 
@@ -81,14 +127,20 @@ impl Query {
     #[must_use]
     pub fn clone_query(&self) -> Self {
         let dst = self.dst();
+        let mut clone = DqlState::new(
+            dst.dql.clone(),
+            dst.first_result,
+            dst.max_results,
+            STATE_DIRTY,
+        );
+        clone.parser_result.clone_from(&dst.parser_result);
+        clone.query_cache.clone_from(&dst.query_cache);
+        clone.expire_query_cache = dst.expire_query_cache;
+        clone.query_cache_ttl = dst.query_cache_ttl;
+        clone.use_query_cache = dst.use_query_cache;
         Self {
             state: self.state.clone_state(),
-            dql: Mutex::new(DqlState {
-                dql: dst.dql.clone(),
-                first_result: dst.first_result,
-                max_results: dst.max_results,
-                state: STATE_DIRTY,
-            }),
+            dql: Mutex::new(clone),
         }
     }
 
@@ -109,9 +161,7 @@ impl Query {
     }
 
     fn get_sql_executor(&self) -> Result<SqlExecutor, Thrown> {
-        let parser_result = Parser::new(self)?.parse()?;
-        let parser_result = parser_result.borrow();
-        self.dst().state = STATE_CLEAN;
+        let parser_result = self.parse()?;
         self.state
             .result_set_mapping_or(|| parser_result.get_result_set_mapping().clone());
         parser_result.prepare_sql_executor(self)
@@ -123,9 +173,7 @@ impl Query {
         if let Some(rsm) = self.state.get_result_set_mapping() {
             return Ok(rsm);
         }
-        let parser_result = Parser::new(self)?.parse()?;
-        let rsm = parser_result.borrow().get_result_set_mapping().clone();
-        self.dst().state = STATE_CLEAN;
+        let rsm = self.parse()?.get_result_set_mapping().clone();
         self.state.result_set_mapping_or(|| rsm.clone());
         Ok(self.state.get_result_set_mapping().unwrap_or(rsm))
     }
@@ -148,6 +196,183 @@ impl Query {
         Ok(crate::cache::sha1_hex(
             format!("{parent}-{first_result}-{max_results}").as_bytes(),
         ))
+    }
+
+    /// Parses the DQL query, if necessary, and stores the parser result.
+    fn parse(&self) -> Result<Arc<ParserResult>, Thrown> {
+        let types: Vec<(String, WrapperParameterType)> = self
+            .state
+            .get_parameters()
+            .iter()
+            .map(|parameter| {
+                (
+                    parameter.get_name().to_owned(),
+                    parameter.get_type().clone(),
+                )
+            })
+            .collect();
+        let changes = self.state.changes();
+
+        // Return previous parser result if the query and the filter collection are both clean
+        {
+            let dst = self.dst();
+            if dst.state == STATE_CLEAN
+                && dst.parsed_changes == changes
+                && dst.parsed_types == types
+                && self.get_entity_manager().is_filters_state_clean()
+                && let Some(parser_result) = &dst.parser_result
+            {
+                return Ok(parser_result.clone());
+            }
+        }
+
+        let (query_cache, use_query_cache, expire_query_cache, query_cache_ttl) = {
+            let mut dst = self.dst();
+            dst.state = STATE_CLEAN;
+            dst.parsed_types = types;
+            dst.parsed_changes = changes;
+            (
+                dst.query_cache.clone(),
+                dst.use_query_cache,
+                dst.expire_query_cache,
+                dst.query_cache_ttl,
+            )
+        };
+
+        let query_cache = query_cache.or_else(|| {
+            self.get_entity_manager()
+                .get_configuration()
+                .get_query_cache()
+        });
+        // Check query cache.
+        let Some(query_cache) = query_cache.filter(|_| use_query_cache) else {
+            return self.parse_dql();
+        };
+
+        let cache_item = query_cache.get_item(&self.get_query_cache_id())?;
+
+        if !expire_query_cache
+            && cache_item.is_hit()
+            && let Some(PoolValue::ParserResult(cached)) = cache_item.get()
+        {
+            // Cache hit.
+            let parser_result = cached.0.clone();
+            self.dst().parser_result = Some(parser_result.clone());
+            return Ok(parser_result);
+        }
+
+        // Cache miss.
+        let parser_result = self.parse_dql()?;
+
+        let mut cache_item = cache_item.set(PoolValue::ParserResult(CachedParserResult(
+            parser_result.clone(),
+        )));
+        if let Some(ttl) = query_cache_ttl {
+            cache_item = cache_item.expires_after(ttl);
+        }
+        query_cache.save(cache_item);
+
+        Ok(parser_result)
+    }
+
+    /// `$this->parserResult = (new Parser($this))->parse()`.
+    fn parse_dql(&self) -> Result<Arc<ParserResult>, Thrown> {
+        let parser_result = Parser::new(self)?.parse()?;
+        let parser_result = Arc::new(
+            Rc::try_unwrap(parser_result)
+                .map_or_else(|shared| shared.borrow().clone(), RefCell::into_inner),
+        );
+        self.dst().parser_result = Some(parser_result.clone());
+        Ok(parser_result)
+    }
+
+    /// `getQueryCacheId()`.
+    fn get_query_cache_id(&self) -> String {
+        // ksort($this->hints)
+        let mut hints = self.state.get_hints();
+        hints.sort_by(|(a, _), (b, _)| a.cmp(b));
+
+        let first_and_max_result = match self.state.get_hint(HINT_CUSTOM_OUTPUT_WALKER) {
+            Hint::OutputWalker(output_walker_class)
+                if !self.is_output_walker(output_walker_class) =>
+            {
+                let class = output_walker_class.name;
+                crate::deprecations::trigger("https://github.com/doctrine/orm/pull/11188/", || {
+                    format!(
+                        "Your output walker class {class} should implement Doctrine\\ORM\\Query\\OutputWalker in order to provide a Doctrine\\ORM\\Query\\Exec\\SqlFinalizer. This also means the output walker should not use the query firstResult/maxResult values, which should be read from the query by the SqlFinalizer only."
+                    )
+                });
+                let (first_result, max_results) = {
+                    let dst = self.dst();
+                    (dst.first_result, dst.max_results)
+                };
+                format!(
+                    "&firstResult={first_result}&maxResult={}",
+                    max_results.map(|m| m.to_string()).unwrap_or_default()
+                )
+            }
+            // Assume Parser will create the SqlOutputWalker; save is_a call, which might trigger a class load
+            _ => String::new(),
+        };
+
+        let em = self.get_entity_manager();
+        let filters = if em.has_filters() {
+            em.get_filters().get_hash()
+        } else {
+            String::new()
+        };
+        let types = format!("{:?}", self.dst().parsed_types);
+        let key = format!(
+            "{}{hints:?}&platform={}{filters}{first_and_max_result}&hydrationMode={}&types={types}DOCTRINE_QUERY_CACHE_SALT",
+            self.get_dql().unwrap_or_default(),
+            em.get_database_platform().class(),
+            self.state.get_hydration_mode(),
+        );
+        md5_hex(key.as_bytes())
+    }
+
+    /// `is_a($outputWalkerClass, OutputWalker::class, true)`.
+    fn is_output_walker(&self, output_walker_class: OutputWalkerClass) -> bool {
+        let mut walker = (output_walker_class.construct)(
+            self,
+            Rc::new(RefCell::new(ParserResult::new())),
+            QueryComponents::default(),
+        );
+        walker.as_output_walker().is_some()
+    }
+
+    /// Defines a cache driver to be used for caching queries.
+    pub fn set_query_cache(&self, query_cache: Option<Arc<dyn CacheItemPool>>) -> &Self {
+        self.dst().query_cache = query_cache;
+        self
+    }
+
+    /// Defines whether the query should make use of a query cache, if available.
+    pub fn use_query_cache(&self, use_query_cache: bool) -> &Self {
+        self.dst().use_query_cache = use_query_cache;
+        self
+    }
+
+    /// Defines how long the query cache will be active before expire.
+    pub fn set_query_cache_lifetime(&self, time_to_live: Option<i64>) -> &Self {
+        self.dst().query_cache_ttl = time_to_live;
+        self
+    }
+
+    /// Retrieves the lifetime of resultset cache.
+    pub fn get_query_cache_lifetime(&self) -> Option<i64> {
+        self.dst().query_cache_ttl
+    }
+
+    /// Defines if the query cache is active or not.
+    pub fn expire_query_cache(&self, expire: bool) -> &Self {
+        self.dst().expire_query_cache = expire;
+        self
+    }
+
+    /// Retrieves if the query cache is active or not.
+    pub fn get_expire_query_cache(&self) -> bool {
+        self.dst().expire_query_cache
     }
 
     /// `evictEntityCacheRegion()`.
@@ -318,16 +543,13 @@ impl Query {
 
     /// The executor and the SQL parameters of an execution.
     fn prepare_execution(&self) -> Result<(SqlExecutor, PhpArray, ParameterTypes), Thrown> {
-        let parser_result = Parser::new(self)?.parse()?;
-        let parser_result = parser_result.borrow();
-        self.dst().state = STATE_CLEAN;
+        let parser_result = self.parse()?;
         let executor = parser_result.prepare_sql_executor(self)?;
         self.state
             .result_set_mapping_or(|| parser_result.get_result_set_mapping().clone());
 
         // Prepare parameters
         let param_mappings = parser_result.get_parameter_mappings().clone();
-        drop(parser_result);
         let parameters = self.state.get_parameters();
         let param_count = i64::try_from(parameters.len()).unwrap_or(i64::MAX);
         let mapping_count = i64::try_from(param_mappings.len()).unwrap_or(i64::MAX);

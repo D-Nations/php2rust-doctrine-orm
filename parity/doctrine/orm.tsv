@@ -228,13 +228,13 @@ tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetCustomHydrationM
 tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetAutoGenerateProxyClasses	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetAutoGenerateProxyClasses
 tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetClassMetadataFactoryName	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetClassMetadataFactoryName
 tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetEntityListenerResolver	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetEntityListenerResolver
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetHydrationCache	pending	the query, hydration and metadata caches are not ported
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetMetadataCache	pending	the query, hydration and metadata caches are not ported
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetHydrationCache	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetHydrationCache
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetMetadataCache	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetMetadataCache
 tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetMetadataDriverImpl	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetMetadataDriverImpl
 tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetNamingStrategy	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetNamingStrategy
 tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetProxyDir	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetProxyDir
 tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetProxyNamespace	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetProxyNamespace
-tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetQueryCache	pending	the query, hydration and metadata caches are not ported
+tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetQueryCache	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetQueryCache
 tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetQuoteStrategy	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetQuoteStrategy
 tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetSecondLevelCacheConfig	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetSecondLevelCacheConfig
 tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetTypedFieldMapper	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetTypedFieldMapper
@@ -766,7 +766,7 @@ tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testCountWithCount
 tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testCountWithFetchJoin	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testCountWithFetchJoin
 tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testCustomIdTypeWithoutOutputWalker	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testCustomIdTypeWithoutOutputWalker
 tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testDetectOutputWalker	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testDetectOutputWalker
-tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testDifferentResultLengthsDoNotRequireExtraQueryCacheEntries	pending	the port has no query cache
+tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testDifferentResultLengthsDoNotRequireExtraQueryCacheEntries	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testDifferentResultLengthsDoNotRequireExtraQueryCacheEntries
 tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateComplexWithOutputWalker	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testIterateComplexWithOutputWalker
 tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateSimpleWithOutputWalkerWithoutJoinWithComplexOrder	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testIterateSimpleWithOutputWalkerWithoutJoinWithComplexOrder
 tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testIterateSimpleWithOutputWalkerWithoutJoinWithComplexOrderAndLimit	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testIterateSimpleWithOutputWalkerWithoutJoinWithComplexOrderAndLimit
@@ -847,12 +847,12 @@ tests/Tests/ORM/Functional/ProxiesLikeEntitiesTest.php	ProxiesLikeEntitiesTest::
 tests/Tests/ORM/Functional/ProxiesLikeEntitiesTest.php	ProxiesLikeEntitiesTest::testProxyAsDqlParameterPersist	pending	
 tests/Tests/ORM/Functional/QueryBuilderParenthesisTest.php	QueryBuilderParenthesisTest::testParenthesisOnMultiLine	ported	crates/php2rust-doctrine-orm/tests/query_builder_parenthesis_test.rs::testParenthesisOnMultiLine
 tests/Tests/ORM/Functional/QueryBuilderParenthesisTest.php	QueryBuilderParenthesisTest::testParenthesisOnSingleLine	ported	crates/php2rust-doctrine-orm/tests/query_builder_parenthesis_test.rs::testParenthesisOnSingleLine
-tests/Tests/ORM/Functional/QueryCacheTest.php	QueryCacheTest::testQueryCacheDependsOnHints	pending	
-tests/Tests/ORM/Functional/QueryCacheTest.php	QueryCacheTest::testQueryCacheDependsOnHydrationMode	pending	
-tests/Tests/ORM/Functional/QueryCacheTest.php	QueryCacheTest::testQueryCacheDoesNotDependOnFirstResultForDefaultOutputWalker	pending	
-tests/Tests/ORM/Functional/QueryCacheTest.php	QueryCacheTest::testQueryCacheDoesNotDependOnMaxResultsForDefaultOutputWalker	pending	
-tests/Tests/ORM/Functional/QueryCacheTest.php	QueryCacheTest::testQueryCacheHitDoesNotSaveParserResult	pending	
-tests/Tests/ORM/Functional/QueryCacheTest.php	QueryCacheTest::testQueryCacheNoHitSaveParserResult	pending	
+tests/Tests/ORM/Functional/QueryCacheTest.php	QueryCacheTest::testQueryCacheDependsOnHints	ported	crates/php2rust-doctrine-orm/tests/query_cache_test.rs::testQueryCacheDependsOnHints
+tests/Tests/ORM/Functional/QueryCacheTest.php	QueryCacheTest::testQueryCacheDependsOnHydrationMode	ported	crates/php2rust-doctrine-orm/tests/query_cache_test.rs::testQueryCacheDependsOnHydrationMode
+tests/Tests/ORM/Functional/QueryCacheTest.php	QueryCacheTest::testQueryCacheDoesNotDependOnFirstResultForDefaultOutputWalker	ported	crates/php2rust-doctrine-orm/tests/query_cache_test.rs::testQueryCacheDoesNotDependOnFirstResultForDefaultOutputWalker
+tests/Tests/ORM/Functional/QueryCacheTest.php	QueryCacheTest::testQueryCacheDoesNotDependOnMaxResultsForDefaultOutputWalker	ported	crates/php2rust-doctrine-orm/tests/query_cache_test.rs::testQueryCacheDoesNotDependOnMaxResultsForDefaultOutputWalker
+tests/Tests/ORM/Functional/QueryCacheTest.php	QueryCacheTest::testQueryCacheHitDoesNotSaveParserResult	ported	crates/php2rust-doctrine-orm/tests/query_cache_test.rs::testQueryCacheHitDoesNotSaveParserResult
+tests/Tests/ORM/Functional/QueryCacheTest.php	QueryCacheTest::testQueryCacheNoHitSaveParserResult	ported	crates/php2rust-doctrine-orm/tests/query_cache_test.rs::testQueryCacheNoHitSaveParserResult
 tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testAggregateAvg	ported	crates/php2rust-doctrine-orm/tests/query_dql_function_test.rs::testAggregateAvg
 tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testAggregateCount	ported	crates/php2rust-doctrine-orm/tests/query_dql_function_test.rs::testAggregateCount
 tests/Tests/ORM/Functional/QueryDqlFunctionTest.php	QueryDqlFunctionTest::testAggregateMax	ported	crates/php2rust-doctrine-orm/tests/query_dql_function_test.rs::testAggregateMax
@@ -957,18 +957,18 @@ tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testInitia
 tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testLazyLoadsFieldValuesFromDatabase	ported	crates/php2rust-doctrine-orm/tests/reference_proxy_test.rs::testLazyLoadsFieldValuesFromDatabase
 tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testReferenceFind	ported	crates/php2rust-doctrine-orm/tests/reference_proxy_test.rs::testReferenceFind
 tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testWakeupOnProxy	ported	crates/php2rust-doctrine-orm/tests/reference_proxy_test.rs::testWakeupOnProxy
-tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testDisableResultCache	pending	
-tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testEnableResultCache	pending	
-tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testEnableResultCacheParams	pending	
-tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testEnableResultCacheWithIterable	pending	
-tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testNativeQueryResultCaching	pending	
-tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testResultCache	pending	
-tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testResultCacheDependsOnParameters	pending	
-tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testResultCacheNotDependsOnHydrationMode	pending	
-tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testResultCacheNotDependsOnQueryHints	pending	
-tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testResultCacheWithObjectParameter	pending	
-tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testSetResultCacheId	pending	
-tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testUseResultCacheParams	pending	
+tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testDisableResultCache	pending	the result cache: DBAL's QueryCacheProfile and Connection::executeCacheQuery() are not ported
+tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testEnableResultCache	pending	the result cache: DBAL's QueryCacheProfile and Connection::executeCacheQuery() are not ported
+tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testEnableResultCacheParams	pending	the result cache: DBAL's QueryCacheProfile and Connection::executeCacheQuery() are not ported
+tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testEnableResultCacheWithIterable	pending	the result cache: DBAL's QueryCacheProfile and Connection::executeCacheQuery() are not ported
+tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testNativeQueryResultCaching	pending	the result cache: DBAL's QueryCacheProfile and Connection::executeCacheQuery() are not ported
+tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testResultCache	pending	the result cache: DBAL's QueryCacheProfile and Connection::executeCacheQuery() are not ported
+tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testResultCacheDependsOnParameters	pending	the result cache: DBAL's QueryCacheProfile and Connection::executeCacheQuery() are not ported
+tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testResultCacheNotDependsOnHydrationMode	pending	the result cache: DBAL's QueryCacheProfile and Connection::executeCacheQuery() are not ported
+tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testResultCacheNotDependsOnQueryHints	pending	the result cache: DBAL's QueryCacheProfile and Connection::executeCacheQuery() are not ported
+tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testResultCacheWithObjectParameter	pending	the result cache: DBAL's QueryCacheProfile and Connection::executeCacheQuery() are not ported
+tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testSetResultCacheId	pending	the result cache: DBAL's QueryCacheProfile and Connection::executeCacheQuery() are not ported
+tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testUseResultCacheParams	pending	the result cache: DBAL's QueryCacheProfile and Connection::executeCacheQuery() are not ported
 tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testConfigureFilter	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testConfigureFilter
 tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testEntityManagerDisableFilter	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testEntityManagerDisableFilter
 tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testEntityManagerEnableFilter	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testEntityManagerEnableFilter
@@ -997,7 +997,7 @@ tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testOneToManyExtraLa
 tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testOneToManyExtraLazySliceWithFilterOnCTI	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testOneToManyExtraLazySliceWithFilterOnCTI
 tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testOneToManyExtraLazySliceWithFilterOnSTI	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testOneToManyExtraLazySliceWithFilterOnSTI
 tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testOneToOneInverseSideWithFilter	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testOneToOneInverseSideWithFilter
-tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testQueryCacheDependsOnFilters	pending	
+tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testQueryCacheDependsOnFilters	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testQueryCacheDependsOnFilters
 tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testQueryGenerationDependsOnFilters	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testQueryGenerationDependsOnFilters
 tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testRepositoryFind	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testRepositoryFind
 tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testRepositoryFindAll	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testRepositoryFindAll
@@ -2580,8 +2580,8 @@ tests/Tests/ORM/Query/QueryTest.php	QueryTest::testGetParameterColonNormalize	po
 tests/Tests/ORM/Query/QueryTest.php	QueryTest::testGetParameterTypeJuggling	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testGetParameterTypeJuggling
 tests/Tests/ORM/Query/QueryTest.php	QueryTest::testGetParameters	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testGetParameters
 tests/Tests/ORM/Query/QueryTest.php	QueryTest::testGetParametersHasSomeAlready	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testGetParametersHasSomeAlready
-tests/Tests/ORM/Query/QueryTest.php	QueryTest::testGetQueryCacheDriverWithCacheExplicitlySet	pending	
-tests/Tests/ORM/Query/QueryTest.php	QueryTest::testGetQueryCacheDriverWithDefaults	pending	
+tests/Tests/ORM/Query/QueryTest.php	QueryTest::testGetQueryCacheDriverWithCacheExplicitlySet	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testGetQueryCacheDriverWithCacheExplicitlySet
+tests/Tests/ORM/Query/QueryTest.php	QueryTest::testGetQueryCacheDriverWithDefaults	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testGetQueryCacheDriverWithDefaults
 tests/Tests/ORM/Query/QueryTest.php	QueryTest::testHints	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testHints
 tests/Tests/ORM/Query/QueryTest.php	QueryTest::testIterateEmptyResult	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testIterateEmptyResult
 tests/Tests/ORM/Query/QueryTest.php	QueryTest::testIterateWithDistinct	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testIterateWithDistinct
@@ -2594,12 +2594,12 @@ tests/Tests/ORM/Query/QueryTest.php	QueryTest::testProcessParameterValueNull	por
 tests/Tests/ORM/Query/QueryTest.php	QueryTest::testProcessParameterValueObject	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testProcessParameterValueObject
 tests/Tests/ORM/Query/QueryTest.php	QueryTest::testProcessParameterValueValueObjectWithDriverChain	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testProcessParameterValueValueObjectWithDriverChain
 tests/Tests/ORM/Query/QueryTest.php	QueryTest::testProcessParameterValueWithIterableEntityShouldNotBeTreatedAsIterable	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testProcessParameterValueWithIterableEntityShouldNotBeTreatedAsIterable
-tests/Tests/ORM/Query/QueryTest.php	QueryTest::testResultCacheCaching	pending	
-tests/Tests/ORM/Query/QueryTest.php	QueryTest::testResultCacheEviction	pending	
-tests/Tests/ORM/Query/QueryTest.php	QueryTest::testResultCacheProfileCanBeRemovedViaSetter	pending	
+tests/Tests/ORM/Query/QueryTest.php	QueryTest::testResultCacheCaching	pending	the result and hydration caches: DBAL's QueryCacheProfile is not ported
+tests/Tests/ORM/Query/QueryTest.php	QueryTest::testResultCacheEviction	pending	the result and hydration caches: DBAL's QueryCacheProfile is not ported
+tests/Tests/ORM/Query/QueryTest.php	QueryTest::testResultCacheProfileCanBeRemovedViaSetter	pending	the result and hydration caches: DBAL's QueryCacheProfile is not ported
 tests/Tests/ORM/Query/QueryTest.php	QueryTest::testSelectFromSubquery	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testSelectFromSubquery
 tests/Tests/ORM/Query/QueryTest.php	QueryTest::testSelectJoinSubquery	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testSelectJoinSubquery
-tests/Tests/ORM/Query/QueryTest.php	QueryTest::testSetHydrationCacheProfileNull	pending	
+tests/Tests/ORM/Query/QueryTest.php	QueryTest::testSetHydrationCacheProfileNull	pending	the result and hydration caches: DBAL's QueryCacheProfile is not ported
 tests/Tests/ORM/Query/QueryTest.php	QueryTest::testSetLockMode	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testSetLockMode
 tests/Tests/ORM/Query/QueryTest.php	QueryTest::testSetLockModeNoneDoesNotRequireTransaction	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testSetLockModeNoneDoesNotRequireTransaction
 tests/Tests/ORM/Query/QueryTest.php	QueryTest::testSetParameterWithNameZeroDoesNotOverrideAnotherParameter	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testSetParameterWithNameZeroDoesNotOverrideAnotherParameter
@@ -3076,7 +3076,7 @@ tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubquery
 tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryWithScalarSortPg	pending	PostgreSQLPlatform (ROW_NUMBER() SQL); the DBAL port has only SQLitePlatform
 tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryWithSortOracle	pending	OraclePlatform (ROW_NUMBER() SQL); the DBAL port has only SQLitePlatform
 tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testLimitSubqueryWithSortPg	pending	PostgreSQLPlatform (ROW_NUMBER() SQL); the DBAL port has only SQLitePlatform
-tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testParsingQueryWithDifferentLimitOffsetValuesTakesOnlyOneCacheEntry	pending	the port has no query cache (Configuration::setQueryCache)
+tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testParsingQueryWithDifferentLimitOffsetValuesTakesOnlyOneCacheEntry	ported	crates/php2rust-doctrine-orm/tests/limit_subquery_output_walker_test.rs::testParsingQueryWithDifferentLimitOffsetValuesTakesOnlyOneCacheEntry
 tests/Tests/ORM/Tools/Pagination/LimitSubqueryOutputWalkerTest.php	LimitSubqueryOutputWalkerTest::testSubqueryClonedCompletely	ported	crates/php2rust-doctrine-orm/tests/limit_subquery_output_walker_test.rs::testSubqueryClonedCompletely
 tests/Tests/ORM/Tools/Pagination/LimitSubqueryWalkerTest.php	LimitSubqueryWalkerTest::testAggQueryMixedResultsWithNameAndSort	ported	crates/php2rust-doctrine-orm/tests/limit_subquery_walker_test.rs::testAggQueryMixedResultsWithNameAndSort
 tests/Tests/ORM/Tools/Pagination/LimitSubqueryWalkerTest.php	LimitSubqueryWalkerTest::testAggQueryMultipleMixedResultsWithSort	ported	crates/php2rust-doctrine-orm/tests/limit_subquery_walker_test.rs::testAggQueryMultipleMixedResultsWithSort

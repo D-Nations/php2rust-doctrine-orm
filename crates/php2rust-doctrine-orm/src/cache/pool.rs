@@ -11,21 +11,36 @@
 
 use std::collections::HashMap;
 use std::fmt::Debug;
-use std::sync::{Mutex, MutexGuard, PoisonError};
+use std::sync::{Arc, Mutex, MutexGuard, PoisonError};
 
 use php_value::{Thrown, Value};
 
 use super::CacheEntry;
 use super::exception::PSR_INVALID_ARGUMENT_EXCEPTION;
+use crate::query::ParserResult;
 
 /// The characters a PSR-6 key must not contain.
 pub const RESERVED_CHARACTERS: &str = "{}()/\\@:";
 
-/// What a pool item holds: a cache entry, or another PHP value.
+/// What a pool item holds: a cache entry, a parsed DQL query (the query
+/// cache), or another PHP value.
 #[derive(Debug, Clone, PartialEq)]
 pub enum PoolValue {
     Entry(CacheEntry),
+    ParserResult(CachedParserResult),
     Value(Value),
+}
+
+/// A `ParserResult` in a pool. PHP stores a serialized copy; the parser
+/// result is not changed once parsed, so the pool shares it. Two are equal
+/// when they are the same result.
+#[derive(Debug, Clone)]
+pub struct CachedParserResult(pub Arc<ParserResult>);
+
+impl PartialEq for CachedParserResult {
+    fn eq(&self, other: &Self) -> bool {
+        Arc::ptr_eq(&self.0, &other.0)
+    }
 }
 
 /// `Psr\Cache\CacheItemInterface`.
@@ -123,6 +138,14 @@ impl ArrayAdapter {
             default_lifetime,
             values: Mutex::default(),
         }
+    }
+
+    /// `getValues()`: the stored values, by key.
+    pub fn get_values(&self) -> Vec<(String, PoolValue)> {
+        self.values()
+            .iter()
+            .map(|(key, (value, _))| (key.clone(), value.clone()))
+            .collect()
     }
 
     fn values(&self) -> MutexGuard<'_, HashMap<String, (PoolValue, Option<f64>)>> {

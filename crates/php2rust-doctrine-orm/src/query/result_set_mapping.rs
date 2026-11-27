@@ -77,6 +77,10 @@ pub struct ResultSetMapping {
 
 /// `new ResultSetMapping()`: `$isSelect` is `true`.
 impl Default for ResultSetMapping {
+    #[allow(
+        clippy::default_trait_access,
+        reason = "every other field is its type's default"
+    )]
     fn default() -> Self {
         Self {
             is_mixed: false,
