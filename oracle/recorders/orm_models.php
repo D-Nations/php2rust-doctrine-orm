@@ -700,6 +700,7 @@ namespace {
         'ORM/Functional/EagerFetchCollectionTest.php',
         'ORM/Tools/ResolveTargetEntityListenerTest.php',
         'ORM/Tools/AttachEntityListenersListenerTest.php',
+        'ORM/Tools/Console/MetadataFilterTest.php',
     ];
     $before = array_merge(get_declared_classes(), get_declared_interfaces(), get_declared_traits());
     foreach ($files as $file) {
