@@ -169,12 +169,11 @@ async fn testMultiSelfReference() {
 
     t.em.clear().unwrap();
 
-    let entity2 = t
-        .em
-        .find(entity1.class(), get(&entity1, "id"))
-        .await
-        .unwrap()
-        .unwrap();
+    let entity2 =
+        t.em.find(entity1.class(), get(&entity1, "id"))
+            .await
+            .unwrap()
+            .unwrap();
 
     let other1 = obj(&get(&entity2, "other1"));
     let other2 = obj(&get(&entity2, "other2"));

@@ -82,11 +82,12 @@ async fn testReferenceProxyDelegatesLoadingToThePersister() {
 
     let entries = t.log.entries();
     assert_eq!(1, entries.len(), "{entries:#?}");
-    assert!(entries[0].0.ends_with("WHERE t0.id = ?"), "{}", entries[0].0);
-    assert_eq!(
-        Some(&get(&feature, "id")),
-        entries[0].1.values().next()
+    assert!(
+        entries[0].0.ends_with("WHERE t0.id = ?"),
+        "{}",
+        entries[0].0
     );
+    assert_eq!(Some(&get(&feature, "id")), entries[0].1.values().next());
     assert_eq!(Value::string("Feature"), get(&proxy, "description"));
 }
 
@@ -98,7 +99,8 @@ async fn testSkipMappedSuperClassesOnGeneration() {
 
     assert_eq!(
         0,
-        t.proxy_factory.generate_proxy_classes(&[Arc::new(cm)], None),
+        t.proxy_factory
+            .generate_proxy_classes(&[Arc::new(cm)], None),
         "No proxies generated."
     );
 }
@@ -112,7 +114,8 @@ async fn testSkipEmbeddableClassesOnGeneration() {
 
     assert_eq!(
         0,
-        t.proxy_factory.generate_proxy_classes(&[Arc::new(cm)], None),
+        t.proxy_factory
+            .generate_proxy_classes(&[Arc::new(cm)], None),
         "No proxies generated."
     );
 }
@@ -123,7 +126,9 @@ async fn testSkipAbstractClassesOnGeneration() {
     let t = set_up().await;
     let cm = ClassMetadata::new("Doctrine\\Tests\\ORM\\Proxy\\AbstractClass", None, None);
 
-    let num = t.proxy_factory.generate_proxy_classes(&[Arc::new(cm)], None);
+    let num = t
+        .proxy_factory
+        .generate_proxy_classes(&[Arc::new(cm)], None);
 
     assert_eq!(0, num, "No proxies generated.");
 }

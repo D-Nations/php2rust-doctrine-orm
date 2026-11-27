@@ -50,9 +50,12 @@ struct Test {
 
 async fn set_up() -> Test {
     custom_types::register_types();
-    let (em, log) =
-        query_log::set_up_logged(&[CUSTOM_TYPE_CHILD, CUSTOM_TYPE_PARENT, NON_ALPHA_COLUMNS_ENTITY])
-            .await;
+    let (em, log) = query_log::set_up_logged(&[
+        CUSTOM_TYPE_CHILD,
+        CUSTOM_TYPE_PARENT,
+        NON_ALPHA_COLUMNS_ENTITY,
+    ])
+    .await;
     let persister = persister(&em, CUSTOM_TYPE_PARENT);
     Test { em, log, persister }
 }
@@ -102,7 +105,8 @@ async fn testUpdateUsesTypeValuesSQL() {
         php_array!["customInteger" => 0, "child" => Value::Null],
     )
     .unwrap();
-    uow.register_managed(&child, id(1), PhpArray::new()).unwrap();
+    uow.register_managed(&child, id(1), PhpArray::new())
+        .unwrap();
 
     // propertyChanged($parent, 'customInteger', 0, 1) and
     // propertyChanged($parent, 'child', null, $child)
@@ -268,8 +272,10 @@ async fn testDeleteManyToManyUsesTypeValuesSQL() {
     add_my_friend(&parent, &friend);
 
     let uow = t.em.get_unit_of_work();
-    uow.register_managed(&parent, id(1), PhpArray::new()).unwrap();
-    uow.register_managed(&friend, id(2), PhpArray::new()).unwrap();
+    uow.register_managed(&parent, id(1), PhpArray::new())
+        .unwrap();
+    uow.register_managed(&friend, id(2), PhpArray::new())
+        .unwrap();
 
     t.log.reset_and_enable();
     persister.delete(&parent).await.unwrap();

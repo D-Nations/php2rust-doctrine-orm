@@ -20,8 +20,8 @@ mod orm;
 
 use std::sync::Arc;
 
-use php_value::compare::loose_equals;
 use php_value::Value;
+use php_value::compare::loose_equals;
 use php2rust_doctrine_orm::collection_object as coll;
 use php2rust_doctrine_orm::entity_manager::EntityManager;
 use php2rust_doctrine_orm::query::context::HYDRATE_OBJECT;

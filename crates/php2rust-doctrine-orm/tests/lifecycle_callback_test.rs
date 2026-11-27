@@ -26,7 +26,6 @@ use std::any::Any;
 use std::cell::Cell;
 use std::sync::{Arc, Once};
 
-
 use php_value::{Object, PhpArray, Value};
 use php2rust_doctrine_event_manager::{
     EventArgs, EventListener, EventListenerRegistry as _, ListenerError,
@@ -35,8 +34,8 @@ use php2rust_doctrine_orm::collection_object::ArrayCollectionObject;
 use php2rust_doctrine_orm::event::{self, PreUpdateEventArgs, event_args_class};
 use php2rust_doctrine_orm::events;
 use php2rust_doctrine_orm::object::register_method;
-use php2rust_doctrine_orm::utility::to_text;
 use php2rust_doctrine_orm::query::context::{HYDRATE_OBJECT, HYDRATE_SIMPLEOBJECT};
+use php2rust_doctrine_orm::utility::to_text;
 
 use orm::*;
 
@@ -410,7 +409,10 @@ async fn testPreSavePostSaveCallbacksAreInvoked() {
     em.flush().await.unwrap();
 
     assert_eq!(get(&entity, "prePersistCallbackInvoked"), Value::Bool(true));
-    assert_eq!(get(&entity, "postPersistCallbackInvoked"), Value::Bool(true));
+    assert_eq!(
+        get(&entity, "postPersistCallbackInvoked"),
+        Value::Bool(true)
+    );
 
     em.clear().unwrap();
     ENTITY_POST_LOAD_INVOKED.store(false); // Reset the tracking of the postLoad invocation
@@ -511,10 +513,7 @@ async fn testCascadedEntitiesNotLoadedInPostLoadDuringIterationWithSimpleObjectH
     ENTITY_POST_LOAD_INVOKED.store(false); // Reset the tracking of the postLoad invocation
 
     let query = em.create_query(&format!("SELECT e FROM {TEST_ENTITY_DQL} AS e"));
-    let result = query
-        .to_iterable(None, HYDRATE_SIMPLEOBJECT)
-        .await
-        .unwrap();
+    let result = query.to_iterable(None, HYDRATE_SIMPLEOBJECT).await.unwrap();
 
     if let Some(entity) = result.first() {
         assert!(ENTITY_POST_LOAD_INVOKED.load());

@@ -171,12 +171,11 @@ async fn testNullForeignKey() {
     t.em.persist(&product).unwrap();
     t.em.flush().await.unwrap();
 
-    let product = t
-        .em
-        .find(product.class(), get(&product, "id"))
-        .await
-        .unwrap()
-        .unwrap();
+    let product =
+        t.em.find(product.class(), get(&product, "id"))
+            .await
+            .unwrap()
+            .unwrap();
 
     assert_eq!(Value::Null, get(&product, "shipping"));
 }
