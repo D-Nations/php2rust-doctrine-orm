@@ -7,9 +7,13 @@
 //! the array of a hydration, the scalar of `HYDRATE_SINGLE_SCALAR`, or
 //! the affected row count of a DQL UPDATE or DELETE. A cacheable query
 //! of an em with the second-level cache goes through its query cache
-//! (`executeUsingQueryCache()`). The result and hydration caches and
-//! custom hydration modes are not ported; `toIterable()` hydrates row by row but reads the rows
-//! whole.
+//! (`executeUsingQueryCache()`). The result cache is DBAL's: the query's
+//! [`QueryCacheProfile`] goes to `Connection::executeQuery()`. The
+//! hydration cache keeps the hydrated result in the profile's pool under
+//! the real key of its profile; a hit gives the same values (entities
+//! included) that were saved, where PHP's serializing `ArrayAdapter`
+//! gives copies. Custom hydration modes are not ported; `toIterable()`
+//! hydrates row by row but reads the rows whole.
 //!
 //! Upstream: doctrine/orm src/AbstractQuery.php src/NoResultException.php src/NonUniqueResultException.php src/UnexpectedResultException.php
 
@@ -17,6 +21,7 @@ use std::sync::{Arc, Mutex, MutexGuard, PoisonError};
 
 use php_value::{Key, PhpArray, Thrown, Value};
 use php2rust_doctrine_dbal::WrapperParameterType;
+use php2rust_doctrine_dbal::cache::{CacheItemPool, PoolValue, QueryCacheProfile};
 
 use crate::collection_object::ArrayCollectionObject;
 use crate::entity_manager::EntityManager;
@@ -84,6 +89,40 @@ pub(crate) fn register_classes() {
     hydration::register_classes();
 }
 
+/// The hydration cache's answer for an execution.
+pub(crate) enum HydrationCacheLookup {
+    /// No hydration cache profile.
+    None,
+    /// The cached result.
+    Hit(Value),
+    /// `$setCacheEntry`: saves `$result + [$realCacheKey => $data]`.
+    Miss {
+        cache: Arc<dyn CacheItemPool>,
+        item: php2rust_doctrine_dbal::cache::CacheItem,
+        result: PhpArray,
+        real_cache_key: Key,
+    },
+}
+
+impl HydrationCacheLookup {
+    /// `$setCacheEntry($data)`.
+    pub(crate) fn set_cache_entry(self, data: &Value) {
+        if let Self::Miss {
+            cache,
+            item,
+            mut result,
+            real_cache_key,
+        } = self
+        {
+            // `$result + [$realCacheKey => $data]`.
+            if !result.contains_key(&real_cache_key) {
+                result.insert(real_cache_key, data.clone());
+            }
+            cache.save(item.set(PoolValue::Value(Value::Array(result))));
+        }
+    }
+}
+
 /// What `_doExecute()` gives: the rows of a SELECT, or the affected row
 /// count of an UPDATE or DELETE.
 #[derive(Debug, Clone)]
@@ -106,6 +145,12 @@ struct Inner {
     lifetime: i64,
     cache_region: Option<String>,
     cache_mode: Option<i64>,
+    // The result and hydration caches.
+    /// The user-specified `ResultCacheProfile` (the result cache).
+    query_cache_profile: Option<QueryCacheProfile>,
+    /// Whether or not caching of the result set is to be expired.
+    expire_result_cache: bool,
+    hydration_cache_profile: Option<QueryCacheProfile>,
 }
 
 /// The state of an `AbstractQuery`.
@@ -169,6 +214,9 @@ impl QueryState {
                 lifetime: st.lifetime,
                 cache_region: st.cache_region.clone(),
                 cache_mode: st.cache_mode,
+                query_cache_profile: st.query_cache_profile.clone(),
+                expire_result_cache: st.expire_result_cache,
+                hydration_cache_profile: st.hydration_cache_profile.clone(),
             }),
         }
     }
@@ -453,6 +501,209 @@ impl QueryState {
             .get_configuration()
             .get_second_level_cache_configuration()
             .and_then(|config| config.get_cache_logger())
+    }
+
+    /// Set a cache profile for hydration caching. If no result cache
+    /// driver is set in the `QueryCacheProfile`, the default hydration
+    /// cache of the configuration is used.
+    pub fn set_hydration_cache_profile(&self, profile: Option<QueryCacheProfile>) {
+        let Some(mut profile) = profile else {
+            self.st().hydration_cache_profile = None;
+            return;
+        };
+
+        if profile.get_result_cache().is_none()
+            && let Some(default_hydration_cache_impl) =
+                self.em.get_configuration().get_hydration_cache()
+        {
+            profile = profile.set_result_cache(default_hydration_cache_impl);
+        }
+
+        self.st().hydration_cache_profile = Some(profile);
+    }
+
+    pub fn get_hydration_cache_profile(&self) -> Option<QueryCacheProfile> {
+        self.st().hydration_cache_profile.clone()
+    }
+
+    /// Set a cache profile for the result cache. If no result cache
+    /// driver is set in the `QueryCacheProfile`, the default result cache
+    /// driver is used from the configuration.
+    pub fn set_result_cache_profile(&self, profile: Option<QueryCacheProfile>) {
+        let Some(mut profile) = profile else {
+            self.st().query_cache_profile = None;
+            return;
+        };
+
+        if profile.get_result_cache().is_none()
+            && let Some(default_result_cache) = self.em.get_configuration().get_result_cache()
+        {
+            profile = profile.set_result_cache(default_result_cache);
+        }
+
+        self.st().query_cache_profile = Some(profile);
+    }
+
+    /// Defines a cache driver to be used for caching result sets and
+    /// implicitly enables caching. `None` keeps the profile's lifetime and
+    /// key (`getCacheKey()` throws `NoCacheKey` when it has none).
+    pub fn set_result_cache(
+        &self,
+        result_cache: Option<Arc<dyn CacheItemPool>>,
+    ) -> Result<(), Thrown> {
+        let mut st = self.st();
+        let Some(result_cache) = result_cache else {
+            if let Some(profile) = &st.query_cache_profile {
+                let cache_key = profile
+                    .get_cache_key()
+                    .map_err(|e| crate::exception::from_dbal(&e))?
+                    .to_owned();
+                st.query_cache_profile = Some(QueryCacheProfile::new(
+                    profile.get_lifetime(),
+                    Some(cache_key),
+                    None,
+                ));
+            }
+            return Ok(());
+        };
+
+        st.query_cache_profile = Some(match &st.query_cache_profile {
+            Some(profile) => profile.set_result_cache(result_cache),
+            None => QueryCacheProfile::new(0, None, Some(result_cache)),
+        });
+        Ok(())
+    }
+
+    /// Enables caching of the results of this query, for given or default
+    /// amount of seconds and optionally specifies which ID to use for the
+    /// cache entry.
+    pub fn enable_result_cache(&self, lifetime: Option<i64>, result_cache_id: Option<&str>) {
+        self.set_result_cache_lifetime(lifetime);
+        self.set_result_cache_id(result_cache_id);
+    }
+
+    /// Disables caching of the results of this query.
+    pub fn disable_result_cache(&self) {
+        self.st().query_cache_profile = None;
+    }
+
+    /// Defines how long the result cache will be active before expire.
+    pub fn set_result_cache_lifetime(&self, lifetime: Option<i64>) {
+        let lifetime = lifetime.unwrap_or(0);
+
+        let current = self.st().query_cache_profile.clone();
+        if let Some(profile) = current {
+            self.st().query_cache_profile = Some(profile.set_lifetime(lifetime));
+            return;
+        }
+
+        let mut profile = QueryCacheProfile::new(lifetime, None, None);
+
+        if let Some(cache) = self.em.get_configuration().get_result_cache() {
+            profile = profile.set_result_cache(cache);
+        }
+
+        self.st().query_cache_profile = Some(profile);
+    }
+
+    /// Defines if the result cache is active or not.
+    pub fn expire_result_cache(&self, expire: bool) {
+        self.st().expire_result_cache = expire;
+    }
+
+    /// Retrieves if the resultset cache is active or not.
+    pub fn get_expire_result_cache(&self) -> bool {
+        self.st().expire_result_cache
+    }
+
+    pub fn get_query_cache_profile(&self) -> Option<QueryCacheProfile> {
+        self.st().query_cache_profile.clone()
+    }
+
+    /// Set the result cache id to use to store the result set cache
+    /// entry. If this is not explicitly set by the developer then a hash
+    /// is automatically generated for you.
+    pub fn set_result_cache_id(&self, id: Option<&str>) {
+        let profile = self.st().query_cache_profile.clone();
+        match profile {
+            None => self.set_result_cache_profile(Some(QueryCacheProfile::new(
+                0,
+                id.map(str::to_owned),
+                None,
+            ))),
+            Some(profile) => {
+                self.st().query_cache_profile = Some(profile.set_cache_key(id.map(str::to_owned)));
+            }
+        }
+    }
+
+    /// `getHydrationCacheId()`: `[$key, $hash]` of the hydration cache
+    /// entry for the query's SQL (`None` without a hydration cache
+    /// profile).
+    pub(crate) fn get_hydration_cache_id(
+        &self,
+        sql: &str,
+    ) -> Result<Option<(String, php_value::PhpString)>, Thrown> {
+        let mut parameters = PhpArray::new();
+        let mut types = php2rust_doctrine_dbal::ParameterTypes::new();
+
+        for parameter in self.get_parameters() {
+            let name = Key::from_bytes(parameter.get_name().as_bytes());
+            parameters.insert(
+                name.clone(),
+                self.process_parameter_value(parameter.get_value())?,
+            );
+            types.insert(name, parameter.get_type().clone());
+        }
+
+        let Some(query_cache_profile) = self.get_hydration_cache_profile() else {
+            return Ok(None);
+        };
+        let mut hints = self.hints_array();
+        hints.insert("hydrationMode", Value::Int(self.get_hydration_mode()));
+
+        hints.ksort();
+
+        Ok(Some(query_cache_profile.generate_cache_keys(
+            sql,
+            &parameters,
+            &types,
+            &hints,
+        )))
+    }
+
+    /// The hydration cache's pool and the entry for the query's SQL: the
+    /// cached result on a hit, or what a miss saves the result with.
+    pub(crate) fn hydration_cache_lookup(&self, sql: &str) -> Result<HydrationCacheLookup, Thrown> {
+        let Some((cache_key, real_cache_key)) = self.get_hydration_cache_id(sql)? else {
+            return Ok(HydrationCacheLookup::None);
+        };
+        let Some(cache) = self
+            .get_hydration_cache_profile()
+            .and_then(|profile| profile.get_result_cache().cloned())
+        else {
+            return Ok(HydrationCacheLookup::None);
+        };
+        let cache_item = cache.get_item(&cache_key)?;
+        let real_cache_key = Key::from(real_cache_key);
+        let result = match cache_item.get() {
+            Some(PoolValue::Value(Value::Array(result))) if cache_item.is_hit() => result.clone(),
+            _ => PhpArray::new(),
+        };
+
+        // `isset($result[$realCacheKey])`.
+        if let Some(cached) = result.get(&real_cache_key)
+            && !matches!(cached, Value::Null)
+        {
+            return Ok(HydrationCacheLookup::Hit(cached.clone()));
+        }
+
+        Ok(HydrationCacheLookup::Miss {
+            cache,
+            item: cache_item,
+            result,
+            real_cache_key,
+        })
     }
 
     /// `$this->hints` as a PHP array: a lock mode is its integer, the
@@ -865,10 +1116,107 @@ macro_rules! abstract_query_methods {
             if let Some(parameters) = parameters.filter(|p| !p.is_empty()) {
                 self.state().set_parameters_array(parameters);
             }
-            match self.do_execute().await? {
-                $crate::abstract_query::Executed::Count(count) => Ok(php_value::Value::Int(count)),
-                $crate::abstract_query::Executed::Rows(rows) => self.state().hydrate(rows).await,
-            }
+
+            let set_cache_entry = if self.state().get_hydration_cache_profile().is_some() {
+                let sql = self.hydration_cache_sql()?;
+                match self.state().hydration_cache_lookup(&sql)? {
+                    $crate::abstract_query::HydrationCacheLookup::Hit(result) => return Ok(result),
+                    lookup => lookup,
+                }
+            } else {
+                $crate::abstract_query::HydrationCacheLookup::None
+            };
+
+            let data = match self.do_execute().await? {
+                $crate::abstract_query::Executed::Count(count) => php_value::Value::Int(count),
+                $crate::abstract_query::Executed::Rows(rows) => self.state().hydrate(rows).await?,
+            };
+
+            set_cache_entry.set_cache_entry(&data);
+
+            Ok(data)
+        }
+
+        /// Set a cache profile for hydration caching (the configuration's
+        /// hydration cache when the profile has no pool).
+        pub fn set_hydration_cache_profile(
+            &self,
+            profile: Option<php2rust_doctrine_dbal::cache::QueryCacheProfile>,
+        ) -> &Self {
+            self.state().set_hydration_cache_profile(profile);
+            self
+        }
+
+        pub fn get_hydration_cache_profile(
+            &self,
+        ) -> Option<php2rust_doctrine_dbal::cache::QueryCacheProfile> {
+            self.state().get_hydration_cache_profile()
+        }
+
+        /// Set a cache profile for the result cache (the configuration's
+        /// result cache when the profile has no pool).
+        pub fn set_result_cache_profile(
+            &self,
+            profile: Option<php2rust_doctrine_dbal::cache::QueryCacheProfile>,
+        ) -> &Self {
+            self.state().set_result_cache_profile(profile);
+            self
+        }
+
+        /// Defines a cache driver to be used for caching result sets and
+        /// implicitly enables caching.
+        pub fn set_result_cache(
+            &self,
+            result_cache: Option<std::sync::Arc<dyn php2rust_doctrine_dbal::cache::CacheItemPool>>,
+        ) -> Result<&Self, php_value::Thrown> {
+            self.state().set_result_cache(result_cache)?;
+            Ok(self)
+        }
+
+        /// Enables caching of the results of this query.
+        pub fn enable_result_cache(
+            &self,
+            lifetime: Option<i64>,
+            result_cache_id: Option<&str>,
+        ) -> &Self {
+            self.state().enable_result_cache(lifetime, result_cache_id);
+            self
+        }
+
+        /// Disables caching of the results of this query.
+        pub fn disable_result_cache(&self) -> &Self {
+            self.state().disable_result_cache();
+            self
+        }
+
+        /// Defines how long the result cache will be active before expire.
+        pub fn set_result_cache_lifetime(&self, lifetime: Option<i64>) -> &Self {
+            self.state().set_result_cache_lifetime(lifetime);
+            self
+        }
+
+        /// Defines if the result cache is active or not.
+        pub fn expire_result_cache(&self, expire: bool) -> &Self {
+            self.state().expire_result_cache(expire);
+            self
+        }
+
+        /// Retrieves if the resultset cache is active or not.
+        pub fn get_expire_result_cache(&self) -> bool {
+            self.state().get_expire_result_cache()
+        }
+
+        pub fn get_query_cache_profile(
+            &self,
+        ) -> Option<php2rust_doctrine_dbal::cache::QueryCacheProfile> {
+            self.state().get_query_cache_profile()
+        }
+
+        /// Set the result cache id to use to store the result set cache
+        /// entry.
+        pub fn set_result_cache_id(&self, id: Option<&str>) -> &Self {
+            self.state().set_result_cache_id(id);
+            self
         }
 
         /// Gets the list of results for the query.

@@ -2,8 +2,8 @@
 //! An executor holds the SQL statements the walker generated (and, for the
 //! multi-table executors, the temporary table statements and parameter
 //! lists). `execute()` runs them on a connection; a SELECT's rows are
-//! fetched whole. The query cache profile (DBAL's result cache) is not
-//! ported.
+//! fetched whole. A SELECT executor passes its query cache profile
+//! (DBAL's result cache) to `Connection::executeQuery()`.
 //!
 //! Upstream: doctrine/orm src/Query/Exec/AbstractSqlExecutor.php src/Query/Exec/FinalizedSelectExecutor.php src/Query/Exec/MultiTableDeleteExecutor.php src/Query/Exec/MultiTableUpdateExecutor.php src/Query/Exec/PreparedExecutorFinalizer.php src/Query/Exec/SingleSelectExecutor.php src/Query/Exec/SingleSelectSqlFinalizer.php src/Query/Exec/SingleTableDeleteUpdateExecutor.php src/Query/Exec/SqlFinalizer.php
 
@@ -57,11 +57,16 @@ pub enum ExecutorKind {
 }
 
 /// An `AbstractSqlExecutor`.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct SqlExecutor {
     sql_statements: SqlStatements,
     kind: ExecutorKind,
+    query_cache_profile: Option<php2rust_doctrine_dbal::cache::QueryCacheProfile>,
 }
+
+// A profile compares its lifetime, key and pool (by identity): an
+// equivalence.
+impl Eq for SqlExecutor {}
 
 impl SqlExecutor {
     /// An executor of the given kind.
@@ -69,7 +74,20 @@ impl SqlExecutor {
         Self {
             sql_statements,
             kind,
+            query_cache_profile: None,
         }
+    }
+
+    pub fn set_query_cache_profile(
+        &mut self,
+        qcp: php2rust_doctrine_dbal::cache::QueryCacheProfile,
+    ) {
+        self.query_cache_profile = Some(qcp);
+    }
+
+    /// Do not use query cache
+    pub fn remove_query_cache_profile(&mut self) {
+        self.query_cache_profile = None;
     }
 
     /// `getSqlStatements()`.
@@ -310,8 +328,14 @@ impl SqlExecutor {
         match &self.kind {
             ExecutorKind::FinalizedSelect | ExecutorKind::SingleSelect => {
                 let rows = conn
-                    .fetch_all_associative(&one(&self.sql_statements), params, types)
+                    .execute_query_with_profile(
+                        &one(&self.sql_statements),
+                        params,
+                        types,
+                        self.query_cache_profile.as_ref(),
+                    )
                     .await
+                    .and_then(|mut result| result.fetch_all_associative())
                     .map_err(dbal_error)?;
                 Ok(Executed::Rows(rows))
             }

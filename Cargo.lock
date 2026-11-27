@@ -652,10 +652,12 @@ dependencies = [
 [[package]]
 name = "php2rust-doctrine-dbal"
 version = "0.1.0"
-source = "git+https://github.com/D-Nations/php2rust-doctrine-dbal?rev=e12b5eecef530c37b90ca75453d74cf4e965d1fb#e12b5eecef530c37b90ca75453d74cf4e965d1fb"
+source = "git+https://github.com/D-Nations/php2rust-doctrine-dbal?rev=dfd232be0f2b4d5990089431dc0e7510ef8da4fc#dfd232be0f2b4d5990089431dc0e7510ef8da4fc"
 dependencies = [
  "php2rust-regex",
  "php2rust-value",
+ "sha1",
+ "sha2 0.10.9",
  "sqlx",
  "tokio",
 ]
@@ -870,6 +872,17 @@ dependencies = [
 
 [[package]]
 name = "sha2"
+version = "0.10.9"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a7507d819769d01a365ab707794a4084392c824f54a7a6a7862f8c3d0892b283"
+dependencies = [
+ "cfg-if",
+ "cpufeatures 0.2.17",
+ "digest 0.10.7",
+]
+
+[[package]]
+name = "sha2"
 version = "0.11.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5b0e5c7d67bc53f435386b2130fdc900488c5703770f6d8a4633060e34288a27"
@@ -951,7 +964,7 @@ dependencies = [
  "memchr",
  "percent-encoding",
  "serde",
- "sha2",
+ "sha2 0.11.2",
  "smallvec",
  "thiserror",
  "tokio",
@@ -988,7 +1001,7 @@ dependencies = [
  "quote",
  "serde",
  "serde_json",
- "sha2",
+ "sha2 0.11.2",
  "sqlx-core",
  "sqlx-sqlite",
  "syn 2.0.119",

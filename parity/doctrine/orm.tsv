@@ -1,7 +1,7 @@
 # doctrine/orm at 00c2fd70da291cca1ec75f4dae5344fe3df588fa: upstream test	method	status	rust test
-tests/Tests/ORM/AbstractQueryTest.php	AbstractQueryTest::testItMakesHydrationCacheProfilesAwareOfTheResultCache	pending	
-tests/Tests/ORM/AbstractQueryTest.php	AbstractQueryTest::testItMakesResultCacheProfilesAwareOfTheResultCache	pending	
-tests/Tests/ORM/AbstractQueryTest.php	AbstractQueryTest::testSettingTheResultCacheIsPossibleWithoutCallingDeprecatedMethods	pending	
+tests/Tests/ORM/AbstractQueryTest.php	AbstractQueryTest::testItMakesHydrationCacheProfilesAwareOfTheResultCache	ported	crates/php2rust-doctrine-orm/tests/abstract_query_test.rs::testItMakesHydrationCacheProfilesAwareOfTheResultCache
+tests/Tests/ORM/AbstractQueryTest.php	AbstractQueryTest::testItMakesResultCacheProfilesAwareOfTheResultCache	ported	crates/php2rust-doctrine-orm/tests/abstract_query_test.rs::testItMakesResultCacheProfilesAwareOfTheResultCache
+tests/Tests/ORM/AbstractQueryTest.php	AbstractQueryTest::testSettingTheResultCacheIsPossibleWithoutCallingDeprecatedMethods	ported	crates/php2rust-doctrine-orm/tests/abstract_query_test.rs::testSettingTheResultCacheIsPossibleWithoutCallingDeprecatedMethods
 tests/Tests/ORM/Cache/CacheConfigTest.php	CacheConfigTest::testSetGetCacheFactory	ported	crates/php2rust-doctrine-orm/tests/cache_config_test.rs::testSetGetCacheFactory
 tests/Tests/ORM/Cache/CacheConfigTest.php	CacheConfigTest::testSetGetCacheLogger	ported	crates/php2rust-doctrine-orm/tests/cache_config_test.rs::testSetGetCacheLogger
 tests/Tests/ORM/Cache/CacheConfigTest.php	CacheConfigTest::testSetGetQueryValidator	ported	crates/php2rust-doctrine-orm/tests/cache_config_test.rs::testSetGetQueryValidator
@@ -531,8 +531,8 @@ tests/Tests/ORM/Functional/GH8011Test.php	GH8011Test::testOrderWithArithmeticExp
 tests/Tests/ORM/Functional/GH8011Test.php	GH8011Test::testOrderWithArithmeticExpressionWithSingleValuedPathExpression	ported	crates/php2rust-doctrine-orm/tests/gh8011_test.rs::testOrderWithArithmeticExpressionWithSingleValuedPathExpression
 tests/Tests/ORM/Functional/GH8011Test.php	GH8011Test::testOrderWithArithmeticExpressionWithSingleValuedPathExpressionAndLiteral	ported	crates/php2rust-doctrine-orm/tests/gh8011_test.rs::testOrderWithArithmeticExpressionWithSingleValuedPathExpressionAndLiteral
 tests/Tests/ORM/Functional/GH8011Test.php	GH8011Test::testOrderWithArithmeticExpressionWithSingleValuedPathExpressionAndResultVariable	ported	crates/php2rust-doctrine-orm/tests/gh8011_test.rs::testOrderWithArithmeticExpressionWithSingleValuedPathExpressionAndResultVariable
-tests/Tests/ORM/Functional/HydrationCacheTest.php	HydrationCacheTest::testHydrationCache	pending	
-tests/Tests/ORM/Functional/HydrationCacheTest.php	HydrationCacheTest::testHydrationParametersSerialization	pending	
+tests/Tests/ORM/Functional/HydrationCacheTest.php	HydrationCacheTest::testHydrationCache	ported	crates/php2rust-doctrine-orm/tests/hydration_cache_test.rs::testHydrationCache
+tests/Tests/ORM/Functional/HydrationCacheTest.php	HydrationCacheTest::testHydrationParametersSerialization	ported	crates/php2rust-doctrine-orm/tests/hydration_cache_test.rs::testHydrationParametersSerialization
 tests/Tests/ORM/Functional/IdentityMapTest.php	IdentityMapTest::testBasicIdentityManagement	ported	crates/php2rust-doctrine-orm/tests/identity_map_test.rs::testBasicIdentityManagement
 tests/Tests/ORM/Functional/IdentityMapTest.php	IdentityMapTest::testCollectionValuedAssociationIdentityMapBehaviorWithRefresh	ported	crates/php2rust-doctrine-orm/tests/identity_map_test.rs::testCollectionValuedAssociationIdentityMapBehaviorWithRefresh
 tests/Tests/ORM/Functional/IdentityMapTest.php	IdentityMapTest::testCollectionValuedAssociationIdentityMapBehaviorWithRefreshQuery	ported	crates/php2rust-doctrine-orm/tests/identity_map_test.rs::testCollectionValuedAssociationIdentityMapBehaviorWithRefreshQuery
@@ -639,7 +639,7 @@ tests/Tests/ORM/Functional/NativeQueryTest.php	NativeQueryTest::testAbstractClas
 tests/Tests/ORM/Functional/NativeQueryTest.php	NativeQueryTest::testBasicNativeQuery	ported	crates/php2rust-doctrine-orm/tests/native_query_test.rs::testBasicNativeQuery
 tests/Tests/ORM/Functional/NativeQueryTest.php	NativeQueryTest::testBasicNativeQueryWithMetaResult	ported	crates/php2rust-doctrine-orm/tests/native_query_test.rs::testBasicNativeQueryWithMetaResult
 tests/Tests/ORM/Functional/NativeQueryTest.php	NativeQueryTest::testConcreteClassInSingleTableInheritanceSchemaWithRSMBuilderIsFine	ported	crates/php2rust-doctrine-orm/tests/native_query_test.rs::testConcreteClassInSingleTableInheritanceSchemaWithRSMBuilderIsFine
-tests/Tests/ORM/Functional/NativeQueryTest.php	NativeQueryTest::testFluentInterface	pending	
+tests/Tests/ORM/Functional/NativeQueryTest.php	NativeQueryTest::testFluentInterface	ported	crates/php2rust-doctrine-orm/tests/native_query_test.rs::testFluentInterface
 tests/Tests/ORM/Functional/NativeQueryTest.php	NativeQueryTest::testGenerateSelectClauseCustomRenames	ported	crates/php2rust-doctrine-orm/tests/native_query_test.rs::testGenerateSelectClauseCustomRenames
 tests/Tests/ORM/Functional/NativeQueryTest.php	NativeQueryTest::testGenerateSelectClauseIncrement	ported	crates/php2rust-doctrine-orm/tests/native_query_test.rs::testGenerateSelectClauseIncrement
 tests/Tests/ORM/Functional/NativeQueryTest.php	NativeQueryTest::testGenerateSelectClauseNoRenameSingleEntity	ported	crates/php2rust-doctrine-orm/tests/native_query_test.rs::testGenerateSelectClauseNoRenameSingleEntity
@@ -957,18 +957,18 @@ tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testInitia
 tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testLazyLoadsFieldValuesFromDatabase	ported	crates/php2rust-doctrine-orm/tests/reference_proxy_test.rs::testLazyLoadsFieldValuesFromDatabase
 tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testReferenceFind	ported	crates/php2rust-doctrine-orm/tests/reference_proxy_test.rs::testReferenceFind
 tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testWakeupOnProxy	ported	crates/php2rust-doctrine-orm/tests/reference_proxy_test.rs::testWakeupOnProxy
-tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testDisableResultCache	pending	the result cache: DBAL's QueryCacheProfile and Connection::executeCacheQuery() are not ported
-tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testEnableResultCache	pending	the result cache: DBAL's QueryCacheProfile and Connection::executeCacheQuery() are not ported
-tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testEnableResultCacheParams	pending	the result cache: DBAL's QueryCacheProfile and Connection::executeCacheQuery() are not ported
-tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testEnableResultCacheWithIterable	pending	the result cache: DBAL's QueryCacheProfile and Connection::executeCacheQuery() are not ported
-tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testNativeQueryResultCaching	pending	the result cache: DBAL's QueryCacheProfile and Connection::executeCacheQuery() are not ported
-tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testResultCache	pending	the result cache: DBAL's QueryCacheProfile and Connection::executeCacheQuery() are not ported
-tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testResultCacheDependsOnParameters	pending	the result cache: DBAL's QueryCacheProfile and Connection::executeCacheQuery() are not ported
-tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testResultCacheNotDependsOnHydrationMode	pending	the result cache: DBAL's QueryCacheProfile and Connection::executeCacheQuery() are not ported
-tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testResultCacheNotDependsOnQueryHints	pending	the result cache: DBAL's QueryCacheProfile and Connection::executeCacheQuery() are not ported
-tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testResultCacheWithObjectParameter	pending	the result cache: DBAL's QueryCacheProfile and Connection::executeCacheQuery() are not ported
-tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testSetResultCacheId	pending	the result cache: DBAL's QueryCacheProfile and Connection::executeCacheQuery() are not ported
-tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testUseResultCacheParams	pending	the result cache: DBAL's QueryCacheProfile and Connection::executeCacheQuery() are not ported
+tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testDisableResultCache	ported	crates/php2rust-doctrine-orm/tests/result_cache_test.rs::testDisableResultCache
+tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testEnableResultCache	ported	crates/php2rust-doctrine-orm/tests/result_cache_test.rs::testEnableResultCache
+tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testEnableResultCacheParams	ported	crates/php2rust-doctrine-orm/tests/result_cache_test.rs::testEnableResultCacheParams
+tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testEnableResultCacheWithIterable	ported	crates/php2rust-doctrine-orm/tests/result_cache_test.rs::testEnableResultCacheWithIterable
+tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testNativeQueryResultCaching	ported	crates/php2rust-doctrine-orm/tests/result_cache_test.rs::testNativeQueryResultCaching
+tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testResultCache	ported	crates/php2rust-doctrine-orm/tests/result_cache_test.rs::testResultCache
+tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testResultCacheDependsOnParameters	ported	crates/php2rust-doctrine-orm/tests/result_cache_test.rs::testResultCacheDependsOnParameters
+tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testResultCacheNotDependsOnHydrationMode	ported	crates/php2rust-doctrine-orm/tests/result_cache_test.rs::testResultCacheNotDependsOnHydrationMode
+tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testResultCacheNotDependsOnQueryHints	ported	crates/php2rust-doctrine-orm/tests/result_cache_test.rs::testResultCacheNotDependsOnQueryHints
+tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testResultCacheWithObjectParameter	ported	crates/php2rust-doctrine-orm/tests/result_cache_test.rs::testResultCacheWithObjectParameter
+tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testSetResultCacheId	ported	crates/php2rust-doctrine-orm/tests/result_cache_test.rs::testSetResultCacheId
+tests/Tests/ORM/Functional/ResultCacheTest.php	ResultCacheTest::testUseResultCacheParams	ported	crates/php2rust-doctrine-orm/tests/result_cache_test.rs::testUseResultCacheParams
 tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testConfigureFilter	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testConfigureFilter
 tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testEntityManagerDisableFilter	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testEntityManagerDisableFilter
 tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testEntityManagerEnableFilter	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testEntityManagerEnableFilter
@@ -2594,12 +2594,12 @@ tests/Tests/ORM/Query/QueryTest.php	QueryTest::testProcessParameterValueNull	por
 tests/Tests/ORM/Query/QueryTest.php	QueryTest::testProcessParameterValueObject	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testProcessParameterValueObject
 tests/Tests/ORM/Query/QueryTest.php	QueryTest::testProcessParameterValueValueObjectWithDriverChain	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testProcessParameterValueValueObjectWithDriverChain
 tests/Tests/ORM/Query/QueryTest.php	QueryTest::testProcessParameterValueWithIterableEntityShouldNotBeTreatedAsIterable	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testProcessParameterValueWithIterableEntityShouldNotBeTreatedAsIterable
-tests/Tests/ORM/Query/QueryTest.php	QueryTest::testResultCacheCaching	pending	the result and hydration caches: DBAL's QueryCacheProfile is not ported
-tests/Tests/ORM/Query/QueryTest.php	QueryTest::testResultCacheEviction	pending	the result and hydration caches: DBAL's QueryCacheProfile is not ported
-tests/Tests/ORM/Query/QueryTest.php	QueryTest::testResultCacheProfileCanBeRemovedViaSetter	pending	the result and hydration caches: DBAL's QueryCacheProfile is not ported
+tests/Tests/ORM/Query/QueryTest.php	QueryTest::testResultCacheCaching	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testResultCacheCaching
+tests/Tests/ORM/Query/QueryTest.php	QueryTest::testResultCacheEviction	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testResultCacheEviction
+tests/Tests/ORM/Query/QueryTest.php	QueryTest::testResultCacheProfileCanBeRemovedViaSetter	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testResultCacheProfileCanBeRemovedViaSetter
 tests/Tests/ORM/Query/QueryTest.php	QueryTest::testSelectFromSubquery	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testSelectFromSubquery
 tests/Tests/ORM/Query/QueryTest.php	QueryTest::testSelectJoinSubquery	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testSelectJoinSubquery
-tests/Tests/ORM/Query/QueryTest.php	QueryTest::testSetHydrationCacheProfileNull	pending	the result and hydration caches: DBAL's QueryCacheProfile is not ported
+tests/Tests/ORM/Query/QueryTest.php	QueryTest::testSetHydrationCacheProfileNull	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testSetHydrationCacheProfileNull
 tests/Tests/ORM/Query/QueryTest.php	QueryTest::testSetLockMode	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testSetLockMode
 tests/Tests/ORM/Query/QueryTest.php	QueryTest::testSetLockModeNoneDoesNotRequireTransaction	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testSetLockModeNoneDoesNotRequireTransaction
 tests/Tests/ORM/Query/QueryTest.php	QueryTest::testSetParameterWithNameZeroDoesNotOverrideAnotherParameter	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testSetParameterWithNameZeroDoesNotOverrideAnotherParameter

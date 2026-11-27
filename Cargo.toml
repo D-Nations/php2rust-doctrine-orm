@@ -10,7 +10,7 @@ resolver = "3"
 php-value = { package = "php2rust-value", git = "https://github.com/D-Nations/php2rust-compatibility-tools", rev = "977342827ba414362c6af60f38dd376f2fbcfd72" }
 php-regex = { package = "php2rust-regex", git = "https://github.com/D-Nations/php2rust-compatibility-tools", rev = "977342827ba414362c6af60f38dd376f2fbcfd72" }
 php2rust-dom = { git = "https://github.com/D-Nations/php2rust-compatibility-tools", rev = "977342827ba414362c6af60f38dd376f2fbcfd72" }
-php2rust-doctrine-dbal = { package = "php2rust-doctrine-dbal", git = "https://github.com/D-Nations/php2rust-doctrine-dbal", rev = "e12b5eecef530c37b90ca75453d74cf4e965d1fb" }
+php2rust-doctrine-dbal = { package = "php2rust-doctrine-dbal", git = "https://github.com/D-Nations/php2rust-doctrine-dbal", rev = "dfd232be0f2b4d5990089431dc0e7510ef8da4fc" }
 # Lints for every member (`[lints] workspace = true`), the same rule set as
 # symfony-rs and php2rust-compatibility-tools.
 [workspace.lints.clippy]

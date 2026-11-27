@@ -41,7 +41,8 @@ assert_eq!(PhpString::from("O'Neil"), lexer.token().unwrap().value);
 | `Query\SqlWalker` and `SqlOutputWalker`: the SQL of SELECT, UPDATE and DELETE statements on the platform, table aliases, class table and single table inheritance, ordered collections, filters, lock hints, `HINT_FORCE_PARTIAL_LOAD`, limit and offset, custom DBAL types' `convertToPHPValueSQL()`, the result set mapping the walker fills; `OutputWalker::getFinalizer()` | `Query/SqlWalker.php`, `Query/SqlOutputWalker.php`, `Query/OutputWalker.php` | SelectSqlGenerationTest (172 of 185), UpdateSqlGenerationTest (18), DeleteSqlGenerationTest (28), SqlWalkerTest (2) |
 | `TreeWalker`, `TreeWalkerAdapter`, `TreeWalkerChain`: walkers that change the AST (`&mut`) before the output walker; `setQueryComponent()`'s check | `Query/TreeWalker.php`, `TreeWalkerAdapter.php`, `TreeWalkerChain.php` | CustomTreeWalkersTest (5), CustomTreeWalkersJoinTest (2) |
 | `ParserResult`, the executors and finalizers (`SqlExecutor` with its kind and SQL statements, `execute()` on the connection with bound parameters, the multi-table executors' temporary tables, `SingleSelectSqlFinalizer`, `PreparedExecutorFinalizer`), the deprecation `https://github.com/doctrine/orm/pull/11188` | `Query/ParserResult.php`, `Query/Exec/*.php` | ParserResultTest (5), Functional QueryTest |
-| `Query` and `AbstractQuery`: `EntityManager::createQuery()`, DQL and state, parameters (`setParameter()` with name normalization, `setParameters()` from parameters or an array, `processParameterValue()` for entities, collections, arrays and backed enums), the parameter count checks, `setFirstResult()`/`setMaxResults()`, hints and default hints, lock modes (`TransactionRequiredException`), `setFetchMode()`, `getSQL()`, `execute()`, `getResult()`, `getArrayResult()`, `getScalarResult()`, `getSingleColumnResult()`, `getSingleResult()`, `getOneOrNullResult()`, `getSingleScalarResult()` (`NoResultException`, `NonUniqueResultException`), `toIterable()`, `free()`, `clone` | `Query.php`, `AbstractQuery.php`, `NoResultException.php`, `NonUniqueResultException.php`, `UnexpectedResultException.php` | Query QueryTest (32 of 39), Functional QueryTest (39 of 41), QueryIterableTest (4), QueryParameterTest (6), IndexByAssociationTest (5), TypeTest (9 of 11), TypeValueSqlTest (4), EnumTest (24), on SQLite |
+| `Query` and `AbstractQuery`: `EntityManager::createQuery()`, DQL and state, parameters (`setParameter()` with name normalization, `setParameters()` from parameters or an array, `processParameterValue()` for entities, collections, arrays and backed enums), the parameter count checks, `setFirstResult()`/`setMaxResults()`, hints and default hints, lock modes (`TransactionRequiredException`), `setFetchMode()`, `getSQL()`, `execute()`, `getResult()`, `getArrayResult()`, `getScalarResult()`, `getSingleColumnResult()`, `getSingleResult()`, `getOneOrNullResult()`, `getSingleScalarResult()` (`NoResultException`, `NonUniqueResultException`), `toIterable()`, `free()`, `clone` | `Query.php`, `AbstractQuery.php`, `NoResultException.php`, `NonUniqueResultException.php`, `UnexpectedResultException.php` | Query QueryTest (39), Functional QueryTest (39 of 41), QueryIterableTest (4), QueryParameterTest (6), IndexByAssociationTest (5), TypeTest (9 of 11), TypeValueSqlTest (4), EnumTest (24), on SQLite |
+| The result and hydration caches: `setResultCacheProfile()`, `setResultCache()`, `enableResultCache()`/`disableResultCache()`, `setResultCacheLifetime()`, `setResultCacheId()`, `expireResultCache()` (the cached statements deleted), the configuration's result and hydration caches for a profile without a pool, `setHydrationCacheProfile()` and the hydration cache entries keyed by the SQL, parameters, hints and hydration mode; DQL (both SELECT executors) and native queries pass the profile to DBAL's `executeQuery()` | `AbstractQuery.php`, `Query.php`, `NativeQuery.php`, `Query/Exec/AbstractSqlExecutor.php` | ResultCacheTest (12), HydrationCacheTest (2), AbstractQueryTest (3), Query QueryTest's cache tests (4), NativeQueryTest `testFluentInterface`, on SQLite |
 | The hydrators: `AbstractHydrator` (column information, `gatherRowData()`, `gatherScalarRowData()`, `buildEnum()`, `registerManaged()`), `ObjectHydrator` (fetch joins, collections, index by, `NEW` objects with named arguments and entities as arguments, mixed results, discriminators, proxies, `HydrationException`s), `ArrayHydrator`, `ScalarHydrator`, `SingleScalarHydrator`, `ScalarColumnHydrator`, `SimpleObjectHydrator` (discriminators, joined inheritance fields, enum checks with `MappingException::invalidEnumValue()`) | `Internal/Hydration/*.php`, `Exception/MultipleSelectorsFoundException.php` | ObjectHydratorTest (31), ArrayHydratorTest (19), ScalarHydratorTest (3), SingleScalarHydratorTest (4), ScalarColumnHydratorTest (4), SimpleObjectHydratorTest (6), AbstractHydratorTest (2 of 6), ResultSetMappingTest (3), Functional/NewOperatorTest (38, on SQLite) |
 | `Query\Filter`: `SQLFilter` (`setParameter()` with the inferred or given type, `setParameterList()`, `getParameter()` quoted by the connection, `getParameterList()` quoted and comma-joined, `hasParameter()`, `__toString()` as PHP's `serialize()` of the ksorted parameters, `getConnection()`, the `FilterException` texts), `FilterCollection` (`enable()`, `disable()`, `suspend()`, `restore()`, `getFilter()`, `has()`, `isEnabled()`, `isSuspended()`, `isClean()`, `getHash()`, `setFiltersStateDirty()`, the InvalidArgumentException texts); `Configuration::addFilter()`/`getFilterClassName()`; `EntityManager::getFilters()`, `isFiltersStateClean()`, `hasFilters()`; the filter conditions in the SQL walker and in the persister's `getSelectSQL()`, `getCountSQL()` and `exists()`, on the root entity for the inheritance persisters (`SingleTablePersister::generateFilterConditionSQL()`, the `JoinedSubclassPersister` select and count SQL); the many-to-many persister's `getFilterSql()` (the join of the target table `te` for the extra-lazy `count()`, `contains()`, `containsKey()` and `get()`) | `Query/Filter/SQLFilter.php`, `Query/Filter/Parameter.php`, `Query/Filter/FilterException.php`, `Query/FilterCollection.php`, `Configuration.php`, `EntityManager.php`, `Persisters/Entity/BasicEntityPersister.php`, `Persisters/Entity/SingleTablePersister.php`, `Persisters/Entity/JoinedSubclassPersister.php`, `Persisters/Collection/ManyToManyPersister.php` | Functional/SQLFilterTest (48 of 49), FilterCollectionTest (9), ConfigurationTest::testAddGetFilters, the SwitchContextWithFilter ChangeFiltersTest (3) and the SwitchContextWithFilterAndIndexedRelation ChangeFiltersTest (1), on SQLite |
 | `NativeQuery` and `EntityManager::createNativeQuery()` | `NativeQuery.php` | NativeQueryTest (20), Query NativeQueryTest (1) |
@@ -564,17 +565,19 @@ Queries and hydration, not reproduced and so not claimed:
   query cache (`Query::setQueryCache()`, `useQueryCache()`,
   `setQueryCacheLifetime()`, `expireQueryCache()`,
   `Configuration::setQueryCache()`): the pool shares the parsed result
-  (`cache::pool::PoolValue::ParserResult`) where PHP stores a serialized
+  (`cache::pool::CachedParserResult`) where PHP stores a serialized
   copy, and the cache id hashes the hints' debug form where PHP hashes
   `serialize($this->hints)` (the same hints give the same id). A query is
   dirty after `setHint()` or `setHydrationMode()` (counted on the query
   state) as after `setDQL()`, `setFirstResult()` and `setMaxResults()`.
   `is_a($outputWalkerClass, OutputWalker::class, true)` constructs the
-  walker and asks it. The result and hydration caches are not ported:
-  they need DBAL's `QueryCacheProfile` and `Connection::executeCacheQuery()`,
-  which php2rust-doctrine-dbal does not port; `Configuration` keeps the
-  result, hydration and metadata cache pools (set/get only, shared by its
-  clones), and the metadata factory does not cache.
+  walker and asks it. The result cache is DBAL's (`QueryCacheProfile`,
+  `Connection::executeCacheQuery()`); the hydration cache keeps the
+  hydrated result in its profile's pool, and a hit gives the values that
+  were saved (the same entity objects) where PHP's serializing
+  `ArrayAdapter` gives copies. The PSR-6 pool (`cache::pool`) is
+  php2rust-doctrine-dbal's, re-exported. The metadata cache pool is kept
+  (set/get only) and the metadata factory does not cache.
 - A result is read whole (the DBAL port fetches all rows): `toIterable()`
   returns the hydrated values in a `Vec` and the `onClear` listener of
   an iteration is not registered. `toIterable()` with the generator keys
@@ -628,13 +631,10 @@ Queries and hydration, not reproduced and so not claimed:
 
 Persistence and query pending: `EntityRepositoryTest::testDefaultRepositoryClassName`
 (the DDC753 models and changing the configuration after `create()`);
-`NativeQueryTest::testFluentInterface` (the result cache);
 Functional `PersistentCollectionTest` is `n/a` (upstream skips it: its
 models extend persistence 2's `PersistentObject`); the criteria and extra-lazy
 tests of the Ticket, filter, enum and inheritance test files (GH7767,
-GH7836, GH7864, SQLFilterTest); the result cache tests
-(ResultCacheTest, DBAL's `QueryCacheProfile` is not ported) and the
-result cache tests of Query QueryTest;
+GH7836, GH7864, SQLFilterTest);
 `Functional\QueryTest::testJoinPartialObjectHydration` (partial objects)
 and `testQueryBuilderWithStringWhereClauseContainingOrAndConditionalPrimary`
 (the query builder); `AbstractHydratorTest`'s `onClear` listener tests;

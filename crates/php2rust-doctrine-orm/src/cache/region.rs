@@ -131,7 +131,7 @@ impl Region for DefaultRegion {
             .cache_item_pool
             .get_item(&self.get_cache_entry_key(key))?;
         Ok(match item.get() {
-            Some(PoolValue::Entry(entry)) if item.is_hit() => Some(entry.clone()),
+            Some(value) if item.is_hit() => value.downcast_ref::<CacheEntry>().cloned(),
             _ => None,
         })
     }
@@ -151,8 +151,8 @@ impl Region for DefaultRegion {
             let Some(item) = items.iter().find(|item| item.get_key() == cache_key) else {
                 return Ok(None);
             };
-            match item.get() {
-                Some(PoolValue::Entry(entry)) if item.is_hit() => {
+            match item.get().and_then(PoolValue::downcast_ref::<CacheEntry>) {
+                Some(entry) if item.is_hit() => {
                     result.push((array_key.clone(), entry.clone()));
                 }
                 _ => return Ok(None),
@@ -165,7 +165,7 @@ impl Region for DefaultRegion {
         let mut item = self
             .cache_item_pool
             .get_item(&self.get_cache_entry_key(key))?
-            .set(PoolValue::Entry(entry));
+            .set(PoolValue::object(entry));
         if self.lifetime > 0 {
             item = item.expires_after(self.lifetime);
         }

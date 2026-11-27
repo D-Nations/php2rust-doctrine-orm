@@ -101,9 +101,21 @@ impl NativeQuery {
         let rows = self
             .get_entity_manager()
             .get_connection()
-            .fetch_all_associative(&self.get_sql(), &parameters, &types)
+            .execute_query_with_profile(
+                &self.get_sql(),
+                &parameters,
+                &types,
+                self.state.get_query_cache_profile().as_ref(),
+            )
             .await
+            .and_then(|mut result| result.fetch_all_associative())
             .map_err(|e| crate::exception::from_dbal(&e))?;
         Ok(Executed::Rows(rows))
+    }
+
+    /// The SQL of the hydration cache key (`getSQL()`).
+    #[allow(clippy::unnecessary_wraps, reason = "the DQL query's can fail")]
+    fn hydration_cache_sql(&self) -> Result<String, Thrown> {
+        Ok(self.get_sql())
     }
 }
