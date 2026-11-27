@@ -9,6 +9,7 @@
 
 #![allow(dead_code, reason = "each test binary uses a part of the models")]
 
+use std::collections::HashMap;
 use std::sync::{Arc, Once};
 
 use php_value::{Object, PhpArray, Value, vectors};
@@ -17,7 +18,7 @@ use php2rust_doctrine_orm::mapping::attributes::{
 };
 use php2rust_doctrine_orm::object::EntityObject;
 use php2rust_doctrine_persistence::php_reflection::{
-    ClassInfo, MethodInfo, PropertyInfo, Visibility, class_info, register_class,
+    ClassInfo, LoadMetadataFn, MethodInfo, PropertyInfo, Visibility, class_info, register_class,
 };
 use serde_json::Value as Json;
 
@@ -40,12 +41,23 @@ pub fn register_query_models() {
 
 /// Declares the models, once per test binary.
 pub fn register() {
+    register_with_load_metadata(Vec::new);
+}
+
+/// Declares the models, once per test binary, with the static
+/// `loadMetadata()` of the classes `loaders` names: PHP code, written as
+/// Rust fns in the test that calls the `StaticPHPDriver`.
+pub fn register_with_load_metadata(loaders: impl FnOnce() -> Vec<(String, LoadMetadataFn)>) {
     static ONCE: Once = Once::new();
     ONCE.call_once(|| {
         php2rust_doctrine_orm::mapping::register_orm_classes();
+        let loaders: HashMap<String, LoadMetadataFn> = loaders()
+            .into_iter()
+            .map(|(class, load)| (class.to_ascii_lowercase(), load))
+            .collect();
         let json: Json = serde_json::from_str(MODELS).unwrap();
         for class in json["classes"].as_array().unwrap() {
-            declare(class);
+            declare_with(class, &loaders);
         }
     });
 }
@@ -63,6 +75,10 @@ fn visibility(json: &Json) -> Visibility {
 }
 
 fn declare(class: &Json) {
+    declare_with(class, &HashMap::new());
+}
+
+fn declare_with(class: &Json, loaders: &HashMap<String, LoadMetadataFn>) {
     let name = text(&class["name"]);
     if class_info(&name).is_some() {
         return;
@@ -132,17 +148,13 @@ fn declare(class: &Json) {
             attributes = attributes.property(&property_name, property_attributes);
         }
     }
+    let load_metadata = loaders.get(&name.to_ascii_lowercase());
     for method in class["methods"].as_array().unwrap() {
         let method_name = text(&method["name"]);
-        let mut m =
-            MethodInfo::new(method_name.as_str()).visibility(visibility(&method["visibility"]));
-        if method["static"].as_bool().unwrap() {
-            m = m.static_method();
+        if load_metadata.is_some() && method_name == "loadMetadata" {
+            continue;
         }
-        if let Some(required) = method["required"].as_u64() {
-            m = m.required_parameters(usize::try_from(required).unwrap());
-        }
-        info = info.method(m);
+        info = info.method(method_info(method, &method_name));
         let method_attributes: Vec<MappingAttribute> = method["attributes"]
             .as_array()
             .unwrap()
@@ -152,6 +164,9 @@ fn declare(class: &Json) {
         if !method_attributes.is_empty() {
             attributes = attributes.method(&method_name, method_attributes);
         }
+    }
+    if let Some(load) = load_metadata {
+        info = info.load_metadata(Arc::clone(load));
     }
     if class["kind"].as_str() == Some("class") {
         let instance_class = name.clone();
@@ -163,6 +178,18 @@ fn declare(class: &Json) {
     }
     register_class(info);
     attr::register_attributes(attributes);
+}
+
+/// A recorded method.
+fn method_info(method: &Json, method_name: &str) -> MethodInfo {
+    let mut m = MethodInfo::new(method_name).visibility(visibility(&method["visibility"]));
+    if method["static"].as_bool().unwrap() {
+        m = m.static_method();
+    }
+    if let Some(required) = method["required"].as_u64() {
+        m = m.required_parameters(usize::try_from(required).unwrap());
+    }
+    m
 }
 
 /// A recorded attribute (`["object", class, properties]`).

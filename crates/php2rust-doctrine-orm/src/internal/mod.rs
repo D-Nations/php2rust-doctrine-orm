@@ -5,6 +5,7 @@
 pub mod hydration;
 mod strongly_connected_components;
 mod topological_sort;
+pub mod unit_of_work;
 
 pub use strongly_connected_components::StronglyConnectedComponents;
 pub use topological_sort::{CycleDetectedException, TopologicalSort};
