@@ -63,7 +63,7 @@ src/EntityNotFoundException.php	EntityNotFoundException	26	ported	crates/php2rus
 src/EntityRepository.php	EntityRepository	122	ported	crates/php2rust-doctrine-orm/src/entity_repository.rs
 src/Event/ListenersInvoker.php	ListenersInvoker	59	ported	crates/php2rust-doctrine-orm/src/event/listeners_invoker.rs
 src/Event/LoadClassMetadataEventArgs.php	LoadClassMetadataEventArgs	12	pending	
-src/Event/OnClassMetadataNotFoundEventArgs.php	OnClassMetadataNotFoundEventArgs	28	pending	
+src/Event/OnClassMetadataNotFoundEventArgs.php	OnClassMetadataNotFoundEventArgs	28	ported	crates/php2rust-doctrine-orm/src/event/mod.rs
 src/Event/OnClearEventArgs.php	OnClearEventArgs	7	ported	crates/php2rust-doctrine-orm/src/event/mod.rs
 src/Event/OnFlushEventArgs.php	OnFlushEventArgs	7	ported	crates/php2rust-doctrine-orm/src/event/mod.rs
 src/Event/PostFlushEventArgs.php	PostFlushEventArgs	7	ported	crates/php2rust-doctrine-orm/src/event/mod.rs

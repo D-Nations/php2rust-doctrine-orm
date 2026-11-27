@@ -1,5 +1,5 @@
 //! Port of `BinaryIdPersisterTest`, on `SQLite`. `BinaryIdType` and
-//! `BinaryId` are Rust types (`BinaryId::generate()` takes counter-based bytes,
+//! `BinaryId` are Rust types (`BinaryId::new()` (`generate()`) takes counter-based bytes,
 //! not `random_bytes()`); the class locator of `Models/BinaryPrimaryKey` lists
 //! its entity, `Category`.
 //!

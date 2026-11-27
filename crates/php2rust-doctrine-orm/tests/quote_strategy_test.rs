@@ -12,9 +12,13 @@
 #[path = "common/models.rs"]
 mod models;
 
-use php_value::php_array;
-use php2rust_doctrine_dbal::platforms::SQLitePlatform;
+use std::sync::Arc;
+
+use php_value::{PhpArray, php_array};
+use php2rust_doctrine_dbal::platforms::{AbstractPlatform, SQLitePlatform};
+use php2rust_doctrine_orm::configuration::Configuration;
 use php2rust_doctrine_orm::mapping::class_metadata::ClassMetadataInfo;
+use php2rust_doctrine_orm::mapping::{AssociationMapping, JoinColumnMapping};
 use php2rust_doctrine_orm::mapping::{DefaultQuoteStrategy, QuoteStrategy};
 use php2rust_doctrine_persistence::mapping::RuntimeReflectionService;
 
@@ -192,4 +196,96 @@ fn testReferencedJoinColumnName() {
         "\"id\"",
         strategy.get_referenced_join_column_name(join_column, &cm, &platform)
     );
+}
+
+/// `MyQuoteStrategy extends DefaultQuoteStrategy`.
+#[derive(Debug)]
+struct MyQuoteStrategy(DefaultQuoteStrategy);
+
+impl QuoteStrategy for MyQuoteStrategy {
+    fn get_column_name(
+        &self,
+        field_name: &str,
+        class: &ClassMetadataInfo,
+        platform: &dyn AbstractPlatform,
+    ) -> String {
+        self.0.get_column_name(field_name, class, platform)
+    }
+
+    fn get_table_name(&self, class: &ClassMetadataInfo, platform: &dyn AbstractPlatform) -> String {
+        self.0.get_table_name(class, platform)
+    }
+
+    fn get_sequence_name(
+        &self,
+        definition: &PhpArray,
+        class: &ClassMetadataInfo,
+        platform: &dyn AbstractPlatform,
+    ) -> String {
+        self.0.get_sequence_name(definition, class, platform)
+    }
+
+    fn get_join_table_name(
+        &self,
+        association: &AssociationMapping,
+        class: &ClassMetadataInfo,
+        platform: &dyn AbstractPlatform,
+    ) -> String {
+        self.0.get_join_table_name(association, class, platform)
+    }
+
+    fn get_join_column_name(
+        &self,
+        join_column: &JoinColumnMapping,
+        class: &ClassMetadataInfo,
+        platform: &dyn AbstractPlatform,
+    ) -> String {
+        self.0.get_join_column_name(join_column, class, platform)
+    }
+
+    fn get_referenced_join_column_name(
+        &self,
+        join_column: &JoinColumnMapping,
+        class: &ClassMetadataInfo,
+        platform: &dyn AbstractPlatform,
+    ) -> String {
+        self.0
+            .get_referenced_join_column_name(join_column, class, platform)
+    }
+
+    fn get_identifier_column_names(
+        &self,
+        class: &ClassMetadataInfo,
+        platform: &dyn AbstractPlatform,
+    ) -> Vec<String> {
+        self.0.get_identifier_column_names(class, platform)
+    }
+
+    fn get_column_alias(
+        &self,
+        column_name: &str,
+        counter: i64,
+        platform: &dyn AbstractPlatform,
+        class: Option<&ClassMetadataInfo>,
+    ) -> String {
+        self.0
+            .get_column_alias(column_name, counter, platform, class)
+    }
+}
+
+/// The test entity manager's configuration is a new `Configuration`
+/// (the entity manager's own cannot change after it is created); the
+/// strategy's class is its `Debug` name.
+#[test]
+fn testConfiguration() {
+    let mut config = Configuration::new();
+
+    assert_eq!(
+        "DefaultQuoteStrategy",
+        format!("{:?}", config.get_quote_strategy())
+    );
+
+    config.set_quote_strategy(Arc::new(MyQuoteStrategy(DefaultQuoteStrategy)));
+
+    assert!(format!("{:?}", config.get_quote_strategy()).starts_with("MyQuoteStrategy"));
 }

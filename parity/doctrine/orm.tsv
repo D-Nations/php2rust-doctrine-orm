@@ -260,7 +260,7 @@ tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testWrapInTransactionRe
 tests/Tests/ORM/EntityNotFoundExceptionTest.php	EntityNotFoundExceptionTest::testFromClassNameAndIdentifier	ported	crates/php2rust-doctrine-orm/tests/entity_not_found_exception_test.rs::testFromClassNameAndIdentifier
 tests/Tests/ORM/EntityNotFoundExceptionTest.php	EntityNotFoundExceptionTest::testNoIdentifierFound	ported	crates/php2rust-doctrine-orm/tests/entity_not_found_exception_test.rs::testNoIdentifierFound
 tests/Tests/ORM/EntityRepositoryTest.php	EntityRepositoryTest::testExpr	ported	crates/php2rust-doctrine-orm/tests/orm_entity_repository_test.rs::testExpr
-tests/Tests/ORM/Event/OnClassMetadataNotFoundEventArgsTest.php	OnClassMetadataNotFoundEventArgsTest::testEventArgsMutability	pending	
+tests/Tests/ORM/Event/OnClassMetadataNotFoundEventArgsTest.php	OnClassMetadataNotFoundEventArgsTest::testEventArgsMutability	ported	crates/php2rust-doctrine-orm/tests/on_class_metadata_not_found_event_args_test.rs::testEventArgsMutability
 tests/Tests/ORM/Functional/AbstractFetchEagerTest.php	AbstractFetchEagerTest::testWithAbstractFetchEager	ported	crates/php2rust-doctrine-orm/tests/abstract_fetch_eager_test.rs::testWithAbstractFetchEager
 tests/Tests/ORM/Functional/AdvancedAssociationTest.php	AdvancedAssociationTest::testIssue	ported	crates/php2rust-doctrine-orm/tests/advanced_association_test.rs::testIssue
 tests/Tests/ORM/Functional/AdvancedAssociationTest.php	AdvancedAssociationTest::testManyToMany	ported	crates/php2rust-doctrine-orm/tests/advanced_association_test.rs::testManyToMany
@@ -1901,7 +1901,7 @@ tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testLifecyc
 tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testLifecycleCallbacksSupportMultipleMethodNames	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testLifecycleCallbacksSupportMultipleMethodNames
 tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testManyToManyAssociationWithCascadeAll	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testManyToManyAssociationWithCascadeAll
 tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testManyToManyAssociationWithNestedJoinColumns	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testManyToManyAssociationWithNestedJoinColumns
-tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testMappedSuperclassWithRepository	pending	
+tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testMappedSuperclassWithRepository	pending	needs DDC869PaymentRepository, a custom repository class with PHP methods (isTrue())
 tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testNamingStrategy	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testNamingStrategy
 tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testOrderByWithInvalidDirection	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testOrderByWithInvalidDirection
 tests/Tests/ORM/Mapping/AttributeDriverTest.php	AttributeDriverTest::testOrderByWithStringValues	ported	crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs::testOrderByWithStringValues
@@ -1971,7 +1971,7 @@ tests/Tests/ORM/Mapping/ClassMetadataBuilderTest.php	ClassMetadataBuilderTest::t
 tests/Tests/ORM/Mapping/ClassMetadataBuilderTest.php	ClassMetadataBuilderTest::testThrowsExceptionOnCreateManyToManyWithIdentity	ported	crates/php2rust-doctrine-orm/tests/class_metadata_builder_test.rs::testThrowsExceptionOnCreateManyToManyWithIdentity
 tests/Tests/ORM/Mapping/ClassMetadataBuilderTest.php	ClassMetadataBuilderTest::testThrowsExceptionOnCreateOneToManyWithIdentity	ported	crates/php2rust-doctrine-orm/tests/class_metadata_builder_test.rs::testThrowsExceptionOnCreateOneToManyWithIdentity
 tests/Tests/ORM/Mapping/ClassMetadataBuilderTest.php	ClassMetadataBuilderTest::testThrowsExceptionOnCreateOneToOneWithIdentityOnInverseSide	ported	crates/php2rust-doctrine-orm/tests/class_metadata_builder_test.rs::testThrowsExceptionOnCreateOneToOneWithIdentityOnInverseSide
-tests/Tests/ORM/Mapping/ClassMetadataFactoryTest.php	ClassMetadataFactoryTest::testAcceptsEntityManagerInterfaceInstances	pending	
+tests/Tests/ORM/Mapping/ClassMetadataFactoryTest.php	ClassMetadataFactoryTest::testAcceptsEntityManagerInterfaceInstances	pending	the factory's setEntityManager() takes a FactoryConfiguration (the parts of the entity manager it reads), not an EntityManagerInterface, and keeps no em property to read back by reflection
 tests/Tests/ORM/Mapping/ClassMetadataFactoryTest.php	ClassMetadataFactoryTest::testAddDefaultDiscriminatorMap	n/a: upstream skips it (the test is incorrect)	
 tests/Tests/ORM/Mapping/ClassMetadataFactoryTest.php	ClassMetadataFactoryTest::testFallbackLoadingCausesEventTriggeringThatCanModifyFetchedMetadata	ported	crates/php2rust-doctrine-orm/tests/class_metadata_factory_test.rs::testFallbackLoadingCausesEventTriggeringThatCanModifyFetchedMetadata
 tests/Tests/ORM/Mapping/ClassMetadataFactoryTest.php	ClassMetadataFactoryTest::testGetAllMetadataWorksWithBadConnection	ported	crates/php2rust-doctrine-orm/tests/class_metadata_factory_test.rs::testGetAllMetadataWorksWithBadConnection
@@ -1994,7 +1994,7 @@ tests/Tests/ORM/Mapping/ClassMetadataTest.php	ClassMetadataTest::testCanInstanti
 tests/Tests/ORM/Mapping/ClassMetadataTest.php	ClassMetadataTest::testCanInstantiateInternalPhpClassSubclassFromUnserializedMetadata	ported	crates/php2rust-doctrine-orm/tests/class_metadata_test.rs::testCanInstantiateInternalPhpClassSubclassFromUnserializedMetadata
 tests/Tests/ORM/Mapping/ClassMetadataTest.php	ClassMetadataTest::testClassCaseSensitivity	ported	crates/php2rust-doctrine-orm/tests/class_metadata_test.rs::testClassCaseSensitivity
 tests/Tests/ORM/Mapping/ClassMetadataTest.php	ClassMetadataTest::testClassMetadataInstanceSerialization	ported	crates/php2rust-doctrine-orm/tests/class_metadata_test.rs::testClassMetadataInstanceSerialization
-tests/Tests/ORM/Mapping/ClassMetadataTest.php	ClassMetadataTest::testClassNameMappingDiscriminatorValue	pending	
+tests/Tests/ORM/Mapping/ClassMetadataTest.php	ClassMetadataTest::testClassNameMappingDiscriminatorValue	ported	crates/php2rust-doctrine-orm/tests/class_metadata_test.rs::testClassNameMappingDiscriminatorValue
 tests/Tests/ORM/Mapping/ClassMetadataTest.php	ClassMetadataTest::testCompositeIdentifierDefaultPositionPreservesInsertionOrder	ported	crates/php2rust-doctrine-orm/tests/class_metadata_test.rs::testCompositeIdentifierDefaultPositionPreservesInsertionOrder
 tests/Tests/ORM/Mapping/ClassMetadataTest.php	ClassMetadataTest::testCompositeIdentifierOrderingByPosition	ported	crates/php2rust-doctrine-orm/tests/class_metadata_test.rs::testCompositeIdentifierOrderingByPosition
 tests/Tests/ORM/Mapping/ClassMetadataTest.php	ClassMetadataTest::testCompositeIdentifierPositionSurvivesSerialization	ported	crates/php2rust-doctrine-orm/tests/class_metadata_test.rs::testCompositeIdentifierPositionSurvivesSerialization
@@ -2093,14 +2093,14 @@ tests/Tests/ORM/Mapping/PropertyAccessors/EnumPropertyAccessorTest.php	EnumPrope
 tests/Tests/ORM/Mapping/PropertyAccessors/ObjectCastPropertyAccessorTest.php	ObjectCastPropertyAccessorTest::testSetGetInternalProxyValue	ported	crates/php2rust-doctrine-orm/tests/object_cast_property_accessor_test.rs::testSetGetInternalProxyValue
 tests/Tests/ORM/Mapping/PropertyAccessors/ObjectCastPropertyAccessorTest.php	ObjectCastPropertyAccessorTest::testSetGetPrivatePropertyValue	ported	crates/php2rust-doctrine-orm/tests/object_cast_property_accessor_test.rs::testSetGetPrivatePropertyValue
 tests/Tests/ORM/Mapping/PropertyAccessors/ObjectCastPropertyAccessorTest.php	ObjectCastPropertyAccessorTest::testSetGetPublicPropertyValue	ported	crates/php2rust-doctrine-orm/tests/object_cast_property_accessor_test.rs::testSetGetPublicPropertyValue
-tests/Tests/ORM/Mapping/PropertyAccessors/RawValuePropertyAccessorTest.php	RawValuePropertyAccessorTest::testSetGetValue	pending	
-tests/Tests/ORM/Mapping/PropertyAccessors/RawValuePropertyAccessorTest.php	RawValuePropertyAccessorTest::testSetGetValueWithLanguage	pending	
+tests/Tests/ORM/Mapping/PropertyAccessors/RawValuePropertyAccessorTest.php	RawValuePropertyAccessorTest::testSetGetValue	pending	needs PHP 8.4 property hooks on PropertyHooks\User (the raw value bypasses the hook bodies); the recorded models have no hook bodies and EntityObject has no hooks
+tests/Tests/ORM/Mapping/PropertyAccessors/RawValuePropertyAccessorTest.php	RawValuePropertyAccessorTest::testSetGetValueWithLanguage	pending	needs PHP 8.4 property hooks on PropertyHooks\User (the raw value bypasses the hook bodies); the recorded models have no hook bodies and EntityObject has no hooks
 tests/Tests/ORM/Mapping/PropertyAccessors/ReadOnlyAccessorTest.php	ReadOnlyAccessorTest::testReadOnlyProperty	ported	crates/php2rust-doctrine-orm/tests/read_only_accessor_test.rs::testReadOnlyProperty
 tests/Tests/ORM/Mapping/PropertyAccessors/ReadOnlyAccessorTest.php	ReadOnlyAccessorTest::testReadOnlyPropertyOnlyOnce	ported	crates/php2rust-doctrine-orm/tests/read_only_accessor_test.rs::testReadOnlyPropertyOnlyOnce
 tests/Tests/ORM/Mapping/PropertyAccessors/TypedNoDefaultPropertyAccessorTest.php	TypedNoDefaultPropertyAccessorTest::testSetNullWithoutDefault	ported	crates/php2rust-doctrine-orm/tests/typed_no_default_property_accessor_test.rs::testSetNullWithoutDefault
 tests/Tests/ORM/Mapping/PropertyAccessors/TypedNoDefaultPropertyAccessorTest.php	TypedNoDefaultPropertyAccessorTest::testSetValueWithoutDefault	ported	crates/php2rust-doctrine-orm/tests/typed_no_default_property_accessor_test.rs::testSetValueWithoutDefault
 tests/Tests/ORM/Mapping/QuoteStrategyTest.php	QuoteStrategyTest::testColumnAlias	ported	crates/php2rust-doctrine-orm/tests/quote_strategy_test.rs::testColumnAlias
-tests/Tests/ORM/Mapping/QuoteStrategyTest.php	QuoteStrategyTest::testConfiguration	pending	
+tests/Tests/ORM/Mapping/QuoteStrategyTest.php	QuoteStrategyTest::testConfiguration	ported	crates/php2rust-doctrine-orm/tests/quote_strategy_test.rs::testConfiguration
 tests/Tests/ORM/Mapping/QuoteStrategyTest.php	QuoteStrategyTest::testGetColumnName	ported	crates/php2rust-doctrine-orm/tests/quote_strategy_test.rs::testGetColumnName
 tests/Tests/ORM/Mapping/QuoteStrategyTest.php	QuoteStrategyTest::testGetTableName	ported	crates/php2rust-doctrine-orm/tests/quote_strategy_test.rs::testGetTableName
 tests/Tests/ORM/Mapping/QuoteStrategyTest.php	QuoteStrategyTest::testIdentifierColumnNames	ported	crates/php2rust-doctrine-orm/tests/quote_strategy_test.rs::testIdentifierColumnNames
@@ -2256,7 +2256,7 @@ tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testVersi
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testXmlCustomForeignKeyNames	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testXmlCustomForeignKeyNames
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testXmlValidationDisabled	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testXmlValidationDisabled
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testXmlValidationEnabled	pending	needs XSD validation: php2rust-dom refuses doctrine-mapping.xsd (xs:complexContent, xs:token), so the XML driver does not validate
-tests/Tests/ORM/ORMInvalidArgumentExceptionTest.php	ORMInvalidArgumentExceptionTest::testNewEntitiesFoundThroughRelationships	pending	
+tests/Tests/ORM/ORMInvalidArgumentExceptionTest.php	ORMInvalidArgumentExceptionTest::testNewEntitiesFoundThroughRelationships	ported	crates/php2rust-doctrine-orm/tests/orm_invalid_argument_exception_test.rs::testNewEntitiesFoundThroughRelationships
 tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testAttributeConfig	ported	crates/php2rust-doctrine-orm/tests/orm_setup_test.rs::testAttributeConfig
 tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testAttributeConfiguration	ported	crates/php2rust-doctrine-orm/tests/orm_setup_test.rs::testAttributeConfiguration
 tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testCacheNamespaceShouldBeGeneratedForApcu	n/a: requires the apcu extension (skipped upstream without it); the port has no APCu adapter	
