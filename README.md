@@ -10,7 +10,7 @@ endorsed by the Doctrine Project.
 Part of the php2rust project. DBAL comes from
 [php2rust/doctrine-dbal-rs](https://github.com/php2rust/doctrine-dbal-rs)
 and PHP's own behaviour (values, arrays, dates) from
-[php2rust/compatibility-tools-rs](https://github.com/php2rust/compatibility-tools-rs),
+[php2rust/compatibility-tools](https://github.com/php2rust/compatibility-tools),
 both as git dependencies pinned to a commit.
 
 **Status.** Work in progress. One crate per package in `crates/`; each

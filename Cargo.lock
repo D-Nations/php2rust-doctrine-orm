@@ -663,7 +663,7 @@ dependencies = [
 [[package]]
 name = "php2rust-doctrine-dbal"
 version = "0.1.0"
-source = "git+https://github.com/php2rust/doctrine-dbal-rs?rev=32c79e94393d2c249a31184c80f772788c3ff4e8#32c79e94393d2c249a31184c80f772788c3ff4e8"
+source = "git+https://github.com/php2rust/doctrine-dbal-rs?rev=739ac04ac7c77304208050fe0bb35a4e34b5c81b#739ac04ac7c77304208050fe0bb35a4e34b5c81b"
 dependencies = [
  "php2rust-regex",
  "php2rust-value",
@@ -740,12 +740,12 @@ dependencies = [
 [[package]]
 name = "php2rust-dom"
 version = "0.1.0"
-source = "git+https://github.com/php2rust/compatibility-tools-rs?rev=4585a15ed0263257317cdf818ebcad7ed7542db8#4585a15ed0263257317cdf818ebcad7ed7542db8"
+source = "git+https://github.com/php2rust/compatibility-tools?rev=4585a15ed0263257317cdf818ebcad7ed7542db8#4585a15ed0263257317cdf818ebcad7ed7542db8"
 
 [[package]]
 name = "php2rust-regex"
 version = "0.1.0"
-source = "git+https://github.com/php2rust/compatibility-tools-rs?rev=4585a15ed0263257317cdf818ebcad7ed7542db8#4585a15ed0263257317cdf818ebcad7ed7542db8"
+source = "git+https://github.com/php2rust/compatibility-tools?rev=4585a15ed0263257317cdf818ebcad7ed7542db8#4585a15ed0263257317cdf818ebcad7ed7542db8"
 dependencies = [
  "fancy-regex",
 ]
@@ -753,7 +753,7 @@ dependencies = [
 [[package]]
 name = "php2rust-symfony-console"
 version = "0.1.0"
-source = "git+https://github.com/php2rust/symfony-console-rs?rev=a7fe522753baf22240afd238ab90d79fcef9d1db#a7fe522753baf22240afd238ab90d79fcef9d1db"
+source = "git+https://github.com/php2rust/symfony-console-rs?rev=8a0e6960e5fcc28f822ae9fd8131c5b8e5703085#8a0e6960e5fcc28f822ae9fd8131c5b8e5703085"
 dependencies = [
  "fancy-regex",
  "php2rust-symfony-deprecation-contracts",
@@ -769,7 +769,7 @@ source = "git+https://github.com/php2rust/symfony-deprecation-contracts-rs?rev=2
 [[package]]
 name = "php2rust-symfony-string"
 version = "0.1.0"
-source = "git+https://github.com/php2rust/symfony-console-rs?rev=a7fe522753baf22240afd238ab90d79fcef9d1db#a7fe522753baf22240afd238ab90d79fcef9d1db"
+source = "git+https://github.com/php2rust/symfony-console-rs?rev=8a0e6960e5fcc28f822ae9fd8131c5b8e5703085#8a0e6960e5fcc28f822ae9fd8131c5b8e5703085"
 dependencies = [
  "getrandom",
  "php2rust-regex",
@@ -781,7 +781,7 @@ dependencies = [
 [[package]]
 name = "php2rust-value"
 version = "0.1.0"
-source = "git+https://github.com/php2rust/compatibility-tools-rs?rev=4585a15ed0263257317cdf818ebcad7ed7542db8#4585a15ed0263257317cdf818ebcad7ed7542db8"
+source = "git+https://github.com/php2rust/compatibility-tools?rev=4585a15ed0263257317cdf818ebcad7ed7542db8#4585a15ed0263257317cdf818ebcad7ed7542db8"
 dependencies = [
  "serde_json",
 ]

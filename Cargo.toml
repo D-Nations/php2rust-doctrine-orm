@@ -2,20 +2,20 @@
 members = ["crates/*"]
 resolver = "3"
 
-# PHP behaviour crates from php2rust/compatibility-tools-rs, pinned to a
+# PHP behaviour crates from php2rust/compatibility-tools, pinned to a
 # commit. The alias keeps `php_value::` in code. To work on both
 # repositories, override the git source with a local path in an
 # uncommitted .cargo/config.toml (see README.md).
 # The DBAL and symfony-console-rs revs below use the same URL and rev, so
 # the build has one php2rust-value and php_value types match.
 [workspace.dependencies]
-php-value = { package = "php2rust-value", git = "https://github.com/php2rust/compatibility-tools-rs", rev = "4585a15ed0263257317cdf818ebcad7ed7542db8" }
-php-regex = { package = "php2rust-regex", git = "https://github.com/php2rust/compatibility-tools-rs", rev = "4585a15ed0263257317cdf818ebcad7ed7542db8" }
-php2rust-dom = { git = "https://github.com/php2rust/compatibility-tools-rs", rev = "4585a15ed0263257317cdf818ebcad7ed7542db8" }
-php2rust-doctrine-dbal = { package = "php2rust-doctrine-dbal", git = "https://github.com/php2rust/doctrine-dbal-rs", rev = "32c79e94393d2c249a31184c80f772788c3ff4e8" }
+php-value = { package = "php2rust-value", git = "https://github.com/php2rust/compatibility-tools", rev = "4585a15ed0263257317cdf818ebcad7ed7542db8" }
+php-regex = { package = "php2rust-regex", git = "https://github.com/php2rust/compatibility-tools", rev = "4585a15ed0263257317cdf818ebcad7ed7542db8" }
+php2rust-dom = { git = "https://github.com/php2rust/compatibility-tools", rev = "4585a15ed0263257317cdf818ebcad7ed7542db8" }
+php2rust-doctrine-dbal = { package = "php2rust-doctrine-dbal", git = "https://github.com/php2rust/doctrine-dbal-rs", rev = "739ac04ac7c77304208050fe0bb35a4e34b5c81b" }
 # symfony/console, for the ORM console commands (Tools/Console), from
 # php2rust/symfony-console-rs (not from symfony-rs).
-symfony-console = { package = "php2rust-symfony-console", git = "https://github.com/php2rust/symfony-console-rs", rev = "a7fe522753baf22240afd238ab90d79fcef9d1db" }
+symfony-console = { package = "php2rust-symfony-console", git = "https://github.com/php2rust/symfony-console-rs", rev = "8a0e6960e5fcc28f822ae9fd8131c5b8e5703085" }
 # Lints for every member (`[lints] workspace = true`), the same rule set as
 # symfony-rs and php2rust-compatibility-tools.
 [workspace.lints.clippy]
