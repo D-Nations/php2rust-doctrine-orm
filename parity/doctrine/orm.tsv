@@ -1238,10 +1238,10 @@ tests/Tests/ORM/Functional/Ticket/DDC1654Test.php	DDC1654Test::testManyToManyRem
 tests/Tests/ORM/Functional/Ticket/DDC1655Test.php	DDC1655Test::testPostLoadInheritanceChild	ported	crates/php2rust-doctrine-orm/tests/ddc1655_test.rs::testPostLoadInheritanceChild
 tests/Tests/ORM/Functional/Ticket/DDC1655Test.php	DDC1655Test::testPostLoadOneToManyInheritance	ported	crates/php2rust-doctrine-orm/tests/ddc1655_test.rs::testPostLoadOneToManyInheritance
 tests/Tests/ORM/Functional/Ticket/DDC1666Test.php	DDC1666Test::testGivenOrphanRemovalOneToOneWhenReplacingThenNoUniqueConstraintError	ported	crates/php2rust-doctrine-orm/tests/ddc1666_test.rs::testGivenOrphanRemovalOneToOneWhenReplacingThenNoUniqueConstraintError
-tests/Tests/ORM/Functional/Ticket/DDC1685Test.php	DDC1685Test::testPaginateCount	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1685Test.php	DDC1685Test::testPaginateCountNoOutputWalkers	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1685Test.php	DDC1685Test::testPaginateIterate	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1685Test.php	DDC1685Test::testPaginateIterateNoOutputWalkers	pending	
+tests/Tests/ORM/Functional/Ticket/DDC1685Test.php	DDC1685Test::testPaginateCount	ported	crates/php2rust-doctrine-orm/tests/ddc1685_test.rs::testPaginateCount
+tests/Tests/ORM/Functional/Ticket/DDC1685Test.php	DDC1685Test::testPaginateCountNoOutputWalkers	ported	crates/php2rust-doctrine-orm/tests/ddc1685_test.rs::testPaginateCountNoOutputWalkers
+tests/Tests/ORM/Functional/Ticket/DDC1685Test.php	DDC1685Test::testPaginateIterate	ported	crates/php2rust-doctrine-orm/tests/ddc1685_test.rs::testPaginateIterate
+tests/Tests/ORM/Functional/Ticket/DDC1685Test.php	DDC1685Test::testPaginateIterateNoOutputWalkers	ported	crates/php2rust-doctrine-orm/tests/ddc1685_test.rs::testPaginateIterateNoOutputWalkers
 tests/Tests/ORM/Functional/Ticket/DDC168Test.php	DDC168Test::testJoinedSubclassPersisterRequiresSpecificOrderOfMetadataReflFieldsArray	ported	crates/php2rust-doctrine-orm/tests/ddc168_test.rs::testJoinedSubclassPersisterRequiresSpecificOrderOfMetadataReflFieldsArray
 tests/Tests/ORM/Functional/Ticket/DDC1695Test.php	DDC1695Test::testIssue	pending	
 tests/Tests/ORM/Functional/Ticket/DDC1707Test.php	DDC1707Test::testPostLoadOnChild	ported	crates/php2rust-doctrine-orm/tests/ddc1707_test.rs::testPostLoadOnChild
