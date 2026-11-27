@@ -2,10 +2,9 @@
 //!
 //! `buildEnumForTesting()` is [`build_enum`]. `DummyHydrator` is an
 //! `AbstractHydrator` implementation; the stubbed result is an empty
-//! `SQLite` result of the test entity manager's connection.
-//! `testToIterableIfYieldAndBreakBeforeFinishAlwaysCleansUp` is pending:
-//! `Query::toIterable()` hydrates the whole result before it returns, so
-//! it is not a generator that can stop early.
+//! `SQLite` result of the test entity manager's connection. In
+//! `testToIterableIfYieldAndBreakBeforeFinishAlwaysCleansUp` the `break`
+//! of the `foreach` is the drop of the iterable.
 
 #![allow(non_snake_case)]
 #![allow(
@@ -29,6 +28,7 @@ use php2rust_doctrine_orm::internal::hydration::{
     AbstractHydrator, HydrationContext, build_enum, hydrate_all_with, to_iterable_with,
 };
 use php2rust_doctrine_orm::query::ResultSetMapping;
+use php2rust_doctrine_orm::query::context::HYDRATE_OBJECT;
 use php2rust_doctrine_persistence::php_reflection;
 
 const ACCESS_LEVEL: &str = "Doctrine\\Tests\\Models\\Enums\\AccessLevel";
@@ -208,4 +208,40 @@ async fn testHydrateAllClearsAllAttachedListenersEvenOnError() {
     assert!(hydrator.has_listener);
     assert!(!has_on_clear_listeners(&em));
     assert_eq!("LogicException", e.class);
+}
+
+const SIMPLE_ENTITY: &str = "Doctrine\\Tests\\Models\\Hydration\\SimpleEntity";
+
+fn on_clear_listener_count(em: &EntityManager) -> usize {
+    em.get_event_manager().get_listeners(events::ON_CLEAR).len()
+}
+
+#[tokio::test]
+async fn testToIterableIfYieldAndBreakBeforeFinishAlwaysCleansUp() {
+    models::register();
+    let em = orm::set_up(&[SIMPLE_ENTITY]).await;
+
+    let entity1 = orm::new_object(SIMPLE_ENTITY);
+    em.persist(&entity1).unwrap();
+    let entity2 = orm::new_object(SIMPLE_ENTITY);
+    em.persist(&entity2).unwrap();
+
+    em.flush().await.unwrap();
+    em.clear().unwrap();
+
+    let q = em.create_query(&format!("SELECT e.id FROM {SIMPLE_ENTITY} e"));
+
+    // select two entities, but do no iterate
+    let _ = q.to_iterable(None, HYDRATE_OBJECT).await.unwrap();
+    assert_eq!(0, on_clear_listener_count(&em));
+
+    // select two entities, but abort after first record
+    let mut iterable = q.to_iterable(None, HYDRATE_OBJECT).await.unwrap();
+    if let Some(result) = iterable.next().await {
+        result.unwrap();
+        assert_eq!(1, on_clear_listener_count(&em));
+    }
+    drop(iterable);
+
+    assert_eq!(0, on_clear_listener_count(&em));
 }

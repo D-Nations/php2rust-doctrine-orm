@@ -2873,6 +2873,9 @@ impl UnitOfWork {
                 // flushed there. Load immediately instead (also allows
                 // hitting the collection cache region).
                 if assoc.is_one_to_many()
+                    // is iteration
+                    && !hints.internal_iteration
+                    // is foreign key composite
                     && mapped_by_join_columns <= 1
                     && !assoc.is_indexed()
                     && !hints.cache_enabled

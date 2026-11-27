@@ -13,6 +13,7 @@
 mod abstract_hydrator;
 mod array_hydrator;
 mod custom_hydrator;
+mod iterable;
 mod object_hydrator;
 
 use std::sync::Arc;
@@ -33,6 +34,7 @@ pub use custom_hydrator::{
     AbstractHydrator, HydrationContext, HydratorConstructor, ToIterable,
     hydrate_all as hydrate_all_with, register_hydrator_class, to_iterable as to_iterable_with,
 };
+pub use iterable::Iterable;
 use object_hydrator::ObjectHydrator;
 
 use php_value::{Key, Object, PhpArray, Thrown, Value};
@@ -432,129 +434,47 @@ pub async fn hydrate(
     }
 }
 
-/// `toIterable($stmt, $rsm, $hints)`: the yielded values, row by row
-/// (the rows are read whole).
+/// `iterator_to_array($hydrator->toIterable($stmt, $rsm, $hints),
+/// false)`: the values the generator yields, to the end.
 pub async fn to_iterable(
     em: &Arc<EntityManager>,
     hydration_mode: i64,
     rows: Vec<PhpArray>,
     rsm: &ResultSetMapping,
-    hints: &mut Hints,
+    hints: &Hints,
     extra: HydrationHints,
 ) -> Result<Vec<Value>, Thrown> {
-    Ok(
-        to_iterable_with_keys(em, hydration_mode, rows, rsm, hints, extra)
-            .await?
-            .into_iter()
-            .map(|(_, value)| value)
-            .collect(),
+    Iterable::new(
+        em.clone(),
+        hydration_mode,
+        rows,
+        rsm.clone(),
+        hints.clone(),
+        extra,
     )
+    .to_vec()
+    .await
 }
 
-/// `toIterable($stmt, $rsm, $hints)` with the generator's keys: the
-/// index-by keys of `yield from $result`, and the generator's own
-/// integer keys (from 0) for the other values.
+/// [`to_iterable`] with the generator's keys: the index-by keys of
+/// `yield from $result`, and the generator's own integer keys (from 0)
+/// for the other values.
 pub async fn to_iterable_with_keys(
     em: &Arc<EntityManager>,
     hydration_mode: i64,
     rows: Vec<PhpArray>,
     rsm: &ResultSetMapping,
-    hints: &mut Hints,
+    hints: &Hints,
     extra: HydrationHints,
 ) -> Result<Vec<(Key, Value)>, Thrown> {
-    use crate::query::context::{
-        HYDRATE_ARRAY, HYDRATE_OBJECT, HYDRATE_SCALAR, HYDRATE_SIMPLEOBJECT,
-    };
-    let index_by = !rsm.index_by_map.is_empty();
-    let mut yielded: Vec<(Key, Value)> = Vec::new();
-    // The generator's key for a `yield` without a key.
-    let mut auto_key: i64 = 0;
-    let mut yield_row = |result: PhpArray| {
-        let mut next_key = || {
-            let key = Key::Int(auto_key);
-            auto_key += 1;
-            key
-        };
-        if result.len() == 1 {
-            if index_by {
-                yielded.extend(result.iter().map(|(k, v)| (k.clone(), v.clone())));
-            } else if let Some((_, last)) = result.last() {
-                yielded.push((next_key(), last.clone()));
-            }
-        } else if matches!(result.values().next(), Some(Value::Object(_))) {
-            yielded.push((next_key(), Value::Array(result)));
-        } else {
-            // array_merge(...$result)
-            let mut merged = PhpArray::new();
-            for value in result.values() {
-                if let Value::Array(row) = value {
-                    for (k, v) in row.iter() {
-                        match k {
-                            Key::Int(_) => {
-                                let _ = merged.push(v.clone());
-                            }
-                            Key::Str(_) => merged.insert(k.clone(), v.clone()),
-                        }
-                    }
-                }
-            }
-            yielded.push((next_key(), Value::Array(merged)));
-        }
-    };
-    match hydration_mode {
-        HYDRATE_OBJECT => {
-            let mut hydrator =
-                ObjectHydrator::new(em, rsm, hints, extra.defer_eager_load, extra.collection);
-            let mut outcome = hydrator.prepare();
-            if outcome.is_ok() {
-                for row in rows {
-                    let mut result = PhpArray::new();
-                    if let Err(e) = hydrator.hydrate_row_data(&row, &mut result).await {
-                        outcome = Err(e);
-                        break;
-                    }
-                    hydrator.cleanup_after_row_iteration();
-                    yield_row(result);
-                }
-            }
-            let cleanup = hydrator.cleanup().await;
-            outcome?;
-            cleanup?;
-        }
-        HYDRATE_ARRAY => {
-            let mut hydrator = ArrayHydrator::new(em, rsm, hints.force_dbal_type_conversion);
-            hydrator.prepare();
-            for row in &rows {
-                let mut result = PhpArray::new();
-                hydrator.hydrate_row_data(row, &mut result)?;
-                yield_row(result);
-            }
-        }
-        HYDRATE_SCALAR => {
-            let mut columns = Columns::new(em, rsm, hints.force_dbal_type_conversion);
-            for row in &rows {
-                let mut result = PhpArray::new();
-                let _ = result.push(Value::Array(columns.gather_scalar_row_data(row)?));
-                yield_row(result);
-            }
-        }
-        HYDRATE_SIMPLEOBJECT => {
-            for row in rows {
-                let entities = hydrate_all(em, vec![row], rsm, hints, None).await?;
-                let mut result = PhpArray::new();
-                for entity in entities {
-                    let _ = result.push(Value::Object(entity));
-                }
-                yield_row(result);
-            }
-        }
-        _ => {
-            return Err(Thrown::new(
-                HYDRATION_EXCEPTION,
-                "hydrateRowData() not implemented by this hydrator.",
-                0,
-            ));
-        }
-    }
-    Ok(yielded)
+    Iterable::new(
+        em.clone(),
+        hydration_mode,
+        rows,
+        rsm.clone(),
+        hints.clone(),
+        extra,
+    )
+    .to_vec_with_keys()
+    .await
 }

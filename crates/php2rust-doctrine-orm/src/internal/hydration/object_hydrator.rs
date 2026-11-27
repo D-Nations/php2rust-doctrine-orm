@@ -180,6 +180,13 @@ impl<'a> ObjectHydrator<'a> {
         self.uow().hydration_complete()
     }
 
+    /// `onClear()`: the identifier map keeps its aliases, emptied.
+    pub fn on_clear(&mut self) {
+        for ids in self.identifier_map.values_mut() {
+            ids.clear();
+        }
+    }
+
     /// `cleanupAfterRowIteration()`.
     pub fn cleanup_after_row_iteration(&mut self) {
         self.identifier_map.clear();

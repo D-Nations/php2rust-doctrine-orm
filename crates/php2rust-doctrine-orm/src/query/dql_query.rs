@@ -20,6 +20,7 @@ use php2rust_doctrine_dbal::{LockMode, ParameterTypes, WrapperParameterType};
 use crate::abstract_query::{Executed, QueryState, abstract_query_methods};
 use crate::cache::pool::{CacheItemPool, CachedParserResult, PoolValue};
 use crate::entity_manager::EntityManager;
+use crate::internal::hydration::Iterable;
 use crate::query::context::{
     DqlQuery, HINT_INTERNAL_ITERATION, HINT_LOCK_MODE, Hint, OutputWalkerClass, QueryComponents,
     QueryContext,
@@ -488,12 +489,14 @@ impl Query {
         }
     }
 
-    /// Executes the query and returns the values it yields, row by row.
+    /// `toIterable($parameters, $hydrationMode)`: executes the query and
+    /// returns the generator over its result, which hydrates each row as
+    /// it is iterated.
     pub async fn to_iterable(
         &self,
         parameters: Option<&PhpArray>,
         hydration_mode: i64,
-    ) -> Result<Vec<Value>, Thrown> {
+    ) -> Result<Iterable, Thrown> {
         self.state
             .set_hint(HINT_INTERNAL_ITERATION, Hint::Value(Value::Bool(true)));
         self.set_hydration_mode(hydration_mode);
@@ -503,8 +506,8 @@ impl Query {
         // The result set mapping: the parse sets it.
         let executed = self.do_execute().await?;
         match executed {
-            Executed::Rows(rows) => self.state.hydrate_iterable(rows).await,
-            Executed::Count(count) => Ok(vec![Value::Int(count)]),
+            Executed::Rows(rows) => self.state.hydrate_iterable(rows),
+            Executed::Count(count) => Ok(Iterable::of(vec![(Key::Int(0), Value::Int(count))])),
         }
     }
 
@@ -516,22 +519,10 @@ impl Query {
         parameters: Option<&PhpArray>,
         hydration_mode: i64,
     ) -> Result<PhpArray, Thrown> {
-        self.state
-            .set_hint(HINT_INTERNAL_ITERATION, Hint::Value(Value::Bool(true)));
-        self.set_hydration_mode(hydration_mode);
-        if let Some(parameters) = parameters.filter(|p| !p.is_empty()) {
-            self.state.set_parameters_array(parameters);
-        }
-        let executed = self.do_execute().await?;
-        let yielded = match executed {
-            Executed::Rows(rows) => self.state.hydrate_iterable_with_keys(rows).await?,
-            Executed::Count(count) => vec![(Key::Int(0), Value::Int(count))],
-        };
-        let mut array = PhpArray::new();
-        for (key, value) in yielded {
-            array.insert(key, value);
-        }
-        Ok(array)
+        self.to_iterable(parameters, hydration_mode)
+            .await?
+            .to_array()
+            .await
     }
 
     /// `_doExecute()`.

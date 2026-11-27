@@ -491,9 +491,10 @@ WHERE
 
     let query = em.create_query(&dql);
 
-    let iterable_result = query.to_iterable(None, HYDRATE_OBJECT).await.unwrap();
+    let mut iterable_result = query.to_iterable(None, HYDRATE_OBJECT).await.unwrap();
 
-    if let Some(entity) = iterable_result.first() {
+    if let Some(entity) = iterable_result.next().await {
+        let entity = &entity.unwrap();
         assert!(ENTITY_POST_LOAD_INVOKED.load());
         assert_eq!(
             Value::Bool(false),
@@ -513,9 +514,10 @@ async fn testCascadedEntitiesNotLoadedInPostLoadDuringIterationWithSimpleObjectH
     ENTITY_POST_LOAD_INVOKED.store(false); // Reset the tracking of the postLoad invocation
 
     let query = em.create_query(&format!("SELECT e FROM {TEST_ENTITY_DQL} AS e"));
-    let result = query.to_iterable(None, HYDRATE_SIMPLEOBJECT).await.unwrap();
+    let mut result = query.to_iterable(None, HYDRATE_SIMPLEOBJECT).await.unwrap();
 
-    if let Some(entity) = result.first() {
+    if let Some(entity) = result.next().await {
+        let entity = &entity.unwrap();
         assert!(ENTITY_POST_LOAD_INVOKED.load());
         assert_eq!(
             Value::Bool(false),

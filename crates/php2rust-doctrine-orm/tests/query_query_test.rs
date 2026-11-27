@@ -300,7 +300,10 @@ async fn testIterateEmptyResult() {
     let em = entity_manager().await;
     let q = em.create_query("SELECT u from Doctrine\\Tests\\Models\\CMS\\CmsUser u");
 
-    for _item in q.to_iterable(None, HYDRATE_OBJECT).await.unwrap() {}
+    let mut iterable = q.to_iterable(None, HYDRATE_OBJECT).await.unwrap();
+    while let Some(item) = iterable.next().await {
+        item.unwrap();
+    }
 }
 
 #[tokio::test]

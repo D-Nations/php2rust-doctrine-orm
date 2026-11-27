@@ -314,8 +314,8 @@ pub async fn php_to_iterable(
     rsm: &ResultSetMapping,
     hints: &Value,
 ) -> Result<Value, Thrown> {
-    let (mut uow_hints, extra) = hints_of(hints);
-    hydration::to_iterable(em, mode, rows_of(result_set), rsm, &mut uow_hints, extra)
+    let (uow_hints, extra) = hints_of(hints);
+    hydration::to_iterable(em, mode, rows_of(result_set), rsm, &uow_hints, extra)
         .await
         .map(list_of)
 }

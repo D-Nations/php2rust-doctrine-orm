@@ -46,26 +46,28 @@ async fn testTwoToIterableHydrations() {
         .create_query("SELECT c FROM Doctrine\\Tests\\ORM\\Functional\\Ticket\\DDC309Country c")
         .to_iterable(None, HYDRATE_OBJECT)
         .await
-        .unwrap()
-        .into_iter();
-    let c = q.next().unwrap();
+        .unwrap();
+    let c = q.next().await.unwrap().unwrap();
     assert_loose_eq(&Value::Int(1), &get(&obj(&c), "id"));
 
     let mut r = em
         .create_query("SELECT u FROM Doctrine\\Tests\\ORM\\Functional\\Ticket\\DDC309User u")
         .to_iterable(None, HYDRATE_OBJECT)
         .await
-        .unwrap()
-        .into_iter();
-    let u = r.next().unwrap();
+        .unwrap();
+    let u = r.next().await.unwrap().unwrap();
     assert_loose_eq(&Value::Int(1), &get(&obj(&u), "id"));
 
-    let c = q.next().unwrap();
-    let u = r.next().unwrap();
+    let c = q.next().await.unwrap().unwrap();
+    let u = r.next().await.unwrap().unwrap();
 
     assert_loose_eq(&Value::Int(2), &get(&obj(&c), "id"));
     assert_loose_eq(&Value::Int(2), &get(&obj(&u), "id"));
 
-    for _ in q.by_ref() {}
-    for _ in r.by_ref() {}
+    while let Some(c) = q.next().await {
+        c.unwrap();
+    }
+    while let Some(u) = r.next().await {
+        u.unwrap();
+    }
 }
