@@ -1031,7 +1031,7 @@ tests/Tests/ORM/Functional/SchemaTool/MySqlSchemaToolTest.php	MySqlSchemaToolTes
 tests/Tests/ORM/Functional/SchemaTool/MySqlSchemaToolTest.php	MySqlSchemaToolTest::testGetCreateSchemaSql4	pending	
 tests/Tests/ORM/Functional/SchemaTool/PostgreSqlSchemaToolTest.php	PostgreSqlSchemaToolTest::testSetDeferrableForeignKey	pending	
 tests/Tests/ORM/Functional/SchemaTool/PostgreSqlSchemaToolTest.php	PostgreSqlSchemaToolTest::testUpdateSchemaWithPostgreSQLSchema	pending	
-tests/Tests/ORM/Functional/SchemaValidatorTest.php	SchemaValidatorTest::testValidateModelSets	pending	
+tests/Tests/ORM/Functional/SchemaValidatorTest.php	SchemaValidatorTest::testValidateModelSets	ported	crates/php2rust-doctrine-orm/tests/functional_schema_validator_test.rs::testValidateModelSets
 tests/Tests/ORM/Functional/SecondLevelCacheCompositePrimaryKeyTest.php	SecondLevelCacheCompositePrimaryKeyTest::testPutAndLoadCompositPrimaryKeyEntities	pending	not ported yet: the second-level cache functional tests continue in the next batch
 tests/Tests/ORM/Functional/SecondLevelCacheCompositePrimaryKeyTest.php	SecondLevelCacheCompositePrimaryKeyTest::testRemoveCompositPrimaryKeyEntities	pending	not ported yet: the second-level cache functional tests continue in the next batch
 tests/Tests/ORM/Functional/SecondLevelCacheCompositePrimaryKeyTest.php	SecondLevelCacheCompositePrimaryKeyTest::testUpdateCompositPrimaryKeyEntities	pending	not ported yet: the second-level cache functional tests continue in the next batch

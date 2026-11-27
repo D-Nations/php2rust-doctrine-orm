@@ -873,6 +873,7 @@ crates/php2rust-doctrine-orm/tests/field_mapping_test.rs	doctrine/orm	tests/Test
 crates/php2rust-doctrine-orm/tests/file_lock_region_test.rs	doctrine/orm	tests/Tests/ORM/Cache/FileLockRegionTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/filter_collection_test.rs	doctrine/orm	tests/Tests/ORM/Query/FilterCollectionTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/functional_query_test.rs	doctrine/orm	tests/Tests/ORM/Functional/QueryTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/tests/functional_schema_validator_test.rs	doctrine/orm	tests/Tests/ORM/Functional/SchemaValidatorTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/gh10049_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/GH10049/GH10049Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/gh10049_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/GH10049/ReadOnlyPropertyInheritor.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/gh10049_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/GH10049/ReadOnlyPropertyOwner.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
