@@ -2334,6 +2334,13 @@ impl ClassMetadataInfo {
         serialized
     }
 
+    /// `$metadata->$name` for the serialized properties and the others
+    /// `MappingDescribeCommand` reads; `None` for an uninitialized one or
+    /// a name it does not know.
+    pub fn property_value(&self, name: &str) -> Option<Value> {
+        self.sleep_value(name)
+    }
+
     /// A serialized property's value; `None` for an uninitialized one
     /// (`serialize()` leaves it out).
     fn sleep_value(&self, name: &str) -> Option<Value> {

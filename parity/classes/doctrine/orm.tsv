@@ -415,8 +415,8 @@ src/Tools/Console/Command/Debug/DebugEntityListenersDoctrineCommand.php	DebugEnt
 src/Tools/Console/Command/Debug/DebugEventManagerDoctrineCommand.php	DebugEventManagerDoctrineCommand	87	pending	
 src/Tools/Console/Command/GenerateProxiesCommand.php	GenerateProxiesCommand	86	pending	
 src/Tools/Console/Command/InfoCommand.php	InfoCommand	59	ported	crates/php2rust-doctrine-orm/src/tools/console/command/info_command.rs
-src/Tools/Console/Command/MappingDescribeCommand.php	MappingDescribeCommand	289	pending	
-src/Tools/Console/Command/MappingDescribeCommandFormat.php	MappingDescribeCommandFormat	7	pending	
+src/Tools/Console/Command/MappingDescribeCommand.php	MappingDescribeCommand	289	ported	crates/php2rust-doctrine-orm/src/tools/console/command/mapping_describe_command.rs
+src/Tools/Console/Command/MappingDescribeCommandFormat.php	MappingDescribeCommandFormat	7	ported	crates/php2rust-doctrine-orm/src/tools/console/command/mapping_describe_command.rs
 src/Tools/Console/Command/RunDqlCommand.php	RunDqlCommand	90	pending	
 src/Tools/Console/Command/SchemaTool/AbstractCommand.php	AbstractCommand	22	pending	
 src/Tools/Console/Command/SchemaTool/CreateCommand.php	CreateCommand	51	pending	
