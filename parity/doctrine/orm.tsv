@@ -549,19 +549,19 @@ tests/Tests/ORM/Functional/InvalidMappingDefinitionTest.php	InvalidMappingDefini
 tests/Tests/ORM/Functional/JoinedTableCompositeKeyTest.php	JoinedTableCompositeKeyTest::testInsertWithCompositeKey	ported	crates/php2rust-doctrine-orm/tests/joined_table_composite_key_test.rs::testInsertWithCompositeKey
 tests/Tests/ORM/Functional/JoinedTableCompositeKeyTest.php	JoinedTableCompositeKeyTest::testUpdateWithCompositeKey	ported	crates/php2rust-doctrine-orm/tests/joined_table_composite_key_test.rs::testUpdateWithCompositeKey
 tests/Tests/ORM/Functional/LifecycleCallbackTest.php	LifecycleCallbackTest::testCascadedEntitiesCallsPrePersist	ported	crates/php2rust-doctrine-orm/tests/lifecycle_callback_test.rs::testCascadedEntitiesCallsPrePersist
-tests/Tests/ORM/Functional/LifecycleCallbackTest.php	LifecycleCallbackTest::testCascadedEntitiesLoadedInPostLoad	pending	
-tests/Tests/ORM/Functional/LifecycleCallbackTest.php	LifecycleCallbackTest::testCascadedEntitiesNotLoadedInPostLoadDuringIteration	pending	
-tests/Tests/ORM/Functional/LifecycleCallbackTest.php	LifecycleCallbackTest::testCascadedEntitiesNotLoadedInPostLoadDuringIterationWithSimpleObjectHydrator	pending	
+tests/Tests/ORM/Functional/LifecycleCallbackTest.php	LifecycleCallbackTest::testCascadedEntitiesLoadedInPostLoad	pending	the cascader's postLoad() counts its uninitialized collection, which a lifecycle callback body (synchronous) cannot load
+tests/Tests/ORM/Functional/LifecycleCallbackTest.php	LifecycleCallbackTest::testCascadedEntitiesNotLoadedInPostLoadDuringIteration	ported	crates/php2rust-doctrine-orm/tests/lifecycle_callback_test.rs::testCascadedEntitiesNotLoadedInPostLoadDuringIteration
+tests/Tests/ORM/Functional/LifecycleCallbackTest.php	LifecycleCallbackTest::testCascadedEntitiesNotLoadedInPostLoadDuringIterationWithSimpleObjectHydrator	ported	crates/php2rust-doctrine-orm/tests/lifecycle_callback_test.rs::testCascadedEntitiesNotLoadedInPostLoadDuringIterationWithSimpleObjectHydrator
 tests/Tests/ORM/Functional/LifecycleCallbackTest.php	LifecycleCallbackTest::testChangesDontGetLost	ported	crates/php2rust-doctrine-orm/tests/lifecycle_callback_test.rs::testChangesDontGetLost
 tests/Tests/ORM/Functional/LifecycleCallbackTest.php	LifecycleCallbackTest::testGetReferenceWithPostLoadEventIsDelayedUntilProxyTrigger	ported	crates/php2rust-doctrine-orm/tests/lifecycle_callback_test.rs::testGetReferenceWithPostLoadEventIsDelayedUntilProxyTrigger
 tests/Tests/ORM/Functional/LifecycleCallbackTest.php	LifecycleCallbackTest::testLifecycleCallbackEventArgs	ported	crates/php2rust-doctrine-orm/tests/lifecycle_callback_test.rs::testLifecycleCallbackEventArgs
 tests/Tests/ORM/Functional/LifecycleCallbackTest.php	LifecycleCallbackTest::testLifecycleCallbacksGetInherited	ported	crates/php2rust-doctrine-orm/tests/lifecycle_callback_test.rs::testLifecycleCallbacksGetInherited
-tests/Tests/ORM/Functional/LifecycleCallbackTest.php	LifecycleCallbackTest::testLifecycleListenerChangeUpdateChangeSet	pending	
-tests/Tests/ORM/Functional/LifecycleCallbackTest.php	LifecycleCallbackTest::testPostLoadIsInvokedOnFetchJoinedEntities	pending	
+tests/Tests/ORM/Functional/LifecycleCallbackTest.php	LifecycleCallbackTest::testLifecycleListenerChangeUpdateChangeSet	ported	crates/php2rust-doctrine-orm/tests/lifecycle_callback_test.rs::testLifecycleListenerChangeUpdateChangeSet
+tests/Tests/ORM/Functional/LifecycleCallbackTest.php	LifecycleCallbackTest::testPostLoadIsInvokedOnFetchJoinedEntities	ported	crates/php2rust-doctrine-orm/tests/lifecycle_callback_test.rs::testPostLoadIsInvokedOnFetchJoinedEntities
 tests/Tests/ORM/Functional/LifecycleCallbackTest.php	LifecycleCallbackTest::testPostLoadTriggeredOnRefresh	ported	crates/php2rust-doctrine-orm/tests/lifecycle_callback_test.rs::testPostLoadTriggeredOnRefresh
 tests/Tests/ORM/Functional/LifecycleCallbackTest.php	LifecycleCallbackTest::testPreFlushCallbacksAreInvoked	ported	crates/php2rust-doctrine-orm/tests/lifecycle_callback_test.rs::testPreFlushCallbacksAreInvoked
-tests/Tests/ORM/Functional/LifecycleCallbackTest.php	LifecycleCallbackTest::testPreSavePostSaveCallbacksAreInvoked	pending	
-tests/Tests/ORM/Functional/LifecycleCallbackTest.php	LifecycleCallbackTestUser::testCallback	pending	
+tests/Tests/ORM/Functional/LifecycleCallbackTest.php	LifecycleCallbackTest::testPreSavePostSaveCallbacksAreInvoked	ported	crates/php2rust-doctrine-orm/tests/lifecycle_callback_test.rs::testPreSavePostSaveCallbacksAreInvoked
+tests/Tests/ORM/Functional/LifecycleCallbackTest.php	LifecycleCallbackTestUser::testCallback	n/a: not a test: a lifecycle callback method of the LifecycleCallbackTestUser model	
 tests/Tests/ORM/Functional/Locking/GearmanLockTest.php	GearmanLockTest::testDqlWithLock	n/a: upstream marks it skipped: pecl/gearman is required for this test to run.	
 tests/Tests/ORM/Functional/Locking/GearmanLockTest.php	GearmanLockTest::testFindWithLock	n/a: upstream marks it skipped: pecl/gearman is required for this test to run.	
 tests/Tests/ORM/Functional/Locking/GearmanLockTest.php	GearmanLockTest::testFindWithOneLock	n/a: upstream marks it skipped: pecl/gearman is required for this test to run.	
