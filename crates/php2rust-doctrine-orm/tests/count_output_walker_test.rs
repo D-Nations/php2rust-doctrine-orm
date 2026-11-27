@@ -1,7 +1,9 @@
 //! CountOutputWalkerTest.php at doctrine/orm 00c2fd70da291cca1ec75f4dae5344fe3df588fa,
 //! on the test entity manager (`tests/common/dql.rs`, `SQLite`).
 //! `testCountQueryOrderBySqlServer` runs on `SQLServerPlatform` only
-//! (upstream skips it elsewhere), which the DBAL port does not have.
+//! (upstream skips it on any other platform, so on its `SQLite` test entity
+//! manager): here it runs on a test entity manager with DBAL's
+//! `SQLServerPlatform`.
 //!
 //! Upstream: doctrine/orm tests/Tests/ORM/Tools/Pagination/CountOutputWalkerTest.php
 
@@ -17,6 +19,7 @@ mod dql;
 #[path = "common/models.rs"]
 mod models;
 
+use php2rust_doctrine_dbal::platforms::SQLServerPlatform;
 use php2rust_doctrine_orm::query::context::{HINT_CUSTOM_OUTPUT_WALKER, Hint};
 use php2rust_doctrine_orm::tools::pagination::CountOutputWalker;
 
@@ -70,5 +73,23 @@ fn testCountQueryHaving() {
         count_sql(
             r"SELECT g, u, count(u.id) AS userCount FROM Doctrine\Tests\ORM\Tools\Pagination\Group g LEFT JOIN g.users u GROUP BY g.id HAVING userCount > 0"
         )
+    );
+}
+
+#[test]
+fn testCountQueryOrderBySqlServer() {
+    let entity_manager = TestEntityManager::with_platform(Box::new(SQLServerPlatform::new()));
+    let query = entity_manager.create_query(
+        r"SELECT p FROM Doctrine\Tests\ORM\Tools\Pagination\BlogPost p ORDER BY p.id",
+    );
+    query.hint(
+        HINT_CUSTOM_OUTPUT_WALKER,
+        Hint::OutputWalker(CountOutputWalker::CLASS),
+    );
+    query.set_first_result(0).set_max_results(None);
+
+    assert_eq!(
+        "SELECT COUNT(*) AS dctrn_count FROM (SELECT DISTINCT id_0 FROM (SELECT b0_.id AS id_0, b0_.author_id AS author_id_1, b0_.category_id AS category_id_2 FROM BlogPost b0_) dctrn_result) dctrn_table",
+        query.get_single_sql().unwrap()
     );
 }

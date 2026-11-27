@@ -2990,7 +2990,7 @@ tests/Tests/ORM/Tools/Pagination/CountOutputWalkerTest.php	CountOutputWalkerTest
 tests/Tests/ORM/Tools/Pagination/CountOutputWalkerTest.php	CountOutputWalkerTest::testCountQueryGroupBy	ported	crates/php2rust-doctrine-orm/tests/count_output_walker_test.rs::testCountQueryGroupBy
 tests/Tests/ORM/Tools/Pagination/CountOutputWalkerTest.php	CountOutputWalkerTest::testCountQueryHaving	ported	crates/php2rust-doctrine-orm/tests/count_output_walker_test.rs::testCountQueryHaving
 tests/Tests/ORM/Tools/Pagination/CountOutputWalkerTest.php	CountOutputWalkerTest::testCountQueryMixedResultsWithName	ported	crates/php2rust-doctrine-orm/tests/count_output_walker_test.rs::testCountQueryMixedResultsWithName
-tests/Tests/ORM/Tools/Pagination/CountOutputWalkerTest.php	CountOutputWalkerTest::testCountQueryOrderBySqlServer	pending	SQLServerPlatform only; the DBAL port has only SQLitePlatform
+tests/Tests/ORM/Tools/Pagination/CountOutputWalkerTest.php	CountOutputWalkerTest::testCountQueryOrderBySqlServer	ported	crates/php2rust-doctrine-orm/tests/count_output_walker_test.rs::testCountQueryOrderBySqlServer
 tests/Tests/ORM/Tools/Pagination/CountWalkerTest.php	CountWalkerTest::testCountQuery	ported	crates/php2rust-doctrine-orm/tests/count_walker_test.rs::testCountQuery
 tests/Tests/ORM/Tools/Pagination/CountWalkerTest.php	CountWalkerTest::testCountQueryHavingException	ported	crates/php2rust-doctrine-orm/tests/count_walker_test.rs::testCountQueryHavingException
 tests/Tests/ORM/Tools/Pagination/CountWalkerTest.php	CountWalkerTest::testCountQueryKeepsGroupBy	ported	crates/php2rust-doctrine-orm/tests/count_walker_test.rs::testCountQueryKeepsGroupBy
