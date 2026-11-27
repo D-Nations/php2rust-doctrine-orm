@@ -65,6 +65,13 @@ pub fn obj_to_str(obj: &Object) -> String {
 
 // ORMInvalidArgumentException
 
+pub fn invalid_auto_generate_mode(value: i64) -> Thrown {
+    new(
+        ORM_INVALID_ARGUMENT_EXCEPTION,
+        format!("Invalid auto generate mode \"{value}\" given."),
+    )
+}
+
 pub fn schedule_insert_for_managed_entity(entity: &Object) -> Thrown {
     new(
         ORM_INVALID_ARGUMENT_EXCEPTION,

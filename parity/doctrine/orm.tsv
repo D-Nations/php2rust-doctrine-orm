@@ -249,7 +249,7 @@ tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testGetConfiguration	po
 tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testGetConnection	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testGetConnection
 tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testGetEventManager	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testGetEventManager
 tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testGetMetadataFactory	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testGetMetadataFactory
-tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testGetProxyFactory	pending	the proxies are native lazy ghosts: there is no ProxyFactory object
+tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testGetProxyFactory	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testGetProxyFactory
 tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testGetUnitOfWork	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testGetUnitOfWork
 tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testIsOpen	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testIsOpen
 tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testItDoesNotAttemptToRollbackIfNoTransactionIsActive	pending	overrides Connection::commit() and isTransactionActive() in a subclass (the DBAL connection is a struct)
@@ -2307,17 +2307,17 @@ tests/Tests/ORM/Persisters/BasicEntityPersisterTypeValueSqlTest.php	BasicEntityP
 tests/Tests/ORM/Persisters/BinaryIdPersisterTest.php	BinaryIdPersisterTest::testOneToManyWithEagerFetchMode	pending	
 tests/Tests/ORM/Persisters/Exception/UnrecognizedFieldTest.php	UnrecognizedFieldTest::testByFullyQualifiedName	pending	
 tests/Tests/ORM/Persisters/ManyToManyPersisterTest.php	ManyToManyPersisterTest::testDeleteManyToManyCollection	pending	
-tests/Tests/ORM/Proxy/ProxyFactoryTest.php	ProxyFactoryTest::testFailedProxyCloningDoesNotMarkTheProxyAsInitialized	pending	
-tests/Tests/ORM/Proxy/ProxyFactoryTest.php	ProxyFactoryTest::testFailedProxyLoadingDoesNotMarkTheProxyAsInitialized	pending	
-tests/Tests/ORM/Proxy/ProxyFactoryTest.php	ProxyFactoryTest::testProxyClonesParentFields	pending	
-tests/Tests/ORM/Proxy/ProxyFactoryTest.php	ProxyFactoryTest::testProxyFactoryAcceptsNullProxyArgsWhenNativeLazyObjectsAreEnabled	pending	
-tests/Tests/ORM/Proxy/ProxyFactoryTest.php	ProxyFactoryTest::testProxyFactoryDoesNotTriggerDeprecationWhenNativeLazyObjectsAreDisabled	pending	
-tests/Tests/ORM/Proxy/ProxyFactoryTest.php	ProxyFactoryTest::testProxyFactoryThrowsIfLazyGhostsAreUnavailable	pending	
-tests/Tests/ORM/Proxy/ProxyFactoryTest.php	ProxyFactoryTest::testProxyFactoryTriggersDeprecationWhenNativeLazyObjectsAreDisabled	pending	
-tests/Tests/ORM/Proxy/ProxyFactoryTest.php	ProxyFactoryTest::testReferenceProxyDelegatesLoadingToThePersister	pending	
-tests/Tests/ORM/Proxy/ProxyFactoryTest.php	ProxyFactoryTest::testSkipAbstractClassesOnGeneration	pending	
-tests/Tests/ORM/Proxy/ProxyFactoryTest.php	ProxyFactoryTest::testSkipEmbeddableClassesOnGeneration	pending	
-tests/Tests/ORM/Proxy/ProxyFactoryTest.php	ProxyFactoryTest::testSkipMappedSuperClassesOnGeneration	pending	
+tests/Tests/ORM/Proxy/ProxyFactoryTest.php	ProxyFactoryTest::testFailedProxyCloningDoesNotMarkTheProxyAsInitialized	ported	crates/php2rust-doctrine-orm/tests/proxy_factory_test.rs::testFailedProxyCloningDoesNotMarkTheProxyAsInitialized
+tests/Tests/ORM/Proxy/ProxyFactoryTest.php	ProxyFactoryTest::testFailedProxyLoadingDoesNotMarkTheProxyAsInitialized	ported	crates/php2rust-doctrine-orm/tests/proxy_factory_test.rs::testFailedProxyLoadingDoesNotMarkTheProxyAsInitialized
+tests/Tests/ORM/Proxy/ProxyFactoryTest.php	ProxyFactoryTest::testProxyClonesParentFields	n/a: upstream marks it skipped: This test is not relevant when native lazy objects are enabled	
+tests/Tests/ORM/Proxy/ProxyFactoryTest.php	ProxyFactoryTest::testProxyFactoryAcceptsNullProxyArgsWhenNativeLazyObjectsAreEnabled	ported	crates/php2rust-doctrine-orm/tests/proxy_factory_test.rs::testProxyFactoryAcceptsNullProxyArgsWhenNativeLazyObjectsAreEnabled
+tests/Tests/ORM/Proxy/ProxyFactoryTest.php	ProxyFactoryTest::testProxyFactoryDoesNotTriggerDeprecationWhenNativeLazyObjectsAreDisabled	n/a: upstream skips it on PHP 8.4 (RequiresPhp < 8.4.0)	
+tests/Tests/ORM/Proxy/ProxyFactoryTest.php	ProxyFactoryTest::testProxyFactoryThrowsIfLazyGhostsAreUnavailable	pending	the port only has native lazy objects: enableNativeLazyObjects(false) is refused, so there is no ProxyFactory without them
+tests/Tests/ORM/Proxy/ProxyFactoryTest.php	ProxyFactoryTest::testProxyFactoryTriggersDeprecationWhenNativeLazyObjectsAreDisabled	pending	the port only has native lazy objects: enableNativeLazyObjects(false) is refused, so there is no ProxyFactory without them
+tests/Tests/ORM/Proxy/ProxyFactoryTest.php	ProxyFactoryTest::testReferenceProxyDelegatesLoadingToThePersister	ported	crates/php2rust-doctrine-orm/tests/proxy_factory_test.rs::testReferenceProxyDelegatesLoadingToThePersister
+tests/Tests/ORM/Proxy/ProxyFactoryTest.php	ProxyFactoryTest::testSkipAbstractClassesOnGeneration	ported	crates/php2rust-doctrine-orm/tests/proxy_factory_test.rs::testSkipAbstractClassesOnGeneration
+tests/Tests/ORM/Proxy/ProxyFactoryTest.php	ProxyFactoryTest::testSkipEmbeddableClassesOnGeneration	ported	crates/php2rust-doctrine-orm/tests/proxy_factory_test.rs::testSkipEmbeddableClassesOnGeneration
+tests/Tests/ORM/Proxy/ProxyFactoryTest.php	ProxyFactoryTest::testSkipMappedSuperClassesOnGeneration	ported	crates/php2rust-doctrine-orm/tests/proxy_factory_test.rs::testSkipMappedSuperClassesOnGeneration
 tests/Tests/ORM/Query/CustomTreeWalkersJoinTest.php	CustomTreeWalkersJoinTest::testAddsJoin	ported	crates/php2rust-doctrine-orm/tests/custom_tree_walkers_join_test.rs::testAddsJoin
 tests/Tests/ORM/Query/CustomTreeWalkersJoinTest.php	CustomTreeWalkersJoinTest::testDoesNotAddJoin	ported	crates/php2rust-doctrine-orm/tests/custom_tree_walkers_join_test.rs::testDoesNotAddJoin
 tests/Tests/ORM/Query/CustomTreeWalkersTest.php	CustomTreeWalkersTest::testSetUnknownQueryComponentThrowsException	ported	crates/php2rust-doctrine-orm/tests/custom_tree_walkers_test.rs::testSetUnknownQueryComponentThrowsException
