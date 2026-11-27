@@ -178,10 +178,10 @@ async fn testLazyOneToManyCollectionIsRetrievedWithOrderByClause() {
 
     let route = em.find(ROUTING_ROUTE, route_id).await.unwrap().unwrap();
 
-    let bookings = elements(&route, "bookings").await;
-    assert_eq!(2, bookings.len());
-    assert_loose_eq(&s("Benjamin"), &get(&bookings[0], "passengerName"));
-    assert_loose_eq(&s("Guilherme"), &get(&bookings[1], "passengerName"));
+    let route_bookings = elements(&route, "bookings").await;
+    assert_eq!(2, route_bookings.len());
+    assert_loose_eq(&s("Benjamin"), &get(&route_bookings[0], "passengerName"));
+    assert_loose_eq(&s("Guilherme"), &get(&route_bookings[1], "passengerName"));
 }
 
 #[tokio::test]

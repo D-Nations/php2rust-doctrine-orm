@@ -29,6 +29,7 @@ use orm::{CMS_MODELS, create_schema};
 
 /// `OnFlushCalledListener`.
 #[derive(Default)]
+#[allow(clippy::struct_field_names, reason = "upstream's property names")]
 struct OnFlushCalledListener {
     pre_flush: AtomicI64,
     on_flush: AtomicI64,
