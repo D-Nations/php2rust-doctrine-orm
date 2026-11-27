@@ -2588,7 +2588,7 @@ tests/Tests/ORM/Query/QueryTest.php	QueryTest::testIterateWithDistinct	ported	cr
 tests/Tests/ORM/Query/QueryTest.php	QueryTest::testNonExistentExecutor	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testNonExistentExecutor
 tests/Tests/ORM/Query/QueryTest.php	QueryTest::testProcessParameterValueBackedEnum	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testProcessParameterValueBackedEnum
 tests/Tests/ORM/Query/QueryTest.php	QueryTest::testProcessParameterValueBackedEnumArray	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testProcessParameterValueBackedEnumArray
-tests/Tests/ORM/Query/QueryTest.php	QueryTest::testProcessParameterValueClassMetadata	pending	
+tests/Tests/ORM/Query/QueryTest.php	QueryTest::testProcessParameterValueClassMetadata	pending	a ClassMetadata is not a PHP object value (php_value::Object) in the port, so it cannot be a parameter value
 tests/Tests/ORM/Query/QueryTest.php	QueryTest::testProcessParameterValueIterable	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testProcessParameterValueIterable
 tests/Tests/ORM/Query/QueryTest.php	QueryTest::testProcessParameterValueNull	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testProcessParameterValueNull
 tests/Tests/ORM/Query/QueryTest.php	QueryTest::testProcessParameterValueObject	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testProcessParameterValueObject
