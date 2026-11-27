@@ -1243,7 +1243,7 @@ tests/Tests/ORM/Functional/Ticket/DDC1685Test.php	DDC1685Test::testPaginateCount
 tests/Tests/ORM/Functional/Ticket/DDC1685Test.php	DDC1685Test::testPaginateIterate	ported	crates/php2rust-doctrine-orm/tests/ddc1685_test.rs::testPaginateIterate
 tests/Tests/ORM/Functional/Ticket/DDC1685Test.php	DDC1685Test::testPaginateIterateNoOutputWalkers	ported	crates/php2rust-doctrine-orm/tests/ddc1685_test.rs::testPaginateIterateNoOutputWalkers
 tests/Tests/ORM/Functional/Ticket/DDC168Test.php	DDC168Test::testJoinedSubclassPersisterRequiresSpecificOrderOfMetadataReflFieldsArray	ported	crates/php2rust-doctrine-orm/tests/ddc168_test.rs::testJoinedSubclassPersisterRequiresSpecificOrderOfMetadataReflFieldsArray
-tests/Tests/ORM/Functional/Ticket/DDC1695Test.php	DDC1695Test::testIssue	pending	
+tests/Tests/ORM/Functional/Ticket/DDC1695Test.php	DDC1695Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc1695_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC1707Test.php	DDC1707Test::testPostLoadOnChild	ported	crates/php2rust-doctrine-orm/tests/ddc1707_test.rs::testPostLoadOnChild
 tests/Tests/ORM/Functional/Ticket/DDC1719Test.php	DDC1719Test::testCreateRetrieveUpdateDelete	ported	crates/php2rust-doctrine-orm/tests/ddc1719_test.rs::testCreateRetrieveUpdateDelete
 tests/Tests/ORM/Functional/Ticket/DDC1757Test.php	DDC1757Test::testFailingCase	ported	crates/php2rust-doctrine-orm/tests/ddc1757_test.rs::testFailingCase
