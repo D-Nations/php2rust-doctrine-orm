@@ -192,10 +192,24 @@ Mapping, not reproduced and so not claimed:
   type) cannot fail: the Rust types rule those values out.
 - PHPUnit's `#[Depends]` chains rebuild the metadata in each test.
 
-Mapping pending: XmlMappingDriverTest, the Symfony XmlDriverTest,
-StaticPHPMappingDriverTest and `ClassMetadataTest::testClassNameMappingDiscriminatorValue`
-(the XML and static PHP drivers are not ported; the demo uses
-attributes); `RawValuePropertyAccessorTest` (PHP 8.4 property hooks);
+- `XmlDriver` reads the mapping files with php2rust-dom, as SimpleXML
+  reads them (child elements and attributes without a namespace prefix;
+  an element's own text). XSD validation runs only when php2rust-dom can
+  read `doctrine-mapping.xsd`: the pinned version refuses it
+  (`xs:complexContent`, `xs:token`), so no document is validated, and
+  the four XmlMappingDriverTest tests that expect a validation error are
+  pending. `getDirection()`'s assertion is an `AssertionError`.
+  `parseOptions()`'s `<object>` is the class's
+  `newInstanceWithoutConstructor()`. XmlMappingDriverTest reads a copy of
+  the mapping files in `tests/data/Mapping`. The `MappingDriverTestCase`
+  tests are in `tests/common/mapping_driver_test_case.rs`, over the
+  `load_driver()` of the test binary; `assertEquals()` on a name map
+  compares it without its key order.
+
+Mapping pending: the Symfony XmlDriverTest, StaticPHPMappingDriverTest
+(the models' static `loadMetadata()` methods are PHP code) and
+`ClassMetadataTest::testClassNameMappingDiscriminatorValue`
+(the static PHP driver); `RawValuePropertyAccessorTest` (PHP 8.4 property hooks);
 `AttributeDriverTest::testMappedSuperclassWithRepository`,
 `ClassMetadataFactoryTest::testAcceptsEntityManagerInterfaceInstances`
 and `QuoteStrategyTest::testConfiguration` (the entity manager and its
@@ -336,7 +350,17 @@ Persistence, not reproduced and so not claimed:
   `loadMetadata()` is the test's Rust function.
 - SchemaValidatorTest's model directories are class locators of the
   recorded classes of their namespace. `schemaInSyncWithMetadata()` and
-  `getUpdateSchemaList()` are not ported (no schema updates).
+  `getUpdateSchemaList()` are async (they introspect the database).
+- `SchemaTool::getUpdateSchemaSql()` cannot swap the connection's schema
+  assets filter (the DBAL port's configuration is fixed once the
+  connection exists): it introspects the target schema's tables that the
+  filter leaves out one by one, which keeps them as upstream's
+  whitelisting filter does. GH7875Test builds its connection with the
+  filter, which `createSchemaForModels()` does not read. DDC214Test
+  (SQLite cannot alter tables), MySqlSchemaToolTest and
+  PostgreSqlSchemaToolTest are skipped upstream on SQLite: `n/a`.
+  Functional SchemaValidatorTest's data provider runs in one test; its
+  three DBAL types are Rust types with their names and declarations.
 - `clone $entity` has no runtime counterpart: ReferenceProxyTest's
   `clone_entity()` initializes the lazy original (as PHP 8.4 does before
   cloning a lazy object), copies its properties and runs the model's
@@ -431,16 +455,22 @@ result cache), GH5562Test, GH6217Test, GH7067Test and GH7735Test (the
 second-level cache); three GH7820Test tests and `DDC1995Test::testQueryCache`
 (the query cache); GH7684Test (`DatabaseDriver` is not ported); GH7869Test
 (`EntityManagerDecorator` and a mock that counts `getClassMetadata()`
-calls); GH7875Test (`SchemaTool::getUpdateSchemaSql()` is not ported);
+calls);
 GH7941Test (the DBAL port does not register SQLite's user-defined `SQRT()`);
 GH5804Test (a `CUSTOM` id generator, an `AbstractIdGenerator` subclass,
 which the unit of work does not run). Upstream skips GH10462Test and GH6823Test (MySQL only),
 GH10927Test (PostgreSQL only) and `GH11982Test::testSchemaLegacyDbal`
 (doctrine/dbal before 4.3): `n/a`.
 
-Locking and inheritance tickets pending: DDC3634Test (its DBAL driver
-middleware `LastInsertIdMockMiddleware` is recorded now, but the DBAL
-port has no middlewares).
+DDC3634Test's DBAL middleware (`LastInsertIdMockMiddleware`) is a Rust
+driver that wraps the SQLite driver and its connections (the DBAL port
+has no middlewares). DDC2090Test, DDC2224Test (the query cache),
+DDC2862Test, DDC2943Test, DDC3967Test, DDC4003Test, DDC7969Test and
+EagerSecondLevelCacheCollectionTest (the second-level cache) and
+DDC2415Test (the static PHP driver and a `CUSTOM` id generator) are
+pending. Upstream skips DDC2182Test (MySQL only), DDC2825Test (SQLite
+does not support schemas), DDC933Test (SQLite) and DDC3103Test
+(doctrine/persistence 4 has no `StaticReflectionService`): `n/a`.
 
 Queries and hydration, not reproduced and so not claimed:
 

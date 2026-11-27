@@ -147,11 +147,11 @@ src/Mapping/DiscriminatorMap.php	DiscriminatorMap	11	ported	crates/php2rust-doct
 src/Mapping/Driver/AttributeDriver.php	AttributeDriver	551	ported	crates/php2rust-doctrine-orm/src/mapping/driver/attribute_driver.rs
 src/Mapping/Driver/AttributeReader.php	AttributeReader	84	ported	crates/php2rust-doctrine-orm/src/mapping/driver/attribute_reader.rs
 src/Mapping/Driver/DatabaseDriver.php	DatabaseDriver	419	pending	
-src/Mapping/Driver/LoadMappingFileImplementation.php	LoadMappingFileImplementation LoadMappingFileImplementation	21	pending	
+src/Mapping/Driver/LoadMappingFileImplementation.php	LoadMappingFileImplementation LoadMappingFileImplementation	21	ported	crates/php2rust-doctrine-orm/src/mapping/driver/xml_driver.rs
 src/Mapping/Driver/ReflectionBasedDriver.php	ReflectionBasedDriver	25	ported	crates/php2rust-doctrine-orm/src/mapping/driver/attribute_driver.rs
 src/Mapping/Driver/RepeatableAttributeCollection.php	RepeatableAttributeCollection	7	ported	crates/php2rust-doctrine-orm/src/mapping/driver/attribute_reader.rs
-src/Mapping/Driver/SimplifiedXmlDriver.php	SimplifiedXmlDriver	12	pending	
-src/Mapping/Driver/XmlDriver.php	XmlDriver	711	pending	
+src/Mapping/Driver/SimplifiedXmlDriver.php	SimplifiedXmlDriver	12	ported	crates/php2rust-doctrine-orm/src/mapping/driver/xml_driver.rs
+src/Mapping/Driver/XmlDriver.php	XmlDriver	711	ported	crates/php2rust-doctrine-orm/src/mapping/driver/xml_driver.rs
 src/Mapping/Embeddable.php	Embeddable	7	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
 src/Mapping/Embedded.php	Embedded	12	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
 src/Mapping/EmbeddedClassMapping.php	EmbeddedClassMapping	42	ported	crates/php2rust-doctrine-orm/src/mapping/embedded_class_mapping.rs

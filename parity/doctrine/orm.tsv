@@ -1020,18 +1020,18 @@ tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testWhereFilter	port
 tests/Tests/ORM/Functional/SQLFilterTest.php	SQLFilterTest::testWhereOrFilter	ported	crates/php2rust-doctrine-orm/tests/sql_filter_test.rs::testWhereOrFilter
 tests/Tests/ORM/Functional/SchemaTool/CompanySchemaTest.php	CompanySchemaTest::testGeneratedSchema	ported	crates/php2rust-doctrine-orm/tests/company_schema_test.rs::testGeneratedSchema
 tests/Tests/ORM/Functional/SchemaTool/CompanySchemaTest.php	CompanySchemaTest::testSingleTableInheritance	ported	crates/php2rust-doctrine-orm/tests/company_schema_test.rs::testSingleTableInheritance
-tests/Tests/ORM/Functional/SchemaTool/DBAL483Test.php	DBAL483Test::testDefaultValueIsComparedCorrectly	pending	
-tests/Tests/ORM/Functional/SchemaTool/DDC214Test.php	DDC214Test::testCmsAddressModel	pending	
-tests/Tests/ORM/Functional/SchemaTool/DDC214Test.php	DDC214Test::testCompanyModel	pending	
-tests/Tests/ORM/Functional/SchemaTool/MySqlSchemaToolTest.php	MySqlSchemaToolTest::testFulltextIndexSurvivesCreateIntrospectAndUpdateWithColumnUnique	pending	
-tests/Tests/ORM/Functional/SchemaTool/MySqlSchemaToolTest.php	MySqlSchemaToolTest::testFulltextIndexSurvivesCreateIntrospectAndUpdateWithUniqueConstraint	pending	
-tests/Tests/ORM/Functional/SchemaTool/MySqlSchemaToolTest.php	MySqlSchemaToolTest::testGetCreateSchemaSql	pending	
-tests/Tests/ORM/Functional/SchemaTool/MySqlSchemaToolTest.php	MySqlSchemaToolTest::testGetCreateSchemaSql2	pending	
-tests/Tests/ORM/Functional/SchemaTool/MySqlSchemaToolTest.php	MySqlSchemaToolTest::testGetCreateSchemaSql3	pending	
-tests/Tests/ORM/Functional/SchemaTool/MySqlSchemaToolTest.php	MySqlSchemaToolTest::testGetCreateSchemaSql4	pending	
-tests/Tests/ORM/Functional/SchemaTool/PostgreSqlSchemaToolTest.php	PostgreSqlSchemaToolTest::testSetDeferrableForeignKey	pending	
-tests/Tests/ORM/Functional/SchemaTool/PostgreSqlSchemaToolTest.php	PostgreSqlSchemaToolTest::testUpdateSchemaWithPostgreSQLSchema	pending	
-tests/Tests/ORM/Functional/SchemaValidatorTest.php	SchemaValidatorTest::testValidateModelSets	pending	
+tests/Tests/ORM/Functional/SchemaTool/DBAL483Test.php	DBAL483Test::testDefaultValueIsComparedCorrectly	ported	crates/php2rust-doctrine-orm/tests/dbal483_test.rs::testDefaultValueIsComparedCorrectly
+tests/Tests/ORM/Functional/SchemaTool/DDC214Test.php	DDC214Test::testCmsAddressModel	n/a: skipped upstream on SQLite (no ALTER TABLE)	
+tests/Tests/ORM/Functional/SchemaTool/DDC214Test.php	DDC214Test::testCompanyModel	n/a: skipped upstream on SQLite (no ALTER TABLE)	
+tests/Tests/ORM/Functional/SchemaTool/MySqlSchemaToolTest.php	MySqlSchemaToolTest::testFulltextIndexSurvivesCreateIntrospectAndUpdateWithColumnUnique	n/a: MySQL only, skipped upstream on SQLite	
+tests/Tests/ORM/Functional/SchemaTool/MySqlSchemaToolTest.php	MySqlSchemaToolTest::testFulltextIndexSurvivesCreateIntrospectAndUpdateWithUniqueConstraint	n/a: MySQL only, skipped upstream on SQLite	
+tests/Tests/ORM/Functional/SchemaTool/MySqlSchemaToolTest.php	MySqlSchemaToolTest::testGetCreateSchemaSql	n/a: MySQL only, skipped upstream on SQLite	
+tests/Tests/ORM/Functional/SchemaTool/MySqlSchemaToolTest.php	MySqlSchemaToolTest::testGetCreateSchemaSql2	n/a: MySQL only, skipped upstream on SQLite	
+tests/Tests/ORM/Functional/SchemaTool/MySqlSchemaToolTest.php	MySqlSchemaToolTest::testGetCreateSchemaSql3	n/a: MySQL only, skipped upstream on SQLite	
+tests/Tests/ORM/Functional/SchemaTool/MySqlSchemaToolTest.php	MySqlSchemaToolTest::testGetCreateSchemaSql4	n/a: MySQL only, skipped upstream on SQLite	
+tests/Tests/ORM/Functional/SchemaTool/PostgreSqlSchemaToolTest.php	PostgreSqlSchemaToolTest::testSetDeferrableForeignKey	n/a: PostgreSQL only	
+tests/Tests/ORM/Functional/SchemaTool/PostgreSqlSchemaToolTest.php	PostgreSqlSchemaToolTest::testUpdateSchemaWithPostgreSQLSchema	n/a: PostgreSQL only	
+tests/Tests/ORM/Functional/SchemaValidatorTest.php	SchemaValidatorTest::testValidateModelSets	ported	crates/php2rust-doctrine-orm/tests/functional_schema_validator_test.rs::testValidateModelSets
 tests/Tests/ORM/Functional/SecondLevelCacheCompositePrimaryKeyTest.php	SecondLevelCacheCompositePrimaryKeyTest::testPutAndLoadCompositPrimaryKeyEntities	pending	not ported yet: the second-level cache functional tests continue in the next batch
 tests/Tests/ORM/Functional/SecondLevelCacheCompositePrimaryKeyTest.php	SecondLevelCacheCompositePrimaryKeyTest::testRemoveCompositPrimaryKeyEntities	pending	not ported yet: the second-level cache functional tests continue in the next batch
 tests/Tests/ORM/Functional/SecondLevelCacheCompositePrimaryKeyTest.php	SecondLevelCacheCompositePrimaryKeyTest::testUpdateCompositPrimaryKeyEntities	pending	not ported yet: the second-level cache functional tests continue in the next batch
@@ -1238,12 +1238,12 @@ tests/Tests/ORM/Functional/Ticket/DDC1654Test.php	DDC1654Test::testManyToManyRem
 tests/Tests/ORM/Functional/Ticket/DDC1655Test.php	DDC1655Test::testPostLoadInheritanceChild	ported	crates/php2rust-doctrine-orm/tests/ddc1655_test.rs::testPostLoadInheritanceChild
 tests/Tests/ORM/Functional/Ticket/DDC1655Test.php	DDC1655Test::testPostLoadOneToManyInheritance	ported	crates/php2rust-doctrine-orm/tests/ddc1655_test.rs::testPostLoadOneToManyInheritance
 tests/Tests/ORM/Functional/Ticket/DDC1666Test.php	DDC1666Test::testGivenOrphanRemovalOneToOneWhenReplacingThenNoUniqueConstraintError	ported	crates/php2rust-doctrine-orm/tests/ddc1666_test.rs::testGivenOrphanRemovalOneToOneWhenReplacingThenNoUniqueConstraintError
-tests/Tests/ORM/Functional/Ticket/DDC1685Test.php	DDC1685Test::testPaginateCount	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1685Test.php	DDC1685Test::testPaginateCountNoOutputWalkers	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1685Test.php	DDC1685Test::testPaginateIterate	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1685Test.php	DDC1685Test::testPaginateIterateNoOutputWalkers	pending	
+tests/Tests/ORM/Functional/Ticket/DDC1685Test.php	DDC1685Test::testPaginateCount	ported	crates/php2rust-doctrine-orm/tests/ddc1685_test.rs::testPaginateCount
+tests/Tests/ORM/Functional/Ticket/DDC1685Test.php	DDC1685Test::testPaginateCountNoOutputWalkers	ported	crates/php2rust-doctrine-orm/tests/ddc1685_test.rs::testPaginateCountNoOutputWalkers
+tests/Tests/ORM/Functional/Ticket/DDC1685Test.php	DDC1685Test::testPaginateIterate	ported	crates/php2rust-doctrine-orm/tests/ddc1685_test.rs::testPaginateIterate
+tests/Tests/ORM/Functional/Ticket/DDC1685Test.php	DDC1685Test::testPaginateIterateNoOutputWalkers	ported	crates/php2rust-doctrine-orm/tests/ddc1685_test.rs::testPaginateIterateNoOutputWalkers
 tests/Tests/ORM/Functional/Ticket/DDC168Test.php	DDC168Test::testJoinedSubclassPersisterRequiresSpecificOrderOfMetadataReflFieldsArray	ported	crates/php2rust-doctrine-orm/tests/ddc168_test.rs::testJoinedSubclassPersisterRequiresSpecificOrderOfMetadataReflFieldsArray
-tests/Tests/ORM/Functional/Ticket/DDC1695Test.php	DDC1695Test::testIssue	pending	
+tests/Tests/ORM/Functional/Ticket/DDC1695Test.php	DDC1695Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc1695_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC1707Test.php	DDC1707Test::testPostLoadOnChild	ported	crates/php2rust-doctrine-orm/tests/ddc1707_test.rs::testPostLoadOnChild
 tests/Tests/ORM/Functional/Ticket/DDC1719Test.php	DDC1719Test::testCreateRetrieveUpdateDelete	ported	crates/php2rust-doctrine-orm/tests/ddc1719_test.rs::testCreateRetrieveUpdateDelete
 tests/Tests/ORM/Functional/Ticket/DDC1757Test.php	DDC1757Test::testFailingCase	ported	crates/php2rust-doctrine-orm/tests/ddc1757_test.rs::testFailingCase
@@ -1252,9 +1252,9 @@ tests/Tests/ORM/Functional/Ticket/DDC1778Test.php	DDC1778Test::testRemove	ported
 tests/Tests/ORM/Functional/Ticket/DDC1778Test.php	DDC1778Test::testRemoveElement	ported	crates/php2rust-doctrine-orm/tests/ddc1778_test.rs::testRemoveElement
 tests/Tests/ORM/Functional/Ticket/DDC1787Test.php	DDC1787Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc1787_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC1843Test.php	DDC1843Test::testCreateRetrieveUpdateDelete	ported	crates/php2rust-doctrine-orm/tests/ddc1843_test.rs::testCreateRetrieveUpdateDelete
-tests/Tests/ORM/Functional/Ticket/DDC1884Test.php	DDC1884Test::testSelectFromInverseSideWithCompositePkAndSolelyIdentifierColumnsUsingFetchJoins	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1884Test.php	DDC1884Test::testSelectFromInverseSideWithCompositePkUsingFetchJoins	pending	
-tests/Tests/ORM/Functional/Ticket/DDC1884Test.php	DDC1884Test::testSelectFromOwningSideUsingFetchJoins	pending	
+tests/Tests/ORM/Functional/Ticket/DDC1884Test.php	DDC1884Test::testSelectFromInverseSideWithCompositePkAndSolelyIdentifierColumnsUsingFetchJoins	ported	crates/php2rust-doctrine-orm/tests/ddc1884_test.rs::testSelectFromInverseSideWithCompositePkAndSolelyIdentifierColumnsUsingFetchJoins
+tests/Tests/ORM/Functional/Ticket/DDC1884Test.php	DDC1884Test::testSelectFromInverseSideWithCompositePkUsingFetchJoins	ported	crates/php2rust-doctrine-orm/tests/ddc1884_test.rs::testSelectFromInverseSideWithCompositePkUsingFetchJoins
+tests/Tests/ORM/Functional/Ticket/DDC1884Test.php	DDC1884Test::testSelectFromOwningSideUsingFetchJoins	ported	crates/php2rust-doctrine-orm/tests/ddc1884_test.rs::testSelectFromOwningSideUsingFetchJoins
 tests/Tests/ORM/Functional/Ticket/DDC1885Test.php	DDC1885Test::testClearAll	ported	crates/php2rust-doctrine-orm/tests/ddc1885_test.rs::testClearAll
 tests/Tests/ORM/Functional/Ticket/DDC1885Test.php	DDC1885Test::testCountExtraLazy	ported	crates/php2rust-doctrine-orm/tests/ddc1885_test.rs::testCountExtraLazy
 tests/Tests/ORM/Functional/Ticket/DDC1885Test.php	DDC1885Test::testCreateRetrieveUpdateDelete	ported	crates/php2rust-doctrine-orm/tests/ddc1885_test.rs::testCreateRetrieveUpdateDelete
@@ -1271,15 +1271,15 @@ tests/Tests/ORM/Functional/Ticket/DDC2074Test.php	DDC2074Test::testSavingClonedP
 tests/Tests/ORM/Functional/Ticket/DDC2074Test.php	DDC2074Test::testShouldNotScheduleDeletionOnClonedInstances	ported	crates/php2rust-doctrine-orm/tests/ddc2074_test.rs::testShouldNotScheduleDeletionOnClonedInstances
 tests/Tests/ORM/Functional/Ticket/DDC2084Test.php	DDC2084Test::testInvalidIdentifierBindingEntityException	ported	crates/php2rust-doctrine-orm/tests/ddc2084_test.rs::testInvalidIdentifierBindingEntityException
 tests/Tests/ORM/Functional/Ticket/DDC2084Test.php	DDC2084Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2084_test.rs::testIssue
-tests/Tests/ORM/Functional/Ticket/DDC2090Test.php	DDC2090Test::testIssue	pending	
+tests/Tests/ORM/Functional/Ticket/DDC2090Test.php	DDC2090Test::testIssue	pending	needs the query cache (useQueryCache())
 tests/Tests/ORM/Functional/Ticket/DDC2106Test.php	DDC2106Test::testDetachedEntityAsId	ported	crates/php2rust-doctrine-orm/tests/ddc2106_test.rs::testDetachedEntityAsId
 tests/Tests/ORM/Functional/Ticket/DDC211Test.php	DDC211Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc211_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC2138Test.php	DDC2138Test::testForeignKeyOnSTIWithMultipleMapping	ported	crates/php2rust-doctrine-orm/tests/ddc2138_test.rs::testForeignKeyOnSTIWithMultipleMapping
 tests/Tests/ORM/Functional/Ticket/DDC2175Test.php	DDC2175Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2175_test.rs::testIssue
-tests/Tests/ORM/Functional/Ticket/DDC2182Test.php	DDC2182Test::testPassColumnOptionsToJoinColumns	pending	
+tests/Tests/ORM/Functional/Ticket/DDC2182Test.php	DDC2182Test::testPassColumnOptionsToJoinColumns	n/a: MySQL only, skipped upstream on SQLite	
 tests/Tests/ORM/Functional/Ticket/DDC2214Test.php	DDC2214Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2214_test.rs::testIssue
-tests/Tests/ORM/Functional/Ticket/DDC2224Test.php	DDC2224Test::testCacheMissWhenTypeChanges	pending	
-tests/Tests/ORM/Functional/Ticket/DDC2224Test.php	DDC2224Test::testIssue	pending	
+tests/Tests/ORM/Functional/Ticket/DDC2224Test.php	DDC2224Test::testCacheMissWhenTypeChanges	pending	needs the query cache (setQueryCache())
+tests/Tests/ORM/Functional/Ticket/DDC2224Test.php	DDC2224Test::testIssue	pending	needs the query cache (setQueryCache())
 tests/Tests/ORM/Functional/Ticket/DDC2252Test.php	DDC2252Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2252_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC2306Test.php	DDC2306Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2306_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC2346Test.php	DDC2346Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2346_test.rs::testIssue
@@ -1287,7 +1287,7 @@ tests/Tests/ORM/Functional/Ticket/DDC2350Test.php	DDC2350Test::testEagerCollecti
 tests/Tests/ORM/Functional/Ticket/DDC2359Test.php	DDC2359Test::testIssue	pending	PHPUnit mocks of the metadata factory and driver
 tests/Tests/ORM/Functional/Ticket/DDC237Test.php	DDC237Test::testUninitializedProxyIsInitializedOnFetchJoin	ported	crates/php2rust-doctrine-orm/tests/ddc237_test.rs::testUninitializedProxyIsInitializedOnFetchJoin
 tests/Tests/ORM/Functional/Ticket/DDC2387Test.php	DDC2387Test::testCompositeAssociationKeyDetection	pending	DatabaseDriver (schema to metadata) is not ported
-tests/Tests/ORM/Functional/Ticket/DDC2415Test.php	DDC2415Test::testTicket	pending	
+tests/Tests/ORM/Functional/Ticket/DDC2415Test.php	DDC2415Test::testTicket	pending	needs the static PHP driver (loadMetadata()) and a CUSTOM id generator (an AbstractIdGenerator subclass)
 tests/Tests/ORM/Functional/Ticket/DDC2494Test.php	DDC2494Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2494_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC2519Test.php	DDC2519Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2519_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC2575Test.php	DDC2575Test::testHydrationIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2575_test.rs::testHydrationIssue
@@ -1303,49 +1303,49 @@ tests/Tests/ORM/Functional/Ticket/DDC2775Test.php	DDC2775Test::testIssueCascadeR
 tests/Tests/ORM/Functional/Ticket/DDC2780Test.php	DDC2780Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2780_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC2790Test.php	DDC2790Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2790_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC279Test.php	DDC279Test::testDDC279	ported	crates/php2rust-doctrine-orm/tests/ddc279_test.rs::testDDC279
-tests/Tests/ORM/Functional/Ticket/DDC2825Test.php	DDC2825Test::testPersistenceOfEntityWithSchemaMapping	pending	
-tests/Tests/ORM/Functional/Ticket/DDC2862Test.php	DDC2862Test::testIssue	pending	
-tests/Tests/ORM/Functional/Ticket/DDC2862Test.php	DDC2862Test::testIssueReopened	pending	
+tests/Tests/ORM/Functional/Ticket/DDC2825Test.php	DDC2825Test::testPersistenceOfEntityWithSchemaMapping	n/a: skipped upstream: SQLite does not support schemas	
+tests/Tests/ORM/Functional/Ticket/DDC2862Test.php	DDC2862Test::testIssue	pending	needs the second-level cache
+tests/Tests/ORM/Functional/Ticket/DDC2862Test.php	DDC2862Test::testIssueReopened	pending	needs the second-level cache
 tests/Tests/ORM/Functional/Ticket/DDC2895Test.php	DDC2895Test::testPostLoadOneToManyInheritance	ported	crates/php2rust-doctrine-orm/tests/ddc2895_test.rs::testPostLoadOneToManyInheritance
 tests/Tests/ORM/Functional/Ticket/DDC2931Test.php	DDC2931Test::testFetchJoinedEntitiesCanBeRefreshed	ported	crates/php2rust-doctrine-orm/tests/ddc2931_test.rs::testFetchJoinedEntitiesCanBeRefreshed
 tests/Tests/ORM/Functional/Ticket/DDC2931Test.php	DDC2931Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2931_test.rs::testIssue
-tests/Tests/ORM/Functional/Ticket/DDC2943Test.php	DDC2943Test::testIssue	pending	
-tests/Tests/ORM/Functional/Ticket/DDC2943Test.php	DDC2943Test::testIssueNonFetchJoin	pending	
+tests/Tests/ORM/Functional/Ticket/DDC2943Test.php	DDC2943Test::testIssue	pending	needs the second-level cache
+tests/Tests/ORM/Functional/Ticket/DDC2943Test.php	DDC2943Test::testIssueNonFetchJoin	pending	needs the second-level cache
 tests/Tests/ORM/Functional/Ticket/DDC2984Test.php	DDC2984Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2984_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC2996Test.php	DDC2996Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2996_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC3033Test.php	DDC3033Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc3033_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC3042Test.php	DDC3042Test::testSQLGenerationDoesNotProvokeAliasCollisions	ported	crates/php2rust-doctrine-orm/tests/ddc3042_test.rs::testSQLGenerationDoesNotProvokeAliasCollisions
-tests/Tests/ORM/Functional/Ticket/DDC3068Test.php	DDC3068Test::testFindUsingAnArrayOfObjectAsPrimaryKey	pending	
+tests/Tests/ORM/Functional/Ticket/DDC3068Test.php	DDC3068Test::testFindUsingAnArrayOfObjectAsPrimaryKey	ported	crates/php2rust-doctrine-orm/tests/ddc3068_test.rs::testFindUsingAnArrayOfObjectAsPrimaryKey
 tests/Tests/ORM/Functional/Ticket/DDC309Test.php	DDC309Test::testTwoToIterableHydrations	ported	crates/php2rust-doctrine-orm/tests/ddc309_test.rs::testTwoToIterableHydrations
-tests/Tests/ORM/Functional/Ticket/DDC3103Test.php	DDC3103Test::testIssue	pending	
+tests/Tests/ORM/Functional/Ticket/DDC3103Test.php	DDC3103Test::testIssue	n/a: skipped upstream: doctrine/persistence 4 has no StaticReflectionService	
 tests/Tests/ORM/Functional/Ticket/DDC3123Test.php	DDC3123Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc3123_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC3160Test.php	DDC3160Test::testNoUpdateOnInsert	ported	crates/php2rust-doctrine-orm/tests/ddc3160_test.rs::testNoUpdateOnInsert
 tests/Tests/ORM/Functional/Ticket/DDC3170Test.php	DDC3170Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc3170_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC3192Test.php	DDC3192Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc3192_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC3223Test.php	DDC3223Test::testIssueGetId	ported	crates/php2rust-doctrine-orm/tests/ddc3223_test.rs::testIssueGetId
 tests/Tests/ORM/Functional/Ticket/DDC3300Test.php	DDC3300Test::testResolveTargetEntitiesChangesDiscriminatorMapValues	pending	ResolveTargetEntityListener is not ported
-tests/Tests/ORM/Functional/Ticket/DDC3303Test.php	DDC3303Test::testEmbeddedObjectsAreAlsoInherited	pending	
+tests/Tests/ORM/Functional/Ticket/DDC3303Test.php	DDC3303Test::testEmbeddedObjectsAreAlsoInherited	ported	crates/php2rust-doctrine-orm/tests/ddc3303_test.rs::testEmbeddedObjectsAreAlsoInherited
 tests/Tests/ORM/Functional/Ticket/DDC331Test.php	DDC331Test::testSelectFieldOnRootEntity	ported	crates/php2rust-doctrine-orm/tests/ddc331_test.rs::testSelectFieldOnRootEntity
 tests/Tests/ORM/Functional/Ticket/DDC3330Test.php	DDC3330Test::testIssueCollectionOrderWithPaginator	ported	crates/php2rust-doctrine-orm/tests/ddc3330_test.rs::testIssueCollectionOrderWithPaginator
-tests/Tests/ORM/Functional/Ticket/DDC3346Test.php	DDC3346Test::testFindLimitedWithEagerFetchWillNotHydrateLimitedCollection	pending	
-tests/Tests/ORM/Functional/Ticket/DDC3346Test.php	DDC3346Test::testFindOneWithEagerFetchWillNotHydrateLimitedCollection	pending	
-tests/Tests/ORM/Functional/Ticket/DDC3346Test.php	DDC3346Test::testFindWithEagerFetchAndOffsetWillNotHydrateLimitedCollection	pending	
+tests/Tests/ORM/Functional/Ticket/DDC3346Test.php	DDC3346Test::testFindLimitedWithEagerFetchWillNotHydrateLimitedCollection	ported	crates/php2rust-doctrine-orm/tests/ddc3346_test.rs::testFindLimitedWithEagerFetchWillNotHydrateLimitedCollection
+tests/Tests/ORM/Functional/Ticket/DDC3346Test.php	DDC3346Test::testFindOneWithEagerFetchWillNotHydrateLimitedCollection	ported	crates/php2rust-doctrine-orm/tests/ddc3346_test.rs::testFindOneWithEagerFetchWillNotHydrateLimitedCollection
+tests/Tests/ORM/Functional/Ticket/DDC3346Test.php	DDC3346Test::testFindWithEagerFetchAndOffsetWillNotHydrateLimitedCollection	ported	crates/php2rust-doctrine-orm/tests/ddc3346_test.rs::testFindWithEagerFetchAndOffsetWillNotHydrateLimitedCollection
 tests/Tests/ORM/Functional/Ticket/DDC345Test.php	DDC345Test::testTwoIterateHydrations	ported	crates/php2rust-doctrine-orm/tests/ddc345_test.rs::testTwoIterateHydrations
 tests/Tests/ORM/Functional/Ticket/DDC353Test.php	DDC353Test::testFailingCase	ported	crates/php2rust-doctrine-orm/tests/ddc353_test.rs::testFailingCase
 tests/Tests/ORM/Functional/Ticket/DDC353Test.php	DDC353Test::testWorkingCase	ported	crates/php2rust-doctrine-orm/tests/ddc353_test.rs::testWorkingCase
-tests/Tests/ORM/Functional/Ticket/DDC3582Test.php	DDC3582Test::testNestedEmbeddablesAreHydratedWithProperClass	pending	
+tests/Tests/ORM/Functional/Ticket/DDC3582Test.php	DDC3582Test::testNestedEmbeddablesAreHydratedWithProperClass	ported	crates/php2rust-doctrine-orm/tests/ddc3582_test.rs::testNestedEmbeddablesAreHydratedWithProperClass
 tests/Tests/ORM/Functional/Ticket/DDC3597Test.php	DDC3597Test::testSaveImageEntity	ported	crates/php2rust-doctrine-orm/tests/ddc3597_test.rs::testSaveImageEntity
-tests/Tests/ORM/Functional/Ticket/DDC3634Test.php	DDC3634Test::testSavesIntegerAutoGeneratedValue	pending	
-tests/Tests/ORM/Functional/Ticket/DDC3634Test.php	DDC3634Test::testSavesIntegerAutoGeneratedValueWithJoinedInheritance	pending	
-tests/Tests/ORM/Functional/Ticket/DDC3634Test.php	DDC3634Test::testSavesVeryLargeIntegerAutoGeneratedValue	pending	
+tests/Tests/ORM/Functional/Ticket/DDC3634Test.php	DDC3634Test::testSavesIntegerAutoGeneratedValue	ported	crates/php2rust-doctrine-orm/tests/ddc3634_test.rs::testSavesIntegerAutoGeneratedValue
+tests/Tests/ORM/Functional/Ticket/DDC3634Test.php	DDC3634Test::testSavesIntegerAutoGeneratedValueWithJoinedInheritance	ported	crates/php2rust-doctrine-orm/tests/ddc3634_test.rs::testSavesIntegerAutoGeneratedValueWithJoinedInheritance
+tests/Tests/ORM/Functional/Ticket/DDC3634Test.php	DDC3634Test::testSavesVeryLargeIntegerAutoGeneratedValue	ported	crates/php2rust-doctrine-orm/tests/ddc3634_test.rs::testSavesVeryLargeIntegerAutoGeneratedValue
 tests/Tests/ORM/Functional/Ticket/DDC3644Test.php	DDC3644Test::testIssueWithJoinedEntity	ported	crates/php2rust-doctrine-orm/tests/ddc3644_test.rs::testIssueWithJoinedEntity
 tests/Tests/ORM/Functional/Ticket/DDC3644Test.php	DDC3644Test::testIssueWithRegularEntity	ported	crates/php2rust-doctrine-orm/tests/ddc3644_test.rs::testIssueWithRegularEntity
 tests/Tests/ORM/Functional/Ticket/DDC3719Test.php	DDC3719Test::testCriteriaOnNotOwningSide	ported	crates/php2rust-doctrine-orm/tests/ddc3719_test.rs::testCriteriaOnNotOwningSide
 tests/Tests/ORM/Functional/Ticket/DDC371Test.php	DDC371Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc371_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC3785Test.php	DDC3785Test::testOwningValueObjectIdIsCorrectlyTransformedWhenRemovingOrphanedChildEntities	ported	crates/php2rust-doctrine-orm/tests/ddc3785_test.rs::testOwningValueObjectIdIsCorrectlyTransformedWhenRemovingOrphanedChildEntities
 tests/Tests/ORM/Functional/Ticket/DDC381Test.php	DDC381Test::testCallUnserializedProxyMethods	pending	serialize()/unserialize() of a proxy is not ported
-tests/Tests/ORM/Functional/Ticket/DDC3967Test.php	DDC3967Test::testIdentifierCachedWithProperType	pending	
-tests/Tests/ORM/Functional/Ticket/DDC4003Test.php	DDC4003Test::testReadsThroughRepositorySameDataThatItWroteInCache	pending	
+tests/Tests/ORM/Functional/Ticket/DDC3967Test.php	DDC3967Test::testIdentifierCachedWithProperType	pending	needs the second-level cache
+tests/Tests/ORM/Functional/Ticket/DDC4003Test.php	DDC4003Test::testReadsThroughRepositorySameDataThatItWroteInCache	pending	needs the second-level cache
 tests/Tests/ORM/Functional/Ticket/DDC4024Test.php	DDC4024Test::testADefaultMessageShouldBeUsedWhenNothingWasProvided	ported	crates/php2rust-doctrine-orm/tests/ddc4024_test.rs::testADefaultMessageShouldBeUsedWhenNothingWasProvided
 tests/Tests/ORM/Functional/Ticket/DDC4024Test.php	DDC4024Test::testConstructorShouldUseProvidedMessage	ported	crates/php2rust-doctrine-orm/tests/ddc4024_test.rs::testConstructorShouldUseProvidedMessage
 tests/Tests/ORM/Functional/Ticket/DDC422Test.php	DDC422Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc422_test.rs::testIssue
@@ -1373,8 +1373,8 @@ tests/Tests/ORM/Functional/Ticket/DDC6303Test.php	DDC6303Test::testEmptyValuesIn
 tests/Tests/ORM/Functional/Ticket/DDC6303Test.php	DDC6303Test::testMixedTypeHydratedCorrectlyInJoinedInheritance	ported	crates/php2rust-doctrine-orm/tests/ddc6303_test.rs::testMixedTypeHydratedCorrectlyInJoinedInheritance
 tests/Tests/ORM/Functional/Ticket/DDC633Test.php	DDC633Test::testDQLDeferredEagerLoad	ported	crates/php2rust-doctrine-orm/tests/ddc633_test.rs::testDQLDeferredEagerLoad
 tests/Tests/ORM/Functional/Ticket/DDC633Test.php	DDC633Test::testOneToOneEager	ported	crates/php2rust-doctrine-orm/tests/ddc633_test.rs::testOneToOneEager
-tests/Tests/ORM/Functional/Ticket/DDC6460Test.php	DDC6460Test::testInlineEmbeddable	pending	
-tests/Tests/ORM/Functional/Ticket/DDC6460Test.php	DDC6460Test::testInlineEmbeddableProxyInitialization	pending	
+tests/Tests/ORM/Functional/Ticket/DDC6460Test.php	DDC6460Test::testInlineEmbeddable	ported	crates/php2rust-doctrine-orm/tests/ddc6460_test.rs::testInlineEmbeddable
+tests/Tests/ORM/Functional/Ticket/DDC6460Test.php	DDC6460Test::testInlineEmbeddableProxyInitialization	ported	crates/php2rust-doctrine-orm/tests/ddc6460_test.rs::testInlineEmbeddableProxyInitialization
 tests/Tests/ORM/Functional/Ticket/DDC6558Test.php	DDC6558Test::testEmployeeIsPopulated	ported	crates/php2rust-doctrine-orm/tests/ddc6558_test.rs::testEmployeeIsPopulated
 tests/Tests/ORM/Functional/Ticket/DDC656Test.php	DDC656Test::testRecomputeSingleEntityChangeSetPreservesFieldOrder	ported	crates/php2rust-doctrine-orm/tests/ddc656_test.rs::testRecomputeSingleEntityChangeSetPreservesFieldOrder
 tests/Tests/ORM/Functional/Ticket/DDC6573Test.php	DDC6573Test::testShouldSupportsBasicUsage	ported	crates/php2rust-doctrine-orm/tests/ddc6573_test.rs::testShouldSupportsBasicUsage
@@ -1393,7 +1393,7 @@ tests/Tests/ORM/Functional/Ticket/DDC736Test.php	DDC736Test::testReorderEntityFe
 tests/Tests/ORM/Functional/Ticket/DDC748Test.php	DDC748Test::testRefreshOneToOne	ported	crates/php2rust-doctrine-orm/tests/ddc748_test.rs::testRefreshOneToOne
 tests/Tests/ORM/Functional/Ticket/DDC748Test.php	DDC748Test::testRefreshWithManyToOne	ported	crates/php2rust-doctrine-orm/tests/ddc748_test.rs::testRefreshWithManyToOne
 tests/Tests/ORM/Functional/Ticket/DDC767Test.php	DDC767Test::testCollectionChangesInsideTransaction	ported	crates/php2rust-doctrine-orm/tests/ddc767_test.rs::testCollectionChangesInsideTransaction
-tests/Tests/ORM/Functional/Ticket/DDC7969Test.php	DDC7969Test::testChildEntityRetrievedFromCache	pending	
+tests/Tests/ORM/Functional/Ticket/DDC7969Test.php	DDC7969Test::testChildEntityRetrievedFromCache	pending	needs the second-level cache
 tests/Tests/ORM/Functional/Ticket/DDC809Test.php	DDC809Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc809_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC812Test.php	DDC812Test::testFetchJoinInitializesPreviouslyUninitializedCollectionOfManagedEntity	ported	crates/php2rust-doctrine-orm/tests/ddc812_test.rs::testFetchJoinInitializesPreviouslyUninitializedCollectionOfManagedEntity
 tests/Tests/ORM/Functional/Ticket/DDC832Test.php	DDC832Test::testQuotedTableBasicRemove	ported	crates/php2rust-doctrine-orm/tests/ddc832_test.rs::testQuotedTableBasicRemove
@@ -1407,12 +1407,12 @@ tests/Tests/ORM/Functional/Ticket/DDC849Test.php	DDC849Test::testClearContains	p
 tests/Tests/ORM/Functional/Ticket/DDC849Test.php	DDC849Test::testClearCount	ported	crates/php2rust-doctrine-orm/tests/ddc849_test.rs::testClearCount
 tests/Tests/ORM/Functional/Ticket/DDC849Test.php	DDC849Test::testRemoveContains	ported	crates/php2rust-doctrine-orm/tests/ddc849_test.rs::testRemoveContains
 tests/Tests/ORM/Functional/Ticket/DDC881Test.php	DDC881Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc881_test.rs::testIssue
-tests/Tests/ORM/Functional/Ticket/DDC933Test.php	DDC933Test::testLockCTIClass	pending	
+tests/Tests/ORM/Functional/Ticket/DDC933Test.php	DDC933Test::testLockCTIClass	n/a: skipped upstream on SQLite	
 tests/Tests/ORM/Functional/Ticket/DDC949Test.php	DDC949Test::testBooleanThroughRepository	ported	crates/php2rust-doctrine-orm/tests/ddc949_test.rs::testBooleanThroughRepository
 tests/Tests/ORM/Functional/Ticket/DDC960Test.php	DDC960Test::testUpdateRootVersion	ported	crates/php2rust-doctrine-orm/tests/ddc960_test.rs::testUpdateRootVersion
 tests/Tests/ORM/Functional/Ticket/DDC992Test.php	DDC992Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc992_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC992Test.php	DDC992Test::testOneToManyChild	ported	crates/php2rust-doctrine-orm/tests/ddc992_test.rs::testOneToManyChild
-tests/Tests/ORM/Functional/Ticket/EagerSecondLevelCacheCollectionTest.php	EagerSecondLevelCacheCollectionTest::testEagerCollectionIsNotDuplicatedAfterSecondLevelCacheHit	pending	
+tests/Tests/ORM/Functional/Ticket/EagerSecondLevelCacheCollectionTest.php	EagerSecondLevelCacheCollectionTest::testEagerCollectionIsNotDuplicatedAfterSecondLevelCacheHit	pending	needs the second-level cache
 tests/Tests/ORM/Functional/Ticket/GH10049/GH10049Test.php	GH10049Test::testInheritedReadOnlyPropertyValueCanBeSet	ported	crates/php2rust-doctrine-orm/tests/gh10049_test.rs::testInheritedReadOnlyPropertyValueCanBeSet
 tests/Tests/ORM/Functional/Ticket/GH10132Test.php	GH10132Test::testQueryBackedEnumInCompositeKeyJoin	ported	crates/php2rust-doctrine-orm/tests/gh10132_test.rs::testQueryBackedEnumInCompositeKeyJoin
 tests/Tests/ORM/Functional/Ticket/GH10288Test.php	GH10288Test::testEnumDiscriminatorWithCustomEnumType	ported	crates/php2rust-doctrine-orm/tests/gh10288_test.rs::testEnumDiscriminatorWithCustomEnumType
@@ -1576,8 +1576,8 @@ tests/Tests/ORM/Functional/Ticket/GH7836Test.php	GH7836Test::testMatchingOverrul
 tests/Tests/ORM/Functional/Ticket/GH7836Test.php	GH7836Test::testMatchingRespectsCollectionOrdering	ported	crates/php2rust-doctrine-orm/tests/gh7836_test.rs::testMatchingRespectsCollectionOrdering
 tests/Tests/ORM/Functional/Ticket/GH7864Test.php	GH7864Test::testExtraLazyRemoveElement	ported	crates/php2rust-doctrine-orm/tests/gh7864_test.rs::testExtraLazyRemoveElement
 tests/Tests/ORM/Functional/Ticket/GH7869Test.php	GH7869Test::testDQLDeferredEagerLoad	pending	needs EntityManagerDecorator and a mock that counts getClassMetadata() calls
-tests/Tests/ORM/Functional/Ticket/GH7875Test.php	GH7875Test::testUpdateSchemaSql	pending	needs SchemaTool::getUpdateSchemaSql(), which is not ported
-tests/Tests/ORM/Functional/Ticket/GH7875Test.php	GH7875Test::testUpdateSchemaSqlWithSchemaAssetFilter	pending	needs SchemaTool::getUpdateSchemaSql(), which is not ported
+tests/Tests/ORM/Functional/Ticket/GH7875Test.php	GH7875Test::testUpdateSchemaSql	ported	crates/php2rust-doctrine-orm/tests/gh7875_test.rs::testUpdateSchemaSql
+tests/Tests/ORM/Functional/Ticket/GH7875Test.php	GH7875Test::testUpdateSchemaSqlWithSchemaAssetFilter	ported	crates/php2rust-doctrine-orm/tests/gh7875_test.rs::testUpdateSchemaSqlWithSchemaAssetFilter
 tests/Tests/ORM/Functional/Ticket/GH7941Test.php	GH7941Test::typesShouldBeConvertedForDQLFunctions	pending	the DBAL port does not register SQLite's user-defined SQRT() function
 tests/Tests/ORM/Functional/Ticket/GH8055Test.php	GH8055Test::testNumericDescriminatorColumn	ported	crates/php2rust-doctrine-orm/tests/gh8055_test.rs::testNumericDescriminatorColumn
 tests/Tests/ORM/Functional/Ticket/GH8061Test.php	GH8061Test::testConvertToPHPValueSQLForNewObjectExpression	ported	crates/php2rust-doctrine-orm/tests/gh8061_test.rs::testConvertToPHPValueSQLForNewObjectExpression
@@ -2113,64 +2113,64 @@ tests/Tests/ORM/Mapping/ReflectionEmbeddedPropertyTest.php	ReflectionEmbeddedPro
 tests/Tests/ORM/Mapping/ReflectionReadonlyPropertyTest.php	ReflectionReadonlyPropertyTest::testNonReadonlyPropertiesAreForbidden	ported	crates/php2rust-doctrine-orm/tests/reflection_readonly_property_test.rs::testNonReadonlyPropertiesAreForbidden
 tests/Tests/ORM/Mapping/ReflectionReadonlyPropertyTest.php	ReflectionReadonlyPropertyTest::testSecondWriteWithDifferentValue	ported	crates/php2rust-doctrine-orm/tests/reflection_readonly_property_test.rs::testSecondWriteWithDifferentValue
 tests/Tests/ORM/Mapping/ReflectionReadonlyPropertyTest.php	ReflectionReadonlyPropertyTest::testSecondWriteWithSameValue	ported	crates/php2rust-doctrine-orm/tests/reflection_readonly_property_test.rs::testSecondWriteWithSameValue
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testAssociationOverridesMapping	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testAssociations	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testAttributeOverridesMapping	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testBooleanValuesForOptionIsSetCorrectly	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testColumnDefinition	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testCustomFieldTypeFromReflection	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testCustomNamingStrategyIsRespected	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDefaultFieldType	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDiscriminatorColumnDefaultLength	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDiscriminatorColumnDefaultName	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDiscriminatorColumnDefaultType	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDiscriminatorColumnDefaults	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDiscriminatorColumnDefinition	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDiscriminatorColumnEnumTypeDefinition	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityCustomGenerator	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityIncorrectIndexes	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityIncorrectUniqueContraint	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityIndexFlagsAndPartialIndexes	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityIndexes	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityListeners	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityListenersNamingConvention	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityListenersOverride	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityOptions	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntitySequence	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityTableNameAndInheritance	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityUniqueConstraints	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEnumType	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testFetchOverrideMapping	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testFieldMappings	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testFieldMappingsColumnNames	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testFieldOptions	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testFieldTypeFromReflection	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testIdFieldOptions	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testIdentifier	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testIdentifierColumnDefinition	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testIdentifierRequiredShouldMentionParentClasses	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testInsertableColumn	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testInvalidEntityOrMappedSuperClassShouldMentionParentClasses	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testInverseOneToManyAssociation	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testInversedByOverrideMapping	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testJoinColumnOnDelete	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testJoinColumnUniqueAndNullable	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testLifecycleCallbacks	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testLifecycleCallbacksSupportMultipleMethodNames	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testManyToManyAssociationWithCascadeAll	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testMappedSuperclassWithRepository	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testNamingStrategy	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testOrderByWithInvalidDirection	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testOrderByWithStringValues	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testOwningOneToOneAssociation	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testReservedWordInTableColumn	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testSchemaDefinitionViaExplicitTableSchemaAttributeProperty	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testSchemaDefinitionViaSchemaDefinedInTableNameInTableAttributeProperty	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testSecondLevelCacheMapping	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testStringFieldMappings	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testUpdatableColumn	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testVersionedField	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testinvalidEntityOrMappedSuperClassShouldMentionParentClasses	pending	
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testAssociationOverridesMapping	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testAssociations	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testAttributeOverridesMapping	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testBooleanValuesForOptionIsSetCorrectly	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testColumnDefinition	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testCustomFieldTypeFromReflection	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testCustomNamingStrategyIsRespected	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDefaultFieldType	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDiscriminatorColumnDefaultLength	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDiscriminatorColumnDefaultName	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDiscriminatorColumnDefaultType	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDiscriminatorColumnDefaults	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDiscriminatorColumnDefinition	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDiscriminatorColumnEnumTypeDefinition	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityCustomGenerator	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityIncorrectIndexes	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityIncorrectUniqueContraint	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityIndexFlagsAndPartialIndexes	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityIndexes	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityListeners	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityListenersNamingConvention	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityListenersOverride	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityOptions	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntitySequence	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityTableNameAndInheritance	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityUniqueConstraints	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEnumType	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testFetchOverrideMapping	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testFieldMappings	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testFieldMappingsColumnNames	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testFieldOptions	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testFieldTypeFromReflection	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testIdFieldOptions	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testIdentifier	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testIdentifierColumnDefinition	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testIdentifierRequiredShouldMentionParentClasses	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testInsertableColumn	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testInvalidEntityOrMappedSuperClassShouldMentionParentClasses	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testInverseOneToManyAssociation	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testInversedByOverrideMapping	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testJoinColumnOnDelete	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testJoinColumnUniqueAndNullable	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testLifecycleCallbacks	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testLifecycleCallbacksSupportMultipleMethodNames	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testManyToManyAssociationWithCascadeAll	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testMappedSuperclassWithRepository	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testNamingStrategy	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testOrderByWithInvalidDirection	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testOrderByWithStringValues	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testOwningOneToOneAssociation	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testReservedWordInTableColumn	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testSchemaDefinitionViaExplicitTableSchemaAttributeProperty	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testSchemaDefinitionViaSchemaDefinedInTableNameInTableAttributeProperty	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testSecondLevelCacheMapping	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testStringFieldMappings	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testUpdatableColumn	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testVersionedField	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testinvalidEntityOrMappedSuperClassShouldMentionParentClasses	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
 tests/Tests/ORM/Mapping/Symfony/XmlDriverTest.php	XmlDriverTest::testFindMappingFile	pending	
 tests/Tests/ORM/Mapping/Symfony/XmlDriverTest.php	XmlDriverTest::testFindMappingFileInSubnamespace	pending	
 tests/Tests/ORM/Mapping/Symfony/XmlDriverTest.php	XmlDriverTest::testFindMappingFileNamespacedFoundFileNotFound	pending	
@@ -2180,82 +2180,82 @@ tests/Tests/ORM/Mapping/TableMappingTest.php	TableMappingTest::testDeprecationOn
 tests/Tests/ORM/Mapping/ToManyAssociationMappingTest.php	ToManyAssociationMappingTest::testItSurvivesSerialization	ported	crates/php2rust-doctrine-orm/tests/to_many_association_mapping_test.rs::testItSurvivesSerialization
 tests/Tests/ORM/Mapping/TypedEnumFieldMapperTest.php	TypedEnumFieldMapperTest::testNotBackedEnumThrows	ported	crates/php2rust-doctrine-orm/tests/typed_enum_field_mapper_test.rs::testNotBackedEnumThrows
 tests/Tests/ORM/Mapping/TypedFieldMapperTest.php	TypedFieldMapperTest::testValidateAndComplete	ported	crates/php2rust-doctrine-orm/tests/typed_field_mapper_test.rs::testValidateAndComplete
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testAssociationOverridesMapping	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testAssociations	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testAttributeOverridesMapping	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testBooleanValuesForOptionIsSetCorrectly	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testClassNameInFieldOrId	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testClassTableInheritanceDiscriminatorMap	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testColumnDefinition	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testCompositeIdPositionOrdering	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testCustomFieldTypeFromReflection	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testCustomNamingStrategyIsRespected	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testDefaultFieldType	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testDisablingXmlValidationIsPossible	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testDiscriminatorColumnDefaultLength	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testDiscriminatorColumnDefaultName	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testDiscriminatorColumnDefaultType	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testDiscriminatorColumnDefaults	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testDiscriminatorColumnDefinition	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testDiscriminatorColumnEnumTypeDefinition	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEmbeddableMapping	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEmbeddableSubclassDoesNotRequireInheritanceTypeDeclaration	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEmbeddedMapping	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEmbeddedMappingsWithFalseUseColumnPrefix	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEmbeddedMappingsWithUseColumnPrefix	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityCustomGenerator	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityIncorrectIndexes	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityIncorrectUniqueContraint	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityIndexFlagsAndPartialIndexes	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityIndexes	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityListeners	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityListenersNamingConvention	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityListenersOverride	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityOptions	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntitySequence	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityTableNameAndInheritance	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityUniqueConstraints	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEnumType	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testFailingSecondLevelCacheAssociation	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testFetchOverrideMapping	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testFieldMappings	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testFieldMappingsColumnNames	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testFieldOptions	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testFieldTypeFromReflection	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testIdFieldOptions	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testIdentifier	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testIdentifierColumnDefinition	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testIdentifierRequiredShouldMentionParentClasses	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testIdentifierWithAssociationKey	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testInsertableColumn	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testInvalidEntityOrMappedSuperClassShouldMentionParentClasses	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testInverseOneToManyAssociation	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testInversedByOverrideMapping	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testItMentionsFilenameAndEntityNameOnInvalidMapping	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testJoinColumnOnDelete	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testJoinColumnUniqueAndNullable	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testLifecycleCallbacks	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testLifecycleCallbacksSupportMultipleMethodNames	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testManyToManyAssociationWithCascadeAll	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testManyToManyDefaultOrderByAsc	pending	
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testAssociationOverridesMapping	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testAssociationOverridesMapping
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testAssociations	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testAssociations
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testAttributeOverridesMapping	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testAttributeOverridesMapping
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testBooleanValuesForOptionIsSetCorrectly	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testBooleanValuesForOptionIsSetCorrectly
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testClassNameInFieldOrId	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testClassNameInFieldOrId
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testClassTableInheritanceDiscriminatorMap	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testClassTableInheritanceDiscriminatorMap
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testColumnDefinition	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testColumnDefinition
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testCompositeIdPositionOrdering	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testCompositeIdPositionOrdering
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testCustomFieldTypeFromReflection	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testCustomFieldTypeFromReflection
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testCustomNamingStrategyIsRespected	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testCustomNamingStrategyIsRespected
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testDefaultFieldType	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testDefaultFieldType
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testDisablingXmlValidationIsPossible	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testDisablingXmlValidationIsPossible
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testDiscriminatorColumnDefaultLength	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testDiscriminatorColumnDefaultLength
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testDiscriminatorColumnDefaultName	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testDiscriminatorColumnDefaultName
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testDiscriminatorColumnDefaultType	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testDiscriminatorColumnDefaultType
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testDiscriminatorColumnDefaults	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testDiscriminatorColumnDefaults
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testDiscriminatorColumnDefinition	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testDiscriminatorColumnDefinition
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testDiscriminatorColumnEnumTypeDefinition	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testDiscriminatorColumnEnumTypeDefinition
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEmbeddableMapping	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testEmbeddableMapping
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEmbeddableSubclassDoesNotRequireInheritanceTypeDeclaration	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testEmbeddableSubclassDoesNotRequireInheritanceTypeDeclaration
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEmbeddedMapping	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testEmbeddedMapping
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEmbeddedMappingsWithFalseUseColumnPrefix	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testEmbeddedMappingsWithFalseUseColumnPrefix
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEmbeddedMappingsWithUseColumnPrefix	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testEmbeddedMappingsWithUseColumnPrefix
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityCustomGenerator	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testEntityCustomGenerator
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityIncorrectIndexes	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testEntityIncorrectIndexes
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityIncorrectUniqueContraint	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testEntityIncorrectUniqueContraint
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityIndexFlagsAndPartialIndexes	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testEntityIndexFlagsAndPartialIndexes
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityIndexes	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testEntityIndexes
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityListeners	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testEntityListeners
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityListenersNamingConvention	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testEntityListenersNamingConvention
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityListenersOverride	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testEntityListenersOverride
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityOptions	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testEntityOptions
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntitySequence	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testEntitySequence
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityTableNameAndInheritance	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testEntityTableNameAndInheritance
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEntityUniqueConstraints	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testEntityUniqueConstraints
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testEnumType	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testEnumType
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testFailingSecondLevelCacheAssociation	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testFailingSecondLevelCacheAssociation
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testFetchOverrideMapping	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testFetchOverrideMapping
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testFieldMappings	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testFieldMappings
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testFieldMappingsColumnNames	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testFieldMappingsColumnNames
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testFieldOptions	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testFieldOptions
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testFieldTypeFromReflection	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testFieldTypeFromReflection
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testIdFieldOptions	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testIdFieldOptions
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testIdentifier	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testIdentifier
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testIdentifierColumnDefinition	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testIdentifierColumnDefinition
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testIdentifierRequiredShouldMentionParentClasses	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testIdentifierRequiredShouldMentionParentClasses
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testIdentifierWithAssociationKey	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testIdentifierWithAssociationKey
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testInsertableColumn	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testInsertableColumn
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testInvalidEntityOrMappedSuperClassShouldMentionParentClasses	pending	needs XSD validation: php2rust-dom refuses doctrine-mapping.xsd (xs:complexContent, xs:token), so the XML driver does not validate
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testInverseOneToManyAssociation	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testInverseOneToManyAssociation
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testInversedByOverrideMapping	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testInversedByOverrideMapping
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testItMentionsFilenameAndEntityNameOnInvalidMapping	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testItMentionsFilenameAndEntityNameOnInvalidMapping
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testJoinColumnOnDelete	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testJoinColumnOnDelete
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testJoinColumnUniqueAndNullable	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testJoinColumnUniqueAndNullable
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testLifecycleCallbacks	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testLifecycleCallbacks
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testLifecycleCallbacksSupportMultipleMethodNames	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testLifecycleCallbacksSupportMultipleMethodNames
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testManyToManyAssociationWithCascadeAll	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testManyToManyAssociationWithCascadeAll
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testManyToManyDefaultOrderByAsc	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testManyToManyDefaultOrderByAsc
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testMappedSuperclassWithRepository	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testNamingStrategy	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testOneToManyDefaultOrderByAsc	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testOrderByWithInvalidDirection	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testOrderByWithStringValues	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testOwningOneToOneAssociation	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testReservedWordInTableColumn	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testSchemaDefinitionViaExplicitTableSchemaAttributeProperty	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testSchemaDefinitionViaSchemaDefinedInTableNameInTableAttributeProperty	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testSecondLevelCacheMapping	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testStringFieldMappings	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testUpdatableColumn	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testValidateIncorrectXmlSchema	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testValidateXmlSchema	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testVersionedField	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testXmlCustomForeignKeyNames	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testXmlValidationDisabled	pending	
-tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testXmlValidationEnabled	pending	
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testNamingStrategy	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testNamingStrategy
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testOneToManyDefaultOrderByAsc	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testOneToManyDefaultOrderByAsc
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testOrderByWithInvalidDirection	pending	needs XSD validation: php2rust-dom refuses doctrine-mapping.xsd (xs:complexContent, xs:token), so the XML driver does not validate
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testOrderByWithStringValues	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testOrderByWithStringValues
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testOwningOneToOneAssociation	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testOwningOneToOneAssociation
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testReservedWordInTableColumn	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testReservedWordInTableColumn
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testSchemaDefinitionViaExplicitTableSchemaAttributeProperty	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testSchemaDefinitionViaExplicitTableSchemaAttributeProperty
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testSchemaDefinitionViaSchemaDefinedInTableNameInTableAttributeProperty	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testSchemaDefinitionViaSchemaDefinedInTableNameInTableAttributeProperty
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testSecondLevelCacheMapping	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testSecondLevelCacheMapping
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testStringFieldMappings	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testStringFieldMappings
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testUpdatableColumn	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testUpdatableColumn
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testValidateIncorrectXmlSchema	pending	needs XSD validation: php2rust-dom refuses doctrine-mapping.xsd (xs:complexContent, xs:token), so the XML driver does not validate
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testValidateXmlSchema	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testValidateXmlSchema
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testVersionedField	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testVersionedField
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testXmlCustomForeignKeyNames	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testXmlCustomForeignKeyNames
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testXmlValidationDisabled	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testXmlValidationDisabled
+tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testXmlValidationEnabled	pending	needs XSD validation: php2rust-dom refuses doctrine-mapping.xsd (xs:complexContent, xs:token), so the XML driver does not validate
 tests/Tests/ORM/ORMInvalidArgumentExceptionTest.php	ORMInvalidArgumentExceptionTest::testNewEntitiesFoundThroughRelationships	pending	
 tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testAttributeConfig	pending	
 tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testAttributeConfiguration	pending	

@@ -1,8 +1,8 @@
 //! Performs strict validation of the mapping schema.
 //!
-//! `schemaInSyncWithMetadata()` and `getUpdateSchemaList()` are not ported
-//! (the schema tool has no schema updates). A property type is a named
-//! type unless it is a union or an intersection.
+//! `schemaInSyncWithMetadata()` and `getUpdateSchemaList()` are async (they
+//! introspect the database). A property type is a named type unless it is a
+//! union or an intersection.
 //!
 //! Upstream: doctrine/orm src/Tools/SchemaValidator.php
 
@@ -16,6 +16,7 @@ use php2rust_doctrine_persistence::php_reflection;
 use crate::entity_manager::EntityManager;
 use crate::mapping::typed_field_mapper::enum_backing_type;
 use crate::mapping::{ClassMetadata, ClassMetadataInfo, FieldMapping};
+use crate::tools::SchemaTool;
 use crate::utility::to_text;
 
 /// It maps built-in Doctrine types to PHP types.
@@ -85,6 +86,21 @@ impl SchemaValidator {
         }
 
         Ok(errors)
+    }
+
+    /// Checks if the Database Schema is in sync with the current metadata
+    /// state.
+    pub async fn schema_in_sync_with_metadata(&self) -> Result<bool, Thrown> {
+        Ok(self.get_update_schema_list().await?.is_empty())
+    }
+
+    /// Returns the list of missing Database Schema updates.
+    pub async fn get_update_schema_list(&self) -> Result<Vec<String>, Thrown> {
+        let schema_tool = SchemaTool::new(&self.em);
+
+        let all_metadata = self.em.get_metadata_factory().get_all_metadata()?;
+
+        schema_tool.get_update_schema_sql(&all_metadata).await
     }
 
     /// Validates a single class of the current.

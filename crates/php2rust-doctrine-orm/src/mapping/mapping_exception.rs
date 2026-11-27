@@ -653,6 +653,23 @@ pub fn invalid_enum_value(
     ))
 }
 
+/// `MappingException::fromLibXmlErrors()`: one line per error (`PHP_EOL`
+/// between them), with the error's file (`''` for none) and line.
+pub fn from_lib_xml_errors(errors: &[php2rust_dom::LibxmlError]) -> Thrown {
+    let lines: Vec<String> = errors
+        .iter()
+        .map(|error| {
+            format!(
+                "libxml error: {} in {} at line {}",
+                error.message,
+                error.file.as_deref().unwrap_or_default(),
+                error.line
+            )
+        })
+        .collect();
+    new(lines.join("\n"))
+}
+
 /// `MappingException::invalidAttributeOnEmbeddable()`.
 pub fn invalid_attribute_on_embeddable(entity_name: &str, attribute_name: &str) -> Thrown {
     new(format!(
