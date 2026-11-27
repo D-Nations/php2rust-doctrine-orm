@@ -330,9 +330,9 @@ tests/Tests/ORM/Functional/ClassTableInheritanceTest.php	ClassTableInheritanceTe
 tests/Tests/ORM/Functional/ClassTableInheritanceTest.php	ClassTableInheritanceTest::testQueryForInheritedSingleValuedAssociation	ported	crates/php2rust-doctrine-orm/tests/class_table_inheritance_test.rs::testQueryForInheritedSingleValuedAssociation
 tests/Tests/ORM/Functional/ClassTableInheritanceTest.php	ClassTableInheritanceTest::testSelfReferencingManyToMany	ported	crates/php2rust-doctrine-orm/tests/class_table_inheritance_test.rs::testSelfReferencingManyToMany
 tests/Tests/ORM/Functional/ClassTableInheritanceTest.php	ClassTableInheritanceTest::testSelfReferencingOneToOne	ported	crates/php2rust-doctrine-orm/tests/class_table_inheritance_test.rs::testSelfReferencingOneToOne
-tests/Tests/ORM/Functional/ClearEventTest.php	ClearEventTest::testEventIsCalledOnClear	pending	
-tests/Tests/ORM/Functional/CompositeKeyRelationsTest.php	CompositeKeyRelationsTest::testFindEntityWithNotNullRelation	pending	
-tests/Tests/ORM/Functional/CompositeKeyRelationsTest.php	CompositeKeyRelationsTest::testFindEntityWithNullRelation	pending	
+tests/Tests/ORM/Functional/ClearEventTest.php	ClearEventTest::testEventIsCalledOnClear	ported	crates/php2rust-doctrine-orm/tests/clear_event_test.rs::testEventIsCalledOnClear
+tests/Tests/ORM/Functional/CompositeKeyRelationsTest.php	CompositeKeyRelationsTest::testFindEntityWithNotNullRelation	ported	crates/php2rust-doctrine-orm/tests/composite_key_relations_test.rs::testFindEntityWithNotNullRelation
+tests/Tests/ORM/Functional/CompositeKeyRelationsTest.php	CompositeKeyRelationsTest::testFindEntityWithNullRelation	ported	crates/php2rust-doctrine-orm/tests/composite_key_relations_test.rs::testFindEntityWithNullRelation
 tests/Tests/ORM/Functional/CompositePrimaryKeyTest.php	CompositePrimaryKeyTest::testCompositeCollectionMemberExpression	n/a: upstream marks it skipped: How to test this?	
 tests/Tests/ORM/Functional/CompositePrimaryKeyTest.php	CompositePrimaryKeyTest::testCompositeDqlEagerFetching	ported	crates/php2rust-doctrine-orm/tests/composite_primary_key_test.rs::testCompositeDqlEagerFetching
 tests/Tests/ORM/Functional/CompositePrimaryKeyTest.php	CompositePrimaryKeyTest::testDeleteCompositePersistentCollection	ported	crates/php2rust-doctrine-orm/tests/composite_primary_key_test.rs::testDeleteCompositePersistentCollection
@@ -543,8 +543,8 @@ tests/Tests/ORM/Functional/IndexByAssociationTest.php	IndexByAssociationTest::te
 tests/Tests/ORM/Functional/IndexByAssociationTest.php	IndexByAssociationTest::testManyToOneDQL	ported	crates/php2rust-doctrine-orm/tests/index_by_association_test.rs::testManyToOneDQL
 tests/Tests/ORM/Functional/IndexByAssociationTest.php	IndexByAssociationTest::testManyToOneFinder	ported	crates/php2rust-doctrine-orm/tests/index_by_association_test.rs::testManyToOneFinder
 tests/Tests/ORM/Functional/IndexByAssociationTest.php	IndexByAssociationTest::testManytoManyDQL	ported	crates/php2rust-doctrine-orm/tests/index_by_association_test.rs::testManytoManyDQL
-tests/Tests/ORM/Functional/InsertableUpdatableTest.php	InsertableUpdatableTest::testNotInsertableIsFetchedFromDatabase	pending	
-tests/Tests/ORM/Functional/InsertableUpdatableTest.php	InsertableUpdatableTest::testNotUpdatableIsFetched	pending	
+tests/Tests/ORM/Functional/InsertableUpdatableTest.php	InsertableUpdatableTest::testNotInsertableIsFetchedFromDatabase	ported	crates/php2rust-doctrine-orm/tests/insertable_updatable_test.rs::testNotInsertableIsFetchedFromDatabase
+tests/Tests/ORM/Functional/InsertableUpdatableTest.php	InsertableUpdatableTest::testNotUpdatableIsFetched	ported	crates/php2rust-doctrine-orm/tests/insertable_updatable_test.rs::testNotUpdatableIsFetched
 tests/Tests/ORM/Functional/InvalidMappingDefinitionTest.php	InvalidMappingDefinitionTest::testManyToManyRelationWithJoinTableOnTheWrongSide	pending	
 tests/Tests/ORM/Functional/JoinedTableCompositeKeyTest.php	JoinedTableCompositeKeyTest::testInsertWithCompositeKey	ported	crates/php2rust-doctrine-orm/tests/joined_table_composite_key_test.rs::testInsertWithCompositeKey
 tests/Tests/ORM/Functional/JoinedTableCompositeKeyTest.php	JoinedTableCompositeKeyTest::testUpdateWithCompositeKey	ported	crates/php2rust-doctrine-orm/tests/joined_table_composite_key_test.rs::testUpdateWithCompositeKey

@@ -618,6 +618,7 @@ crates/php2rust-doctrine-orm/tests/class_table_inheritance_test.rs	doctrine/orm	
 crates/php2rust-doctrine-orm/tests/clear_cache_collection_region_command_test.rs	doctrine/orm	tests/Tests/ORM/Tools/Console/Command/ClearCacheCollectionRegionCommandTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/clear_cache_entity_region_command_test.rs	doctrine/orm	tests/Tests/ORM/Tools/Console/Command/ClearCacheEntityRegionCommandTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/clear_cache_query_region_command_test.rs	doctrine/orm	tests/Tests/ORM/Tools/Console/Command/ClearCacheQueryRegionCommandTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/tests/clear_event_test.rs	doctrine/orm	tests/Tests/ORM/Functional/ClearEventTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/common/cache.rs	doctrine/orm	tests/Tests/Mocks/CacheKeyMock.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/common/cache.rs	doctrine/orm	tests/Tests/Mocks/CacheEntryMock.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/common/cache.rs	doctrine/orm	tests/Tests/ORM/Cache/RegionTestCase.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
@@ -721,6 +722,7 @@ crates/php2rust-doctrine-orm/tests/common/vct.rs	doctrine/orm	tests/Tests/Models
 crates/php2rust-doctrine-orm/tests/common/vct.rs	doctrine/orm	tests/Tests/Models/ValueConversionType/OwningManyToManyCompositeIdForeignKeyEntity.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/common/vct.rs	doctrine/orm	tests/Tests/Models/ValueConversionType/OwningManyToManyEntity.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/company_schema_test.rs	doctrine/orm	tests/Tests/ORM/Functional/SchemaTool/CompanySchemaTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/tests/composite_key_relations_test.rs	doctrine/orm	tests/Tests/ORM/Functional/CompositeKeyRelationsTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/composite_primary_key_test.rs	doctrine/orm	tests/Tests/ORM/Functional/CompositePrimaryKeyTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/configuration_test.rs	doctrine/orm	tests/Tests/ORM/ConfigurationTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/count_output_walker_test.rs	doctrine/orm	tests/Tests/ORM/Tools/Pagination/CountOutputWalkerTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
@@ -1097,6 +1099,7 @@ crates/php2rust-doctrine-orm/tests/index_by_association_test.rs	doctrine/orm	tes
 crates/php2rust-doctrine-orm/tests/index_by_association_test.rs	doctrine/orm	tests/Tests/Models/StockExchange/Bond.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/info_command_test.rs	doctrine/orm	tests/Tests/ORM/Tools/Console/Command/InfoCommandTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/insert_batch_test.rs	doctrine/orm	tests/Tests/ORM/Internal/UnitOfWork/InsertBatchTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/tests/insertable_updatable_test.rs	doctrine/orm	tests/Tests/ORM/Functional/InsertableUpdatableTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/inverse_side_mapping_test.rs	doctrine/orm	tests/Tests/ORM/Mapping/InverseSideMappingTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/issue5989_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/Issue5989Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/issue9300_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/Issue9300Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
