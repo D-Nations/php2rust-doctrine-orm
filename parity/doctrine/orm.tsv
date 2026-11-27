@@ -2113,64 +2113,64 @@ tests/Tests/ORM/Mapping/ReflectionEmbeddedPropertyTest.php	ReflectionEmbeddedPro
 tests/Tests/ORM/Mapping/ReflectionReadonlyPropertyTest.php	ReflectionReadonlyPropertyTest::testNonReadonlyPropertiesAreForbidden	ported	crates/php2rust-doctrine-orm/tests/reflection_readonly_property_test.rs::testNonReadonlyPropertiesAreForbidden
 tests/Tests/ORM/Mapping/ReflectionReadonlyPropertyTest.php	ReflectionReadonlyPropertyTest::testSecondWriteWithDifferentValue	ported	crates/php2rust-doctrine-orm/tests/reflection_readonly_property_test.rs::testSecondWriteWithDifferentValue
 tests/Tests/ORM/Mapping/ReflectionReadonlyPropertyTest.php	ReflectionReadonlyPropertyTest::testSecondWriteWithSameValue	ported	crates/php2rust-doctrine-orm/tests/reflection_readonly_property_test.rs::testSecondWriteWithSameValue
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testAssociationOverridesMapping	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testAssociations	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testAttributeOverridesMapping	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testBooleanValuesForOptionIsSetCorrectly	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testColumnDefinition	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testCustomFieldTypeFromReflection	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testCustomNamingStrategyIsRespected	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDefaultFieldType	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDiscriminatorColumnDefaultLength	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDiscriminatorColumnDefaultName	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDiscriminatorColumnDefaultType	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDiscriminatorColumnDefaults	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDiscriminatorColumnDefinition	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDiscriminatorColumnEnumTypeDefinition	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityCustomGenerator	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityIncorrectIndexes	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityIncorrectUniqueContraint	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityIndexFlagsAndPartialIndexes	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityIndexes	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityListeners	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityListenersNamingConvention	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityListenersOverride	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityOptions	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntitySequence	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityTableNameAndInheritance	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityUniqueConstraints	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEnumType	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testFetchOverrideMapping	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testFieldMappings	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testFieldMappingsColumnNames	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testFieldOptions	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testFieldTypeFromReflection	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testIdFieldOptions	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testIdentifier	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testIdentifierColumnDefinition	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testIdentifierRequiredShouldMentionParentClasses	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testInsertableColumn	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testInvalidEntityOrMappedSuperClassShouldMentionParentClasses	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testInverseOneToManyAssociation	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testInversedByOverrideMapping	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testJoinColumnOnDelete	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testJoinColumnUniqueAndNullable	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testLifecycleCallbacks	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testLifecycleCallbacksSupportMultipleMethodNames	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testManyToManyAssociationWithCascadeAll	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testMappedSuperclassWithRepository	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testNamingStrategy	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testOrderByWithInvalidDirection	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testOrderByWithStringValues	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testOwningOneToOneAssociation	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testReservedWordInTableColumn	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testSchemaDefinitionViaExplicitTableSchemaAttributeProperty	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testSchemaDefinitionViaSchemaDefinedInTableNameInTableAttributeProperty	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testSecondLevelCacheMapping	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testStringFieldMappings	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testUpdatableColumn	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testVersionedField	pending	
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testinvalidEntityOrMappedSuperClassShouldMentionParentClasses	pending	
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testAssociationOverridesMapping	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testAssociations	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testAttributeOverridesMapping	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testBooleanValuesForOptionIsSetCorrectly	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testColumnDefinition	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testCustomFieldTypeFromReflection	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testCustomNamingStrategyIsRespected	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDefaultFieldType	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDiscriminatorColumnDefaultLength	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDiscriminatorColumnDefaultName	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDiscriminatorColumnDefaultType	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDiscriminatorColumnDefaults	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDiscriminatorColumnDefinition	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDiscriminatorColumnEnumTypeDefinition	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityCustomGenerator	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityIncorrectIndexes	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityIncorrectUniqueContraint	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityIndexFlagsAndPartialIndexes	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityIndexes	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityListeners	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityListenersNamingConvention	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityListenersOverride	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityOptions	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntitySequence	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityTableNameAndInheritance	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityUniqueConstraints	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEnumType	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testFetchOverrideMapping	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testFieldMappings	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testFieldMappingsColumnNames	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testFieldOptions	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testFieldTypeFromReflection	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testIdFieldOptions	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testIdentifier	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testIdentifierColumnDefinition	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testIdentifierRequiredShouldMentionParentClasses	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testInsertableColumn	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testInvalidEntityOrMappedSuperClassShouldMentionParentClasses	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testInverseOneToManyAssociation	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testInversedByOverrideMapping	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testJoinColumnOnDelete	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testJoinColumnUniqueAndNullable	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testLifecycleCallbacks	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testLifecycleCallbacksSupportMultipleMethodNames	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testManyToManyAssociationWithCascadeAll	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testMappedSuperclassWithRepository	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testNamingStrategy	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testOrderByWithInvalidDirection	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testOrderByWithStringValues	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testOwningOneToOneAssociation	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testReservedWordInTableColumn	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testSchemaDefinitionViaExplicitTableSchemaAttributeProperty	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testSchemaDefinitionViaSchemaDefinedInTableNameInTableAttributeProperty	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testSecondLevelCacheMapping	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testStringFieldMappings	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testUpdatableColumn	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testVersionedField	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testinvalidEntityOrMappedSuperClassShouldMentionParentClasses	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
 tests/Tests/ORM/Mapping/Symfony/XmlDriverTest.php	XmlDriverTest::testFindMappingFile	pending	
 tests/Tests/ORM/Mapping/Symfony/XmlDriverTest.php	XmlDriverTest::testFindMappingFileInSubnamespace	pending	
 tests/Tests/ORM/Mapping/Symfony/XmlDriverTest.php	XmlDriverTest::testFindMappingFileNamespacedFoundFileNotFound	pending	
