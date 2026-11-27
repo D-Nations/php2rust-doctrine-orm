@@ -401,7 +401,7 @@ src/Repository/DefaultRepositoryFactory.php	DefaultRepositoryFactory	24	ported	c
 src/Repository/Exception/InvalidFindByCall.php	InvalidFindByCall	16	ported	crates/php2rust-doctrine-orm/src/exception.rs
 src/Repository/Exception/InvalidMagicMethodCall.php	InvalidMagicMethodCall	21	ported	crates/php2rust-doctrine-orm/src/exception.rs
 src/Repository/RepositoryFactory.php	RepositoryFactory	8	ported	crates/php2rust-doctrine-orm/src/repository/mod.rs
-src/Tools/AttachEntityListenersListener.php	AttachEntityListenersListener	38	pending	
+src/Tools/AttachEntityListenersListener.php	AttachEntityListenersListener	38	ported	crates/php2rust-doctrine-orm/src/tools/attach_entity_listeners_listener.rs
 src/Tools/Console/ApplicationCompatibility.php	ApplicationCompatibility	15	pending	
 src/Tools/Console/Command/AbstractEntityManagerCommand.php	AbstractEntityManagerCommand	19	pending	
 src/Tools/Console/Command/ClearCache/CollectionRegionCommand.php	CollectionRegionCommand	96	pending	
@@ -458,7 +458,7 @@ src/Tools/Pagination/RowNumberOverFunction.php	RowNumberOverFunction	22	ported	c
 src/Tools/Pagination/WhereInWalker.php	WhereInWalker	85	ported	crates/php2rust-doctrine-orm/src/tools/pagination/where_in_walker.rs
 src/Tools/Pagination/Window.php	Window	46	ported	crates/php2rust-doctrine-orm/src/tools/pagination/window.rs
 src/Tools/Pagination/WindowPage.php	WindowPage	76	ported	crates/php2rust-doctrine-orm/src/tools/pagination/window_page.rs
-src/Tools/ResolveTargetEntityListener.php	ResolveTargetEntityListener	75	pending	
+src/Tools/ResolveTargetEntityListener.php	ResolveTargetEntityListener	75	ported	crates/php2rust-doctrine-orm/src/tools/resolve_target_entity_listener.rs
 src/Tools/SchemaTool.php	SchemaTool	1118	ported	crates/php2rust-doctrine-orm/src/tools/schema_tool.rs
 src/Tools/SchemaValidator.php	SchemaValidator	345	ported	crates/php2rust-doctrine-orm/src/tools/schema_validator.rs
 src/Tools/ToolEvents.php	ToolEvents	7	ported	crates/php2rust-doctrine-orm/src/tools/tool_events.rs
