@@ -1345,7 +1345,7 @@ tests/Tests/ORM/Functional/Ticket/DDC371Test.php	DDC371Test::testIssue	ported	cr
 tests/Tests/ORM/Functional/Ticket/DDC3785Test.php	DDC3785Test::testOwningValueObjectIdIsCorrectlyTransformedWhenRemovingOrphanedChildEntities	ported	crates/php2rust-doctrine-orm/tests/ddc3785_test.rs::testOwningValueObjectIdIsCorrectlyTransformedWhenRemovingOrphanedChildEntities
 tests/Tests/ORM/Functional/Ticket/DDC381Test.php	DDC381Test::testCallUnserializedProxyMethods	pending	serialize()/unserialize() of a proxy is not ported
 tests/Tests/ORM/Functional/Ticket/DDC3967Test.php	DDC3967Test::testIdentifierCachedWithProperType	pending	needs the second-level cache
-tests/Tests/ORM/Functional/Ticket/DDC4003Test.php	DDC4003Test::testReadsThroughRepositorySameDataThatItWroteInCache	pending	
+tests/Tests/ORM/Functional/Ticket/DDC4003Test.php	DDC4003Test::testReadsThroughRepositorySameDataThatItWroteInCache	pending	needs the second-level cache
 tests/Tests/ORM/Functional/Ticket/DDC4024Test.php	DDC4024Test::testADefaultMessageShouldBeUsedWhenNothingWasProvided	ported	crates/php2rust-doctrine-orm/tests/ddc4024_test.rs::testADefaultMessageShouldBeUsedWhenNothingWasProvided
 tests/Tests/ORM/Functional/Ticket/DDC4024Test.php	DDC4024Test::testConstructorShouldUseProvidedMessage	ported	crates/php2rust-doctrine-orm/tests/ddc4024_test.rs::testConstructorShouldUseProvidedMessage
 tests/Tests/ORM/Functional/Ticket/DDC422Test.php	DDC422Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc422_test.rs::testIssue
