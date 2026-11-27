@@ -257,8 +257,8 @@ tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testItPreservesTheOrigi
 tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testLazyGhostEntityManager	pending	a lazy ghost of the entity manager through reflection (ReflectionClass::newLazyGhost) is not ported
 tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testWrapInTransactionAcceptsReturn	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testWrapInTransactionAcceptsReturn
 tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testWrapInTransactionReThrowsThrowables	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testWrapInTransactionReThrowsThrowables
-tests/Tests/ORM/EntityNotFoundExceptionTest.php	EntityNotFoundExceptionTest::testFromClassNameAndIdentifier	pending	
-tests/Tests/ORM/EntityNotFoundExceptionTest.php	EntityNotFoundExceptionTest::testNoIdentifierFound	pending	
+tests/Tests/ORM/EntityNotFoundExceptionTest.php	EntityNotFoundExceptionTest::testFromClassNameAndIdentifier	ported	crates/php2rust-doctrine-orm/tests/entity_not_found_exception_test.rs::testFromClassNameAndIdentifier
+tests/Tests/ORM/EntityNotFoundExceptionTest.php	EntityNotFoundExceptionTest::testNoIdentifierFound	ported	crates/php2rust-doctrine-orm/tests/entity_not_found_exception_test.rs::testNoIdentifierFound
 tests/Tests/ORM/EntityRepositoryTest.php	EntityRepositoryTest::testExpr	pending	
 tests/Tests/ORM/Event/OnClassMetadataNotFoundEventArgsTest.php	OnClassMetadataNotFoundEventArgsTest::testEventArgsMutability	pending	
 tests/Tests/ORM/Functional/AbstractFetchEagerTest.php	AbstractFetchEagerTest::testWithAbstractFetchEager	pending	
@@ -354,12 +354,12 @@ tests/Tests/ORM/Functional/CustomFunctionsTest.php	CustomFunctionsTest::testCust
 tests/Tests/ORM/Functional/CustomIdObjectTypeTest.php	CustomIdObjectTypeTest::testFetchJoinCustomIdObject	pending	
 tests/Tests/ORM/Functional/CustomIdObjectTypeTest.php	CustomIdObjectTypeTest::testFetchJoinWhereCustomIdObject	pending	
 tests/Tests/ORM/Functional/CustomIdObjectTypeTest.php	CustomIdObjectTypeTest::testFindByCustomIdObject	pending	
-tests/Tests/ORM/Functional/DatabaseDriverTest.php	DatabaseDriverTest::testDetectManyToManyTables	pending	
-tests/Tests/ORM/Functional/DatabaseDriverTest.php	DatabaseDriverTest::testIgnoreManyToManyTableWithoutFurtherForeignKeyDetails	pending	
-tests/Tests/ORM/Functional/DatabaseDriverTest.php	DatabaseDriverTest::testIssue2059	pending	
-tests/Tests/ORM/Functional/DatabaseDriverTest.php	DatabaseDriverTest::testLoadMetadataFromDatabase	pending	
-tests/Tests/ORM/Functional/DatabaseDriverTest.php	DatabaseDriverTest::testLoadMetadataFromDatabaseDetail	pending	
-tests/Tests/ORM/Functional/DatabaseDriverTest.php	DatabaseDriverTest::testLoadMetadataWithForeignKeyFromDatabase	pending	
+tests/Tests/ORM/Functional/DatabaseDriverTest.php	DatabaseDriverTest::testDetectManyToManyTables	ported	crates/php2rust-doctrine-orm/tests/database_driver_test.rs::testDetectManyToManyTables
+tests/Tests/ORM/Functional/DatabaseDriverTest.php	DatabaseDriverTest::testIgnoreManyToManyTableWithoutFurtherForeignKeyDetails	ported	crates/php2rust-doctrine-orm/tests/database_driver_test.rs::testIgnoreManyToManyTableWithoutFurtherForeignKeyDetails
+tests/Tests/ORM/Functional/DatabaseDriverTest.php	DatabaseDriverTest::testIssue2059	ported	crates/php2rust-doctrine-orm/tests/database_driver_test.rs::testIssue2059
+tests/Tests/ORM/Functional/DatabaseDriverTest.php	DatabaseDriverTest::testLoadMetadataFromDatabase	ported	crates/php2rust-doctrine-orm/tests/database_driver_test.rs::testLoadMetadataFromDatabase
+tests/Tests/ORM/Functional/DatabaseDriverTest.php	DatabaseDriverTest::testLoadMetadataFromDatabaseDetail	ported	crates/php2rust-doctrine-orm/tests/database_driver_test.rs::testLoadMetadataFromDatabaseDetail
+tests/Tests/ORM/Functional/DatabaseDriverTest.php	DatabaseDriverTest::testLoadMetadataWithForeignKeyFromDatabase	ported	crates/php2rust-doctrine-orm/tests/database_driver_test.rs::testLoadMetadataWithForeignKeyFromDatabase
 tests/Tests/ORM/Functional/DefaultTimeExpressionTest.php	DefaultTimeExpressionTest::testNoDeprecationsAreTrownWhenTheyCannotBeAddressed	pending	
 tests/Tests/ORM/Functional/DefaultTimeExpressionTest.php	DefaultTimeExpressionTest::testUsingDefaultExpressionInstancesCausesNoDeprecation	pending	
 tests/Tests/ORM/Functional/DefaultTimeExpressionTest.php	DefaultTimeExpressionTest::testUsingTimeRelatedDefaultExpressionCausesAnOrmDeprecationAndNoDbalDeprecation	pending	
@@ -369,12 +369,12 @@ tests/Tests/ORM/Functional/DefaultValuesTest.php	DefaultValuesTest::testSimpleDe
 tests/Tests/ORM/Functional/DetachedEntityTest.php	DetachedEntityTest::testDetachManagedUnpersistedEntity	pending	
 tests/Tests/ORM/Functional/DetachedEntityTest.php	DetachedEntityTest::testDetachedEntityThrowsExceptionOnFlush	pending	
 tests/Tests/ORM/Functional/DetachedEntityTest.php	DetachedEntityTest::testUseDetachedEntityAsQueryParameter	pending	
-tests/Tests/ORM/Functional/EagerFetchCollectionTest.php	EagerFetchCollectionTest::testEagerFetchMode	pending	
-tests/Tests/ORM/Functional/EagerFetchCollectionTest.php	EagerFetchCollectionTest::testEagerFetchModeWithDQL	pending	
-tests/Tests/ORM/Functional/EagerFetchCollectionTest.php	EagerFetchCollectionTest::testEagerFetchWithIterable	pending	
-tests/Tests/ORM/Functional/EagerFetchCollectionTest.php	EagerFetchCollectionTest::testSubselectFetchJoinWithAllowedWhenOverriddenNotEager	pending	
-tests/Tests/ORM/Functional/EagerFetchCollectionTest.php	EagerFetchCollectionTest::testSubselectFetchJoinWithAllowedWhenOverriddenNotEagerPaginator	pending	
-tests/Tests/ORM/Functional/EagerFetchCollectionTest.php	EagerFetchCollectionTest::testSubselectFetchJoinWithNotAllowed	pending	
+tests/Tests/ORM/Functional/EagerFetchCollectionTest.php	EagerFetchCollectionTest::testEagerFetchMode	ported	crates/php2rust-doctrine-orm/tests/eager_fetch_collection_test.rs::testEagerFetchMode
+tests/Tests/ORM/Functional/EagerFetchCollectionTest.php	EagerFetchCollectionTest::testEagerFetchModeWithDQL	ported	crates/php2rust-doctrine-orm/tests/eager_fetch_collection_test.rs::testEagerFetchModeWithDQL
+tests/Tests/ORM/Functional/EagerFetchCollectionTest.php	EagerFetchCollectionTest::testEagerFetchWithIterable	ported	crates/php2rust-doctrine-orm/tests/eager_fetch_collection_test.rs::testEagerFetchWithIterable
+tests/Tests/ORM/Functional/EagerFetchCollectionTest.php	EagerFetchCollectionTest::testSubselectFetchJoinWithAllowedWhenOverriddenNotEager	ported	crates/php2rust-doctrine-orm/tests/eager_fetch_collection_test.rs::testSubselectFetchJoinWithAllowedWhenOverriddenNotEager
+tests/Tests/ORM/Functional/EagerFetchCollectionTest.php	EagerFetchCollectionTest::testSubselectFetchJoinWithAllowedWhenOverriddenNotEagerPaginator	ported	crates/php2rust-doctrine-orm/tests/eager_fetch_collection_test.rs::testSubselectFetchJoinWithAllowedWhenOverriddenNotEagerPaginator
+tests/Tests/ORM/Functional/EagerFetchCollectionTest.php	EagerFetchCollectionTest::testSubselectFetchJoinWithNotAllowed	ported	crates/php2rust-doctrine-orm/tests/eager_fetch_collection_test.rs::testSubselectFetchJoinWithNotAllowed
 tests/Tests/ORM/Functional/EagerFetchOneToManyWithCompositeKeyTest.php	EagerFetchOneToManyWithCompositeKeyTest::testItDoesNotThrowAnExceptionWhenTriggeringALoad	pending	
 tests/Tests/ORM/Functional/EntityListenersTest.php	EntityListenersTest::testPostLoadListeners	ported	crates/php2rust-doctrine-orm/tests/entity_listeners_test.rs::testPostLoadListeners
 tests/Tests/ORM/Functional/EntityListenersTest.php	EntityListenersTest::testPostPersistCalledAfterAllInsertsHaveBeenPerformedAndIdsHaveBeenAssigned	ported	crates/php2rust-doctrine-orm/tests/entity_listeners_test.rs::testPostPersistCalledAfterAllInsertsHaveBeenPerformedAndIdsHaveBeenAssigned
@@ -1286,7 +1286,7 @@ tests/Tests/ORM/Functional/Ticket/DDC2346Test.php	DDC2346Test::testIssue	ported	
 tests/Tests/ORM/Functional/Ticket/DDC2350Test.php	DDC2350Test::testEagerCollectionsAreOnlyRetrievedOnce	ported	crates/php2rust-doctrine-orm/tests/ddc2350_test.rs::testEagerCollectionsAreOnlyRetrievedOnce
 tests/Tests/ORM/Functional/Ticket/DDC2359Test.php	DDC2359Test::testIssue	pending	PHPUnit mocks of the metadata factory and driver
 tests/Tests/ORM/Functional/Ticket/DDC237Test.php	DDC237Test::testUninitializedProxyIsInitializedOnFetchJoin	ported	crates/php2rust-doctrine-orm/tests/ddc237_test.rs::testUninitializedProxyIsInitializedOnFetchJoin
-tests/Tests/ORM/Functional/Ticket/DDC2387Test.php	DDC2387Test::testCompositeAssociationKeyDetection	pending	DatabaseDriver (schema to metadata) is not ported
+tests/Tests/ORM/Functional/Ticket/DDC2387Test.php	DDC2387Test::testCompositeAssociationKeyDetection	ported	crates/php2rust-doctrine-orm/tests/ddc2387_test.rs::testCompositeAssociationKeyDetection
 tests/Tests/ORM/Functional/Ticket/DDC2415Test.php	DDC2415Test::testTicket	pending	needs the static PHP driver (loadMetadata()) and a CUSTOM id generator (an AbstractIdGenerator subclass)
 tests/Tests/ORM/Functional/Ticket/DDC2494Test.php	DDC2494Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2494_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC2519Test.php	DDC2519Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2519_test.rs::testIssue
@@ -1323,7 +1323,7 @@ tests/Tests/ORM/Functional/Ticket/DDC3160Test.php	DDC3160Test::testNoUpdateOnIns
 tests/Tests/ORM/Functional/Ticket/DDC3170Test.php	DDC3170Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc3170_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC3192Test.php	DDC3192Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc3192_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC3223Test.php	DDC3223Test::testIssueGetId	ported	crates/php2rust-doctrine-orm/tests/ddc3223_test.rs::testIssueGetId
-tests/Tests/ORM/Functional/Ticket/DDC3300Test.php	DDC3300Test::testResolveTargetEntitiesChangesDiscriminatorMapValues	pending	ResolveTargetEntityListener is not ported
+tests/Tests/ORM/Functional/Ticket/DDC3300Test.php	DDC3300Test::testResolveTargetEntitiesChangesDiscriminatorMapValues	ported	crates/php2rust-doctrine-orm/tests/ddc3300_test.rs::testResolveTargetEntitiesChangesDiscriminatorMapValues
 tests/Tests/ORM/Functional/Ticket/DDC3303Test.php	DDC3303Test::testEmbeddedObjectsAreAlsoInherited	ported	crates/php2rust-doctrine-orm/tests/ddc3303_test.rs::testEmbeddedObjectsAreAlsoInherited
 tests/Tests/ORM/Functional/Ticket/DDC331Test.php	DDC331Test::testSelectFieldOnRootEntity	ported	crates/php2rust-doctrine-orm/tests/ddc331_test.rs::testSelectFieldOnRootEntity
 tests/Tests/ORM/Functional/Ticket/DDC3330Test.php	DDC3330Test::testIssueCollectionOrderWithPaginator	ported	crates/php2rust-doctrine-orm/tests/ddc3330_test.rs::testIssueCollectionOrderWithPaginator
@@ -1425,7 +1425,7 @@ tests/Tests/ORM/Functional/Ticket/GH10387Test.php	GH10387Test::testSchemaToolCre
 tests/Tests/ORM/Functional/Ticket/GH10450Test.php	GH10450Test::testDuplicatePrivateFieldsShallBeRejected	ported	crates/php2rust-doctrine-orm/tests/gh10450_test.rs::testDuplicatePrivateFieldsShallBeRejected
 tests/Tests/ORM/Functional/Ticket/GH10454Test.php	GH10454Test::testProtectedPropertyMustNotBeInheritedAndReconfigured	ported	crates/php2rust-doctrine-orm/tests/gh10454_test.rs::testProtectedPropertyMustNotBeInheritedAndReconfigured
 tests/Tests/ORM/Functional/Ticket/GH10462Test.php	GH10462Test::testCharsetAndCollationOptionsOnDiscriminatedColumn	n/a: upstream skips it on SQLite (This test is useful for all databases, but designed only for mysql.)	
-tests/Tests/ORM/Functional/Ticket/GH10473Test.php	GH10473Test::testMappedSuperclassAssociationsCanBeResolvedToEntities	pending	ResolveTargetEntityListener is not ported
+tests/Tests/ORM/Functional/Ticket/GH10473Test.php	GH10473Test::testMappedSuperclassAssociationsCanBeResolvedToEntities	ported	crates/php2rust-doctrine-orm/tests/gh10473_test.rs::testMappedSuperclassAssociationsCanBeResolvedToEntities
 tests/Tests/ORM/Functional/Ticket/GH10531Test.php	GH10531Test::testDeletes	ported	crates/php2rust-doctrine-orm/tests/gh10531_test.rs::testDeletes
 tests/Tests/ORM/Functional/Ticket/GH10531Test.php	GH10531Test::testInserts	ported	crates/php2rust-doctrine-orm/tests/gh10531_test.rs::testInserts
 tests/Tests/ORM/Functional/Ticket/GH10532Test.php	GH10532Test::testDeletes	ported	crates/php2rust-doctrine-orm/tests/gh10532_test.rs::testDeletes
@@ -1485,7 +1485,7 @@ tests/Tests/ORM/Functional/Ticket/GH12172Test.php	GH12172Test::testInitializeObj
 tests/Tests/ORM/Functional/Ticket/GH12172Test.php	GH12172Test::testInitializeObjectWithValidEntityClassDoesNotBreakMetadataLoading	ported	crates/php2rust-doctrine-orm/tests/gh12172_test.rs::testInitializeObjectWithValidEntityClassDoesNotBreakMetadataLoading
 tests/Tests/ORM/Functional/Ticket/GH12172Test.php	GH12172Test::testIsUninitializedObjectNoExceptionForNonManagedObjects	ported	crates/php2rust-doctrine-orm/tests/gh12172_test.rs::testIsUninitializedObjectNoExceptionForNonManagedObjects
 tests/Tests/ORM/Functional/Ticket/GH12172Test.php	GH12172Test::testIsUninitializedObjectNoExceptionForNonManagedObjectsWithMappingDriverChain	ported	crates/php2rust-doctrine-orm/tests/gh12172_test.rs::testIsUninitializedObjectNoExceptionForNonManagedObjectsWithMappingDriverChain
-tests/Tests/ORM/Functional/Ticket/GH12174Test.php	GH12174Test::testMappedSuperclassNameCanBeUsedToResolveTargetEntityClass	pending	ResolveTargetEntityListener is not ported
+tests/Tests/ORM/Functional/Ticket/GH12174Test.php	GH12174Test::testMappedSuperclassNameCanBeUsedToResolveTargetEntityClass	ported	crates/php2rust-doctrine-orm/tests/gh12174_test.rs::testMappedSuperclassNameCanBeUsedToResolveTargetEntityClass
 tests/Tests/ORM/Functional/Ticket/GH12183Test.php	GH12183Test::testPaginatorCountWithTreeWalkerAfterQueryHasBeenExecuted	ported	crates/php2rust-doctrine-orm/tests/gh12183_test.rs::testPaginatorCountWithTreeWalkerAfterQueryHasBeenExecuted
 tests/Tests/ORM/Functional/Ticket/GH12225/GH12225Test.php	GH12225Test::testHydrateWithIndexByFilterAndInheritanceMapping	ported	crates/php2rust-doctrine-orm/tests/gh12225_test.rs::testHydrateWithIndexByFilterAndInheritanceMapping
 tests/Tests/ORM/Functional/Ticket/GH12254Test.php	GH12254Test::testFindByEmptyArrayShouldReturnEmptyArray	ported	crates/php2rust-doctrine-orm/tests/gh12254_test.rs::testFindByEmptyArrayShouldReturnEmptyArray
@@ -1557,7 +1557,7 @@ tests/Tests/ORM/Functional/Ticket/GH7512Test.php	GH7512Test::testFindEntityByAss
 tests/Tests/ORM/Functional/Ticket/GH7629Test.php	GH7629Test::testClearScheduledForSynchronizationWhenCommitEmpty	ported	crates/php2rust-doctrine-orm/tests/gh7629_test.rs::testClearScheduledForSynchronizationWhenCommitEmpty
 tests/Tests/ORM/Functional/Ticket/GH7629Test.php	GH7629Test::testPersistAfterRemoveSchedulesForSynchronization	ported	crates/php2rust-doctrine-orm/tests/gh7629_test.rs::testPersistAfterRemoveSchedulesForSynchronization
 tests/Tests/ORM/Functional/Ticket/GH7661Test.php	GH7661Test::testIndexByAssociation	ported	crates/php2rust-doctrine-orm/tests/gh7661_test.rs::testIndexByAssociation
-tests/Tests/ORM/Functional/Ticket/GH7684Test.php	GH7684Test::testIssue	pending	needs the DatabaseDriver (reverse engineering), which is not ported
+tests/Tests/ORM/Functional/Ticket/GH7684Test.php	GH7684Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/gh7684_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/GH7717Test.php	GH7717Test::testManyToManyPersisterIsNullComparison	ported	crates/php2rust-doctrine-orm/tests/gh7717_test.rs::testManyToManyPersisterIsNullComparison
 tests/Tests/ORM/Functional/Ticket/GH7735Test.php	GH7735Test::findByReturnsCachedEntity	ported	crates/php2rust-doctrine-orm/tests/gh7735_test.rs::findByReturnsCachedEntity
 tests/Tests/ORM/Functional/Ticket/GH7737Test.php	GH7737Test::memberOfCriteriaShouldBeCompatibleWithQueryBuilder	ported	crates/php2rust-doctrine-orm/tests/gh7737_test.rs::memberOfCriteriaShouldBeCompatibleWithQueryBuilder
@@ -1827,11 +1827,11 @@ tests/Tests/ORM/Internal/TopologicalSortTest.php	TopologicalSortTest::testNodesR
 tests/Tests/ORM/Internal/TopologicalSortTest.php	TopologicalSortTest::testNodesReturnedInDepthFirstOrderWithEdgesInDifferentOrderThanNodes	ported	crates/php2rust-doctrine-orm/tests/topological_sort_test.rs::testNodesReturnedInDepthFirstOrderWithEdgesInDifferentOrderThanNodes
 tests/Tests/ORM/Internal/TopologicalSortTest.php	TopologicalSortTest::testSimpleOrdering	ported	crates/php2rust-doctrine-orm/tests/topological_sort_test.rs::testSimpleOrdering
 tests/Tests/ORM/Internal/TopologicalSortTest.php	TopologicalSortTest::testSkipOptionalEdgeToBreakCycle	ported	crates/php2rust-doctrine-orm/tests/topological_sort_test.rs::testSkipOptionalEdgeToBreakCycle
-tests/Tests/ORM/Internal/UnitOfWork/InsertBatchTest.php	InsertBatchTest::testWillBatchInterleavedEntityOperationsInGroups	pending	
-tests/Tests/ORM/Internal/UnitOfWork/InsertBatchTest.php	InsertBatchTest::testWillBatchSameEntityOperationsInSingleBatch	pending	
-tests/Tests/ORM/Internal/UnitOfWork/InsertBatchTest.php	InsertBatchTest::testWillIsolateBatchesForEntitiesWithGeneratedIdentifiers	pending	
-tests/Tests/ORM/Internal/UnitOfWork/InsertBatchTest.php	InsertBatchTest::testWillNotBatchOperationsForAGeneratedIdentifierEntity	pending	
-tests/Tests/ORM/Internal/UnitOfWork/InsertBatchTest.php	InsertBatchTest::testWillProduceEmptyBatchOnNoGivenEntities	pending	
+tests/Tests/ORM/Internal/UnitOfWork/InsertBatchTest.php	InsertBatchTest::testWillBatchInterleavedEntityOperationsInGroups	ported	crates/php2rust-doctrine-orm/tests/insert_batch_test.rs::testWillBatchInterleavedEntityOperationsInGroups
+tests/Tests/ORM/Internal/UnitOfWork/InsertBatchTest.php	InsertBatchTest::testWillBatchSameEntityOperationsInSingleBatch	ported	crates/php2rust-doctrine-orm/tests/insert_batch_test.rs::testWillBatchSameEntityOperationsInSingleBatch
+tests/Tests/ORM/Internal/UnitOfWork/InsertBatchTest.php	InsertBatchTest::testWillIsolateBatchesForEntitiesWithGeneratedIdentifiers	ported	crates/php2rust-doctrine-orm/tests/insert_batch_test.rs::testWillIsolateBatchesForEntitiesWithGeneratedIdentifiers
+tests/Tests/ORM/Internal/UnitOfWork/InsertBatchTest.php	InsertBatchTest::testWillNotBatchOperationsForAGeneratedIdentifierEntity	ported	crates/php2rust-doctrine-orm/tests/insert_batch_test.rs::testWillNotBatchOperationsForAGeneratedIdentifierEntity
+tests/Tests/ORM/Internal/UnitOfWork/InsertBatchTest.php	InsertBatchTest::testWillProduceEmptyBatchOnNoGivenEntities	ported	crates/php2rust-doctrine-orm/tests/insert_batch_test.rs::testWillProduceEmptyBatchOnNoGivenEntities
 tests/Tests/ORM/LazyCriteriaCollectionTest.php	LazyCriteriaCollectionTest::testCountIsCached	ported	crates/php2rust-doctrine-orm/tests/lazy_criteria_collection_test.rs::testCountIsCached
 tests/Tests/ORM/LazyCriteriaCollectionTest.php	LazyCriteriaCollectionTest::testCountIsCachedEvenWithZeroResult	ported	crates/php2rust-doctrine-orm/tests/lazy_criteria_collection_test.rs::testCountIsCachedEvenWithZeroResult
 tests/Tests/ORM/LazyCriteriaCollectionTest.php	LazyCriteriaCollectionTest::testCountUsesWrappedCollectionWhenInitialized	ported	crates/php2rust-doctrine-orm/tests/lazy_criteria_collection_test.rs::testCountUsesWrappedCollectionWhenInitialized
@@ -2113,68 +2113,68 @@ tests/Tests/ORM/Mapping/ReflectionEmbeddedPropertyTest.php	ReflectionEmbeddedPro
 tests/Tests/ORM/Mapping/ReflectionReadonlyPropertyTest.php	ReflectionReadonlyPropertyTest::testNonReadonlyPropertiesAreForbidden	ported	crates/php2rust-doctrine-orm/tests/reflection_readonly_property_test.rs::testNonReadonlyPropertiesAreForbidden
 tests/Tests/ORM/Mapping/ReflectionReadonlyPropertyTest.php	ReflectionReadonlyPropertyTest::testSecondWriteWithDifferentValue	ported	crates/php2rust-doctrine-orm/tests/reflection_readonly_property_test.rs::testSecondWriteWithDifferentValue
 tests/Tests/ORM/Mapping/ReflectionReadonlyPropertyTest.php	ReflectionReadonlyPropertyTest::testSecondWriteWithSameValue	ported	crates/php2rust-doctrine-orm/tests/reflection_readonly_property_test.rs::testSecondWriteWithSameValue
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testAssociationOverridesMapping	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testAssociations	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testAttributeOverridesMapping	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testBooleanValuesForOptionIsSetCorrectly	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testColumnDefinition	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testCustomFieldTypeFromReflection	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testCustomNamingStrategyIsRespected	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDefaultFieldType	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDiscriminatorColumnDefaultLength	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDiscriminatorColumnDefaultName	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDiscriminatorColumnDefaultType	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDiscriminatorColumnDefaults	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDiscriminatorColumnDefinition	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDiscriminatorColumnEnumTypeDefinition	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityCustomGenerator	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityIncorrectIndexes	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityIncorrectUniqueContraint	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityIndexFlagsAndPartialIndexes	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityIndexes	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityListeners	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityListenersNamingConvention	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityListenersOverride	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityOptions	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntitySequence	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityTableNameAndInheritance	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityUniqueConstraints	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEnumType	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testFetchOverrideMapping	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testFieldMappings	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testFieldMappingsColumnNames	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testFieldOptions	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testFieldTypeFromReflection	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testIdFieldOptions	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testIdentifier	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testIdentifierColumnDefinition	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testIdentifierRequiredShouldMentionParentClasses	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testInsertableColumn	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testInvalidEntityOrMappedSuperClassShouldMentionParentClasses	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testInverseOneToManyAssociation	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testInversedByOverrideMapping	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testJoinColumnOnDelete	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testJoinColumnUniqueAndNullable	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testLifecycleCallbacks	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testLifecycleCallbacksSupportMultipleMethodNames	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testManyToManyAssociationWithCascadeAll	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testMappedSuperclassWithRepository	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testNamingStrategy	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testOrderByWithInvalidDirection	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testOrderByWithStringValues	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testOwningOneToOneAssociation	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testReservedWordInTableColumn	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testSchemaDefinitionViaExplicitTableSchemaAttributeProperty	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testSchemaDefinitionViaSchemaDefinedInTableNameInTableAttributeProperty	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testSecondLevelCacheMapping	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testStringFieldMappings	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testUpdatableColumn	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testVersionedField	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testinvalidEntityOrMappedSuperClassShouldMentionParentClasses	pending	needs the models' static loadMetadata() methods, which are PHP code the port does not run
-tests/Tests/ORM/Mapping/Symfony/XmlDriverTest.php	XmlDriverTest::testFindMappingFile	pending	
-tests/Tests/ORM/Mapping/Symfony/XmlDriverTest.php	XmlDriverTest::testFindMappingFileInSubnamespace	pending	
-tests/Tests/ORM/Mapping/Symfony/XmlDriverTest.php	XmlDriverTest::testFindMappingFileNamespacedFoundFileNotFound	pending	
-tests/Tests/ORM/Mapping/Symfony/XmlDriverTest.php	XmlDriverTest::testFindMappingNamespaceNotFound	pending	
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testAssociationOverridesMapping	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testAssociationOverridesMapping
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testAssociations	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testAssociations
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testAttributeOverridesMapping	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testAttributeOverridesMapping
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testBooleanValuesForOptionIsSetCorrectly	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testBooleanValuesForOptionIsSetCorrectly
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testColumnDefinition	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testColumnDefinition
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testCustomFieldTypeFromReflection	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testCustomFieldTypeFromReflection
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testCustomNamingStrategyIsRespected	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testCustomNamingStrategyIsRespected
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDefaultFieldType	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testDefaultFieldType
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDiscriminatorColumnDefaultLength	n/a: skipped upstream: PHP Mapping Drivers have no defaults	
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDiscriminatorColumnDefaultName	n/a: skipped upstream: PHP Mapping Drivers have no defaults	
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDiscriminatorColumnDefaultType	n/a: skipped upstream: PHP Mapping Drivers have no defaults	
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDiscriminatorColumnDefaults	n/a: skipped upstream: PHP Mapping Drivers have no defaults	
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDiscriminatorColumnDefinition	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testDiscriminatorColumnDefinition
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testDiscriminatorColumnEnumTypeDefinition	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testDiscriminatorColumnEnumTypeDefinition
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityCustomGenerator	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testEntityCustomGenerator
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityIncorrectIndexes	n/a: skipped upstream: Static PHP driver does not ensure index correctness	
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityIncorrectUniqueContraint	n/a: skipped upstream: Static PHP driver does not ensure index correctness	
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityIndexFlagsAndPartialIndexes	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testEntityIndexFlagsAndPartialIndexes
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityIndexes	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testEntityIndexes
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityListeners	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testEntityListeners
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityListenersNamingConvention	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testEntityListenersNamingConvention
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityListenersOverride	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testEntityListenersOverride
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityOptions	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testEntityOptions
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntitySequence	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testEntitySequence
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityTableNameAndInheritance	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testEntityTableNameAndInheritance
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEntityUniqueConstraints	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testEntityUniqueConstraints
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testEnumType	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testEnumType
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testFetchOverrideMapping	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testFetchOverrideMapping
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testFieldMappings	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testFieldMappings
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testFieldMappingsColumnNames	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testFieldMappingsColumnNames
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testFieldOptions	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testFieldOptions
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testFieldTypeFromReflection	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testFieldTypeFromReflection
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testIdFieldOptions	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testIdFieldOptions
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testIdentifier	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testIdentifier
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testIdentifierColumnDefinition	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testIdentifierColumnDefinition
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testIdentifierRequiredShouldMentionParentClasses	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testIdentifierRequiredShouldMentionParentClasses
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testInsertableColumn	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testInsertableColumn
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testInvalidEntityOrMappedSuperClassShouldMentionParentClasses	n/a: overridden by testinvalidEntityOrMappedSuperClassShouldMentionParentClasses (PHP method names ignore case)	
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testInverseOneToManyAssociation	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testInverseOneToManyAssociation
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testInversedByOverrideMapping	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testInversedByOverrideMapping
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testJoinColumnOnDelete	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testJoinColumnOnDelete
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testJoinColumnUniqueAndNullable	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testJoinColumnUniqueAndNullable
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testLifecycleCallbacks	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testLifecycleCallbacks
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testLifecycleCallbacksSupportMultipleMethodNames	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testLifecycleCallbacksSupportMultipleMethodNames
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testManyToManyAssociationWithCascadeAll	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testManyToManyAssociationWithCascadeAll
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testMappedSuperclassWithRepository	pending	needs DDC869PaymentRepository, a custom repository class with PHP methods (isTrue())
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testNamingStrategy	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testNamingStrategy
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testOrderByWithInvalidDirection	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testOrderByWithInvalidDirection
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testOrderByWithStringValues	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testOrderByWithStringValues
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testOwningOneToOneAssociation	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testOwningOneToOneAssociation
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testReservedWordInTableColumn	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testReservedWordInTableColumn
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testSchemaDefinitionViaExplicitTableSchemaAttributeProperty	n/a: incomplete upstream (markTestIncomplete)	
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testSchemaDefinitionViaSchemaDefinedInTableNameInTableAttributeProperty	n/a: incomplete upstream (markTestIncomplete)	
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testSecondLevelCacheMapping	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testSecondLevelCacheMapping
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testStringFieldMappings	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testStringFieldMappings
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testUpdatableColumn	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testUpdatableColumn
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testVersionedField	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testVersionedField
+tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	StaticPHPMappingDriverTest::testinvalidEntityOrMappedSuperClassShouldMentionParentClasses	ported	crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs::testinvalidEntityOrMappedSuperClassShouldMentionParentClasses
+tests/Tests/ORM/Mapping/Symfony/XmlDriverTest.php	XmlDriverTest::testFindMappingFile	ported	crates/php2rust-doctrine-orm/tests/symfony_xml_driver_test.rs::testFindMappingFile
+tests/Tests/ORM/Mapping/Symfony/XmlDriverTest.php	XmlDriverTest::testFindMappingFileInSubnamespace	ported	crates/php2rust-doctrine-orm/tests/symfony_xml_driver_test.rs::testFindMappingFileInSubnamespace
+tests/Tests/ORM/Mapping/Symfony/XmlDriverTest.php	XmlDriverTest::testFindMappingFileNamespacedFoundFileNotFound	ported	crates/php2rust-doctrine-orm/tests/symfony_xml_driver_test.rs::testFindMappingFileNamespacedFoundFileNotFound
+tests/Tests/ORM/Mapping/Symfony/XmlDriverTest.php	XmlDriverTest::testFindMappingNamespaceNotFound	ported	crates/php2rust-doctrine-orm/tests/symfony_xml_driver_test.rs::testFindMappingNamespaceNotFound
 tests/Tests/ORM/Mapping/TableMappingTest.php	TableMappingTest::testDeprecationOnIndexesPropertyIsTriggered	ported	crates/php2rust-doctrine-orm/tests/table_mapping_test.rs::testDeprecationOnIndexesPropertyIsTriggered
 tests/Tests/ORM/Mapping/TableMappingTest.php	TableMappingTest::testDeprecationOnUniqueConstraintsPropertyIsTriggered	ported	crates/php2rust-doctrine-orm/tests/table_mapping_test.rs::testDeprecationOnUniqueConstraintsPropertyIsTriggered
 tests/Tests/ORM/Mapping/ToManyAssociationMappingTest.php	ToManyAssociationMappingTest::testItSurvivesSerialization	ported	crates/php2rust-doctrine-orm/tests/to_many_association_mapping_test.rs::testItSurvivesSerialization
@@ -2257,15 +2257,15 @@ tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testXmlCu
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testXmlValidationDisabled	ported	crates/php2rust-doctrine-orm/tests/xml_mapping_driver_test.rs::testXmlValidationDisabled
 tests/Tests/ORM/Mapping/XmlMappingDriverTest.php	XmlMappingDriverTest::testXmlValidationEnabled	pending	needs XSD validation: php2rust-dom refuses doctrine-mapping.xsd (xs:complexContent, xs:token), so the XML driver does not validate
 tests/Tests/ORM/ORMInvalidArgumentExceptionTest.php	ORMInvalidArgumentExceptionTest::testNewEntitiesFoundThroughRelationships	pending	
-tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testAttributeConfig	pending	
-tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testAttributeConfiguration	pending	
-tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testCacheNamespaceShouldBeGeneratedForApcu	pending	
-tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testCacheNamespaceShouldBeGeneratedForApcuWhenUsingLegacyConstructor	pending	
-tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testConfigureCache	pending	
-tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testConfigureCacheCustomInstance	pending	
-tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testConfigureProxyDir	pending	
-tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testDisablingXmlValidationIsPossible	pending	
-tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testXMLConfiguration	pending	
+tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testAttributeConfig	ported	crates/php2rust-doctrine-orm/tests/orm_setup_test.rs::testAttributeConfig
+tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testAttributeConfiguration	ported	crates/php2rust-doctrine-orm/tests/orm_setup_test.rs::testAttributeConfiguration
+tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testCacheNamespaceShouldBeGeneratedForApcu	n/a: requires the apcu extension (skipped upstream without it); the port has no APCu adapter	
+tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testCacheNamespaceShouldBeGeneratedForApcuWhenUsingLegacyConstructor	n/a: requires the apcu extension (skipped upstream without it); the port has no APCu adapter	
+tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testConfigureCache	ported	crates/php2rust-doctrine-orm/tests/orm_setup_test.rs::testConfigureCache
+tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testConfigureCacheCustomInstance	ported	crates/php2rust-doctrine-orm/tests/orm_setup_test.rs::testConfigureCacheCustomInstance
+tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testConfigureProxyDir	ported	crates/php2rust-doctrine-orm/tests/orm_setup_test.rs::testConfigureProxyDir
+tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testDisablingXmlValidationIsPossible	ported	crates/php2rust-doctrine-orm/tests/orm_setup_test.rs::testDisablingXmlValidationIsPossible
+tests/Tests/ORM/ORMSetupTest.php	ORMSetupTest::testXMLConfiguration	ported	crates/php2rust-doctrine-orm/tests/orm_setup_test.rs::testXMLConfiguration
 tests/Tests/ORM/Performance/SecondLevelCacheTest.php	SecondLevelCacheTest::testFindAllEntityWithCache	ported	crates/php2rust-doctrine-orm/tests/performance_second_level_cache_test.rs::testFindAllEntityWithCache
 tests/Tests/ORM/Performance/SecondLevelCacheTest.php	SecondLevelCacheTest::testFindAllEntityWithoutCache	ported	crates/php2rust-doctrine-orm/tests/performance_second_level_cache_test.rs::testFindAllEntityWithoutCache
 tests/Tests/ORM/Performance/SecondLevelCacheTest.php	SecondLevelCacheTest::testFindEntityOneToManyWithCache	ported	crates/php2rust-doctrine-orm/tests/performance_second_level_cache_test.rs::testFindEntityOneToManyWithCache
@@ -2305,7 +2305,7 @@ tests/Tests/ORM/Persisters/BasicEntityPersisterTypeValueSqlTest.php	BasicEntityP
 tests/Tests/ORM/Persisters/BasicEntityPersisterTypeValueSqlTest.php	BasicEntityPersisterTypeValueSqlTest::testStripNonAlphanumericCharactersFromSelectColumnListSQL	ported	crates/php2rust-doctrine-orm/tests/basic_entity_persister_type_value_sql_test.rs::testStripNonAlphanumericCharactersFromSelectColumnListSQL
 tests/Tests/ORM/Persisters/BasicEntityPersisterTypeValueSqlTest.php	BasicEntityPersisterTypeValueSqlTest::testUpdateUsesTypeValuesSQL	ported	crates/php2rust-doctrine-orm/tests/basic_entity_persister_type_value_sql_test.rs::testUpdateUsesTypeValuesSQL
 tests/Tests/ORM/Persisters/BinaryIdPersisterTest.php	BinaryIdPersisterTest::testOneToManyWithEagerFetchMode	pending	
-tests/Tests/ORM/Persisters/Exception/UnrecognizedFieldTest.php	UnrecognizedFieldTest::testByFullyQualifiedName	pending	
+tests/Tests/ORM/Persisters/Exception/UnrecognizedFieldTest.php	UnrecognizedFieldTest::testByFullyQualifiedName	ported	crates/php2rust-doctrine-orm/tests/unrecognized_field_test.rs::testByFullyQualifiedName
 tests/Tests/ORM/Persisters/ManyToManyPersisterTest.php	ManyToManyPersisterTest::testDeleteManyToManyCollection	pending	
 tests/Tests/ORM/Proxy/ProxyFactoryTest.php	ProxyFactoryTest::testFailedProxyCloningDoesNotMarkTheProxyAsInitialized	ported	crates/php2rust-doctrine-orm/tests/proxy_factory_test.rs::testFailedProxyCloningDoesNotMarkTheProxyAsInitialized
 tests/Tests/ORM/Proxy/ProxyFactoryTest.php	ProxyFactoryTest::testFailedProxyLoadingDoesNotMarkTheProxyAsInitialized	ported	crates/php2rust-doctrine-orm/tests/proxy_factory_test.rs::testFailedProxyLoadingDoesNotMarkTheProxyAsInitialized
@@ -2926,66 +2926,66 @@ tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testWhereAppend	ported	cr
 tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testWhereInWithObjectLiterals	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testWhereInWithObjectLiterals
 tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testWhereInWithStringLiterals	ported	crates/php2rust-doctrine-orm/tests/query_builder_test.rs::testWhereInWithStringLiterals
 tests/Tests/ORM/QueryBuilderTest.php	QueryBuilderTest::testWhereWithUnexpectedNamedArguments	n/a: Rust has no named arguments	
-tests/Tests/ORM/Repository/DefaultRepositoryFactoryTest.php	DefaultRepositoryFactoryTest::testCachesDistinctRepositoriesPerDistinctEntityManager	pending	
-tests/Tests/ORM/Repository/DefaultRepositoryFactoryTest.php	DefaultRepositoryFactoryTest::testCreatedRepositoriesAreCached	pending	
-tests/Tests/ORM/Repository/DefaultRepositoryFactoryTest.php	DefaultRepositoryFactoryTest::testCreatesRepositoryFromCustomClassMetadata	pending	
-tests/Tests/ORM/Repository/DefaultRepositoryFactoryTest.php	DefaultRepositoryFactoryTest::testCreatesRepositoryFromDefaultRepositoryClass	pending	
-tests/Tests/ORM/Tools/AttachEntityListenersListenerTest.php	AttachEntityListenersListenerTest::testAttachEntityListeners	pending	
-tests/Tests/ORM/Tools/AttachEntityListenersListenerTest.php	AttachEntityListenersListenerTest::testAttachToExistingEntityListeners	pending	
-tests/Tests/ORM/Tools/AttachEntityListenersListenerTest.php	AttachEntityListenersListenerTest::testAttachWithoutSpecifyingAnEventName	pending	
-tests/Tests/ORM/Tools/AttachEntityListenersListenerTest.php	AttachEntityListenersListenerTest::testDuplicateEntityListenerException	pending	
-tests/Tests/ORM/Tools/Console/Command/ClearCacheCollectionRegionCommandTest.php	ClearCacheCollectionRegionCommandTest::testClearAllRegion	pending	
-tests/Tests/ORM/Tools/Console/Command/ClearCacheCollectionRegionCommandTest.php	ClearCacheCollectionRegionCommandTest::testClearByOwnerEntityClassName	pending	
-tests/Tests/ORM/Tools/Console/Command/ClearCacheCollectionRegionCommandTest.php	ClearCacheCollectionRegionCommandTest::testClearCacheEntryName	pending	
-tests/Tests/ORM/Tools/Console/Command/ClearCacheCollectionRegionCommandTest.php	ClearCacheCollectionRegionCommandTest::testFlushRegionName	pending	
-tests/Tests/ORM/Tools/Console/Command/ClearCacheEntityRegionCommandTest.php	ClearCacheEntityRegionCommandTest::testClearAllRegion	pending	
-tests/Tests/ORM/Tools/Console/Command/ClearCacheEntityRegionCommandTest.php	ClearCacheEntityRegionCommandTest::testClearByEntityClassName	pending	
-tests/Tests/ORM/Tools/Console/Command/ClearCacheEntityRegionCommandTest.php	ClearCacheEntityRegionCommandTest::testClearCacheEntryName	pending	
-tests/Tests/ORM/Tools/Console/Command/ClearCacheEntityRegionCommandTest.php	ClearCacheEntityRegionCommandTest::testFlushRegionName	pending	
-tests/Tests/ORM/Tools/Console/Command/ClearCacheQueryRegionCommandTest.php	ClearCacheQueryRegionCommandTest::testClearAllRegion	pending	
-tests/Tests/ORM/Tools/Console/Command/ClearCacheQueryRegionCommandTest.php	ClearCacheQueryRegionCommandTest::testClearByRegionName	pending	
-tests/Tests/ORM/Tools/Console/Command/ClearCacheQueryRegionCommandTest.php	ClearCacheQueryRegionCommandTest::testClearDefaultRegionName	pending	
-tests/Tests/ORM/Tools/Console/Command/ClearCacheQueryRegionCommandTest.php	ClearCacheQueryRegionCommandTest::testFlushRegionName	pending	
-tests/Tests/ORM/Tools/Console/Command/Debug/DebugEntityListenersDoctrineCommandTest.php	DebugEntityListenersDoctrineCommandTest::testComplete	pending	
-tests/Tests/ORM/Tools/Console/Command/Debug/DebugEntityListenersDoctrineCommandTest.php	DebugEntityListenersDoctrineCommandTest::testExecute	pending	
-tests/Tests/ORM/Tools/Console/Command/Debug/DebugEntityListenersDoctrineCommandTest.php	DebugEntityListenersDoctrineCommandTest::testExecuteWithEvent	pending	
-tests/Tests/ORM/Tools/Console/Command/Debug/DebugEntityListenersDoctrineCommandTest.php	DebugEntityListenersDoctrineCommandTest::testExecuteWithMissingEvent	pending	
-tests/Tests/ORM/Tools/Console/Command/Debug/DebugEventManagerDoctrineCommandTest.php	DebugEventManagerDoctrineCommandTest::testComplete	pending	
-tests/Tests/ORM/Tools/Console/Command/Debug/DebugEventManagerDoctrineCommandTest.php	DebugEventManagerDoctrineCommandTest::testExecute	pending	
-tests/Tests/ORM/Tools/Console/Command/Debug/DebugEventManagerDoctrineCommandTest.php	DebugEventManagerDoctrineCommandTest::testExecuteWithEvent	pending	
-tests/Tests/ORM/Tools/Console/Command/Debug/DebugEventManagerDoctrineCommandTest.php	DebugEventManagerDoctrineCommandTest::testExecuteWithMissingEvent	pending	
-tests/Tests/ORM/Tools/Console/Command/InfoCommandTest.php	InfoCommandTest::testEmptyEntityClassNames	pending	
-tests/Tests/ORM/Tools/Console/Command/InfoCommandTest.php	InfoCommandTest::testInvalidEntityClassMetadata	pending	
-tests/Tests/ORM/Tools/Console/Command/InfoCommandTest.php	InfoCommandTest::testListAllClasses	pending	
-tests/Tests/ORM/Tools/Console/Command/MappingDescribeCommandTest.php	MappingDescribeCommandTest::testComplete	pending	
-tests/Tests/ORM/Tools/Console/Command/MappingDescribeCommandTest.php	MappingDescribeCommandTest::testShowEntityWithEntityListeners	pending	
-tests/Tests/ORM/Tools/Console/Command/MappingDescribeCommandTest.php	MappingDescribeCommandTest::testShowSpecificFuzzyAmbiguous	pending	
-tests/Tests/ORM/Tools/Console/Command/MappingDescribeCommandTest.php	MappingDescribeCommandTest::testShowSpecificFuzzySingle	pending	
-tests/Tests/ORM/Tools/Console/Command/MappingDescribeCommandTest.php	MappingDescribeCommandTest::testShowSpecificFuzzySingleJson	pending	
-tests/Tests/ORM/Tools/Console/Command/MappingDescribeCommandTest.php	MappingDescribeCommandTest::testShowSpecificNotFound	pending	
-tests/Tests/ORM/Tools/Console/Command/RunDqlCommandTest.php	RunDqlCommandTest::testCommandName	pending	
-tests/Tests/ORM/Tools/Console/Command/RunDqlCommandTest.php	RunDqlCommandTest::testWillRunQuery	pending	
-tests/Tests/ORM/Tools/Console/Command/RunDqlCommandTest.php	RunDqlCommandTest::testWillShowQuery	pending	
-tests/Tests/ORM/Tools/Console/Command/SchemaTool/CreateCommandTest.php	CreateCommandTest::testItPrintsTheSql	pending	
-tests/Tests/ORM/Tools/Console/Command/SchemaTool/DropCommandTest.php	DropCommandTest::testItPrintsTheSql	pending	
-tests/Tests/ORM/Tools/Console/Command/ValidateSchemaCommandTest.php	ValidateSchemaCommandTest::testNotInSync	pending	
-tests/Tests/ORM/Tools/Console/Command/ValidateSchemaCommandTest.php	ValidateSchemaCommandTest::testNotInSyncVerbose	pending	
-tests/Tests/ORM/Tools/Console/ConsoleRunnerTest.php	ConsoleRunnerTest::testCreateApplicationShouldAppendGivenCommands	pending	
-tests/Tests/ORM/Tools/Console/ConsoleRunnerTest.php	ConsoleRunnerTest::testCreateApplicationShouldReturnAnApplicationWithTheCorrectCommands	pending	
+tests/Tests/ORM/Repository/DefaultRepositoryFactoryTest.php	DefaultRepositoryFactoryTest::testCachesDistinctRepositoriesPerDistinctEntityManager	ported	crates/php2rust-doctrine-orm/tests/default_repository_factory_test.rs::testCachesDistinctRepositoriesPerDistinctEntityManager
+tests/Tests/ORM/Repository/DefaultRepositoryFactoryTest.php	DefaultRepositoryFactoryTest::testCreatedRepositoriesAreCached	ported	crates/php2rust-doctrine-orm/tests/default_repository_factory_test.rs::testCreatedRepositoriesAreCached
+tests/Tests/ORM/Repository/DefaultRepositoryFactoryTest.php	DefaultRepositoryFactoryTest::testCreatesRepositoryFromCustomClassMetadata	ported	crates/php2rust-doctrine-orm/tests/default_repository_factory_test.rs::testCreatesRepositoryFromCustomClassMetadata
+tests/Tests/ORM/Repository/DefaultRepositoryFactoryTest.php	DefaultRepositoryFactoryTest::testCreatesRepositoryFromDefaultRepositoryClass	ported	crates/php2rust-doctrine-orm/tests/default_repository_factory_test.rs::testCreatesRepositoryFromDefaultRepositoryClass
+tests/Tests/ORM/Tools/AttachEntityListenersListenerTest.php	AttachEntityListenersListenerTest::testAttachEntityListeners	ported	crates/php2rust-doctrine-orm/tests/attach_entity_listeners_listener_test.rs::testAttachEntityListeners
+tests/Tests/ORM/Tools/AttachEntityListenersListenerTest.php	AttachEntityListenersListenerTest::testAttachToExistingEntityListeners	ported	crates/php2rust-doctrine-orm/tests/attach_entity_listeners_listener_test.rs::testAttachToExistingEntityListeners
+tests/Tests/ORM/Tools/AttachEntityListenersListenerTest.php	AttachEntityListenersListenerTest::testAttachWithoutSpecifyingAnEventName	ported	crates/php2rust-doctrine-orm/tests/attach_entity_listeners_listener_test.rs::testAttachWithoutSpecifyingAnEventName
+tests/Tests/ORM/Tools/AttachEntityListenersListenerTest.php	AttachEntityListenersListenerTest::testDuplicateEntityListenerException	ported	crates/php2rust-doctrine-orm/tests/attach_entity_listeners_listener_test.rs::testDuplicateEntityListenerException
+tests/Tests/ORM/Tools/Console/Command/ClearCacheCollectionRegionCommandTest.php	ClearCacheCollectionRegionCommandTest::testClearAllRegion	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/ClearCacheCollectionRegionCommandTest.php	ClearCacheCollectionRegionCommandTest::testClearByOwnerEntityClassName	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/ClearCacheCollectionRegionCommandTest.php	ClearCacheCollectionRegionCommandTest::testClearCacheEntryName	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/ClearCacheCollectionRegionCommandTest.php	ClearCacheCollectionRegionCommandTest::testFlushRegionName	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/ClearCacheEntityRegionCommandTest.php	ClearCacheEntityRegionCommandTest::testClearAllRegion	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/ClearCacheEntityRegionCommandTest.php	ClearCacheEntityRegionCommandTest::testClearByEntityClassName	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/ClearCacheEntityRegionCommandTest.php	ClearCacheEntityRegionCommandTest::testClearCacheEntryName	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/ClearCacheEntityRegionCommandTest.php	ClearCacheEntityRegionCommandTest::testFlushRegionName	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/ClearCacheQueryRegionCommandTest.php	ClearCacheQueryRegionCommandTest::testClearAllRegion	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/ClearCacheQueryRegionCommandTest.php	ClearCacheQueryRegionCommandTest::testClearByRegionName	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/ClearCacheQueryRegionCommandTest.php	ClearCacheQueryRegionCommandTest::testClearDefaultRegionName	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/ClearCacheQueryRegionCommandTest.php	ClearCacheQueryRegionCommandTest::testFlushRegionName	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/Debug/DebugEntityListenersDoctrineCommandTest.php	DebugEntityListenersDoctrineCommandTest::testComplete	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/Debug/DebugEntityListenersDoctrineCommandTest.php	DebugEntityListenersDoctrineCommandTest::testExecute	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/Debug/DebugEntityListenersDoctrineCommandTest.php	DebugEntityListenersDoctrineCommandTest::testExecuteWithEvent	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/Debug/DebugEntityListenersDoctrineCommandTest.php	DebugEntityListenersDoctrineCommandTest::testExecuteWithMissingEvent	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/Debug/DebugEventManagerDoctrineCommandTest.php	DebugEventManagerDoctrineCommandTest::testComplete	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/Debug/DebugEventManagerDoctrineCommandTest.php	DebugEventManagerDoctrineCommandTest::testExecute	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/Debug/DebugEventManagerDoctrineCommandTest.php	DebugEventManagerDoctrineCommandTest::testExecuteWithEvent	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/Debug/DebugEventManagerDoctrineCommandTest.php	DebugEventManagerDoctrineCommandTest::testExecuteWithMissingEvent	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/InfoCommandTest.php	InfoCommandTest::testEmptyEntityClassNames	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/InfoCommandTest.php	InfoCommandTest::testInvalidEntityClassMetadata	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/InfoCommandTest.php	InfoCommandTest::testListAllClasses	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/MappingDescribeCommandTest.php	MappingDescribeCommandTest::testComplete	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/MappingDescribeCommandTest.php	MappingDescribeCommandTest::testShowEntityWithEntityListeners	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/MappingDescribeCommandTest.php	MappingDescribeCommandTest::testShowSpecificFuzzyAmbiguous	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/MappingDescribeCommandTest.php	MappingDescribeCommandTest::testShowSpecificFuzzySingle	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/MappingDescribeCommandTest.php	MappingDescribeCommandTest::testShowSpecificFuzzySingleJson	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/MappingDescribeCommandTest.php	MappingDescribeCommandTest::testShowSpecificNotFound	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/RunDqlCommandTest.php	RunDqlCommandTest::testCommandName	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/RunDqlCommandTest.php	RunDqlCommandTest::testWillRunQuery	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/RunDqlCommandTest.php	RunDqlCommandTest::testWillShowQuery	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/SchemaTool/CreateCommandTest.php	CreateCommandTest::testItPrintsTheSql	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/SchemaTool/DropCommandTest.php	DropCommandTest::testItPrintsTheSql	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/ValidateSchemaCommandTest.php	ValidateSchemaCommandTest::testNotInSync	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/Command/ValidateSchemaCommandTest.php	ValidateSchemaCommandTest::testNotInSyncVerbose	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/ConsoleRunnerTest.php	ConsoleRunnerTest::testCreateApplicationShouldAppendGivenCommands	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
+tests/Tests/ORM/Tools/Console/ConsoleRunnerTest.php	ConsoleRunnerTest::testCreateApplicationShouldReturnAnApplicationWithTheCorrectCommands	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
 tests/Tests/ORM/Tools/Console/MetadataFilterTest.php	MetadataFilterTest::testFilterWithArray	pending	
 tests/Tests/ORM/Tools/Console/MetadataFilterTest.php	MetadataFilterTest::testFilterWithEmptyArray	pending	
 tests/Tests/ORM/Tools/Console/MetadataFilterTest.php	MetadataFilterTest::testFilterWithRegex	pending	
 tests/Tests/ORM/Tools/Console/MetadataFilterTest.php	MetadataFilterTest::testFilterWithString	pending	
 tests/Tests/ORM/Tools/Console/MetadataFilterTest.php	MetadataFilterTest::testFilterWithString2	pending	
-tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testCollectionsAreCastIntoArrays	pending	
-tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportArray	pending	
-tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportArrayTraversable	pending	
-tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportDateTime	pending	
-tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportDateTimeImmutable	pending	
-tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportDateTimeZone	pending	
-tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportObject	pending	
-tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportObjectWithReference	pending	
-tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportParentAttributes	pending	
+tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testCollectionsAreCastIntoArrays	pending	needs PHP's print_r(), DateTime/ArrayObject and (array) casts of objects with mangled property names
+tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportArray	pending	needs PHP's print_r(), DateTime/ArrayObject and (array) casts of objects with mangled property names
+tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportArrayTraversable	pending	needs PHP's print_r(), DateTime/ArrayObject and (array) casts of objects with mangled property names
+tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportDateTime	pending	needs PHP's print_r(), DateTime/ArrayObject and (array) casts of objects with mangled property names
+tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportDateTimeImmutable	pending	needs PHP's print_r(), DateTime/ArrayObject and (array) casts of objects with mangled property names
+tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportDateTimeZone	pending	needs PHP's print_r(), DateTime/ArrayObject and (array) casts of objects with mangled property names
+tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportObject	pending	needs PHP's print_r(), DateTime/ArrayObject and (array) casts of objects with mangled property names
+tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportObjectWithReference	pending	needs PHP's print_r(), DateTime/ArrayObject and (array) casts of objects with mangled property names
+tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportParentAttributes	pending	needs PHP's print_r(), DateTime/ArrayObject and (array) casts of objects with mangled property names
 tests/Tests/ORM/Tools/Pagination/CountOutputWalkerTest.php	CountOutputWalkerTest::testCountQuery	ported	crates/php2rust-doctrine-orm/tests/count_output_walker_test.rs::testCountQuery
 tests/Tests/ORM/Tools/Pagination/CountOutputWalkerTest.php	CountOutputWalkerTest::testCountQueryGroupBy	ported	crates/php2rust-doctrine-orm/tests/count_output_walker_test.rs::testCountQueryGroupBy
 tests/Tests/ORM/Tools/Pagination/CountOutputWalkerTest.php	CountOutputWalkerTest::testCountQueryHaving	ported	crates/php2rust-doctrine-orm/tests/count_output_walker_test.rs::testCountQueryHaving
@@ -3123,10 +3123,10 @@ tests/Tests/ORM/Tools/Pagination/WindowTest.php	WindowTest::testPrevious	ported	
 tests/Tests/ORM/Tools/Pagination/WindowTest.php	WindowTest::testPreviousIsClampedAtZero	ported	crates/php2rust-doctrine-orm/tests/window_test.rs::testPreviousIsClampedAtZero
 tests/Tests/ORM/Tools/Pagination/WindowTest.php	WindowTest::testWindowIsFinal	n/a: a Rust struct has no subclasses	
 tests/Tests/ORM/Tools/Pagination/WindowTest.php	WindowTest::testZeroMaxResultsThrows	ported	crates/php2rust-doctrine-orm/tests/window_test.rs::testZeroMaxResultsThrows
-tests/Tests/ORM/Tools/ResolveTargetEntityListenerTest.php	ResolveTargetEntityListenerTest::testAssertTableColumnsAreNotAddedInManyToMany	pending	
-tests/Tests/ORM/Tools/ResolveTargetEntityListenerTest.php	ResolveTargetEntityListenerTest::testDoesResolveTargetEntitiesInDQLAlsoWithInterfaces	pending	
-tests/Tests/ORM/Tools/ResolveTargetEntityListenerTest.php	ResolveTargetEntityListenerTest::testResolveTargetEntityListenerCanResolveTargetEntity	pending	
-tests/Tests/ORM/Tools/ResolveTargetEntityListenerTest.php	ResolveTargetEntityListenerTest::testResolveTargetEntityListenerCanRetrieveTargetEntityByInterfaceName	pending	
+tests/Tests/ORM/Tools/ResolveTargetEntityListenerTest.php	ResolveTargetEntityListenerTest::testAssertTableColumnsAreNotAddedInManyToMany	ported	crates/php2rust-doctrine-orm/tests/resolve_target_entity_listener_test.rs::testAssertTableColumnsAreNotAddedInManyToMany
+tests/Tests/ORM/Tools/ResolveTargetEntityListenerTest.php	ResolveTargetEntityListenerTest::testDoesResolveTargetEntitiesInDQLAlsoWithInterfaces	pending	passes upstream only through OrmTestCase's metadata cache shared between tests (ResolveTargetEntity with Target resolved by an earlier test); alone its SQL loads the unresolved Target interface and throws, as the port does
+tests/Tests/ORM/Tools/ResolveTargetEntityListenerTest.php	ResolveTargetEntityListenerTest::testResolveTargetEntityListenerCanResolveTargetEntity	ported	crates/php2rust-doctrine-orm/tests/resolve_target_entity_listener_test.rs::testResolveTargetEntityListenerCanResolveTargetEntity
+tests/Tests/ORM/Tools/ResolveTargetEntityListenerTest.php	ResolveTargetEntityListenerTest::testResolveTargetEntityListenerCanRetrieveTargetEntityByInterfaceName	ported	crates/php2rust-doctrine-orm/tests/resolve_target_entity_listener_test.rs::testResolveTargetEntityListenerCanRetrieveTargetEntityByInterfaceName
 tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testAddUniqueIndexForUniqueFieldAttribute	ported	crates/php2rust-doctrine-orm/tests/schema_tool_test.rs::testAddUniqueIndexForUniqueFieldAttribute
 tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testAttributeOptionsArgument	ported	crates/php2rust-doctrine-orm/tests/schema_tool_test.rs::testAttributeOptionsArgument
 tests/Tests/ORM/Tools/SchemaToolTest.php	SchemaToolTest::testCompositeFulltextAndUniqueIndexesOnSameColumnsArePreserved	ported	crates/php2rust-doctrine-orm/tests/schema_tool_test.rs::testCompositeFulltextAndUniqueIndexesOnSameColumnsArePreserved

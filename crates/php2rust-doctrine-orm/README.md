@@ -52,7 +52,7 @@ assert_eq!(PhpString::from("O'Neil"), lexer.token().unwrap().value);
 | `UnitOfWork` (UnitOfWorkTest runs on a stubbed driver connection, as upstream's mocks): change sets (scalars, to-one, collections, `recomputeSingleEntityChangeSet()`), commit order by `TopologicalSort`, identity map (`EntityIdentityCollisionException`), cascades (persist, remove, refresh, detach), orphan removal, collection deletions and updates, entity states, `createEntity()` (lazy to-one proxies, deferred eager loads), the ORMInvalidArgumentException texts (`newEntityFoundThroughRelationship`, `invalidAssociation`, ...) | `UnitOfWork.php`, `ORMInvalidArgumentException.php`, `Exception/*.php`, `EntityNotFoundException.php`, `OptimisticLockException.php` | BasicFunctionalTest, UnitOfWorkTest (121; `EntityPersisterMock` is a `CommitPersister` set with `UnitOfWork::set_entity_persister()`), the OneToMany*/ManyToMany* association tests (37), OneToManyOrphanRemovalTest (5), LifecycleCallbackTest (12 of 13, the thirteenth row is a model callback named `testCallback`) |
 | `PersistentCollection` over collections' `ArrayCollection` (lazy loading, snapshot, insert/delete diffs, dirty flag, orphan scheduling), and an `ArrayCollection` property object; `EXTRA_LAZY` collections (`count()`, `contains()`, `containsKey()` and `get()` of an `indexBy` collection, `slice()`, `first()` without loading the collection); `matching()` (in memory when initialized or dirty, else the one-to-many criteria on the back reference with the association's ordering, a `LazyCriteriaCollection` when extra lazy, or the many-to-many persister's criteria query) | `PersistentCollection.php` | the association tests, ManyToManyBasicAssociationTest (22), OneToManyBidirectionalAssociationTest (12), ExtraLazyCollectionTest (37), PersistentCollectionCriteriaTest (2), the ValueConversionType extra-lazy and criteria matching tests (14), the ValueConversionType many-to-many, one-to-many and one-to-one tests (51, the composite one-to-ones through the inverse one-to-one join), PersistentCollectionTest (13) |
 | `BasicEntityPersister` (inserts with identity ids, updates with versions, deletes with join table rows, `load()`, `loadAll()`, `loadById()`, `count()`, `exists()` (with a `Criteria`), `refresh()`, the SELECT/INSERT/COUNT SQL, the joins of the inverse one-to-one and EAGER to-one associations into the SELECT (hydrated by the object hydrator), criteria with `IN` and `NULL`, `loadCriteria()`, `countCriteria()`, `expandCriteriaParameters()`, the comparison operators of a `Criteria` (`LIKE` for `CONTAINS`/`STARTS_WITH`/`ENDS_WITH`, `IS [NOT] NULL`, `IN`/`NOT IN` and `1=0` for an empty list), `InvalidOrientation`, `UnrecognizedField`, `InvalidFindByCall`, `MatchingAssociationFieldRequiresObject`), `SqlExpressionVisitor`, `SqlValueVisitor`, `OneToManyPersister` and `ManyToManyPersister` (`delete()`, `update()`, the extra-lazy `count()`, `slice()`, `containsKey()`, `contains()`, `get()`, and `loadCriteria()` of a many-to-many collection), `PersisterHelper`, `IdentifierFlattener`, the simple object hydrator; the inheritance persisters as kinds of `BasicEntityPersister` (`PersisterKind`): `AbstractEntityInheritancePersister` (the discriminator value in the insert data, the declaring class's column aliases), `SingleTablePersister` (the root table alias, the discriminator column and the subclasses' columns, the discriminator condition), `JoinedSubclassPersister` (inserts into the root table then the sub tables, updates and versions per owning table, deletes from the root table, the parent and subclass joins, the owning table of a field), `OneToManyPersister::deleteJoinedEntityCollection()` (the temporary id table) | `Persisters/Entity/BasicEntityPersister.php`, `Persisters/Entity/AbstractEntityInheritancePersister.php`, `Persisters/Entity/SingleTablePersister.php`, `Persisters/Entity/JoinedSubclassPersister.php`, `Persisters/SqlExpressionVisitor.php`, `Persisters/SqlValueVisitor.php`, `Persisters/MatchingAssociationFieldRequiresObject.php`, `Persisters/Collection/*Persister.php`, `Utility/*.php`, `Internal/Hydration/SimpleObjectHydrator.php` | EntityRepositoryTest, EntityRepositoryCriteriaTest (6), BasicFunctionalTest, ManyToManyBasicAssociationTest (query counts), ExtraLazyCollectionTest, SqlExpressionVisitorTest (1), SingleTableInheritanceTest (22), ClassTableInheritanceTest (16), ClassTableInheritanceSecondTest (2), MappedSuperclassTest (1), OneToOneSingleTableInheritanceTest (1), OrderedJoinedTableInheritanceCollectionTest (1), JoinedTableCompositeKeyTest (2), SingleTableCompositeKeyTest (2), the Ticket tests DDC168, DDC1655 (2), DDC6303 (2), DDC832 (6), GH11500, GH11501, DDC331, DDC1041, DDC163, DDC3719, Persisters/BasicEntityPersisterTypeValueSqlTest (11) |
-| `EntityRepository` (`find()`, `findAll()`, `findBy()`, `findOneBy()`, `count()`, `__call()` magic finders with `InvalidMagicMethodCall`, `matching()`, `createResultSetMappingBuilder()`), `DefaultRepositoryFactory` | `EntityRepository.php`, `Repository/*.php` | EntityRepositoryTest (56) |
+| `EntityRepository` (`find()`, `findAll()`, `findBy()`, `findOneBy()`, `count()`, `__call()` magic finders with `InvalidMagicMethodCall`, `matching()`, `createResultSetMappingBuilder()`), `DefaultRepositoryFactory` | `EntityRepository.php`, `Repository/*.php` | EntityRepositoryTest (56), DefaultRepositoryFactoryTest (4) |
 | `LazyCriteriaCollection`: the cached count, `isEmpty()` and `contains()` without loading, `matching()` in memory after one load | `LazyCriteriaCollection.php` | LazyCriteriaCollectionTest (7), EntityRepositoryCriteriaTest |
 | Lifecycle events: `ListenersInvoker` (callbacks, entity listeners, event manager), the event args classes, `PreUpdateEventArgs`; `DefaultEntityListenerResolver` (`Configuration::setEntityListenerResolver()`, the instances outlive `UnitOfWork::clear()`) | `Event/*.php`, `Mapping/EntityListenerResolver.php`, `Mapping/DefaultEntityListenerResolver.php` | LifecycleCallbackTest, EntityListenersTest (10), PostLoadEventTest (9 of 10), EntityListenerResolverTest (4) |
 | `SchemaTool::createSchema()`/`dropSchema()`/`getSchemaFromMetadata()`/`updateSchema()`/`getUpdateSchemaSql()` for no, single table and joined (class table) inheritance (columns, join columns and tables, indexes, unique constraints replacing the indexes they fulfill but fulltext and spatial ones, foreign keys, the child tables' primary keys and `ON DELETE CASCADE` foreign keys to the root table); the `ToolEvents` (`postGenerateSchemaTable`, `postGenerateSchema`) and their event args (`setSchema()`, `setClassTable()`) | `Tools/SchemaTool.php`, `Tools/ToolEvents.php`, `Tools/Event/*.php` | the functional tests' schemas, CompanySchemaTest (2), Tools/SchemaToolTest (33), SchemaTool/DBAL483Test (1), CustomForeignKeyNameTest (6) |
@@ -195,6 +195,29 @@ Mapping, not reproduced and so not claimed:
   type) cannot fail: the Rust types rule those values out.
 - PHPUnit's `#[Depends]` chains rebuild the metadata in each test.
 
+- `ResolveTargetEntityListener` and `AttachEntityListenersListener`
+  listen through the metadata factory's hooks (its configuration's
+  `loadClassMetadata` and `onClassMetadataNotFound` listeners), not the
+  entity manager's event manager: `addEventSubscriber()` is
+  `ResolveTargetEntityListener::subscribe(&em)`, which adds both hooks to
+  the entity manager's factory (`ClassMetadataFactory::add_*_hook()`).
+  `ResolveTargetEntityListenerTest::testDoesResolveTargetEntitiesInDQLAlsoWithInterfaces`
+  is pending: it passes upstream only through the metadata cache that
+  `OrmTestCase` shares between tests.
+- `ORMSetup` without a cache gives an `ArrayAdapter`: the port has no
+  `APCu`, Memcached or Redis adapter, so the cache namespace seed is not
+  used (the two `APCu` tests are `n/a`). Persistence's `MappingDriver`
+  has `Any` as a supertrait, so `assertInstanceOf()` of a driver is
+  `downcast_ref()`.
+- `InsertBatch::batch_by_entity_type()` takes the entity manager's
+  `getClassMetadata()` as a function; the `UnitOfWork` calls it.
+- `DatabaseDriver::new()` is async and lists the schema manager's tables
+  when the driver is made (`listTables()` is async; the mapping driver's
+  methods are not). The driver reverse engineers them on first use, as
+  upstream does, so a table without a primary key still throws then;
+  `setTables()` replaces them. `getAllClassNames()` and
+  `loadMetadataForClass()` see the database as it was when the driver
+  was made.
 - `XmlDriver` reads the mapping files with php2rust-dom, as SimpleXML
   reads them (child elements and attributes without a namespace prefix;
   an element's own text). XSD validation runs only when php2rust-dom can
@@ -209,9 +232,17 @@ Mapping, not reproduced and so not claimed:
   `load_driver()` of the test binary; `assertEquals()` on a name map
   compares it without its key order.
 
-Mapping pending: the Symfony XmlDriverTest, StaticPHPMappingDriverTest
-(the models' static `loadMetadata()` methods are PHP code) and
-`ClassMetadataTest::testClassNameMappingDiscriminatorValue`
+- StaticPHPMappingDriverTest: the models' static `loadMetadata()` methods
+  are PHP code, so the test writes each one as a Rust fn making the same
+  calls on the metadata, and `models::register_with_load_metadata()`
+  declares it on the recorded class (a class without one inherits its
+  parent's, as PHP's static methods do). `testMappedSuperclassWithRepository`
+  is pending, as for the attribute driver.
+- The Symfony XmlDriverTest gives each test its own directory under the
+  system temp directory (upstream's tests share one, as they run one at
+  a time).
+
+Mapping pending: `ClassMetadataTest::testClassNameMappingDiscriminatorValue`
 (the static PHP driver); `RawValuePropertyAccessorTest` (PHP 8.4 property hooks);
 `AttributeDriverTest::testMappedSuperclassWithRepository`,
 `ClassMetadataFactoryTest::testAcceptsEntityManagerInterfaceInstances`
@@ -414,6 +445,10 @@ Persistence, not reproduced and so not claimed:
   `register_listener_method()`), what a compiler would emit. A custom
   repository class is a name: the repository is an `EntityRepository`
   that reports it. `__call()` magic finders are `EntityRepository::call()`.
+  DefaultRepositoryFactoryTest's entity manager stubs are entity
+  managers whose metadata factory holds the stubbed metadata
+  (`setMetadataFor()`); `assertInstanceOf()` of a repository compares its
+  repository class.
 - `wrapInTransaction()` takes an async closure; `getReference()` is
   async: for a class with subclasses it calls `find()`, as PHP does.
 - The inheritance persisters are one `BasicEntityPersister` whose

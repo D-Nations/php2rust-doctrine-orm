@@ -12,7 +12,7 @@
 //! the `NOTIFY` change tracking policy's listener and partial objects are
 //! not ported.
 //!
-//! Upstream: doctrine/orm src/UnitOfWork.php src/Internal/HydrationCompleteHandler.php src/Internal/UnitOfWork/InsertBatch.php
+//! Upstream: doctrine/orm src/UnitOfWork.php src/Internal/HydrationCompleteHandler.php
 //! Upstream: doctrine/orm src/Id/AssignedGenerator.php src/Id/IdentityGenerator.php src/Id/SequenceGenerator.php
 
 use std::collections::{HashMap, HashSet};
@@ -35,6 +35,7 @@ use crate::event::{
 use crate::events;
 use crate::exception;
 use crate::id::IdGenerator;
+use crate::internal::unit_of_work::InsertBatch;
 use crate::internal::{StronglyConnectedComponents, TopologicalSort, object_id};
 use crate::mapping::{AssociationMapping, ClassMetadata};
 use crate::object::EntityObject;
@@ -1274,26 +1275,11 @@ impl UnitOfWork {
         let em = self.em()?;
         let order = self.compute_insert_execution_order()?;
 
-        // InsertBatch::batchByEntityType()
-        let mut batches: Vec<(Arc<ClassMetadata>, Vec<Object>)> = Vec::new();
-        for entity in order {
-            let entity_class = em.get_class_metadata(entity.class())?;
-            let assigned = matches!(
-                entity_class.read().id_generator,
-                Some(IdGenerator::Assigned)
-            );
-            match batches.last_mut() {
-                Some((current, entities))
-                    if current.read().name == entity_class.read().name && assigned =>
-                {
-                    entities.push(entity);
-                }
-                _ => batches.push((entity_class, vec![entity])),
-            }
-        }
+        let batches =
+            InsertBatch::batch_by_entity_type(|class| em.get_class_metadata(class), order)?;
 
         let mut events_to_dispatch: Vec<(Arc<ClassMetadata>, Object, i32)> = Vec::new();
-        for (class, entities) in batches {
+        for InsertBatch { class, entities } in batches {
             let invoke = self.subscribed(&em, &class, events::POST_PERSIST);
             let persister = self.get_commit_persister(&class.read().name.clone())?;
             for entity in &entities {

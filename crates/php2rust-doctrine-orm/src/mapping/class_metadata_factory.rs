@@ -146,6 +146,39 @@ impl ClassMetadataFactory {
             .unwrap_or_else(PoisonError::into_inner) = Some(configuration);
     }
 
+    /// Adds a `loadClassMetadata` listener to the configuration the
+    /// factory has (`EventManager::addEventListener()`).
+    pub fn add_load_class_metadata_hook(&self, hook: LoadClassMetadataHook) -> Result<(), Thrown> {
+        let mut configuration = self
+            .configuration
+            .write()
+            .unwrap_or_else(PoisonError::into_inner);
+        configuration
+            .as_mut()
+            .ok_or_else(not_set)?
+            .load_class_metadata
+            .push(hook);
+        Ok(())
+    }
+
+    /// Adds an `onClassMetadataNotFound` listener to the configuration the
+    /// factory has (`EventManager::addEventListener()`).
+    pub fn add_class_metadata_not_found_hook(
+        &self,
+        hook: ClassMetadataNotFoundHook,
+    ) -> Result<(), Thrown> {
+        let mut configuration = self
+            .configuration
+            .write()
+            .unwrap_or_else(PoisonError::into_inner);
+        configuration
+            .as_mut()
+            .ok_or_else(not_set)?
+            .on_class_metadata_not_found
+            .push(hook);
+        Ok(())
+    }
+
     fn configuration(&self) -> Result<FactoryConfiguration, Thrown> {
         self.configuration
             .read()

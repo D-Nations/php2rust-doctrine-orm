@@ -114,7 +114,7 @@ src/Internal/SQLResultCasing.php	SQLResultCasing	21	ported	crates/php2rust-doctr
 src/Internal/StronglyConnectedComponents.php	StronglyConnectedComponents	81	ported	crates/php2rust-doctrine-orm/src/internal/strongly_connected_components.rs
 src/Internal/TopologicalSort.php	TopologicalSort	71	ported	crates/php2rust-doctrine-orm/src/internal/topological_sort.rs
 src/Internal/TopologicalSort/CycleDetectedException.php	CycleDetectedException	29	ported	crates/php2rust-doctrine-orm/src/internal/topological_sort.rs
-src/Internal/UnitOfWork/InsertBatch.php	InsertBatch	35	ported	crates/php2rust-doctrine-orm/src/unit_of_work.rs
+src/Internal/UnitOfWork/InsertBatch.php	InsertBatch	35	ported	crates/php2rust-doctrine-orm/src/internal/unit_of_work/insert_batch.rs
 src/LazyCriteriaCollection.php	LazyCriteriaCollection	51	ported	crates/php2rust-doctrine-orm/src/lazy_criteria_collection.rs
 src/Mapping/AnsiQuoteStrategy.php	AnsiQuoteStrategy	53	ported	crates/php2rust-doctrine-orm/src/mapping/quote_strategy.rs
 src/Mapping/ArrayAccessImplementation.php	ArrayAccessImplementation	51	ported	crates/php2rust-doctrine-orm/src/mapping/field_mapping.rs
@@ -146,7 +146,7 @@ src/Mapping/DiscriminatorColumnMapping.php	DiscriminatorColumnMapping	50	ported	
 src/Mapping/DiscriminatorMap.php	DiscriminatorMap	11	ported	crates/php2rust-doctrine-orm/src/mapping/attributes.rs
 src/Mapping/Driver/AttributeDriver.php	AttributeDriver	551	ported	crates/php2rust-doctrine-orm/src/mapping/driver/attribute_driver.rs
 src/Mapping/Driver/AttributeReader.php	AttributeReader	84	ported	crates/php2rust-doctrine-orm/src/mapping/driver/attribute_reader.rs
-src/Mapping/Driver/DatabaseDriver.php	DatabaseDriver	419	pending	
+src/Mapping/Driver/DatabaseDriver.php	DatabaseDriver	419	ported	crates/php2rust-doctrine-orm/src/mapping/driver/database_driver.rs
 src/Mapping/Driver/LoadMappingFileImplementation.php	LoadMappingFileImplementation LoadMappingFileImplementation	21	ported	crates/php2rust-doctrine-orm/src/mapping/driver/xml_driver.rs
 src/Mapping/Driver/ReflectionBasedDriver.php	ReflectionBasedDriver	25	ported	crates/php2rust-doctrine-orm/src/mapping/driver/attribute_driver.rs
 src/Mapping/Driver/RepeatableAttributeCollection.php	RepeatableAttributeCollection	7	ported	crates/php2rust-doctrine-orm/src/mapping/driver/attribute_reader.rs
@@ -231,7 +231,7 @@ src/NativeQuery.php	NativeQuery	52	ported	crates/php2rust-doctrine-orm/src/nativ
 src/NoResultException.php	NoResultException	9	ported	crates/php2rust-doctrine-orm/src/abstract_query.rs
 src/NonUniqueResultException.php	NonUniqueResultException	10	ported	crates/php2rust-doctrine-orm/src/abstract_query.rs
 src/ORMInvalidArgumentException.php	ORMInvalidArgumentException	160	ported	crates/php2rust-doctrine-orm/src/exception.rs
-src/ORMSetup.php	ORMSetup	157	pending	
+src/ORMSetup.php	ORMSetup	157	ported	crates/php2rust-doctrine-orm/src/orm_setup.rs
 src/OptimisticLockException.php	OptimisticLockException	37	ported	crates/php2rust-doctrine-orm/src/exception.rs
 src/PersistentCollection.php	PersistentCollection	376	ported	crates/php2rust-doctrine-orm/src/persistent_collection.rs
 src/PersistentCollectionImplementation.php	PersistentCollectionImplementation PersistentCollectionImplementation	24	ported	crates/php2rust-doctrine-orm/src/persistent_collection.rs
@@ -401,7 +401,7 @@ src/Repository/DefaultRepositoryFactory.php	DefaultRepositoryFactory	24	ported	c
 src/Repository/Exception/InvalidFindByCall.php	InvalidFindByCall	16	ported	crates/php2rust-doctrine-orm/src/exception.rs
 src/Repository/Exception/InvalidMagicMethodCall.php	InvalidMagicMethodCall	21	ported	crates/php2rust-doctrine-orm/src/exception.rs
 src/Repository/RepositoryFactory.php	RepositoryFactory	8	ported	crates/php2rust-doctrine-orm/src/repository/mod.rs
-src/Tools/AttachEntityListenersListener.php	AttachEntityListenersListener	38	pending	
+src/Tools/AttachEntityListenersListener.php	AttachEntityListenersListener	38	ported	crates/php2rust-doctrine-orm/src/tools/attach_entity_listeners_listener.rs
 src/Tools/Console/ApplicationCompatibility.php	ApplicationCompatibility	15	pending	
 src/Tools/Console/Command/AbstractEntityManagerCommand.php	AbstractEntityManagerCommand	19	pending	
 src/Tools/Console/Command/ClearCache/CollectionRegionCommand.php	CollectionRegionCommand	96	pending	
@@ -458,7 +458,7 @@ src/Tools/Pagination/RowNumberOverFunction.php	RowNumberOverFunction	22	ported	c
 src/Tools/Pagination/WhereInWalker.php	WhereInWalker	85	ported	crates/php2rust-doctrine-orm/src/tools/pagination/where_in_walker.rs
 src/Tools/Pagination/Window.php	Window	46	ported	crates/php2rust-doctrine-orm/src/tools/pagination/window.rs
 src/Tools/Pagination/WindowPage.php	WindowPage	76	ported	crates/php2rust-doctrine-orm/src/tools/pagination/window_page.rs
-src/Tools/ResolveTargetEntityListener.php	ResolveTargetEntityListener	75	pending	
+src/Tools/ResolveTargetEntityListener.php	ResolveTargetEntityListener	75	ported	crates/php2rust-doctrine-orm/src/tools/resolve_target_entity_listener.rs
 src/Tools/SchemaTool.php	SchemaTool	1118	ported	crates/php2rust-doctrine-orm/src/tools/schema_tool.rs
 src/Tools/SchemaValidator.php	SchemaValidator	345	ported	crates/php2rust-doctrine-orm/src/tools/schema_validator.rs
 src/Tools/ToolEvents.php	ToolEvents	7	ported	crates/php2rust-doctrine-orm/src/tools/tool_events.rs

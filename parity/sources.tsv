@@ -251,6 +251,7 @@ crates/php2rust-doctrine-orm/src/internal/hydration/object_hydrator.rs	doctrine/
 crates/php2rust-doctrine-orm/src/internal/strongly_connected_components.rs	doctrine/orm	src/Internal/StronglyConnectedComponents.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/internal/topological_sort.rs	doctrine/orm	src/Internal/TopologicalSort.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/internal/topological_sort.rs	doctrine/orm	src/Internal/TopologicalSort/CycleDetectedException.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/src/internal/unit_of_work/insert_batch.rs	doctrine/orm	src/Internal/UnitOfWork/InsertBatch.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/lazy_criteria_collection.rs	doctrine/orm	src/LazyCriteriaCollection.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/mapping/association_mapping.rs	doctrine/orm	src/Mapping/AssociationMapping.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/mapping/association_mapping.rs	doctrine/orm	src/Mapping/OwningSideMapping.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
@@ -327,6 +328,7 @@ crates/php2rust-doctrine-orm/src/mapping/driver/attribute_driver.rs	doctrine/orm
 crates/php2rust-doctrine-orm/src/mapping/driver/attribute_driver.rs	doctrine/orm	src/Mapping/Builder/EntityListenerBuilder.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/mapping/driver/attribute_reader.rs	doctrine/orm	src/Mapping/Driver/AttributeReader.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/mapping/driver/attribute_reader.rs	doctrine/orm	src/Mapping/Driver/RepeatableAttributeCollection.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/src/mapping/driver/database_driver.rs	doctrine/orm	src/Mapping/Driver/DatabaseDriver.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/mapping/driver/xml_driver.rs	doctrine/orm	src/Mapping/Driver/XmlDriver.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/mapping/driver/xml_driver.rs	doctrine/orm	src/Mapping/Driver/LoadMappingFileImplementation.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/mapping/driver/xml_driver.rs	doctrine/orm	src/Mapping/Driver/SimplifiedXmlDriver.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
@@ -362,6 +364,7 @@ crates/php2rust-doctrine-orm/src/mapping/typed_field_mapper.rs	doctrine/orm	src/
 crates/php2rust-doctrine-orm/src/mapping/typed_field_mapper.rs	doctrine/orm	src/Mapping/DefaultTypedFieldMapper.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/mapping/typed_field_mapper.rs	doctrine/orm	src/Mapping/ChainTypedFieldMapper.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/native_query.rs	doctrine/orm	src/NativeQuery.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/src/orm_setup.rs	doctrine/orm	src/ORMSetup.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/persistent_collection.rs	doctrine/orm	src/PersistentCollection.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/persistent_collection.rs	doctrine/orm	src/PersistentCollectionImplementation.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/persisters/abstract_entity_inheritance_persister.rs	doctrine/orm	src/Persisters/Entity/AbstractEntityInheritancePersister.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
@@ -521,6 +524,7 @@ crates/php2rust-doctrine-orm/src/query_builder.rs	doctrine/orm	src/QueryBuilder.
 crates/php2rust-doctrine-orm/src/query_type.rs	doctrine/orm	src/QueryType.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/repository/mod.rs	doctrine/orm	src/Repository/RepositoryFactory.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/repository/mod.rs	doctrine/orm	src/Repository/DefaultRepositoryFactory.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/src/tools/attach_entity_listeners_listener.rs	doctrine/orm	src/Tools/AttachEntityListenersListener.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/tools/event.rs	doctrine/orm	src/Tools/Event/GenerateSchemaTableEventArgs.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/tools/event.rs	doctrine/orm	src/Tools/Event/GenerateSchemaEventArgs.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/tools/pagination/count_output_walker.rs	doctrine/orm	src/Tools/Pagination/CountOutputWalker.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
@@ -546,6 +550,7 @@ crates/php2rust-doctrine-orm/src/tools/pagination/where_in_walker.rs	doctrine/or
 crates/php2rust-doctrine-orm/src/tools/pagination/window.rs	doctrine/orm	src/Tools/Pagination/Window.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/tools/pagination/window_page.rs	doctrine/orm	src/Tools/Pagination/Page.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/tools/pagination/window_page.rs	doctrine/orm	src/Tools/Pagination/WindowPage.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/src/tools/resolve_target_entity_listener.rs	doctrine/orm	src/Tools/ResolveTargetEntityListener.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/tools/schema_tool.rs	doctrine/orm	src/Tools/SchemaTool.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/tools/schema_tool.rs	doctrine/orm	src/Tools/ToolsException.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/tools/schema_tool.rs	doctrine/orm	src/Tools/Exception/MissingColumnException.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
@@ -553,7 +558,6 @@ crates/php2rust-doctrine-orm/src/tools/schema_validator.rs	doctrine/orm	src/Tool
 crates/php2rust-doctrine-orm/src/tools/tool_events.rs	doctrine/orm	src/Tools/ToolEvents.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/unit_of_work.rs	doctrine/orm	src/UnitOfWork.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/unit_of_work.rs	doctrine/orm	src/Internal/HydrationCompleteHandler.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
-crates/php2rust-doctrine-orm/src/unit_of_work.rs	doctrine/orm	src/Internal/UnitOfWork/InsertBatch.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/unit_of_work.rs	doctrine/orm	src/Id/AssignedGenerator.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/unit_of_work.rs	doctrine/orm	src/Id/IdentityGenerator.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/src/unit_of_work.rs	doctrine/orm	src/Id/SequenceGenerator.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
@@ -565,6 +569,7 @@ crates/php2rust-doctrine-orm/tests/advanced_dql_query_test.rs	doctrine/orm	tests
 crates/php2rust-doctrine-orm/tests/ansi_quote_strategy_test.rs	doctrine/orm	tests/Tests/ORM/Mapping/AnsiQuoteStrategyTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/array_hydrator_test.rs	doctrine/orm	tests/Tests/ORM/Hydration/ArrayHydratorTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/association_mapping_test.rs	doctrine/orm	tests/Tests/ORM/Mapping/AssociationMappingTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/tests/attach_entity_listeners_listener_test.rs	doctrine/orm	tests/Tests/ORM/Tools/AttachEntityListenersListenerTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs	doctrine/orm	tests/Tests/ORM/Mapping/AttributeDriverTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/attribute_driver_test.rs	doctrine/orm	tests/Tests/ORM/Mapping/MappingDriverTestCase.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/attribute_reader_test.rs	doctrine/orm	tests/Tests/ORM/Mapping/AttributeReaderTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
@@ -615,6 +620,7 @@ crates/php2rust-doctrine-orm/tests/common/custom_tree_walker_join.rs	doctrine/or
 crates/php2rust-doctrine-orm/tests/common/custom_types.rs	doctrine/orm	tests/Tests/DbalTypes/UpperCaseStringType.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/common/custom_types.rs	doctrine/orm	tests/Tests/DbalTypes/NegativeToPositiveType.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/common/custom_types.rs	doctrine/orm	tests/Tests/Models/CustomType/CustomTypeParent.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/tests/common/database_driver_test_case.rs	doctrine/orm	tests/Tests/ORM/Functional/DatabaseDriverTestCase.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/common/dql.rs	doctrine/orm	tests/Tests/OrmTestCase.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/common/dql.rs	doctrine/orm	tests/Tests/Mocks/EntityManagerMock.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/common/dql.rs	doctrine/orm	tests/Tests/Mocks/NullSqlWalker.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
@@ -702,6 +708,7 @@ crates/php2rust-doctrine-orm/tests/custom_foreign_key_name_test.rs	doctrine/orm	
 crates/php2rust-doctrine-orm/tests/custom_functions_test.rs	doctrine/orm	tests/Tests/ORM/Functional/CustomFunctionsTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/custom_tree_walkers_join_test.rs	doctrine/orm	tests/Tests/ORM/Query/CustomTreeWalkersJoinTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/custom_tree_walkers_test.rs	doctrine/orm	tests/Tests/ORM/Query/CustomTreeWalkersTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/tests/database_driver_test.rs	doctrine/orm	tests/Tests/ORM/Functional/DatabaseDriverTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/dbal483_test.rs	doctrine/orm	tests/Tests/ORM/Functional/SchemaTool/DBAL483Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/ddc1040_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/DDC1040Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/ddc1041_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/DDC1041Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
@@ -780,6 +787,7 @@ crates/php2rust-doctrine-orm/tests/ddc2306_test.rs	doctrine/orm	tests/Tests/ORM/
 crates/php2rust-doctrine-orm/tests/ddc2346_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/DDC2346Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/ddc2350_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/DDC2350Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/ddc237_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/DDC237Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/tests/ddc2387_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/DDC2387Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/ddc2494_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/DDC2494Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/ddc2519_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/DDC2519Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/ddc2575_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/DDC2575Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
@@ -808,6 +816,7 @@ crates/php2rust-doctrine-orm/tests/ddc3160_test.rs	doctrine/orm	tests/Tests/ORM/
 crates/php2rust-doctrine-orm/tests/ddc3170_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/DDC3170Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/ddc3192_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/DDC3192Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/ddc3223_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/DDC3223Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/tests/ddc3300_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/DDC3300Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/ddc3303_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/DDC3303Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/ddc331_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/DDC331Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/ddc3330_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/DDC3330Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
@@ -872,13 +881,16 @@ crates/php2rust-doctrine-orm/tests/default_entity_hydrator_test.rs	doctrine/orm	
 crates/php2rust-doctrine-orm/tests/default_query_cache_test.rs	doctrine/orm	tests/Tests/ORM/Cache/DefaultQueryCacheTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/default_quote_strategy_test.rs	doctrine/orm	tests/Tests/ORM/Mapping/DefaultQuoteStrategyTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/default_region_test.rs	doctrine/orm	tests/Tests/ORM/Cache/DefaultRegionTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/tests/default_repository_factory_test.rs	doctrine/orm	tests/Tests/ORM/Repository/DefaultRepositoryFactoryTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/delete_sql_generation_test.rs	doctrine/orm	tests/Tests/ORM/Query/DeleteSqlGenerationTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/discriminator_column_mapping_test.rs	doctrine/orm	tests/Tests/ORM/Mapping/DiscriminatorColumnMappingTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/tests/eager_fetch_collection_test.rs	doctrine/orm	tests/Tests/ORM/Functional/EagerFetchCollectionTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/eager_second_level_cache_collection_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/EagerSecondLevelCacheCollectionTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/embedded_class_mapping_test.rs	doctrine/orm	tests/Tests/ORM/Mapping/EmbeddedClassMappingTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/entity_listener_resolver_test.rs	doctrine/orm	tests/Tests/ORM/Mapping/EntityListenerResolverTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/entity_listeners_test.rs	doctrine/orm	tests/Tests/ORM/Functional/EntityListenersTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/entity_manager_test.rs	doctrine/orm	tests/Tests/ORM/EntityManagerTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/tests/entity_not_found_exception_test.rs	doctrine/orm	tests/Tests/ORM/EntityNotFoundExceptionTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/entity_repository_criteria_test.rs	doctrine/orm	tests/Tests/ORM/Functional/EntityRepositoryCriteriaTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/entity_repository_test.rs	doctrine/orm	tests/Tests/ORM/Functional/EntityRepositoryTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/enum_property_accessor_test.rs	doctrine/orm	tests/Tests/ORM/Mapping/PropertyAccessors/EnumPropertyAccessorTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
@@ -908,6 +920,7 @@ crates/php2rust-doctrine-orm/tests/gh10348_test.rs	doctrine/orm	tests/Tests/ORM/
 crates/php2rust-doctrine-orm/tests/gh10387_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/GH10387Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/gh10450_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/GH10450Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/gh10454_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/GH10454Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/tests/gh10473_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/GH10473Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/gh10531_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/GH10531Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/gh10532_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/GH10532Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/gh10566_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/GH10566Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
@@ -958,6 +971,7 @@ crates/php2rust-doctrine-orm/tests/gh11982_test.rs	doctrine/orm	tests/Tests/ORM/
 crates/php2rust-doctrine-orm/tests/gh12166_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/GH12166/GH12166Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/gh12166_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/GH12166/LazyEntityWithReadonlyId.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/gh12172_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/GH12172Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/tests/gh12174_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/GH12174Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/gh12183_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/GH12183Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/gh12225_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/GH12225/GH12225Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/gh12225_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/GH12225/AbstractDirectory.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
@@ -1009,6 +1023,7 @@ crates/php2rust-doctrine-orm/tests/gh7505_test.rs	doctrine/orm	tests/Tests/ORM/F
 crates/php2rust-doctrine-orm/tests/gh7512_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/GH7512Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/gh7629_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/GH7629Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/gh7661_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/GH7661Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/tests/gh7684_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/GH7684Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/gh7717_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/GH7717Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/gh7735_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/GH7735Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/gh7737_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/GH7737Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
@@ -1052,6 +1067,7 @@ crates/php2rust-doctrine-orm/tests/index_by_association_test.rs	doctrine/orm	tes
 crates/php2rust-doctrine-orm/tests/index_by_association_test.rs	doctrine/orm	tests/Tests/Models/StockExchange/Market.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/index_by_association_test.rs	doctrine/orm	tests/Tests/Models/StockExchange/Stock.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/index_by_association_test.rs	doctrine/orm	tests/Tests/Models/StockExchange/Bond.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/tests/insert_batch_test.rs	doctrine/orm	tests/Tests/ORM/Internal/UnitOfWork/InsertBatchTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/inverse_side_mapping_test.rs	doctrine/orm	tests/Tests/ORM/Mapping/InverseSideMappingTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/issue5989_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/Issue5989Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/issue9300_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/Issue9300Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
@@ -1100,6 +1116,7 @@ crates/php2rust-doctrine-orm/tests/one_to_one_single_table_inheritance_test.rs	d
 crates/php2rust-doctrine-orm/tests/one_to_one_unidirectional_association_test.rs	doctrine/orm	tests/Tests/ORM/Functional/OneToOneUnidirectionalAssociationTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/optimistic_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Locking/OptimisticTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/ordered_joined_table_inheritance_collection_test.rs	doctrine/orm	tests/Tests/ORM/Functional/OrderedJoinedTableInheritanceCollectionTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/tests/orm_setup_test.rs	doctrine/orm	tests/Tests/ORM/ORMSetupTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/owning_side_mapping_test.rs	doctrine/orm	tests/Tests/ORM/Mapping/OwningSideMappingTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/pagination_test.rs	doctrine/orm	tests/Tests/ORM/Functional/PaginationTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/pagination_test.rs	doctrine/orm	tests/Tests/DbalTypes/CustomIdObjectType.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
@@ -1141,6 +1158,7 @@ crates/php2rust-doctrine-orm/tests/reference_proxy_test.rs	doctrine/orm	tests/Te
 crates/php2rust-doctrine-orm/tests/reference_proxy_test.rs	doctrine/orm	tests/Tests/Models/ECommerce/ECommerceProduct2.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/reflection_embedded_property_test.rs	doctrine/orm	tests/Tests/ORM/Mapping/ReflectionEmbeddedPropertyTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/reflection_readonly_property_test.rs	doctrine/orm	tests/Tests/ORM/Mapping/ReflectionReadonlyPropertyTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/tests/resolve_target_entity_listener_test.rs	doctrine/orm	tests/Tests/ORM/Tools/ResolveTargetEntityListenerTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/result_cache_test.rs	doctrine/orm	tests/Tests/ORM/Functional/ResultCacheTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/result_set_mapping_test.rs	doctrine/orm	tests/Tests/ORM/Hydration/ResultSetMappingTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/root_type_walker_test.rs	doctrine/orm	tests/Tests/ORM/Tools/Pagination/RootTypeWalkerTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
@@ -1177,6 +1195,7 @@ crates/php2rust-doctrine-orm/tests/single_table_inheritance_test.rs	doctrine/orm
 crates/php2rust-doctrine-orm/tests/sql_expression_visitor_test.rs	doctrine/orm	tests/Tests/ORM/Query/SqlExpressionVisitorTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/sql_filter_test.rs	doctrine/orm	tests/Tests/ORM/Functional/SQLFilterTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/sql_walker_test.rs	doctrine/orm	tests/Tests/ORM/Query/SqlWalkerTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/tests/static_php_mapping_driver_test.rs	doctrine/orm	tests/Tests/ORM/Mapping/StaticPHPMappingDriverTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/statistics_cache_logger_test.rs	doctrine/orm	tests/Tests/ORM/Cache/StatisticsCacheLoggerTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/strongly_connected_components_test.rs	doctrine/orm	tests/Tests/ORM/Internal/StronglyConnectedComponentsTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/switch_context_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/SwitchContextWithFilter/SwitchContextTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
@@ -1188,6 +1207,8 @@ crates/php2rust-doctrine-orm/tests/switch_context_test.rs	doctrine/orm	tests/Tes
 crates/php2rust-doctrine-orm/tests/switch_context_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/SwitchContextWithFilter/Entity/PrimaryPatInsurance.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/switch_context_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/SwitchContextWithFilter/Entity/SecondaryPatInsurance.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/switch_context_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/SwitchContextWithFilter/SQLFilter/PracticeContextSQLFilter.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/tests/symfony_xml_driver_test.rs	doctrine/orm	tests/Tests/ORM/Mapping/Symfony/XmlDriverTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/tests/symfony_xml_driver_test.rs	doctrine/orm	tests/Tests/ORM/Mapping/Symfony/DriverTestCase.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/table_mapping_test.rs	doctrine/orm	tests/Tests/ORM/Mapping/TableMappingTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/ticket2481_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/Ticket2481Test.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/ticket4646_instance_of_abstract_test.rs	doctrine/orm	tests/Tests/ORM/Functional/Ticket/Ticket4646InstanceOfAbstractTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
@@ -1209,6 +1230,7 @@ crates/php2rust-doctrine-orm/tests/typed_field_mapper_test.rs	doctrine/orm	tests
 crates/php2rust-doctrine-orm/tests/typed_no_default_property_accessor_test.rs	doctrine/orm	tests/Tests/ORM/Mapping/PropertyAccessors/TypedNoDefaultPropertyAccessorTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/unit_of_work_lifecycle_test.rs	doctrine/orm	tests/Tests/ORM/Functional/UnitOfWorkLifecycleTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/unit_of_work_test.rs	doctrine/orm	tests/Tests/ORM/UnitOfWorkTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
+crates/php2rust-doctrine-orm/tests/unrecognized_field_test.rs	doctrine/orm	tests/Tests/ORM/Persisters/Exception/UnrecognizedFieldTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/update_sql_generation_test.rs	doctrine/orm	tests/Tests/ORM/Query/UpdateSqlGenerationTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/value_conversion_type_many_to_many_composite_id_foreign_key_test.rs	doctrine/orm	tests/Tests/ORM/Functional/ValueConversionType/ManyToManyCompositeIdForeignKeyTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
 crates/php2rust-doctrine-orm/tests/value_conversion_type_many_to_many_composite_id_test.rs	doctrine/orm	tests/Tests/ORM/Functional/ValueConversionType/ManyToManyCompositeIdTest.php	00c2fd70da291cca1ec75f4dae5344fe3df588fa
