@@ -813,10 +813,10 @@ tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testPageItemsAreAL
 tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testPaginationWithColumnAttributeNameDifference	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testPaginationWithColumnAttributeNameDifference
 tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testPaginationWithSubSelectOrderByExpression	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testPaginationWithSubSelectOrderByExpression
 tests/Tests/ORM/Functional/PaginationTest.php	PaginationTest::testQueryWalkerIsKept	ported	crates/php2rust-doctrine-orm/tests/pagination_test.rs::testQueryWalkerIsKept
-tests/Tests/ORM/Functional/ParserResultSerializationTest.php	ParserResultSerializationTest::testSerializeParserResultForQueryWithSqlOutputWalker	pending	
-tests/Tests/ORM/Functional/ParserResultSerializationTest.php	ParserResultSerializationTest::testSerializeParserResultForQueryWithSqlWalker	pending	
-tests/Tests/ORM/Functional/ParserResultSerializationTest.php	ParserResultSerializationTest::testSymfony44ProvidedData	pending	
-tests/Tests/ORM/Functional/ParserResultSerializationTest.php	ParserResultSerializationTest::testUnserializeSingleSelectResult	pending	
+tests/Tests/ORM/Functional/ParserResultSerializationTest.php	ParserResultSerializationTest::testSerializeParserResultForQueryWithSqlOutputWalker	pending	needs PHP serialize()/unserialize() and symfony/var-exporter of a ParserResult; the port's ParserResult is a Rust value with no serialized form
+tests/Tests/ORM/Functional/ParserResultSerializationTest.php	ParserResultSerializationTest::testSerializeParserResultForQueryWithSqlWalker	pending	needs PHP serialize()/unserialize() and symfony/var-exporter of a ParserResult; the port's ParserResult is a Rust value with no serialized form
+tests/Tests/ORM/Functional/ParserResultSerializationTest.php	ParserResultSerializationTest::testSymfony44ProvidedData	pending	needs PHP serialize()/unserialize() and symfony/var-exporter of a ParserResult; the port's ParserResult is a Rust value with no serialized form
+tests/Tests/ORM/Functional/ParserResultSerializationTest.php	ParserResultSerializationTest::testUnserializeSingleSelectResult	pending	needs PHP serialize()/unserialize() and symfony/var-exporter of a ParserResult; the port's ParserResult is a Rust value with no serialized form
 tests/Tests/ORM/Functional/PartialObjectsTest.php	PartialObjectsTest::testPartialObjectLazyInitDoesNotOverwriteChangedProperty	pending	needs PARTIAL objects as lazy ghosts that load the rest on first access; the UnitOfWork's partial objects are not ported
 tests/Tests/ORM/Functional/PartialObjectsTest.php	PartialObjectsTest::testPartialObjectProxyLoadedChangeset	pending	needs PARTIAL objects as lazy ghosts that load the rest on first access; the UnitOfWork's partial objects are not ported
 tests/Tests/ORM/Functional/PersistentCollectionCriteriaTest.php	PersistentCollectionCriteriaTest::testCanCountWithoutLoadingPersistentCollection	ported	crates/php2rust-doctrine-orm/tests/persistent_collection_criteria_test.rs::testCanCountWithoutLoadingPersistentCollection
@@ -838,13 +838,13 @@ tests/Tests/ORM/Functional/PostLoadEventTest.php	PostLoadEventTest::testLoadedPr
 tests/Tests/ORM/Functional/PostLoadEventTest.php	PostLoadEventTest::testLoadedProxyEntityShouldTriggerEvent	ported	crates/php2rust-doctrine-orm/tests/post_load_event_test.rs::testLoadedProxyEntityShouldTriggerEvent
 tests/Tests/ORM/Functional/PostLoadEventTest.php	PostLoadEventTest::testLoadedProxyPartialShouldTriggerEvent	ported	crates/php2rust-doctrine-orm/tests/post_load_event_test.rs::testLoadedProxyPartialShouldTriggerEvent
 tests/Tests/ORM/Functional/PrePersistEventTest.php	PrePersistEventTest::testCallingPersistInPrePersistHook	ported	crates/php2rust-doctrine-orm/tests/pre_persist_event_test.rs::testCallingPersistInPrePersistHook
-tests/Tests/ORM/Functional/PropertyHooksTest.php	PropertyHooksTest::testMapPropertyHooks	pending	
-tests/Tests/ORM/Functional/PropertyHooksTest.php	PropertyHooksTest::testMappingVirtualPropertyIsNotSupported	pending	
-tests/Tests/ORM/Functional/PropertyHooksTest.php	PropertyHooksTest::testTriggerLazyLoadingWhenAccessingPropertyHooks	pending	
-tests/Tests/ORM/Functional/ProxiesLikeEntitiesTest.php	ProxiesLikeEntitiesTest::testEntityWithIdentifier	pending	
-tests/Tests/ORM/Functional/ProxiesLikeEntitiesTest.php	ProxiesLikeEntitiesTest::testFindWithProxyName	pending	
-tests/Tests/ORM/Functional/ProxiesLikeEntitiesTest.php	ProxiesLikeEntitiesTest::testPersistUpdate	pending	
-tests/Tests/ORM/Functional/ProxiesLikeEntitiesTest.php	ProxiesLikeEntitiesTest::testProxyAsDqlParameterPersist	pending	
+tests/Tests/ORM/Functional/PropertyHooksTest.php	PropertyHooksTest::testMapPropertyHooks	pending	needs PHP 8.4 property hooks (get/set bodies on the model, virtual properties); the recorded models have no hook bodies and EntityObject has no hooks
+tests/Tests/ORM/Functional/PropertyHooksTest.php	PropertyHooksTest::testMappingVirtualPropertyIsNotSupported	pending	needs PHP 8.4 property hooks (get/set bodies on the model, virtual properties); the recorded models have no hook bodies and EntityObject has no hooks
+tests/Tests/ORM/Functional/PropertyHooksTest.php	PropertyHooksTest::testTriggerLazyLoadingWhenAccessingPropertyHooks	pending	needs PHP 8.4 property hooks (get/set bodies on the model, virtual properties); the recorded models have no hook bodies and EntityObject has no hooks
+tests/Tests/ORM/Functional/ProxiesLikeEntitiesTest.php	ProxiesLikeEntitiesTest::testEntityWithIdentifier	ported	crates/php2rust-doctrine-orm/tests/proxies_like_entities_test.rs::testEntityWithIdentifier
+tests/Tests/ORM/Functional/ProxiesLikeEntitiesTest.php	ProxiesLikeEntitiesTest::testFindWithProxyName	n/a: upstream skips it with native lazy objects (There is no such thing as a proxy class name when native lazy objects are enabled.)	
+tests/Tests/ORM/Functional/ProxiesLikeEntitiesTest.php	ProxiesLikeEntitiesTest::testPersistUpdate	ported	crates/php2rust-doctrine-orm/tests/proxies_like_entities_test.rs::testPersistUpdate
+tests/Tests/ORM/Functional/ProxiesLikeEntitiesTest.php	ProxiesLikeEntitiesTest::testProxyAsDqlParameterPersist	ported	crates/php2rust-doctrine-orm/tests/proxies_like_entities_test.rs::testProxyAsDqlParameterPersist
 tests/Tests/ORM/Functional/QueryBuilderParenthesisTest.php	QueryBuilderParenthesisTest::testParenthesisOnMultiLine	ported	crates/php2rust-doctrine-orm/tests/query_builder_parenthesis_test.rs::testParenthesisOnMultiLine
 tests/Tests/ORM/Functional/QueryBuilderParenthesisTest.php	QueryBuilderParenthesisTest::testParenthesisOnSingleLine	ported	crates/php2rust-doctrine-orm/tests/query_builder_parenthesis_test.rs::testParenthesisOnSingleLine
 tests/Tests/ORM/Functional/QueryCacheTest.php	QueryCacheTest::testQueryCacheDependsOnHints	ported	crates/php2rust-doctrine-orm/tests/query_cache_test.rs::testQueryCacheDependsOnHints
@@ -940,10 +940,10 @@ tests/Tests/ORM/Functional/ReadOnlyTest.php	ReadOnlyTest::testNotReadOnlyIfObjec
 tests/Tests/ORM/Functional/ReadOnlyTest.php	ReadOnlyTest::testNotReadOnlyQueryHint	ported	crates/php2rust-doctrine-orm/tests/read_only_test.rs::testNotReadOnlyQueryHint
 tests/Tests/ORM/Functional/ReadOnlyTest.php	ReadOnlyTest::testReadOnlyEntityNeverChangeTracked	ported	crates/php2rust-doctrine-orm/tests/read_only_test.rs::testReadOnlyEntityNeverChangeTracked
 tests/Tests/ORM/Functional/ReadOnlyTest.php	ReadOnlyTest::testReadOnlyQueryHint	ported	crates/php2rust-doctrine-orm/tests/read_only_test.rs::testReadOnlyQueryHint
-tests/Tests/ORM/Functional/ReadonlyPropertiesTest.php	ReadonlyPropertiesTest::testEntityWithEagerManyToOne	pending	
-tests/Tests/ORM/Functional/ReadonlyPropertiesTest.php	ReadonlyPropertiesTest::testEntityWithLazyManyToOne	pending	
-tests/Tests/ORM/Functional/ReadonlyPropertiesTest.php	ReadonlyPropertiesTest::testEntityWithManyToMany	pending	
-tests/Tests/ORM/Functional/ReadonlyPropertiesTest.php	ReadonlyPropertiesTest::testSimpleEntity	pending	
+tests/Tests/ORM/Functional/ReadonlyPropertiesTest.php	ReadonlyPropertiesTest::testEntityWithEagerManyToOne	ported	crates/php2rust-doctrine-orm/tests/readonly_properties_test.rs::testEntityWithEagerManyToOne
+tests/Tests/ORM/Functional/ReadonlyPropertiesTest.php	ReadonlyPropertiesTest::testEntityWithLazyManyToOne	ported	crates/php2rust-doctrine-orm/tests/readonly_properties_test.rs::testEntityWithLazyManyToOne
+tests/Tests/ORM/Functional/ReadonlyPropertiesTest.php	ReadonlyPropertiesTest::testEntityWithManyToMany	ported	crates/php2rust-doctrine-orm/tests/readonly_properties_test.rs::testEntityWithManyToMany
+tests/Tests/ORM/Functional/ReadonlyPropertiesTest.php	ReadonlyPropertiesTest::testSimpleEntity	ported	crates/php2rust-doctrine-orm/tests/readonly_properties_test.rs::testSimpleEntity
 tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testAccessMetatadaForProxy	ported	crates/php2rust-doctrine-orm/tests/reference_proxy_test.rs::testAccessMetatadaForProxy
 tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testCloneProxy	ported	crates/php2rust-doctrine-orm/tests/reference_proxy_test.rs::testCloneProxy
 tests/Tests/ORM/Functional/ReferenceProxyTest.php	ReferenceProxyTest::testCloneProxyWithResetId	ported	crates/php2rust-doctrine-orm/tests/reference_proxy_test.rs::testCloneProxyWithResetId
@@ -1152,9 +1152,9 @@ tests/Tests/ORM/Functional/SingleTableInheritanceTest.php	SingleTableInheritance
 tests/Tests/ORM/Functional/SingleTableInheritanceTest.php	SingleTableInheritanceTest::testQueryScalarWithDiscriminatorValue	ported	crates/php2rust-doctrine-orm/tests/single_table_inheritance_test.rs::testQueryScalarWithDiscriminatorValue
 tests/Tests/ORM/Functional/SingleTableInheritanceTest.php	SingleTableInheritanceTest::testUpdateBaseClassWithCondition	ported	crates/php2rust-doctrine-orm/tests/single_table_inheritance_test.rs::testUpdateBaseClassWithCondition
 tests/Tests/ORM/Functional/SingleTableInheritanceTest.php	SingleTableInheritanceTest::testUpdateChildClassWithCondition	ported	crates/php2rust-doctrine-orm/tests/single_table_inheritance_test.rs::testUpdateChildClassWithCondition
-tests/Tests/ORM/Functional/StandardEntityPersisterTest.php	StandardEntityPersisterTest::testAcceptsForeignKeysAsCriteria	pending	
-tests/Tests/ORM/Functional/StandardEntityPersisterTest.php	StandardEntityPersisterTest::testAddPersistRetrieve	pending	
-tests/Tests/ORM/Functional/StandardEntityPersisterTest.php	StandardEntityPersisterTest::testPersistLazyGhost	pending	
+tests/Tests/ORM/Functional/StandardEntityPersisterTest.php	StandardEntityPersisterTest::testAcceptsForeignKeysAsCriteria	ported	crates/php2rust-doctrine-orm/tests/standard_entity_persister_test.rs::testAcceptsForeignKeysAsCriteria
+tests/Tests/ORM/Functional/StandardEntityPersisterTest.php	StandardEntityPersisterTest::testAddPersistRetrieve	ported	crates/php2rust-doctrine-orm/tests/standard_entity_persister_test.rs::testAddPersistRetrieve
+tests/Tests/ORM/Functional/StandardEntityPersisterTest.php	StandardEntityPersisterTest::testPersistLazyGhost	pending	needs ReflectionClass::newLazyGhost() with a PHP initializer closure; the port's lazy objects are the ORM's own ghosts, with no user initializer
 tests/Tests/ORM/Functional/Ticket/DDC1040Test.php	DDC1040Test::testReuseNamedEntityParameter	ported	crates/php2rust-doctrine-orm/tests/ddc1040_test.rs::testReuseNamedEntityParameter
 tests/Tests/ORM/Functional/Ticket/DDC1040Test.php	DDC1040Test::testUseMultiplePositionalParameters	ported	crates/php2rust-doctrine-orm/tests/ddc1040_test.rs::testUseMultiplePositionalParameters
 tests/Tests/ORM/Functional/Ticket/DDC1041Test.php	DDC1041Test::testGrabWrongSubtypeReturnsNull	ported	crates/php2rust-doctrine-orm/tests/ddc1041_test.rs::testGrabWrongSubtypeReturnsNull
@@ -1726,10 +1726,10 @@ tests/Tests/ORM/Functional/ValueObjectsTest.php	ValueObjectsTest::testThrowsExce
 tests/Tests/ORM/Functional/VersionedOneToOneTest.php	VersionedOneToOneTest::testSetVersionOnCreate	ported	crates/php2rust-doctrine-orm/tests/versioned_one_to_one_test.rs::testSetVersionOnCreate
 tests/Tests/ORM/Hydration/AbstractHydratorTest.php	AbstractHydratorTest::testEnumCastsIntegerBackedEnumArrayValues	ported	crates/php2rust-doctrine-orm/tests/abstract_hydrator_test.rs::testEnumCastsIntegerBackedEnumArrayValues
 tests/Tests/ORM/Hydration/AbstractHydratorTest.php	AbstractHydratorTest::testEnumCastsIntegerBackedEnumValues	ported	crates/php2rust-doctrine-orm/tests/abstract_hydrator_test.rs::testEnumCastsIntegerBackedEnumValues
-tests/Tests/ORM/Hydration/AbstractHydratorTest.php	AbstractHydratorTest::testHydrateAllClearsAllAttachedListenersEvenOnError	pending	
-tests/Tests/ORM/Hydration/AbstractHydratorTest.php	AbstractHydratorTest::testHydrateAllRegistersAndClearsAllAttachedListeners	pending	
-tests/Tests/ORM/Hydration/AbstractHydratorTest.php	AbstractHydratorTest::testOnClearEventListenerIsDetachedOnCleanup	pending	
-tests/Tests/ORM/Hydration/AbstractHydratorTest.php	AbstractHydratorTest::testToIterableIfYieldAndBreakBeforeFinishAlwaysCleansUp	pending	
+tests/Tests/ORM/Hydration/AbstractHydratorTest.php	AbstractHydratorTest::testHydrateAllClearsAllAttachedListenersEvenOnError	pending	the port's hydrators read a result whole and register no onClear listener on the event manager; toIterable() is not a generator that can stop early
+tests/Tests/ORM/Hydration/AbstractHydratorTest.php	AbstractHydratorTest::testHydrateAllRegistersAndClearsAllAttachedListeners	pending	the port's hydrators read a result whole and register no onClear listener on the event manager; toIterable() is not a generator that can stop early
+tests/Tests/ORM/Hydration/AbstractHydratorTest.php	AbstractHydratorTest::testOnClearEventListenerIsDetachedOnCleanup	pending	the port's hydrators read a result whole and register no onClear listener on the event manager; toIterable() is not a generator that can stop early
+tests/Tests/ORM/Hydration/AbstractHydratorTest.php	AbstractHydratorTest::testToIterableIfYieldAndBreakBeforeFinishAlwaysCleansUp	pending	the port's hydrators read a result whole and register no onClear listener on the event manager; toIterable() is not a generator that can stop early
 tests/Tests/ORM/Hydration/ArrayHydratorTest.php	ArrayHydratorTest::testChainedJoinWithScalars	ported	crates/php2rust-doctrine-orm/tests/array_hydrator_test.rs::testChainedJoinWithScalars
 tests/Tests/ORM/Hydration/ArrayHydratorTest.php	ArrayHydratorTest::testEntityQueryCustomResultSetOrder	ported	crates/php2rust-doctrine-orm/tests/array_hydrator_test.rs::testEntityQueryCustomResultSetOrder
 tests/Tests/ORM/Hydration/ArrayHydratorTest.php	ArrayHydratorTest::testIndexByAndMixedResult	ported	crates/php2rust-doctrine-orm/tests/array_hydrator_test.rs::testIndexByAndMixedResult
@@ -1749,7 +1749,7 @@ tests/Tests/ORM/Hydration/ArrayHydratorTest.php	ArrayHydratorTest::testSimpleMul
 tests/Tests/ORM/Hydration/ArrayHydratorTest.php	ArrayHydratorTest::testSimpleMultipleRootEntityQueryWithAliasedEntities	ported	crates/php2rust-doctrine-orm/tests/array_hydrator_test.rs::testSimpleMultipleRootEntityQueryWithAliasedEntities
 tests/Tests/ORM/Hydration/ArrayHydratorTest.php	ArrayHydratorTest::testSimpleMultipleRootEntityQueryWithAliasedUserEntity	ported	crates/php2rust-doctrine-orm/tests/array_hydrator_test.rs::testSimpleMultipleRootEntityQueryWithAliasedUserEntity
 tests/Tests/ORM/Hydration/ArrayHydratorTest.php	ArrayHydratorTest::testSkipUnknownColumns	ported	crates/php2rust-doctrine-orm/tests/array_hydrator_test.rs::testSkipUnknownColumns
-tests/Tests/ORM/Hydration/CustomHydratorTest.php	CustomHydratorTest::testCustomHydrator	pending	
+tests/Tests/ORM/Hydration/CustomHydratorTest.php	CustomHydratorTest::testCustomHydrator	pending	needs EntityManager::newHydrator() instantiating an AbstractHydrator subclass by its class name; the port's hydrators are fixed Rust types and newHydrator() is not ported
 tests/Tests/ORM/Hydration/ObjectHydratorTest.php	ObjectHydratorTest::testChainedJoinWithEmptyCollections	ported	crates/php2rust-doctrine-orm/tests/object_hydrator_test.rs::testChainedJoinWithEmptyCollections
 tests/Tests/ORM/Hydration/ObjectHydratorTest.php	ObjectHydratorTest::testChainedJoinWithEmptyCollectionsWithAliasedUserEntity	ported	crates/php2rust-doctrine-orm/tests/object_hydrator_test.rs::testChainedJoinWithEmptyCollectionsWithAliasedUserEntity
 tests/Tests/ORM/Hydration/ObjectHydratorTest.php	ObjectHydratorTest::testCreatesProxyForLazyLoadingWithForeignKeys	ported	crates/php2rust-doctrine-orm/tests/object_hydrator_test.rs::testCreatesProxyForLazyLoadingWithForeignKeys
