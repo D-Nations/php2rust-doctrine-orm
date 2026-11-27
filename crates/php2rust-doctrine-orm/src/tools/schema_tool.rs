@@ -2,8 +2,11 @@
 //! on `ClassMetadata` class descriptors.
 //!
 //! The schema comes from DBAL's (deprecated) table API, as upstream's
-//! default (`useDbalEditorApi` off) does. Sequences and schema updates
-//! are not ported. A foreign key of a table that a
+//! default (`useDbalEditorApi` off) does. Sequences are not ported.
+//! `getUpdateSchemaSql()` introspects the tables of the target schema that
+//! the connection's schema assets filter leaves out one by one, instead of
+//! swapping the filter (the connection's configuration cannot change). A
+//! foreign key of a table that a
 //! `postGenerateSchemaTable` listener replaced, or that the listener's new
 //! schema does not have, is not added (upstream adds it to the detached
 //! table). `dropSchema()` drops the tables of the classes
@@ -17,7 +20,10 @@ use std::sync::Arc;
 use php_value::{PhpArray, Thrown, Value};
 use php2rust_doctrine_dbal::ParameterTypes;
 use php2rust_doctrine_dbal::platforms::AbstractPlatform;
-use php2rust_doctrine_dbal::schema::{Index, IndexType, Schema, Table};
+use php2rust_doctrine_dbal::schema::{
+    AbstractSchemaManager as _, ComparatorConfig, Index, IndexType, SQLiteSchemaManager, Schema,
+    Sequence, Table,
+};
 use php2rust_doctrine_event_manager::EventDispatcher;
 
 use crate::entity_manager::EntityManager;
@@ -140,6 +146,84 @@ impl SchemaTool {
     ) -> Result<Vec<String>, Thrown> {
         let schema = self.get_schema_from_metadata(classes)?;
         schema.to_drop_sql(self.platform()).map_err(|e| dbal(&e))
+    }
+
+    /// Updates the database schema of the given classes by comparing the
+    /// `ClassMetadata` instances to the current database schema that is
+    /// inspected.
+    pub async fn update_schema(&self, classes: &[Arc<ClassMetadata>]) -> Result<(), Thrown> {
+        let conn = self.em.get_connection();
+        for sql in self.get_update_schema_sql(classes).await? {
+            conn.execute_statement(&sql, &PhpArray::new(), &ParameterTypes::new())
+                .await
+                .map_err(|e| dbal(&e))?;
+        }
+        Ok(())
+    }
+
+    /// Gets the sequence of SQL statements that need to be performed in
+    /// order to bring the given class mappings in-synch with the relational
+    /// schema.
+    pub async fn get_update_schema_sql(
+        &self,
+        classes: &[Arc<ClassMetadata>],
+    ) -> Result<Vec<String>, Thrown> {
+        let to_schema = self.get_schema_from_metadata(classes)?;
+        let conn = self.em.get_connection();
+        let schema_manager = conn.create_schema_manager().await.map_err(|e| dbal(&e))?;
+        let from_schema = Self::create_schema_for_comparison(&schema_manager, &to_schema).await?;
+
+        let comparator = schema_manager.create_comparator_with(
+            ComparatorConfig::default().with_report_modified_indexes(false),
+        );
+        let schema_diff = comparator
+            .compare_schemas(&from_schema, &to_schema)
+            .map_err(|e| dbal(&e))?;
+
+        self.platform()
+            .get_alter_schema_sql(&schema_diff)
+            .map_err(|e| dbal(&e))
+    }
+
+    /// Creates the schema from the database, ensuring tables from the
+    /// target schema are whitelisted for comparison.
+    ///
+    /// The connection's configuration cannot be changed here, so instead
+    /// of swapping the schema assets filter, the tables of the target
+    /// schema that the filter left out are introspected one by one (a
+    /// missing one is skipped), as upstream's whitelisting filter keeps
+    /// them.
+    async fn create_schema_for_comparison(
+        schema_manager: &SQLiteSchemaManager<'_>,
+        to_schema: &Schema,
+    ) -> Result<Schema, Thrown> {
+        let introspected = schema_manager
+            .introspect_schema()
+            .await
+            .map_err(|e| dbal(&e))?;
+
+        let mut whitelisted = Vec::new();
+        for table in to_schema.get_tables() {
+            let name = table.get_name();
+            if introspected.has_table(&name) {
+                continue;
+            }
+            if let Ok(table) = schema_manager.introspect_table(&name).await {
+                whitelisted.push(table);
+            }
+        }
+        if whitelisted.is_empty() {
+            return Ok(introspected);
+        }
+
+        let mut tables: Vec<Table> = introspected.get_tables().into_iter().cloned().collect();
+        tables.extend(whitelisted);
+        let sequences: Vec<Sequence> = introspected.get_sequences().into_iter().cloned().collect();
+        let schema_config = schema_manager
+            .create_schema_config()
+            .await
+            .map_err(|e| dbal(&e))?;
+        Schema::new(tables, sequences, Some(schema_config), &[]).map_err(|e| dbal(&e))
     }
 
     fn processing_not_required(&self, class: &ClassMetadataInfo, processed: &[String]) -> bool {
