@@ -238,7 +238,7 @@ tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetQueryCache	po
 tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetQuoteStrategy	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetQuoteStrategy
 tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetSecondLevelCacheConfig	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetSecondLevelCacheConfig
 tests/Tests/ORM/ConfigurationTest.php	ConfigurationTest::testSetGetTypedFieldMapper	ported	crates/php2rust-doctrine-orm/tests/configuration_test.rs::testSetGetTypedFieldMapper
-tests/Tests/ORM/Entity/ConstructorTest.php	ConstructorTest::testFieldInitializationInConstructor	pending	
+tests/Tests/ORM/Entity/ConstructorTest.php	ConstructorTest::testFieldInitializationInConstructor	ported	crates/php2rust-doctrine-orm/tests/constructor_test.rs::testFieldInitializationInConstructor
 tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testAffectedByErrorIfClosedException	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testAffectedByErrorIfClosedException
 tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testCreateNativeQuery	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testCreateNativeQuery
 tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testCreateQuery	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testCreateQuery
@@ -310,8 +310,8 @@ tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testSetT
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testSingleColumnQuery	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testSingleColumnQuery
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testTextColumnSaveAndRetrieve	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testTextColumnSaveAndRetrieve
 tests/Tests/ORM/Functional/BasicFunctionalTest.php	BasicFunctionalTest::testWrongAssociationInstance	ported	crates/php2rust-doctrine-orm/tests/basic_functional_test.rs::testWrongAssociationInstance
-tests/Tests/ORM/Functional/CascadeRemoveOrderTest.php	CascadeRemoveOrderTest::testMany	pending	
-tests/Tests/ORM/Functional/CascadeRemoveOrderTest.php	CascadeRemoveOrderTest::testSingle	pending	
+tests/Tests/ORM/Functional/CascadeRemoveOrderTest.php	CascadeRemoveOrderTest::testMany	ported	crates/php2rust-doctrine-orm/tests/cascade_remove_order_test.rs::testMany
+tests/Tests/ORM/Functional/CascadeRemoveOrderTest.php	CascadeRemoveOrderTest::testSingle	ported	crates/php2rust-doctrine-orm/tests/cascade_remove_order_test.rs::testSingle
 tests/Tests/ORM/Functional/ClassTableInheritanceSecondTest.php	ClassTableInheritanceSecondTest::testManyToManyToCTIHierarchy	ported	crates/php2rust-doctrine-orm/tests/class_table_inheritance_second_test.rs::testManyToManyToCTIHierarchy
 tests/Tests/ORM/Functional/ClassTableInheritanceSecondTest.php	ClassTableInheritanceSecondTest::testOneToOneAssocToBaseTypeBidirectional	ported	crates/php2rust-doctrine-orm/tests/class_table_inheritance_second_test.rs::testOneToOneAssocToBaseTypeBidirectional
 tests/Tests/ORM/Functional/ClassTableInheritanceTest.php	ClassTableInheritanceTest::testBulkUpdateIssueDDC368	ported	crates/php2rust-doctrine-orm/tests/class_table_inheritance_test.rs::testBulkUpdateIssueDDC368
@@ -365,7 +365,7 @@ tests/Tests/ORM/Functional/DefaultTimeExpressionTest.php	DefaultTimeExpressionTe
 tests/Tests/ORM/Functional/DefaultTimeExpressionTest.php	DefaultTimeExpressionTest::testUsingTimeRelatedDefaultExpressionCausesAnOrmDeprecationAndNoDbalDeprecation	pending	
 tests/Tests/ORM/Functional/DefaultTimeExpressionXmlTest.php	DefaultTimeExpressionXmlTest::testUsingDefaultExpressionInstancesCausesNoDeprecationXmlDriver	pending	
 tests/Tests/ORM/Functional/DefaultTimeExpressionXmlTest.php	DefaultTimeExpressionXmlTest::testUsingTimeRelatedDefaultExpressionCausesAnOrmDeprecationAndNoDbalDeprecation	pending	
-tests/Tests/ORM/Functional/DefaultValuesTest.php	DefaultValuesTest::testSimpleDetachMerge	pending	
+tests/Tests/ORM/Functional/DefaultValuesTest.php	DefaultValuesTest::testSimpleDetachMerge	ported	crates/php2rust-doctrine-orm/tests/default_values_test.rs::testSimpleDetachMerge
 tests/Tests/ORM/Functional/DetachedEntityTest.php	DetachedEntityTest::testDetachManagedUnpersistedEntity	ported	crates/php2rust-doctrine-orm/tests/detached_entity_test.rs::testDetachManagedUnpersistedEntity
 tests/Tests/ORM/Functional/DetachedEntityTest.php	DetachedEntityTest::testDetachedEntityThrowsExceptionOnFlush	ported	crates/php2rust-doctrine-orm/tests/detached_entity_test.rs::testDetachedEntityThrowsExceptionOnFlush
 tests/Tests/ORM/Functional/DetachedEntityTest.php	DetachedEntityTest::testUseDetachedEntityAsQueryParameter	ported	crates/php2rust-doctrine-orm/tests/detached_entity_test.rs::testUseDetachedEntityAsQueryParameter
@@ -516,9 +516,9 @@ tests/Tests/ORM/Functional/FlushEventTest.php	FlushEventTest::testPersistNewEnti
 tests/Tests/ORM/Functional/FlushEventTest.php	FlushEventTest::testPreAndOnFlushCalledAlways	ported	crates/php2rust-doctrine-orm/tests/flush_event_test.rs::testPreAndOnFlushCalledAlways
 tests/Tests/ORM/Functional/GH11345Test.php	GH11345Test::testUpdateSqlStatementsAreIssuedInAlphabeticOrderByEntityClass	pending	
 tests/Tests/ORM/Functional/GH11345Test.php	GH11345Test::testUpdateSqlStatementsAreIssuedInAlphabeticOrderByEntityIdForSameClassName	pending	
-tests/Tests/ORM/Functional/GH7877Test.php	GH7877Test::testCrossReferenceWithApplicationGeneratedIdMayBeNotNullable	pending	
-tests/Tests/ORM/Functional/GH7877Test.php	GH7877Test::testNullableForeignKeysMakeInsertOrderLessRelevant	pending	
-tests/Tests/ORM/Functional/GH7877Test.php	GH7877Test::testSelfReferenceWithApplicationGeneratedIdMayBeNotNullable	pending	
+tests/Tests/ORM/Functional/GH7877Test.php	GH7877Test::testCrossReferenceWithApplicationGeneratedIdMayBeNotNullable	ported	crates/php2rust-doctrine-orm/tests/gh7877_test.rs::testCrossReferenceWithApplicationGeneratedIdMayBeNotNullable
+tests/Tests/ORM/Functional/GH7877Test.php	GH7877Test::testNullableForeignKeysMakeInsertOrderLessRelevant	ported	crates/php2rust-doctrine-orm/tests/gh7877_test.rs::testNullableForeignKeysMakeInsertOrderLessRelevant
+tests/Tests/ORM/Functional/GH7877Test.php	GH7877Test::testSelfReferenceWithApplicationGeneratedIdMayBeNotNullable	ported	crates/php2rust-doctrine-orm/tests/gh7877_test.rs::testSelfReferenceWithApplicationGeneratedIdMayBeNotNullable
 tests/Tests/ORM/Functional/GH8011Test.php	GH8011Test::testOrderWithArithmeticExpressionWithLiteralAndResultVariable	ported	crates/php2rust-doctrine-orm/tests/gh8011_test.rs::testOrderWithArithmeticExpressionWithLiteralAndResultVariable
 tests/Tests/ORM/Functional/GH8011Test.php	GH8011Test::testOrderWithArithmeticExpressionWithLiteralAndResultVariable2	ported	crates/php2rust-doctrine-orm/tests/gh8011_test.rs::testOrderWithArithmeticExpressionWithLiteralAndResultVariable2
 tests/Tests/ORM/Functional/GH8011Test.php	GH8011Test::testOrderWithArithmeticExpressionWithLiteralAndResultVariableUsingHiddenResultVariable	ported	crates/php2rust-doctrine-orm/tests/gh8011_test.rs::testOrderWithArithmeticExpressionWithLiteralAndResultVariableUsingHiddenResultVariable
@@ -545,7 +545,7 @@ tests/Tests/ORM/Functional/IndexByAssociationTest.php	IndexByAssociationTest::te
 tests/Tests/ORM/Functional/IndexByAssociationTest.php	IndexByAssociationTest::testManytoManyDQL	ported	crates/php2rust-doctrine-orm/tests/index_by_association_test.rs::testManytoManyDQL
 tests/Tests/ORM/Functional/InsertableUpdatableTest.php	InsertableUpdatableTest::testNotInsertableIsFetchedFromDatabase	ported	crates/php2rust-doctrine-orm/tests/insertable_updatable_test.rs::testNotInsertableIsFetchedFromDatabase
 tests/Tests/ORM/Functional/InsertableUpdatableTest.php	InsertableUpdatableTest::testNotUpdatableIsFetched	ported	crates/php2rust-doctrine-orm/tests/insertable_updatable_test.rs::testNotUpdatableIsFetched
-tests/Tests/ORM/Functional/InvalidMappingDefinitionTest.php	InvalidMappingDefinitionTest::testManyToManyRelationWithJoinTableOnTheWrongSide	pending	
+tests/Tests/ORM/Functional/InvalidMappingDefinitionTest.php	InvalidMappingDefinitionTest::testManyToManyRelationWithJoinTableOnTheWrongSide	ported	crates/php2rust-doctrine-orm/tests/invalid_mapping_definition_test.rs::testManyToManyRelationWithJoinTableOnTheWrongSide
 tests/Tests/ORM/Functional/JoinedTableCompositeKeyTest.php	JoinedTableCompositeKeyTest::testInsertWithCompositeKey	ported	crates/php2rust-doctrine-orm/tests/joined_table_composite_key_test.rs::testInsertWithCompositeKey
 tests/Tests/ORM/Functional/JoinedTableCompositeKeyTest.php	JoinedTableCompositeKeyTest::testUpdateWithCompositeKey	ported	crates/php2rust-doctrine-orm/tests/joined_table_composite_key_test.rs::testUpdateWithCompositeKey
 tests/Tests/ORM/Functional/LifecycleCallbackTest.php	LifecycleCallbackTest::testCascadedEntitiesCallsPrePersist	ported	crates/php2rust-doctrine-orm/tests/lifecycle_callback_test.rs::testCascadedEntitiesCallsPrePersist
@@ -837,7 +837,7 @@ tests/Tests/ORM/Functional/PostLoadEventTest.php	PostLoadEventTest::testLoadedPr
 tests/Tests/ORM/Functional/PostLoadEventTest.php	PostLoadEventTest::testLoadedProxyAssociationToOneShouldTriggerEvent	ported	crates/php2rust-doctrine-orm/tests/post_load_event_test.rs::testLoadedProxyAssociationToOneShouldTriggerEvent
 tests/Tests/ORM/Functional/PostLoadEventTest.php	PostLoadEventTest::testLoadedProxyEntityShouldTriggerEvent	ported	crates/php2rust-doctrine-orm/tests/post_load_event_test.rs::testLoadedProxyEntityShouldTriggerEvent
 tests/Tests/ORM/Functional/PostLoadEventTest.php	PostLoadEventTest::testLoadedProxyPartialShouldTriggerEvent	ported	crates/php2rust-doctrine-orm/tests/post_load_event_test.rs::testLoadedProxyPartialShouldTriggerEvent
-tests/Tests/ORM/Functional/PrePersistEventTest.php	PrePersistEventTest::testCallingPersistInPrePersistHook	pending	
+tests/Tests/ORM/Functional/PrePersistEventTest.php	PrePersistEventTest::testCallingPersistInPrePersistHook	ported	crates/php2rust-doctrine-orm/tests/pre_persist_event_test.rs::testCallingPersistInPrePersistHook
 tests/Tests/ORM/Functional/PropertyHooksTest.php	PropertyHooksTest::testMapPropertyHooks	pending	
 tests/Tests/ORM/Functional/PropertyHooksTest.php	PropertyHooksTest::testMappingVirtualPropertyIsNotSupported	pending	
 tests/Tests/ORM/Functional/PropertyHooksTest.php	PropertyHooksTest::testTriggerLazyLoadingWhenAccessingPropertyHooks	pending	
