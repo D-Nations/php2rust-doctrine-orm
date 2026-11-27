@@ -114,7 +114,7 @@ src/Internal/SQLResultCasing.php	SQLResultCasing	21	ported	crates/php2rust-doctr
 src/Internal/StronglyConnectedComponents.php	StronglyConnectedComponents	81	ported	crates/php2rust-doctrine-orm/src/internal/strongly_connected_components.rs
 src/Internal/TopologicalSort.php	TopologicalSort	71	ported	crates/php2rust-doctrine-orm/src/internal/topological_sort.rs
 src/Internal/TopologicalSort/CycleDetectedException.php	CycleDetectedException	29	ported	crates/php2rust-doctrine-orm/src/internal/topological_sort.rs
-src/Internal/UnitOfWork/InsertBatch.php	InsertBatch	35	ported	crates/php2rust-doctrine-orm/src/unit_of_work.rs
+src/Internal/UnitOfWork/InsertBatch.php	InsertBatch	35	ported	crates/php2rust-doctrine-orm/src/internal/unit_of_work/insert_batch.rs
 src/LazyCriteriaCollection.php	LazyCriteriaCollection	51	ported	crates/php2rust-doctrine-orm/src/lazy_criteria_collection.rs
 src/Mapping/AnsiQuoteStrategy.php	AnsiQuoteStrategy	53	ported	crates/php2rust-doctrine-orm/src/mapping/quote_strategy.rs
 src/Mapping/ArrayAccessImplementation.php	ArrayAccessImplementation	51	ported	crates/php2rust-doctrine-orm/src/mapping/field_mapping.rs
@@ -231,7 +231,7 @@ src/NativeQuery.php	NativeQuery	52	ported	crates/php2rust-doctrine-orm/src/nativ
 src/NoResultException.php	NoResultException	9	ported	crates/php2rust-doctrine-orm/src/abstract_query.rs
 src/NonUniqueResultException.php	NonUniqueResultException	10	ported	crates/php2rust-doctrine-orm/src/abstract_query.rs
 src/ORMInvalidArgumentException.php	ORMInvalidArgumentException	160	ported	crates/php2rust-doctrine-orm/src/exception.rs
-src/ORMSetup.php	ORMSetup	157	pending	
+src/ORMSetup.php	ORMSetup	157	ported	crates/php2rust-doctrine-orm/src/orm_setup.rs
 src/OptimisticLockException.php	OptimisticLockException	37	ported	crates/php2rust-doctrine-orm/src/exception.rs
 src/PersistentCollection.php	PersistentCollection	376	ported	crates/php2rust-doctrine-orm/src/persistent_collection.rs
 src/PersistentCollectionImplementation.php	PersistentCollectionImplementation PersistentCollectionImplementation	24	ported	crates/php2rust-doctrine-orm/src/persistent_collection.rs
