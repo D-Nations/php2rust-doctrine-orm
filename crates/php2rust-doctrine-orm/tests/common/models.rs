@@ -300,6 +300,34 @@ fn join_columns(props: &PhpArray, key: &str) -> Option<Vec<attr::JoinColumn>> {
     })
 }
 
+/// A column's options with the recorded `DefaultExpression` objects
+/// (`new CurrentTimestamp()`) as DBAL's.
+fn default_expressions(mut options: PhpArray) -> PhpArray {
+    use php2rust_doctrine_dbal::schema::{
+        CurrentDate, CurrentTime, CurrentTimestamp, DefaultExpressionObject,
+    };
+    let key = php_value::Key::from("default");
+    let expression = match options.get(&key) {
+        Some(Value::Object(object)) => match object.class() {
+            "Doctrine\\DBAL\\Schema\\DefaultExpression\\CurrentTimestamp" => {
+                Some(DefaultExpressionObject::value(CurrentTimestamp))
+            }
+            "Doctrine\\DBAL\\Schema\\DefaultExpression\\CurrentTime" => {
+                Some(DefaultExpressionObject::value(CurrentTime))
+            }
+            "Doctrine\\DBAL\\Schema\\DefaultExpression\\CurrentDate" => {
+                Some(DefaultExpressionObject::value(CurrentDate))
+            }
+            _ => None,
+        },
+        _ => None,
+    };
+    if let Some(expression) = expression {
+        options.insert(key, expression);
+    }
+    options
+}
+
 fn column(props: &PhpArray) -> attr::Column {
     attr::Column {
         name: opt_string(props, "name"),
@@ -312,7 +340,7 @@ fn column(props: &PhpArray) -> attr::Column {
         insertable: boolean(props, "insertable"),
         updatable: boolean(props, "updatable"),
         enum_type: opt_string(props, "enumType"),
-        options: array(props, "options"),
+        options: default_expressions(array(props, "options")),
         column_definition: opt_string(props, "columnDefinition"),
         generated: opt_string(props, "generated"),
         index: boolean(props, "index"),

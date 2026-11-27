@@ -1236,3 +1236,76 @@ pub fn testCustomNamingStrategyIsRespected() {
     assert_eq!("Id", join_column.referenced_column_name);
     assert_eq!(Some(false), join_column.nullable);
 }
+
+/// DDC-869. `getTestEntityManager()` is an entity manager on an in-memory
+/// `SQLite` database with the attribute driver; the factory loads with
+/// the test's driver. `isTrue()` is `DDC869PaymentRepository`'s own PHP
+/// method (`return true`), which the port's repositories do not have:
+/// the test checks that the repository is of that class.
+pub fn testMappedSuperclassWithRepository() {
+    use php2rust_doctrine_dbal::DriverManager;
+    use php2rust_doctrine_orm::configuration::Configuration;
+    use php2rust_doctrine_orm::entity_manager::EntityManager;
+    use php2rust_doctrine_orm::mapping::driver::AttributeDriver;
+
+    const CREDIT_CARD_PAYMENT: &str = "Doctrine\\Tests\\Models\\DDC869\\DDC869CreditCardPayment";
+    const CHEQUE_PAYMENT: &str = "Doctrine\\Tests\\Models\\DDC869\\DDC869ChequePayment";
+    const PAYMENT_REPOSITORY: &str = "Doctrine\\Tests\\Models\\DDC869\\DDC869PaymentRepository";
+
+    crate::models::register();
+    let mut params = PhpArray::new();
+    params.insert("driver", Value::string("pdo_sqlite"));
+    params.insert("memory", Value::Bool(true));
+    let conn = Arc::new(DriverManager::get_connection(params, None).unwrap());
+    let mut config = Configuration::new();
+    config.set_metadata_driver_impl(Arc::new(
+        AttributeDriver::new(Vec::<String>::new(), true).unwrap(),
+    ));
+    config.enable_native_lazy_objects(true).unwrap();
+    let em = EntityManager::create(conn, config, None).unwrap();
+    let factory = factory();
+
+    let class = factory.get_metadata_for(CREDIT_CARD_PAYMENT).unwrap();
+
+    {
+        let class = class.read();
+        assert!(class.field_mappings.contains_key("id"));
+        assert!(class.field_mappings.contains_key("value"));
+        assert!(class.field_mappings.contains_key("creditCardNumber"));
+        assert_eq!(
+            class.custom_repository_class_name.as_deref(),
+            Some(PAYMENT_REPOSITORY)
+        );
+    }
+    assert_eq!(
+        em.get_repository(CREDIT_CARD_PAYMENT)
+            .unwrap()
+            .get_repository_class(),
+        PAYMENT_REPOSITORY
+    );
+    assert_eq!(
+        em.get_repository(CHEQUE_PAYMENT)
+            .unwrap()
+            .get_repository_class(),
+        PAYMENT_REPOSITORY
+    );
+
+    let class = factory.get_metadata_for(CHEQUE_PAYMENT).unwrap();
+
+    {
+        let class = class.read();
+        assert!(class.field_mappings.contains_key("id"));
+        assert!(class.field_mappings.contains_key("value"));
+        assert!(class.field_mappings.contains_key("serialNumber"));
+        assert_eq!(
+            class.custom_repository_class_name.as_deref(),
+            Some(PAYMENT_REPOSITORY)
+        );
+    }
+    assert_eq!(
+        em.get_repository(CHEQUE_PAYMENT)
+            .unwrap()
+            .get_repository_class(),
+        PAYMENT_REPOSITORY
+    );
+}

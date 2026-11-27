@@ -96,7 +96,7 @@ src/Exception/SchemaToolException.php	SchemaToolException	6	pending
 src/Exception/UnexpectedAssociationValue.php	UnexpectedAssociationValue	21	ported	crates/php2rust-doctrine-orm/src/exception.rs
 src/Exception/UnrecognizedIdentifierFields.php	UnrecognizedIdentifierFields	16	ported	crates/php2rust-doctrine-orm/src/exception.rs
 src/Id/AbstractIdGenerator.php	AbstractIdGenerator	11	pending	
-src/Id/AssignedGenerator.php	AssignedGenerator	24	ported	crates/php2rust-doctrine-orm/src/unit_of_work.rs
+src/Id/AssignedGenerator.php	AssignedGenerator	24	ported	crates/php2rust-doctrine-orm/src/id.rs crates/php2rust-doctrine-orm/src/unit_of_work.rs
 src/Id/BigIntegerIdentityGenerator.php	BigIntegerIdentityGenerator	14	pending	
 src/Id/IdentityGenerator.php	IdentityGenerator	14	ported	crates/php2rust-doctrine-orm/src/unit_of_work.rs
 src/Id/SequenceGenerator.php	SequenceGenerator	73	ported	crates/php2rust-doctrine-orm/src/unit_of_work.rs
@@ -254,10 +254,10 @@ src/Persisters/SqlExpressionVisitor.php	SqlExpressionVisitor	54	ported	crates/ph
 src/Persisters/SqlValueVisitor.php	SqlValueVisitor	39	ported	crates/php2rust-doctrine-orm/src/persisters/sql_value_visitor.rs
 src/Persisters/SqlValueVisitorImplementation.php	SqlValueVisitorImplementation SqlValueVisitorImplementation	44	pending	
 src/PessimisticLockException.php	PessimisticLockException	11	pending	
-src/Proxy/Autoloader.php	Autoloader	63	pending	
+src/Proxy/Autoloader.php	Autoloader	63	ported	crates/php2rust-doctrine-orm/src/proxy.rs
 src/Proxy/DefaultProxyClassNameResolver.php	DefaultProxyClassNameResolver	39	pending	
 src/Proxy/InternalProxy.php	InternalProxy	7	pending	
-src/Proxy/NotAProxyClass.php	NotAProxyClass	16	pending	
+src/Proxy/NotAProxyClass.php	NotAProxyClass	16	ported	crates/php2rust-doctrine-orm/src/proxy.rs
 src/Proxy/ProxyFactory.php	ProxyFactory	399	ported	crates/php2rust-doctrine-orm/src/entity_manager.rs crates/php2rust-doctrine-orm/src/proxy.rs
 src/Query.php	Query	367	ported	crates/php2rust-doctrine-orm/src/query/dql_query.rs
 src/Query/AST/ASTException.php	ASTException	11	ported	crates/php2rust-doctrine-orm/src/query/query_exception.rs
@@ -429,7 +429,7 @@ src/Tools/Console/EntityManagerProvider/ConnectionFromManagerProvider.php	Connec
 src/Tools/Console/EntityManagerProvider/SingleManagerProvider.php	SingleManagerProvider	23	pending	
 src/Tools/Console/EntityManagerProvider/UnknownManagerException.php	UnknownManagerException	16	pending	
 src/Tools/Console/MetadataFilter.php	MetadataFilter	56	pending	
-src/Tools/Debug.php	Debug	104	pending	
+src/Tools/Debug.php	Debug	104	ported	crates/php2rust-doctrine-orm/src/tools/debug.rs
 src/Tools/DebugUnitOfWorkListener.php	DebugUnitOfWorkListener	106	pending	
 src/Tools/Event/GenerateSchemaEventArgs.php	GenerateSchemaEventArgs	33	ported	crates/php2rust-doctrine-orm/src/tools/event.rs
 src/Tools/Event/GenerateSchemaTableEventArgs.php	GenerateSchemaTableEventArgs	55	ported	crates/php2rust-doctrine-orm/src/tools/event.rs

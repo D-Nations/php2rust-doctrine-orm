@@ -12,7 +12,8 @@
 //! read `doctrine-mapping.xsd`. The pinned php2rust-dom refuses it
 //! (`xs:complexContent`, `xs:token`), and then the documents are not
 //! validated. `parseOptions()`'s `<object class="..."/>` is the class's
-//! `newInstanceWithoutConstructor()` (the port runs no PHP constructor).
+//! `newInstanceWithoutConstructor()` (the port runs no PHP constructor);
+//! DBAL's `DefaultExpression` classes are its Rust expressions.
 //! The `SimpleXML` and DOM extension checks of the constructor always pass.
 //!
 //! Upstream: doctrine/orm src/Mapping/Driver/XmlDriver.php src/Mapping/Driver/LoadMappingFileImplementation.php src/Mapping/Driver/SimplifiedXmlDriver.php
@@ -1010,6 +1011,24 @@ fn parse_object_element(object_element: &XmlElement) -> Result<Value, Thrown> {
             "object", "class", "",
         ));
     };
+    // DBAL's default expressions are Rust objects, not registered classes.
+    {
+        use php2rust_doctrine_dbal::schema::{
+            CurrentDate, CurrentTime, CurrentTimestamp, DefaultExpressionObject,
+        };
+        match class_name.trim_start_matches('\\') {
+            "Doctrine\\DBAL\\Schema\\DefaultExpression\\CurrentTimestamp" => {
+                return Ok(DefaultExpressionObject::value(CurrentTimestamp));
+            }
+            "Doctrine\\DBAL\\Schema\\DefaultExpression\\CurrentTime" => {
+                return Ok(DefaultExpressionObject::value(CurrentTime));
+            }
+            "Doctrine\\DBAL\\Schema\\DefaultExpression\\CurrentDate" => {
+                return Ok(DefaultExpressionObject::value(CurrentDate));
+            }
+            _ => {}
+        }
+    }
     if !php_reflection::class_exists(class_name) {
         return Err(Thrown::new(
             "InvalidArgumentException",

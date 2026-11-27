@@ -237,14 +237,16 @@ Mapping, not reproduced and so not claimed:
   calls on the metadata, and `models::register_with_load_metadata()`
   declares it on the recorded class (a class without one inherits its
   parent's, as PHP's static methods do). `testMappedSuperclassWithRepository`
-  is pending, as for the attribute driver.
+  is pending for the static PHP driver. The attribute and XML drivers'
+  check the repository's class (`DDC869PaymentRepository::isTrue()` is
+  the subclass's own PHP method, which the port's repositories do not
+  have).
 - The Symfony XmlDriverTest gives each test its own directory under the
   system temp directory (upstream's tests share one, as they run one at
   a time).
 
 Mapping pending: `ClassMetadataTest::testClassNameMappingDiscriminatorValue`
 (the static PHP driver); `RawValuePropertyAccessorTest` (PHP 8.4 property hooks);
-`AttributeDriverTest::testMappedSuperclassWithRepository`,
 `ClassMetadataFactoryTest::testAcceptsEntityManagerInterfaceInstances`
 and `QuoteStrategyTest::testConfiguration` (the entity manager and its
 `Configuration`).
@@ -387,10 +389,21 @@ Persistence, not reproduced and so not claimed:
   `getTypedFieldMapper()` is `None` until one is set (the entity manager
   gives the metadata factory the `DefaultTypedFieldMapper` then, as
   upstream's factory does). `enableNativeLazyObjects(false)` triggers
-  its deprecation, then is refused: the port only has native lazy
-  objects. EntityManagerTest's pending tests replace the connection's
-  `commit()`/`rollBack()` in a subclass (the DBAL connection is a
-  struct) or make a lazy ghost of the entity manager.
+  its deprecation; the proxy factory (and so `EntityManager::create()`)
+  then throws `lazyGhostUnavailable()`: the port only has native lazy
+  objects, as with symfony/var-exporter 8 on PHP 8.4. EntityManagerTest's
+  pending tests read the previous exception of a failing rollback
+  (`Thrown` keeps none) or make a lazy ghost of the entity manager.
+- `Tools\Debug::export()` (`tools::debug::export()`) reads `(array)
+  $var` as the object's `properties()`: entity objects give their
+  initialized properties under plain names. `dump()` is not ported (its
+  one caller is the `orm:run-dql` command). `Proxy\Autoloader::resolveFile()`
+  is ported, not `register()` (no PHP class is loaded).
+- `SchemaTool` turns a time-related `default` given as the platform's
+  SQL (`CURRENT_TIMESTAMP`, `CURRENT_TIME`, `CURRENT_DATE`) into DBAL's
+  default expression, with the ORM's deprecation; the XML driver's
+  `<object class="...">` of DBAL's `DefaultExpression` classes builds
+  DBAL's expressions.
 - `ProxyFactory` (`proxy::ProxyFactory`, `EntityManager::get_proxy_factory()`)
   has only native lazy objects: `getProxy()` is `EntityManager::get_proxy()`
   and `generateProxyClasses()` generates none. PHP's optional constructor
@@ -543,7 +556,7 @@ DDC381Test (`serialize()` of a proxy); DDC2602Test and GH10869Test
 listener's call is synchronous, the query is async); GH12403Test
 (UnitOfWork's partial-load tracking of native lazy objects is not
 ported, and a lazy ghost does not complete itself when its last
-property is assigned); GH2947Test (the result cache); GH7684Test (`DatabaseDriver` is not ported); GH7869Test
+property is assigned); GH7684Test (`DatabaseDriver` is not ported); GH7869Test
 (`EntityManagerDecorator` and a mock that counts `getClassMetadata()`
 calls);
 GH7941Test (the DBAL port does not register SQLite's user-defined `SQRT()`);

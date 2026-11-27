@@ -453,3 +453,8 @@ fn testItThrowsWhenSettingReportFieldsWhereDeclaredToFalse() {
     let error = AttributeDriver::new(Vec::<String>::new(), false).unwrap_err();
     assert_eq!("InvalidArgumentException", error.class);
 }
+
+#[test]
+fn testMappedSuperclassWithRepository() {
+    mapping_driver_test_case::testMappedSuperclassWithRepository();
+}

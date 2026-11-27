@@ -65,6 +65,14 @@ pub fn obj_to_str(obj: &Object) -> String {
 
 // ORMInvalidArgumentException
 
+/// `ORMInvalidArgumentException::lazyGhostUnavailable()`.
+pub fn lazy_ghost_unavailable() -> Thrown {
+    new(
+        ORM_INVALID_ARGUMENT_EXCEPTION,
+        "Symfony LazyGhost is not available. Please install the \"symfony/var-exporter\" package version 6.4 or 7 to use this feature or enable PHP 8.4 native lazy objects.".to_owned(),
+    )
+}
+
 pub fn invalid_auto_generate_mode(value: i64) -> Thrown {
     new(
         ORM_INVALID_ARGUMENT_EXCEPTION,
