@@ -1263,7 +1263,7 @@ tests/Tests/ORM/Functional/Ticket/DDC1918Test.php	DDC1918Test::testLastPageCorre
 tests/Tests/ORM/Functional/Ticket/DDC1925Test.php	DDC1925Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc1925_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC192Test.php	DDC192Test::testSchemaCreation	ported	crates/php2rust-doctrine-orm/tests/ddc192_test.rs::testSchemaCreation
 tests/Tests/ORM/Functional/Ticket/DDC1995Test.php	DDC1995Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc1995_test.rs::testIssue
-tests/Tests/ORM/Functional/Ticket/DDC1995Test.php	DDC1995Test::testQueryCache	pending	needs the query cache (useQueryCache())
+tests/Tests/ORM/Functional/Ticket/DDC1995Test.php	DDC1995Test::testQueryCache	ported	crates/php2rust-doctrine-orm/tests/ddc1995_test.rs::testQueryCache
 tests/Tests/ORM/Functional/Ticket/DDC1998Test.php	DDC1998Test::testSqlConversionAsIdentifier	ported	crates/php2rust-doctrine-orm/tests/ddc1998_test.rs::testSqlConversionAsIdentifier
 tests/Tests/ORM/Functional/Ticket/DDC199Test.php	DDC199Test::testPolymorphicLoading	ported	crates/php2rust-doctrine-orm/tests/ddc199_test.rs::testPolymorphicLoading
 tests/Tests/ORM/Functional/Ticket/DDC2012Test.php	DDC2012Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2012_test.rs::testIssue
@@ -1271,15 +1271,15 @@ tests/Tests/ORM/Functional/Ticket/DDC2074Test.php	DDC2074Test::testSavingClonedP
 tests/Tests/ORM/Functional/Ticket/DDC2074Test.php	DDC2074Test::testShouldNotScheduleDeletionOnClonedInstances	ported	crates/php2rust-doctrine-orm/tests/ddc2074_test.rs::testShouldNotScheduleDeletionOnClonedInstances
 tests/Tests/ORM/Functional/Ticket/DDC2084Test.php	DDC2084Test::testInvalidIdentifierBindingEntityException	ported	crates/php2rust-doctrine-orm/tests/ddc2084_test.rs::testInvalidIdentifierBindingEntityException
 tests/Tests/ORM/Functional/Ticket/DDC2084Test.php	DDC2084Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2084_test.rs::testIssue
-tests/Tests/ORM/Functional/Ticket/DDC2090Test.php	DDC2090Test::testIssue	pending	needs the query cache (useQueryCache())
+tests/Tests/ORM/Functional/Ticket/DDC2090Test.php	DDC2090Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2090_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC2106Test.php	DDC2106Test::testDetachedEntityAsId	ported	crates/php2rust-doctrine-orm/tests/ddc2106_test.rs::testDetachedEntityAsId
 tests/Tests/ORM/Functional/Ticket/DDC211Test.php	DDC211Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc211_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC2138Test.php	DDC2138Test::testForeignKeyOnSTIWithMultipleMapping	ported	crates/php2rust-doctrine-orm/tests/ddc2138_test.rs::testForeignKeyOnSTIWithMultipleMapping
 tests/Tests/ORM/Functional/Ticket/DDC2175Test.php	DDC2175Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2175_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC2182Test.php	DDC2182Test::testPassColumnOptionsToJoinColumns	n/a: MySQL only, skipped upstream on SQLite	
 tests/Tests/ORM/Functional/Ticket/DDC2214Test.php	DDC2214Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2214_test.rs::testIssue
-tests/Tests/ORM/Functional/Ticket/DDC2224Test.php	DDC2224Test::testCacheMissWhenTypeChanges	pending	needs the query cache (setQueryCache())
-tests/Tests/ORM/Functional/Ticket/DDC2224Test.php	DDC2224Test::testIssue	pending	needs the query cache (setQueryCache())
+tests/Tests/ORM/Functional/Ticket/DDC2224Test.php	DDC2224Test::testCacheMissWhenTypeChanges	ported	crates/php2rust-doctrine-orm/tests/ddc2224_test.rs::testCacheMissWhenTypeChanges
+tests/Tests/ORM/Functional/Ticket/DDC2224Test.php	DDC2224Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2224_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC2252Test.php	DDC2252Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2252_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC2306Test.php	DDC2306Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2306_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC2346Test.php	DDC2346Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2346_test.rs::testIssue
@@ -1304,13 +1304,13 @@ tests/Tests/ORM/Functional/Ticket/DDC2780Test.php	DDC2780Test::testIssue	ported	
 tests/Tests/ORM/Functional/Ticket/DDC2790Test.php	DDC2790Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2790_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC279Test.php	DDC279Test::testDDC279	ported	crates/php2rust-doctrine-orm/tests/ddc279_test.rs::testDDC279
 tests/Tests/ORM/Functional/Ticket/DDC2825Test.php	DDC2825Test::testPersistenceOfEntityWithSchemaMapping	n/a: skipped upstream: SQLite does not support schemas	
-tests/Tests/ORM/Functional/Ticket/DDC2862Test.php	DDC2862Test::testIssue	pending	needs the second-level cache
-tests/Tests/ORM/Functional/Ticket/DDC2862Test.php	DDC2862Test::testIssueReopened	pending	needs the second-level cache
+tests/Tests/ORM/Functional/Ticket/DDC2862Test.php	DDC2862Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2862_test.rs::testIssue
+tests/Tests/ORM/Functional/Ticket/DDC2862Test.php	DDC2862Test::testIssueReopened	ported	crates/php2rust-doctrine-orm/tests/ddc2862_test.rs::testIssueReopened
 tests/Tests/ORM/Functional/Ticket/DDC2895Test.php	DDC2895Test::testPostLoadOneToManyInheritance	ported	crates/php2rust-doctrine-orm/tests/ddc2895_test.rs::testPostLoadOneToManyInheritance
 tests/Tests/ORM/Functional/Ticket/DDC2931Test.php	DDC2931Test::testFetchJoinedEntitiesCanBeRefreshed	ported	crates/php2rust-doctrine-orm/tests/ddc2931_test.rs::testFetchJoinedEntitiesCanBeRefreshed
 tests/Tests/ORM/Functional/Ticket/DDC2931Test.php	DDC2931Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2931_test.rs::testIssue
-tests/Tests/ORM/Functional/Ticket/DDC2943Test.php	DDC2943Test::testIssue	pending	needs the second-level cache
-tests/Tests/ORM/Functional/Ticket/DDC2943Test.php	DDC2943Test::testIssueNonFetchJoin	pending	needs the second-level cache
+tests/Tests/ORM/Functional/Ticket/DDC2943Test.php	DDC2943Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2943_test.rs::testIssue
+tests/Tests/ORM/Functional/Ticket/DDC2943Test.php	DDC2943Test::testIssueNonFetchJoin	ported	crates/php2rust-doctrine-orm/tests/ddc2943_test.rs::testIssueNonFetchJoin
 tests/Tests/ORM/Functional/Ticket/DDC2984Test.php	DDC2984Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2984_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC2996Test.php	DDC2996Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc2996_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC3033Test.php	DDC3033Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc3033_test.rs::testIssue
@@ -1344,8 +1344,8 @@ tests/Tests/ORM/Functional/Ticket/DDC3719Test.php	DDC3719Test::testCriteriaOnNot
 tests/Tests/ORM/Functional/Ticket/DDC371Test.php	DDC371Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc371_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC3785Test.php	DDC3785Test::testOwningValueObjectIdIsCorrectlyTransformedWhenRemovingOrphanedChildEntities	ported	crates/php2rust-doctrine-orm/tests/ddc3785_test.rs::testOwningValueObjectIdIsCorrectlyTransformedWhenRemovingOrphanedChildEntities
 tests/Tests/ORM/Functional/Ticket/DDC381Test.php	DDC381Test::testCallUnserializedProxyMethods	pending	serialize()/unserialize() of a proxy is not ported
-tests/Tests/ORM/Functional/Ticket/DDC3967Test.php	DDC3967Test::testIdentifierCachedWithProperType	pending	needs the second-level cache
-tests/Tests/ORM/Functional/Ticket/DDC4003Test.php	DDC4003Test::testReadsThroughRepositorySameDataThatItWroteInCache	pending	needs the second-level cache
+tests/Tests/ORM/Functional/Ticket/DDC3967Test.php	DDC3967Test::testIdentifierCachedWithProperType	ported	crates/php2rust-doctrine-orm/tests/ddc3967_test.rs::testIdentifierCachedWithProperType
+tests/Tests/ORM/Functional/Ticket/DDC4003Test.php	DDC4003Test::testReadsThroughRepositorySameDataThatItWroteInCache	ported	crates/php2rust-doctrine-orm/tests/ddc4003_test.rs::testReadsThroughRepositorySameDataThatItWroteInCache
 tests/Tests/ORM/Functional/Ticket/DDC4024Test.php	DDC4024Test::testADefaultMessageShouldBeUsedWhenNothingWasProvided	ported	crates/php2rust-doctrine-orm/tests/ddc4024_test.rs::testADefaultMessageShouldBeUsedWhenNothingWasProvided
 tests/Tests/ORM/Functional/Ticket/DDC4024Test.php	DDC4024Test::testConstructorShouldUseProvidedMessage	ported	crates/php2rust-doctrine-orm/tests/ddc4024_test.rs::testConstructorShouldUseProvidedMessage
 tests/Tests/ORM/Functional/Ticket/DDC422Test.php	DDC422Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc422_test.rs::testIssue
@@ -1393,7 +1393,7 @@ tests/Tests/ORM/Functional/Ticket/DDC736Test.php	DDC736Test::testReorderEntityFe
 tests/Tests/ORM/Functional/Ticket/DDC748Test.php	DDC748Test::testRefreshOneToOne	ported	crates/php2rust-doctrine-orm/tests/ddc748_test.rs::testRefreshOneToOne
 tests/Tests/ORM/Functional/Ticket/DDC748Test.php	DDC748Test::testRefreshWithManyToOne	ported	crates/php2rust-doctrine-orm/tests/ddc748_test.rs::testRefreshWithManyToOne
 tests/Tests/ORM/Functional/Ticket/DDC767Test.php	DDC767Test::testCollectionChangesInsideTransaction	ported	crates/php2rust-doctrine-orm/tests/ddc767_test.rs::testCollectionChangesInsideTransaction
-tests/Tests/ORM/Functional/Ticket/DDC7969Test.php	DDC7969Test::testChildEntityRetrievedFromCache	pending	needs the second-level cache
+tests/Tests/ORM/Functional/Ticket/DDC7969Test.php	DDC7969Test::testChildEntityRetrievedFromCache	ported	crates/php2rust-doctrine-orm/tests/ddc7969_test.rs::testChildEntityRetrievedFromCache
 tests/Tests/ORM/Functional/Ticket/DDC809Test.php	DDC809Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc809_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC812Test.php	DDC812Test::testFetchJoinInitializesPreviouslyUninitializedCollectionOfManagedEntity	ported	crates/php2rust-doctrine-orm/tests/ddc812_test.rs::testFetchJoinInitializesPreviouslyUninitializedCollectionOfManagedEntity
 tests/Tests/ORM/Functional/Ticket/DDC832Test.php	DDC832Test::testQuotedTableBasicRemove	ported	crates/php2rust-doctrine-orm/tests/ddc832_test.rs::testQuotedTableBasicRemove
@@ -1412,7 +1412,7 @@ tests/Tests/ORM/Functional/Ticket/DDC949Test.php	DDC949Test::testBooleanThroughR
 tests/Tests/ORM/Functional/Ticket/DDC960Test.php	DDC960Test::testUpdateRootVersion	ported	crates/php2rust-doctrine-orm/tests/ddc960_test.rs::testUpdateRootVersion
 tests/Tests/ORM/Functional/Ticket/DDC992Test.php	DDC992Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc992_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/DDC992Test.php	DDC992Test::testOneToManyChild	ported	crates/php2rust-doctrine-orm/tests/ddc992_test.rs::testOneToManyChild
-tests/Tests/ORM/Functional/Ticket/EagerSecondLevelCacheCollectionTest.php	EagerSecondLevelCacheCollectionTest::testEagerCollectionIsNotDuplicatedAfterSecondLevelCacheHit	pending	needs the second-level cache
+tests/Tests/ORM/Functional/Ticket/EagerSecondLevelCacheCollectionTest.php	EagerSecondLevelCacheCollectionTest::testEagerCollectionIsNotDuplicatedAfterSecondLevelCacheHit	ported	crates/php2rust-doctrine-orm/tests/eager_second_level_cache_collection_test.rs::testEagerCollectionIsNotDuplicatedAfterSecondLevelCacheHit
 tests/Tests/ORM/Functional/Ticket/GH10049/GH10049Test.php	GH10049Test::testInheritedReadOnlyPropertyValueCanBeSet	ported	crates/php2rust-doctrine-orm/tests/gh10049_test.rs::testInheritedReadOnlyPropertyValueCanBeSet
 tests/Tests/ORM/Functional/Ticket/GH10132Test.php	GH10132Test::testQueryBackedEnumInCompositeKeyJoin	ported	crates/php2rust-doctrine-orm/tests/gh10132_test.rs::testQueryBackedEnumInCompositeKeyJoin
 tests/Tests/ORM/Functional/Ticket/GH10288Test.php	GH10288Test::testEnumDiscriminatorWithCustomEnumType	ported	crates/php2rust-doctrine-orm/tests/gh10288_test.rs::testEnumDiscriminatorWithCustomEnumType
@@ -1462,8 +1462,8 @@ tests/Tests/ORM/Functional/Ticket/GH11058Test.php	GH11058Test::testChildrenInser
 tests/Tests/ORM/Functional/Ticket/GH11058Test.php	GH11058Test::testChildrenInsertedInOrderOfPersistCalls2WhenParentPersistedLast	ported	crates/php2rust-doctrine-orm/tests/gh11058_test.rs::testChildrenInsertedInOrderOfPersistCalls2WhenParentPersistedLast
 tests/Tests/ORM/Functional/Ticket/GH11072/GH11072Test.php	GH11072Test::testAcceptsAdvancedSubsetOfBuiltinTypesWithoutErrors	ported	crates/php2rust-doctrine-orm/tests/gh11072_test.rs::testAcceptsAdvancedSubsetOfBuiltinTypesWithoutErrors
 tests/Tests/ORM/Functional/Ticket/GH11072/GH11072Test.php	GH11072Test::testAcceptsSubsetOfBuiltinTypesWithoutErrors	ported	crates/php2rust-doctrine-orm/tests/gh11072_test.rs::testAcceptsSubsetOfBuiltinTypesWithoutErrors
-tests/Tests/ORM/Functional/Ticket/GH11112Test.php	GH11112Test::testSimpleQueryHasLimitAndOffsetApplied	pending	needs the query cache
-tests/Tests/ORM/Functional/Ticket/GH11112Test.php	GH11112Test::testSubqueryLimitAndOffsetAreIgnored	pending	needs the query cache
+tests/Tests/ORM/Functional/Ticket/GH11112Test.php	GH11112Test::testSimpleQueryHasLimitAndOffsetApplied	ported	crates/php2rust-doctrine-orm/tests/gh11112_test.rs::testSimpleQueryHasLimitAndOffsetApplied
+tests/Tests/ORM/Functional/Ticket/GH11112Test.php	GH11112Test::testSubqueryLimitAndOffsetAreIgnored	ported	crates/php2rust-doctrine-orm/tests/gh11112_test.rs::testSubqueryLimitAndOffsetAreIgnored
 tests/Tests/ORM/Functional/Ticket/GH11135Test.php	GH11135Test::testOverrideInheritsDeclaringClass	ported	crates/php2rust-doctrine-orm/tests/gh11135_test.rs::testOverrideInheritsDeclaringClass
 tests/Tests/ORM/Functional/Ticket/GH11149/GH11149Test.php	GH11149Test::testFetchEagerModeWithIndexBy	ported	crates/php2rust-doctrine-orm/tests/gh11149_test.rs::testFetchEagerModeWithIndexBy
 tests/Tests/ORM/Functional/Ticket/GH11163Test.php	GH11163Test::testFetchEagerModeWithOrderBy	ported	crates/php2rust-doctrine-orm/tests/gh11163_test.rs::testFetchEagerModeWithOrderBy
@@ -1497,7 +1497,7 @@ tests/Tests/ORM/Functional/Ticket/GH12438Test.php	GH12438Test::testFetchWithJoin
 tests/Tests/ORM/Functional/Ticket/GH12438Test.php	GH12438Test::testFetchWithJoinConditionWithoutAssociation	ported	crates/php2rust-doctrine-orm/tests/gh12438_test.rs::testFetchWithJoinConditionWithoutAssociation
 tests/Tests/ORM/Functional/Ticket/GH12505/GH12505Test.php	GH12505Test::testHydrateManyToManyIndexedByInheritedIdAfterFilterChange	ported	crates/php2rust-doctrine-orm/tests/gh12505_test.rs::testHydrateManyToManyIndexedByInheritedIdAfterFilterChange
 tests/Tests/ORM/Functional/Ticket/GH2947Test.php	GH2947Test::testIssue	pending	needs the result cache
-tests/Tests/ORM/Functional/Ticket/GH5562Test.php	GH5562Test::testCacheShouldBeUpdatedWhenAssociationChanges	pending	needs the second-level cache
+tests/Tests/ORM/Functional/Ticket/GH5562Test.php	GH5562Test::testCacheShouldBeUpdatedWhenAssociationChanges	ported	crates/php2rust-doctrine-orm/tests/gh5562_test.rs::testCacheShouldBeUpdatedWhenAssociationChanges
 tests/Tests/ORM/Functional/Ticket/GH5742Test.php	GH5742Test::testManyToManyCollectionUpdateBeforeRemoval	ported	crates/php2rust-doctrine-orm/tests/gh5742_test.rs::testManyToManyCollectionUpdateBeforeRemoval
 tests/Tests/ORM/Functional/Ticket/GH5742Test.php	GH5742Test::testUpdateOneToOneToNewEntityBeforePreviousEntityCanBeRemoved	ported	crates/php2rust-doctrine-orm/tests/gh5742_test.rs::testUpdateOneToOneToNewEntityBeforePreviousEntityCanBeRemoved
 tests/Tests/ORM/Functional/Ticket/GH5762Test.php	GH5762Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/gh5762_test.rs::testIssue
@@ -1510,7 +1510,7 @@ tests/Tests/ORM/Functional/Ticket/GH6029Test.php	GH6029Test::testOneToManyAssoci
 tests/Tests/ORM/Functional/Ticket/GH6123Test.php	GH6123Test::testLoadingRemovedEntityFromDatabaseDoesNotCreateNewManagedEntityInstance	ported	crates/php2rust-doctrine-orm/tests/gh6123_test.rs::testLoadingRemovedEntityFromDatabaseDoesNotCreateNewManagedEntityInstance
 tests/Tests/ORM/Functional/Ticket/GH6123Test.php	GH6123Test::testRemovedEntityCanBePersistedAgain	ported	crates/php2rust-doctrine-orm/tests/gh6123_test.rs::testRemovedEntityCanBePersistedAgain
 tests/Tests/ORM/Functional/Ticket/GH6141Test.php	GH6141Test::testEnumDiscriminatorsShouldBeConvertedToString	ported	crates/php2rust-doctrine-orm/tests/gh6141_test.rs::testEnumDiscriminatorsShouldBeConvertedToString
-tests/Tests/ORM/Functional/Ticket/GH6217Test.php	GH6217Test::testLoadingOfSecondLevelCacheOnEagerAssociations	pending	needs the second-level cache
+tests/Tests/ORM/Functional/Ticket/GH6217Test.php	GH6217Test::testLoadingOfSecondLevelCacheOnEagerAssociations	ported	crates/php2rust-doctrine-orm/tests/gh6217_test.rs::testLoadingOfSecondLevelCacheOnEagerAssociations
 tests/Tests/ORM/Functional/Ticket/GH6362Test.php	GH6362Test::testInheritanceJoinAlias	ported	crates/php2rust-doctrine-orm/tests/gh6362_test.rs::testInheritanceJoinAlias
 tests/Tests/ORM/Functional/Ticket/GH6394Test.php	GH6394Test::testFetchVersionValueForDifferentIdFieldAndColumn	ported	crates/php2rust-doctrine-orm/tests/gh6394_test.rs::testFetchVersionValueForDifferentIdFieldAndColumn
 tests/Tests/ORM/Functional/Ticket/GH6402Test.php	GH6402Test::testFind	ported	crates/php2rust-doctrine-orm/tests/gh6402_test.rs::testFind
@@ -1540,7 +1540,7 @@ tests/Tests/ORM/Functional/Ticket/GH6937Test.php	GH6937Test::testPhoneNumberIsPo
 tests/Tests/ORM/Functional/Ticket/GH7006Test.php	GH7006Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/gh7006_test.rs::testIssue
 tests/Tests/ORM/Functional/Ticket/GH7012Test.php	GH7012Test::testUpdateEntityWithIdentifierAssociationWithQuotedJoinColumn	ported	crates/php2rust-doctrine-orm/tests/gh7012_test.rs::testUpdateEntityWithIdentifierAssociationWithQuotedJoinColumn
 tests/Tests/ORM/Functional/Ticket/GH7062Test.php	GH7062Test::testEntityWithAssociationKeyIdentityCanBeUpdated	ported	crates/php2rust-doctrine-orm/tests/gh7062_test.rs::testEntityWithAssociationKeyIdentityCanBeUpdated
-tests/Tests/ORM/Functional/Ticket/GH7067Test.php	GH7067Test::testSLCWithVersion	pending	needs the second-level cache
+tests/Tests/ORM/Functional/Ticket/GH7067Test.php	GH7067Test::testSLCWithVersion	ported	crates/php2rust-doctrine-orm/tests/gh7067_test.rs::testSLCWithVersion
 tests/Tests/ORM/Functional/Ticket/GH7068Test.php	GH7068Test::testLockModeIsRespected	ported	crates/php2rust-doctrine-orm/tests/gh7068_test.rs::testLockModeIsRespected
 tests/Tests/ORM/Functional/Ticket/GH7079Test.php	GH7079Test::testGetTableName	ported	crates/php2rust-doctrine-orm/tests/gh7079_test.rs::testGetTableName
 tests/Tests/ORM/Functional/Ticket/GH7079Test.php	GH7079Test::testJoinTableName	ported	crates/php2rust-doctrine-orm/tests/gh7079_test.rs::testJoinTableName
@@ -1559,16 +1559,16 @@ tests/Tests/ORM/Functional/Ticket/GH7629Test.php	GH7629Test::testPersistAfterRem
 tests/Tests/ORM/Functional/Ticket/GH7661Test.php	GH7661Test::testIndexByAssociation	ported	crates/php2rust-doctrine-orm/tests/gh7661_test.rs::testIndexByAssociation
 tests/Tests/ORM/Functional/Ticket/GH7684Test.php	GH7684Test::testIssue	pending	needs the DatabaseDriver (reverse engineering), which is not ported
 tests/Tests/ORM/Functional/Ticket/GH7717Test.php	GH7717Test::testManyToManyPersisterIsNullComparison	ported	crates/php2rust-doctrine-orm/tests/gh7717_test.rs::testManyToManyPersisterIsNullComparison
-tests/Tests/ORM/Functional/Ticket/GH7735Test.php	GH7735Test::findByReturnsCachedEntity	pending	needs the second-level cache
+tests/Tests/ORM/Functional/Ticket/GH7735Test.php	GH7735Test::findByReturnsCachedEntity	ported	crates/php2rust-doctrine-orm/tests/gh7735_test.rs::findByReturnsCachedEntity
 tests/Tests/ORM/Functional/Ticket/GH7737Test.php	GH7737Test::memberOfCriteriaShouldBeCompatibleWithQueryBuilder	ported	crates/php2rust-doctrine-orm/tests/gh7737_test.rs::memberOfCriteriaShouldBeCompatibleWithQueryBuilder
 tests/Tests/ORM/Functional/Ticket/GH7761Test.php	GH7761Test::testCollectionClearDoesClearIfPersisted	ported	crates/php2rust-doctrine-orm/tests/gh7761_test.rs::testCollectionClearDoesClearIfPersisted
 tests/Tests/ORM/Functional/Ticket/GH7761Test.php	GH7761Test::testCollectionClearDoesNotClearIfNotPersisted	ported	crates/php2rust-doctrine-orm/tests/gh7761_test.rs::testCollectionClearDoesNotClearIfNotPersisted
 tests/Tests/ORM/Functional/Ticket/GH7767Test.php	GH7767Test::testMatchingOverrulesCollectionOrdering	ported	crates/php2rust-doctrine-orm/tests/gh7767_test.rs::testMatchingOverrulesCollectionOrdering
 tests/Tests/ORM/Functional/Ticket/GH7767Test.php	GH7767Test::testMatchingRespectsCollectionOrdering	ported	crates/php2rust-doctrine-orm/tests/gh7767_test.rs::testMatchingRespectsCollectionOrdering
-tests/Tests/ORM/Functional/Ticket/GH7820Test.php	GH7820Test::testPaginatorDoesNotForceCacheToUpdateEntries	pending	needs the query cache
-tests/Tests/ORM/Functional/Ticket/GH7820Test.php	GH7820Test::testPaginatorQueriesWillBeCached	pending	needs the query cache
+tests/Tests/ORM/Functional/Ticket/GH7820Test.php	GH7820Test::testPaginatorDoesNotForceCacheToUpdateEntries	ported	crates/php2rust-doctrine-orm/tests/gh7820_test.rs::testPaginatorDoesNotForceCacheToUpdateEntries
+tests/Tests/ORM/Functional/Ticket/GH7820Test.php	GH7820Test::testPaginatorQueriesWillBeCached	ported	crates/php2rust-doctrine-orm/tests/gh7820_test.rs::testPaginatorQueriesWillBeCached
 tests/Tests/ORM/Functional/Ticket/GH7820Test.php	GH7820Test::testWillFindSongsInPaginator	ported	crates/php2rust-doctrine-orm/tests/gh7820_test.rs::testWillFindSongsInPaginator
-tests/Tests/ORM/Functional/Ticket/GH7820Test.php	GH7820Test::testWillFindSongsInPaginatorEvenWithCachedQueryParsing	pending	needs the query cache
+tests/Tests/ORM/Functional/Ticket/GH7820Test.php	GH7820Test::testWillFindSongsInPaginatorEvenWithCachedQueryParsing	ported	crates/php2rust-doctrine-orm/tests/gh7820_test.rs::testWillFindSongsInPaginatorEvenWithCachedQueryParsing
 tests/Tests/ORM/Functional/Ticket/GH7829Test.php	GH7829Test::testPaginatorWithLimitSubquery	ported	crates/php2rust-doctrine-orm/tests/gh7829_test.rs::testPaginatorWithLimitSubquery
 tests/Tests/ORM/Functional/Ticket/GH7829Test.php	GH7829Test::testPaginatorWithLimitSubquerySkipped	ported	crates/php2rust-doctrine-orm/tests/gh7829_test.rs::testPaginatorWithLimitSubquerySkipped
 tests/Tests/ORM/Functional/Ticket/GH7836Test.php	GH7836Test::testMatchingKeepsOrderOfCriteriaOrderingKeys	ported	crates/php2rust-doctrine-orm/tests/gh7836_test.rs::testMatchingKeepsOrderOfCriteriaOrderingKeys
@@ -2588,7 +2588,7 @@ tests/Tests/ORM/Query/QueryTest.php	QueryTest::testIterateWithDistinct	ported	cr
 tests/Tests/ORM/Query/QueryTest.php	QueryTest::testNonExistentExecutor	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testNonExistentExecutor
 tests/Tests/ORM/Query/QueryTest.php	QueryTest::testProcessParameterValueBackedEnum	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testProcessParameterValueBackedEnum
 tests/Tests/ORM/Query/QueryTest.php	QueryTest::testProcessParameterValueBackedEnumArray	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testProcessParameterValueBackedEnumArray
-tests/Tests/ORM/Query/QueryTest.php	QueryTest::testProcessParameterValueClassMetadata	pending	a ClassMetadata is not a PHP object value (php_value::Object) in the port, so it cannot be a parameter value
+tests/Tests/ORM/Query/QueryTest.php	QueryTest::testProcessParameterValueClassMetadata	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testProcessParameterValueClassMetadata
 tests/Tests/ORM/Query/QueryTest.php	QueryTest::testProcessParameterValueIterable	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testProcessParameterValueIterable
 tests/Tests/ORM/Query/QueryTest.php	QueryTest::testProcessParameterValueNull	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testProcessParameterValueNull
 tests/Tests/ORM/Query/QueryTest.php	QueryTest::testProcessParameterValueObject	ported	crates/php2rust-doctrine-orm/tests/query_query_test.rs::testProcessParameterValueObject

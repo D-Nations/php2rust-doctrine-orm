@@ -1,5 +1,8 @@
 //! Ticket/GH7820Test.php at doctrine/orm 00c2fd70da291cca1ec75f4dae5344fe3df588fa,
 //! on `SQLite` (its own models; `GH7820LineTextType` and `GH7820LineText` are Rust types).
+//! The functional test case's query cache is a new `ArrayAdapter` per test
+//! (PHP shares one between the tests of a run); the anonymous `ArrayAdapter`
+//! subclasses are pools over an `ArrayAdapter`.
 //!
 //! Upstream: doctrine/orm tests/Tests/ORM/Functional/Ticket/GH7820Test.php
 
@@ -19,9 +22,12 @@ mod ticket;
 
 use std::sync::Arc;
 
-use php_value::{Object, PhpArray, PhpObject, PhpString, Value};
+use php_value::{Object, PhpArray, PhpObject, PhpString, Thrown, Value};
 use php2rust_doctrine_dbal::platforms::AbstractPlatform;
 use php2rust_doctrine_dbal::types::{ConversionError, StringType, Type};
+use std::sync::atomic::{AtomicBool, Ordering};
+
+use php2rust_doctrine_orm::cache::pool::{ArrayAdapter, CacheItem, CacheItemPool};
 use php2rust_doctrine_orm::entity_manager::EntityManager;
 use php2rust_doctrine_orm::query::SortDirection;
 use php2rust_doctrine_orm::tools::pagination::{OffsetPaginator, Page, Window};
@@ -134,6 +140,8 @@ async fn set_up() -> Arc<EntityManager> {
     }
 
     let em = ticket::set_up(&["GH7820Line"]).await;
+    em.get_configuration()
+        .set_query_cache(Arc::new(ArrayAdapter::new()));
 
     em.create_query(&format!("DELETE FROM {} l", class("GH7820Line")))
         .execute(None, None)
@@ -187,4 +195,141 @@ async fn testWillFindSongsInPaginator() {
     for (expected, actual) in song.iter().zip(&lines) {
         assert!(expected.identical(actual), "{expected:?} !== {actual:?}");
     }
+}
+
+/// GH7837
+#[tokio::test]
+async fn testWillFindSongsInPaginatorEvenWithCachedQueryParsing() {
+    let em = set_up().await;
+    // Enable the query cache
+    em.get_configuration().get_query_cache().unwrap().clear("");
+
+    let song: Vec<Value> = SONG.iter().map(|line| s(line)).collect();
+    let assert_same = |lines: &[Value], message: &str| {
+        assert_eq!(song.len(), lines.len(), "{message}");
+        for (expected, actual) in song.iter().zip(lines) {
+            assert!(expected.identical(actual), "{message}");
+        }
+    };
+
+    // Fetch song lines with the paginator, also priming the query cache
+    let lines = fetch_song_lines_with_paginator(&em).await;
+    assert_same(
+        &lines,
+        "Expected to return expected data before query cache is populated with DQL -> SQL translation. Were SQL parameters translated?",
+    );
+
+    // Fetch song lines again
+    let lines = fetch_song_lines_with_paginator(&em).await;
+    assert_same(
+        &lines,
+        "Expected to return expected data even when DQL -> SQL translation is present in cache. Were SQL parameters translated again?",
+    );
+}
+
+/// The `ArrayAdapter` whose `save()` asserts that it does not overwrite an
+/// entry.
+#[derive(Debug, Default)]
+struct NoOverwriteAdapter(ArrayAdapter);
+
+impl CacheItemPool for NoOverwriteAdapter {
+    fn get_item(&self, key: &str) -> Result<CacheItem, Thrown> {
+        self.0.get_item(key)
+    }
+
+    fn get_items(&self, keys: &[String]) -> Result<Vec<CacheItem>, Thrown> {
+        self.0.get_items(keys)
+    }
+
+    fn has_item(&self, key: &str) -> Result<bool, Thrown> {
+        self.0.has_item(key)
+    }
+
+    fn clear(&self, prefix: &str) -> bool {
+        self.0.clear(prefix)
+    }
+
+    fn delete_item(&self, key: &str) -> Result<bool, Thrown> {
+        self.0.delete_item(key)
+    }
+
+    fn save(&self, item: CacheItem) -> bool {
+        assert!(
+            !self.has_item(item.get_key()).unwrap(),
+            "The cache should not have to overwrite the entry"
+        );
+        self.0.save(item)
+    }
+}
+
+#[tokio::test]
+async fn testPaginatorDoesNotForceCacheToUpdateEntries() {
+    let em = set_up().await;
+    em.get_configuration()
+        .set_query_cache(Arc::new(NoOverwriteAdapter::default()));
+
+    // "Prime" the cache (in fact, that should not even happen)
+    fetch_song_lines_with_paginator(&em).await;
+
+    // Make sure we can query again without overwriting the cache
+    fetch_song_lines_with_paginator(&em).await;
+}
+
+/// The `ArrayAdapter` whose `getItem()` asserts a hit once
+/// `failOnCacheMiss()` is called.
+#[derive(Debug, Default)]
+struct FailOnMissAdapter {
+    inner: ArrayAdapter,
+    fail_on_cache_miss: AtomicBool,
+}
+
+impl FailOnMissAdapter {
+    fn fail_on_cache_miss(&self) {
+        self.fail_on_cache_miss.store(true, Ordering::SeqCst);
+    }
+}
+
+impl CacheItemPool for FailOnMissAdapter {
+    fn get_item(&self, key: &str) -> Result<CacheItem, Thrown> {
+        let item = self.inner.get_item(key)?;
+        assert!(
+            !self.fail_on_cache_miss.load(Ordering::SeqCst) || item.is_hit(),
+            "cache was missed"
+        );
+        Ok(item)
+    }
+
+    fn get_items(&self, keys: &[String]) -> Result<Vec<CacheItem>, Thrown> {
+        self.inner.get_items(keys)
+    }
+
+    fn has_item(&self, key: &str) -> Result<bool, Thrown> {
+        self.inner.has_item(key)
+    }
+
+    fn clear(&self, prefix: &str) -> bool {
+        self.inner.clear(prefix)
+    }
+
+    fn delete_item(&self, key: &str) -> Result<bool, Thrown> {
+        self.inner.delete_item(key)
+    }
+
+    fn save(&self, item: CacheItem) -> bool {
+        self.inner.save(item)
+    }
+}
+
+#[tokio::test]
+async fn testPaginatorQueriesWillBeCached() {
+    let em = set_up().await;
+    let cache = Arc::new(FailOnMissAdapter::default());
+    em.get_configuration().set_query_cache(cache.clone());
+
+    // Prime the cache
+    fetch_song_lines_with_paginator(&em).await;
+
+    cache.fail_on_cache_miss();
+
+    fetch_song_lines_with_paginator(&em).await;
 }

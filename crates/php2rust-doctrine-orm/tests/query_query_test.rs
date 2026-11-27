@@ -386,6 +386,21 @@ async fn testProcessParameterValueWithIterableEntityShouldNotBeTreatedAsIterable
 }
 
 #[tokio::test]
+async fn testProcessParameterValueClassMetadata() {
+    let em = entity_manager().await;
+    let query = em.create_query(
+        "SELECT a FROM Doctrine\\Tests\\Models\\CMS\\CmsAddress a WHERE a.city IN (:cities)",
+    );
+    let metadata = em.get_class_metadata(orm::CMS_ADDRESS).unwrap();
+    assert!(php_value::compare::loose_equals(
+        &Value::from(orm::CMS_ADDRESS),
+        &query
+            .process_parameter_value(&Value::Object(metadata))
+            .unwrap()
+    ));
+}
+
+#[tokio::test]
 async fn testProcessParameterValueObject() {
     let em = entity_manager().await;
     let query = em.create_query(
