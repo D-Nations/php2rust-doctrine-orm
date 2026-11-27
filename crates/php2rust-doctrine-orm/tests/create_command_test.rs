@@ -4,7 +4,6 @@
 //!
 //! Upstream: doctrine/orm tests/Tests/ORM/Tools/Console/Command/SchemaTool/CreateCommandTest.php tests/Tests/ORM/Tools/Console/Command/SchemaTool/CommandTestCase.php
 #![cfg(feature = "console")]
-
 #![allow(non_snake_case)]
 #![allow(
     clippy::unwrap_used,

@@ -3,7 +3,6 @@
 //!
 //! Upstream: doctrine/orm tests/Tests/ORM/Tools/Console/Command/ClearCacheQueryRegionCommandTest.php
 #![cfg(feature = "console")]
-
 #![allow(non_snake_case)]
 #![allow(
     clippy::unwrap_used,

@@ -7,7 +7,6 @@
 //!
 //! Upstream: doctrine/orm tests/Tests/ORM/Tools/Console/Command/InfoCommandTest.php
 #![cfg(feature = "console")]
-
 #![allow(non_snake_case)]
 #![allow(
     clippy::unwrap_used,
