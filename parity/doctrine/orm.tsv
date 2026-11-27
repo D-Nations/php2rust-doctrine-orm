@@ -259,7 +259,7 @@ tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testWrapInTransactionAc
 tests/Tests/ORM/EntityManagerTest.php	EntityManagerTest::testWrapInTransactionReThrowsThrowables	ported	crates/php2rust-doctrine-orm/tests/entity_manager_test.rs::testWrapInTransactionReThrowsThrowables
 tests/Tests/ORM/EntityNotFoundExceptionTest.php	EntityNotFoundExceptionTest::testFromClassNameAndIdentifier	ported	crates/php2rust-doctrine-orm/tests/entity_not_found_exception_test.rs::testFromClassNameAndIdentifier
 tests/Tests/ORM/EntityNotFoundExceptionTest.php	EntityNotFoundExceptionTest::testNoIdentifierFound	ported	crates/php2rust-doctrine-orm/tests/entity_not_found_exception_test.rs::testNoIdentifierFound
-tests/Tests/ORM/EntityRepositoryTest.php	EntityRepositoryTest::testExpr	pending	
+tests/Tests/ORM/EntityRepositoryTest.php	EntityRepositoryTest::testExpr	ported	crates/php2rust-doctrine-orm/tests/orm_entity_repository_test.rs::testExpr
 tests/Tests/ORM/Event/OnClassMetadataNotFoundEventArgsTest.php	OnClassMetadataNotFoundEventArgsTest::testEventArgsMutability	pending	
 tests/Tests/ORM/Functional/AbstractFetchEagerTest.php	AbstractFetchEagerTest::testWithAbstractFetchEager	ported	crates/php2rust-doctrine-orm/tests/abstract_fetch_eager_test.rs::testWithAbstractFetchEager
 tests/Tests/ORM/Functional/AdvancedAssociationTest.php	AdvancedAssociationTest::testIssue	ported	crates/php2rust-doctrine-orm/tests/advanced_association_test.rs::testIssue
@@ -397,7 +397,7 @@ tests/Tests/ORM/Functional/EntityRepositoryTest.php	EntityRepositoryTest::testCa
 tests/Tests/ORM/Functional/EntityRepositoryTest.php	EntityRepositoryTest::testCount	ported	crates/php2rust-doctrine-orm/tests/entity_repository_test.rs::testCount
 tests/Tests/ORM/Functional/EntityRepositoryTest.php	EntityRepositoryTest::testCountBy	ported	crates/php2rust-doctrine-orm/tests/entity_repository_test.rs::testCountBy
 tests/Tests/ORM/Functional/EntityRepositoryTest.php	EntityRepositoryTest::testCreateResultSetMappingBuilder	ported	crates/php2rust-doctrine-orm/tests/entity_repository_test.rs::testCreateResultSetMappingBuilder
-tests/Tests/ORM/Functional/EntityRepositoryTest.php	EntityRepositoryTest::testDefaultRepositoryClassName	pending	
+tests/Tests/ORM/Functional/EntityRepositoryTest.php	EntityRepositoryTest::testDefaultRepositoryClassName	ported	crates/php2rust-doctrine-orm/tests/entity_repository_test.rs::testDefaultRepositoryClassName
 tests/Tests/ORM/Functional/EntityRepositoryTest.php	EntityRepositoryTest::testExceptionIsThrownWhenCallingFindByWithoutParameter	ported	crates/php2rust-doctrine-orm/tests/entity_repository_test.rs::testExceptionIsThrownWhenCallingFindByWithoutParameter
 tests/Tests/ORM/Functional/EntityRepositoryTest.php	EntityRepositoryTest::testExceptionIsThrownWhenUsingInvalidFieldName	ported	crates/php2rust-doctrine-orm/tests/entity_repository_test.rs::testExceptionIsThrownWhenUsingInvalidFieldName
 tests/Tests/ORM/Functional/EntityRepositoryTest.php	EntityRepositoryTest::testFindAll	ported	crates/php2rust-doctrine-orm/tests/entity_repository_test.rs::testFindAll
@@ -904,13 +904,13 @@ tests/Tests/ORM/Functional/QueryTest.php	QueryTest::testIterateResultAsArrayAndP
 tests/Tests/ORM/Functional/QueryTest.php	QueryTest::testIterateResultClearEveryCycle	ported	crates/php2rust-doctrine-orm/tests/functional_query_test.rs::testIterateResultClearEveryCycle
 tests/Tests/ORM/Functional/QueryTest.php	QueryTest::testIterateResultIterativelyBuildUpUnitOfWork	ported	crates/php2rust-doctrine-orm/tests/functional_query_test.rs::testIterateResultIterativelyBuildUpUnitOfWork
 tests/Tests/ORM/Functional/QueryTest.php	QueryTest::testJoinPartialArrayHydration	ported	crates/php2rust-doctrine-orm/tests/functional_query_test.rs::testJoinPartialArrayHydration
-tests/Tests/ORM/Functional/QueryTest.php	QueryTest::testJoinPartialObjectHydration	pending	
+tests/Tests/ORM/Functional/QueryTest.php	QueryTest::testJoinPartialObjectHydration	pending	needs PARTIAL objects as lazy ghosts that load the rest on first access; the UnitOfWork's partial objects are not ported
 tests/Tests/ORM/Functional/QueryTest.php	QueryTest::testJoinQueries	ported	crates/php2rust-doctrine-orm/tests/functional_query_test.rs::testJoinQueries
 tests/Tests/ORM/Functional/QueryTest.php	QueryTest::testModifiedLimitQuery	ported	crates/php2rust-doctrine-orm/tests/functional_query_test.rs::testModifiedLimitQuery
 tests/Tests/ORM/Functional/QueryTest.php	QueryTest::testMultipleJoinComponentsUsingInnerJoin	ported	crates/php2rust-doctrine-orm/tests/functional_query_test.rs::testMultipleJoinComponentsUsingInnerJoin
 tests/Tests/ORM/Functional/QueryTest.php	QueryTest::testMultipleJoinComponentsUsingLeftJoin	ported	crates/php2rust-doctrine-orm/tests/functional_query_test.rs::testMultipleJoinComponentsUsingLeftJoin
 tests/Tests/ORM/Functional/QueryTest.php	QueryTest::testParameterOrder	ported	crates/php2rust-doctrine-orm/tests/functional_query_test.rs::testParameterOrder
-tests/Tests/ORM/Functional/QueryTest.php	QueryTest::testQueryBuilderWithStringWhereClauseContainingOrAndConditionalPrimary	pending	
+tests/Tests/ORM/Functional/QueryTest.php	QueryTest::testQueryBuilderWithStringWhereClauseContainingOrAndConditionalPrimary	ported	crates/php2rust-doctrine-orm/tests/functional_query_test.rs::testQueryBuilderWithStringWhereClauseContainingOrAndConditionalPrimary
 tests/Tests/ORM/Functional/QueryTest.php	QueryTest::testQueryWithArrayOfEntitiesAsParameter	ported	crates/php2rust-doctrine-orm/tests/functional_query_test.rs::testQueryWithArrayOfEntitiesAsParameter
 tests/Tests/ORM/Functional/QueryTest.php	QueryTest::testQueryWithHiddenAsSelectExpression	ported	crates/php2rust-doctrine-orm/tests/functional_query_test.rs::testQueryWithHiddenAsSelectExpression
 tests/Tests/ORM/Functional/QueryTest.php	QueryTest::testSetCollectionParameterBindingSingleIdentifierObject	ported	crates/php2rust-doctrine-orm/tests/functional_query_test.rs::testSetCollectionParameterBindingSingleIdentifierObject
