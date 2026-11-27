@@ -1407,7 +1407,7 @@ tests/Tests/ORM/Functional/Ticket/DDC849Test.php	DDC849Test::testClearContains	p
 tests/Tests/ORM/Functional/Ticket/DDC849Test.php	DDC849Test::testClearCount	ported	crates/php2rust-doctrine-orm/tests/ddc849_test.rs::testClearCount
 tests/Tests/ORM/Functional/Ticket/DDC849Test.php	DDC849Test::testRemoveContains	ported	crates/php2rust-doctrine-orm/tests/ddc849_test.rs::testRemoveContains
 tests/Tests/ORM/Functional/Ticket/DDC881Test.php	DDC881Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc881_test.rs::testIssue
-tests/Tests/ORM/Functional/Ticket/DDC933Test.php	DDC933Test::testLockCTIClass	pending	
+tests/Tests/ORM/Functional/Ticket/DDC933Test.php	DDC933Test::testLockCTIClass	n/a	
 tests/Tests/ORM/Functional/Ticket/DDC949Test.php	DDC949Test::testBooleanThroughRepository	ported	crates/php2rust-doctrine-orm/tests/ddc949_test.rs::testBooleanThroughRepository
 tests/Tests/ORM/Functional/Ticket/DDC960Test.php	DDC960Test::testUpdateRootVersion	ported	crates/php2rust-doctrine-orm/tests/ddc960_test.rs::testUpdateRootVersion
 tests/Tests/ORM/Functional/Ticket/DDC992Test.php	DDC992Test::testIssue	ported	crates/php2rust-doctrine-orm/tests/ddc992_test.rs::testIssue
