@@ -1023,12 +1023,12 @@ tests/Tests/ORM/Functional/SchemaTool/CompanySchemaTest.php	CompanySchemaTest::t
 tests/Tests/ORM/Functional/SchemaTool/DBAL483Test.php	DBAL483Test::testDefaultValueIsComparedCorrectly	ported	crates/php2rust-doctrine-orm/tests/dbal483_test.rs::testDefaultValueIsComparedCorrectly
 tests/Tests/ORM/Functional/SchemaTool/DDC214Test.php	DDC214Test::testCmsAddressModel	n/a	
 tests/Tests/ORM/Functional/SchemaTool/DDC214Test.php	DDC214Test::testCompanyModel	n/a	
-tests/Tests/ORM/Functional/SchemaTool/MySqlSchemaToolTest.php	MySqlSchemaToolTest::testFulltextIndexSurvivesCreateIntrospectAndUpdateWithColumnUnique	pending	
-tests/Tests/ORM/Functional/SchemaTool/MySqlSchemaToolTest.php	MySqlSchemaToolTest::testFulltextIndexSurvivesCreateIntrospectAndUpdateWithUniqueConstraint	pending	
-tests/Tests/ORM/Functional/SchemaTool/MySqlSchemaToolTest.php	MySqlSchemaToolTest::testGetCreateSchemaSql	pending	
-tests/Tests/ORM/Functional/SchemaTool/MySqlSchemaToolTest.php	MySqlSchemaToolTest::testGetCreateSchemaSql2	pending	
-tests/Tests/ORM/Functional/SchemaTool/MySqlSchemaToolTest.php	MySqlSchemaToolTest::testGetCreateSchemaSql3	pending	
-tests/Tests/ORM/Functional/SchemaTool/MySqlSchemaToolTest.php	MySqlSchemaToolTest::testGetCreateSchemaSql4	pending	
+tests/Tests/ORM/Functional/SchemaTool/MySqlSchemaToolTest.php	MySqlSchemaToolTest::testFulltextIndexSurvivesCreateIntrospectAndUpdateWithColumnUnique	n/a	
+tests/Tests/ORM/Functional/SchemaTool/MySqlSchemaToolTest.php	MySqlSchemaToolTest::testFulltextIndexSurvivesCreateIntrospectAndUpdateWithUniqueConstraint	n/a	
+tests/Tests/ORM/Functional/SchemaTool/MySqlSchemaToolTest.php	MySqlSchemaToolTest::testGetCreateSchemaSql	n/a	
+tests/Tests/ORM/Functional/SchemaTool/MySqlSchemaToolTest.php	MySqlSchemaToolTest::testGetCreateSchemaSql2	n/a	
+tests/Tests/ORM/Functional/SchemaTool/MySqlSchemaToolTest.php	MySqlSchemaToolTest::testGetCreateSchemaSql3	n/a	
+tests/Tests/ORM/Functional/SchemaTool/MySqlSchemaToolTest.php	MySqlSchemaToolTest::testGetCreateSchemaSql4	n/a	
 tests/Tests/ORM/Functional/SchemaTool/PostgreSqlSchemaToolTest.php	PostgreSqlSchemaToolTest::testSetDeferrableForeignKey	pending	
 tests/Tests/ORM/Functional/SchemaTool/PostgreSqlSchemaToolTest.php	PostgreSqlSchemaToolTest::testUpdateSchemaWithPostgreSQLSchema	pending	
 tests/Tests/ORM/Functional/SchemaValidatorTest.php	SchemaValidatorTest::testValidateModelSets	ported	crates/php2rust-doctrine-orm/tests/functional_schema_validator_test.rs::testValidateModelSets
