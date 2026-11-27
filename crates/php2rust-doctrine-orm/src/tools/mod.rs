@@ -4,6 +4,7 @@
 //! Upstream: none
 
 pub mod attach_entity_listeners_listener;
+pub mod console;
 pub mod event;
 pub mod pagination;
 pub mod resolve_target_entity_listener;

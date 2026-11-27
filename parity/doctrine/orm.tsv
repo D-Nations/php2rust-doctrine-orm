@@ -2972,11 +2972,11 @@ tests/Tests/ORM/Tools/Console/Command/ValidateSchemaCommandTest.php	ValidateSche
 tests/Tests/ORM/Tools/Console/Command/ValidateSchemaCommandTest.php	ValidateSchemaCommandTest::testNotInSyncVerbose	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
 tests/Tests/ORM/Tools/Console/ConsoleRunnerTest.php	ConsoleRunnerTest::testCreateApplicationShouldAppendGivenCommands	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
 tests/Tests/ORM/Tools/Console/ConsoleRunnerTest.php	ConsoleRunnerTest::testCreateApplicationShouldReturnAnApplicationWithTheCorrectCommands	pending	needs the ORM console commands on symfony/console (symfony-rs has crates/console; the commands are not ported yet)
-tests/Tests/ORM/Tools/Console/MetadataFilterTest.php	MetadataFilterTest::testFilterWithArray	pending	
-tests/Tests/ORM/Tools/Console/MetadataFilterTest.php	MetadataFilterTest::testFilterWithEmptyArray	pending	
-tests/Tests/ORM/Tools/Console/MetadataFilterTest.php	MetadataFilterTest::testFilterWithRegex	pending	
-tests/Tests/ORM/Tools/Console/MetadataFilterTest.php	MetadataFilterTest::testFilterWithString	pending	
-tests/Tests/ORM/Tools/Console/MetadataFilterTest.php	MetadataFilterTest::testFilterWithString2	pending	
+tests/Tests/ORM/Tools/Console/MetadataFilterTest.php	MetadataFilterTest::testFilterWithArray	ported	crates/php2rust-doctrine-orm/tests/metadata_filter_test.rs::testFilterWithArray
+tests/Tests/ORM/Tools/Console/MetadataFilterTest.php	MetadataFilterTest::testFilterWithEmptyArray	ported	crates/php2rust-doctrine-orm/tests/metadata_filter_test.rs::testFilterWithEmptyArray
+tests/Tests/ORM/Tools/Console/MetadataFilterTest.php	MetadataFilterTest::testFilterWithRegex	ported	crates/php2rust-doctrine-orm/tests/metadata_filter_test.rs::testFilterWithRegex
+tests/Tests/ORM/Tools/Console/MetadataFilterTest.php	MetadataFilterTest::testFilterWithString	ported	crates/php2rust-doctrine-orm/tests/metadata_filter_test.rs::testFilterWithString
+tests/Tests/ORM/Tools/Console/MetadataFilterTest.php	MetadataFilterTest::testFilterWithString2	ported	crates/php2rust-doctrine-orm/tests/metadata_filter_test.rs::testFilterWithString2
 tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testCollectionsAreCastIntoArrays	pending	needs PHP's print_r(), DateTime/ArrayObject and (array) casts of objects with mangled property names
 tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportArray	pending	needs PHP's print_r(), DateTime/ArrayObject and (array) casts of objects with mangled property names
 tests/Tests/ORM/Tools/DebugTest.php	DebugTest::testExportArrayTraversable	pending	needs PHP's print_r(), DateTime/ArrayObject and (array) casts of objects with mangled property names

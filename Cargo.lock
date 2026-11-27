@@ -706,6 +706,7 @@ dependencies = [
  "php2rust-doctrine-lexer",
  "php2rust-doctrine-persistence",
  "php2rust-dom",
+ "php2rust-regex",
  "php2rust-value",
  "serde_json",
  "sha1",

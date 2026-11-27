@@ -428,7 +428,7 @@ src/Tools/Console/EntityManagerProvider.php	EntityManagerProvider	8	pending
 src/Tools/Console/EntityManagerProvider/ConnectionFromManagerProvider.php	ConnectionFromManagerProvider	19	pending	
 src/Tools/Console/EntityManagerProvider/SingleManagerProvider.php	SingleManagerProvider	23	pending	
 src/Tools/Console/EntityManagerProvider/UnknownManagerException.php	UnknownManagerException	16	pending	
-src/Tools/Console/MetadataFilter.php	MetadataFilter	56	pending	
+src/Tools/Console/MetadataFilter.php	MetadataFilter	56	ported	crates/php2rust-doctrine-orm/src/tools/console/metadata_filter.rs
 src/Tools/Debug.php	Debug	104	pending	
 src/Tools/DebugUnitOfWorkListener.php	DebugUnitOfWorkListener	106	pending	
 src/Tools/Event/GenerateSchemaEventArgs.php	GenerateSchemaEventArgs	33	ported	crates/php2rust-doctrine-orm/src/tools/event.rs
