@@ -29,6 +29,7 @@ pub mod lazy_criteria_collection;
 pub mod mapping;
 pub mod native_query;
 pub mod object;
+pub mod orm_setup;
 pub mod persistent_collection;
 pub mod persisters;
 pub mod proxy;
