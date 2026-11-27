@@ -462,7 +462,19 @@ Persistence, not reproduced and so not claimed:
   GH11341, GH6464 and GH8061 are matched by hand (an anchored suffix, a
   substring, or the `\w+` words of GH6464 and GH8061).
 - `#[Depends]` runs the test it depends on first, with the entity
-  manager cleared (GH8499, GH9467).
+  manager cleared (GH8499, GH9467), or takes its query (DDC2224).
+- The functional test case's query cache (`self::$queryCache`, one
+  `ArrayAdapter` per run) is a new `ArrayAdapter` that the tests which
+  use it set on the configuration (DDC1995, DDC2090, GH11112, GH7820);
+  the other functional tests run without one. The `ArrayAdapter`
+  subclasses of GH7820 are pools over an `ArrayAdapter`.
+- A Ticket test that calls `enableSecondLevelCache()` runs on the
+  `SecondLevelCacheFunctionalTestCase` fixture
+  (`slc_functional::set_up_with()`, which also logs the cache
+  statistics) with its own models (DDC2862, DDC2943, EagerSecondLevelCacheCollection,
+  GH5562, GH6217, GH7067, GH7735). Reading a property of a lazy proxy does
+  not load it, so these tests call `initialize_object()` where PHP's
+  getter would. `uniqid()` and `random_int()` are fixed values.
 - `markLazyObjectAsInitialized()` is `EntityObject::set_lazy(false)`.
 - The custom DBAL types of the Ticket tests are Rust `Type`s in the test
   files, registered with `ticket::add_type()` (`Type::addType()`, or
@@ -495,10 +507,7 @@ DDC381Test (`serialize()` of a proxy); DDC2602Test and GH10869Test
 listener's call is synchronous, the query is async); GH12403Test
 (UnitOfWork's partial-load tracking of native lazy objects is not
 ported, and a lazy ghost does not complete itself when its last
-property is assigned); GH11112Test (the query cache), GH2947Test (the
-result cache), GH5562Test, GH6217Test, GH7067Test and GH7735Test (the
-second-level cache); three GH7820Test tests and `DDC1995Test::testQueryCache`
-(the query cache); GH7684Test (`DatabaseDriver` is not ported); GH7869Test
+property is assigned); GH2947Test (the result cache); GH7684Test (`DatabaseDriver` is not ported); GH7869Test
 (`EntityManagerDecorator` and a mock that counts `getClassMetadata()`
 calls);
 GH7941Test (the DBAL port does not register SQLite's user-defined `SQRT()`);
@@ -509,10 +518,7 @@ GH10927Test (PostgreSQL only) and `GH11982Test::testSchemaLegacyDbal`
 
 DDC3634Test's DBAL middleware (`LastInsertIdMockMiddleware`) is a Rust
 driver that wraps the SQLite driver and its connections (the DBAL port
-has no middlewares). DDC2090Test, DDC2224Test (the query cache),
-DDC2862Test, DDC2943Test, DDC3967Test, DDC4003Test, DDC7969Test and
-EagerSecondLevelCacheCollectionTest (the second-level cache) and
-DDC2415Test (the static PHP driver and a `CUSTOM` id generator) are
+has no middlewares). DDC2415Test (the static PHP driver and a `CUSTOM` id generator) is
 pending. Upstream skips DDC2182Test (MySQL only), DDC2825Test (SQLite
 does not support schemas), DDC933Test (SQLite) and DDC3103Test
 (doctrine/persistence 4 has no `StaticReflectionService`): `n/a`.
@@ -593,7 +599,7 @@ models extend persistence 2's `PersistentObject`); the criteria and extra-lazy
 tests of the Ticket, filter, enum and inheritance test files (GH7767,
 GH7836, GH7864, SQLFilterTest); the result cache tests
 (ResultCacheTest, DBAL's `QueryCacheProfile` is not ported) and the
-query and result cache tests of Query QueryTest and `testProcessParameterValueClassMetadata`;
+result cache tests of Query QueryTest;
 `Functional\QueryTest::testJoinPartialObjectHydration` (partial objects)
 and `testQueryBuilderWithStringWhereClauseContainingOrAndConditionalPrimary`
 (the query builder); `AbstractHydratorTest`'s `onClear` listener tests;
