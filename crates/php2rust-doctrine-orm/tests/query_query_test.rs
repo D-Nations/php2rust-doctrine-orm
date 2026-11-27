@@ -2,8 +2,10 @@
 //!
 //! The test entity manager is one on an empty `SQLite` database with the
 //! schema of the models (upstream's mocked connection returns no rows).
-//! The result cache is not ported (DBAL's `QueryCacheProfile`), so its
-//! tests are not; `testFluentQueryInterface` chains the setters that are.
+//! `testFluentQueryInterface` chains the setters that are ported. The
+//! result cache tests queue the mocked connection's results; here the
+//! rows are in the database, and the test changes them between the
+//! queries where the queued results differ.
 //! The query cache's `createMock(CacheItemPoolInterface::class)` counts
 //! its `getItem()` calls over an `ArrayAdapter`.
 
@@ -228,6 +230,10 @@ async fn testFluentQueryInterface() {
         .set_hint("bar", Hint::Value(s("baz")))
         .set_parameter(1, s("bar"), None)
         .set_parameters(vec![Parameter::new(2, s("baz"), None)])
+        .expire_result_cache(true)
+        .set_result_cache(None)
+        .unwrap()
+        .set_result_cache_id(Some("foo"))
         .set_dql("foo")
         .set_first_result(10)
         .set_max_results(Some(10));
@@ -724,4 +730,156 @@ async fn testGetQueryCacheDriverWithCacheExplicitlySet() {
         .get_sql()
         .unwrap();
     cache.assert_get_item_at_least_once();
+}
+
+/// `INSERT INTO cms_users` of a user with the given id.
+async fn insert_user(em: &EntityManager, id: i64) {
+    let mut params = PhpArray::new();
+    params.insert("id", Value::Int(id));
+    params.insert("status", s("dev"));
+    params.insert("username", s(&format!("user{id}")));
+    params.insert("name", s("name"));
+    em.get_connection()
+        .insert(
+            "cms_users",
+            &params,
+            &php2rust_doctrine_dbal::ParameterTypes::new(),
+        )
+        .await
+        .unwrap();
+}
+
+fn count(result: &Value) -> usize {
+    match result {
+        Value::Array(array) => array.len(),
+        _ => panic!("not an array"),
+    }
+}
+
+/// The first mocked result has one row and the second none: the row is
+/// deleted between the queries.
+#[tokio::test]
+async fn testResultCacheCaching() {
+    let entity_manager = entity_manager().await;
+    insert_user(&entity_manager, 1).await;
+
+    entity_manager
+        .get_configuration()
+        .set_result_cache(Arc::new(ArrayAdapter::new()));
+    entity_manager
+        .get_configuration()
+        .set_query_cache(Arc::new(ArrayAdapter::new()));
+
+    let res = entity_manager
+        .create_query("select u from Doctrine\\Tests\\Models\\CMS\\CmsUser u")
+        .use_query_cache(true)
+        .enable_result_cache(Some(60), None)
+        //let it cache
+        .get_object_result()
+        .await
+        .unwrap();
+
+    assert_eq!(count(&res), 1);
+
+    entity_manager
+        .get_connection()
+        .execute_statement(
+            "DELETE FROM cms_users",
+            &PhpArray::new(),
+            &php2rust_doctrine_dbal::ParameterTypes::new(),
+        )
+        .await
+        .unwrap();
+    entity_manager.clear().unwrap();
+
+    let res = entity_manager
+        .create_query("select u from Doctrine\\Tests\\Models\\CMS\\CmsUser u")
+        .use_query_cache(true)
+        .disable_result_cache()
+        .get_object_result()
+        .await
+        .unwrap();
+    assert_eq!(count(&res), 0);
+}
+
+/// DDC-3741
+#[tokio::test]
+async fn testSetHydrationCacheProfileNull() {
+    let em = entity_manager().await;
+    let query = em.create_query("");
+    query.set_hydration_cache_profile(None);
+    assert!(query.get_hydration_cache_profile().is_none());
+}
+
+/// 2947. The mocked results have one row, then two, then one: the
+/// second user is inserted before the third query, and the third result
+/// is never read (the last query reads the cache).
+#[tokio::test]
+async fn testResultCacheEviction() {
+    let entity_manager = entity_manager().await;
+    insert_user(&entity_manager, 1).await;
+
+    entity_manager
+        .get_configuration()
+        .set_result_cache(Arc::new(ArrayAdapter::new()));
+
+    let query =
+        entity_manager.create_query("SELECT u FROM Doctrine\\Tests\\Models\\CMS\\CmsUser u");
+    query.enable_result_cache(None, None);
+
+    // Performs the query and sets up the initial cache
+    assert_eq!(count(&query.get_object_result().await.unwrap()), 1);
+
+    insert_user(&entity_manager, 2).await;
+
+    // Retrieves cached data since expire flag is false and we have a cached result set
+    assert_eq!(count(&query.get_object_result().await.unwrap()), 1);
+
+    // Performs the query and caches the result set since expire flag is true
+    assert_eq!(
+        count(
+            &query
+                .expire_result_cache(true)
+                .get_object_result()
+                .await
+                .unwrap()
+        ),
+        2
+    );
+
+    entity_manager
+        .get_connection()
+        .execute_statement(
+            "DELETE FROM cms_users WHERE id = 2",
+            &PhpArray::new(),
+            &php2rust_doctrine_dbal::ParameterTypes::new(),
+        )
+        .await
+        .unwrap();
+
+    // Retrieves cached data since expire flag is false and we have a cached result set
+    assert_eq!(
+        count(
+            &query
+                .expire_result_cache(false)
+                .get_object_result()
+                .await
+                .unwrap()
+        ),
+        2
+    );
+}
+
+/// 6748
+#[tokio::test]
+async fn testResultCacheProfileCanBeRemovedViaSetter() {
+    let em = entity_manager().await;
+    em.get_configuration()
+        .set_result_cache(Arc::new(ArrayAdapter::new()));
+
+    let query = em.create_query(&format!("SELECT u FROM {CMS_USER} u"));
+    query.enable_result_cache(None, None);
+    query.set_result_cache_profile(None);
+
+    assert!(query.get_query_cache_profile().is_none());
 }

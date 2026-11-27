@@ -26,8 +26,7 @@ pub const NON_CACHEABLE_ENTITY_ASSOCIATION: &str =
     "Doctrine\\ORM\\Cache\\Exception\\NonCacheableEntityAssociation";
 pub const INVALID_ARGUMENT_EXCEPTION: &str = "InvalidArgumentException";
 pub const LOGIC_EXCEPTION: &str = "LogicException";
-pub const PSR_INVALID_ARGUMENT_EXCEPTION: &str =
-    "Symfony\\Component\\Cache\\Exception\\InvalidArgumentException";
+pub use super::pool::PSR_INVALID_ARGUMENT_EXCEPTION;
 
 /// Declares the cache exception classes in persistence's class registry.
 pub(crate) fn register_classes() {

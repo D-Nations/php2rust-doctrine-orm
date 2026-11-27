@@ -163,7 +163,12 @@ async fn testQueryCacheNoHitSaveParserResult() {
     let saved = cache.saved.lock().unwrap();
     assert_eq!(1, saved.len());
     assert!(!saved[0].is_hit());
-    assert!(matches!(saved[0].get(), Some(PoolValue::ParserResult(_))));
+    assert!(
+        saved[0]
+            .get()
+            .and_then(PoolValue::downcast_ref::<CachedParserResult>)
+            .is_some()
+    );
 }
 
 /// `createMock(SqlFinalizer::class)`: `createExecutor($query)` returns
@@ -224,7 +229,7 @@ async fn testQueryCacheHitDoesNotSaveParserResult() {
         .inner
         .get_item("cached")
         .unwrap()
-        .set(PoolValue::ParserResult(CachedParserResult(Arc::new(
+        .set(PoolValue::object(CachedParserResult(Arc::new(
             parser_result_mock,
         ))));
     cache.inner.save(item);
