@@ -66,6 +66,6 @@ pub async fn to_iterable(
     rows: Vec<PhpArray>,
     rsm: &ResultSetMapping,
 ) -> Result<Vec<Value>, Thrown> {
-    let mut hints = Hints::default();
-    hydration::to_iterable(em, mode, rows, rsm, &mut hints, HydrationHints::default()).await
+    let hints = Hints::default();
+    hydration::to_iterable(em, mode, rows, rsm, &hints, HydrationHints::default()).await
 }

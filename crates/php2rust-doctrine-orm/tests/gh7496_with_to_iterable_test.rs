@@ -58,7 +58,13 @@ async fn testNonUniqueObjectHydrationDuringIteration() {
         class("GH7496EntityB")
     ));
 
-    let bs = q.to_iterable(None, HYDRATE_OBJECT).await.unwrap();
+    let bs = q
+        .to_iterable(None, HYDRATE_OBJECT)
+        .await
+        .unwrap()
+        .to_vec()
+        .await
+        .unwrap();
 
     assert_eq!(2, bs.len());
     assert_instance_of("GH7496EntityB", &bs[0]);
@@ -66,7 +72,13 @@ async fn testNonUniqueObjectHydrationDuringIteration() {
     assert_loose_eq(&Value::Int(1), &get(&obj(&bs[0]), "id"));
     assert_loose_eq(&Value::Int(1), &get(&obj(&bs[1]), "id"));
 
-    let bs = q.to_iterable(None, HYDRATE_ARRAY).await.unwrap();
+    let bs = q
+        .to_iterable(None, HYDRATE_ARRAY)
+        .await
+        .unwrap()
+        .to_vec()
+        .await
+        .unwrap();
 
     assert_eq!(2, bs.len());
     assert_loose_eq(&Value::Int(1), &at(&bs[0], "id"));

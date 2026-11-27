@@ -422,7 +422,13 @@ async fn testIterateResultAsArrayAndParams() {
     );
 
     query.set_parameters(vec![Parameter::new(1, s("Doctrine 2"), None)]);
-    let articles = query.to_iterable(None, HYDRATE_ARRAY).await.unwrap();
+    let articles = query
+        .to_iterable(None, HYDRATE_ARRAY)
+        .await
+        .unwrap()
+        .to_vec()
+        .await
+        .unwrap();
 
     assert_eq!(articles.len(), 1);
     assert_loose_eq(
@@ -437,12 +443,13 @@ async fn testIterateResultIterativelyBuildUpUnitOfWork() {
     persist_two_articles(&em).await;
 
     let query = em.create_query(&format!("select a from {CMS_ARTICLE} a"));
-    let articles = query.to_iterable(None, HYDRATE_OBJECT).await.unwrap();
+    let mut articles = query.to_iterable(None, HYDRATE_OBJECT).await.unwrap();
 
     let mut iterated_count = 0;
     let mut topics = Vec::new();
 
-    for article in articles {
+    while let Some(article) = articles.next().await {
+        let article = article.unwrap();
         topics.push(get(&obj(&article), "topic"));
 
         let identity_map = em.get_unit_of_work().get_identity_map();
@@ -484,7 +491,13 @@ async fn testToIterableWithMultipleSelectElements() {
         "select a, u from {CMS_ARTICLE} a JOIN {CMS_USER} u ON a.user = u"
     ));
 
-    let result = query.to_iterable(None, HYDRATE_OBJECT).await.unwrap();
+    let result = query
+        .to_iterable(None, HYDRATE_OBJECT)
+        .await
+        .unwrap()
+        .to_vec()
+        .await
+        .unwrap();
 
     assert_eq!(result.len(), 2);
 
@@ -503,7 +516,13 @@ async fn testToIterableWithMixedResultEntityScalars() {
     let query = em.create_query(&format!(
         "select a, a.topic, a.text from {CMS_ARTICLE} a order by a.id asc"
     ));
-    let it = query.to_iterable(None, HYDRATE_OBJECT).await.unwrap();
+    let it = query
+        .to_iterable(None, HYDRATE_OBJECT)
+        .await
+        .unwrap()
+        .to_vec()
+        .await
+        .unwrap();
 
     assert_eq!(it.len(), 3);
     assert_loose_eq(&s("Doctrine 2"), &at(&it[0], "topic"));
@@ -520,7 +539,13 @@ async fn testToIterableWithMixedResultArbitraryJoinsScalars() {
     let query = em.create_query(&format!(
         "select a, u, a.topic, a.text from {CMS_ARTICLE} a, {CMS_USER} u WHERE a.user = u order by a.id asc"
     ));
-    let it = query.to_iterable(None, HYDRATE_OBJECT).await.unwrap();
+    let it = query
+        .to_iterable(None, HYDRATE_OBJECT)
+        .await
+        .unwrap()
+        .to_vec()
+        .await
+        .unwrap();
 
     assert_eq!(it.len(), 3);
     assert_loose_eq(&s("Doctrine 2"), &at(&it[0], "topic"));
@@ -539,7 +564,13 @@ async fn testToIterableWithMixedResultScalarsOnly() {
     let query = em.create_query(&format!(
         "select a.topic, a.text from {CMS_ARTICLE} a order by a.id asc"
     ));
-    let it = query.to_iterable(None, HYDRATE_OBJECT).await.unwrap();
+    let it = query
+        .to_iterable(None, HYDRATE_OBJECT)
+        .await
+        .unwrap()
+        .to_vec()
+        .await
+        .unwrap();
 
     let row = |topic: &str, text: &str| {
         let mut row = PhpArray::new();
@@ -565,10 +596,11 @@ async fn testIterateResultClearEveryCycle() {
     let query = em
         .create_query("select a from Doctrine\\Tests\\Models\\CMS\\CmsArticle a order by a.id asc");
 
-    let articles = query.to_iterable(None, HYDRATE_OBJECT).await.unwrap();
+    let mut articles = query.to_iterable(None, HYDRATE_OBJECT).await.unwrap();
     let mut iterated_count = 0;
     let mut topics = Vec::new();
-    for article in articles {
+    while let Some(article) = articles.next().await {
+        let article = article.unwrap();
         topics.push(get(&obj(&article), "topic"));
 
         em.clear().unwrap();

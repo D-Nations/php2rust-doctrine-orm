@@ -886,27 +886,25 @@ impl QueryState {
     }
 
     /// `$this->em->newHydrator($this->hydrationMode)->toIterable($stmt,
-    /// $rsm, $this->hints)`.
-    pub(crate) async fn hydrate_iterable(&self, rows: Vec<PhpArray>) -> Result<Vec<Value>, Thrown> {
-        let rsm = self
-            .get_result_set_mapping()
-            .ok_or_else(|| Thrown::new("LogicException", "Uninitialized result set mapping.", 0))?;
-        let (mut hints, extra) = self.hydration_hints();
-        let mode = self.get_hydration_mode();
-        hydration::to_iterable(&self.em, mode, rows, &rsm, &mut hints, extra).await
-    }
-
-    /// `hydrate_iterable()` with the generator's keys.
-    pub(crate) async fn hydrate_iterable_with_keys(
+    /// $rsm, $this->hints)`: the generator, which hydrates as it is
+    /// iterated.
+    pub(crate) fn hydrate_iterable(
         &self,
         rows: Vec<PhpArray>,
-    ) -> Result<Vec<(Key, Value)>, Thrown> {
+    ) -> Result<hydration::Iterable, Thrown> {
         let rsm = self
             .get_result_set_mapping()
             .ok_or_else(|| Thrown::new("LogicException", "Uninitialized result set mapping.", 0))?;
-        let (mut hints, extra) = self.hydration_hints();
+        let (hints, extra) = self.hydration_hints();
         let mode = self.get_hydration_mode();
-        hydration::to_iterable_with_keys(&self.em, mode, rows, &rsm, &mut hints, extra).await
+        Ok(hydration::Iterable::new(
+            self.em.clone(),
+            mode,
+            rows,
+            rsm,
+            hints,
+            extra,
+        ))
     }
 
     /// `getSingleResult()` of an executed result.

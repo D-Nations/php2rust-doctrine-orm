@@ -216,7 +216,7 @@ async fn testEagerFetchWithIterable() {
     em.flush().await.unwrap();
     em.clear().unwrap();
 
-    let iterable = em
+    let mut iterable = em
         .get_repository(OWNER)
         .unwrap()
         .create_query_builder("o", None)
@@ -228,7 +228,8 @@ async fn testEagerFetchWithIterable() {
         .unwrap();
 
     // There is only a single record, but use a foreach to ensure the iterator is marked as finished and the table lock is released
-    for owner in iterable {
+    while let Some(owner) = iterable.next().await {
+        let owner = owner.unwrap();
         assert_eq!(
             2,
             orm::count_of(owner.as_object().unwrap(), "children").await
