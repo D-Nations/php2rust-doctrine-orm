@@ -580,8 +580,8 @@ GH10927Test (PostgreSQL only) and `GH11982Test::testSchemaLegacyDbal`
 
 DDC3634Test's DBAL middleware (`LastInsertIdMockMiddleware`) is a Rust
 driver that wraps the SQLite driver and its connections (the DBAL port
-has no middlewares). DDC2415Test (the static PHP driver and a `CUSTOM` id generator) is
-pending. Upstream skips DDC2182Test (MySQL only), DDC2825Test (SQLite
+has no middlewares). DDC2415Test verifies an inherited custom generator with the static PHP driver.
+Upstream skips DDC2182Test (MySQL only), DDC2825Test (SQLite
 does not support schemas), DDC933Test (SQLite) and DDC3103Test
 (doctrine/persistence 4 has no `StaticReflectionService`): `n/a`.
 
