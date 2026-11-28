@@ -50,9 +50,9 @@ async fn testIssue() {
     if get(&r0, "id") == get(&customer1, "id") {
         assert_instance_of("DDC512OfferItem", &get(&r0, "item"));
         assert_loose_eq(&get(&item, "id"), &get(&obj(&get(&r0, "item")), "id"));
-        assert!(matches!(get(&r1, "item"), Value::Null));
+        std::assert_matches!(get(&r1, "item"), Value::Null);
     } else {
         assert_instance_of("DDC512OfferItem", &get(&r1, "item"));
-        assert!(matches!(get(&r0, "item"), Value::Null));
+        std::assert_matches!(get(&r0, "item"), Value::Null);
     }
 }

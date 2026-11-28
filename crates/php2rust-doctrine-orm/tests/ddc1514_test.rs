@@ -76,7 +76,7 @@ async fn testIssue() {
 
     let (r0, r1) = (obj(&results[0]), obj(&results[1]));
     assert_loose_eq(&get(&a1, "id"), &get(&r0, "id"));
-    assert!(matches!(get(&r0, "entityC"), Value::Null));
+    std::assert_matches!(get(&r0, "entityC"), Value::Null);
 
     assert_loose_eq(&get(&a2, "id"), &get(&r1, "id"));
     assert_loose_eq(&get(&c, "title"), &get(&obj(&get(&r1, "entityC")), "title"));
