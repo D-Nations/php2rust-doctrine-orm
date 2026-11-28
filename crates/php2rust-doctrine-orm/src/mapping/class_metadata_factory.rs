@@ -684,8 +684,7 @@ impl ClassMetadataFactory {
                 };
                 let generator_class = pv::get(&definition, "class")
                     .and_then(Value::to_php_string)
-                    .map(|s| pv::text(&s))
-                    .unwrap_or_default();
+                    .map_or_default(|s| pv::text(&s));
                 if !php_reflection::class_exists(&generator_class) {
                     return Err(
                         mapping_exception::invalid_custom_generator_on_missing_class(

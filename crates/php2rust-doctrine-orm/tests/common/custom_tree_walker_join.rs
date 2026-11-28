@@ -38,8 +38,7 @@ impl CustomTreeWalkerJoin<'_> {
         let alias = identification_variable_decl
             .range_variable_declaration
             .as_ref()
-            .map(|decl| decl.alias_identification_variable.clone())
-            .unwrap_or_default();
+            .map_or_default(|decl| decl.alias_identification_variable.clone());
         let join_assoc_path_expression = JoinAssociationPathExpression {
             identification_variable: alias.clone(),
             association_field: "address".to_owned(),

@@ -110,7 +110,7 @@ pub(crate) fn strings(value: &Value, class: &str, property: &str) -> Result<Vec<
         .values()
         .map(|value| match value {
             Value::String(s) => text(s),
-            other => other.to_php_string().map(|s| text(&s)).unwrap_or_default(),
+            other => other.to_php_string().map_or_default(|s| text(&s)),
         })
         .collect())
 }

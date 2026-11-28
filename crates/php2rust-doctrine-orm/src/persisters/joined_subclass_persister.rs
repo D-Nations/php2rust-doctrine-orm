@@ -696,8 +696,7 @@ impl BasicEntityPersister {
                 .read()
                 .field_mappings
                 .get(&field)
-                .map(|m| m.r#type.clone())
-                .unwrap_or_default();
+                .map_or_default(|m| m.r#type.clone());
             let ty = types::get_type(&ty).map_err(|e| Thrown::new(e.class(), e.message(), 0))?;
             let value = ty
                 .convert_to_php_value(&value, platform)

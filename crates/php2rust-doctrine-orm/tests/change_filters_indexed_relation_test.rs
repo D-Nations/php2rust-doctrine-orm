@@ -52,8 +52,7 @@ impl FilterConstraint for CategoryTypeSqlFilter {
             let field_name = target_entity
                 .field_mappings
                 .get("type")
-                .map(|mapping| mapping.field_name.clone())
-                .unwrap_or_default();
+                .map_or_default(|mapping| mapping.field_name.clone());
             return Ok(format!(
                 "{target_table_alias}.{field_name} = {}",
                 filter.get_parameter("type")?

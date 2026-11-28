@@ -354,8 +354,7 @@ impl DefaultQueryCache {
             .alias_map
             .iter()
             .next()
-            .map(|(alias, name)| (alias.to_owned(), name.clone()))
-            .unwrap_or_default();
+            .map_or_default(|(alias, name)| (alias.to_owned(), name.clone()));
         let persister = uow
             .get_cached_entity_persister(&entity_name)?
             .ok_or_else(|| non_cacheable_entity(&entity_name))?;

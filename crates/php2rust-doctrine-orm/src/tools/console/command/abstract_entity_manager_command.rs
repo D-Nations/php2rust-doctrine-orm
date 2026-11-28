@@ -73,8 +73,7 @@ pub fn exception(class: &str, message: impl Into<String>) -> ConsoleError {
 pub fn to_string(value: &Value) -> String {
     value
         .to_php_string()
-        .map(|s| s.to_string_lossy().into_owned())
-        .unwrap_or_default()
+        .map_or_default(|s| s.to_string_lossy().into_owned())
 }
 
 /// Runs one of the ORM's async calls from a command: on the current

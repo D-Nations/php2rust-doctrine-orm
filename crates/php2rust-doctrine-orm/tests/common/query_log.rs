@@ -91,8 +91,7 @@ impl QueryLog {
             .unwrap_or_else(PoisonError::into_inner)
             .1
             .last()
-            .map(|(_, params)| params.clone())
-            .unwrap_or_default()
+            .map_or_default(|(_, params)| params.clone())
     }
 
     /// The statements recorded since `reset_and_enable()`, with their

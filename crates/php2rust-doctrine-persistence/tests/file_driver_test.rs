@@ -92,8 +92,7 @@ impl FileLocator for MockFileLocator {
             .find_mapping_file
             .as_ref()
             .filter(|(name, _)| name == class_name)
-            .map(|(_, file)| file.clone())
-            .unwrap_or_default())
+            .map_or_default(|(_, file)| file.clone()))
     }
 
     fn get_all_class_names(&self, global_basename: &str) -> Result<Vec<String>, Thrown> {

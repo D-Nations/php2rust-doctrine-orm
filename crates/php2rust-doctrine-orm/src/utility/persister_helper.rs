@@ -48,8 +48,7 @@ pub fn get_type_of_field(
         assoc
             .join_table
             .as_ref()
-            .map(|t| t.join_columns.clone())
-            .unwrap_or_default()
+            .map_or_default(|t| t.join_columns.clone())
     } else {
         assoc.join_columns.clone()
     };

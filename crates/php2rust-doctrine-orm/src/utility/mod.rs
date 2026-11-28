@@ -31,8 +31,7 @@ pub fn to_text(value: &Value) -> String {
         Value::Int(i) => i.to_string(),
         other => other
             .to_php_string_or_stringable()
-            .map(|s| s.to_string_lossy().into_owned())
-            .unwrap_or_default(),
+            .map_or_default(|s| s.to_string_lossy().into_owned()),
     }
 }
 

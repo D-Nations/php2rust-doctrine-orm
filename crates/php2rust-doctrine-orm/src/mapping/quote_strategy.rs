@@ -195,8 +195,7 @@ fn column_name(class: &ClassMetadataInfo, field_name: &str) -> String {
     class
         .field_mappings
         .get(field_name)
-        .map(|m| m.column_name.clone())
-        .unwrap_or_default()
+        .map_or_default(|m| m.column_name.clone())
 }
 
 /// `Doctrine\ORM\Mapping\DefaultQuoteStrategy`: quotes the names the
@@ -260,8 +259,7 @@ impl QuoteStrategy for DefaultQuoteStrategy {
     ) -> String {
         let name = pv::get(definition, "sequenceName")
             .and_then(Value::to_php_string)
-            .map(|s| pv::text(&s))
-            .unwrap_or_default();
+            .map_or_default(|s| pv::text(&s));
         if pv::isset(definition, "quoted") {
             name.split('.')
                 .map(|part| platform.quote_single_identifier(part))
@@ -423,8 +421,7 @@ impl QuoteStrategy for AnsiQuoteStrategy {
     ) -> String {
         pv::get(definition, "sequenceName")
             .and_then(Value::to_php_string)
-            .map(|s| pv::text(&s))
-            .unwrap_or_default()
+            .map_or_default(|s| pv::text(&s))
     }
 
     fn get_join_column_name(
@@ -454,8 +451,7 @@ impl QuoteStrategy for AnsiQuoteStrategy {
         association
             .join_table
             .as_ref()
-            .map(|t| t.name.clone())
-            .unwrap_or_default()
+            .map_or_default(|t| t.name.clone())
     }
 
     fn get_identifier_column_names(

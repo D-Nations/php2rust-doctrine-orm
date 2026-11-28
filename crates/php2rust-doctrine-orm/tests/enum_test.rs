@@ -136,8 +136,7 @@ fn canonical_cases(value: &Value) -> Vec<(String, String)> {
             let name = case
                 .property(b"name")
                 .and_then(|n| n.to_php_string())
-                .map(|n| n.to_string_lossy().into_owned())
-                .unwrap_or_default();
+                .map_or_default(|n| n.to_string_lossy().into_owned());
             (case.class().to_owned(), name)
         })
         .collect();

@@ -331,8 +331,7 @@ pub(crate) fn register_managed(
                 Some(assoc) if assoc.is_to_one_owning_side() => assoc
                     .join_columns
                     .first()
-                    .map(|jc| jc.name.clone())
-                    .unwrap_or_default(),
+                    .map_or_default(|jc| jc.name.clone()),
                 _ => field_name.clone(),
             };
             id.insert(

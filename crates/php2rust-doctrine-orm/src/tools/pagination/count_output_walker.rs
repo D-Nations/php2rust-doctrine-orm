@@ -138,8 +138,7 @@ impl<'a> SqlWalker<'a> for CountOutputWalker<'a> {
                 let join_column = association
                     .join_columns
                     .first()
-                    .map(|join_column| join_column.name.clone())
-                    .unwrap_or_default();
+                    .map_or_default(|join_column| join_column.name.clone());
                 for (alias, _) in rsm.meta_mappings.iter().filter(|(_, c)| **c == join_column) {
                     if rsm.column_owner_map.get(alias) == Some(&root_alias) {
                         set(property, alias);

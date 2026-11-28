@@ -375,10 +375,7 @@ impl AbstractLexer for FloatLexer {
             return Some(Self::T_BOOL);
         }
 
-        let text = value
-            .as_string()
-            .map(PhpString::as_bytes)
-            .unwrap_or_default();
+        let text = value.as_string().map_or_default(PhpString::as_bytes);
         if is_numeric(text) {
             *value = match numeric_value(text) {
                 Some(Number::Int(i)) => Value::Int(i),

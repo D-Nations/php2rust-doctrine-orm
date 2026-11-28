@@ -345,8 +345,8 @@ impl AbstractEntityPersister {
             )
             .as_bytes(),
         );
-        data.extend_from_slice(limit.map(|l| l.to_string()).unwrap_or_default().as_bytes());
-        data.extend_from_slice(offset.map(|o| o.to_string()).unwrap_or_default().as_bytes());
+        data.extend_from_slice(limit.map_or_default(|l| l.to_string()).as_bytes());
+        data.extend_from_slice(offset.map_or_default(|o| o.to_string()).as_bytes());
         data.extend_from_slice(em.get_filters().get_hash().as_bytes());
         Ok(sha1_hex(&data))
     }
