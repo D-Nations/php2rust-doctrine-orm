@@ -66,12 +66,17 @@ fn get_schema_sql_for_entities(em: &Arc<EntityManager>, entity_classes: &[String
 fn matches_constraint_foreign_key(sql: &str, name: &str) -> bool {
     let lower = sql.to_lowercase();
     let words: Vec<&str> = lower.split_whitespace().collect();
-    words.windows(4).any(|w| {
-        let quoted = w[1]
-            .trim_start_matches(['`', '"'])
-            .trim_end_matches(['`', '"']);
-        w[0] == "constraint" && quoted == name && w[2] == "foreign" && w[3].starts_with("key")
-    })
+    words
+        .array_windows()
+        .any(|[constraint, identifier, foreign, key]| {
+            let quoted = identifier
+                .trim_start_matches(['`', '"'])
+                .trim_end_matches(['`', '"']);
+            *constraint == "constraint"
+                && quoted == name
+                && *foreign == "foreign"
+                && key.starts_with("key")
+        })
 }
 
 /// `getSchemaSql()`.

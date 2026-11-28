@@ -58,5 +58,5 @@ async fn testIssue() {
     assert_ne!(resumes.len(), 0);
     let resume = obj(&resumes[0]);
     assert_loose_eq(&Value::Int(1), &get(&obj(&get(&resume, "person")), "id"));
-    assert!(matches!(get(&resume, "currentCompany"), Value::Null));
+    std::assert_matches!(get(&resume, "currentCompany"), Value::Null);
 }

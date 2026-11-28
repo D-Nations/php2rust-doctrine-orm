@@ -41,8 +41,8 @@ async fn testIssue() {
 
     em.flush().await.unwrap();
 
-    assert!(matches!(get(&a, "id"), Value::Int(_)));
-    assert!(matches!(get(&b, "id"), Value::Int(_)));
+    std::assert_matches!(get(&a, "id"), Value::Int(_));
+    std::assert_matches!(get(&b, "id"), Value::Int(_));
 }
 
 #[tokio::test]
@@ -58,6 +58,6 @@ async fn testIssueReversed() {
 
     em.flush().await.unwrap();
 
-    assert!(matches!(get(&a, "id"), Value::Int(_)));
-    assert!(matches!(get(&b, "id"), Value::Int(_)));
+    std::assert_matches!(get(&a, "id"), Value::Int(_));
+    std::assert_matches!(get(&b, "id"), Value::Int(_));
 }

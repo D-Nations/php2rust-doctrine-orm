@@ -113,7 +113,7 @@ async fn testIssue() {
         .unwrap()
         .unwrap();
     let phrase2_type = get_object(&phrase2, "type").unwrap();
-    assert!(matches!(get(&phrase2_type, "id"), Value::Int(_)));
+    std::assert_matches!(get(&phrase2_type, "id"), Value::Int(_));
 
     em.clear().unwrap();
 

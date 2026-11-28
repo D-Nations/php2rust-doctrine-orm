@@ -110,7 +110,7 @@ fn testExceptionOnUnSerializationException() {
     let instantiator = set_up();
     let error = instantiator.instantiate("PDORow").unwrap_err();
 
-    assert!(matches!(error, InstantiatorError::UnexpectedValue(_)));
+    std::assert_matches!(error, InstantiatorError::UnexpectedValue(_));
     assert!(is_a(
         &error.to_thrown().class,
         UnexpectedValueException::CLASS
