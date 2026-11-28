@@ -181,10 +181,7 @@ pub fn call(value: &Value, method: &str, args: &[Value]) -> Value {
     }
     if let Some(field) = method.strip_prefix("get") {
         let mut chars = field.chars();
-        let first = chars
-            .next()
-            .map(|c| c.to_ascii_lowercase())
-            .unwrap_or_default();
+        let first = chars.next().map_or_default(|c| c.to_ascii_lowercase());
         return prop(value, &format!("{first}{}", chars.as_str()));
     }
     panic!("method {method}() of {value:?}")

@@ -260,8 +260,7 @@ impl<T: FileDriverImpl> MappingDriver for FileDriver<T> {
             .lock()
             .unwrap_or_else(PoisonError::into_inner)
             .as_ref()
-            .map(|cache| cache.iter().map(|(name, _)| name.clone()).collect())
-            .unwrap_or_default();
+            .map_or_default(|cache| cache.iter().map(|(name, _)| name.clone()).collect());
 
         let located = self
             .get_locator()

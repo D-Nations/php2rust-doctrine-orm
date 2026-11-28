@@ -986,8 +986,7 @@ impl UnitOfWork {
                     self.st()
                         .scheduled_for_synchronization
                         .get(&class_name)
-                        .map(|m| m.values().cloned().collect())
-                        .unwrap_or_default()
+                        .map_or_default(|m| m.values().cloned().collect())
                 };
 
             for entity in entities_to_process {
@@ -3029,8 +3028,7 @@ impl UnitOfWork {
                         .read()
                         .association_mappings
                         .get(&mapped_by)
-                        .map(|a| a.join_columns.clone())
-                        .unwrap_or_default();
+                        .map_or_default(|a| a.join_columns.clone());
                     join_columns
                         .iter()
                         .map(|jc| {

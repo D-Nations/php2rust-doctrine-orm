@@ -759,7 +759,7 @@ async fn multiple_new_operators(
     scalars: &[(&str, Option<&str>)],
 ) {
     let (em, fixtures) = set_up().await;
-    let alias = |a: Option<&str>| a.map(|a| format!(" as {a}")).unwrap_or_default();
+    let alias = |a: Option<&str>| a.map_or_default(|a| format!(" as {a}"));
     let mut select = format!(
         "
                 new CmsUserDTO(

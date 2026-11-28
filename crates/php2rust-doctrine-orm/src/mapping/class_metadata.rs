@@ -507,8 +507,7 @@ impl ClassMetadataInfo {
                 let parent_class = self
                     .embedded_classes
                     .get(declared_field)
-                    .map(|e| e.class.clone())
-                    .unwrap_or_default();
+                    .map_or_default(|e| e.class.clone());
                 let child = create_property_accessor(
                     &parent_class,
                     embedded_class.original_field.as_deref().unwrap_or_default(),
@@ -2046,8 +2045,7 @@ impl ClassMetadataInfo {
             let column_prefix = self
                 .embedded_classes
                 .get(property)
-                .map(|e| e.column_prefix.clone())
-                .unwrap_or_default();
+                .map_or_default(|e| e.column_prefix.clone());
             let column_name = original_field_mapping.column_name.clone();
             match &column_prefix {
                 prefix if prefix.is_truthy() => {

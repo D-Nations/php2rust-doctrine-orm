@@ -294,8 +294,7 @@ impl<C: ArrayCollectionClass> ArrayCollection<C> {
         self.elements
             .iter()
             .find(|(key, element)| p(key, element))
-            .map(|(_, element)| element.clone())
-            .unwrap_or_default()
+            .map_or_default(|(_, element)| element.clone())
     }
 
     /// `forAll($p)`.

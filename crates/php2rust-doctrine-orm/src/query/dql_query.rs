@@ -193,7 +193,7 @@ impl Query {
             let dst = self.dst();
             (dst.first_result, dst.max_results)
         };
-        let max_results = max_results.map(|m| m.to_string()).unwrap_or_default();
+        let max_results = max_results.map_or_default(|m| m.to_string());
         Ok(crate::cache::sha1_hex(
             format!("{parent}-{first_result}-{max_results}").as_bytes(),
         ))
@@ -310,7 +310,7 @@ impl Query {
                 };
                 format!(
                     "&firstResult={first_result}&maxResult={}",
-                    max_results.map(|m| m.to_string()).unwrap_or_default()
+                    max_results.map_or_default(|m| m.to_string())
                 )
             }
             // Assume Parser will create the SqlOutputWalker; save is_a call, which might trigger a class load

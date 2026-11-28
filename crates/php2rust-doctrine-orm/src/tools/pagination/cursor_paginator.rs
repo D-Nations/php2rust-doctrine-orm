@@ -256,8 +256,7 @@ impl PaginatorInterface for CursorPaginator {
             Hint::Value(Value::Array(
                 cursor
                     .as_ref()
-                    .map(|cursor| cursor.get_parameters().clone())
-                    .unwrap_or_default(),
+                    .map_or_default(|cursor| cursor.get_parameters().clone()),
             )),
         );
         sub_query

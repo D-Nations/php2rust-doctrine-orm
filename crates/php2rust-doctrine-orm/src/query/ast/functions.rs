@@ -1281,11 +1281,7 @@ mod tests {
         ];
         let classes: Vec<String> = names
             .iter()
-            .map(|name| {
-                builtin(name)
-                    .map(|f| f.class().to_owned())
-                    .unwrap_or_default()
-            })
+            .map(|name| builtin(name).map_or_default(|f| f.class().to_owned()))
             .collect();
         assert_eq!(
             classes,

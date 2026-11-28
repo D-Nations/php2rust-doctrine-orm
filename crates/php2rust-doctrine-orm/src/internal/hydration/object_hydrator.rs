@@ -352,8 +352,7 @@ impl<'a> ObjectHydrator<'a> {
                 Some(assoc) => assoc
                     .join_columns
                     .first()
-                    .map(|jc| jc.name.clone())
-                    .unwrap_or_default(),
+                    .map_or_default(|jc| jc.name.clone()),
                 None => field_name.to_owned(),
             };
             data.get(&Key::from(key.as_str()))

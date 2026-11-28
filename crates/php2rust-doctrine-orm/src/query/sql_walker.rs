@@ -80,8 +80,7 @@ fn truthy(value: &str) -> bool {
 fn text(value: &Value) -> String {
     value
         .to_php_string()
-        .map(|s| s.to_string_lossy().into_owned())
-        .unwrap_or_default()
+        .map_or_default(|s| s.to_string_lossy().into_owned())
 }
 
 /// The `TypeError` PHP throws for an argument of the wrong type.
@@ -1647,8 +1646,7 @@ pub mod base {
             .target_to_source_key_columns
             .values()
             .next()
-            .map(text)
-            .unwrap_or_default();
+            .map_or_default(text);
         Ok((class, column))
     }
 

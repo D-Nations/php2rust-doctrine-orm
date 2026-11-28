@@ -525,10 +525,7 @@ impl<'a> Columns<'a> {
                     .and_then(Key::from_value)
                 && !new_object_classes.iter().any(|(k, _)| *k == obj_index)
             {
-                let class_name = mapping
-                    .get(&Key::from("className"))
-                    .map(to_text)
-                    .unwrap_or_default();
+                let class_name = mapping.get(&Key::from("className")).map_or_default(to_text);
                 new_object_classes.push((obj_index, class_name));
             }
         }
@@ -629,10 +626,7 @@ impl<'a> Columns<'a> {
             let Value::Array(argument) = argument else {
                 continue;
             };
-            let arg_alias = argument
-                .get(&Key::from("argAlias"))
-                .map(to_text)
-                .unwrap_or_default();
+            let arg_alias = argument.get(&Key::from("argAlias")).map_or_default(to_text);
             let arg_alias_key = Key::from_bytes(arg_alias.as_bytes());
             if pending.args.iter().any(|(k, _)| *k == arg_alias_key) {
                 continue;
@@ -686,8 +680,7 @@ impl<'a> Columns<'a> {
                 let class_name = new_object_classes
                     .iter()
                     .find(|(k, _)| *k == arg_alias_key)
-                    .map(|(_, c)| c.clone())
-                    .unwrap_or_default();
+                    .map_or_default(|(_, c)| c.clone());
                 args.ksort();
                 new_instance_args(&class_name, &args)?
             } else if let Some(position) = row_data.data.iter().position(|(a, _)| *a == arg_alias) {
@@ -726,8 +719,7 @@ impl<'a> Columns<'a> {
             let class_name = new_object_classes
                 .iter()
                 .find(|(k, _)| *k == obj_index)
-                .map(|(_, c)| c.clone())
-                .unwrap_or_default();
+                .map_or_default(|(_, c)| c.clone());
             let obj = new_instance_args(&class_name, &args)?;
             row_data.new_objects.push((obj_index, obj, count));
         }

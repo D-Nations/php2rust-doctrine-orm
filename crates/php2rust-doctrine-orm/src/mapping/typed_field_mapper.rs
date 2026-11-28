@@ -129,8 +129,7 @@ impl TypedFieldMapper for DefaultTypedFieldMapper {
             let Some(backing) = enum_backing_type(&type_name) else {
                 let field_name = pv::get(&mapping, "fieldName")
                     .and_then(Value::to_php_string)
-                    .map(|s| pv::text(&s))
-                    .unwrap_or_default();
+                    .map_or_default(|s| pv::text(&s));
                 return Err(mapping_exception::backed_enum_type_required(
                     field.class(),
                     &field_name,

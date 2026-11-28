@@ -555,8 +555,7 @@ fn format_entity_listeners(entity_listeners: &Value) -> Result<[String; 2]> {
                 let get = |k: &str| {
                     listener
                         .get(&php_value::Key::from(k))
-                        .map(to_string)
-                        .unwrap_or_default()
+                        .map_or_default(to_string)
                 };
                 listeners.push(Value::from(format!(
                     "{}: {}::{}",

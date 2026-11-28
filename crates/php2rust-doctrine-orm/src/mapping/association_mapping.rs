@@ -442,8 +442,7 @@ impl AssociationMapping {
         let mut mapping_array = mapping_array.clone();
         let field_name = pv::get(&mapping_array, "fieldName")
             .and_then(Value::to_php_string)
-            .map(|s| pv::text(&s))
-            .unwrap_or_default();
+            .map_or_default(|s| pv::text(&s));
         if let Some(Value::Array(join_columns)) = mapping_array.get_mut(&Key::from("joinColumns")) {
             let keys: Vec<Key> = join_columns.keys().cloned().collect();
             for index in keys {
@@ -591,8 +590,7 @@ impl AssociationMapping {
         let string_of = |array: &PhpArray, key: &str| {
             pv::get(array, key)
                 .and_then(Value::to_php_string)
-                .map(|s| pv::text(&s))
-                .unwrap_or_default()
+                .map_or_default(|s| pv::text(&s))
         };
         let source_entity = string_of(&mapping_array, "sourceEntity");
         let target_entity = string_of(&mapping_array, "targetEntity");

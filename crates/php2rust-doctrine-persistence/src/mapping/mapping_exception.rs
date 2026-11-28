@@ -37,7 +37,7 @@ pub fn path_required_for_driver(driver_class_name: &str) -> Thrown {
 }
 
 pub fn file_mapping_drivers_require_configured_directory_path(path: Option<&str>) -> Thrown {
-    let path = path.map(|p| format!("[{p}]")).unwrap_or_default();
+    let path = path.map_or_default(|p| format!("[{p}]"));
     new(format!(
         "File mapping drivers must have a valid directory path, however the given path {path} seems to be incorrect!"
     ))

@@ -122,8 +122,7 @@ impl XmlElement {
     /// `$element->$parent->$name ?? []`, iterated.
     fn grandchildren(&self, parent: &str, name: &str) -> Vec<Self> {
         self.child(parent)
-            .map(|parent| parent.children_named(name))
-            .unwrap_or_default()
+            .map_or_default(|parent| parent.children_named(name))
     }
 
     /// `$element->count()`.
