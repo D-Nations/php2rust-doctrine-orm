@@ -282,11 +282,23 @@ async fn native_query_result_caching(f: &Fixture) -> (NativeQuery, Arc<ArrayAdap
     set_result_cache!(query, pool(&cache));
     query.enable_result_cache(None, None);
 
-    assert!(cache.get_values().is_empty());
+    assert_eq!(
+        cache.get_values(),
+        [] as [(
+            std::string::String,
+            php2rust_doctrine_dbal::cache::PoolValue
+        ); 0]
+    );
 
     query.get_object_result().await.unwrap();
 
-    assert!(!cache.get_values().is_empty());
+    assert_ne!(
+        cache.get_values(),
+        [] as [(
+            std::string::String,
+            php2rust_doctrine_dbal::cache::PoolValue
+        ); 0]
+    );
 
     (query, cache)
 }

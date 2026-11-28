@@ -57,7 +57,10 @@ fn testGetClassNames() {
 fn testGetClassNamesWithEmptyIterator() {
     common::register_fixtures();
     let locator = FileClassLocator::new(Vec::<PathBuf>::new());
-    assert!(locator.get_class_names().unwrap().is_empty());
+    assert_eq!(
+        locator.get_class_names().unwrap(),
+        [] as [std::string::String; 0]
+    );
 }
 
 #[test]
@@ -101,7 +104,10 @@ fn testCreateFromEmptyDirectory() {
     )
     .unwrap();
 
-    assert!(locator.get_class_names().unwrap().is_empty());
+    assert_eq!(
+        locator.get_class_names().unwrap(),
+        [] as [std::string::String; 0]
+    );
 }
 
 #[test]

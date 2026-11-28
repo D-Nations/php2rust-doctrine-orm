@@ -73,8 +73,8 @@ fn testGetMetadataForSubclassWithTransientBaseClass() {
     let class = cmf.get_metadata_for(&ns("EntitySubClass")).unwrap();
     let class = class.read();
 
-    assert!(class.sub_classes.is_empty());
-    assert!(class.parent_classes.is_empty());
+    assert_eq!(class.sub_classes, [] as [std::string::String; 0]);
+    assert_eq!(class.parent_classes, [] as [std::string::String; 0]);
     assert!(class.field_mappings.get("id").is_some());
     assert!(class.field_mappings.get("name").is_some());
 }
@@ -85,8 +85,8 @@ fn testGetMetadataForSubclassWithMappedSuperclass() {
     let class = cmf.get_metadata_for(&ns("EntitySubClass2")).unwrap();
     let class = class.read();
 
-    assert!(class.sub_classes.is_empty());
-    assert!(class.parent_classes.is_empty());
+    assert_eq!(class.sub_classes, [] as [std::string::String; 0]);
+    assert_eq!(class.parent_classes, [] as [std::string::String; 0]);
 
     assert!(class.field_mappings.get("mapped1").is_some());
     assert!(class.field_mappings.get("mapped2").is_some());

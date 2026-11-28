@@ -60,6 +60,6 @@ async fn testTheORMRemovesReferencedEmployeeBeforeReferencingEmployee() {
             .get_result(HYDRATE_OBJECT)
             .await
             .unwrap();
-        assert!(list(&result).is_empty());
+        assert_eq!(list(&result).len(), 0);
     }
 }

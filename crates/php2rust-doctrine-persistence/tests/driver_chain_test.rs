@@ -71,8 +71,8 @@ fn testDelegateToMatchingNamespaceDriver() {
 
         assert!(chain.is_transient(class_name).unwrap());
 
-        assert!(driver1.load_metadata_calls().is_empty());
-        assert!(driver1.is_transient_calls().is_empty());
+        assert_eq!(driver1.load_metadata_calls(), Vec::<String>::new());
+        assert_eq!(driver1.is_transient_calls(), Vec::<String>::new());
         assert_eq!(driver2.load_metadata_calls(), [class_name]);
         assert_eq!(driver2.is_transient_calls(), [class_name]);
     }
@@ -169,9 +169,9 @@ fn testDefaultDriver() {
     assert!(chain.is_transient(entity_class_name).unwrap());
     assert!(!chain.is_transient(manager_class_name).unwrap());
 
-    assert!(company_driver.load_metadata_calls().is_empty());
+    assert_eq!(company_driver.load_metadata_calls(), Vec::<String>::new());
     assert_eq!(company_driver.is_transient_calls(), [manager_class_name]);
-    assert!(default_driver.load_metadata_calls().is_empty());
+    assert_eq!(default_driver.load_metadata_calls(), Vec::<String>::new());
     assert_eq!(default_driver.is_transient_calls(), [entity_class_name]);
 }
 

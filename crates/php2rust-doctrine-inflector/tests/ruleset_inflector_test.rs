@@ -64,7 +64,7 @@ fn testInflectIrregularUsesFirstMatch() {
 
     assert_eq!(PhpString::from("first"), inflector.inflect(b"in"));
     assert_eq!(vec!["in"], first_irregular.calls());
-    assert!(second_irregular.calls().is_empty());
+    assert_eq!(second_irregular.calls(), [] as [std::string::String; 0]);
 }
 
 #[test]
@@ -104,7 +104,7 @@ fn testInflectUninflectedSkipsOnFirstMatch() {
 
     assert_eq!(PhpString::from("in"), inflector.inflect(b"in"));
     assert_eq!(vec!["in"], first_uninflected.calls());
-    assert!(second_uninflected.calls().is_empty());
+    assert_eq!(second_uninflected.calls(), [] as [std::string::String; 0]);
 }
 
 #[test]
@@ -156,7 +156,7 @@ fn testInflectRegularUsesFirstMatch() {
 
     assert_eq!(PhpString::from("first"), inflector.inflect(b"in"));
     assert_eq!(vec!["in"], first_regular.calls());
-    assert!(second_regular.calls().is_empty());
+    assert_eq!(second_regular.calls(), [] as [std::string::String; 0]);
 }
 
 #[test]

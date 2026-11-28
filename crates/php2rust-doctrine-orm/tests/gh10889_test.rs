@@ -55,7 +55,7 @@ async fn testIssue() {
             .unwrap(),
     );
 
-    assert!(!resumes.is_empty());
+    assert_ne!(resumes.len(), 0);
     let resume = obj(&resumes[0]);
     assert_loose_eq(&Value::Int(1), &get(&obj(&get(&resume, "person")), "id"));
     assert!(matches!(get(&resume, "currentCompany"), Value::Null));

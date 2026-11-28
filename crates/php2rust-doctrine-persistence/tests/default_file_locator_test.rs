@@ -109,7 +109,10 @@ fn testGetAllClassNamesNonMatchingFileExtension() {
     let path = files();
 
     let locator = DefaultFileLocator::new([path], Some(".xml"));
-    assert!(locator.get_all_class_names("global").unwrap().is_empty());
+    assert_eq!(
+        locator.get_all_class_names("global").unwrap(),
+        [] as [std::string::String; 0]
+    );
 }
 
 #[test]

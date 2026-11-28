@@ -113,7 +113,10 @@ fn testAddGetPaths() {
 #[test]
 fn testAddGetExcludePaths() {
     let driver = create_directory_path_driver(colocated());
-    assert!(driver.colocated.get_exclude_paths().is_empty());
+    assert_eq!(
+        driver.colocated.get_exclude_paths(),
+        [] as [std::string::String; 0]
+    );
 
     driver
         .colocated
