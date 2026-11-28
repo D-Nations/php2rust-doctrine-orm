@@ -322,6 +322,13 @@ table inheritance); `QueryDqlFunctionTest::testFunctionSqrt` (the SQLite
 library of the DBAL port has no math functions: `no such function:
 SQRT`).
 
+Custom pre-insert ID generators register their PHP class name and Rust
+function through `id::register_custom_generator()`. The unit of work calls
+the function with the entity manager and entity, converts its result with
+the identifier's DBAL type, and sets the entity's identifier. Custom
+post-insert generators are not supported. GH5804Test exercises the custom
+generator with a custom DBAL type and a versioned entity.
+
 Persistence, not reproduced and so not claimed:
 
 - The DBAL is async, so the entity manager, unit of work, persisters,
@@ -567,9 +574,7 @@ ported, and a lazy ghost does not complete itself when its last
 property is assigned); GH7684Test (`DatabaseDriver` is not ported); GH7869Test
 (`EntityManagerDecorator` and a mock that counts `getClassMetadata()`
 calls);
-GH7941Test (the DBAL port does not register SQLite's user-defined `SQRT()`);
-GH5804Test (a `CUSTOM` id generator, an `AbstractIdGenerator` subclass,
-which the unit of work does not run). Upstream skips GH10462Test and GH6823Test (MySQL only),
+GH7941Test (the DBAL port does not register SQLite's user-defined `SQRT()`). Upstream skips GH10462Test and GH6823Test (MySQL only),
 GH10927Test (PostgreSQL only) and `GH11982Test::testSchemaLegacyDbal`
 (doctrine/dbal before 4.3): `n/a`.
 
