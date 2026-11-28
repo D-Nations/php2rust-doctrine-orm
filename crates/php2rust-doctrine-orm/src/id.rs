@@ -9,6 +9,36 @@
 //!
 //! Upstream: doctrine/orm src/Id/AssignedGenerator.php src/Id/SequenceGenerator.php
 
+/// A registered custom generator's `generateId()` implementation.
+pub type CustomIdGenerator = fn(
+    &crate::entity_manager::EntityManager,
+    Option<&php_value::Object>,
+) -> Result<php_value::Value, php_value::Thrown>;
+
+fn custom_generators()
+-> &'static std::sync::RwLock<std::collections::HashMap<String, CustomIdGenerator>> {
+    static GENERATORS: std::sync::OnceLock<
+        std::sync::RwLock<std::collections::HashMap<String, CustomIdGenerator>>,
+    > = std::sync::OnceLock::new();
+    GENERATORS.get_or_init(Default::default)
+}
+
+/// Register a custom pre-insert generator by its PHP class name.
+pub fn register_custom_generator(class_name: &str, generator: CustomIdGenerator) {
+    custom_generators()
+        .write()
+        .unwrap_or_else(std::sync::PoisonError::into_inner)
+        .insert(class_name.trim_start_matches('\\').to_owned(), generator);
+}
+
+pub(crate) fn custom_generator(class_name: &str) -> Option<CustomIdGenerator> {
+    custom_generators()
+        .read()
+        .unwrap_or_else(std::sync::PoisonError::into_inner)
+        .get(class_name.trim_start_matches('\\'))
+        .copied()
+}
+
 /// `Doctrine\ORM\Id\AbstractIdGenerator` and its subclasses.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum IdGenerator {

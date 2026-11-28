@@ -1165,6 +1165,24 @@ impl UnitOfWork {
         if !id_gen.is_post_insert_generator() {
             let id_value = match &id_gen {
                 IdGenerator::Assigned => self.generate_assigned_id(&em, entity)?,
+                IdGenerator::Custom {
+                    class: generator_class,
+                } => {
+                    let generator =
+                        crate::id::custom_generator(generator_class).ok_or_else(|| {
+                            php2rust_doctrine_persistence::php_reflection::class_does_not_exist(
+                                generator_class,
+                            )
+                        })?;
+                    let generated = generator(&em, Some(entity))?;
+                    let field = class.read().get_single_identifier_field_name()?;
+                    let value =
+                        self.convert_single_field_identifier_to_php_value(class, &generated)?;
+                    let mut identifier = PhpArray::new();
+                    identifier.insert(field.as_str(), value);
+                    class.read().set_identifier_values(entity, &identifier)?;
+                    identifier
+                }
                 IdGenerator::Sequence { sequence_name, .. } => {
                     // The sequence's next value needs a query the platform
                     // gives; SQLite has no sequences.
