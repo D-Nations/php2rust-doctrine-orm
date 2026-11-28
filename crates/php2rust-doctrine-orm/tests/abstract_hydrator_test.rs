@@ -158,7 +158,7 @@ async fn testOnClearEventListenerIsDetachedOnCleanup() {
 
     let iterator = to_iterable_with(&mut hydrator, &em, &mut result, &rsm, PhpArray::new());
     let values: Vec<_> = iterator.collect();
-    assert!(values.is_empty());
+    assert_eq!(values.len(), 0);
     assert!(hydrator.has_listener);
     assert!(!has_on_clear_listeners(&em));
 }

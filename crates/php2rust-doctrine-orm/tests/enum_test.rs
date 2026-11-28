@@ -273,7 +273,7 @@ async fn testEnumHydrationObjectHydrator() {
             .unwrap(),
     );
 
-    assert!(!found_cards.is_empty());
+    assert_ne!(found_cards.len(), 0);
     for card in &found_cards {
         assert_same(&suit("Clubs"), &field(card, "suit"));
     }
@@ -574,7 +574,7 @@ async fn testFindByEnum() {
         .find_by(&php_array! { "suit" => suit("Clubs") }, None, None, None)
         .await
         .unwrap();
-    assert!(!found_cards.is_empty());
+    assert_ne!(found_cards.len(), 0);
     for card in &found_cards {
         assert_same(&suit("Clubs"), &get(card, "suit"));
     }

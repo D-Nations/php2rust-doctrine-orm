@@ -2130,10 +2130,7 @@ pub mod base {
             ));
         }
 
-        let target_table_join_table;
-        let target_table_join_condition;
-
-        if assoc.is_to_one() {
+        let (target_table_join_table, target_table_join_condition) = if assoc.is_to_one() {
             let mut conditions = Vec::new();
 
             for join_column in &assoc.join_columns {
@@ -2173,8 +2170,10 @@ pub mod base {
                 conditions.push(filter_expr);
             }
 
-            target_table_join_table = format!("{target_table_name} {target_table_alias}");
-            target_table_join_condition = conditions.join(" AND ");
+            (
+                format!("{target_table_name} {target_table_alias}"),
+                conditions.join(" AND "),
+            )
         } else if assoc.is_many_to_many() {
             // Join relation table
             let join_table = assoc
@@ -2261,15 +2260,17 @@ pub mod base {
                 conditions.push(filter_expr);
             }
 
-            target_table_join_table = format!("{target_table_name} {target_table_alias}");
-            target_table_join_condition = conditions.join(" AND ");
+            (
+                format!("{target_table_name} {target_table_alias}"),
+                conditions.join(" AND "),
+            )
         } else {
             return Err(Thrown::new(
                 "BadMethodCallException",
                 "Type of association must be one of *_TO_ONE or MANY_TO_MANY",
                 0,
             ));
-        }
+        };
 
         // Handle WITH clause
         let with_condition = match cond_expr {

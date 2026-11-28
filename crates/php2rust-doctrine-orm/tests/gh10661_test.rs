@@ -58,7 +58,7 @@ async fn testPropertyTypeErrorsCanBeSilenced() {
         .validate_class(&class)
         .unwrap();
 
-    assert!(ce.is_empty());
+    assert_eq!(ce, [] as [std::string::String; 0]);
 }
 
 #[tokio::test]

@@ -77,5 +77,5 @@ async fn testIssue() {
     );
 
     // Query shouldn't yield a result, yet it shouldn't crash (anymore)
-    assert!(list(&query.get_object_result().await.unwrap()).is_empty());
+    assert_eq!(list(&query.get_object_result().await.unwrap()).len(), 0);
 }

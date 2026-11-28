@@ -33,7 +33,7 @@ async fn testEmptyResultTest() {
     let result = hydrate_all(&em, HYDRATE_SCALAR_COLUMN, Vec::new(), &rsm)
         .await
         .unwrap();
-    assert!(list(&result).is_empty());
+    assert_eq!(list(&result).len(), 0);
 }
 
 /// `Select u.id from CmsUser u`

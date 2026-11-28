@@ -169,6 +169,18 @@ class RunnerTests(unittest.TestCase):
             ("cargo", "fmt", "--check", "-p", "c"),
         ])
 
+    def test_oversized_package_formats_each_target_in_windows_batches(self):
+        paths = ["C:/" + ch * 9_000 + ".rs" for ch in "abc"]
+        metadata = {
+            "workspace_members": ["big"],
+            "packages": [{"id": "big", "name": "big", "edition": "2024",
+                          "targets": [{"src_path": p, "edition": "2024"} for p in paths]}],
+        }
+        with patch.object(dev_check.sys, "platform", "win32"), \
+                patch.dict(dev_check.os.environ, {"RUSTFMT": "custom-rustfmt"}):
+            self.assertEqual(dev_check.fmt_commands(metadata), [
+                ("custom-rustfmt", "--check", "--edition", "2024", path) for path in paths
+            ])
     def test_parity_does_not_start_cargo(self):
         with patch.object(sys, "argv", ["dev_check.py", "parity", "--bash", "chosen-bash"]):
             with patch.object(dev_check, "run") as run:

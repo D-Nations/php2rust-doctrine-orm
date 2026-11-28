@@ -263,7 +263,7 @@ async fn testGetNextCursorAsStringReturnsStringWhenNextPageExists() {
         .await
         .unwrap();
 
-    assert!(!page.get_next_cursor_as_string().await.unwrap().is_empty());
+    assert_ne!(page.get_next_cursor_as_string().await.unwrap(), "");
 }
 
 fn cursor(key: &str, value: i64, is_next: bool) -> Cursor {
@@ -284,13 +284,7 @@ async fn testGetPreviousCursorAsStringReturnsStringWhenPreviousPageExists() {
         .await
         .unwrap();
 
-    assert!(
-        !page
-            .get_previous_cursor_as_string()
-            .await
-            .unwrap()
-            .is_empty()
-    );
+    assert_ne!(page.get_previous_cursor_as_string().await.unwrap(), "");
 }
 
 #[tokio::test]
@@ -384,7 +378,7 @@ async fn testGetItemsReturnsEmptyArrayWhenNoResults() {
         .unwrap();
 
     assert!(page.get_items_with_cursors().await.unwrap().is_empty());
-    assert!(page.get_items().is_empty());
+    assert_eq!(page.get_items(), []);
 }
 
 #[tokio::test]
@@ -399,13 +393,7 @@ async fn testPaginateWithCursorInstance() {
         .await
         .unwrap();
 
-    assert!(
-        !page
-            .get_previous_cursor_as_string()
-            .await
-            .unwrap()
-            .is_empty()
-    );
+    assert_ne!(page.get_previous_cursor_as_string().await.unwrap(), "");
 }
 
 #[tokio::test]

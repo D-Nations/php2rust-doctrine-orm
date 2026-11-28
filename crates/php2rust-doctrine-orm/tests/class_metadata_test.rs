@@ -97,8 +97,8 @@ fn testClassMetadataInstanceSerialization() {
     assert!(cm.refl_class.is_some());
     assert_eq!(cm.name, CMS_USER);
     assert_eq!(cm.root_entity_name, CMS_USER);
-    assert!(cm.sub_classes.is_empty());
-    assert!(cm.parent_classes.is_empty());
+    assert_eq!(cm.sub_classes, [] as [std::string::String; 0]);
+    assert_eq!(cm.parent_classes, [] as [std::string::String; 0]);
     assert_eq!(cm.inheritance_type, cm::INHERITANCE_TYPE_NONE);
 
     // Customize state

@@ -70,6 +70,27 @@ def fmt_commands(metadata: dict) -> list[tuple[str, ...]]:
         if batch and size + length > FMT_COMMAND_LIMIT:
             commands.append(("cargo", "fmt", "--check", *batch))
             batch, size = [], 0
+        if length > FMT_COMMAND_LIMIT and sys.platform == "win32":
+            # Cargo passes all targets of one package to rustfmt together.
+            # Split oversized packages by target so CreateProcess stays below
+            # the Windows command-line limit, retaining each target's edition.
+            formatter = os.environ.get("RUSTFMT", "rustfmt")
+            targets: dict[str, list[str]] = {}
+            for target in package["targets"]:
+                edition = target.get("edition", package.get("edition", "2015"))
+                targets.setdefault(edition, []).append(target["src_path"])
+            for edition, paths in targets.items():
+                chunk: list[str] = []
+                chunk_size = 0
+                for path in dict.fromkeys(paths):
+                    if chunk and chunk_size + len(path) + 3 > FMT_COMMAND_LIMIT:
+                        commands.append((formatter, "--check", "--edition", edition, *chunk))
+                        chunk, chunk_size = [], 0
+                    chunk.append(path)
+                    chunk_size += len(path) + 3
+                if chunk:
+                    commands.append((formatter, "--check", "--edition", edition, *chunk))
+            continue
         batch.extend(("-p", package["name"]))
         size += length
     if batch:

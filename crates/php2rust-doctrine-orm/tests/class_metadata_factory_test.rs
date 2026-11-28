@@ -263,7 +263,7 @@ fn testGetMetadataForSingleClass() {
     // Prechecks
     {
         let info = cm1.read();
-        assert!(info.parent_classes.is_empty());
+        assert_eq!(info.parent_classes, [] as [std::string::String; 0]);
         assert_eq!(cm::INHERITANCE_TYPE_NONE, info.inheritance_type);
         assert!(info.has_field("name"));
         assert_eq!(2, info.association_mappings.len());
@@ -280,7 +280,10 @@ fn testGetMetadataForSingleClass() {
         Some(&Value::Bool(true)),
         cm_map1.read().table.get(&"quoted".into())
     );
-    assert!(cm_map1.read().parent_classes.is_empty());
+    assert_eq!(
+        cm_map1.read().parent_classes,
+        [] as [std::string::String; 0]
+    );
     assert!(cm_map1.read().has_field("name"));
 }
 
